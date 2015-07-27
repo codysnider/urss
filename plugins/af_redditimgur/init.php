@@ -23,9 +23,6 @@ class Af_RedditImgur extends Plugin {
 		$enable_readability = $this->host->get($this, "enable_readability");
 		$enable_readability_checked = $enable_readability ? "checked" : "";
 
-		$enable_dupecheck = $this->host->get($this, "enable_dupecheck");
-		$enable_dupecheck_checked = $enable_dupecheck ? "checked" : "";
-		
 		print "<form dojoType=\"dijit.form.Form\">";
 
 		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
@@ -56,13 +53,6 @@ class Af_RedditImgur extends Plugin {
 
 		print "<label for=\"enable_readability\">" . __("Extract missing content using Readability") . "</label>";
 
-		print "<br/>";
-		
-		print "<input dojoType=\"dijit.form.CheckBox\" id=\"enable_dupecheck\"
-			$enable_dupecheck_checked name=\"enable_dupecheck\">&nbsp;";
-
-		print "<label for=\"enable_dupecheck\">" . __("Mark duplicates as read using content links") . "</label>";
-		
 		print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".
 			__("Save")."</button>";
 
@@ -73,10 +63,8 @@ class Af_RedditImgur extends Plugin {
 
 	function save() {
 		$enable_readability = checkbox_to_sql_bool($_POST["enable_readability"]) == "true";
-		$enable_dupecheck = checkbox_to_sql_bool($_POST["enable_dupecheck"]) == "true";
-		
+
 		$this->host->set($this, "enable_readability", $enable_readability);
-		$this->host->set($this, "enable_dupecheck", $enable_dupecheck);
 
 		echo __("Configuration saved");
 	}
@@ -242,34 +230,7 @@ class Af_RedditImgur extends Plugin {
 
 			$content_link = $xpath->query("(//a[contains(., '[link]')])")->item(0);
 
-			if ($content_link && $this->host->get($this, "enable_dupecheck")) {
-
-				if (DB_TYPE == "pgsql") {
-					$date_qpart = "date_entered < NOW() - INTERVAL '1 day' ";
-				} else {
-					$date_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 1 DAY) ";
-				}
-
-				$content_href = db_escape_string($content_link->getAttribute("href"));
-				$owner_uid = $article["owner_uid"];
-				$guid = db_escape_string($article["guid_hashed"]);
-
-				$result = db_query("SELECT id FROM ttrss_entries, ttrss_user_entries
-					WHERE
-						content LIKE '%$content_href%' AND
-						$date_qpart AND
-						ref_id = id AND
-						owner_uid = $owner_uid
-						AND guid != '$guid'
-					LIMIT 1");
-
-				if (db_num_rows($result) != 0) {
-					$found = true;
-					$article["force_catchup"] = true;
-				}
-			}
-
-			if (!$found) $found = $this->inline_stuff($article, $doc, $xpath);
+			$found = $this->inline_stuff($article, $doc, $xpath);
 
 			if (function_exists("curl_init") && !$found && $this->host->get($this, "enable_readability") &&
 				mb_strlen(strip_tags($article["content"])) <= 150) {
