@@ -53,6 +53,8 @@
 		@session_start();
 	}
 
+	startup_gettext();
+
 	if (!init_plugins()) return;
 
 	$method = strtolower($_REQUEST["op"]);
