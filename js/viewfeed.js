@@ -136,8 +136,8 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 
 						if (loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("cdmFeedTitle")) {
 							dijit.byId("headlines-frame").domNode.appendChild(row);
-							Element.hide(row);
-							new Effect.Appear(row, {duration:0.5});
+							//Element.hide(row);
+							//new Effect.Appear(row, {duration:0.5});
 							loaded_article_ids.push(row.id);
 						}
 					}
