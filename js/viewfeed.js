@@ -1279,26 +1279,15 @@ function headlines_scroll_handler(e) {
 		}
 
 		if (!_infscroll_disable) {
-			if ((hsp && e.scrollTop + e.offsetHeight >= hsp.offsetTop - hsp.offsetHeight) ||
-					(e.scrollHeight != 0 &&
-					 	((e.scrollTop + e.offsetHeight) / e.scrollHeight >= 0.7))) {
+			if (hsp && hsp.offsetTop <= e.scrollTop + e.offsetHeight) {
 
-				if (hsp)
-					hsp.innerHTML = "<span class='loading'><img src='images/indicator_tiny.gif'> " +
-						__("Loading, please wait...") + "</span>";
+				hsp.innerHTML = "<span class='loading'><img src='images/indicator_tiny.gif'> " +
+					__("Loading, please wait...") + "</span>";
 
 				loadMoreHeadlines();
 				return;
 
 			}
-		/*} else {
-			if (hsp) {
-				if (_infscroll_disable)
-					hsp.innerHTML = "<a href='#' onclick='openNextUnreadFeed()'>" +
-						__("Click to open next unread feed.") + "</a>";
-				else
-					hsp.innerHTML = "";
-			}*/
 		}
 
 		if (isCdmMode()) {
