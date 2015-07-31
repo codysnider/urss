@@ -41,5 +41,7 @@ dojo.addOnLoad(function() {
 				}
 			}, 150);
 		}
+
+		return true;
 	});
 });
