@@ -236,9 +236,8 @@ function render_article(article) {
 			c.domNode.scrollTop = 0;
 		} catch (e) { };
 
-		PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED, article);
-
 		c.attr('content', article);
+		PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED, c.domNode);
 
 		correctHeadlinesOffset(getActiveArticleId());
 
@@ -1231,10 +1230,11 @@ function unpackVisibleHeadlines() {
 					var cencw = $("CENCW-" + child.id.replace("RROW-", ""));
 
 					if (cencw) {
-						PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, child);
-
 						cencw.innerHTML = htmlspecialchars_decode(cencw.innerHTML);
 						cencw.setAttribute('id', '');
+
+						PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, child);
+
 						Element.show(cencw);
 					}
 				}
