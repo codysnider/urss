@@ -226,7 +226,7 @@ class Instances extends Plugin implements IHandler {
 		print __("Access key:") . " ";
 
 		print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
-			placeHolder=\"".__("Access key")."\" regExp='\w{40}'
+			placeHolder=\"".__("Access key")."\"
 			style=\"width: 20em\" name=\"access_key\" id=\"instance_edit_key\"
 			value=\"$access_key\">";
 
@@ -414,7 +414,7 @@ class Instances extends Plugin implements IHandler {
 		print __("Access key:") . " ";
 
 		print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
-			placeHolder=\"".__("Access key")."\" regExp='\w{40}'
+			placeHolder=\"".__("Access key")."\"
 			style=\"width: 20em\" name=\"access_key\" id=\"instance_add_key\"
 			value=\"$access_key\">";
 
