@@ -738,7 +738,7 @@
 
 				$_SESSION["name"] = db_fetch_result($result, 0, "login");
 				$_SESSION["access_level"] = db_fetch_result($result, 0, "access_level");
-				$_SESSION["csrf_token"] = uniqid(rand(), true);
+				$_SESSION["csrf_token"] = uniqid_short();
 
 				db_query("UPDATE ttrss_users SET last_login = NOW() WHERE id = " .
 					$_SESSION["uid"]);
@@ -768,7 +768,7 @@
 			$_SESSION["auth_module"] = false;
 
 			if (!$_SESSION["csrf_token"]) {
-				$_SESSION["csrf_token"] = uniqid(rand(), true);
+				$_SESSION["csrf_token"] = uniqid_short();
 			}
 
 			$_SESSION["ip_address"] = $_SERVER["REMOTE_ADDR"];
@@ -1994,6 +1994,10 @@
 		} else {
 			return $id;
 		}
+	}
+
+	function uniqid_short() {
+		return uniqid(base_convert(rand(), 10, 36));
 	}
 
 	// TODO: less dumb splitting

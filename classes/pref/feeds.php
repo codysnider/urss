@@ -1893,7 +1893,7 @@ class Pref_Feeds extends Handler_Protected {
 			AND owner_uid = " . $owner_uid);
 
 		if ($this->dbh->num_rows($result) == 1) {
-			$key = $this->dbh->escape_string(uniqid(base_convert(rand(), 10, 36)));
+			$key = $this->dbh->escape_string(uniqid_short());
 
 			$this->dbh->query("UPDATE ttrss_access_keys SET access_key = '$key'
 				WHERE feed_id = '$feed_id' AND is_cat = $sql_is_cat
