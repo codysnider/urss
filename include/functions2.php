@@ -280,12 +280,17 @@
 		return $data;
 	}
 
-	function search_to_sql($search) {
+	function search_to_sql($search, $search_language) {
 
 		$keywords = str_getcsv($search, " ");
 		$query_keywords = array();
 		$search_words = array();
 		$search_query_leftover = array();
+
+		if ($search_language)
+			$search_language = db_escape_string(mb_strtolower($search_language));
+		else
+			$search_language = "english";
 
 		foreach ($keywords as $k) {
 			if (strpos($k, "-") === 0) {
@@ -402,7 +407,7 @@
 
 			if (DB_TYPE == "pgsql") {
 				array_push($query_keywords,
-					"(tsvector_combined @@ to_tsquery('english', '$search_query_leftover'))");
+					"(tsvector_combined @@ to_tsquery('$search_language', '$search_query_leftover'))");
 			}
 
 		}
@@ -447,6 +452,7 @@
 		$view_mode = $params["view_mode"];
 		$cat_view = isset($params["cat_view"]) ? $params["cat_view"] : false;
 		$search = isset($params["search"]) ? $params["search"] : false;
+		$search_language = isset($params["search_language"]) ? $params["search_language"] : "";
 		$override_order = isset($params["override_order"]) ? $params["override_order"] : false;
 		$offset = isset($params["offset"]) ? $params["offset"] : 0;
 		$owner_uid = isset($params["owner_uid"]) ? $params["owner_uid"] : $_SESSION["uid"];
@@ -471,7 +477,7 @@
 
 				// fall back in case of no plugins
 				if (!$search_query_part) {
-					list($search_query_part, $search_words) = search_to_sql($search);
+					list($search_query_part, $search_words) = search_to_sql($search, $search_language);
 				}
 				$search_query_part .= " AND ";
 			} else {

@@ -202,6 +202,7 @@ class Feeds extends Handler_Protected {
 		}
 
 		@$search = $this->dbh->escape_string($_REQUEST["query"]);
+		@$search_language = $this->dbh->escape_string($_REQUEST["search_language"]); // PGSQL only
 
 		if ($search) {
 			$disable_cache = true;
@@ -247,6 +248,7 @@ class Feeds extends Handler_Protected {
 				"view_mode" => $view_mode,
 				"cat_view" => $cat_view,
 				"search" => $search,
+				"search_language" => $search_language,
 				"override_order" => $override_order,
 				"offset" => $offset,
 				"include_children" => $include_children,
@@ -1142,6 +1144,12 @@ class Feeds extends Handler_Protected {
 			required=\"1\" name=\"query\" type=\"search\" value=''>";
 
 		print "<hr/><span style='float : right'>".T_sprintf('in %s', getFeedTitle($active_feed_id, $is_cat))."</span>";
+
+		if (DB_TYPE == "pgsql") {
+			print "<hr/>";
+			print_select("search_language", "", Pref_Feeds::$feed_languages,
+				"dojoType='dijit.form.Select' title=\"".__('Used for word stemming')."\"");
+		}
 
 		print "</div>";
 
