@@ -335,10 +335,10 @@
 	if (isset($options["gen-search-idx"])) {
 		echo "Generating search index (stemming set to English)...\n";
 
-		$result = db_query("SELECT COUNT(id) AS count FROM ttrss_entries");
+		$result = db_query("SELECT COUNT(id) AS count FROM ttrss_entries WHERE tsvector_combined IS NULL");
 		$count = db_fetch_result($result, 0, "count");
 
-		print "Total entries: $count.\n";
+		print "Entries to process: $count.\n";
 
 		$offset = 0;
 		$limit = 1000;
