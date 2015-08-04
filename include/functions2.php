@@ -716,6 +716,12 @@
 				if ($feed == -3)
 					$first_id_query_strategy_part = "true";
 
+				if (DB_TYPE == "pgsql") {
+					$sanity_interval_qpart = "date_entered >= NOW() - INTERVAL '1 hour' AND";
+				} else {
+					$sanity_interval_qpart = "date_entered >= DATE_SUB(NOW(), INTERVAL 1 hour) AND";
+				}
+
 				if (!$search) {
 					// if previous topmost article id changed that means our current pagination is no longer valid
 					$query = "SELECT DISTINCT
@@ -739,6 +745,7 @@
 						$search_query_part
 						$start_ts_query_part
 						$since_id_part
+						$sanity_interval_qpart
 						$first_id_query_strategy_part ORDER BY $order_by LIMIT 1";
 
 					if ($_REQUEST["debug"]) {
