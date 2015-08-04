@@ -96,6 +96,7 @@ create table ttrss_feeds (id serial not null primary key,
 	view_settings varchar(250) not null default '',
 	pubsub_state integer not null default 0,
 	favicon_last_checked timestamp default null,
+	feed_language varchar(100) not null default '',
 	auth_pass_encrypted boolean not null default false);
 
 create index ttrss_feeds_owner_uid_index on ttrss_feeds(owner_uid);

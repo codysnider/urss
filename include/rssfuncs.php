@@ -306,6 +306,7 @@
 			feed_url,auth_pass,cache_images,
 			mark_unread_on_update, owner_uid,
 			pubsub_state, auth_pass_encrypted,
+			feed_language,
 			(SELECT max(date_entered) FROM
 				ttrss_entries, ttrss_user_entries where ref_id = id AND feed_id = '$feed') AS last_article_timestamp
 			FROM ttrss_feeds WHERE id = '$feed'");
@@ -340,6 +341,8 @@
 
 		$cache_images = sql_bool_to_bool(db_fetch_result($result, 0, "cache_images"));
 		$fetch_url = db_fetch_result($result, 0, "feed_url");
+		$feed_language = db_escape_string(mb_strtolower(db_fetch_result($result, 0, "feed_language")));
+		if (!$feed_language) $feed_language = 'english';
 
 		$feed = db_escape_string($feed);
 
@@ -463,6 +466,7 @@
 			// We use local pluginhost here because we need to load different per-user feed plugins
 			$pluginhost->run_hooks(PluginHost::HOOK_FEED_PARSED, "hook_feed_parsed", $rss);
 
+			_debug("language: $feed_language", $debug_enabled);
 			_debug("processing feed data...", $debug_enabled);
 
 //			db_query("BEGIN");
@@ -988,7 +992,7 @@
 						$tsvector_combined = db_escape_string(mb_substr($entry_title . ' ' . strip_tags($entry_content),
 							0, 1000000));
 
-						$tsvector_qpart = "tsvector_combined = to_tsvector('simple', '$tsvector_combined'),";
+						$tsvector_qpart = "tsvector_combined = to_tsvector('$feed_language', '$tsvector_combined'),";
 
 					} else {
 						$tsvector_qpart = "";

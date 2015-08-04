@@ -402,7 +402,7 @@
 
 			if (DB_TYPE == "pgsql") {
 				array_push($query_keywords,
-					"(tsvector_combined @@ '$search_query_leftover'::tsquery)");
+					"(tsvector_combined @@ to_tsquery('english', '$search_query_leftover'))");
 			}
 
 		}

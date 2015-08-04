@@ -1,5 +1,7 @@
 <?php
 class Pref_Feeds extends Handler_Protected {
+	public static $feed_languages = array("English", "Danish", "Dutch", "Finnish", "French", "German", "Hungarian", "Italian", "Norwegian",
+		"Portuguese", "Russian", "Spanish", "Swedish", "Turkish", "Simple");
 
 	function csrf_ignore($method) {
 		$csrf_ignored = array("index", "getfeedtree", "add", "editcats", "editfeed",
@@ -593,6 +595,18 @@ class Pref_Feeds extends Handler_Protected {
 				'dojoType="dijit.form.Select"');
 		}
 
+		/* FTS Stemming Language */
+
+		if (DB_TYPE == "pgsql") {
+			$feed_language = $this->dbh->fetch_result($result, 0, "feed_language");
+
+			print "<hr/>";
+
+			print __('Language:') . " ";
+			print_select("feed_language", $feed_language, $this::$feed_languages,
+				'dojoType="dijit.form.Select"');
+		}
+
 		print "</div>";
 
 		print "<div class=\"dlgSec\">".__("Update")."</div>";
@@ -807,6 +821,18 @@ class Pref_Feeds extends Handler_Protected {
 
 		}
 
+		/* FTS Stemming Language */
+
+		if (DB_TYPE == "pgsql") {
+			print "<hr/>";
+
+			print __('Language:') . " ";
+			print_select("feed_language", "", $this::$feed_languages,
+				'disabled="1" dojoType="dijit.form.Select"');
+
+			$this->batch_edit_cbox("feed_language");
+		}
+
 		print "</div>";
 
 		print "<div class=\"dlgSec\">".__("Update")."</div>";
@@ -938,6 +964,8 @@ class Pref_Feeds extends Handler_Protected {
 		$mark_unread_on_update = checkbox_to_sql_bool(
 			$this->dbh->escape_string($_POST["mark_unread_on_update"]));
 
+		$feed_language = $this->dbh->escape_string(trim($_POST["feed_language"]));
+
 		if (strlen(FEED_CRYPT_KEY) > 0) {
 			require_once "crypt.php";
 			$auth_pass = substr(encrypt_string($auth_pass), 0, 250);
@@ -976,7 +1004,8 @@ class Pref_Feeds extends Handler_Protected {
 				hide_images = $hide_images,
 				include_in_digest = $include_in_digest,
 				always_display_enclosures = $always_display_enclosures,
-				mark_unread_on_update = $mark_unread_on_update
+				mark_unread_on_update = $mark_unread_on_update,
+				feed_language = '$feed_language'
 			WHERE id = '$feed_id' AND owner_uid = " . $_SESSION["uid"]);
 
 			PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_SAVE_FEED,
@@ -1049,6 +1078,10 @@ class Pref_Feeds extends Handler_Protected {
 
 					case "cat_id":
 						$qpart = $category_qpart_nocomma;
+						break;
+
+					case "feed_language":
+						$qpart = "feed_language = '$feed_language'";
 						break;
 
 				}

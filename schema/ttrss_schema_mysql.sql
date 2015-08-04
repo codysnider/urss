@@ -127,6 +127,7 @@ create table ttrss_feeds (id integer not null auto_increment primary key,
 	view_settings varchar(250) not null default '',
 	pubsub_state integer not null default 0,
 	favicon_last_checked datetime default null,
+	feed_language varchar(100) not null default '',
 	foreign key (owner_uid) references ttrss_users(id) ON DELETE CASCADE,
 	foreign key (cat_id) references ttrss_feed_categories(id) ON DELETE SET NULL,
 	foreign key (parent_feed) references ttrss_feeds(id) ON DELETE SET NULL) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
