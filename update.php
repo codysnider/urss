@@ -33,6 +33,7 @@
 			"update-schema",
 			"convert-filters",
 			"force-update",
+			"update-search-idx",
 			"list-plugins",
 			"help");
 
@@ -80,6 +81,7 @@
 		print "  --log FILE           - log messages to FILE\n";
 		print "  --indexes            - recreate missing schema indexes\n";
 		print "  --update-schema      - update database schema\n";
+		print "  --update-search-idx  - update PostgreSQL fulltext search index\n";
 		print "  --convert-filters    - convert type1 filters to type2\n";
 		print "  --force-update       - force update of all feeds\n";
 		print "  --list-plugins       - list all available plugins\n";
@@ -326,6 +328,40 @@
 			}
 		} else {
 			_debug("update not required.");
+		}
+
+	}
+
+	if (isset($options["update-search-idx"])) {
+		echo "Generating search index...\n";
+
+		$result = db_query("SELECT COUNT(id) AS count FROM ttrss_entries");
+		$count = db_fetch_result($result, 0, "count");
+
+		print "Total entries: $count.\n";
+
+		$offset = 0;
+		$limit = 1000;
+
+		while (true) {
+			$result = db_query("SELECT id, title, content FROM ttrss_entries WHERE tsvector_combined IS NULL ORDER BY id LIMIT $limit OFFSET $offset");
+
+			if (db_num_rows($result) != 0) {
+				echo "Offset $offset...\n";
+
+				while ($line = db_fetch_assoc($result)) {
+					$tsvector_combined = db_escape_string(mb_substr($line['title'] . ' ' . strip_tags($line['content']),
+						0, 1000000));
+
+					db_query("UPDATE ttrss_entries SET tsvector_combined = to_tsvector('simple', '$tsvector_combined') WHERE id = " . $line["id"]);
+				}
+
+				$offset += $limit;
+			} else {
+				echo "All done.\n";
+				break;
+			}
+
 		}
 
 	}

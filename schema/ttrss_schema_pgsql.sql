@@ -142,12 +142,14 @@ create table ttrss_entries (id serial not null primary key,
 	num_comments integer not null default 0,
 	comments varchar(250) not null default '',
 	plugin_data text,
+	tsvector_combined tsvector,
 	lang varchar(2),
 	author varchar(250) not null default '');
 
 -- create index ttrss_entries_title_index on ttrss_entries(title);
 create index ttrss_entries_date_entered_index on ttrss_entries(date_entered);
 create index ttrss_entries_updated_idx on ttrss_entries(updated);
+create index ttrss_entries_tsvector_combined_idx on ttrss_entries using gin(tsvector_combined);
 
 create table ttrss_user_entries (
 	int_id serial not null primary key,

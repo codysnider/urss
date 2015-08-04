@@ -282,17 +282,10 @@
 
 	function search_to_sql($search) {
 
-		/*if (DB_TYPE == "pgsql") {
-			$search_escaped = db_escape_string($search);
-
-			return array("(to_tsvector('english', SUBSTR(ttrss_entries.title, 0, 200) || ' ' || SUBSTR(content, 0, 800))
-				@@ to_tsquery('$search_escaped'))", explode(" ", $search));
-		}*/
-
 		$keywords = str_getcsv($search, " ");
 		$query_keywords = array();
 		$search_words = array();
-		$search_query_leftover = "";
+		$search_query_leftover = array();
 
 		foreach ($keywords as $k) {
 			if (strpos($k, "-") === 0) {
@@ -390,23 +383,27 @@
 
 					array_push($query_keywords, "(".SUBSTRING_FOR_DATE."(updated,1,LENGTH('$k')) $not = '$k')");
 				} else {
-					$search_query_leftover .= $k . " ";
+
+					if (DB_TYPE == "pgsql") {
+						$k = mb_strtolower($k);
+						array_push($search_query_leftover, $not ? "!$k" : $k);
+					} else {
+						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
+							OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
+					}
 
 					if (!$not) array_push($search_words, $k);
-
-					/*array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-						OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
-					if (!$not) array_push($search_words, $k);*/
 				}
 			}
 		}
 
-		if ($search_query_leftover) {
-			$search_query_leftover = db_escape_string($search_query_leftover);
+		if (count($search_query_leftover) > 0) {
+			$search_query_leftover = db_escape_string(implode(" & ", $search_query_leftover));
 
-			array_push($query_keywords,
-				"(to_tsvector('simple', SUBSTR(ttrss_entries.title, 0, 200) || ' ' || SUBSTR(content, 0, 800))
-				@@ to_tsquery('$search_query_leftover'))");
+			if (DB_TYPE == "pgsql") {
+				array_push($query_keywords,
+					"(tsvector_combined @@ '$search_query_leftover'::tsquery)");
+			}
 
 		}
 
@@ -713,29 +710,30 @@
 				if ($feed == -3)
 					$first_id_query_strategy_part = "true";
 
-				// if previous topmost article id changed that means our current pagination is no longer valid
-				$query = "SELECT DISTINCT
-						ttrss_feeds.title,
-						date_entered,
-						guid,
-						ttrss_entries.id,
-						ttrss_entries.title,
-						updated,
-						score,
-						marked,
-						published,
-						last_marked,
-						last_published
-					FROM
-						$from_qpart
-					WHERE
-					$feed_check_qpart
-					ttrss_user_entries.ref_id = ttrss_entries.id AND
-					ttrss_user_entries.owner_uid = '$owner_uid' AND
-					$search_query_part
-					$start_ts_query_part
-					$since_id_part
-					$first_id_query_strategy_part ORDER BY $order_by LIMIT 1";
+				if (!$search) {
+					// if previous topmost article id changed that means our current pagination is no longer valid
+					$query = "SELECT DISTINCT
+							ttrss_feeds.title,
+							date_entered,
+							guid,
+							ttrss_entries.id,
+							ttrss_entries.title,
+							updated,
+							score,
+							marked,
+							published,
+							last_marked,
+							last_published
+						FROM
+							$from_qpart
+						WHERE
+						$feed_check_qpart
+						ttrss_user_entries.ref_id = ttrss_entries.id AND
+						ttrss_user_entries.owner_uid = '$owner_uid' AND
+						$search_query_part
+						$start_ts_query_part
+						$since_id_part
+						$first_id_query_strategy_part ORDER BY $order_by LIMIT 1";
 
 					if ($_REQUEST["debug"]) {
 						print $query;
@@ -743,12 +741,13 @@
 
 					$result = db_query($query);
 					if ($result && db_num_rows($result) > 0) {
-						$first_id = (int) db_fetch_result($result, 0, "id");
+						$first_id = (int)db_fetch_result($result, 0, "id");
 
 						if ($offset > 0 && $first_id && $check_first_id && $first_id != $check_first_id) {
 							return array(-1, $feed_title, $feed_site_url, $last_error, $last_updated, $search_words, $first_id);
 						}
 					}
+				}
 
 				$query = "SELECT DISTINCT
 						date_entered,

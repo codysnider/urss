@@ -984,11 +984,22 @@
 
 					_debug("RID: $entry_ref_id, IID: $entry_int_id", $debug_enabled);
 
+					if (DB_TYPE == "pgsql") {
+						$tsvector_combined = db_escape_string(mb_substr($entry_title . ' ' . strip_tags($entry_content),
+							0, 1000000));
+
+						$tsvector_qpart = "tsvector_combined = to_tsvector('simple', '$tsvector_combined'),";
+
+					} else {
+						$tsvector_qpart = "";
+					}
+
 					db_query("UPDATE ttrss_entries
 						SET title = '$entry_title',
 							content = '$entry_content',
 							content_hash = '$entry_current_hash',
 							updated = '$entry_timestamp_fmt',
+							$tsvector_qpart
 							num_comments = '$num_comments',
 							plugin_data = '$entry_plugin_data',
 							author = '$entry_author',
