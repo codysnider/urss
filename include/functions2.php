@@ -282,11 +282,17 @@
 
 	function search_to_sql($search) {
 
-		$search_query_part = "";
+		/*if (DB_TYPE == "pgsql") {
+			$search_escaped = db_escape_string($search);
+
+			return array("(to_tsvector('english', SUBSTR(ttrss_entries.title, 0, 200) || ' ' || SUBSTR(content, 0, 800))
+				@@ to_tsquery('$search_escaped'))", explode(" ", $search));
+		}*/
 
 		$keywords = str_getcsv($search, " ");
 		$query_keywords = array();
 		$search_words = array();
+		$search_query_leftover = "";
 
 		foreach ($keywords as $k) {
 			if (strpos($k, "-") === 0) {
@@ -384,12 +390,24 @@
 
 					array_push($query_keywords, "(".SUBSTRING_FOR_DATE."(updated,1,LENGTH('$k')) $not = '$k')");
 				} else {
-					array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-							OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
+					$search_query_leftover .= $k . " ";
 
 					if (!$not) array_push($search_words, $k);
+
+					/*array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
+						OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
+					if (!$not) array_push($search_words, $k);*/
 				}
 			}
+		}
+
+		if ($search_query_leftover) {
+			$search_query_leftover = db_escape_string($search_query_leftover);
+
+			array_push($query_keywords,
+				"(to_tsvector('simple', SUBSTR(ttrss_entries.title, 0, 200) || ' ' || SUBSTR(content, 0, 800))
+				@@ to_tsquery('$search_query_leftover'))");
+
 		}
 
 		$search_query_part = implode("AND", $query_keywords);
