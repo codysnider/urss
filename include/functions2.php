@@ -726,7 +726,7 @@
 					$sanity_interval_qpart = "date_entered >= DATE_SUB(NOW(), INTERVAL 1 hour) AND";
 				}
 
-				if (!$search) {
+				if (!$search && !$disable_offsets) {
 					// if previous topmost article id changed that means our current pagination is no longer valid
 					$query = "SELECT DISTINCT
 							ttrss_feeds.title,
