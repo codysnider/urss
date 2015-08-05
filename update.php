@@ -346,24 +346,21 @@
 		while (true) {
 			$result = db_query("SELECT id, title, content FROM ttrss_entries WHERE tsvector_combined IS NULL ORDER BY id LIMIT $limit");
 
-			if (db_num_rows($result) != 0) {
-				while ($line = db_fetch_assoc($result)) {
-					$tsvector_combined = db_escape_string(mb_substr($line['title'] . ' ' . strip_tags($line['content']),
-						0, 1000000));
+			while ($line = db_fetch_assoc($result)) {
+				$tsvector_combined = db_escape_string(mb_substr($line['title'] . ' ' . strip_tags($line['content']),
+					0, 1000000));
 
-					db_query("UPDATE ttrss_entries SET tsvector_combined = to_tsvector('english', '$tsvector_combined') WHERE id = " . $line["id"]);
-				}
+				db_query("UPDATE ttrss_entries SET tsvector_combined = to_tsvector('english', '$tsvector_combined') WHERE id = " . $line["id"]);
+			}
 
-				$processed += db_num_rows($result);
-				print "Processed $processed articles...\n";
+			$processed += db_num_rows($result);
+			print "Processed $processed articles...\n";
 
-			} else {
+			if (db_num_rows($result) != $limit) {
 				echo "All done.\n";
 				break;
 			}
-
 		}
-
 	}
 
 	if (isset($options["list-plugins"])) {
