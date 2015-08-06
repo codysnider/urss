@@ -248,27 +248,13 @@
 		if (!$purge_unread) $query_limit = " unread = false AND ";
 
 		if (DB_TYPE == "pgsql") {
-			$pg_version = get_pgsql_version();
-
-			if (preg_match("/^7\./", $pg_version) || preg_match("/^8\.0/", $pg_version)) {
-
-				$result = db_query("DELETE FROM ttrss_user_entries WHERE
-					ttrss_entries.id = ref_id AND
-					marked = false AND
-					feed_id = '$feed_id' AND
-					$query_limit
-					ttrss_entries.date_updated < NOW() - INTERVAL '$purge_interval days'");
-
-			} else {
-
-				$result = db_query("DELETE FROM ttrss_user_entries
-					USING ttrss_entries
-					WHERE ttrss_entries.id = ref_id AND
-					marked = false AND
-					feed_id = '$feed_id' AND
-					$query_limit
-					ttrss_entries.date_updated < NOW() - INTERVAL '$purge_interval days'");
-			}
+			$result = db_query("DELETE FROM ttrss_user_entries
+				USING ttrss_entries
+				WHERE ttrss_entries.id = ref_id AND
+				marked = false AND
+				feed_id = '$feed_id' AND
+				$query_limit
+				ttrss_entries.date_updated < NOW() - INTERVAL '$purge_interval days'");
 
 		} else {
 
