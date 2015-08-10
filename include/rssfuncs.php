@@ -796,7 +796,7 @@
 
 				$entry_content = db_escape_string($entry_content, false);
 
-				db_query("BEGIN");
+				//db_query("BEGIN");
 
 				$result = db_query("SELECT id FROM	ttrss_entries
 					WHERE (guid = '$entry_guid' OR guid = '$entry_guid_hashed')");
@@ -889,7 +889,7 @@
 					}
 
 					if (find_article_filter($article_filters, "filter")) {
-						db_query("COMMIT"); // close transaction in progress
+						//db_query("COMMIT"); // close transaction in progress
 						continue;
 					}
 
@@ -1020,7 +1020,7 @@
 					}
 				}
 
-				db_query("COMMIT");
+				//db_query("COMMIT");
 
 				_debug("assigning labels [other]...", $debug_enabled);
 
