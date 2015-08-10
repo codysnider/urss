@@ -991,6 +991,11 @@ class Pref_Feeds extends Handler_Protected {
 
 		if (!$batch) {
 
+			$result = db_query("SELECT feed_url FROM ttrss_feeds WHERE id = " . $feed_id);
+			$orig_feed_url = db_fetch_result($result, 0, "feed_url");
+
+			$reset_basic_info = $orig_feed_url != $feed_link;
+
 			$this->dbh->query("UPDATE ttrss_feeds SET
 				$category_qpart
 				title = '$feed_title', feed_url = '$feed_link',
@@ -1007,6 +1012,12 @@ class Pref_Feeds extends Handler_Protected {
 				mark_unread_on_update = $mark_unread_on_update,
 				feed_language = '$feed_language'
 			WHERE id = '$feed_id' AND owner_uid = " . $_SESSION["uid"]);
+
+			if ($reset_basic_info) {
+				require_once "rssfuncs.php";
+
+				set_basic_feed_info($feed_id);
+			}
 
 			PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_SAVE_FEED,
 				"hook_prefs_save_feed", $feed_id);
