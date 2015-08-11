@@ -1030,6 +1030,11 @@ select.attachments {
 	margin-right : 25px;
 }
 
+span.sel_links {
+	margin-right : 4px;
+	vertical-align  : middle;
+}
+
 #feedTree img.feedIcon {
 	position : relative;
 	top : -2px;
