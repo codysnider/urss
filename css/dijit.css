@@ -520,6 +520,6 @@ button[disabled],
 .claro .dijitToolbar .dijitTextBox {
 	padding : 0px;
 	margin-bottom : 0px;
-
+	border-radius : 0px;
 }
 
