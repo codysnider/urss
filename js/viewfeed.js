@@ -1279,7 +1279,7 @@ function headlines_scroll_handler(e) {
 		}
 
 		if (!_infscroll_disable) {
-			if (hsp && hsp.offsetTop <= e.scrollTop + e.offsetHeight) {
+			if (hsp && hsp.offsetTop + -100 <= e.scrollTop + e.offsetHeight) {
 
 				hsp.innerHTML = "<span class='loading'><img src='images/indicator_tiny.gif'> " +
 					__("Loading, please wait...") + "</span>";
