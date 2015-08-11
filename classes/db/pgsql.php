@@ -78,7 +78,7 @@ class Db_Pgsql implements IDb {
 		pg_set_client_encoding("UNICODE");
 		$this->query("set datestyle = 'ISO, european'");
 		$this->query("set TIME ZONE 0");
-		$this->query("set cpu_tuple_cost = 0.1");
+		$this->query("set cpu_tuple_cost = 0.5");
 
 		return true;
 	}
