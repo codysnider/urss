@@ -699,20 +699,17 @@ class Feeds extends Handler_Protected {
 
 					$reply['content'] .= "</span>";
 
-					$always_display_enclosures = sql_bool_to_bool($line["always_display_enclosures"]);
-
 					$reply['content'] .= "</div>";
 
 					$reply['content'] .= "<div class=\"cdmFooter\" onclick=\"cdmFooterClick(event)\">";
-
-					$reply['content'] .= format_article_enclosures($id, $always_display_enclosures, $line["content"], sql_bool_to_bool($line["hide_images"]));
-					$reply['content'] .= "<br/>";
 
 					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_LEFT_BUTTON) as $p) {
 						$reply['content'] .= $p->hook_article_left_button($line);
 					}
 
 					$tags_str = format_tags_string($tags, $id);
+
+					$reply['content'] .= "<span class='left'>";
 
 					$reply['content'] .= "<img src='images/tag.png' alt='Tags' title='Tags'>
 						<span id=\"ATSTR-$id\">$tags_str</span>
@@ -740,10 +737,14 @@ class Feeds extends Handler_Protected {
 
 					if ($entry_comments) $reply['content'] .= "&nbsp;($entry_comments)";
 
-					$reply['content'] .= "<div style=\"float : right\">";
+					$reply['content'] .= "</span>";
+					$reply['content'] .= "<div>";
 
 //					$reply['content'] .= "$marked_pic";
 //					$reply['content'] .= "$published_pic";
+
+					$always_display_enclosures = sql_bool_to_bool($line["always_display_enclosures"]);
+					$reply['content'] .= format_article_enclosures($id, $always_display_enclosures, $line["content"], sql_bool_to_bool($line["hide_images"]));
 
 					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_BUTTON) as $p) {
 						$reply['content'] .= $p->hook_article_button($line);

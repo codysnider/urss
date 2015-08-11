@@ -2,7 +2,7 @@ div.cdmHeader img, div.cdmHeader input, div.cdmFooter img {
 	vertical-align : middle;
 }
 
-div.cdmHeader {
+div.cdmHeader, div.cdmFooter {
 	display : table;
 }
 
@@ -11,11 +11,16 @@ div.cdmHeader > * {
 	padding : 5px;
 }
 
-div.cdmHeader > div {
+div.cdmFooter > * {
+	display : table-cell;
+	vertical-align : middle;
+}
+
+div.cdmHeader > div, div.cdmFooter > div {
 	white-space : nowrap;
 }
 
-div.cdmHeader > span {
+div.cdmHeader > span, div.cdmFooter > span.left {
 	width : 100%;
 }
 
@@ -74,7 +79,8 @@ div.cdmContentInner h4 {
 }
 
 div.cdmFooter {
-	padding : 5px;
+	height : 30px;
+	padding-left : 5px;
 	font-weight : normal;
 	color : #555;
 	clear : both;

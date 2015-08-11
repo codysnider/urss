@@ -1114,6 +1114,10 @@ body#ttrssMain #feedTree .dijitTreeRow img.dijitTreeExpandoLeaf {
 	outline: none; 
 }
 
+.dijitDropDownButton.attachments .dijitButtonText {
+	font-size : 12px;
+}
+
 .dijitDropDownButton.attachments {
-	margin-bottom : 10px;
+	display : inline-block;
 }
