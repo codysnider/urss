@@ -185,6 +185,7 @@
 /* Various buttons */
 
 .claro .dijitButton .dijitButtonNode,
+.claro .dijitDropDownButton .dijitButtonNode,
 .claro .dijitComboButton .dijitButtonNode, 
 .claro .dijitToolbar .dijitDropDownButton .dijitButtonNode,
 .claro .dijitToolbar .dijitComboButton,
@@ -203,6 +204,7 @@ input[type="submit"] {
 button,
 input[type="submit"],
 .claro .dijitButton,
+.claro .dijitDropDownButton .dijitDownArrowButton,
 .claro .dijitComboButton {
   display: inline-block;
   padding: 4px 12px;
@@ -237,6 +239,9 @@ input[type="submit"]:active,
 .claro .dijitButton:hover,
 .claro .dijitButton:focus,
 .claro .dijitButton:active,
+.claro .dijitDropDownButton .dijitDownArrowButton:hover,
+.claro .dijitDropDownButton .dijitDownArrowButton:focus,
+.claro .dijitDropDownButton .dijitDownArrowButton:active,
 .claro .dijitComboButton:hover,
 .claro .dijitComboButton:focus,
 .claro .dijitComboButton:active,
@@ -248,6 +253,7 @@ input[type="submit"]:active,
 button:active,
 input[type="submit"]:active,
 .claro .dijitButton:active,
+.claro .dijitDropDownButton .dijitDownArrowButton:active,
 .claro .dijitComboButton:active {
 	background-color: #cccccc \9;
 }
@@ -255,6 +261,7 @@ input[type="submit"]:active,
 .claro .dijitToolbar .dijitButton,
 .claro .dijitToolbar .dijitButton.dijitHover,
 .claro .dijitToolbar .dijitComboButton,
+.claro .dijitToolbar .dijitDropDownButton .dijitDownArrowButton,
 .claro .dijitToolbar .dijitComboButton.dijitHover {
 	background : none;
 	border-color : transparent;
@@ -296,6 +303,7 @@ button:focus,
 input[type="submit"]:hover,
 input[type="submit"]:focus,
 .claro .dijitButton:hover,
+.claro .dijitDropDownButton .dijitDownArrowButton:hover,
 .claro .dijitToolbar .dijitButton:hover .dijitButtonNode,
 .claro .dijitToolbar .dijitButton.dijitHover .dijitButtonNode,
 .claro .dijitButton:focus,
@@ -311,6 +319,7 @@ input[type="submit"]:focus,
 button:focus,
 input[type="submit"]:focus,
 .claro .dijitButton:focus,
+.claro .dijitDropDownButton .dijitDownArrowButton:focus,
 .claro .dijitComboButton:focus {
   outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
@@ -333,6 +342,7 @@ input[type="submit"]:active,
 input[type="submit"][disabled],
 button[disabled],
 .claro .dijitButton[disabled],
+.claro .dijitDropDownButton .dijitDownArrowButton[disabled],
 .claro .dijitButton.dijitButtonDisabled,
 .claro .dijitComboButton.dijitButtonDisabled {
   cursor: default;
@@ -344,6 +354,7 @@ button[disabled],
 }
 
 .claro .dijitButton .dijitButtonContents,
+.claro .dijitDropDownButton .dijitButtonContents,
 .claro .dijitComboButton .dijitButtonContents {
 	font-size : 14px;
 	font-weight : normal;
