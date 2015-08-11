@@ -568,7 +568,7 @@ function moveToPost(mode, noscroll, noexpand) {
 		console.log("cur: " + getActiveArticleId() + " next: " + next_id);
 
 		if (mode == "next") {
-		 	if (next_id /*|| getActiveArticleId()*/) {
+		 	if (next_id || getActiveArticleId()) {
 				if (isCdmMode()) {
 
 					var article = $("RROW-" + getActiveArticleId());
@@ -1305,6 +1305,8 @@ function headlines_scroll_handler(e) {
 			updateFloatingTitle();
 		}
 
+		catchupCurrentBatchIfNeeded();
+
 		if (getInitParam("cdm_auto_catchup") == 1) {
 
 			// let's get DOM some time to settle down
@@ -1325,16 +1327,6 @@ function headlines_scroll_handler(e) {
 					}
 
 				});
-
-			if (catchup_id_batch.length > 0) {
-				window.clearTimeout(catchup_timeout_id);
-
-				catchup_timeout_id = window.setTimeout('catchupBatchedArticles()', 500);
-
-				if (catchup_id_batch.length >= 10) {
-					catchupBatchedArticles();
-				}
-			}
 
 			if (_infscroll_disable) {
 				var child = $$("#headlines-frame div[id*=RROW]").last();
@@ -1369,6 +1361,8 @@ function openNextUnreadFeed() {
 function catchupBatchedArticles() {
 	try {
 		if (catchup_id_batch.length > 0 && !_infscroll_request_sent && !_catchup_request_sent) {
+
+			console.log("catchupBatchedArticles: working");
 
 			// make a copy of the array
 			var batch = catchup_id_batch.slice();
@@ -1573,8 +1567,12 @@ function cdmExpandArticle(id, noexpand) {
 		if (old_offset > new_offset)
 			$("headlines-frame").scrollTop -= (old_offset-new_offset);
 
-		if (!noexpand)
-			toggleUnread(id, 0, true);
+		if (!noexpand) {
+			if (catchup_id_batch.indexOf(id) == -1)
+				catchup_id_batch.push(id);
+
+			catchupCurrentBatchIfNeeded();
+		}
 
 		toggleSelected(id);
 		$("RROW-" + id).addClassName("active");
@@ -2427,6 +2425,17 @@ function updateFloatingTitle(unread_only) {
 
 	} catch (e) {
 		exception_error("updateFloatingTitle", e);
+	}
+}
+
+function catchupCurrentBatchIfNeeded() {
+	if (catchup_id_batch.length > 0) {
+		window.clearTimeout(catchup_timeout_id);
+		catchup_timeout_id = window.setTimeout('catchupBatchedArticles()', 1000);
+
+		if (catchup_id_batch.length >= 10) {
+			catchupBatchedArticles();
+		}
 	}
 }
 
