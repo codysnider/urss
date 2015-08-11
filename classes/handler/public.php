@@ -1004,10 +1004,10 @@ class Handler_Public extends Handler {
 
 						print "<h2>Database update required</h2>";
 
-						print "<h3>";
-						printf("Your Tiny Tiny RSS database needs update to the latest version: %d to %d.",
-							$updater->getSchemaVersion(), SCHEMA_VERSION);
-						print "</h3>";
+						print_notice("<h4>".
+						sprintf("Your Tiny Tiny RSS database needs update to the latest version: %d to %d.",
+							$updater->getSchemaVersion(), SCHEMA_VERSION).
+						"</h4>");
 
 						print_warning("Please backup your database before proceeding.");
 

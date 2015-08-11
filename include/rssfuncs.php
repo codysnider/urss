@@ -773,6 +773,47 @@
 					}
 				}
 
+				/* Collect article tags here so we could filter by them: */
+
+				$article_filters = get_article_filters($filters, $article["title"],
+					$article["content"], $article["link"], 0, $article["author"],
+					$article["tags"]);
+
+				if ($debug_enabled) {
+					_debug("article filters: ", $debug_enabled);
+					if (count($article_filters) != 0) {
+						print_r($article_filters);
+					}
+				}
+
+				$plugin_filter_names = find_article_filters($article_filters, "plugin");
+				$plugin_filter_actions = $pluginhost->get_filter_actions();
+
+				if (count($plugin_filter_names) > 0) {
+					_debug("applying plugin filter actions...", $debug_enabled);
+
+					foreach ($plugin_filter_names as $pfn) {
+						list($pfclass,$pfaction) = explode(":", $pfn["param"]);
+
+						if (isset($plugin_filter_actions[$pfclass])) {
+							$plugin = $pluginhost->get_plugin($pfclass);
+
+							_debug("... $pfclass: $pfaction", $debug_enabled);
+
+							if ($plugin) {
+								$start = microtime(true);
+								$article = $plugin->hook_article_filter_action($article, $pfaction);
+
+								_debug("=== " . sprintf("%.4f (sec)", microtime(true) - $start), $debug_enabled);
+							} else {
+								_debug("??? $pfclass: plugin object not found.");
+							}
+						} else {
+							_debug("??? $pfclass: filter plugin not registered.");
+						}
+					}
+				}
+
 				$entry_tags = $article["tags"];
 				$entry_guid = db_escape_string($entry_guid);
 				$entry_title = db_escape_string($article["title"]);
@@ -873,19 +914,6 @@
 						$dupcheck_qpart = "AND (feed_id = '$feed' OR feed_id IS NULL)";
 					} else {
 						$dupcheck_qpart = "";
-					}
-
-					/* Collect article tags here so we could filter by them: */
-
-					$article_filters = get_article_filters($filters, $entry_title,
-						$entry_content, $entry_link, $entry_timestamp, $entry_author,
-						$entry_tags);
-
-					if ($debug_enabled) {
-						_debug("article filters: ", $debug_enabled);
-						if (count($article_filters) != 0) {
-							print_r($article_filters);
-						}
 					}
 
 					if (find_article_filter($article_filters, "filter")) {

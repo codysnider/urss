@@ -591,15 +591,21 @@ function filterDlgCheckAction(sender) {
 		}
 
 		// if selected action supports parameters, enable params field
-		if (action == 4 || action == 6 || action == 7) {
+		if (action == 4 || action == 6 || action == 7 || action == 9) {
 			new Effect.Appear(action_param, {duration : 0.5});
-			if (action != 7) {
-				Element.show(dijit.byId("filterDlg_actionParam").domNode);
-				Element.hide(dijit.byId("filterDlg_actionParamLabel").domNode);
-			} else {
+
+			Element.hide(dijit.byId("filterDlg_actionParam").domNode);
+			Element.hide(dijit.byId("filterDlg_actionParamLabel").domNode);
+			Element.hide(dijit.byId("filterDlg_actionParamPlugin").domNode);
+
+			if (action == 7) {
 				Element.show(dijit.byId("filterDlg_actionParamLabel").domNode);
-				Element.hide(dijit.byId("filterDlg_actionParam").domNode);
+			} else if (action == 9) {
+				Element.show(dijit.byId("filterDlg_actionParamPlugin").domNode);
+			} else {
+				Element.show(dijit.byId("filterDlg_actionParam").domNode);
 			}
+
 		} else {
 			Element.hide(action_param);
 		}
@@ -966,6 +972,8 @@ function createNewActionElement(parentNode, replaceNode) {
 
 		if (form.action_id.value == 7) {
 			form.action_param.value = form.action_param_label.value;
+		} else if (form.action_id.value == 9) {
+			form.action_param.value = form.action_param_plugin.value;
 		}
 
 		var query = "backend.php?op=pref-filters&method=printactionname&action="+
