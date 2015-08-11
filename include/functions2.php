@@ -596,7 +596,7 @@
 				} else {
 					$vfeed_query_part = "ttrss_feeds.title AS feed_title,";
 
-					$ext_tables_part = ",ttrss_labels2,ttrss_user_labels2";
+					$ext_tables_part = "ttrss_labels2,ttrss_user_labels2,";
 
 					$query_strategy_part = "ttrss_labels2.id = ttrss_user_labels2.label_id AND
 						ttrss_user_labels2.article_id = ref_id";
@@ -634,7 +634,7 @@
 					ttrss_user_labels2.article_id = ref_id";
 
 				$vfeed_query_part = "ttrss_feeds.title AS feed_title,";
-				$ext_tables_part = ",ttrss_labels2,ttrss_user_labels2";
+				$ext_tables_part = "ttrss_labels2,ttrss_user_labels2,";
 				$allow_archived = true;
 
 			} else {
@@ -697,11 +697,11 @@
 				}
 
 				if (!$allow_archived) {
-					$from_qpart = "ttrss_entries,ttrss_user_entries,ttrss_feeds$ext_tables_part";
+					$from_qpart = "${ext_tables_part}ttrss_entries LEFT JOIN ttrss_user_entries ON (ref_id = ttrss_entries.id),ttrss_feeds";
 					$feed_check_qpart = "ttrss_user_entries.feed_id = ttrss_feeds.id AND";
 
 				} else {
-					$from_qpart = "ttrss_entries$ext_tables_part,ttrss_user_entries
+					$from_qpart = "${ext_tables_part}ttrss_entries LEFT JOIN ttrss_user_entries ON (ref_id = ttrss_entries.id)
 						LEFT JOIN ttrss_feeds ON (feed_id = ttrss_feeds.id)";
 				}
 
@@ -745,7 +745,6 @@
 							$from_qpart
 						WHERE
 						$feed_check_qpart
-						ttrss_user_entries.ref_id = ttrss_entries.id AND
 						ttrss_user_entries.owner_uid = '$owner_uid' AND
 						$search_query_part
 						$start_ts_query_part
@@ -796,7 +795,6 @@
 						$from_qpart
 					WHERE
 					$feed_check_qpart
-					ttrss_user_entries.ref_id = ttrss_entries.id AND
 					ttrss_user_entries.owner_uid = '$owner_uid' AND
 					$search_query_part
 					$start_ts_query_part
