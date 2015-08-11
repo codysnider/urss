@@ -52,7 +52,6 @@ div.postReply div.postContent video {
 }
 
 div.postReply div.postEnclosures {
-	margin-top : 1em;
 	color : #555;
 }
 
@@ -1113,4 +1112,8 @@ body#ttrssMain #feedTree .dijitTreeRow img.dijitTreeExpandoLeaf {
 
 :focus {
 	outline: none; 
+}
+
+.dijitDropDownButton.attachments {
+	margin-bottom : 10px;
 }

@@ -2347,20 +2347,6 @@ function displayArticleUrl(id) {
 	}
 }
 
-function openSelectedAttachment(elem) {
-	try {
-		var url = elem[elem.selectedIndex].value;
-
-		if (url) {
-			window.open(url);
-			elem.selectedIndex = 0;
-		}
-
-	} catch (e) {
-		exception_error("openSelectedAttachment", e);
-	}
-}
-
 function scrollToRowId(id) {
 	try {
 		var row = $(id);

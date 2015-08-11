@@ -1314,21 +1314,6 @@
 						<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
 						<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">
 
-						<script type=\"text/javascript\">
-						function openSelectedAttachment(elem) {
-							try {
-								var url = elem[elem.selectedIndex].value;
-
-								if (url) {
-									window.open(url);
-									elem.selectedIndex = 0;
-								}
-
-							} catch (e) {
-								exception_error(\"openSelectedAttachment\", e);
-							}
-						}
-					</script>
 					</head><body id=\"ttrssZoom\">";
 			}
 
@@ -1446,10 +1431,13 @@
 			$rv['content'] .= "<div class=\"postContent\" lang=\"".$line['lang']."\">";
 
 			$rv['content'] .= $line["content"];
-			$rv['content'] .= format_article_enclosures($id,
-				sql_bool_to_bool($line["always_display_enclosures"]),
-				$line["content"],
-				sql_bool_to_bool($line["hide_images"]));
+
+			if (!$zoom_mode) {
+				$rv['content'] .= format_article_enclosures($id,
+					sql_bool_to_bool($line["always_display_enclosures"]),
+					$line["content"],
+					sql_bool_to_bool($line["hide_images"]));
+			}
 
 			$rv['content'] .= "</div>";
 
@@ -1988,8 +1976,10 @@
 				$rv .= "<hr clear='both'/>";
 			}
 
-			$rv .= "<select class=\"attachments\" onchange=\"openSelectedAttachment(this)\">".
-				"<option value=''>" . __('Attachments')."</option>";
+			$rv .= "<div class=\"attachments\" dojoType=\"dijit.form.DropDownButton\">".
+				"<span>" . __('Attachments')."</span>";
+
+			$rv .= "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 
 			foreach ($entries as $entry) {
 				if ($entry["title"])
@@ -1997,11 +1987,13 @@
 				else
 					$title = "";
 
-				$rv .= "<option value=\"".htmlspecialchars($entry["url"])."\">" . htmlspecialchars($entry["filename"]) . "$title</option>";
+				$rv .= "<div onclick='window.open(\"".htmlspecialchars($entry["url"])."\")'
+					dojoType=\"dijit.MenuItem\">".htmlspecialchars($entry["filename"])."$title</div>";
 
 			};
 
-			$rv .= "</select>";
+			$rv .= "</div>";
+			$rv .= "</div>";
 		}
 
 		return $rv;
