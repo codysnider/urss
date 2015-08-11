@@ -80,10 +80,10 @@ class Pref_Filters extends Handler_Protected {
 
 				if (isset($rule["feed_id"]) && $rule['feed_id'] > 0) {
 					array_push($scope_qparts, "feed_id = " . $rule["feed_id"]);
-				}
-
-				if (isset($rule["cat_id"])) {
+				} else if (isset($rule["cat_id"])) {
 					array_push($scope_qparts, "cat_id = " . $rule["cat_id"]);
+				} else {
+					array_push($scope_qparts, "true");
 				}
 
 				array_push($filter["rules"], $rule);
@@ -106,7 +106,7 @@ class Pref_Filters extends Handler_Protected {
 		print "<div class=\"filterTestHolder\">";
 		print "<table width=\"100%\" cellspacing=\"0\" id=\"prefErrorFeedList\">";
 
-		$glue = $filter['match_any_rule'] ? " AND " :  "OR ";
+		$glue = $filter['match_any_rule'] ? " OR " :  " AND ";
 		$scope_qpart = join($glue, $scope_qparts);
 
 		if (!$scope_qpart) $scope_qpart = "true";
