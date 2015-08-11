@@ -1512,8 +1512,6 @@ function cdmCollapseArticle(event, id, unmark) {
 
 function cdmExpandArticle(id, noexpand) {
 	try {
-		if (getInitParam("cdm_expanded")) return;
-
 		console.log("cdmExpandArticle " + id);
 
 		if (!$("RROW-" + id)) return false;
