@@ -1154,18 +1154,15 @@
 	}
 
 	function format_warning($msg, $id = "") {
-		return "<div class=\"warning\" id=\"$id\">
-			<span><img src=\"images/alert.png\"></span><span>$msg</span></div>";
+		return "<div class=\"alert\" id=\"$id\">$msg</div>";
 	}
 
 	function format_notice($msg, $id = "") {
-		return "<div class=\"notice\" id=\"$id\">
-			<span><img src=\"images/information.png\"></span><span>$msg</span></div>";
+		return "<div class=\"alert alert-info\" id=\"$id\">$msg</div>";
 	}
 
 	function format_error($msg, $id = "") {
-		return "<div class=\"error\" id=\"$id\">
-			<span><img src=\"images/alert.png\"></span><span>$msg</span></div>";
+		return "<div class=\"alert alert-danger\" id=\"$id\">$msg</div>";
 	}
 
 	function print_notice($msg) {
