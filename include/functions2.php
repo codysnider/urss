@@ -739,7 +739,8 @@
 							marked,
 							published,
 							last_marked,
-							last_published
+							last_published,
+							last_read
 						FROM
 							$from_qpart
 						WHERE

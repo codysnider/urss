@@ -796,7 +796,7 @@
 
 				$entry_content = db_escape_string($entry_content, false);
 
-				db_query("BEGIN");
+				//db_query("BEGIN");
 
 				$result = db_query("SELECT id FROM	ttrss_entries
 					WHERE (guid = '$entry_guid' OR guid = '$entry_guid_hashed')");
@@ -889,7 +889,7 @@
 					}
 
 					if (find_article_filter($article_filters, "filter")) {
-						db_query("COMMIT"); // close transaction in progress
+						//db_query("COMMIT"); // close transaction in progress
 						continue;
 					}
 
@@ -1020,7 +1020,7 @@
 					}
 				}
 
-				db_query("COMMIT");
+				//db_query("COMMIT");
 
 				_debug("assigning labels [other]...", $debug_enabled);
 
@@ -1054,7 +1054,7 @@
 					print_r($enclosures);
 				}
 
-				db_query("BEGIN");
+				//db_query("BEGIN");
 
 //				debugging
 //				db_query("DELETE FROM ttrss_enclosures WHERE post_id = '$entry_ref_id'");
@@ -1077,7 +1077,7 @@
 					}
 				}
 
-				db_query("COMMIT");
+				//db_query("COMMIT");
 
 				// check for manual tags (we have to do it here since they're loaded from filters)
 
@@ -1121,7 +1121,7 @@
 
 				if (count($filtered_tags) > 0) {
 
-					db_query("BEGIN");
+					//db_query("BEGIN");
 
 					foreach ($filtered_tags as $tag) {
 
@@ -1154,7 +1154,7 @@
 						SET tag_cache = '$tags_str' WHERE ref_id = '$entry_ref_id'
 						AND owner_uid = $owner_uid");
 
-					db_query("COMMIT");
+					//db_query("COMMIT");
 				}
 
 				_debug("article processed", $debug_enabled);
