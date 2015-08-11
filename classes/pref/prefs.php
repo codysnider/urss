@@ -622,6 +622,8 @@ class Pref_Prefs extends Handler_Protected {
 				$cert_serial = htmlspecialchars(get_ssl_certificate_id());
 				$has_serial = ($cert_serial) ? "false" : "true";
 
+				print "<br/>";
+
 				print " <button dojoType=\"dijit.form.Button\" disabled=\"$has_serial\"
 					onclick=\"insertSSLserial('$cert_serial')\">" .
 					__('Register') . "</button>";
