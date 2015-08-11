@@ -41,7 +41,7 @@ class Note extends Plugin {
 
 		print "<table width='100%'><tr><td>";
 		print "<textarea dojoType=\"dijit.form.SimpleTextarea\"
-			style='font-size : 12px; width : 100%; height: 100px;'
+			style='font-size : 12px; width : 98%; height: 100px;'
 			placeHolder='body#ttrssMain { font-size : 14px; };'
 			name='note'>$note</textarea>";
 		print "</td></tr></table>";

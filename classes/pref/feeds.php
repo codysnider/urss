@@ -1827,7 +1827,7 @@ class Pref_Feeds extends Handler_Protected {
 		}
 		print "</td></tr><tr><td colspan='2'>";
 		print "<textarea
-			style='font-size : 12px; width : 100%; height: 200px;'
+			style='font-size : 12px; width : 98%; height: 200px;'
 			placeHolder=\"".__("Feeds to subscribe, One per line")."\"
 			dojoType=\"dijit.form.SimpleTextarea\" required=\"1\" name=\"feeds\"></textarea>";
 
