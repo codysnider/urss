@@ -482,7 +482,7 @@ button[disabled],
 	transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
-.claro .dijitTextBox:focus {
+.claro .dijitTextBox.dijitFocused {
 	border-color: rgba(82, 168, 236, 0.8);
 	outline: 0;
 	outline: thin dotted \9;
