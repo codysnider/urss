@@ -565,8 +565,10 @@ function moveToPost(mode, noscroll, noexpand) {
 			}
 		}
 
+		console.log("cur: " + getActiveArticleId() + " next: " + next_id);
+
 		if (mode == "next") {
-		 	if (next_id || getActiveArticleId()) {
+		 	if (next_id /*|| getActiveArticleId()*/) {
 				if (isCdmMode()) {
 
 					var article = $("RROW-" + getActiveArticleId());
@@ -690,6 +692,8 @@ function toggleUnread(id, cmode, effect) {
 
 		var row = $("RROW-" + id);
 		if (row) {
+			var tmpClassName = row.className;
+
 			if (cmode == undefined || cmode == 2) {
 				if (row.hasClassName("Unread")) {
 					row.removeClassName("Unread");
@@ -713,11 +717,14 @@ function toggleUnread(id, cmode, effect) {
 
 //			notify_progress("Loading, please wait...");
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function(transport) {
-					handle_rpc_json(transport);
-				} });
+			if (tmpClassName != row.className) {
+				new Ajax.Request("backend.php", {
+					parameters: query,
+					onComplete: function (transport) {
+						handle_rpc_json(transport);
+					}
+				});
+			}
 
 		}
 
@@ -1204,6 +1211,8 @@ function cdmScrollToArticleId(id, force) {
 }
 
 function setActiveArticleId(id) {
+	console.log("setActiveArticleId:" + id);
+
 	_active_article_id = id;
 	PluginHost.run(PluginHost.HOOK_ARTICLE_SET_ACTIVE, _active_article_id);
 }
@@ -1281,7 +1290,7 @@ function headlines_scroll_handler(e) {
 		}
 
 		if (!_infscroll_disable) {
-			if (hsp && hsp.offsetTop - 100 <= e.scrollTop + e.offsetHeight) {
+			if (hsp && hsp.offsetTop - 250 <= e.scrollTop + e.offsetHeight) {
 
 				hsp.innerHTML = "<span class='loading'><img src='images/indicator_tiny.gif'> " +
 					__("Loading, please wait...") + "</span>";

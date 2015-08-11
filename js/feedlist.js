@@ -72,12 +72,12 @@ function viewfeed(feed, method, is_cat, offset, background, infscroll_req, can_w
 		if (!background) {
 			_viewfeed_last = get_timestamp();
 
-			if (getActiveFeedId() != feed || offset == 0) {
+			if (getActiveFeedId() != feed || !infscroll_req) {
 				setActiveArticleId(0);
 				_infscroll_disable = 0;
 			}
 
-			if (offset != 0 && !method) {
+			if (infscroll_req && !method) {
 				var timestamp = get_timestamp();
 
 				if (_infscroll_request_sent && _infscroll_request_sent + 30 > timestamp) {
