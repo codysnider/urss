@@ -506,7 +506,7 @@
 
 					if ($unread > 0) {
 						$view_query_part = " unread = true AND ";
-						$disable_offsets = !$api_request && get_pref("CDM_AUTO_CATCHUP");
+						$disable_offsets = !$api_request && get_pref("CDM_AUTO_CATCHUP") && get_pref("CDM_EXPANDED");
 					}
 				}
 			}
@@ -525,7 +525,7 @@
 
 			if ($view_mode == "unread" && $feed != -6) {
 				$view_query_part = " unread = true AND ";
-				$disable_offsets = !$api_request && get_pref("CDM_AUTO_CATCHUP");
+				$disable_offsets = !$api_request && get_pref("CDM_AUTO_CATCHUP") && get_pref("CDM_EXPANDED");
 			}
 
 			if ($limit > 0) {
