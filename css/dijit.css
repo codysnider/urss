@@ -368,15 +368,16 @@ button[disabled],
 }
 
 .claro .dijitMenu {
-	border-color : #ccc;
+	border-color: rgba(82, 168, 236, 0.8);
 }
 
 .claro .dijitMenu .dijitMenuItem.dijitHover,
 .claro .dijitMenu .dijitMenuItem.dijitFocused,
 .claro .dijitMenuTable .dijitMenuItem.dijitHover .dijitMenuItemLabel,
 .claro .dijitMenuTable .dijitMenuItem.dijitFocused .dijitMenuItemLabel {
-	background : #eee;
-	border-color : transparent;
+	background :  rgba(82, 168, 236, 0.8);
+	color : white;
+	border-color : rgba(82, 168, 236, 0.8);
 }
 
 .claro .dijitButton .dijitButtonNode,
@@ -482,7 +483,8 @@ button[disabled],
 	transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
-.claro .dijitTextBox.dijitFocused {
+.claro .dijitTextBox.dijitFocused,
+.claro .dijitSelect.dijitFocused {
 	border-color: rgba(82, 168, 236, 0.8);
 	outline: 0;
 	outline: thin dotted \9;
@@ -497,6 +499,7 @@ button[disabled],
 	padding : 0px;
 	width : 13px;
 	border-width : 1px;
+	display : none;
 }
 
 .claro .dijitTextBox.dijitReadOnly,
@@ -510,7 +513,7 @@ button[disabled],
 }
 
 .claro .dijitToolbar .dijitDownArrowButton.dijitSelect .dijitButtonContents {
-	padding : 0px 2px 0px 2px;
+	padding : 2px 2px 0px 4px;
 }
 
 .claro .dijitToolbar .dijitDownArrowButton.dijitSelect {
@@ -523,3 +526,30 @@ button[disabled],
 	border-radius : 0px;
 }
 
+/* dialog */
+
+.claro .dijitDialog {
+	border-radius : 6px;
+
+}
+
+.claro .dijitDialog .dijitDialogCloseIcon {
+	margin-top : 5px;
+}
+
+.claro .dijitDialog .dijitDialogTitleBar {
+	background : white;
+	padding : 10px;
+	font-weight : 600;
+	color : #555;
+	font-size : 16px;
+	text-rendering: optimizelegibility;
+	font-family : "Segoe WP Semibold", "Segoe UI Semibold",
+	"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "DejaVu Sans", "Helvetica Neue",
+	Helvetica, Arial, sans-serif;
+}
+
+.claro .dijitDialog .dijitDialogPaneContent {
+	border-color : #ddd;
+	padding : 10px;
+}
