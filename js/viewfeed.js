@@ -1320,16 +1320,11 @@ function headlines_scroll_handler(e) {
 			if (catchup_id_batch.length > 0) {
 				window.clearTimeout(catchup_timeout_id);
 
-				if (!_infscroll_request_sent) {
-					if (catchup_id_batch.length < 10) {
-						catchup_timeout_id = window.setTimeout('catchupBatchedArticles()',
-							500);
-					} else {
-						catchupBatchedArticles();
-					}
-				}
+				catchup_timeout_id = window.setTimeout('catchupBatchedArticles()', 500);
 
-				catchupBatchedArticles();
+				if (catchup_id_batch.length >= 10) {
+					catchupBatchedArticles();
+				}
 			}
 
 			if (_infscroll_disable) {
