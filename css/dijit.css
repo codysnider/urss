@@ -471,6 +471,7 @@ button[disabled],
 	float  :right;
 }
 
+.claro select,
 .claro .dijitDownArrowButton.dijitSelect {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -490,6 +491,8 @@ button[disabled],
 	border-width : 0px;
 }
 
+.claro select,
+.claro textarea,
 .claro .input.input-text,
 .claro .dijitTextBox {
 	display: inline-block;
@@ -504,11 +507,17 @@ button[disabled],
 	border-radius: 4px;
 	margin-bottom : 4px;
 }
+.claro textarea {
+	height : auto;
+}
 
+.claro select,
 .claro .input.input-text {
 	height : 30px;
 }
 
+.claro textarea,
+.claro select,
 .claro .input.input-text,
 .claro .dijitTextBox,
 .claro .dijitSelect {
@@ -523,6 +532,7 @@ button[disabled],
 	transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
+.claro select:focus,
 .claro .input.input-text:focus,
 .claro .dijitTextBox.dijitFocused,
 .claro .dijitSelect.dijitFocused {

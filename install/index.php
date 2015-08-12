@@ -8,7 +8,7 @@
 	textarea { font-size : 12px; }
 	</style>
 </head>
-<body>
+<body class="claro">
 
 <?php
 
@@ -263,28 +263,28 @@
 
 <fieldset>
 	<label>Username</label>
-	<input required name="DB_USER" size="20" value="<?php echo $DB_USER ?>"/>
+	<input class="input input-text" required name="DB_USER" size="20" value="<?php echo $DB_USER ?>"/>
 </fieldset>
 
 <fieldset>
 	<label>Password</label>
-	<input name="DB_PASS" size="20" type="password" value="<?php echo $DB_PASS ?>"/>
+	<input class="input input-text" name="DB_PASS" size="20" type="password" value="<?php echo $DB_PASS ?>"/>
 </fieldset>
 
 <fieldset>
 	<label>Database name</label>
-	<input required name="DB_NAME" size="20" value="<?php echo $DB_NAME ?>"/>
+	<input class="input input-text" required name="DB_NAME" size="20" value="<?php echo $DB_NAME ?>"/>
 </fieldset>
 
 <fieldset>
 	<label>Host name</label>
-	<input name="DB_HOST" size="20" value="<?php echo $DB_HOST ?>"/>
+	<input class="input input-text" name="DB_HOST" size="20" value="<?php echo $DB_HOST ?>"/>
 	<span class="hint">If needed</span>
 </fieldset>
 
 <fieldset>
 	<label>Port</label>
-	<input name="DB_PORT" type="number" size="20" value="<?php echo $DB_PORT ?>"/>
+	<input class="input input-text" name="DB_PORT" type="number" size="20" value="<?php echo $DB_PORT ?>"/>
 	<span class="hint">Usually 3306 for MySQL or 5432 for PostgreSQL</span>
 </fieldset>
 
@@ -294,7 +294,7 @@
 
 <fieldset>
 	<label>Tiny Tiny RSS URL</label>
-	<input type="url" name="SELF_URL_PATH" placeholder="<?php echo $SELF_URL_PATH; ?>" size="60" value="<?php echo $SELF_URL_PATH ?>"/>
+	<input class="input input-text" type="url" name="SELF_URL_PATH" placeholder="<?php echo $SELF_URL_PATH; ?>" size="60" value="<?php echo $SELF_URL_PATH ?>"/>
 </fieldset>
 
 
