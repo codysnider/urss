@@ -551,8 +551,10 @@ button[disabled],
 	cursor: not-allowed;
 }
 
+.claro .dijitTextBox.dijitTextBoxDisabled,
+.claro .dijitTextBox.dijitTextBoxDisabled .dijitInputInner,
 .claro .dijitTextBox.dijitReadOnly,
-.claro .dijitTextBox.dijitReadOnly .dijitInputField .dijitInputInner {
+.claro .dijitTextBox.dijitReadOnly .dijitInputInner {
 	cursor: not-allowed;
 	background-color: #eeeeee;
 }
