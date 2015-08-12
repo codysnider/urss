@@ -383,7 +383,7 @@ button[disabled],
 .claro .dijitMenu .dijitMenuItem.dijitFocused,
 .claro .dijitMenuTable .dijitMenuItem.dijitHover .dijitMenuItemLabel,
 .claro .dijitMenuTable .dijitMenuItem.dijitFocused .dijitMenuItemLabel {
-	background :  rgba(82, 168, 236, 0.8);
+	background :  rgb(82, 168, 236);
 	color : white;
 	border-color : rgba(82, 168, 236, 0.8);
 }
@@ -406,8 +406,29 @@ button[disabled],
 		Helvetica, Arial, sans-serif;
 } */
 
+
+.claro .dijitAccordionTitle.dijitAccordionTitleHover,
+.claro .dijitAccordionTitle.dijitAccordionTitleFocused {
+	background : white;
+	transition : background 0.25s;
+}
+.claro .dijitAccordionTitle {
+	background : #f0f0f0;
+	transition : background 0.25s;
+}
+
+.claro .dijitAccordionInnerContainer.dijitAccordionInnerContainerSelected,
+.claro .dijitAccordionTitle.dijitAccordionTitleSelected {
+	background : #0088cc;
+	transition : background 0.25s;
+}
+
+.claro .dijitAccordionTitle.dijitAccordionTitleSelected .dijitAccordionText {
+	color : white;
+}
+
 .claro .dijitAccordionInnerContainer.dijitAccordionInnerContainerSelected {
-	border-color : #ccc;
+	border-color : #0088cc;
 }
 
 .claro .dijitAccordionContainer .dijitAccordionChildWrapper {
@@ -415,6 +436,10 @@ button[disabled],
 }
 
 /* Tabs */
+
+.claro .dijitTabInner.dijitTab {
+	background : #f0f0f0;
+}
 
 .claro .dijitTabContent {
 	background : #eee;
@@ -576,4 +601,18 @@ button[disabled],
 .claro .dijitDialog .dijitDialogPaneContent {
 	border-color : #ddd;
 	padding : 10px;
+}
+
+.claro .dijitProgressBar.dijitProgressBarEmpty {
+	background : #ddd;
+	border-color : #0088cc;
+}
+
+.claro .dijitProgressBar.dijitProgressBarEmpty .dijitProgressBarFull .dijitProgressBarTile {
+	background : rgb(82, 168, 236);
+
+}
+
+.claro .dijitProgressBar .dijitProgressBarLabel {
+	color : white;
 }

@@ -57,7 +57,7 @@
 	div.header {
 		border-width : 0px 0px 1px 0px;
 		border-style : solid;
-		border-color : #88b0f0;
+		border-color : #0088cc;
 		margin-bottom : 1em;
 		padding-bottom : 5px;
 	}
@@ -67,7 +67,7 @@
 		padding-top : 5px;
 		border-width : 1px 0px 0px 0px;
 		border-style : solid;
-		border-color : #88b0f0;
+		border-color : #0088cc;
 		text-align : center;
 		color : gray;
 		font-size : 12px;
@@ -80,11 +80,18 @@
 	}
 
 	a {
-		color : #4684ff;
+		color : #0088cc;
 	}
 
-	a:hover {
-		color : black;
+	a {
+		color: #0088cc;
+		text-decoration: none;
+	}
+
+	a:hover,
+	a:focus {
+		color: #005580;
+		text-decoration: underline;
 	}
 
 	div.footer a {
@@ -92,7 +99,7 @@
 	}
 
 	div.footer a:hover {
-		color : #88b0f0;
+		color : #0088cc;
 	}
 
 	div.row {

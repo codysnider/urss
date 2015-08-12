@@ -52,7 +52,7 @@ div.insensitive-small {
 }
 
 a {
-	color : #4684ff;
+	color : rgb(82, 168, 236);
 	text-decoration : none;
 }
 
@@ -120,14 +120,14 @@ a:hover {
 }
 
 h1 {
-	color : #88b0f0;
+	color : rgb(82, 168, 236);
 	font-size : 32px;
 	margin : 20px 0px 5px 0px;
 	text-shadow : 0 0 6px #fff;
 }
 
 h2 {
-	color : #88b0f0;
+	color : rgb(82, 168, 236);
 	font-size : 14pt;
 	border-width : 0px 0px 1px 0px;
 	border-color : #f0f0f0;
@@ -192,12 +192,12 @@ body#sharepopup {
 body#sharepopup h1 {
 	font-size : 14px;
 	margin : 0px;
-	color : #88b0f0;
+	color : rgb(82, 168, 236);
 }
 
 body#sharepopup table {
 	background : white;
-	border : 1px solid #88b0f0;
+	border : 1px solid rgb(82, 168, 236);
 	padding : 5px;
 }
 

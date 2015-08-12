@@ -130,12 +130,14 @@ hr {
 }
 
 a {
-	color : #4684ff;
-	text-decoration : none;
+	color: #0088cc;
+	text-decoration: none;
 }
 
-a:hover {
-	color : #88b0f0;
+a:hover,
+a:focus {
+	color: #005580;
+	text-decoration: underline;
 }
 
 #piggie {
@@ -199,7 +201,7 @@ a:hover {
 }
 
 .notify.notify_info {
-	border-color : #88b0f0;
+	border-color : rgb(82, 168, 236);
 	background-color : #ecf4ff;
 }
 
@@ -222,7 +224,7 @@ a:hover {
 }
 
 .hl.active div.hlTitle a {
-	color : #4684ff;
+	color : rgb(82, 168, 236);
 	/* text-shadow : 1px 1px 2px #fff; */
 }
 
@@ -712,7 +714,7 @@ div#cmdline {
 	color : #555;
 	font-weight : bold;
 	background-color : white;
-	border : 1px solid #88b0f0;
+	border : 1px solid rgb(82, 168, 236);
 	padding : 3px 5px 3px 5px;
 	z-index : 5;
 }
@@ -768,7 +770,7 @@ div.hlRight img {
 }
 
 .hl span.hlFeed a:hover {
-	color : #4684ff;
+	color : rgb(82, 168, 236);
 }
 
 .hl span.hlUpdated {
@@ -965,7 +967,7 @@ img.feedIcon, img.tinyFeedIcon {
 }
 
 #headlines-spacer a:hover {
-	color : #88b0f0;
+	color : rgb(82, 168, 236);
 }
 
 ul#filterDlg_Matches, ul#filterDlg_Actions {
@@ -998,7 +1000,7 @@ ul.helpKbList {
 ul.helpKbList span.hksequence {
 	width : 6em;
 	margin-left : 20px;
-	color : #88b0f0;
+	color : rgb(82, 168, 236);
 	font-weight : bold;
 	display : inline-block;
 }
@@ -1090,9 +1092,9 @@ body#ttrssMain #feedTree .counterNode {
 	display : inline-block;
 	font-size : 9px;
 	text-align : center;
-	border : 1px solid #88b0f0;
+	border : 1px solid rgb(82, 168, 236);
 	color : white;
-	background : #88b0f0;
+	background : rgb(82, 168, 236);
 	border-radius : 4px;
 	vertical-align : middle;
 	float : right;

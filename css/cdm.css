@@ -161,7 +161,7 @@ div.cdm.expandable.Unread div.cdmHeader a.title {
 }
 
 div.cdm.expandable.active div.cdmHeader a.title {
-	color : #4684ff;
+	color : #0088cc;
 	font-size : 16px;
 	font-weight : 600;
 	text-rendering: optimizelegibility;
@@ -191,7 +191,7 @@ div.cdm.expanded.active {
 }
 
 div.cdm.expanded.active div.cdmHeader a.title {
-	color : #4684ff;
+	color : #0088cc;
 }
 
 div.cdm.expanded.Unread div.cdmHeader a.title {
@@ -223,7 +223,7 @@ div.cdmContent div.postEnclosures {
 }
 
 div.cdmFeedTitle {
-	border-color : #4684ff;
+	border-color : #0088cc;
 	border-width : 0px 0px 1px 0px;
 	border-style : solid;
 	padding : 5px 3px 5px 5px;
@@ -239,7 +239,7 @@ div.cdmFeedTitle a {
 }
 
 div.cdmFeedTitle a:hover {
-	color : #4684ff;
+	color : #0088cc;
 }
 
 div.cdmHeader span.hlFeed {
@@ -404,6 +404,6 @@ div.cdmFeedTitle a.catchup {
 }
 
 div.cdmFeedTitle a.catchup:hover {
-	color : #4684ff;
+	color : #0088cc;
 }
 
