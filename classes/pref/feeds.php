@@ -1298,30 +1298,11 @@ class Pref_Feeds extends Handler_Protected {
 				__("Feeds with errors") . "</button>";
 		}
 
-		if (DB_TYPE == "pgsql") {
-			$interval_qpart = "NOW() - INTERVAL '3 months'";
-		} else {
-			$interval_qpart = "DATE_SUB(NOW(), INTERVAL 3 MONTH)";
-		}
-
-		// could be performance-intensive and prevent feeds pref-panel from showing
-		if (!defined('_DISABLE_INACTIVE_FEEDS') || !_DISABLE_INACTIVE_FEEDS) {
-			$result = $this->dbh->query("SELECT COUNT(*) AS num_inactive FROM ttrss_feeds WHERE
-					(SELECT MAX(updated) FROM ttrss_entries, ttrss_user_entries WHERE
-						ttrss_entries.id = ref_id AND
-							ttrss_user_entries.feed_id = ttrss_feeds.id) < $interval_qpart AND
-			ttrss_feeds.owner_uid = ".$_SESSION["uid"]);
-
-			$num_inactive = $this->dbh->fetch_result($result, 0, "num_inactive");
-		} else {
-			$num_inactive = 0;
-		}
-
-		if ($num_inactive > 0) {
-			$inactive_button = "<button dojoType=\"dijit.form.Button\"
-			  		onclick=\"showInactiveFeeds()\">" .
-					__("Inactive feeds") . "</button>";
-		}
+		$inactive_button = "<button dojoType=\"dijit.form.Button\"
+				id=\"pref_feeds_inactive_btn\"
+				style=\"display : none\"
+				onclick=\"showInactiveFeeds()\">" .
+				__("Inactive feeds") . "</button>";
 
 		$feed_search = $this->dbh->escape_string($_REQUEST["search"]);
 
@@ -1433,6 +1414,8 @@ class Pref_Feeds extends Handler_Protected {
 		</script>
 		<script type=\"dojo/method\" event=\"onLoad\" args=\"item\">
 			Element.hide(\"feedlistLoading\");
+
+			checkInactiveFeeds();
 		</script>
 		</div>";
 
@@ -1970,5 +1953,20 @@ class Pref_Feeds extends Handler_Protected {
 		return $c;
 	}
 
+	function getinactivefeeds() {
+		if (DB_TYPE == "pgsql") {
+			$interval_qpart = "NOW() - INTERVAL '3 months'";
+		} else {
+			$interval_qpart = "DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+		}
+
+		$result = $this->dbh->query("SELECT COUNT(*) AS num_inactive FROM ttrss_feeds WHERE
+				(SELECT MAX(updated) FROM ttrss_entries, ttrss_user_entries WHERE
+					ttrss_entries.id = ref_id AND
+						ttrss_user_entries.feed_id = ttrss_feeds.id) < $interval_qpart AND
+			  ttrss_feeds.owner_uid = ".$_SESSION["uid"]);
+
+		print (int) $this->dbh->fetch_result($result, 0, "num_inactive");
+	}
 }
 ?>

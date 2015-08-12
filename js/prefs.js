@@ -24,6 +24,20 @@ function updateFeedList(sort_key) {
 		} });
 }
 
+function checkInactiveFeeds() {
+	try {
+		new Ajax.Request("backend.php", {
+			parameters: "?op=pref-feeds&method=getinactivefeeds",
+			onComplete: function(transport) {
+				if (parseInt(transport.responseText) > 0) {
+					Element.show(dijit.byId("pref_feeds_inactive_btn").domNode);
+				}
+			} });
+
+	} catch (e) {
+		exception_error("checkInactiveFeeds", e);
+	}
+}
 
 function updateUsersList(sort_key) {
 	try {
