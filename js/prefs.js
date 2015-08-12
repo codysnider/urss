@@ -109,7 +109,6 @@ function editUser(id, event) {
 			style: "width: 600px",
 			execute: function() {
 				if (this.validate()) {
-
 					notify_progress("Saving data...", true);
 
 					var query = dojo.formToQuery("user_edit_form");

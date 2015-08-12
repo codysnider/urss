@@ -502,27 +502,6 @@ function infobox_callback2(transport, title) {
 	}
 }
 
-function filterCR(e, f)
-{
-     var key;
-
-     if(window.event)
-          key = window.event.keyCode;     //IE
-     else
-          key = e.which;     //firefox
-
-	if (key == 13) {
-  		if (typeof f != 'undefined') {
-			f();
-			return false;
-		} else {
-			return false;
-		}
-	} else {
-		return true;
-	}
-}
-
 function getInitParam(key) {
 	return init_params[key];
 }
