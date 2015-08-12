@@ -604,6 +604,13 @@
 				}
 			} else if ($feed == -6) { // recently read
 				$query_strategy_part = "unread = false AND last_read IS NOT NULL";
+
+				if (DB_TYPE == "pgsql") {
+					$query_strategy_part .= " AND date_entered > NOW() - INTERVAL '1 DAY' ";
+				} else {
+					$query_strategy_part .= " AND date_entered > DATE_SUB(NOW(), INTERVAL 1 DAY) ";
+				}
+
 				$vfeed_query_part = "ttrss_feeds.title AS feed_title,";
 				$allow_archived = true;
 				$ignore_vfeed_group = true;
