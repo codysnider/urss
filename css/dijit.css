@@ -518,6 +518,14 @@ button[disabled],
 	display : none;
 }
 
+.claro .dijitSelect.dijitSelectDisabled  {
+	background-color: #eeeeee;
+}
+
+.claro .dijitSelect.dijitSelectDisabled .dijitSelectLabel {
+	cursor: not-allowed;
+}
+
 .claro .dijitTextBox.dijitReadOnly,
 .claro .dijitTextBox.dijitReadOnly .dijitInputField .dijitInputInner {
 	cursor: not-allowed;

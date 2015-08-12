@@ -1033,11 +1033,19 @@ class Pref_Filters extends Handler_Protected {
 				$filter_action_hash[$fclass . ":" . $faction["action"]] =
 					$fclass . ": " . $faction["description"];
 			}
+		}
 
+		if (count($filter_action_hash) == 0) {
+			$filter_plugin_disabled = "disabled";
+
+			$filter_action_hash["no-data"] = __("No actions available");
+
+		} else {
+			$filter_plugin_disabled = "";
 		}
 
 		print_select_hash("filterDlg_actionParamPlugin", $action_param, $filter_action_hash,
-			"style=\"$plugin_param_hidden\" dojoType=\"dijit.form.Select\"",
+			"style=\"$plugin_param_hidden\" dojoType=\"dijit.form.Select\" $filter_plugin_disabled",
 			"action_param_plugin");
 
 		print "</span>";
