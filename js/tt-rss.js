@@ -79,7 +79,7 @@ function updateFeedList() {
 			var id = String(item.id);
 			var is_cat = id.match("^CAT:");
 			var feed = id.substr(id.indexOf(":")+1);
-			viewfeed(feed, '', is_cat);
+			viewfeed({feed: feed, is_cat: is_cat});
 			return false;
 		},
 		openOnClick: false,
@@ -146,11 +146,11 @@ function catchupAllFeeds() {
 	}
 }
 
-function viewCurrentFeed(method) {
+function viewCurrentFeed() {
 	console.log("viewCurrentFeed");
 
 	if (getActiveFeedId() != undefined) {
-		viewfeed(getActiveFeedId(), method, activeFeedIsCat());
+		viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat()});
 	}
 	return false; // block unneeded form submits
 }
@@ -273,13 +273,13 @@ function init() {
 				var rv = dijit.byId("feedTree").getNextFeed(
 						getActiveFeedId(), activeFeedIsCat());
 
-				if (rv) viewfeed(rv[0], '', rv[1], null, null, null, true);
+				if (rv) viewfeed({feed: rv[0], is_cat: rv[1], can_wait: true})
 		};
 		hotkey_actions["prev_feed"] = function() {
 				var rv = dijit.byId("feedTree").getPreviousFeed(
 						getActiveFeedId(), activeFeedIsCat());
 
-				if (rv) viewfeed(rv[0], '', rv[1], null, null, null, true);
+				if (rv) viewfeed({feed: rv[0], is_cat: rv[1], can_wait: true})
 		};
 		hotkey_actions["next_article"] = function() {
 				moveToPost('next');
@@ -411,7 +411,7 @@ function init() {
 		};
 		hotkey_actions["feed_refresh"] = function() {
 				if (getActiveFeedId() != undefined) {
-					viewfeed(getActiveFeedId(), '', activeFeedIsCat());
+					viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat()});
 					return;
 				}
 		};
@@ -429,6 +429,11 @@ function init() {
 				alert("You can't debug this kind of feed.");
 			}
 		};
+
+		hotkey_actions["feed_debug_viewfeed"] = function() {
+			viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat(), viewfeed_debug: true});
+		};
+
 		hotkey_actions["feed_edit"] = function() {
 				if (activeFeedIsCat())
 					alert(__("You can't edit this kind of feed."));
@@ -454,16 +459,16 @@ function init() {
 				}
 		};
 		hotkey_actions["goto_all"] = function() {
-				viewfeed(-4);
+				viewfeed({feed: -4});
 		};
 		hotkey_actions["goto_fresh"] = function() {
-				viewfeed(-3);
+				viewfeed({feed: -3});
 		};
 		hotkey_actions["goto_marked"] = function() {
-				viewfeed(-1);
+				viewfeed({feed: -1});
 		};
 		hotkey_actions["goto_published"] = function() {
-				viewfeed(-2);
+				viewfeed({feed: -2});
 		};
 		hotkey_actions["goto_tagcloud"] = function() {
 				displayDlg(__("Tag cloud"), "printTagCloud");

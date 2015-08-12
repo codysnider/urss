@@ -1352,7 +1352,7 @@ function openNextUnreadFeed() {
 	try {
 		var is_cat = activeFeedIsCat();
 		var nuf = getNextUnreadFeed(getActiveFeedId(), is_cat);
-		if (nuf) viewfeed(nuf, '', is_cat);
+		if (nuf) viewfeed({feed: nuf, is_cat: is_cat});
 	} catch (e) {
 		exception_error("openNextUnreadFeed", e);
 	}
