@@ -8,6 +8,7 @@ class PluginHost {
 	private $storage = array();
 	private $feeds = array();
 	private $api_methods = array();
+	private $plugin_actions = array();
 	private $owner_uid;
 	private $debug;
 	private $last_registered;
@@ -47,6 +48,7 @@ class PluginHost {
 	const HOOK_SUBSCRIBE_FEED = 27;
 	const HOOK_HEADLINES_BEFORE = 28;
 	const HOOK_RENDER_ENCLOSURE = 29;
+	const HOOK_ARTICLE_FILTER_ACTION = 30;
 
 	const KIND_ALL = 1;
 	const KIND_SYSTEM = 2;
@@ -98,7 +100,7 @@ class PluginHost {
 	}
 
 	function get_plugin($name) {
-		return $this->plugins[$name];
+		return $this->plugins[strtolower($name)];
 	}
 
 	function run_hooks($type, $method, $args) {
@@ -414,6 +416,20 @@ class PluginHost {
 
 	function get_api_method($name) {
 		return $this->api_methods[$name];
+	}
+
+	function add_filter_action($sender, $action_name, $action_desc) {
+		$sender_class = get_class($sender);
+
+		if (!isset($this->plugin_actions[$sender_class]))
+			$this->plugin_actions[$sender_class] = array();
+
+		array_push($this->plugin_actions[$sender_class],
+			array("action" => $action_name, "description" => $action_desc, "sender" => $sender));
+	}
+
+	function get_filter_actions() {
+		return $this->plugin_actions;
 	}
 }
 ?>

@@ -519,6 +519,21 @@ class Pref_Filters extends Handler_Protected {
 			$action["action_id"] == 7)
 				$title .= ": " . $action["action_param"];
 
+		if ($action["action_id"] == 9) {
+			list ($pfclass, $pfaction) = explode(":", $action["action_param"]);
+
+			$filter_actions = PluginHost::getInstance()->get_filter_actions();
+
+			foreach ($filter_actions as $fclass => $factions) {
+				foreach ($factions as $faction) {
+					if ($pfaction == $faction["action"] && $pfclass == $fclass) {
+						$title .= ": " . $fclass . ": " . $faction["description"];
+						break;
+					}
+				}
+			}
+		}
+
 		return $title;
 	}
 
@@ -989,16 +1004,18 @@ class Pref_Filters extends Handler_Protected {
 
 		print "</select>";
 
-		$param_box_hidden = ($action_id == 7 || $action_id == 4 || $action_id == 6) ?
+		$param_box_hidden = ($action_id == 7 || $action_id == 4 || $action_id == 6 || $action_id == 9) ?
 			"" : "display : none";
 
 		$param_hidden = ($action_id == 4 || $action_id == 6) ?
 			"" : "display : none";
 
 		$label_param_hidden = ($action_id == 7) ?	"" : "display : none";
+		$plugin_param_hidden = ($action_id == 9) ?	"" : "display : none";
 
 		print "<span id=\"filterDlg_paramBox\" style=\"$param_box_hidden\">";
-		print " " . __("with parameters:") . " ";
+		print " ";
+		//print " " . __("with parameters:") . " ";
 		print "<input dojoType=\"dijit.form.TextBox\"
 			id=\"filterDlg_actionParam\" style=\"$param_hidden\"
 			name=\"action_param\" value=\"$action_param\">";
@@ -1006,6 +1023,22 @@ class Pref_Filters extends Handler_Protected {
 		print_label_select("action_param_label", $action_param,
 			"id=\"filterDlg_actionParamLabel\" style=\"$label_param_hidden\"
 			dojoType=\"dijit.form.Select\"");
+
+		$filter_actions = PluginHost::getInstance()->get_filter_actions();
+		$filter_action_hash = array();
+
+		foreach ($filter_actions as $fclass => $factions) {
+			foreach ($factions as $faction) {
+
+				$filter_action_hash[$fclass . ":" . $faction["action"]] =
+					$fclass . ": " . $faction["description"];
+			}
+
+		}
+
+		print_select_hash("filterDlg_actionParamPlugin", $action_param, $filter_action_hash,
+			"style=\"$plugin_param_hidden\" dojoType=\"dijit.form.Select\"",
+			"action_param_plugin");
 
 		print "</span>";
 

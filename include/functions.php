@@ -1,6 +1,6 @@
 <?php
 	define('EXPECTED_CONFIG_VERSION', 26);
-	define('SCHEMA_VERSION', 128);
+	define('SCHEMA_VERSION', 129);
 
 	define('LABEL_BASE_INDEX', -1024);
 	define('PLUGIN_FEED_BASE_INDEX', -128);
@@ -580,8 +580,10 @@
 		}
 	}
 
-	function print_select($id, $default, $values, $attributes = "") {
-		print "<select name=\"$id\" id=\"$id\" $attributes>";
+	function print_select($id, $default, $values, $attributes = "", $name = "") {
+		if (!$name) $name = $id;
+
+		print "<select name=\"$name\" id=\"$id\" $attributes>";
 		foreach ($values as $v) {
 			if ($v == $default)
 				$sel = "selected=\"1\"";
@@ -595,8 +597,10 @@
 		print "</select>";
 	}
 
-	function print_select_hash($id, $default, $values, $attributes = "") {
-		print "<select name=\"$id\" id='$id' $attributes>";
+	function print_select_hash($id, $default, $values, $attributes = "", $name = "") {
+		if (!$name) $name = $id;
+
+		print "<select name=\"$name\" id='$id' $attributes>";
 		foreach (array_keys($values) as $v) {
 			if ($v == $default)
 				$sel = 'selected="selected"';

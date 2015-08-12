@@ -228,6 +228,9 @@ insert into ttrss_filter_actions (id,name,description) values (7, 'label',
 insert into ttrss_filter_actions (id,name,description) values (8, 'stop',
 	'Stop / Do nothing');
 
+insert into ttrss_filter_actions (id,name,description) values (9, 'plugin',
+	'Invoke plugin');
+
 create table ttrss_filters2(id serial not null primary key,
 	owner_uid integer not null references ttrss_users(id) on delete cascade,
 	match_any_rule boolean not null default false,
@@ -260,7 +263,7 @@ create index ttrss_tags_post_int_id_idx on ttrss_tags(post_int_id);
 
 create table ttrss_version (schema_version int not null);
 
-insert into ttrss_version values (127);
+insert into ttrss_version values (129);
 
 create table ttrss_enclosures (id serial not null primary key,
 	content_url text not null,

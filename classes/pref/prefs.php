@@ -752,7 +752,7 @@ class Pref_Prefs extends Handler_Protected {
 		foreach ($tmppluginhost->get_plugins() as $name => $plugin) {
 			$about = $plugin->about();
 
-			if ($about[3] && strpos($name, "example") === FALSE) {
+			if ($about[3]) {
 				if (in_array($name, $system_enabled)) {
 					$checked = "checked='1'";
 				} else {
@@ -802,7 +802,7 @@ class Pref_Prefs extends Handler_Protected {
 		foreach ($tmppluginhost->get_plugins() as $name => $plugin) {
 			$about = $plugin->about();
 
-			if (!$about[3] && strpos($name, "example") === FALSE) {
+			if (!$about[3]) {
 
 				if (in_array($name, $system_enabled)) {
 					$checked = "checked='1'";
