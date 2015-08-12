@@ -445,14 +445,19 @@
 			}
 
 			if (!$post_query && $timestamp) {
-				$context = stream_context_create(array(
-					'http' => array(
-						'method' => 'GET',
-						'header' => "If-Modified-Since: ".gmdate("D, d M Y H:i:s \\G\\M\\T\r\n", $timestamp)
-					)));
+				 $context = stream_context_create(array(
+					  'http' => array(
+							'method' => 'GET',
+							'protocol_version'=> 1.1,
+							'header' => "If-Modified-Since: ".gmdate("D, d M Y H:i:s \\G\\M\\T\r\n", $timestamp)
+					  )));
 			} else {
-				$context = NULL;
-			}
+				 $context = stream_context_create(array(
+					  'http' => array(
+							'method' => 'GET',
+							'protocol_version'=> 1.1
+					  )));
+			} 
 
 			$old_error = error_get_last();
 
