@@ -87,13 +87,11 @@
 	}
 
 	function print_error($msg) {
-		print "<div class='error'><span><img src='../images/alert.png'></span>
-			<span>$msg</span></div>";
+		print "<div class='alert alert-error'>$msg</div>";
 	}
 
 	function print_notice($msg) {
-		print "<div class=\"notice\">
-			<span><img src=\"../images/information.png\"></span><span>$msg</span></div>";
+		print "<div class=\"alert alert-info\">$msg</div>";
 	}
 
 	function db_connect($host, $user, $pass, $db, $type, $port = false) {

@@ -1,3 +1,5 @@
+@import "dijit.css";
+
 body {
 	background : #f5f5f5;
 	color : black;
@@ -24,6 +26,7 @@ div.content {
 	background : white;
 	border : 1px solid #ddd;
 	padding : 10px;
+	border-radius : 6px;
 	box-shadow : 0px 1px 1px -1px rgba(0,0,0,0.1);
 }
 
