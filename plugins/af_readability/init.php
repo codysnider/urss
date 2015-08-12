@@ -21,6 +21,8 @@ class Af_Readability extends Plugin {
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 		$host->add_hook($host::HOOK_PREFS_EDIT_FEED, $this);
 		$host->add_hook($host::HOOK_PREFS_SAVE_FEED, $this);
+
+		$host->add_filter_action($this, "action_inline", __("Inline content"));
 	}
 
 	function hook_prefs_tab($args) {
@@ -90,11 +92,11 @@ class Af_Readability extends Plugin {
 		$this->host->set($this, "enabled_feeds", $enabled_feeds);
 	}
 
-	function hook_article_filter($article) {
+	function hook_article_filter_action($article, $action) {
+		return $this->process_article($article);
+	}
 
-		$enabled_feeds = $this->host->get($this, "enabled_feeds");
-		$key = array_search($article["feed"]["id"], $enabled_feeds);
-		if ($key === FALSE) return $article;
+	function process_article($article) {
 
 		if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
 
@@ -161,6 +163,15 @@ class Af_Readability extends Plugin {
 		}
 
 		return $article;
+	}
+
+	function hook_article_filter($article) {
+
+		$enabled_feeds = $this->host->get($this, "enabled_feeds");
+		$key = array_search($article["feed"]["id"], $enabled_feeds);
+		if ($key === FALSE) return $article;
+
+		return $this->process_article($article);
 
 	}
 
