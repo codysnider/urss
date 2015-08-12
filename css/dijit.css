@@ -443,6 +443,7 @@ button[disabled],
 
 .claro .dijitSelect .dijitArrowButton .dijitArrowButtonInner {
 	margin-right : 5px;
+	float  :right;
 }
 
 .claro .dijitDownArrowButton.dijitSelect {
@@ -464,6 +465,7 @@ button[disabled],
 	border-width : 0px;
 }
 
+.claro .input.input-text,
 .claro .dijitTextBox {
 	display: inline-block;
 	height: 20px;
@@ -478,6 +480,11 @@ button[disabled],
 	margin-bottom : 4px;
 }
 
+.claro .input.input-text {
+	height : 30px;
+}
+
+.claro .input.input-text,
 .claro .dijitTextBox,
 .claro .dijitSelect {
 	background-color: #ffffff;
@@ -491,6 +498,7 @@ button[disabled],
 	transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
+.claro .input.input-text:focus,
 .claro .dijitTextBox.dijitFocused,
 .claro .dijitSelect.dijitFocused {
 	border-color: rgba(82, 168, 236, 0.8);
