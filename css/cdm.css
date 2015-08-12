@@ -55,6 +55,10 @@ div.cdmHeader input {
 	margin-right : 4px;
 }
 
+div.cdmIntermediate {
+	margin : 10px;
+}
+
 div.cdmContentInner {
 	margin : 10px;
 	line-height : 1.5;

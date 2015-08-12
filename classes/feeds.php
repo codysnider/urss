@@ -701,6 +701,13 @@ class Feeds extends Handler_Protected {
 
 					$reply['content'] .= "</div>";
 
+					$reply['content'] .= "<div class=\"cdmIntermediate\">";
+
+					$always_display_enclosures = sql_bool_to_bool($line["always_display_enclosures"]);
+					$reply['content'] .= format_article_enclosures($id, $always_display_enclosures, $line["content"], sql_bool_to_bool($line["hide_images"]));
+
+					$reply['content'] .= "</div>";
+
 					$reply['content'] .= "<div class=\"cdmFooter\" onclick=\"cdmFooterClick(event)\">";
 
 					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_LEFT_BUTTON) as $p) {
@@ -742,9 +749,6 @@ class Feeds extends Handler_Protected {
 
 //					$reply['content'] .= "$marked_pic";
 //					$reply['content'] .= "$published_pic";
-
-					$always_display_enclosures = sql_bool_to_bool($line["always_display_enclosures"]);
-					$reply['content'] .= format_article_enclosures($id, $always_display_enclosures, $line["content"], sql_bool_to_bool($line["hide_images"]));
 
 					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_BUTTON) as $p) {
 						$reply['content'] .= $p->hook_article_button($line);
