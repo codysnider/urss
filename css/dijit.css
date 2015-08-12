@@ -184,6 +184,14 @@
 
 /* Various buttons */
 
+.claro .dijitDropDownButton {
+	margin : 0px;
+}
+
+.claro .dijitDropDownButton .dijitButtonNode {
+	padding : 0px;
+}
+
 .claro .dijitButton .dijitButtonNode,
 .claro .dijitDropDownButton .dijitButtonNode,
 .claro .dijitComboButton .dijitButtonNode, 
