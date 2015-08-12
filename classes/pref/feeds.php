@@ -533,6 +533,9 @@ class Pref_Feeds extends Handler_Protected {
 		global $purge_intervals;
 		global $update_intervals;
 
+		print '<div dojoType="dijit.layout.TabContainer" style="height : 450px">
+        		<div dojoType="dijit.layout.ContentPane" title="'.__('General').'">';
+
 		$feed_id = $this->dbh->escape_string($_REQUEST["id"]);
 
 		$result = $this->dbh->query(
@@ -658,8 +661,11 @@ class Pref_Feeds extends Handler_Protected {
 			</div>";
 
 		print "</div>";
-		print "<div class=\"dlgSec\">".__("Options")."</div>";
-		print "<div class=\"dlgSecCont\">";
+
+		print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Options').'">';
+
+		//print "<div class=\"dlgSec\">".__("Options")."</div>";
+		print "<div class=\"dlgSecSimple\">";
 
 		$private = sql_bool_to_bool($this->dbh->fetch_result($result, 0, "private"));
 
@@ -737,10 +743,11 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "</div>";
 
+		print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Icon').'">';
+
 		/* Icon */
 
-		print "<div class=\"dlgSec\">".__("Icon")."</div>";
-		print "<div class=\"dlgSecCont\">";
+		print "<div class=\"dlgSecSimple\">";
 
 		print "<iframe name=\"icon_upload_iframe\"
 			style=\"width: 400px; height: 100px; display: none;\"></iframe>";
@@ -751,17 +758,22 @@ class Pref_Feeds extends Handler_Protected {
 			<input id=\"icon_file\" size=\"10\" name=\"icon_file\" type=\"file\">
 			<input type=\"hidden\" name=\"op\" value=\"pref-feeds\">
 			<input type=\"hidden\" name=\"feed_id\" value=\"$feed_id\">
-			<input type=\"hidden\" name=\"method\" value=\"uploadicon\">
-			<button class=\"small\" dojoType=\"dijit.form.Button\" onclick=\"return uploadFeedIcon();\"
+			<input type=\"hidden\" name=\"method\" value=\"uploadicon\"><p>
+			<button class=\"\" dojoType=\"dijit.form.Button\" onclick=\"return uploadFeedIcon();\"
 				type=\"submit\">".__('Replace')."</button>
-			<button class=\"small\" dojoType=\"dijit.form.Button\" onclick=\"return removeFeedIcon($feed_id);\"
+			<button class=\"\" dojoType=\"dijit.form.Button\" onclick=\"return removeFeedIcon($feed_id);\"
 				type=\"submit\">".__('Remove')."</button>
 			</form>";
 
 		print "</div>";
 
+		print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Plugins').'">';
+
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_EDIT_FEED,
 			"hook_prefs_edit_feed", $feed_id);
+
+
+		print "</div></div>";
 
 		$title = htmlspecialchars($title, ENT_QUOTES);
 
@@ -787,6 +799,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('feedEditDlg').execute()\">".__('Save')."</button>
 			<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('feedEditDlg').hide()\">".__('Cancel')."</button>
 		</div>";
+
 
 		return;
 	}
