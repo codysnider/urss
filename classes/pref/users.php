@@ -35,10 +35,6 @@ class Pref_Users extends Handler_Protected {
 				return;
 			}
 
-			// print "<h1>User Details</h1>";
-
-			$login = $this->dbh->fetch_result($result, 0, "login");
-
 			print "<table width='100%'>";
 
 			$last_login = make_local_datetime(
@@ -47,7 +43,6 @@ class Pref_Users extends Handler_Protected {
 			$created = make_local_datetime(
 				$this->dbh->fetch_result($result, 0, "created"), true);
 
-			$access_level = $this->dbh->fetch_result($result, 0, "access_level");
 			$stored_articles = $this->dbh->fetch_result($result, 0, "stored_articles");
 
 			print "<tr><td>".__('Registered')."</td><td>$created</td></tr>";
@@ -59,6 +54,7 @@ class Pref_Users extends Handler_Protected {
 			$num_feeds = $this->dbh->fetch_result($result, 0, "num_feeds");
 
 			print "<tr><td>".__('Subscribed feeds count')."</td><td>$num_feeds</td></tr>";
+			print "<tr><td>".__('Stored articles')."</td><td>$stored_articles</td></tr>";
 
 			print "</table>";
 
@@ -381,8 +377,7 @@ class Pref_Users extends Handler_Protected {
 					login,access_level,email,
 					".SUBSTRING_FOR_DATE."(last_login,1,16) as last_login,
 					".SUBSTRING_FOR_DATE."(created,1,16) as created,
-					(SELECT COUNT(id) FROM ttrss_feeds WHERE owner_uid = tu.id) AS num_feeds,
-					(SELECT COUNT(ref_id) FROM ttrss_user_entries WHERE owner_uid = tu.id) AS num_articles
+					(SELECT COUNT(id) FROM ttrss_feeds WHERE owner_uid = tu.id) AS num_feeds
 				FROM
 					ttrss_users tu
 				WHERE
@@ -400,7 +395,6 @@ class Pref_Users extends Handler_Protected {
 						<td width='20%'><a href=\"#\" onclick=\"updateUsersList('login')\">".__('Login')."</a></td>
 						<td width='20%'><a href=\"#\" onclick=\"updateUsersList('access_level')\">".__('Access Level')."</a></td>
 						<td width='10%'><a href=\"#\" onclick=\"updateUsersList('num_feeds')\">".__('Subscribed feeds')."</a></td>
-						<td width='10%'><a href=\"#\" onclick=\"updateUsersList('num_articles')\">".__('Stored articles')."</a></td>
 						<td width='20%'><a href=\"#\" onclick=\"updateUsersList('created')\">".__('Registered')."</a></td>
 						<td width='20%'><a href=\"#\" onclick=\"updateUsersList('last_login')\">".__('Last login')."</a></td></tr>";
 
@@ -429,7 +423,6 @@ class Pref_Users extends Handler_Protected {
 
 				print "<td $onclick>" .	$access_level_names[$line["access_level"]] . "</td>";
 				print "<td $onclick>" . $line["num_feeds"] . "</td>";
-				print "<td $onclick>" . $line["num_articles"] . "</td>";
 				print "<td $onclick>" . $line["created"] . "</td>";
 				print "<td $onclick>" . $line["last_login"] . "</td>";
 
