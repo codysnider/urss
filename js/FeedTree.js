@@ -433,10 +433,11 @@ dojo.declare("fox.FeedTree", dijit.Tree, {
 				var bare_id = parseInt(feed.bare_id);;
 
 				var unread = feed.unread[0];
+				var has_error = feed.error[0] != '';
 				var node = tree._itemNodesMap[id];
 
 				if (node) {
-					if (hide && unread == 0 && (bare_id > 0 || bare_id < _label_base_index || !show_special)) {
+					if (hide && unread == 0 && !has_error && (bare_id > 0 || bare_id < _label_base_index || !show_special)) {
 						Effect.Fade(node[0].rowNode, {duration : 0.3,
 							queue: { position: 'end', scope: 'FFADE-' + id, limit: 1 }});
 					} else {
