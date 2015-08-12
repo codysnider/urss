@@ -1,3 +1,16 @@
 AddType image/svg+xml svg
 AddType image/svg+xml svgz
 
+# PROTECT all htaccess files
+<Files ~ "^[\._]ht">
+  Order Allow,Deny
+  Deny from all
+  Satisfy All
+</Files>
+
+# PROTECT config.php
+<files config.php>
+  Order Allow,Deny
+  Deny from all
+  Satisfy all
+</files>
