@@ -156,7 +156,7 @@ class Af_Psql_Trgm extends Plugin {
 		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"save\">";
 		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"plugin\" value=\"af_psql_trgm\">";
 
-		print_notice("PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking.");
+		print "<p>" . __("PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking.") . "</p>";
 		print_notice("Enable the plugin for specific feeds in the feed editor.");
 
 		print "<h3>" . __("Global settings") . "</h3>";

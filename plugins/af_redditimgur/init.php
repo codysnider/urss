@@ -43,9 +43,7 @@ class Af_RedditImgur extends Plugin {
 		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"save\">";
 		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"plugin\" value=\"af_redditimgur\">";
 
-		print "<h3>" . __("Global settings") . "</h3>";
-
-		print_notice("Uses Readability (full-text-rss) implementation by <a target='_blank' href='https://bitbucket.org/fivefilters/'>FiveFilters.org</a>");
+		print "<p>" . __("Uses Readability (full-text-rss) implementation by <a target='_blank' href='https://bitbucket.org/fivefilters/'>FiveFilters.org</a>");
 		print "<p/>";
 
 		print "<input dojoType=\"dijit.form.CheckBox\" id=\"enable_readability\"

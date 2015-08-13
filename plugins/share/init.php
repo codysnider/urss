@@ -36,11 +36,9 @@ class Share extends Plugin {
 	function hook_prefs_tab_section($id) {
 		if ($id == "prefFeedsPublishedGenerated") {
 
-			print_warning(__("You can disable all articles shared by unique URLs here."));
+			print "<p>" . __("You can disable all articles shared by unique URLs here.") . "</p>";
 
-			print "<p>";
-
-			print "<button dojoType=\"dijit.form.Button\" onclick=\"return clearArticleAccessKeys()\">".
+			print "<button class=\"danger\" dojoType=\"dijit.form.Button\" onclick=\"return clearArticleAccessKeys()\">".
 				__('Unshare all articles')."</button> ";
 
 			print "</p>";
@@ -96,7 +94,7 @@ class Share extends Plugin {
 					AND owner_uid = " . $_SESSION['uid']);
 			}
 
-			print "<h2>". __("You can share this article by the following unique URL:") . "</h2>";
+			print __("You can share this article by the following unique URL:") . "<br/>";
 
 			$url_path = get_self_url_prefix();
 			$url_path .= "/public.php?op=share&key=$uuid";

@@ -779,7 +779,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div class='dlgButtons'>
 			<div style=\"float : left\">
-			<button dojoType=\"dijit.form.Button\" onclick='return unsubscribeFeed($feed_id, \"$title\")'>".
+			<button class=\"danger\" dojoType=\"dijit.form.Button\" onclick='return unsubscribeFeed($feed_id, \"$title\")'>".
 				__('Unsubscribe')."</button>";
 
 		if (PUBSUBHUBBUB_ENABLED) {
@@ -1443,7 +1443,8 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('OPML')."\">";
 
-		print_notice(__("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.") . __("Only main settings profile can be migrated using OPML."));
+		print "<p>" . __("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.") .
+			__("Only main settings profile can be migrated using OPML.") . "</p>";
 
 		print "<iframe id=\"upload_iframe\"
 			name=\"upload_iframe\" onload=\"opmlImportComplete(this)\"
@@ -1470,9 +1471,9 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<hr>";
 
-		print "<p>".__('Your OPML can be published publicly and can be subscribed by anyone who knows the URL below.') . " ";
+		print "<p>" . __('Your OPML can be published publicly and can be subscribed by anyone who knows the URL below.') . "</p>";
 
-		print __("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.") . "</p>";
+		print_warning("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.");
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return displayDlg('".__("Public OPML URL")."','pubOPMLUrl')\">".
 			__('Display published OPML URL')."</button> ";
@@ -1503,7 +1504,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Published & shared articles / Generated feeds')."\">";
 
-		print_notice(__('Published articles are exported as a public RSS feed and can be subscribed by anyone who knows the URL specified below.'));
+		print "<p>" . __('Published articles are exported as a public RSS feed and can be subscribed by anyone who knows the URL specified below.') . "</p>";
 
 		$rss_url = '-2::' . htmlspecialchars(get_self_url_prefix() .
 				"/public.php?op=rss&id=-2&view-mode=all_articles");;
@@ -1513,7 +1514,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return displayDlg('".__("View as RSS")."','generatedFeed', '$rss_url')\">".
 			__('Display URL')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return clearFeedAccessKeys()\">".
+		print "<button class=\"warning\" dojoType=\"dijit.form.Button\" onclick=\"return clearFeedAccessKeys()\">".
 			__('Clear all generated URLs')."</button> ";
 
 		print "</p>";
@@ -1643,7 +1644,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div class='dlgButtons'>";
 		print "<div style='float : left'>";
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('inactiveFeedsDlg').removeSelected()\">"
+		print "<button class=\"danger\" dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('inactiveFeedsDlg').removeSelected()\">"
 			.__('Unsubscribe from selected feeds')."</button> ";
 		print "</div>";
 
@@ -1709,7 +1710,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div class='dlgButtons'>";
 		print "<div style='float : left'>";
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('errorFeedsDlg').removeSelected()\">"
+		print "<button class=\"danger\" dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('errorFeedsDlg').removeSelected()\">"
 			.__('Unsubscribe from selected feeds')."</button> ";
 		print "</div>";
 
