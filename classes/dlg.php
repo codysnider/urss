@@ -144,7 +144,7 @@ class Dlg extends Handler_Protected {
 
 			$key_escaped = str_replace("'", "\\'", $key);
 
-			echo "<a href=\"javascript:viewfeed('$key_escaped') \" style=\"font-size: " .
+			echo "<a href=\"javascript:viewfeed({feed:'$key_escaped'}) \" style=\"font-size: " .
 				$size . "px\" title=\"$value articles tagged with " .
 				$key . '">' . $key . '</a> ';
 		}
