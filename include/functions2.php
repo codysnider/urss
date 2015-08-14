@@ -284,7 +284,7 @@
 
 	function search_to_sql($search, $search_language) {
 
-		$keywords = str_getcsv($search, " ");
+		$keywords = str_getcsv(trim($search), " ");
 		$query_keywords = array();
 		$search_words = array();
 		$search_query_leftover = array();
