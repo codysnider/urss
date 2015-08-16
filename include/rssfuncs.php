@@ -1248,6 +1248,8 @@
 					if ($file_content && strlen($file_content) > _MIN_CACHE_IMAGE_SIZE) {
 						file_put_contents($local_filename, $file_content);
 					}
+				} else {
+					touch($local_filename);
 				}
 			}
 		}
