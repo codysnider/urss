@@ -1070,19 +1070,21 @@ class Pref_Filters extends Handler_Protected {
 	private function getFilterName($id) {
 
 		$result = $this->dbh->query(
-			"SELECT title,COUNT(DISTINCT r.id) AS num_rules,COUNT(DISTINCT a.id) AS num_actions
+			"SELECT title,match_any_rule,COUNT(DISTINCT r.id) AS num_rules,COUNT(DISTINCT a.id) AS num_actions
 				FROM ttrss_filters2 AS f LEFT JOIN ttrss_filters2_rules AS r
 					ON (r.filter_id = f.id)
 						LEFT JOIN ttrss_filters2_actions AS a
-							ON (a.filter_id = f.id) WHERE f.id = '$id' GROUP BY f.title");
+							ON (a.filter_id = f.id) WHERE f.id = '$id' GROUP BY f.title, f.match_any_rule");
 
 		$title = $this->dbh->fetch_result($result, 0, "title");
 		$num_rules = $this->dbh->fetch_result($result, 0, "num_rules");
 		$num_actions = $this->dbh->fetch_result($result, 0, "num_actions");
+		$match_any_rule = sql_bool_to_bool($this->dbh->fetch_result($result, 0, "match_any_rule"));
 
 		if (!$title) $title = __("[No caption]");
 
 		$title = sprintf(_ngettext("%s (%d rule)", "%s (%d rules)", $num_rules), $title, $num_rules);
+
 
 		$result = $this->dbh->query(
 			"SELECT * FROM ttrss_filters2_actions WHERE filter_id = '$id' ORDER BY id LIMIT 1");
@@ -1095,6 +1097,8 @@ class Pref_Filters extends Handler_Protected {
 
 			$num_actions -= 1;
 		}
+
+		if ($match_any_rule) $title .= " (" . __("matches any rule") . ")";
 
 		if ($num_actions > 0)
 			$actions = sprintf(_ngettext("%s (+%d action)", "%s (+%d actions)", $num_actions), $actions, $num_actions);

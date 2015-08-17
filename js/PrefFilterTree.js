@@ -28,7 +28,7 @@ dojo.declare("fox.PrefFilterTree", lib.CheckBoxTree, {
 
 		if (param) {
 			param = dojo.doc.createElement('span');
-			param.className = (enabled != false) ? 'labelParam' : 'labelParam Disabled';
+			param.className = (enabled != false) ? 'labelParam' : 'labelParam filterDisabled';
 			param.innerHTML = args.item.param[0];
 			dojo.place(param, tnode.rowNode, 'first');
 		}
@@ -74,7 +74,7 @@ dojo.declare("fox.PrefFilterTree", lib.CheckBoxTree, {
 	},
 	getLabelClass: function (item, opened) {
 		var enabled = this.model.store.getValue(item, 'enabled');
-		return (enabled != false) ? "dijitTreeLabel labelFixedLength" : "dijitTreeLabel labelFixedLength Disabled";
+		return (enabled != false) ? "dijitTreeLabel labelFixedLength" : "dijitTreeLabel labelFixedLength filterDisabled";
 	},
 	getRowClass: function (item, opened) {
 		return (!item.error || item.error == '') ? "dijitTreeRow" :
