@@ -1890,6 +1890,7 @@
 				$rv = $retval;
 			}
 		}
+		unset($retval); // Unset to prevent breaking render if there are no HOOK_RENDER_ENCLOSURE hooks below.
 
 		if ($rv === '' && !empty($result)) {
 			$entries_html = array();
