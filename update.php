@@ -347,8 +347,7 @@
 			$result = db_query("SELECT id, title, content FROM ttrss_entries WHERE tsvector_combined IS NULL ORDER BY id LIMIT $limit");
 
 			while ($line = db_fetch_assoc($result)) {
-                               $content_separated = str_replace('<', ' <', $line['content']);
-                               $tsvector_combined = db_escape_string(mb_substr($line['title'] . ' ' . strip_tags($content_separated),
+			   $tsvector_combined = db_escape_string(mb_substr($line['title'] . ' ' . strip_tags(str_replace('<', ' <', $line['content'])),
 					0, 1000000));
 
 				db_query("UPDATE ttrss_entries SET tsvector_combined = to_tsvector('english', '$tsvector_combined') WHERE id = " . $line["id"]);

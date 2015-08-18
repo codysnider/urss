@@ -1017,8 +1017,7 @@
 					_debug("RID: $entry_ref_id, IID: $entry_int_id", $debug_enabled);
 
 					if (DB_TYPE == "pgsql") {
-                                               $entry_content_spaces = str_replace('<', ' <', $entry_content);
-                                               $tsvector_combined = db_escape_string(mb_substr($entry_title . ' ' . strip_tags($entry_content_spaces),
+					   $tsvector_combined = db_escape_string(mb_substr($entry_title . ' ' . strip_tags(str_replace('<', ' <', $entry_content)),
 							0, 1000000));
 
 						$tsvector_qpart = "tsvector_combined = to_tsvector('$feed_language', '$tsvector_combined'),";
