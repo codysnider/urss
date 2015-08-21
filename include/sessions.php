@@ -39,40 +39,11 @@
 	function validate_session() {
 		if (SINGLE_USER_MODE) return true;
 
-		//if (VERSION_STATIC != $_SESSION["version"]) return false;
-
-		$check_ip = $_SESSION['ip_address'];
-
-		switch (SESSION_CHECK_ADDRESS) {
-		case 0:
-			$check_ip = '';
-			break;
-		case 1:
-			$check_ip = substr($check_ip, 0, strrpos($check_ip, '.')+1);
-			break;
-		case 2:
-			$check_ip = substr($check_ip, 0, strrpos($check_ip, '.'));
-			$check_ip = substr($check_ip, 0, strrpos($check_ip, '.')+1);
-			break;
-		};
-
-		if ($check_ip && strpos($_SERVER['REMOTE_ADDR'], $check_ip) !== 0) {
-			$_SESSION["login_error_msg"] =
-				__("Session failed to validate (incorrect IP)");
-			return false;
-		}
-
 		if (isset($_SESSION["ref_schema_version"]) && $_SESSION["ref_schema_version"] != session_get_schema_version(true)) {
 			$_SESSION["login_error_msg"] =
 				__("Session failed to validate (schema version changed)");
 			return false;
 		}
-
-		/* if (sha1($_SERVER['HTTP_USER_AGENT']) != $_SESSION["user_agent"]) {
-			$_SESSION["login_error_msg"] =
-				__("Session failed to validate (user agent changed)");
-			return false;
-		} */
 
 		if ($_SESSION["uid"]) {
 			$result = Db::get()->query(
