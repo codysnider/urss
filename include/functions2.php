@@ -1953,9 +1953,9 @@
 									if (!$hide_images) {
 										$encsize = '';
 										if ($entry['height'] > 0)
-											$encsize .= ' height="' . intval($entry['width']) . '"';
+											$encsize .= ' height="' . intval($entry['height']) . '"';
 										if ($entry['width'] > 0)
-											$encsize .= ' width="' . intval($entry['height']) . '"';
+											$encsize .= ' width="' . intval($entry['width']) . '"';
 										$rv .= "<p><img
 										alt=\"".htmlspecialchars($entry["filename"])."\"
 										src=\"" .htmlspecialchars($entry["url"]) . "\"
