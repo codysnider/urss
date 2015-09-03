@@ -126,7 +126,7 @@ function viewfeed(params) {
 					query = query + "&vgrlf=" + param_escape(vgroup_last_feed);
 				}
 			} else {
-				if (!is_cat && feed == getActiveFeedId()) {
+				if (!is_cat && feed == getActiveFeedId() && !params.method) {
 					query = query + "&m=ForceUpdate";
 				}
 			}
