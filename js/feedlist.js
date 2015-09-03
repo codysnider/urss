@@ -59,6 +59,7 @@ function viewfeed(params) {
 		var infscroll_req = params.infscroll_req;
 		var can_wait = params.can_wait;
 		var viewfeed_debug = params.viewfeed_debug;
+		var method = params.method;
 
 		if (is_cat == undefined)
 			is_cat = false;
@@ -101,6 +102,8 @@ function viewfeed(params) {
 
 		var query = "?op=feeds&method=view&feed=" + param_escape(feed) + "&" +
 			toolbar_query;
+
+		if (method) query += "&m=" + param_escape(method);
 
 		if (offset > 0) {
 			if (current_first_id) {
