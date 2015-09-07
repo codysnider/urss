@@ -2185,6 +2185,12 @@ function initHeadlinesMenu() {
 					catchupFeedInGroup(menu.callerRowId);
 				}}));
 
+			menu.addChild(new dijit.MenuItem({
+				label: __("Edit feed"),
+				onClick: function(event) {
+					editFeed(menu.callerRowId);
+				}}));
+
 			menu.startup();
 
 		}
