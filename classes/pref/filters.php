@@ -43,8 +43,11 @@ class Pref_Filters extends Handler_Protected {
 		return;
 	}
 
+	function testFilterDo() {
+		require_once "include/rssfuncs.php";
 
-	function testFilter() {
+		$offset = (int) db_escape_string($_REQUEST["offset"]);
+
 		$filter = array();
 
 		$filter["enabled"] = true;
@@ -94,24 +97,14 @@ class Pref_Filters extends Handler_Protected {
 			}
 		}
 
-		$found = 0;
-		$offset = 0;
-		$limit = 30;
-		$started = time();
-
-		print __("Articles matching this filter:");
-
-		require_once "include/rssfuncs.php";
-
-		print "<div class=\"filterTestHolder\">";
-		print "<table width=\"100%\" cellspacing=\"0\" id=\"prefErrorFeedList\">";
-
 		$glue = $filter['match_any_rule'] ? " OR " :  " AND ";
 		$scope_qpart = join($glue, $scope_qparts);
 
 		if (!$scope_qpart) $scope_qpart = "true";
 
-		while ($found < $limit && $offset < $limit * 10 && time() - $started < ini_get("max_execution_time") * 0.7) {
+		$rv = array();
+
+		//while ($found < $limit && $offset < $limit * 1000 && time() - $started < ini_get("max_execution_time") * 0.7) {
 
 			$result = db_query("SELECT ttrss_entries.id,
 					ttrss_entries.title,
@@ -130,7 +123,7 @@ class Pref_Filters extends Handler_Protected {
 					ref_id = ttrss_entries.id AND
 					($scope_qpart) AND
 					ttrss_user_entries.owner_uid = " . $_SESSION["uid"] . "
-				ORDER BY date_entered DESC LIMIT $limit OFFSET $offset");
+				ORDER BY date_entered DESC LIMIT 30 OFFSET $offset");
 
 			while ($line = db_fetch_assoc($result)) {
 
@@ -149,14 +142,10 @@ class Pref_Filters extends Handler_Protected {
 
 					if ($line["feed_title"]) $feed_title = "(" . $line["feed_title"] . ")";
 
-					print "<tr>";
-
-					print "<td width='5%' align='center'><input dojoType=\"dijit.form.CheckBox\"
-						checked=\"1\" disabled=\"1\" type=\"checkbox\"></td>";
-					print "<td>";
+					$line = "<td width='5%' align='center'><input dojoType=\"dijit.form.CheckBox\"
+						checked=\"1\" disabled=\"1\" type=\"checkbox\"></td><td>";
 
 					/*foreach ($filter['rules'] as $rule) {
-						$reg_exp = $rule['reg_exp'];
 						$reg_exp = str_replace('/', '\/', $rule["reg_exp"]);
 
 						$line["title"] = preg_replace("/($reg_exp)/i",
@@ -166,25 +155,38 @@ class Pref_Filters extends Handler_Protected {
 							"<span class=\"highlight\">$1</span>", $content_preview);
 					}*/
 
-					print $line["title"];
-					print "<div class='small' style='float : right'>" . $feed_title . "</div>";
-					print "<div class=\"insensitive\">" . $content_preview . "</div>";
-					print " " . mb_substr($line["date_entered"], 0, 16);
+					$line .= $line["title"];
+					$line .= "<div class='small' style='float : right'>" . $feed_title . "</div>";
+					$line .= "<div class=\"insensitive\">" . $content_preview . "</div>";
+					$line .= " " . mb_substr($line["date_entered"], 0, 16);
 
-					print "</td></tr>";
+					$line .= "</td></tr>";
 
-					$found++;
+					array_push($rv, $line);
 				}
 			}
 
-			$offset += $limit;
-		}
+			//$offset += $limit;
+		//}
 
-		if ($found == 0) {
+		/*if ($found == 0) {
 			print "<tr><td align='center'>" .
 				__("No recent articles matching this filter have been found.");
-		}
+		}*/
 
+		print json_encode($rv);
+	}
+
+	function testFilter() {
+
+		if (isset($_REQUEST["offset"])) return $this->testFilterDo();
+
+		//print __("Articles matching this filter:");
+
+		print "<div><img src='images/indicator_tiny.gif'>&nbsp;<span id='prefFilterProgressMsg'>Looking for articles...</span></div>";
+
+		print "<br/><div class=\"filterTestHolder\">";
+		print "<table width=\"100%\" cellspacing=\"0\" id=\"prefFilterTestResultList\">";
 		print "</table></div>";
 
 		print "<div style='text-align : center'>";

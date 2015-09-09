@@ -146,6 +146,7 @@ function editFilter(id) {
 			id: "filterEditDlg",
 			title: __("Edit Filter"),
 			style: "width: 600px",
+
 			test: function() {
 				var query = "backend.php?" + dojo.formToQuery("filter_edit_form") + "&savemode=test";
 
@@ -156,7 +157,60 @@ function editFilter(id) {
 					id: "filterTestDlg",
 					title: "Test Filter",
 					style: "width: 600px",
+					results: 0,
+					max_offset: 10000,
+					getTestResults: function(query, offset) {
+						var updquery = query + "&offset=" + offset;
+
+						console.log("getTestResults:" + offset);
+						//console.log(updquery);
+
+						new Ajax.Request("backend.php", {
+							parameters: updquery,
+							onComplete: function (transport) {
+
+								console.log(transport.responseText);
+
+								var result = JSON.parse(transport.responseText);
+
+								console.log("R:" + result);
+
+								//console.log("<<< " + transport.responseText);
+
+								if (result && dijit.byId("filterTestDlg") && dijit.byId("filterTestDlg").open) {
+									test_dlg.results += result.size();
+
+									$("prefFilterProgressMsg").innerHTML = __("Looking for articles (%d)...".replace("%d", offset));
+
+									console.log(offset + " " + test_dlg.max_offset);
+
+									for (var i = 0; i < result.size(); i++) {
+										$("prefFilterTestResultList").innerHTML += result[i];
+									}
+
+									if (test_dlg.results < 30 && offset < test_dlg.max_offset) {
+										window.setTimeout(function() {
+											//console.log("blaargh");
+
+											test_dlg.getTestResults(query, offset + 30);
+										}, 0);
+									} else {
+
+										// all done
+
+									}
+
+								} else {
+									console.log("can't parse results object / dialog closed");
+								}
+
+							} });
+					},
 					href: query});
+
+				dojo.connect(test_dlg, "onShow", null, function(e) {
+					test_dlg.getTestResults(query, 0);
+				});
 
 				test_dlg.show();
 			},
