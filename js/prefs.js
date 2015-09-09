@@ -131,6 +131,100 @@ function editUser(id, event) {
 
 }
 
+function editFilterTest(query) {
+	try {
+
+		if (dijit.byId("filterTestDlg"))
+			dijit.byId("filterTestDlg").destroyRecursive();
+
+		var test_dlg = new dijit.Dialog({
+			id: "filterTestDlg",
+			title: "Test Filter",
+			style: "width: 600px",
+			results: 0,
+			limit: 100,
+			max_offset: 10000,
+			getTestResults: function(query, offset) {
+				var updquery = query + "&offset=" + offset + "&limit=" + test_dlg.limit;
+
+				console.log("getTestResults:" + offset);
+
+				new Ajax.Request("backend.php", {
+					parameters: updquery,
+					onComplete: function (transport) {
+						try {
+							var result = JSON.parse(transport.responseText);
+
+							if (result && dijit.byId("filterTestDlg") && dijit.byId("filterTestDlg").open) {
+								test_dlg.results += result.size();
+
+								console.log("got results:" + result.size());
+
+								$("prefFilterProgressMsg").innerHTML = __("Looking for articles (%d processed, %f found)...")
+									.replace("%f", test_dlg.results)
+									.replace("%d", offset);
+
+								console.log(offset + " " + test_dlg.max_offset);
+
+								for (var i = 0; i < result.size(); i++) {
+									var tmp = new Element("table");
+									tmp.innerHTML = result[i];
+									dojo.parser.parse(tmp);
+
+									$("prefFilterTestResultList").innerHTML += tmp.innerHTML;
+								}
+
+								if (test_dlg.results < 30 && offset < test_dlg.max_offset) {
+
+									// get the next batch
+									window.setTimeout(function () {
+										test_dlg.getTestResults(query, offset + test_dlg.limit);
+									}, 0);
+
+								} else {
+									// all done
+
+									Element.hide("prefFilterLoadingIndicator");
+
+									if (test_dlg.results == 0) {
+										$("prefFilterTestResultList").innerHTML = "<tr><td align='center'>No recent articles matching this filter have been found.</td></tr>";
+										$("prefFilterProgressMsg").innerHTML = "Articles matching this filter:";
+									} else {
+										$("prefFilterProgressMsg").innerHTML = __("Found %d articles matching this filter:")
+											.replace("%d", test_dlg.results);
+									}
+
+								}
+
+							} else if (!result) {
+								console.log("getTestResults: can't parse results object");
+
+								Element.hide("prefFilterLoadingIndicator");
+
+								notify_error("Error while trying to get filter test results.");
+
+							} else {
+								console.log("getTestResults: dialog closed, bailing out.");
+							}
+						} catch (e) {
+							exception_error("editFilterTest/inner", e);
+						}
+
+					} });
+			},
+			href: query});
+
+		dojo.connect(test_dlg, "onLoad", null, function(e) {
+			test_dlg.getTestResults(query, 0);
+		});
+
+		test_dlg.show();
+
+	} catch (e) {
+		exception_error("editFilterTest", e);
+	}
+}
+
 function editFilter(id) {
 	try {
 
@@ -150,69 +244,7 @@ function editFilter(id) {
 			test: function() {
 				var query = "backend.php?" + dojo.formToQuery("filter_edit_form") + "&savemode=test";
 
-				if (dijit.byId("filterTestDlg"))
-					dijit.byId("filterTestDlg").destroyRecursive();
-
-				var test_dlg = new dijit.Dialog({
-					id: "filterTestDlg",
-					title: "Test Filter",
-					style: "width: 600px",
-					results: 0,
-					max_offset: 10000,
-					getTestResults: function(query, offset) {
-						var updquery = query + "&offset=" + offset;
-
-						console.log("getTestResults:" + offset);
-						//console.log(updquery);
-
-						new Ajax.Request("backend.php", {
-							parameters: updquery,
-							onComplete: function (transport) {
-
-								console.log(transport.responseText);
-
-								var result = JSON.parse(transport.responseText);
-
-								console.log("R:" + result);
-
-								//console.log("<<< " + transport.responseText);
-
-								if (result && dijit.byId("filterTestDlg") && dijit.byId("filterTestDlg").open) {
-									test_dlg.results += result.size();
-
-									$("prefFilterProgressMsg").innerHTML = __("Looking for articles (%d)...".replace("%d", offset));
-
-									console.log(offset + " " + test_dlg.max_offset);
-
-									for (var i = 0; i < result.size(); i++) {
-										$("prefFilterTestResultList").innerHTML += result[i];
-									}
-
-									if (test_dlg.results < 30 && offset < test_dlg.max_offset) {
-										window.setTimeout(function() {
-											//console.log("blaargh");
-
-											test_dlg.getTestResults(query, offset + 30);
-										}, 0);
-									} else {
-
-										// all done
-
-									}
-
-								} else {
-									console.log("can't parse results object / dialog closed");
-								}
-
-							} });
-					},
-					href: query});
-
-				dojo.connect(test_dlg, "onShow", null, function(e) {
-					test_dlg.getTestResults(query, 0);
-				});
-
-				test_dlg.show();
+				editFilterTest(query);
 			},
 			selectRules: function(select) {
 				$$("#filterDlg_Matches input[type=checkbox]").each(function(e) {
