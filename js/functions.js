@@ -2053,3 +2053,10 @@ function getSelectionText() {
 
 	return text.stripTags();
 }
+
+function openArticlePopup(id) {
+	window.open("backend.php?op=article&method=view&mode=raw&html=1&zoom=1&id=" + id +
+		"&csrf_token=" + getInitParam("csrf_token"),
+		"ttrss_article_popup",
+		"height=900,width=900,resizable=yes,status=no,location=no,menubar=no,directories=no,scrollbars=yes,toolbar=no");
+}

@@ -134,7 +134,7 @@ class Pref_Filters extends Handler_Protected {
 
 				if (count($rc) > 0) {
 
-					$line["content_preview"] = truncate_string(strip_tags($line["content"]), 100, '...');
+					$line["content_preview"] = truncate_string(strip_tags($line["content"]), 200, '&hellip;');
 
 					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_QUERY_HEADLINES) as $p) {
 						$line = $p->hook_query_headlines($line, 100);
@@ -142,10 +142,12 @@ class Pref_Filters extends Handler_Protected {
 
 					$content_preview = $line["content_preview"];
 
-					if ($line["feed_title"]) $feed_title = "(" . $line["feed_title"] . ")";
+					$tmp = "<tr style='margin-top : 5px'><td width='5%' align='center'><input dojoType=\"dijit.form.CheckBox\"
+						checked=\"1\" disabled=\"1\" type=\"checkbox\"></td>";
 
-					$tmp = "<tr><td width='5%' align='center'><input dojoType=\"dijit.form.CheckBox\"
-						checked=\"1\" disabled=\"1\" type=\"checkbox\"></td><td>";
+					$id = $line['id'];
+					$tmp .= "<td width='5%' align='center'><img style='cursor : pointer' title='".__("Preview article")."'
+						src='images/information.png' onclick='openArticlePopup($id)'></td><td>";
 
 					foreach ($filter['rules'] as $rule) {
 						$reg_exp = str_replace('/', '\/', $rule["reg_exp"]);
@@ -157,10 +159,9 @@ class Pref_Filters extends Handler_Protected {
 							"<span class=\"highlight\">$1</span>", $content_preview);
 					}
 
-					$tmp .= "<strong>" . $line["title"] . "</strong>";
-					$tmp .= "<div class='small' style='float : right'>" . $feed_title . "</div>";
-					$tmp .= "<div class=\"insensitive\">" . $content_preview . "</div>";
-					$tmp .= " " . mb_substr($line["date_entered"], 0, 16);
+					$tmp .= "<strong>" . $line["title"] . "</strong><br/>";
+					$tmp .= $line['feed_title'] . ", " . mb_substr($line["date_entered"], 0, 16);
+					$tmp .= "<div class='insensitive'>" . $content_preview . "</div>";
 					$tmp .= "</td></tr>";
 
 					array_push($rv, $tmp);
