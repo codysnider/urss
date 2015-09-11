@@ -142,8 +142,10 @@ class Pref_Filters extends Handler_Protected {
 
 					$content_preview = $line["content_preview"];
 
-					$tmp = "<tr style='margin-top : 5px'><td width='5%' align='center'><input dojoType=\"dijit.form.CheckBox\"
-						checked=\"1\" disabled=\"1\" type=\"checkbox\"></td>";
+					$tmp = "<tr style='margin-top : 5px'>";
+
+					#$tmp .= "<td width='5%' align='center'><input dojoType=\"dijit.form.CheckBox\"
+					#	checked=\"1\" disabled=\"1\" type=\"checkbox\"></td>";
 
 					$id = $line['id'];
 					$tmp .= "<td width='5%' align='center'><img style='cursor : pointer' title='".__("Preview article")."'
