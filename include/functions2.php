@@ -465,7 +465,6 @@
 		$override_vfeed = isset($params["override_vfeed"]) ? $params["override_vfeed"] : false;
 		$start_ts = isset($params["start_ts"]) ? $params["start_ts"] : false;
 		$check_first_id = isset($params["check_first_id"]) ? $params["check_first_id"] : false;
-		$api_request = isset($params["api_request"]) ? $params["api_request"] : false;
 
 		$ext_tables_part = "";
 		$query_strategy_part = "";
@@ -494,7 +493,6 @@
 			}
 
 			$view_query_part = "";
-			$disable_offsets = false;
 
 			if ($view_mode == "adaptive") {
 				if ($search) {
@@ -508,7 +506,6 @@
 
 					if ($unread > 0) {
 						$view_query_part = " unread = true AND ";
-						$disable_offsets = !$api_request && get_pref("CDM_AUTO_CATCHUP") && get_pref("CDM_EXPANDED");
 					}
 				}
 			}
@@ -527,7 +524,6 @@
 
 			if ($view_mode == "unread" && $feed != -6) {
 				$view_query_part = " unread = true AND ";
-				$disable_offsets = !$api_request && get_pref("CDM_AUTO_CATCHUP") && get_pref("CDM_EXPANDED");
 			}
 
 			if ($limit > 0) {
@@ -735,7 +731,7 @@
 					$sanity_interval_qpart = "date_entered >= DATE_SUB(NOW(), INTERVAL 1 hour) AND";
 				}
 
-				if (!$search && !$disable_offsets) {
+				if (!$search) {
 					// if previous topmost article id changed that means our current pagination is no longer valid
 					$query = "SELECT DISTINCT
 							ttrss_feeds.title,
@@ -773,10 +769,6 @@
 							return array(-1, $feed_title, $feed_site_url, $last_error, $last_updated, $search_words, $first_id);
 						}
 					}
-				}
-
-				if ($disable_offsets) {
-					$offset_query_part = "";
 				}
 
 				$query = "SELECT DISTINCT

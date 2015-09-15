@@ -686,8 +686,7 @@ class API extends Handler {
 				"offset" => $offset,
 				"since_id" => $since_id,
 				"include_children" => $include_nested,
-				"check_first_id" => $check_first_id,
-				"api_request" => true
+				"check_first_id" => $check_first_id
 			);
 
 			$qfh_ret = queryFeedHeadlines($params);
