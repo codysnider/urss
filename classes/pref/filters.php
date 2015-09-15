@@ -151,7 +151,7 @@ class Pref_Filters extends Handler_Protected {
 					$tmp .= "<td width='5%' align='center'><img style='cursor : pointer' title='".__("Preview article")."'
 						src='images/information.png' onclick='openArticlePopup($id)'></td><td>";
 
-					foreach ($filter['rules'] as $rule) {
+					/*foreach ($filter['rules'] as $rule) {
 						$reg_exp = str_replace('/', '\/', $rule["reg_exp"]);
 
 						$line["title"] = preg_replace("/($reg_exp)/i",
@@ -159,7 +159,7 @@ class Pref_Filters extends Handler_Protected {
 
 						$content_preview = preg_replace("/($reg_exp)/i",
 							"<span class=\"highlight\">$1</span>", $content_preview);
-					}
+					}*/
 
 					$tmp .= "<strong>" . $line["title"] . "</strong><br/>";
 					$tmp .= $line['feed_title'] . ", " . mb_substr($line["date_entered"], 0, 16);
