@@ -1461,8 +1461,10 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<hr>";
 
+		$opml_export_filename = "TinyTinyRSS_".date("Y-m-d").".opml";
+
 		print "<p>" . __('Filename:') .
-            " <input type=\"text\" id=\"filename\" value=\"TinyTinyRSS.opml\" />&nbsp;" .
+            " <input type=\"text\" id=\"filename\" value=\"$opml_export_filename\" />&nbsp;" .
 				__('Include settings') . "<input type=\"checkbox\" id=\"settings\" checked=\"1\"/>";
 
 		print "</p><button dojoType=\"dijit.form.Button\"

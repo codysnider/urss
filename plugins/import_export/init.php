@@ -106,11 +106,13 @@ class Import_Export extends Plugin implements IHandler {
 		if (file_exists($exportname)) {
 			header("Content-type: text/xml");
 
+			$timestamp_suffix = date("Y-m-d", filemtime($exportname));
+
 			if (function_exists('gzencode')) {
-				header("Content-Disposition: attachment; filename=TinyTinyRSS_exported.xml.gz");
+				header("Content-Disposition: attachment; filename=TinyTinyRSS_exported_${timestamp_suffix}.xml.gz");
 				echo gzencode(file_get_contents($exportname));
 			} else {
-				header("Content-Disposition: attachment; filename=TinyTinyRSS_exported.xml");
+				header("Content-Disposition: attachment; filename=TinyTinyRSS_exported_${timestamp_suffix}.xml");
 				echo file_get_contents($exportname);
 			}
 		} else {
