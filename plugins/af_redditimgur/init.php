@@ -261,7 +261,10 @@ class Af_RedditImgur extends Plugin {
 
 						$tmp = fetch_file_contents($content_link->getAttribute("href"));
 
-						if ($tmp) {
+						//_debug("tmplen: " . mb_strlen($tmp));
+
+						if ($tmp && mb_strlen($tmp) < 65535 * 4) {
+
 							$r = new Readability($tmp, $content_link->getAttribute("href"));
 
 							if ($r->init()) {
