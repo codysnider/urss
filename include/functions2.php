@@ -824,6 +824,7 @@
 							marked,
 							num_comments,
 							comments,
+							int_id,
 							tag_cache,
 							label_cache,
 							link,
