@@ -133,7 +133,7 @@ class PluginHost {
 			return array();
 		}
 	}
-	function load_all($kind, $owner_uid = false) {
+	function load_all($kind, $owner_uid = false, $skip_init = false) {
 
 		$plugins = array_merge(glob("plugins/*"), glob("plugins.local/*"));
 		$plugins = array_filter($plugins, "is_dir");
@@ -141,10 +141,10 @@ class PluginHost {
 
 		asort($plugins);
 
-		$this->load(join(",", $plugins), $kind, $owner_uid);
+		$this->load(join(",", $plugins), $kind, $owner_uid, $skip_init);
 	}
 
-	function load($classlist, $kind, $owner_uid = false) {
+	function load($classlist, $kind, $owner_uid = false, $skip_init = false) {
 		$plugins = explode(",", $classlist);
 
 		$this->owner_uid = (int) $owner_uid;
@@ -181,18 +181,18 @@ class PluginHost {
 					switch ($kind) {
 					case $this::KIND_SYSTEM:
 						if ($this->is_system($plugin)) {
-							$plugin->init($this);
+							if (!$skip_init) $plugin->init($this);
 							$this->register_plugin($class, $plugin);
 						}
 						break;
 					case $this::KIND_USER:
 						if (!$this->is_system($plugin)) {
-							$plugin->init($this);
+							if (!$skip_init) $plugin->init($this);
 							$this->register_plugin($class, $plugin);
 						}
 						break;
 					case $this::KIND_ALL:
-						$plugin->init($this);
+						if (!$skip_init) $plugin->init($this);
 						$this->register_plugin($class, $plugin);
 						break;
 					}
