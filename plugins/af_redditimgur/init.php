@@ -88,9 +88,8 @@ class Af_RedditImgur extends Plugin {
 
 					if ($tmp) {
 						$tmpdoc = new DOMDocument();
-						@$tmpdoc->loadHTML($tmp);
 
-						if ($tmpdoc) {
+						if (@$tmpdoc->loadHTML($tmp)) {
 							$tmpxpath = new DOMXPath($tmpdoc);
 
 							$source_meta = $tmpxpath->query("//meta[@name='twitter:player:stream' and contains(@content, '.mp4')]")->item(0);
@@ -177,9 +176,8 @@ class Af_RedditImgur extends Plugin {
 
 					if ($album_content) {
 						$adoc = new DOMDocument();
-						@$adoc->loadHTML($album_content);
 
-						if ($adoc) {
+						if (@$adoc->loadHTML($album_content)) {
 							$axpath = new DOMXPath($adoc);
 							$aentries = $axpath->query("//meta[@property='og:image']");
 							$urls = array();
@@ -207,6 +205,20 @@ class Af_RedditImgur extends Plugin {
 							}
 						}
 					}
+				}
+
+				// wtf is this even
+				if (preg_match("/^https?:\/\/gyazo\.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches)) {
+					$img_id = $matches[1];
+
+					$img = $doc->createElement('img');
+					$img->setAttribute("src", "https://i.gyazo.com/$img_id.jpg");
+
+					$br = $doc->createElement('br');
+					$entry->parentNode->insertBefore($img, $entry);
+					$entry->parentNode->insertBefore($br, $entry);
+
+					$found = true;
 				}
 			}
 
