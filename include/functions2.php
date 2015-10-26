@@ -858,7 +858,7 @@
 	}
 
 	function iframe_whitelisted($entry) {
-		$whitelist = array("youtube.com", "youtu.be", "vimeo.com");
+		$whitelist = array("youtube.com", "youtu.be", "vimeo.com", "player.vimeo.com");
 
 		@$src = parse_url($entry->getAttribute("src"), PHP_URL_HOST);
 
