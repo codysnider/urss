@@ -35,7 +35,8 @@ function loadMoreHeadlines() {
 			offset = unread_in_buffer;
 		} else if (_search_query) {
 			offset = num_all;
-		} else if (view_mode == "adaptive") {
+		} else if (view_mode == "adaptive" && !(getActiveFeedId() == -1 && !activeFeedIsCat())) {
+			// ^ starred feed shows both unread & read articles in adaptive mode
 			offset = num_unread > 0 ? unread_in_buffer : num_all;
 		} else {
 			offset = num_all;
