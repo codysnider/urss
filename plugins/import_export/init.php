@@ -241,10 +241,13 @@ class Import_Export extends Plugin implements IHandler {
 					$article = array();
 
 					foreach ($article_node->childNodes as $child) {
-						if ($child->nodeName != 'label_cache')
-							$article[$child->nodeName] = db_escape_string($child->nodeValue);
-						else
+						if ($child->nodeName == 'content') {
+							$article[$child->nodeName] = db_escape_string($child->nodeValue, false);
+						} else if ($child->nodeName == 'label_cache') {
 							$article[$child->nodeName] = $child->nodeValue;
+						} else {
+							$article[$child->nodeName] = db_escape_string($child->nodeValue);
+						}
 					}
 
 					//print_r($article);
@@ -350,7 +353,6 @@ class Import_Export extends Plugin implements IHandler {
 								$score = (int) $article['score'];
 
 								$tag_cache = $article['tag_cache'];
-								$label_cache = db_escape_string($article['label_cache']);
 								$note = $article['note'];
 
 								//print "Importing " . $article['title'] . "<br/>";
@@ -363,9 +365,9 @@ class Import_Export extends Plugin implements IHandler {
 										published, score, tag_cache, label_cache, uuid, note)
 									VALUES ($ref_id, $owner_uid, $feed, false,
 										NULL, $marked, $published, $score, '$tag_cache',
-											'$label_cache', '', '$note')");
+											'', '', '$note')");
 
-								$label_cache = json_decode($label_cache, true);
+								$label_cache = json_decode($article['label_cache'], true);
 
 								if (is_array($label_cache) && $label_cache["no-labels"] != 1) {
 									foreach ($label_cache as $label) {
