@@ -456,7 +456,7 @@
 							'method' => 'GET',
 							'protocol_version'=> 1.1
 					  )));
-			} 
+			}
 
 			$old_error = error_get_last();
 
@@ -1582,7 +1582,8 @@
 			FROM ttrss_labels2 LEFT JOIN ttrss_user_labels2 ON
 				(ttrss_labels2.id = label_id)
 				LEFT JOIN ttrss_user_entries AS u1 ON u1.ref_id = article_id
-				WHERE ttrss_labels2.owner_uid = $owner_uid GROUP BY ttrss_labels2.id,
+				WHERE ttrss_labels2.owner_uid = $owner_uid AND u1.owner_uid = $owner_uid
+				GROUP BY ttrss_labels2.id,
 					ttrss_labels2.caption");
 
 		while ($line = db_fetch_assoc($result)) {
