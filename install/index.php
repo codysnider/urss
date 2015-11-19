@@ -67,17 +67,13 @@
 			array_push($errors, "PHP support for hash() function is required but was not found.");
 		}
 
-		if (!function_exists("ctype_lower")) {
-			array_push($errors, "PHP support for ctype functions are required by HTMLPurifier.");
-		}
-
 		if (!function_exists("iconv")) {
 			array_push($errors, "PHP support for iconv is required to handle multiple charsets.");
 		}
 
-		/* if (ini_get("safe_mode")) {
-			array_push($errors, "PHP safe mode setting is not supported.");
-		} */
+		if (ini_get("safe_mode")) {
+			array_push($errors, "PHP safe mode setting is obsolete and not supported by tt-rss.");
+		}
 
 		if (!class_exists("DOMDocument")) {
 			array_push($errors, "PHP support for DOMDocument is required, but was not found.");

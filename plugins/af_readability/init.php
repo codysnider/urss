@@ -106,8 +106,7 @@ class Af_Readability extends Plugin {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_HEADER, true);
 			curl_setopt($ch, CURLOPT_NOBODY, true);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION,
-				!ini_get("safe_mode") && !ini_get("open_basedir"));
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
 			curl_setopt($ch, CURLOPT_USERAGENT, SELF_USER_AGENT);
 
 			@$result = curl_exec($ch);

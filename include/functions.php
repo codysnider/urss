@@ -351,16 +351,7 @@
 
 			$fetch_curl_used = true;
 
-			if (ini_get("safe_mode") || ini_get("open_basedir") || defined("FORCE_GETURL")) {
-				$new_url = geturl($url);
-				if (!$new_url) {
-				    // geturl has already populated $fetch_last_error
-				    return false;
-				}
-				$ch = curl_init($new_url);
-			} else {
-				$ch = curl_init($url);
-			}
+			$ch = curl_init($url);
 
 			if ($timestamp && !$post_query) {
 				curl_setopt($ch, CURLOPT_HTTPHEADER,
@@ -369,7 +360,7 @@
 
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout ? $timeout : FILE_FETCH_CONNECT_TIMEOUT);
 			curl_setopt($ch, CURLOPT_TIMEOUT, $timeout ? $timeout : FILE_FETCH_TIMEOUT);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("safe_mode") && !ini_get("open_basedir"));
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
 			curl_setopt($ch, CURLOPT_MAXREDIRS, 20);
 			curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -379,7 +370,7 @@
 			curl_setopt($ch, CURLOPT_ENCODING, "");
 			//curl_setopt($ch, CURLOPT_REFERER, $url);
 
-			if (!ini_get("safe_mode") && !ini_get("open_basedir")) {
+			if (!ini_get("open_basedir")) {
 				curl_setopt($ch, CURLOPT_COOKIEJAR, "/dev/null");
 			}
 
