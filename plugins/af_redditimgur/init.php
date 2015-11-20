@@ -244,7 +244,7 @@ class Af_RedditImgur extends Plugin {
 
 			$found = $this->inline_stuff($article, $doc, $xpath);
 
-			if (function_exists("curl_init") && !$found && $this->host->get($this, "enable_readability") &&
+			if (!defined('NO_CURL') && function_exists("curl_init") && !$found && $this->host->get($this, "enable_readability") &&
 				mb_strlen(strip_tags($article["content"])) <= 150) {
 
 				if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");

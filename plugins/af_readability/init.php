@@ -100,13 +100,15 @@ class Af_Readability extends Plugin {
 
 		if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
 
-		if (function_exists("curl_init")) {
+		if (!defined('NO_CURL') && function_exists('curl_init') && !ini_get("open_basedir")) {
+
 			$ch = curl_init($article["link"]);
+
 			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_HEADER, true);
 			curl_setopt($ch, CURLOPT_NOBODY, true);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 			curl_setopt($ch, CURLOPT_USERAGENT, SELF_USER_AGENT);
 
 			@$result = curl_exec($ch);

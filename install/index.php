@@ -325,6 +325,10 @@
 			array_push($notices, "It is highly recommended to enable support for CURL in PHP.");
 		}
 
+		if (function_exists("curl_init") && ini_get("open_basedir")) {
+			array_push($notices, "CURL and open_basedir combination breaks support for HTTP redirects. See the FAQ for more information.");
+		}
+
 		if (count($notices) > 0) {
 			print_notice("Configuration check succeeded with minor problems:");
 

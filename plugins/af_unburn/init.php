@@ -17,7 +17,7 @@ class Af_Unburn extends Plugin {
 	function hook_article_filter($article) {
 		$owner_uid = $article["owner_uid"];
 
-		if (!function_exists("curl_init") || ini_get("open_basedir"))
+		if (defined('NO_CURL') || !function_exists("curl_init") || ini_get("open_basedir"))
 			return $article;
 
 		if ((strpos($article["link"], "feedproxy.google.com") !== FALSE ||
