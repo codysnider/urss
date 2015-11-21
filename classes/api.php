@@ -210,6 +210,8 @@ class API extends Handler {
 
 			$_SESSION['hasSandbox'] = $has_sandbox;
 
+			$skip_first_id_check = false;
+
 			$override_order = false;
 			switch ($_REQUEST["order_by"]) {
 				case "title":
@@ -217,6 +219,7 @@ class API extends Handler {
 					break;
 				case "date_reverse":
 					$override_order = "score DESC, date_entered, updated";
+					$skip_first_id_check = true;
 					break;
 				case "feed_dates":
 					$override_order = "updated DESC";
@@ -230,7 +233,7 @@ class API extends Handler {
 			list($headlines, $headlines_header) = $this->api_get_headlines($feed_id, $limit, $offset,
 				$filter, $is_cat, $show_excerpt, $show_content, $view_mode, $override_order,
 				$include_attachments, $since_id, $search,
-				$include_nested, $sanitize_content, $force_update, $excerpt_length, $check_first_id);
+				$include_nested, $sanitize_content, $force_update, $excerpt_length, $check_first_id, $skip_first_id_check);
 
 			if ($include_header) {
 				$this->wrap(self::STATUS_OK, array($headlines_header, $headlines));
@@ -644,7 +647,7 @@ class API extends Handler {
 				$filter, $is_cat, $show_excerpt, $show_content, $view_mode, $order,
 				$include_attachments, $since_id,
 				$search = "", $include_nested = false, $sanitize_content = true,
-				$force_update = false, $excerpt_length = 100, $check_first_id = false) {
+				$force_update = false, $excerpt_length = 100, $check_first_id = false, $skip_first_id_check = false) {
 
 			if ($force_update && $feed_id > 0 && is_numeric($feed_id)) {
 				// Update the feed if required with some basic flood control
@@ -686,7 +689,8 @@ class API extends Handler {
 				"offset" => $offset,
 				"since_id" => $since_id,
 				"include_children" => $include_nested,
-				"check_first_id" => $check_first_id
+				"check_first_id" => $check_first_id,
+				"skip_first_id_check" => $skip_first_id_check
 			);
 
 			$qfh_ret = queryFeedHeadlines($params);

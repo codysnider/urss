@@ -465,6 +465,7 @@
 		$override_vfeed = isset($params["override_vfeed"]) ? $params["override_vfeed"] : false;
 		$start_ts = isset($params["start_ts"]) ? $params["start_ts"] : false;
 		$check_first_id = isset($params["check_first_id"]) ? $params["check_first_id"] : false;
+		$skip_first_id_check = isset($params["skip_first_id_check"]) ? $params["skip_first_id_check"] : false;
 
 		$ext_tables_part = "";
 		$query_strategy_part = "";
@@ -731,7 +732,7 @@
 					$sanity_interval_qpart = "date_entered >= DATE_SUB(NOW(), INTERVAL 1 hour) AND";
 				}
 
-				if (!$search) {
+				if (!$search && !$skip_first_id_check) {
 					// if previous topmost article id changed that means our current pagination is no longer valid
 					$query = "SELECT DISTINCT
 							ttrss_feeds.title,
