@@ -2,7 +2,7 @@
 
 class API extends Handler {
 
-	const API_LEVEL  = 12;
+	const API_LEVEL  = 13;
 
 	const STATUS_OK  = 0;
 	const STATUS_ERR = 1;
@@ -325,13 +325,17 @@ class API extends Handler {
 	function getArticle() {
 
 		$article_id = join(",", array_filter(explode(",", $this->dbh->escape_string($_REQUEST["article_id"])), is_numeric));
+		$sanitize_content = !isset($_REQUEST["sanitize"]) ||
+			sql_bool_to_bool($_REQUEST["sanitize"]);
 
 		if ($article_id) {
 
 			$query = "SELECT id,title,link,content,feed_id,comments,int_id,
 				marked,unread,published,score,note,lang,
 				".SUBSTRING_FOR_DATE."(updated,1,16) as updated,
-				author,(SELECT title FROM ttrss_feeds WHERE id = feed_id) AS feed_title
+				author,(SELECT title FROM ttrss_feeds WHERE id = feed_id) AS feed_title,
+				(SELECT site_url FROM ttrss_feeds WHERE id = feed_id) AS site_url,
+				(SELECT hide_images FROM ttrss_feeds WHERE id = feed_id) AS hide_images
 				FROM ttrss_entries,ttrss_user_entries
 				WHERE	id IN ($article_id) AND ref_id = id AND owner_uid = " .
 					$_SESSION["uid"] ;
@@ -357,7 +361,6 @@ class API extends Handler {
 						"comments" => $line["comments"],
 						"author" => $line["author"],
 						"updated" => (int) strtotime($line["updated"]),
-						"content" => $line["content"],
 						"feed_id" => $line["feed_id"],
 						"attachments" => $attachments,
 						"score" => (int)$line["score"],
@@ -365,6 +368,15 @@ class API extends Handler {
 						"note" => $line["note"],
 						"lang" => $line["lang"]
 					);
+
+					if ($sanitize_content) {
+						$article["content"] = sanitize(
+							$line["content"],
+							sql_bool_to_bool($line['hide_images']),
+							false, $line["site_url"], false, $line["id"]);
+					} else {
+						$article["content"] = $line["content"];
+					}
 
 					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_RENDER_ARTICLE_API) as $p) {
 						$article = $p->hook_render_article_api(array("article" => $article));
