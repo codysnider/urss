@@ -67,17 +67,13 @@
 			array_push($errors, "PHP support for hash() function is required but was not found.");
 		}
 
-		if (!function_exists("ctype_lower")) {
-			array_push($errors, "PHP support for ctype functions are required by HTMLPurifier.");
-		}
-
 		if (!function_exists("iconv")) {
 			array_push($errors, "PHP support for iconv is required to handle multiple charsets.");
 		}
 
-		/* if (ini_get("safe_mode")) {
-			array_push($errors, "PHP safe mode setting is not supported.");
-		} */
+		if (ini_get("safe_mode")) {
+			array_push($errors, "PHP safe mode setting is obsolete and not supported by tt-rss.");
+		}
 
 		if (!class_exists("DOMDocument")) {
 			array_push($errors, "PHP support for DOMDocument is required, but was not found.");
@@ -327,6 +323,10 @@
 
 		if (!function_exists("curl_init")) {
 			array_push($notices, "It is highly recommended to enable support for CURL in PHP.");
+		}
+
+		if (function_exists("curl_init") && ini_get("open_basedir")) {
+			array_push($notices, "CURL and open_basedir combination breaks support for HTTP redirects. See the FAQ for more information.");
 		}
 
 		if (count($notices) > 0) {

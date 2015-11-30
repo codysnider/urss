@@ -43,8 +43,12 @@ class Pref_Filters extends Handler_Protected {
 		return;
 	}
 
+	function testFilterDo() {
+		require_once "include/rssfuncs.php";
 
-	function testFilter() {
+		$offset = (int) db_escape_string($_REQUEST["offset"]);
+		$limit = (int) db_escape_string($_REQUEST["limit"]);
+
 		$filter = array();
 
 		$filter["enabled"] = true;
@@ -94,24 +98,14 @@ class Pref_Filters extends Handler_Protected {
 			}
 		}
 
-		$found = 0;
-		$offset = 0;
-		$limit = 30;
-		$started = time();
-
-		print __("Articles matching this filter:");
-
-		require_once "include/rssfuncs.php";
-
-		print "<div class=\"filterTestHolder\">";
-		print "<table width=\"100%\" cellspacing=\"0\" id=\"prefErrorFeedList\">";
-
 		$glue = $filter['match_any_rule'] ? " OR " :  " AND ";
 		$scope_qpart = join($glue, $scope_qparts);
 
 		if (!$scope_qpart) $scope_qpart = "true";
 
-		while ($found < $limit && $offset < $limit * 10 && time() - $started < ini_get("max_execution_time") * 0.7) {
+		$rv = array();
+
+		//while ($found < $limit && $offset < $limit * 1000 && time() - $started < ini_get("max_execution_time") * 0.7) {
 
 			$result = db_query("SELECT ttrss_entries.id,
 					ttrss_entries.title,
@@ -119,6 +113,7 @@ class Pref_Filters extends Handler_Protected {
 					ttrss_feeds.title AS feed_title,
 					ttrss_feed_categories.id AS cat_id,
 					content,
+					date_entered,
 					link,
 					author,
 					tag_cache
@@ -139,7 +134,7 @@ class Pref_Filters extends Handler_Protected {
 
 				if (count($rc) > 0) {
 
-					$line["content_preview"] = truncate_string(strip_tags($line["content"]), 100, '...');
+					$line["content_preview"] = truncate_string(strip_tags($line["content"]), 200, '&hellip;');
 
 					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_QUERY_HEADLINES) as $p) {
 						$line = $p->hook_query_headlines($line, 100);
@@ -147,16 +142,16 @@ class Pref_Filters extends Handler_Protected {
 
 					$content_preview = $line["content_preview"];
 
-					if ($line["feed_title"]) $feed_title = "(" . $line["feed_title"] . ")";
+					$tmp = "<tr style='margin-top : 5px'>";
 
-					print "<tr>";
+					#$tmp .= "<td width='5%' align='center'><input dojoType=\"dijit.form.CheckBox\"
+					#	checked=\"1\" disabled=\"1\" type=\"checkbox\"></td>";
 
-					print "<td width='5%' align='center'><input dojoType=\"dijit.form.CheckBox\"
-						checked=\"1\" disabled=\"1\" type=\"checkbox\"></td>";
-					print "<td>";
+					$id = $line['id'];
+					$tmp .= "<td width='5%' align='center'><img style='cursor : pointer' title='".__("Preview article")."'
+						src='images/information.png' onclick='openArticlePopup($id)'></td><td>";
 
 					/*foreach ($filter['rules'] as $rule) {
-						$reg_exp = $rule['reg_exp'];
 						$reg_exp = str_replace('/', '\/', $rule["reg_exp"]);
 
 						$line["title"] = preg_replace("/($reg_exp)/i",
@@ -166,25 +161,42 @@ class Pref_Filters extends Handler_Protected {
 							"<span class=\"highlight\">$1</span>", $content_preview);
 					}*/
 
-					print $line["title"];
-					print "<div class='small' style='float : right'>" . $feed_title . "</div>";
-					print "<div class=\"insensitive\">" . $content_preview . "</div>";
-					print " " . mb_substr($line["date_entered"], 0, 16);
+					$tmp .= "<strong>" . $line["title"] . "</strong><br/>";
+					$tmp .= $line['feed_title'] . ", " . mb_substr($line["date_entered"], 0, 16);
+					$tmp .= "<div class='insensitive'>" . $content_preview . "</div>";
+					$tmp .= "</td></tr>";
 
-					print "</td></tr>";
+					array_push($rv, $tmp);
 
-					$found++;
+					/*array_push($rv, array("title" => $line["title"],
+						"content" => $content_preview,
+						"date" => $line["date_entered"],
+						"feed" => $line["feed_title"])); */
+
 				}
 			}
 
-			$offset += $limit;
-		}
+			//$offset += $limit;
+		//}
 
-		if ($found == 0) {
+		/*if ($found == 0) {
 			print "<tr><td align='center'>" .
 				__("No recent articles matching this filter have been found.");
-		}
+		}*/
 
+		print json_encode($rv);
+	}
+
+	function testFilter() {
+
+		if (isset($_REQUEST["offset"])) return $this->testFilterDo();
+
+		//print __("Articles matching this filter:");
+
+		print "<div><img id='prefFilterLoadingIndicator' src='images/indicator_tiny.gif'>&nbsp;<span id='prefFilterProgressMsg'>Looking for articles...</span></div>";
+
+		print "<br/><div class=\"filterTestHolder\">";
+		print "<table width=\"100%\" cellspacing=\"0\" id=\"prefFilterTestResultList\">";
 		print "</table></div>";
 
 		print "<div style='text-align : center'>";

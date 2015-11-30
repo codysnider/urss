@@ -148,7 +148,8 @@ class Feeds extends Handler_Protected {
 
 	private function format_headlines_list($feed, $method, $view_mode, $limit, $cat_view,
 					$next_unread_feed, $offset, $vgr_last_feed = false,
-					$override_order = false, $include_children = false, $check_first_id = false) {
+					$override_order = false, $include_children = false, $check_first_id = false,
+					$skip_first_id_check = false) {
 
 		$disable_cache = false;
 
@@ -252,7 +253,8 @@ class Feeds extends Handler_Protected {
 				"override_order" => $override_order,
 				"offset" => $offset,
 				"include_children" => $include_children,
-				"check_first_id" => $check_first_id
+				"check_first_id" => $check_first_id,
+				"skip_first_id_check" => $skip_first_id_check
 			);
 
 			$qfh_ret = queryFeedHeadlines($params);
@@ -903,6 +905,7 @@ class Feeds extends Handler_Protected {
 		$reply['headlines'] = array();
 
 		$override_order = false;
+		$skip_first_id_check = false;
 
 		switch ($order_by) {
 		case "title":
@@ -910,6 +913,7 @@ class Feeds extends Handler_Protected {
 			break;
 		case "date_reverse":
 			$override_order = "score DESC, date_entered, updated";
+			$skip_first_id_check = true;
 			break;
 		case "feed_dates":
 			$override_order = "updated DESC";
@@ -920,7 +924,7 @@ class Feeds extends Handler_Protected {
 
 		$ret = $this->format_headlines_list($feed, $method,
 			$view_mode, $limit, $cat_view, $next_unread_feed, $offset,
-			$vgroup_last_feed, $override_order, true, $check_first_id);
+			$vgroup_last_feed, $override_order, true, $check_first_id, $skip_first_id_check);
 
 		//$topmost_article_ids = $ret[0];
 		$headlines_count = $ret[1];

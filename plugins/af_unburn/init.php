@@ -17,23 +17,19 @@ class Af_Unburn extends Plugin {
 	function hook_article_filter($article) {
 		$owner_uid = $article["owner_uid"];
 
-		if (!function_exists("curl_init"))
+		if (defined('NO_CURL') || !function_exists("curl_init") || ini_get("open_basedir"))
 			return $article;
 
 		if ((strpos($article["link"], "feedproxy.google.com") !== FALSE ||
 		  		strpos($article["link"], "/~r/") !== FALSE ||
 				strpos($article["link"], "feedsportal.com") !== FALSE)) {
 
-				if (ini_get("safe_mode") || ini_get("open_basedir")) {
-					$ch = curl_init(geturl($article["link"]));
-				} else {
-					$ch = curl_init($article["link"]);
-				}
+				$ch = curl_init($article["link"]);
 
 				curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 				curl_setopt($ch, CURLOPT_HEADER, true);
-				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("safe_mode") && !ini_get("open_basedir"));
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 				curl_setopt($ch, CURLOPT_USERAGENT, SELF_USER_AGENT);
 
 				if (defined('_CURL_HTTP_PROXY')) {
@@ -74,55 +70,6 @@ class Af_Unburn extends Plugin {
 		}
 
 		return $article;
-	}
-
-		function geturl($url){
-
-		(function_exists('curl_init')) ? '' : die('cURL Must be installed for geturl function to work. Ask your host to enable it or uncomment extension=php_curl.dll in php.ini');
-
-		$curl = curl_init();
-		$header[0] = "Accept: text/xml,application/xml,application/xhtml+xml,";
-		$header[0] .= "text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
-		$header[] = "Cache-Control: max-age=0";
-		$header[] = "Connection: keep-alive";
-		$header[] = "Keep-Alive: 300";
-		$header[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
-		$header[] = "Accept-Language: en-us,en;q=0.5";
-		$header[] = "Pragma: ";
-
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0 Firefox/5.0');
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-		curl_setopt($curl, CURLOPT_HEADER, true);
-		curl_setopt($curl, CURLOPT_REFERER, $url);
-		curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
-		curl_setopt($curl, CURLOPT_AUTOREFERER, true);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		//curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true); //CURLOPT_FOLLOWLOCATION Disabled...
-		curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-
-		$html = curl_exec($curl);
-
-		$status = curl_getinfo($curl);
-		curl_close($curl);
-
-		if($status['http_code']!=200){
-			if($status['http_code'] == 301 || $status['http_code'] == 302) {
-				list($header) = explode("\r\n\r\n", $html, 2);
-				$matches = array();
-				preg_match("/(Location:|URI:)[^(\n)]*/", $header, $matches);
-				$url = trim(str_replace($matches[1],"",$matches[0]));
-				$url_parsed = parse_url($url);
-				return (isset($url_parsed))? geturl($url):'';
-			}
-			$oline='';
-			foreach($status as $key=>$eline){$oline.='['.$key.']'.$eline.' ';}
-			$line =$oline." \r\n ".$url."\r\n-----------------\r\n";
-			$handle = @fopen('./curl.error.log', 'a');
-			fwrite($handle, $line);
-			return FALSE;
-		}
-		return $url;
 	}
 
 	function api_version() {

@@ -465,7 +465,7 @@
 		$override_vfeed = isset($params["override_vfeed"]) ? $params["override_vfeed"] : false;
 		$start_ts = isset($params["start_ts"]) ? $params["start_ts"] : false;
 		$check_first_id = isset($params["check_first_id"]) ? $params["check_first_id"] : false;
-		$api_request = isset($params["api_request"]) ? $params["api_request"] : false;
+		$skip_first_id_check = isset($params["skip_first_id_check"]) ? $params["skip_first_id_check"] : false;
 
 		$ext_tables_part = "";
 		$query_strategy_part = "";
@@ -494,7 +494,6 @@
 			}
 
 			$view_query_part = "";
-			$disable_offsets = false;
 
 			if ($view_mode == "adaptive") {
 				if ($search) {
@@ -508,7 +507,6 @@
 
 					if ($unread > 0) {
 						$view_query_part = " unread = true AND ";
-						$disable_offsets = !$api_request && get_pref("CDM_AUTO_CATCHUP") && get_pref("CDM_EXPANDED");
 					}
 				}
 			}
@@ -527,7 +525,6 @@
 
 			if ($view_mode == "unread" && $feed != -6) {
 				$view_query_part = " unread = true AND ";
-				$disable_offsets = !$api_request && get_pref("CDM_AUTO_CATCHUP") && get_pref("CDM_EXPANDED");
 			}
 
 			if ($limit > 0) {
@@ -608,9 +605,9 @@
 				$query_strategy_part = "unread = false AND last_read IS NOT NULL";
 
 				if (DB_TYPE == "pgsql") {
-					$query_strategy_part .= " AND date_entered > NOW() - INTERVAL '1 DAY' ";
+					$query_strategy_part .= " AND last_read > NOW() - INTERVAL '1 DAY' ";
 				} else {
-					$query_strategy_part .= " AND date_entered > DATE_SUB(NOW(), INTERVAL 1 DAY) ";
+					$query_strategy_part .= " AND last_read > DATE_SUB(NOW(), INTERVAL 1 DAY) ";
 				}
 
 				$vfeed_query_part = "ttrss_feeds.title AS feed_title,";
@@ -735,7 +732,7 @@
 					$sanity_interval_qpart = "date_entered >= DATE_SUB(NOW(), INTERVAL 1 hour) AND";
 				}
 
-				if (!$search && !$disable_offsets) {
+				if (!$search && !$skip_first_id_check) {
 					// if previous topmost article id changed that means our current pagination is no longer valid
 					$query = "SELECT DISTINCT
 							ttrss_feeds.title,
@@ -773,10 +770,6 @@
 							return array(-1, $feed_title, $feed_site_url, $last_error, $last_updated, $search_words, $first_id);
 						}
 					}
-				}
-
-				if ($disable_offsets) {
-					$offset_query_part = "";
 				}
 
 				$query = "SELECT DISTINCT
@@ -832,6 +825,7 @@
 							marked,
 							num_comments,
 							comments,
+							int_id,
 							tag_cache,
 							label_cache,
 							link,
@@ -865,7 +859,7 @@
 	}
 
 	function iframe_whitelisted($entry) {
-		$whitelist = array("youtube.com", "youtu.be", "vimeo.com");
+		$whitelist = array("youtube.com", "youtu.be", "vimeo.com", "player.vimeo.com");
 
 		@$src = parse_url($entry->getAttribute("src"), PHP_URL_HOST);
 
@@ -1953,9 +1947,9 @@
 									if (!$hide_images) {
 										$encsize = '';
 										if ($entry['height'] > 0)
-											$encsize .= ' height="' . intval($entry['width']) . '"';
+											$encsize .= ' height="' . intval($entry['height']) . '"';
 										if ($entry['width'] > 0)
-											$encsize .= ' width="' . intval($entry['height']) . '"';
+											$encsize .= ' width="' . intval($entry['width']) . '"';
 										$rv .= "<p><img
 										alt=\"".htmlspecialchars($entry["filename"])."\"
 										src=\"" .htmlspecialchars($entry["url"]) . "\"
@@ -2254,77 +2248,6 @@
 
 	function implements_interface($class, $interface) {
 		return in_array($interface, class_implements($class));
-	}
-
-	function geturl($url, $depth = 0, $nobody = true){
-
-		if ($depth == 20) return $url;
-
-		if (!function_exists('curl_init'))
-			return user_error('CURL Must be installed for geturl function to work. Ask your host to enable it or uncomment extension=php_curl.dll in php.ini', E_USER_ERROR);
-
-		$curl = curl_init();
-		$header[0] = "Accept: text/xml,application/xml,application/xhtml+xml,";
-		$header[0] .= "text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
-		$header[] = "Cache-Control: max-age=0";
-		$header[] = "Connection: keep-alive";
-		$header[] = "Keep-Alive: 300";
-		$header[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
-		$header[] = "Accept-Language: en-us,en;q=0.5";
-		$header[] = "Pragma: ";
-
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0 Firefox/5.0');
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-		curl_setopt($curl, CURLOPT_HEADER, true);
-		curl_setopt($curl, CURLOPT_NOBODY, $nobody);
-		curl_setopt($curl, CURLOPT_REFERER, $url);
-		curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
-		curl_setopt($curl, CURLOPT_AUTOREFERER, true);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		//curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true); //CURLOPT_FOLLOWLOCATION Disabled...
-		curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-
-		if (defined('_CURL_HTTP_PROXY')) {
-			curl_setopt($curl, CURLOPT_PROXY, _CURL_HTTP_PROXY);
-		}
-
-		$html = curl_exec($curl);
-
-		$status = curl_getinfo($curl);
-
-		if($status['http_code']!=200){
-
-			// idiot site not allowing http head
-			if($status['http_code'] == 405) {
-				curl_close($curl);
-				return geturl($url, $depth +1, false);
-			}
-
-			if($status['http_code'] == 301 || $status['http_code'] == 302) {
-				curl_close($curl);
-				list($header) = explode("\r\n\r\n", $html, 2);
-				$matches = array();
-				preg_match("/(Location:|URI:)[^(\n)]*/", $header, $matches);
-				$url = trim(str_replace($matches[1],"",$matches[0]));
-				$url_parsed = parse_url($url);
-				return (isset($url_parsed))? geturl($url, $depth + 1):'';
-			}
-
-			global $fetch_last_error;
-
-			$fetch_last_error = curl_errno($curl) . " " . curl_error($curl);
-			curl_close($curl);
-
-#			$oline='';
-#			foreach($status as $key=>$eline){$oline.='['.$key.']'.$eline.' ';}
-#			$line =$oline." \r\n ".$url."\r\n-----------------\r\n";
-#			$handle = @fopen('./curl.error.log', 'a');
-#			fwrite($handle, $line);
-			return FALSE;
-		}
-		curl_close($curl);
-		return $url;
 	}
 
 	function get_minified_js($files) {

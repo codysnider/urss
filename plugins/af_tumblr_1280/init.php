@@ -4,7 +4,7 @@ class Af_Tumblr_1280 extends Plugin {
 
 	function about() {
 		return array(1.0,
-			"Replace Tumblr pictures with largest size if available",
+			"Replace Tumblr pictures with largest size if available (requires CURL)",
 			"fox");
 	}
 
@@ -18,7 +18,8 @@ class Af_Tumblr_1280 extends Plugin {
 
 	function hook_article_filter($article) {
 
-		$owner_uid = $article["owner_uid"];
+		if (!function_exists("curl_init") || ini_get("open_basedir"))
+			return $article;
 
 		$charset_hack = '<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -46,8 +47,7 @@ class Af_Tumblr_1280 extends Plugin {
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 					curl_setopt($ch, CURLOPT_HEADER, true);
 					curl_setopt($ch, CURLOPT_NOBODY, true);
-					curl_setopt($ch, CURLOPT_FOLLOWLOCATION,
-						!ini_get("safe_mode") && !ini_get("open_basedir"));
+					curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 					curl_setopt($ch, CURLOPT_USERAGENT, SELF_USER_AGENT);
 
 					@$result = curl_exec($ch);

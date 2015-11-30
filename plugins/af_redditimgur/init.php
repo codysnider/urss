@@ -88,9 +88,8 @@ class Af_RedditImgur extends Plugin {
 
 					if ($tmp) {
 						$tmpdoc = new DOMDocument();
-						@$tmpdoc->loadHTML($tmp);
 
-						if ($tmpdoc) {
+						if (@$tmpdoc->loadHTML($tmp)) {
 							$tmpxpath = new DOMXPath($tmpdoc);
 
 							$source_meta = $tmpxpath->query("//meta[@name='twitter:player:stream' and contains(@content, '.mp4')]")->item(0);
@@ -177,9 +176,8 @@ class Af_RedditImgur extends Plugin {
 
 					if ($album_content) {
 						$adoc = new DOMDocument();
-						@$adoc->loadHTML($album_content);
 
-						if ($adoc) {
+						if (@$adoc->loadHTML($album_content)) {
 							$axpath = new DOMXPath($adoc);
 							$aentries = $axpath->query("//meta[@property='og:image']");
 							$urls = array();
@@ -208,6 +206,20 @@ class Af_RedditImgur extends Plugin {
 						}
 					}
 				}
+
+				// wtf is this even
+				if (preg_match("/^https?:\/\/gyazo\.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches)) {
+					$img_id = $matches[1];
+
+					$img = $doc->createElement('img');
+					$img->setAttribute("src", "https://i.gyazo.com/$img_id.jpg");
+
+					$br = $doc->createElement('br');
+					$entry->parentNode->insertBefore($img, $entry);
+					$entry->parentNode->insertBefore($br, $entry);
+
+					$found = true;
+				}
 			}
 
 			// remove tiny thumbnails
@@ -232,7 +244,7 @@ class Af_RedditImgur extends Plugin {
 
 			$found = $this->inline_stuff($article, $doc, $xpath);
 
-			if (function_exists("curl_init") && !$found && $this->host->get($this, "enable_readability") &&
+			if (!defined('NO_CURL') && function_exists("curl_init") && !$found && $this->host->get($this, "enable_readability") &&
 				mb_strlen(strip_tags($article["content"])) <= 150) {
 
 				if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
@@ -250,8 +262,7 @@ class Af_RedditImgur extends Plugin {
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 					curl_setopt($ch, CURLOPT_HEADER, true);
 					curl_setopt($ch, CURLOPT_NOBODY, true);
-					curl_setopt($ch, CURLOPT_FOLLOWLOCATION,
-						!ini_get("safe_mode") && !ini_get("open_basedir"));
+					curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
 					curl_setopt($ch, CURLOPT_USERAGENT, SELF_USER_AGENT);
 
 					@$result = curl_exec($ch);
@@ -261,7 +272,10 @@ class Af_RedditImgur extends Plugin {
 
 						$tmp = fetch_file_contents($content_link->getAttribute("href"));
 
-						if ($tmp) {
+						//_debug("tmplen: " . mb_strlen($tmp));
+
+						if ($tmp && mb_strlen($tmp) < 65535 * 4) {
+
 							$r = new Readability($tmp, $content_link->getAttribute("href"));
 
 							if ($r->init()) {

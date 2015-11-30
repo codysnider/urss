@@ -35,7 +35,8 @@ function loadMoreHeadlines() {
 			offset = unread_in_buffer;
 		} else if (_search_query) {
 			offset = num_all;
-		} else if (view_mode == "adaptive") {
+		} else if (view_mode == "adaptive" && !(getActiveFeedId() == -1 && !activeFeedIsCat())) {
+			// ^ starred feed shows both unread & read articles in adaptive mode
 			offset = num_unread > 0 ? unread_in_buffer : num_all;
 		} else {
 			offset = num_all;
@@ -59,6 +60,7 @@ function viewfeed(params) {
 		var infscroll_req = params.infscroll_req;
 		var can_wait = params.can_wait;
 		var viewfeed_debug = params.viewfeed_debug;
+		var method = params.method;
 
 		if (is_cat == undefined)
 			is_cat = false;
@@ -102,6 +104,8 @@ function viewfeed(params) {
 		var query = "?op=feeds&method=view&feed=" + param_escape(feed) + "&" +
 			toolbar_query;
 
+		if (method) query += "&m=" + param_escape(method);
+
 		if (offset > 0) {
 			if (current_first_id) {
 				query = query + "&fid=" + param_escape(current_first_id);
@@ -123,7 +127,7 @@ function viewfeed(params) {
 					query = query + "&vgrlf=" + param_escape(vgroup_last_feed);
 				}
 			} else {
-				if (!is_cat && feed == getActiveFeedId()) {
+				if (!is_cat && feed == getActiveFeedId() && !params.method) {
 					query = query + "&m=ForceUpdate";
 				}
 			}

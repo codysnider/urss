@@ -123,7 +123,7 @@ class RPC extends Handler_Protected {
 		$key = $_REQUEST['key'];
 		$value = str_replace("\n", "<br/>", $_REQUEST['value']);
 
-		set_pref($key, $value, $_SESSION['uid'], $key != 'USER_STYLESHEET');
+		set_pref($key, $value, false, $key != 'USER_STYLESHEET');
 
 		print json_encode(array("param" =>$key, "value" => $value));
 	}

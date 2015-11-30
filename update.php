@@ -365,7 +365,7 @@
 
 	if (isset($options["list-plugins"])) {
 		$tmppluginhost = new PluginHost();
-		$tmppluginhost->load_all($tmppluginhost::KIND_ALL);
+		$tmppluginhost->load_all($tmppluginhost::KIND_ALL, false);
 		$enabled = array_map("trim", explode(",", PLUGINS));
 
 		echo "List of all available plugins:\n";

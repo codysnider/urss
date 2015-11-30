@@ -146,11 +146,11 @@ function catchupAllFeeds() {
 	}
 }
 
-function viewCurrentFeed() {
-	console.log("viewCurrentFeed");
+function viewCurrentFeed(method) {
+	console.log("viewCurrentFeed: " + method);
 
 	if (getActiveFeedId() != undefined) {
-		viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat()});
+		viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat(), method: method});
 	}
 	return false; // block unneeded form submits
 }
