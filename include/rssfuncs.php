@@ -230,6 +230,8 @@
 		$result = db_query("SELECT feed_url,auth_pass,auth_pass_encrypted
 					FROM ttrss_feeds WHERE id = '$feed'");
 
+		if (pg_num_rows($result == 0)) return false;
+
 		$auth_pass_encrypted = sql_bool_to_bool(db_fetch_result($result,
 			0, "auth_pass_encrypted"));
 
