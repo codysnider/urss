@@ -24,6 +24,10 @@ class Db_Mysqli implements IDb {
 	}
 
 	function query($query, $die_on_error = true) {
+		global $last_query;
+
+		if (strpos($query, "ttrss_error_log") === FALSE) $last_query = $query;
+
 		$result = @mysqli_query($this->link, $query);
 		if (!$result) {
 			$error = @mysqli_error($this->link);

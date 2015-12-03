@@ -1,10 +1,13 @@
 <?php
 function ttrss_error_handler($errno, $errstr, $file, $line, $context) {
 	global $logger;
+	global $last_query;
 
 	if (error_reporting() == 0 || !$errno) return false;
 
 	$file = substr(str_replace(dirname(dirname(__FILE__)), "", $file), 1);
+
+	if ($last_query) $errstr .= " [Last query: $last_query]";
 
 	if (class_exists("Logger"))
 		return Logger::get()->log_error($errno, $errstr, $file, $line, $context);
@@ -12,6 +15,7 @@ function ttrss_error_handler($errno, $errstr, $file, $line, $context) {
 
 function ttrss_fatal_handler() {
 	global $logger;
+	global $last_query;
 
 	$error = error_get_last();
 
@@ -26,6 +30,8 @@ function ttrss_fatal_handler() {
 		$context = debug_backtrace();
 
 		$file = substr(str_replace(dirname(dirname(__FILE__)), "", $file), 1);
+
+		if ($last_query) $errstr .= " [Last query: $last_query]";
 
 		if (class_exists("Logger"))
 			return Logger::get()->log_error($errno, $errstr, $file, $line, $context);
