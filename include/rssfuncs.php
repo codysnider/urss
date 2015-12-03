@@ -1405,7 +1405,7 @@
 					array_push($matches, $action);
 
 					// if Stop action encountered, perform no further processing
-					if ($action["type"] == "stop") return $matches;
+					if (isset($action["type"]) && $action["type"] == "stop") return $matches;
 				}
 			}
 		}
