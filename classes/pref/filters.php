@@ -232,7 +232,7 @@ class Pref_Filters extends Handler_Protected {
 			$inverse = sql_bool_to_bool($line["inverse"]) ? "inverse" : "";
 
 			$rv .= "<span class='$inverse'>" . T_sprintf("%s on %s in %s %s",
-				strip_tags($line["reg_exp"]),
+				htmlspecialchars($line["reg_exp"]),
 				$line["field"],
 				$where,
 				sql_bool_to_bool($line["inverse"]) ? __("(inverse)") : "") . "</span>";
@@ -513,7 +513,7 @@ class Pref_Filters extends Handler_Protected {
 		$inverse = isset($rule["inverse"]) ? "inverse" : "";
 
 		return "<span class='filterRule $inverse'>" .
-			T_sprintf("%s on %s in %s %s", strip_tags($rule["reg_exp"]),
+			T_sprintf("%s on %s in %s %s", htmlspecialchars($rule["reg_exp"]),
 			$filter_type, $feed, isset($rule["inverse"]) ? __("(inverse)") : "") . "</span>";
 	}
 
@@ -618,7 +618,7 @@ class Pref_Filters extends Handler_Protected {
 			foreach ($rules as $rule) {
 				if ($rule) {
 
-					$reg_exp = strip_tags($this->dbh->escape_string(trim($rule["reg_exp"])));
+					$reg_exp = $this->dbh->escape_string(trim($rule["reg_exp"]), false);
 					$inverse = isset($rule["inverse"]) ? "true" : "false";
 
 					$filter_type = (int) $this->dbh->escape_string(trim($rule["filter_type"]));
