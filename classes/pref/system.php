@@ -31,7 +31,7 @@ class Pref_System extends Handler_Protected {
 		if (LOG_DESTINATION == "sql") {
 
 			$result = $this->dbh->query("SELECT errno, errstr, filename, lineno,
-				created_at, login FROM ttrss_error_log
+				created_at, login, context FROM ttrss_error_log
 				LEFT JOIN ttrss_users ON (owner_uid = ttrss_users.id)
 				ORDER BY ttrss_error_log.id DESC
 				LIMIT 100");
@@ -61,7 +61,7 @@ class Pref_System extends Handler_Protected {
 
 				print "<td class='errno'>" . Logger::$errornames[$line["errno"]] . " (" . $line["errno"] . ")</td>";
 				print "<td class='filename'>" . $line["filename"] . ":" . $line["lineno"] . "</td>";
-				print "<td class='errstr'>" . $line["errstr"] . "</td>";
+				print "<td class='errstr'>" . $line["errstr"] . "<hr/>" . nl2br($line["context"]) . "</td>";
 				print "<td class='login'>" . $line["login"] . "</td>";
 
 				print "<td class='timestamp'>" .

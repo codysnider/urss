@@ -1,4 +1,36 @@
 <?php
+function format_backtrace($trace) {
+	$rv = "";
+	$idx = 1;
+
+	if (is_array($trace)) {
+		foreach ($trace as $e) {
+			if (isset($e["file"]) && isset($e["line"])) {
+				$fmt_args = [];
+
+				if (is_array($e["args"])) {
+					foreach ($e["args"] as $a) {
+						if (!is_object($a)) {
+							array_push($fmt_args, $a);
+						} else {
+							array_push($fmt_args, "[" . get_class($a) . "]");
+						}
+					}
+				}
+
+				$filename = str_replace(dirname(__DIR__) . "/", "", $e["file"]);
+
+				$rv .= sprintf("%d. %s(%s): %s(%s)\n",
+					$idx, $filename, $e["line"], $e["function"], implode(", ", $fmt_args));
+
+				$idx++;
+			}
+		}
+	}
+
+	return $rv;
+}
+
 function ttrss_error_handler($errno, $errstr, $file, $line, $context) {
 	global $logger;
 	global $last_query;
@@ -8,6 +40,7 @@ function ttrss_error_handler($errno, $errstr, $file, $line, $context) {
 	$file = substr(str_replace(dirname(dirname(__FILE__)), "", $file), 1);
 
 	if ($last_query) $errstr .= " [Last query: $last_query]";
+	$context = format_backtrace(debug_backtrace());
 
 	if (class_exists("Logger"))
 		return Logger::get()->log_error($errno, $errstr, $file, $line, $context);
@@ -27,7 +60,7 @@ function ttrss_fatal_handler() {
 
 		if (!$errno) return false;
 
-		$context = debug_backtrace();
+		$context = format_backtrace(debug_backtrace());
 
 		$file = substr(str_replace(dirname(dirname(__FILE__)), "", $file), 1);
 
