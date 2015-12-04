@@ -935,7 +935,7 @@ class Feeds extends Handler_Protected {
 		//$reply['headlines']['content'] =& $ret[5]['content'];
 		//$reply['headlines']['toolbar'] =& $ret[5]['toolbar'];
 
-		$reply['headlines'] =& $ret[5];
+		$reply['headlines'] = $ret[5];
 
 		if (!$next_unread_feed)
 			$reply['headlines']['id'] = $feed;

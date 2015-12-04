@@ -297,7 +297,7 @@ class Pref_Feeds extends Handler_Protected {
 		if ($_REQUEST['mode'] != 2) {
 			$fl['items'] = array($root);
 		} else {
-			$fl['items'] =& $root['items'];
+			$fl['items'] = $root['items'];
 		}
 
 		return $fl;
@@ -410,7 +410,7 @@ class Pref_Feeds extends Handler_Protected {
 						if (isset($item['items']['_reference'])) {
 							$data_map[$item['id']] = array($item['items']);
 						} else {
-							$data_map[$item['id']] =& $item['items'];
+							$data_map[$item['id']] = $item['items'];
 						}
 					}
 				if ($item['id'] == 'root') {
