@@ -1018,7 +1018,7 @@ div.postContent h4 {
 }
 
 div.postContent p {
-	max-width : 650px;
+	/*max-width : 650px;*/
 	-webkit-hyphens: auto;
 	-moz-hyphens: auto;
 	hyphens: auto;
