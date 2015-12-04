@@ -39,8 +39,8 @@
 	function sanity_check($db_type) {
 		$errors = array();
 
-		if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-			array_push($errors, "PHP version 5.3.0 or newer required.");
+		if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+			array_push($errors, "PHP version 5.4.0 or newer required.");
 		}
 
 		if (!function_exists("curl_init") && !ini_get("allow_url_fopen")) {
