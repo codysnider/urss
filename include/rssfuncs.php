@@ -9,7 +9,11 @@
 
 		foreach ($article as $k => $v) {
 			if ($k != "feed" && isset($v)) {
-				$tmp .= sha1("$k:" . (is_array($v) ? implode(",", $v) : $v));
+				$x = strip_tags(is_array($v) ? implode(",", $v) : $v);
+
+				//_debug("$k:" . sha1($x) . ":" . htmlspecialchars($x), true);
+
+				$tmp .= sha1("$k:" . sha1($x));
 			}
 		}
 
@@ -1043,6 +1047,8 @@
 							SET score = '$score' WHERE ref_id = '$ref_id'");
 
 					if ($mark_unread_on_update) {
+						_debug("article updated, marking unread as requested.", $debug_enabled);
+
 						db_query("UPDATE ttrss_user_entries
 							SET last_read = null, unread = true WHERE ref_id = '$ref_id'");
 					}
