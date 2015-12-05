@@ -280,19 +280,7 @@ class Feeds extends Handler_Protected {
 			$feed, $cat_view, $search, $view_mode,
 			$last_error, $last_updated);
 
-		$headlines_count = $this->dbh->num_rows($result);
-
-		/* if (get_pref('COMBINED_DISPLAY_MODE')) {
-			$button_plugins = array();
-			foreach (explode(",", ARTICLE_BUTTON_PLUGINS) as $p) {
-				$pclass = "button_" . trim($p);
-
-				if (class_exists($pclass)) {
-					$plugin = new $pclass();
-					array_push($button_plugins, $plugin);
-				}
-			}
-		} */
+		$headlines_count = is_numeric($result) ? 0 : $this->dbh->num_rows($result);
 
 		if ($offset == 0) {
 			foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_HEADLINES_BEFORE) as $p) {
@@ -302,7 +290,7 @@ class Feeds extends Handler_Protected {
 
 		$reply['content'] = '';
 
-		if (!is_numeric($result) && $this->dbh->num_rows($result) > 0) {
+		if ($headlines_count > 0) {
 
 			$lnum = $offset;
 
