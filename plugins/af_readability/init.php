@@ -33,11 +33,9 @@ class Af_Readability extends Plugin {
 		print_notice("Enable the plugin for specific feeds in the feed editor.");
 
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
-		if (!array($enabled_feeds)) {
-			$enabled_feeds = array();
-		} else {
-			$enabled_feeds = $this->filter_unknown_feeds($enabled_feeds);
-		}
+		if (!array($enabled_feeds)) $enabled_feeds = array();
+
+		$enabled_feeds = $this->filter_unknown_feeds($enabled_feeds);
 		$this->host->set($this, "enabled_feeds", $enabled_feeds);
 
 		if (count($enabled_feeds) > 0) {
@@ -185,14 +183,12 @@ class Af_Readability extends Plugin {
 	private function filter_unknown_feeds($enabled_feeds) {
 		$tmp = array();
 
-		if (!empty($enabled_feeds)) {
-			foreach ($enabled_feeds as $feed) {
+		foreach ($enabled_feeds as $feed) {
 
-				$result = db_query("SELECT id FROM ttrss_feeds WHERE id = '$feed' AND owner_uid = " . $_SESSION["uid"]);
+			$result = db_query("SELECT id FROM ttrss_feeds WHERE id = '$feed' AND owner_uid = " . $_SESSION["uid"]);
 
-				if (db_num_rows($result) != 0) {
-					array_push($tmp, $feed);
-				}
+			if (db_num_rows($result) != 0) {
+				array_push($tmp, $feed);
 			}
 		}
 
