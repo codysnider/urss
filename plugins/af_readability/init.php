@@ -33,7 +33,7 @@ class Af_Readability extends Plugin {
 		print_notice("Enable the plugin for specific feeds in the feed editor.");
 
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
-		if (!array($enabled_feeds)) $enabled_feeds = array();
+		if (!is_array($enabled_feeds)) $enabled_feeds = array();
 
 		$enabled_feeds = $this->filter_unknown_feeds($enabled_feeds);
 		$this->host->set($this, "enabled_feeds", $enabled_feeds);
@@ -60,7 +60,7 @@ class Af_Readability extends Plugin {
 		print "<div class=\"dlgSecCont\">";
 
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
-		if (!array($enabled_feeds)) $enabled_feeds = array();
+		if (!is_array($enabled_feeds)) $enabled_feeds = array();
 
 		$key = array_search($feed_id, $enabled_feeds);
 		$checked = $key !== FALSE ? "checked" : "";
@@ -169,6 +169,8 @@ class Af_Readability extends Plugin {
 	function hook_article_filter($article) {
 
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
+		if (!is_array($enabled_feeds)) return $article;
+
 		$key = array_search($article["feed"]["id"], $enabled_feeds);
 		if ($key === FALSE) return $article;
 
