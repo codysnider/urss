@@ -119,6 +119,8 @@
 
 	function ttrss_gc ($expire) {
 		Db::get()->query("DELETE FROM ttrss_sessions WHERE expire < " . time());
+
+		return true;
 	}
 
 	if (!SINGLE_USER_MODE /* && DB_TYPE == "pgsql" */) {

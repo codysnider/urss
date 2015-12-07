@@ -700,6 +700,10 @@
 					$entry_stored_hash = db_fetch_result($result, 0, "content_hash");
 					$article_labels = get_article_labels($base_entry_id, $owner_uid);
 					$entry_language = db_fetch_result($result, 0, "lang");
+
+					$existing_tags = get_article_tags($base_entry_id, $owner_uid);
+					$entry_tags = array_unique(array_merge($entry_tags, $existing_tags));
+
 				} else {
 					$base_entry_id = false;
 					$entry_stored_hash = "";
