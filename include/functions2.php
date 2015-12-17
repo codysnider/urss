@@ -892,6 +892,8 @@
 
 		$entries = $xpath->query('(//a[@href]|//img[@src])');
 
+		$ttrss_uses_https = parse_url(get_self_url_prefix(), PHP_URL_SCHEME) === 'https';
+
 		foreach ($entries as $entry) {
 
 			if ($site_url) {
@@ -916,6 +918,21 @@
 				}
 
 				if ($entry->nodeName == 'img') {
+					if ($entry->hasAttribute('src')) {
+						$is_https_url = parse_url($entry->getAttribute('src'), PHP_URL_SCHEME) === 'https';
+
+						if ($ttrss_uses_https && !$is_https_url) {
+
+							if ($entry->hasAttribute('srcset')) {
+								$entry->removeAttribute('srcset');
+							}
+
+							if ($entry->hasAttribute('sizes')) {
+								$entry->removeAttribute('sizes');
+							}
+						}
+					}
+
 					if (($owner && get_pref("STRIP_IMAGES", $owner)) ||
 							$force_remove_images || $_SESSION["bw_limit"]) {
 
