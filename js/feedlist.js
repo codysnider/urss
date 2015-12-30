@@ -321,6 +321,9 @@ function hideOrShowFeeds(hide) {
 }
 
 function getFeedName(feed, is_cat) {
+
+	if (isNaN(feed)) return feed; // it's a tag
+
 	var tree = dijit.byId("feedTree");
 
 	if (tree && tree.model)
