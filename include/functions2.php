@@ -1156,7 +1156,7 @@
 
 	function tag_is_valid($tag) {
 		if ($tag == '') return false;
-		if (preg_match("/^[0-9]*$/", $tag)) return false;
+		if (is_numeric($tag)) return false;
 		if (mb_strlen($tag) > 250) return false;
 
 		if (!$tag) return false;
