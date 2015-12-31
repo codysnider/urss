@@ -134,6 +134,10 @@
 		$query_limit = "";
 		if($limit) $query_limit = sprintf("LIMIT %d", $limit);
 
+		// Update the least recently updated feeds first
+		$query_order = "ORDER BY last_updated";
+		if (DB_TYPE == "pgsql") $query_order .= " NULLS FIRST";
+
 		$query = "SELECT DISTINCT ttrss_feeds.feed_url, ttrss_feeds.last_updated
 			FROM
 				ttrss_feeds, ttrss_users, ttrss_user_prefs
@@ -144,7 +148,7 @@
 				AND ttrss_user_prefs.pref_name = 'DEFAULT_UPDATE_INTERVAL'
 				$login_thresh_qpart $update_limit_qpart
 				$updstart_thresh_qpart
-				ORDER BY last_updated $query_limit";
+				$query_order $query_limit";
 
 		// We search for feed needing update.
 		$result = db_query($query);
