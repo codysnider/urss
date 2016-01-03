@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: tt-rss\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 09:06+0100\n"
-"PO-Revision-Date: 2016-01-03 08:38-0200\n"
+"PO-Revision-Date: 2016-01-03 15:27-0200\n"
 "Last-Translator: Eduardo Kalinowski <eduardo@kalinowski.com.br>\n"
 "Language-Team: Portuguese/Brazil\n"
 "Language: pt_BR\n"
@@ -883,7 +883,7 @@ msgstr "Continuar conectado"
 #: include/login_form.php:249
 #: classes/handler/public.php:565
 msgid "Log in"
-msgstr "Login"
+msgstr "Conectar"
 
 #: include/sessions.php:44
 msgid "Session failed to validate (schema version changed)"
@@ -1275,7 +1275,7 @@ msgstr "Remover"
 #: classes/pref/feeds.php:1838
 #: classes/feeds.php:1064
 msgid "Login"
-msgstr "Login"
+msgstr "Nome de usuário"
 
 #: classes/pref/users.php:398
 msgid "Access Level"
@@ -1484,7 +1484,7 @@ msgstr "Usar a data no feed para ordenar os títulos ao invés da data de import
 
 #: classes/pref/prefs.php:50
 msgid "Login with an SSL certificate"
-msgstr "Login com um certificado SSL"
+msgstr "Conectar com um certificado SSL"
 
 #: classes/pref/prefs.php:50
 msgid "Click to register your SSL client certificate with tt-rss"
@@ -1979,7 +1979,7 @@ msgstr "Remoção de artigos:"
 
 #: classes/pref/feeds.php:660
 msgid "<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds."
-msgstr "<b>Hint:</b> Você precisa preencher suas informações de login se o feed precisa de autenticação, exceto para os feeds do Twitter."
+msgstr "<b>Hint:</b> Você precisa preencher suas informações de conexão se o feed precisa de autenticação, exceto para os feeds do Twitter."
 
 #: classes/pref/feeds.php:679
 #: classes/pref/feeds.php:896
@@ -2863,11 +2863,11 @@ msgstr "Invertido"
 
 #: js/prefs.js:69
 msgid "Please enter login:"
-msgstr "Por favor entre o login:"
+msgstr "Por favor entre o nome de usuário:"
 
 #: js/prefs.js:76
 msgid "Can't create user: no login specified."
-msgstr "Não foi possível criar o usuário: Login foi especificado."
+msgstr "Não foi possível criar o usuário: nome de usuário não informado."
 
 #: js/prefs.js:80
 msgid "Adding user..."
