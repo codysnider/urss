@@ -550,7 +550,7 @@ class RPC extends Handler_Protected {
 
 		// Purge orphans and cleanup tags
 		purge_orphans();
-		cleanup_tags(14, 50000);
+		//cleanup_tags(14, 50000);
 
 		if ($num_updated > 0) {
 			print json_encode(array("message" => "UPDATE_COUNTERS",

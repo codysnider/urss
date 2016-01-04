@@ -1520,9 +1520,9 @@
 
 		purge_orphans( true);
 		cleanup_counters_cache($debug);
-		$rc = cleanup_tags( 14, 50000);
 
-		_debug("Cleaned $rc cached tags.");
+		//$rc = cleanup_tags( 14, 50000);
+		//_debug("Cleaned $rc cached tags.");
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_HOUSE_KEEPING, "hook_house_keeping", "");
 
