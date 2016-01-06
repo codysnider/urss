@@ -59,10 +59,12 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 
 		if ($hash) {
 
-			$filename = $this->cache_dir . "/" . $hash;
+			$filename = $this->cache_dir . "/" . basename($hash);
 			$is_video = strpos($filename, ".mp4") !== FALSE;
 
 			if (file_exists($filename)) {
+				header("Content-Disposition: attachment; filename=\"$hash\"");
+
 				/* See if we can use X-Sendfile */
 				$xsendfile = false;
 				if (function_exists('apache_get_modules') &&
