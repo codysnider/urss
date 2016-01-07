@@ -751,10 +751,24 @@
 						WHERE id = '$base_entry_id'");
 
                     // if we allow duplicate posts, we have to continue to
-                    // create the user entries for this feed
-                    if (!get_pref("ALLOW_DUPLICATE_POSTS", $owner_uid, false)) {
-                        continue;
-                    }
+                    // create the user entries for this feed (if needed)
+                    if (get_pref("ALLOW_DUPLICATE_POSTS", $owner_uid, false)) {
+
+						$query = "SELECT int_id FROM ttrss_user_entries WHERE
+							ref_id = '$base_entry_id' AND owner_uid = '$owner_uid'
+							AND (feed_id = '$feed' OR feed_id IS NULL) LIMIT 1";
+
+						$result = db_query($query);
+
+						if (db_num_rows($result) == 0) {
+							_debug("allow duplicate posts is enabled and user record is not found, continuing.");
+						} else {
+							continue;
+						}
+
+					} else {
+						continue;
+					}
 				}
 
 				_debug("hash differs, applying plugin filters:", $debug_enabled);
@@ -919,15 +933,6 @@
 							id = '$ref_id'");
 					} */
 
-					// check for user post link to main table
-
-					// do we allow duplicate posts with same GUID in different feeds?
-					if (get_pref("ALLOW_DUPLICATE_POSTS", $owner_uid, false)) {
-						$dupcheck_qpart = "AND (feed_id = '$feed' OR feed_id IS NULL)";
-					} else {
-						$dupcheck_qpart = "";
-					}
-
 					if (find_article_filter($article_filters, "filter")) {
 						//db_query("COMMIT"); // close transaction in progress
 						continue;
@@ -936,6 +941,15 @@
 					$score = calculate_article_score($article_filters) + $entry_score_modifier;
 
 					_debug("initial score: $score [including plugin modifier: $entry_score_modifier]", $debug_enabled);
+
+					// check for user post link to main table
+
+					// do we allow duplicate posts with same GUID in different feeds?
+					if (get_pref("ALLOW_DUPLICATE_POSTS", $owner_uid, false)) {
+						$dupcheck_qpart = "AND (feed_id = '$feed' OR feed_id IS NULL)";
+					} else {
+						$dupcheck_qpart = "";
+					}
 
 					$query = "SELECT ref_id, int_id FROM ttrss_user_entries WHERE
 							ref_id = '$ref_id' AND owner_uid = '$owner_uid'
