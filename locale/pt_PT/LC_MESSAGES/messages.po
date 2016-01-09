@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: tt-rss 1.2.14.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 09:06+0100\n"
-"PO-Revision-Date: 2013-08-08 23:19-0300\n"
+"PO-Revision-Date: 2016-01-09 14:25-0200\n"
 "Last-Translator: Duarte Velez Grilo <duartegrilo@gmail.com>\n"
 "Language-Team: Portuguese/Portugal <duartegrilo@gmail.com>\n"
 "Language: Portuguese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -499,7 +499,6 @@ msgid "%d archived article"
 msgid_plural "%d archived articles"
 msgstr[0] "%d artigo arquivado"
 msgstr[1] "%d artigos arquivados"
-msgstr[2] "%d artigos arquivados"
 
 #: include/feedbrowser.php:108
 msgid "No feeds found."
@@ -757,7 +756,6 @@ msgid "comment"
 msgid_plural "comments"
 msgstr[0] "Conteúdo"
 msgstr[1] "Conteúdo"
-msgstr[2] "Conteúdo"
 
 #: include/functions2.php:1299
 #: classes/feeds.php:743
@@ -1948,7 +1946,6 @@ msgid "%s (%d rule)"
 msgid_plural "%s (%d rules)"
 msgstr[0] "Adicionar regra"
 msgstr[1] "Adicionar regra"
-msgstr[2] "Adicionar regra"
 
 #: classes/pref/filters.php:1113
 #, fuzzy
@@ -1961,7 +1958,6 @@ msgid "%s (+%d action)"
 msgid_plural "%s (+%d actions)"
 msgstr[0] "Adicionar ação"
 msgstr[1] "Adicionar ação"
-msgstr[2] "Adicionar ação"
 
 #: classes/pref/feeds.php:15
 msgid "Check to enable field"
@@ -2550,17 +2546,15 @@ msgstr "Terminado:"
 #, php-format
 msgid "%d article processed, "
 msgid_plural "%d articles processed, "
-msgstr[0] "%d artigo processado,"
-msgstr[1] "%d artigos processados,"
-msgstr[2] "%d artigos processados,"
+msgstr[0] "%d artigo processado, "
+msgstr[1] "%d artigos processados, "
 
 #: plugins/import_export/init.php:393
 #, php-format
 msgid "%d imported, "
 msgid_plural "%d imported, "
-msgstr[0] "%d importado,"
-msgstr[1] "%d importados,"
-msgstr[2] "%d importados,"
+msgstr[0] "%d importado, "
+msgstr[1] "%d importados, "
 
 #: plugins/import_export/init.php:394
 #, php-format
@@ -2568,7 +2562,6 @@ msgid "%d feed created."
 msgid_plural "%d feeds created."
 msgstr[0] "%d feed criado."
 msgstr[1] "%d feeds criados."
-msgstr[2] "%d feeds criados."
 
 #: plugins/import_export/init.php:399
 msgid "Could not load XML document."
@@ -3140,7 +3133,6 @@ msgid "Delete %d selected article in %s?"
 msgid_plural "Delete %d selected articles in %s?"
 msgstr[0] "Apagar %d artigo selecionado em %s?"
 msgstr[1] "Apagar %d artigos selecionados em %s?"
-msgstr[2] "Apagar %d artigos selecionados em %s?"
 
 #: js/viewfeed.js:1043
 #, perl-format
@@ -3148,7 +3140,6 @@ msgid "Delete %d selected article?"
 msgid_plural "Delete %d selected articles?"
 msgstr[0] "Apagar %d artigo selecionado?"
 msgstr[1] "Apagar %d artigos selecionados?"
-msgstr[2] "Apagar %d artigos selecionados?"
 
 #: js/viewfeed.js:1085
 #, perl-format
@@ -3156,7 +3147,6 @@ msgid "Archive %d selected article in %s?"
 msgid_plural "Archive %d selected articles in %s?"
 msgstr[0] "Arquivar %d artigo em %s?"
 msgstr[1] "Arquivar %d artigos em %s?"
-msgstr[2] "Arquivar %d artigos em %s?"
 
 #: js/viewfeed.js:1088
 #, perl-format
@@ -3164,7 +3154,6 @@ msgid "Move %d archived article back?"
 msgid_plural "Move %d archived articles back?"
 msgstr[0] "Mover %d artigo de volta?"
 msgstr[1] "Mover %d artigos de volta?"
-msgstr[2] "Mover %d artigos de volta?"
 
 #: js/viewfeed.js:1090
 msgid "Please note that unstarred articles might get purged on next feed update."
@@ -3176,7 +3165,6 @@ msgid "Mark %d selected article in %s as read?"
 msgid_plural "Mark %d selected articles in %s as read?"
 msgstr[0] "Marcar %d artigo selecionado em %s como lido?"
 msgstr[1] "Marcar %d artigos selecionados em %s como lidos?"
-msgstr[2] "Marcar %d artigos selecionados em %s como lidos?"
 
 #: js/viewfeed.js:1159
 msgid "Edit article Tags"
@@ -3253,7 +3241,6 @@ msgid "Finished, exported %d article. You can download the data <a class='visibl
 msgid_plural "Finished, exported %d articles. You can download the data <a class='visibleLink' href='%u'>here</a>."
 msgstr[0] "Exportação de %d artigo terminada. Você pode baixar os dados <a class='visibleLink' href='%u'>aqui</a>."
 msgstr[1] "Exportação de %d artigos terminada. Você pode baixar os dados <a class='visibleLink' href='%u'>aqui</a>."
-msgstr[2] "Exportação de %d artigos terminada. Você pode baixar os dados <a class='visibleLink' href='%u'>aqui</a>."
 
 #: plugins/import_export/import_export.js:93
 msgid "Data Import"
@@ -3588,7 +3575,6 @@ msgid "%d article selected"
 msgid_plural "%d articles selected"
 msgstr[0] "%d artigo selecionado"
 msgstr[1] "%d artigos selecionados"
-msgstr[2] "%d artigos selecionados"
 
 #: js/viewfeed.js:1425
 msgid "No article is selected."
@@ -3603,7 +3589,6 @@ msgid "Mark %d article as read?"
 msgid_plural "Mark %d articles as read?"
 msgstr[0] "Marcar %d artigo como lido?"
 msgstr[1] "Marcar %d artigos como lidos?"
-msgstr[2] "Marcar %d artigos como lidos?"
 
 #: js/viewfeed.js:1985
 msgid "Display article URL"
