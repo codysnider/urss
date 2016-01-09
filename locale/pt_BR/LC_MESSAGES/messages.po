@@ -6,7 +6,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: tt-rss\n"
+"Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 09:06+0100\n"
 "PO-Revision-Date: 2016-01-03 15:27-0200\n"
