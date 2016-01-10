@@ -51,6 +51,23 @@ function loadMoreHeadlines() {
 	}
 }
 
+function cleanup_memory(root) {
+	try {
+		var dijits = dojo.query("[widgetid]", dijit.byId(root).domNode).map(dijit.byNode);
+
+		dijits.each(function (d) {
+			dojo.destroy(d.domNode);
+		});
+
+		$$("#" + root + " *").each(function (i) {
+			i.parentNode ? i.parentNode.removeChild(i) : true;
+		});
+	} catch (e) {
+		console.log("cleanup_memory: exception");
+		console.log(e);
+	}
+}
+
 function viewfeed(params) {
 	try {
 		var feed = params.feed;
@@ -83,6 +100,8 @@ function viewfeed(params) {
 			if (getActiveFeedId() != feed || !infscroll_req) {
 				setActiveArticleId(0);
 				_infscroll_disable = 0;
+
+				cleanup_memory("headlines-frame");
 			}
 
 			if (infscroll_req) {

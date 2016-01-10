@@ -244,6 +244,8 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 
 function render_article(article) {
 	try {
+		cleanup_memory("content-insert");
+
 		dijit.byId("headlines-wrap-inner").addChild(
 				dijit.byId("content-insert"));
 
