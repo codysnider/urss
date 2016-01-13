@@ -347,7 +347,7 @@
 		if (strpos($url, "//") === 0)
 			$url = 'http:' . $url;
 
-		if (!defined('NO_CURL') && function_exists('curl_init')) {
+		if (!defined('NO_CURL') && function_exists('curl_init') && !ini_get("open_basedir")) {
 
 			$fetch_curl_used = true;
 

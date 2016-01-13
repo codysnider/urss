@@ -399,6 +399,11 @@
 			// fetch feed from source
 			if (!$feed_data) {
 				_debug("fetching [$fetch_url]...", $debug_enabled);
+
+				if (ini_get("open_basedir") && function_exists("curl_init")) {
+					_debug("not using CURL due to open_basedir restrictions");
+				}
+
 				_debug("If-Modified-Since: ".gmdate('D, d M Y H:i:s \G\M\T', $last_article_timestamp), $debug_enabled);
 
 				$feed_data = fetch_file_contents($fetch_url, false,

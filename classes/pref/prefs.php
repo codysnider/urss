@@ -709,6 +709,10 @@ class Pref_Prefs extends Handler_Protected {
 
 		print_notice(__("Download more plugins at tt-rss.org <a class=\"visibleLink\" target=\"_blank\" href=\"http://tt-rss.org/forum/viewforum.php?f=22\">forums</a> or <a target=\"_blank\" class=\"visibleLink\" href=\"http://tt-rss.org/wiki/Plugins\">wiki</a>."));
 
+		if (ini_get("open_basedir") && function_exists("curl_init") && !defined("NO_CURL")) {
+			print_warning("Your PHP configuration has open_basedir restrictions enabled. Some plugins relying on CURL for functionality may not work correctly.");
+		}
+
 		print "<form dojoType=\"dijit.form.Form\" id=\"changePluginsForm\">";
 
 		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
