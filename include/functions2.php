@@ -1121,7 +1121,8 @@
 			$result = db_query("SELECT tag_cache FROM ttrss_user_entries
 				WHERE ref_id = '$id' AND owner_uid = $owner_uid");
 
-			$tag_cache = db_fetch_result($result, 0, "tag_cache");
+			if (db_num_rows($result) != 0)
+				$tag_cache = db_fetch_result($result, 0, "tag_cache");
 		}
 
 		if ($tag_cache) {
