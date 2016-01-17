@@ -263,9 +263,8 @@ class Af_Psql_Trgm extends Plugin {
 		$similarity = (float) $this->host->get($this, "similarity");
 		if ($similarity < 0.01) return $article;
 
-		$min_title_length = (int) $this->host->get($this, "min_length");
+		$min_title_length = (int) $this->host->get($this, "min_title_length");
 		if (mb_strlen($article["title"]) < $min_title_length) return $article;
-
 
 		$owner_uid = $article["owner_uid"];
 		$entry_guid = $article["guid_hashed"];
