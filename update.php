@@ -35,6 +35,9 @@
 			"force-update",
 			"gen-search-idx",
 			"list-plugins",
+			"debug-feed:",
+			"force-refetch",
+			"force-rehash",
 			"help");
 
 	foreach (PluginHost::getInstance()->get_commands() as $command => $data) {
@@ -85,6 +88,9 @@
 		print "  --convert-filters    - convert type1 filters to type2\n";
 		print "  --force-update       - force update of all feeds\n";
 		print "  --list-plugins       - list all available plugins\n";
+		print "  --debug-feed N       - perform debug update of feed N\n";
+		print "  --force-refetch      - debug update: force refetch feed data\n";
+		print "  --force-rehash       - debug update: force rehash articles\n";
 		print "  --help               - show this help\n";
 		print "Plugin options:\n";
 
@@ -383,6 +389,17 @@
 
 		echo "Plugins marked by * are currently enabled for all users.\n";
 
+	}
+
+	if (isset($options["debug-feed"])) {
+		$feed = $options["debug-feed"];
+
+		if (isset($options["force-refetch"])) $_REQUEST["force_refetch"] = true;
+		if (isset($options["force-rehash"])) $_REQUEST["force_rehash"] = true;
+
+		$_REQUEST['xdebug'] = 1;
+
+		update_rss_feed($feed);
 	}
 
 	PluginHost::getInstance()->run_commands($options);
