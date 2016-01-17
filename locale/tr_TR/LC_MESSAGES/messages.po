@@ -5,13 +5,13 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Tiny Tiny RSS Turkish translation\n"
+"Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 09:06+0100\n"
 "PO-Revision-Date: 2013-12-08 20:20+0200\n"
 "Last-Translator: akapar <akapar@gmail.com>\n"
 "Language-Team: TURKISH <akapar@gmail.com>\n"
-"Language: Turkish\n"
+"Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1945,10 +1945,11 @@ msgid "matches any rule"
 msgstr "Herhangi bir kurala eşle"
 
 #: classes/pref/filters.php:1116
-#, php-format
+#, fuzzy, php-format
 msgid "%s (+%d action)"
 msgid_plural "%s (+%d actions)"
 msgstr[0] "%s (+%d eylem)"
+msgstr[1] "%s (+%d eylem)"
 
 #: classes/pref/feeds.php:15
 msgid "Check to enable field"
@@ -1959,10 +1960,11 @@ msgstr "Veri alanını etkinleştirmek için tıklayın"
 #: classes/pref/feeds.php:258
 #: classes/pref/feeds.php:264
 #: classes/pref/feeds.php:290
-#, php-format
+#, fuzzy, php-format
 msgid "(%d feed)"
 msgid_plural "(%d feeds)"
 msgstr[0] "(%d özet akışı)"
+msgstr[1] "(%d özet akışı)"
 
 #: classes/pref/feeds.php:561
 msgid "Feed Title"
@@ -2533,13 +2535,14 @@ msgid "Finished: "
 msgstr "Tamamlandı:"
 
 #: plugins/import_export/init.php:392
-#, php-format
+#, fuzzy, php-format
 msgid "%d article processed, "
 msgid_plural "%d articles processed, "
 msgstr[0] "%d yazı işlendi,"
+msgstr[1] "%d yazı işlendi,"
 
 #: plugins/import_export/init.php:393
-#, php-format
+#, fuzzy, php-format
 msgid "%d imported, "
 msgid_plural "%d imported, "
 msgstr[0] "% içe aktarıldı"
@@ -3120,24 +3123,28 @@ msgstr "Hiç yazı seçilmedi."
 msgid "Delete %d selected article in %s?"
 msgid_plural "Delete %d selected articles in %s?"
 msgstr[0] "%s'de seçilen %d yazı silinsin mi? "
+msgstr[1] "%s'de seçilen %d yazı silinsin mi? "
 
 #: js/viewfeed.js:1043
-#, perl-format
+#, fuzzy, perl-format
 msgid "Delete %d selected article?"
 msgid_plural "Delete %d selected articles?"
 msgstr[0] "Seçilen %d yazı silinsin mi?"
+msgstr[1] "Seçilen %d yazı silinsin mi?"
 
 #: js/viewfeed.js:1085
 #, fuzzy, perl-format
 msgid "Archive %d selected article in %s?"
 msgid_plural "Archive %d selected articles in %s?"
 msgstr[0] "%s'de seçilen %d yazı arşivlensin mi?"
+msgstr[1] "%s'de seçilen %d yazı arşivlensin mi?"
 
 #: js/viewfeed.js:1088
-#, perl-format
+#, fuzzy, perl-format
 msgid "Move %d archived article back?"
 msgid_plural "Move %d archived articles back?"
 msgstr[0] "Arşivden %d yazı taşınsın mı?"
+msgstr[1] "Arşivden %d yazı taşınsın mı?"
 
 #: js/viewfeed.js:1090
 msgid "Please note that unstarred articles might get purged on next feed update."
@@ -3148,6 +3155,7 @@ msgstr "favori olarak işaretlenmemiş yazılar bir sonraki özet akışı yenil
 msgid "Mark %d selected article in %s as read?"
 msgid_plural "Mark %d selected articles in %s as read?"
 msgstr[0] "%s'de %d yazı okunmuş olarak işaretlensin mi?"
+msgstr[1] "%s'de %d yazı okunmuş olarak işaretlensin mi?"
 
 #: js/viewfeed.js:1159
 msgid "Edit article Tags"
@@ -3219,10 +3227,11 @@ msgid "Export Data"
 msgstr "Veriyi dışa aktar"
 
 #: plugins/import_export/import_export.js:40
-#, perl-format
+#, fuzzy, perl-format
 msgid "Finished, exported %d article. You can download the data <a class='visibleLink' href='%u'>here</a>."
 msgid_plural "Finished, exported %d articles. You can download the data <a class='visibleLink' href='%u'>here</a>."
 msgstr[0] "Bitti, %d yazı dışa aktarıldı. Veriyi <a class='visibleLink' href='%u'>here</a> adresinden indirebilirsiniz. "
+msgstr[1] "Bitti, %d yazı dışa aktarıldı. Veriyi <a class='visibleLink' href='%u'>here</a> adresinden indirebilirsiniz. "
 
 #: plugins/import_export/import_export.js:93
 msgid "Data Import"
@@ -3551,9 +3560,11 @@ msgid "Publish article"
 msgstr "Yazıyı yayınla"
 
 #: js/viewfeed.js:680
+#, fuzzy
 msgid "%d article selected"
 msgid_plural "%d articles selected"
 msgstr[0] "%d yazı seçildi"
+msgstr[1] "%d yazı seçildi"
 
 #: js/viewfeed.js:1425
 msgid "No article is selected."
@@ -3564,9 +3575,11 @@ msgid "No articles found to mark"
 msgstr "Hiçbir yazı bulunamadı. "
 
 #: js/viewfeed.js:1462
+#, fuzzy
 msgid "Mark %d article as read?"
 msgid_plural "Mark %d articles as read?"
 msgstr[0] "%d yazı okudu olarak işaretlensin mi?"
+msgstr[1] "%d yazı okudu olarak işaretlensin mi?"
 
 #: js/viewfeed.js:1985
 msgid "Display article URL"
