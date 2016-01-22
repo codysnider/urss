@@ -662,7 +662,7 @@
 
 				if ($_REQUEST["xdebug"] == 2) {
 					print "content: ";
-					print $entry_content;
+					print htmlspecialchars($entry_content);
 					print "\n";
 				}
 
@@ -769,6 +769,12 @@
 					_debug("=== " . sprintf("%.4f (sec)", microtime(true) - $start), $debug_enabled);
 
 					$entry_plugin_data .= mb_strtolower(get_class($plugin)) . ",";
+				}
+
+				if ($_REQUEST["xdebug"] == 2) {
+					print "processed content: ";
+					print htmlspecialchars($article["content"]);
+					print "\n";
 				}
 
 				$entry_plugin_data = db_escape_string($entry_plugin_data);
