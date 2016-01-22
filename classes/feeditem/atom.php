@@ -75,7 +75,7 @@ class FeedItem_Atom extends FeedItem_Common {
 				}
 			}
 
-			return $content->c14n();
+			return $content->nodeValue;
 		}
 	}
 
@@ -95,7 +95,7 @@ class FeedItem_Atom extends FeedItem_Common {
 				}
 			}
 
-			return $content->c14n();
+			return $content->nodeValue;
 		}
 
 	}

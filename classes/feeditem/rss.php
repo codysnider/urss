@@ -71,16 +71,17 @@ class FeedItem_RSS extends FeedItem_Common {
 		$contentB = $this->elem->getElementsByTagName("description")->item(0);
 
 		if ($contentA && !$contentB) {
-			return $contentA->c14n();
+			return $contentA->nodeValue;
 		}
 
+
 		if ($contentB && !$contentA) {
-			return $contentB->c14n();
+			return $contentB->nodeValue;
 		}
 
 		if ($contentA && $contentB) {
 			return mb_strlen($contentA->nodeValue) > mb_strlen($contentB->nodeValue) ?
-				$contentA->c14n() : $contentB->c14n();
+				$contentA->nodeValue : $contentB->nodeValue;
 		}
 	}
 
@@ -88,7 +89,7 @@ class FeedItem_RSS extends FeedItem_Common {
 		$summary = $this->elem->getElementsByTagName("description")->item(0);
 
 		if ($summary) {
-			return $summary->c14n();
+			return $summary->nodeValue;
 		}
 	}
 
