@@ -166,7 +166,7 @@ class Feeds extends Handler_Protected {
 
 		$method_split = explode(":", $method);
 
-		if ($method == "ForceUpdate" && $feed > 0 && is_numeric($feed)) {
+		if ($method == "ForceUpdate" && $feed > 0 && is_numeric($feed) && !ini_get("open_basedir")) {
 			// Update the feed if required with some basic flood control
 
 			$result = $this->dbh->query(

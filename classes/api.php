@@ -416,7 +416,9 @@ class API extends Handler {
 
 		$feed_id = (int) $this->dbh->escape_string($_REQUEST["feed_id"]);
 
-		update_rss_feed($feed_id, true);
+		if (!ini_get("open_basedir")) {
+			update_rss_feed($feed_id, true);
+		}
 
 		$this->wrap(self::STATUS_OK, array("status" => "OK"));
 	}
