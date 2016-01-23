@@ -244,6 +244,32 @@ class Af_RedditImgur extends Plugin {
 
 			$found = $this->inline_stuff($article, $doc, $xpath);
 
+			// reddit decided to break its rss because of thunderbird so let's implement a temporary hack
+			// see also: https://www.reddit.com/r/changelog/comments/428vdq/upcoming_reddit_change_switching_from_rss_20_to/
+
+			$textnode = $xpath->query("//*[text()[contains(.,'!-- SC_OFF')]]/text()")->item(0);
+
+			if ($textnode) {
+
+				$badhtml = htmlspecialchars_decode($textnode->textContent);
+				$textnode->textContent = "";
+
+				if ($badhtml) {
+					$body = $doc->getElementsByTagName("body")->item(0);
+
+					$tmp = new DOMDocument;
+
+					if (@$tmp->loadHTML($badhtml)) {
+						$newnode = $doc->importNode($tmp->documentElement, TRUE);
+
+						if ($newnode) {
+							$body->insertBefore($newnode, $body->firstChild);
+							$found = 1;
+						}
+					}
+				}
+			}
+
 			if (!defined('NO_CURL') && function_exists("curl_init") && !$found && $this->host->get($this, "enable_readability") &&
 				mb_strlen(strip_tags($article["content"])) <= 150) {
 
