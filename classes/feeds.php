@@ -671,7 +671,7 @@ class Feeds extends Handler_Protected {
 			if ($line["orig_feed_id"]) {
 
 				$tmp_result = $this->dbh->query("SELECT * FROM ttrss_archived_feeds
-					WHERE id = ".$line["orig_feed_id"]);
+					WHERE id = ".$line["orig_feed_id"] . " AND owner_uid = " . $_SESSION["uid"]);
 
 						if ($this->dbh->num_rows($tmp_result) != 0) {
 

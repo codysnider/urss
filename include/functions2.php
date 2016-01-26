@@ -1410,7 +1410,7 @@
 			if ($line["orig_feed_id"]) {
 
 				$tmp_result = db_query("SELECT * FROM ttrss_archived_feeds
-					WHERE id = ".$line["orig_feed_id"]);
+					WHERE id = ".$line["orig_feed_id"] . " AND owner_uid = " . $_SESSION["uid"]);
 
 				if (db_num_rows($tmp_result) != 0) {
 
