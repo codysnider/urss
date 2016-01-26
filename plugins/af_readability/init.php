@@ -9,6 +9,10 @@ class Af_Readability extends Plugin {
 			"fox");
 	}
 
+	function flags() {
+		return array("needs_curl" => true);
+	}
+
 	function save() {
 		//
 	}
