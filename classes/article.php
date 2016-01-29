@@ -92,13 +92,18 @@ class Article extends Handler_Protected {
 		if (!$content) {
 			$pluginhost = new PluginHost();
 			$pluginhost->load_all(PluginHost::KIND_ALL, $owner_uid);
+			$pluginhost->load_data();
 
 			$af_readability = $pluginhost->get_plugin("Af_Readability");
 
 			if ($af_readability) {
-				$extracted_content = $af_readability->extract_content($url);
+				$enable_share_anything = $pluginhost->get($af_readability, "enable_share_anything");
 
-				if ($extracted_content) $content = db_escape_string($extracted_content);
+				if ($enable_share_anything) {
+					$extracted_content = $af_readability->extract_content($url);
+
+					if ($extracted_content) $content = db_escape_string($extracted_content);
+				}
 			}
 		}
 
