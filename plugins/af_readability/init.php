@@ -14,7 +14,11 @@ class Af_Readability extends Plugin {
 	}
 
 	function save() {
-		//
+		$enable_share_anything = checkbox_to_sql_bool($_POST["enable_share_anything"]) == "true";
+
+		$this->host->set($this, "enable_share_anything", $enable_share_anything);
+
+		echo __("Data saved.");
 	}
 
 	function init($host)
@@ -35,6 +39,38 @@ class Af_Readability extends Plugin {
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('af_readability settings')."\">";
 
 		print_notice("Enable the plugin for specific feeds in the feed editor.");
+
+		print "<form dojoType=\"dijit.form.Form\">";
+
+		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
+			evt.preventDefault();
+			if (this.validate()) {
+				console.log(dojo.objectToQuery(this.getValues()));
+				new Ajax.Request('backend.php', {
+					parameters: dojo.objectToQuery(this.getValues()),
+					onComplete: function(transport) {
+						notify_info(transport.responseText);
+					}
+				});
+				//this.reset();
+			}
+			</script>";
+
+		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pluginhandler\">";
+		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"save\">";
+		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"plugin\" value=\"af_readability\">";
+
+		$enable_share_anything = $this->host->get($this, "enable_share_anything");
+		$enable_share_anything_checked = $enable_share_anything ? "checked" : "";
+
+		print "<input dojoType=\"dijit.form.CheckBox\"
+			$enable_share_anything_checked name=\"enable_share_anything\" id=\"enable_share_anything\">
+			<label for=\"enable_share_anything\">" . __("Use Readability for pages shared via bookmarklet.") . "</label>";
+
+		print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".
+				__("Save")."</button>";
+
+		print "</form>";
 
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
 		if (!is_array($enabled_feeds)) $enabled_feeds = array();
@@ -100,13 +136,12 @@ class Af_Readability extends Plugin {
 		return $this->process_article($article);
 	}
 
-	function process_article($article) {
-
+	public function extract_content($url) {
 		if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
 
 		if (!defined('NO_CURL') && function_exists('curl_init') && !ini_get("open_basedir")) {
 
-			$ch = curl_init($article["link"]);
+			$ch = curl_init($url);
 
 			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -119,16 +154,16 @@ class Af_Readability extends Plugin {
 			$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 
 			if (strpos($content_type, "text/html") === FALSE)
-				return $article;
+				return false;
 		}
 
-		$tmp = fetch_file_contents($article["link"]);
+		$tmp = fetch_file_contents($url);
 
 		if ($tmp && mb_strlen($tmp) < 65535 * 4) {
 			$tmpdoc = new DOMDocument("1.0", "UTF-8");
 
 			if (!$tmpdoc->loadHTML($tmp))
-				return $article;
+				return false;
 
 			if (strtolower($tmpdoc->encoding) != 'utf-8') {
 				$tmpxpath = new DOMXPath($tmpdoc);
@@ -140,10 +175,9 @@ class Af_Readability extends Plugin {
 				$tmp = $tmpdoc->saveHTML();
 			}
 
-			$r = new Readability($tmp, $article["link"]);
+			$r = new Readability($tmp, $url);
 
 			if ($r->init()) {
-
 				$tmpxpath = new DOMXPath($r->dom);
 
 				$entries = $tmpxpath->query('(//a[@href]|//img[@src])');
@@ -151,20 +185,31 @@ class Af_Readability extends Plugin {
 				foreach ($entries as $entry) {
 					if ($entry->hasAttribute("href")) {
 						$entry->setAttribute("href",
-							rewrite_relative_url($article["link"], $entry->getAttribute("href")));
+								rewrite_relative_url($url, $entry->getAttribute("href")));
 
 					}
 
 					if ($entry->hasAttribute("src")) {
 						$entry->setAttribute("src",
-							rewrite_relative_url($article["link"], $entry->getAttribute("src")));
+								rewrite_relative_url($url, $entry->getAttribute("src")));
 
 					}
 
 				}
 
-				$article["content"] = $r->articleContent->innerHTML;
+				return $r->articleContent->innerHTML;
 			}
+		}
+
+		return false;
+	}
+
+	function process_article($article) {
+
+		$extracted_content = $this->extract_content($article["link"]);
+
+		if ($extracted_content) {
+			$article["content"] = $extracted_content;
 		}
 
 		return $article;

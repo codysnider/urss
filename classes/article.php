@@ -88,6 +88,20 @@ class Article extends Handler_Protected {
 			$owner_uid) {
 
 		$guid = 'SHA1:' . sha1("ttshared:" . $url . $owner_uid); // include owner_uid to prevent global GUID clash
+
+		if (!$content) {
+			$pluginhost = new PluginHost();
+			$pluginhost->load_all(PluginHost::KIND_ALL, $owner_uid);
+
+			$af_readability = $pluginhost->get_plugin("Af_Readability");
+
+			if ($af_readability) {
+				$extracted_content = $af_readability->extract_content($url);
+
+				if ($extracted_content) $content = db_escape_string($extracted_content);
+			}
+		}
+
 		$content_hash = sha1($content);
 
 		if ($labels_str != "") {
