@@ -324,7 +324,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		if ($debug) _debug("$prefix C: $item_id P: $parent_id");
 
-		$bare_item_id = substr($item_id, strpos($item_id, ':')+1);
+		$bare_item_id = $this->dbh->escape_string(substr($item_id, strpos($item_id, ':')+1));
 
 		if ($item_id != 'root') {
 			if ($parent_id && $parent_id != 'root') {
@@ -346,7 +346,7 @@ class Pref_Feeds extends Handler_Protected {
 		if ($cat && is_array($cat)) {
 			foreach ($cat as $item) {
 				$id = $item['_reference'];
-				$bare_id = substr($id, strpos($id, ':')+1);
+				$bare_id = $this->dbh->escape_string(substr($id, strpos($id, ':')+1));
 
 				if ($debug) _debug("$prefix [$order_id] $id/$bare_id");
 
