@@ -34,7 +34,7 @@ class Pref_Feeds extends Handler_Protected {
 		else
 			$search = "";
 
-		if ($search) $search_qpart = " AND LOWER(title) LIKE LOWER('%$search%')";
+		if ($search) $search_qpart = " AND (LOWER(title) LIKE LOWER('%$search%') OR LOWER(feed_url) LIKE LOWER('%$search%'))";
 
 		// first one is set by API
 		$show_empty_cats = $_REQUEST['force_show_empty'] ||
