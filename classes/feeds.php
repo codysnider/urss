@@ -203,6 +203,9 @@ class Feeds extends Handler_Protected {
 								WHERE id = '$feed'");
 					}
 				}
+			} else {
+				$this->dbh->query("UPDATE ttrss_feeds SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
+								WHERE id = '$feed'");
 			}
 		}
 
