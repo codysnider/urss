@@ -250,20 +250,6 @@ class Pref_Labels extends Handler_Protected {
 
 	function index() {
 
-		$sort = $this->dbh->escape_string($_REQUEST["sort"]);
-
-		if (!$sort || $sort == "undefined") {
-			$sort = "caption";
-		}
-
-		$label_search = $this->dbh->escape_string($_REQUEST["search"]);
-
-		if (array_key_exists("search", $_REQUEST)) {
-			$_SESSION["prefs_label_search"] = $label_search;
-		} else {
-			$label_search = $_SESSION["prefs_label_search"];
-		}
-
 		print "<div id=\"pref-label-wrap\" dojoType=\"dijit.layout.BorderContainer\" gutters=\"false\">";
 		print "<div id=\"pref-label-header\" dojoType=\"dijit.layout.ContentPane\" region=\"top\">";
 		print "<div id=\"pref-label-toolbar\" dojoType=\"dijit.Toolbar\">";
