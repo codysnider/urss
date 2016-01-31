@@ -244,7 +244,33 @@ class Af_RedditImgur extends Plugin {
 			@$doc->loadHTML($article["content"]);
 			$xpath = new DOMXPath($doc);
 
-			$content_link = $xpath->query("(//a[contains(., '[link]')])")->item(0);
+			/*$content_link = $xpath->query("(//a[contains(., '[link]')])")->item(0);
+
+			if ($content_link) {
+				$content_href = db_escape_string($content_link->getAttribute("href"));
+				$entry_guid = db_escape_string($article["guid_hashed"]);
+				$owner_uid = $article["owner_uid"];
+
+				if (DB_TYPE == "pgsql") {
+					$interval_qpart = "date_entered < NOW() - INTERVAL '1 day'";
+				} else {
+					$interval_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 1 DAY)";
+				}
+
+				$result = db_query("SELECT COUNT(id) AS cid
+					FROM ttrss_entries, ttrss_user_entries WHERE
+						ref_id = id AND
+						$interval_qpart AND
+						guid != '$entry_guid' AND
+						owner_uid = '$owner_uid' AND
+						content LIKE '%href=\"$content_href\">[link]%'");
+
+				if ($result) {
+					$num_found = db_fetch_result($result, 0, "cid");
+
+					if ($num_found > 0) $article["force_catchup"] = true;
+				}
+			}*/
 
 			$found = $this->inline_stuff($article, $doc, $xpath);
 
