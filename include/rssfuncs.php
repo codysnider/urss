@@ -314,20 +314,13 @@
 			feed_url,auth_pass,cache_images,
 			mark_unread_on_update, owner_uid,
 			pubsub_state, auth_pass_encrypted,
-			feed_language,
-			(SELECT max(date_entered) FROM
-				ttrss_entries, ttrss_user_entries where ref_id = id AND feed_id = '$feed') AS last_article_timestamp
+			feed_language
 			FROM ttrss_feeds WHERE id = '$feed'");
 
 		if (db_num_rows($result) == 0) {
 			_debug("feed $feed NOT FOUND/SKIPPED", $debug_enabled);
 			return false;
 		}
-
-		$last_article_timestamp = @strtotime(db_fetch_result($result, 0, "last_article_timestamp"));
-
-		if (defined('_DISABLE_HTTP_304'))
-			$last_article_timestamp = 0;
 
 		$owner_uid = db_fetch_result($result, 0, "owner_uid");
 		$mark_unread_on_update = sql_bool_to_bool(db_fetch_result($result,
@@ -372,9 +365,10 @@
 			$rss_hash = false;
 
 			$force_refetch = isset($_REQUEST["force_refetch"]);
+			$feed_data = "";
 
 			foreach ($pluginhost->get_hooks(PluginHost::HOOK_FETCH_FEED) as $plugin) {
-				$feed_data = $plugin->hook_fetch_feed($feed_data, $fetch_url, $owner_uid, $feed, $last_article_timestamp, $auth_login, $auth_pass);
+				$feed_data = $plugin->hook_fetch_feed($feed_data, $fetch_url, $owner_uid, $feed, 0, $auth_login, $auth_pass);
 			}
 
 			// try cache
@@ -404,12 +398,10 @@
 					_debug("not using CURL due to open_basedir restrictions");
 				}
 
-				_debug("If-Modified-Since: ".gmdate('D, d M Y H:i:s \G\M\T', $last_article_timestamp), $debug_enabled);
-
 				$feed_data = fetch_file_contents($fetch_url, false,
 					$auth_login, $auth_pass, false,
 					$no_cache ? FEED_FETCH_NO_CACHE_TIMEOUT : FEED_FETCH_TIMEOUT,
-					$force_refetch ? 0 : $last_article_timestamp);
+					0);
 
 				global $fetch_curl_used;
 
