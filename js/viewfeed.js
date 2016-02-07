@@ -1755,7 +1755,7 @@ function cdmClicked(event, id) {
 	try {
 		//var shift_key = event.shiftKey;
 
-		if (!event.ctrlKey) {
+		if (!event.ctrlKey && !event.metaKey) {
 
 			if (!getInitParam("cdm_expanded")) {
 				return cdmExpandArticle(id);
@@ -1824,7 +1824,7 @@ function hlClicked(event, id) {
 		if (event.which == 2) {
 			view(id);
 			return true;
-		} else if (event.ctrlKey) {
+		} else if (event.ctrlKey || event.metaKey) {
 			toggleSelected(id, true);
 			toggleUnread(id, 0, false);
 			openArticleInNewWindow(id);
