@@ -878,6 +878,15 @@
 		}
 	}
 
+	// is not utf8 clean
+	function truncate_middle($str, $max_len, $suffix = '&hellip;') {
+		if (strlen($str) > $max_len) {
+			return substr_replace($str, $suffix, $max_len / 2, mb_strlen($str) - $max_len);
+		} else {
+			return $str;
+		}
+	}
+
 	function convert_timestamp($timestamp, $source_tz, $dest_tz) {
 
 		try {

@@ -33,14 +33,13 @@ function format_backtrace($trace) {
 
 function ttrss_error_handler($errno, $errstr, $file, $line, $context) {
 	global $logger;
-	global $last_query;
 
 	if (error_reporting() == 0 || !$errno) return false;
 
 	$file = substr(str_replace(dirname(dirname(__FILE__)), "", $file), 1);
 
-	if ($last_query) $errstr .= " [Last query: $last_query]";
 	$context = format_backtrace(debug_backtrace());
+	$errstr = truncate_middle($errstr, 16384, " (...) ");
 
 	if (class_exists("Logger"))
 		return Logger::get()->log_error($errno, $errstr, $file, $line, $context);
