@@ -216,7 +216,8 @@ class Pref_Filters extends Handler_Protected {
 			FROM
 				ttrss_filters2_rules, ttrss_filter_types
 			WHERE
-				filter_id = '$filter_id' AND filter_type = ttrss_filter_types.id");
+				filter_id = '$filter_id' AND filter_type = ttrss_filter_types.id
+			ORDER BY reg_exp");
 
 		$rv = "";
 
