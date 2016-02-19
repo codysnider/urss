@@ -912,6 +912,14 @@
 
 					if (file_exists($cached_filename)) {
 						$src = SELF_URL_PATH . '/public.php?op=cached_image&hash=' . sha1($src);
+
+						if ($entry->hasAttribute('srcset')) {
+							$entry->removeAttribute('srcset');
+						}
+
+						if ($entry->hasAttribute('sizes')) {
+							$entry->removeAttribute('sizes');
+						}
 					}
 
 					$entry->setAttribute('src', $src);
