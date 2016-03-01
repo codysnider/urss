@@ -127,10 +127,15 @@ class Handler_Public extends Handler {
 
 			$tpl->setVariable('SELF_URL', htmlspecialchars(get_self_url_prefix()), true);
 			while ($line = $this->dbh->fetch_assoc($result)) {
+
 				$line["content_preview"] = truncate_string(strip_tags($line["content"]), 100, '...');
 
 				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_QUERY_HEADLINES) as $p) {
 					$line = $p->hook_query_headlines($line);
+				}
+
+				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_EXPORT_FEED) as $p) {
+					$line = $p->hook_article_export_feed($line);
 				}
 
 				$tpl->setVariable('ARTICLE_ID',
@@ -214,10 +219,17 @@ class Handler_Public extends Handler {
 			$feed['articles'] = array();
 
 			while ($line = $this->dbh->fetch_assoc($result)) {
+
 				$line["content_preview"] = truncate_string(strip_tags($line["content_preview"]), 100, '...');
+
 				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_QUERY_HEADLINES) as $p) {
 					$line = $p->hook_query_headlines($line, 100);
 				}
+
+				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_EXPORT_FEED) as $p) {
+					$line = $p->hook_article_export_feed($line);
+				}
+
 				$article = array();
 
 				$article['id'] = $line['link'];
