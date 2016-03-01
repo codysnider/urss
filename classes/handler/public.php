@@ -135,7 +135,7 @@ class Handler_Public extends Handler {
 				}
 
 				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_EXPORT_FEED) as $p) {
-					$line = $p->hook_article_export_feed($line);
+					$line = $p->hook_article_export_feed($line, $feed, $is_cat);
 				}
 
 				$tpl->setVariable('ARTICLE_ID',
@@ -227,7 +227,7 @@ class Handler_Public extends Handler {
 				}
 
 				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_EXPORT_FEED) as $p) {
-					$line = $p->hook_article_export_feed($line);
+					$line = $p->hook_article_export_feed($line, $feed, $is_cat);
 				}
 
 				$article = array();
