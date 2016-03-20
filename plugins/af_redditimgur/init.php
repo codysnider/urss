@@ -197,7 +197,7 @@ class Af_RedditImgur extends Plugin {
 				if (preg_match("/^https?:\/\/(m\.)?imgur.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches) ||
 					preg_match("/^https?:\/\/imgur.com\/(a|album|gallery)\/[^\.]+$/", $entry->getAttribute("href"), $matches)) {
 
-					_debug("Handling as an imgur gallery/album", $debug);
+					_debug("Handling as an imgur page/album/gallery", $debug);
 
 					$album_content = fetch_file_contents($entry->getAttribute("href"),
 						false, false, false, false, 10);
@@ -235,7 +235,9 @@ class Af_RedditImgur extends Plugin {
 								}
 							} */
 
-							$aentries = $axpath->query("//div[@class='post-image']/img[@src]");
+							//if ($debug) print_r($album_content);
+
+							$aentries = $axpath->query("(//div[@class='post-image']/img[@src] | //a[@class='zoom']/img[@src])");
 							$urls = [];
 
 							foreach ($aentries as $aentry) {
