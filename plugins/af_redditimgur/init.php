@@ -82,7 +82,7 @@ class Af_RedditImgur extends Plugin {
 		echo __("Configuration saved");
 	}
 
-	private function inline_stuff($article, &$doc, $xpath) {
+	private function inline_stuff($article, &$doc, $xpath, $debug = false) {
 
 		$entries = $xpath->query('(//a[@href]|//img[@src])');
 
@@ -91,6 +91,8 @@ class Af_RedditImgur extends Plugin {
 		foreach ($entries as $entry) {
 			if ($entry->hasAttribute("href")) {
 
+				_debug("processing href: " . $entry->getAttribute("href"), $debug);
+
 				$matches = array();
 
 				if (preg_match("/\.gfycat.com\/([a-z]+)?(\.[a-z]+)$/i", $entry->getAttribute("href"), $matches)) {
@@ -98,6 +100,8 @@ class Af_RedditImgur extends Plugin {
 				}
 
 				if (preg_match("/https?:\/\/(www\.)?gfycat.com\/([a-z]+)$/i", $entry->getAttribute("href"), $matches)) {
+
+					_debug("Handling as Gfycat", $debug);
 
 					$tmp = fetch_file_contents($entry->getAttribute("href"));
 
@@ -130,18 +134,21 @@ class Af_RedditImgur extends Plugin {
 
 				// imgur .gif -> .gifv
 				if (preg_match("/i\.imgur\.com\/(.*?)\.gif$/i", $entry->getAttribute("href"))) {
+					_debug("Handling as imgur gif (->gifv)", $debug);
+
 					$entry->setAttribute("href",
 						str_replace(".gif", ".gifv", $entry->getAttribute("href")));
 				}
 
 				if (preg_match("/\.(gifv)$/i", $entry->getAttribute("href"))) {
+					_debug("Handling as imgur gifv", $debug);
 
 					$source_stream = str_replace(".gifv", ".mp4", $entry->getAttribute("href"));
 
 					if (strpos($source_stream, "i.imgur.com") !== FALSE)
 						$poster_url = str_replace(".mp4", "h.jpg", $source_stream);
 
-					$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
+					$this->handle_as_video($doc, $entry, $source_stream, $poster_url, $debug);
 
 					$found = true;
 				}
@@ -153,6 +160,8 @@ class Af_RedditImgur extends Plugin {
 					preg_match("/\/\/youtu.be\/([\w-]+)/", $entry->getAttribute("href"), $matches)) {
 
 					$vid_id = $matches[1];
+
+					_debug("Handling as youtube: $vid_id", $debug);
 
 					$iframe = $doc->createElement("iframe");
 					$iframe->setAttribute("class", "youtube-player");
@@ -171,6 +180,8 @@ class Af_RedditImgur extends Plugin {
 				}
 
 				if (preg_match("/\.(jpg|jpeg|gif|png)(\?[0-9][0-9]*)?$/i", $entry->getAttribute("href"))) {
+					_debug("Handling as a picture", $debug);
+
 					$img = $doc->createElement('img');
 					$img->setAttribute("src", $entry->getAttribute("href"));
 
@@ -186,6 +197,8 @@ class Af_RedditImgur extends Plugin {
 				if (preg_match("/^https?:\/\/(m\.)?imgur.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches) ||
 					preg_match("/^https?:\/\/imgur.com\/(a|album|gallery)\/[^\.]+$/", $entry->getAttribute("href"), $matches)) {
 
+					_debug("Handling as an imgur gallery/album", $debug);
+
 					$album_content = fetch_file_contents($entry->getAttribute("href"),
 						false, false, false, false, 10);
 
@@ -194,10 +207,13 @@ class Af_RedditImgur extends Plugin {
 
 						if (@$adoc->loadHTML($album_content)) {
 							$axpath = new DOMXPath($adoc);
-							$aentries = $axpath->query("//meta[@property='og:image']");
+
+							/*$aentries = $axpath->query("//meta[@property='og:image']");
 							$urls = array();
 
 							foreach ($aentries as $aentry) {
+
+								_debug("og:image content=" . $aentry->getAttribute("content"), $debug);
 
 								$url = str_replace("?fb", "", $aentry->getAttribute("content"));
 								$check_url = basename($url);
@@ -217,7 +233,33 @@ class Af_RedditImgur extends Plugin {
 
 									$found = true;
 								}
+							} */
+
+							$aentries = $axpath->query("//div[@class='post-image']/img[@src]");
+							$urls = [];
+
+							foreach ($aentries as $aentry) {
+
+								$url = $aentry->getAttribute("src");
+
+								if (!in_array($url, $urls)) {
+									$img = $doc->createElement('img');
+									$img->setAttribute("src", $url);
+									$entry->parentNode->insertBefore($doc->createElement('br'), $entry);
+
+									$br = $doc->createElement('br');
+
+									$entry->parentNode->insertBefore($img, $entry);
+									$entry->parentNode->insertBefore($br, $entry);
+
+									array_push($urls, $url);
+
+									$found = true;
+								}
+
 							}
+
+							if ($debug) print_r($urls);
 						}
 					}
 				}
@@ -225,6 +267,8 @@ class Af_RedditImgur extends Plugin {
 				// wtf is this even
 				if (preg_match("/^https?:\/\/gyazo\.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches)) {
 					$img_id = $matches[1];
+
+					_debug("handling as gyazo: $img_id", $debug);
 
 					$img = $doc->createElement('img');
 					$img->setAttribute("src", "https://i.gyazo.com/$img_id.jpg");
@@ -372,7 +416,9 @@ class Af_RedditImgur extends Plugin {
 		return 2;
 	}
 
-	private function handle_as_video($doc, $entry, $source_stream, $poster_url = false) {
+	private function handle_as_video($doc, $entry, $source_stream, $poster_url = false, $debug = false) {
+
+		_debug("handle_as_video: $source_stream", $debug);
 
 		$video = $doc->createElement('video');
 		$video->setAttribute("autoplay", "1");
@@ -396,6 +442,25 @@ class Af_RedditImgur extends Plugin {
 			"data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D");
 
 		$entry->parentNode->insertBefore($img, $entry);
+	}
+
+	function testurl() {
+		$url = htmlspecialchars($_REQUEST["url"]);
+
+		header("Content-type: text/plain");
+
+		print "URL: $url\n";
+
+		$doc = new DOMDocument();
+		@$doc->loadHTML("<html><body><a href=\"$url\">[link]</a></body>");
+		$xpath = new DOMXPath($doc);
+
+		print "Inline result: " . $this->inline_stuff([], $doc, $xpath, true) . "\n";
+
+		print "\nResulting HTML:\n";
+
+		print $doc->saveHTML();
+
 	}
 }
 ?>
