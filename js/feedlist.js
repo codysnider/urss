@@ -450,26 +450,26 @@ function catchupFeedInGroup(id) {
 
 			if (rows.length > 0) {
 
-				rows.each(function(row) {
+				rows.each(function (row) {
 					row.removeClassName("Unread");
 				});
 
 				updateFloatingTitle(true);
-
-				var catchup_query = "?op=rpc&method=catchupFeed&feed_id=" +
-						id + "&is_cat=false";
-
-				console.log(catchup_query);
-
-				notify_progress("Loading, please wait...", true);
-
-				new Ajax.Request("backend.php", {
-					parameters: catchup_query,
-					onComplete: function (transport) {
-						handle_rpc_json(transport);
-					}
-				} );
 			}
+
+			var catchup_query = "?op=rpc&method=catchupFeed&feed_id=" +
+					id + "&is_cat=false";
+
+			console.log(catchup_query);
+
+			notify_progress("Loading, please wait...", true);
+
+			new Ajax.Request("backend.php", {
+				parameters: catchup_query,
+				onComplete: function (transport) {
+					handle_rpc_json(transport);
+				}
+			} );
 
 			//return viewCurrentFeed('MarkAllReadGR:' + id);
 		}
