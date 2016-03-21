@@ -445,7 +445,33 @@ function catchupFeedInGroup(id) {
 		var str = __("Mark all articles in %s as read?").replace("%s", title);
 
 		if (getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
-			return viewCurrentFeed('MarkAllReadGR:' + id);
+
+			var rows = $$("#headlines-frame > div[id*=RROW][class*=Unread][orig-feed-id='"+id+"']");
+
+			if (rows.length > 0) {
+
+				rows.each(function(row) {
+					row.removeClassName("Unread");
+				});
+
+				updateFloatingTitle(true);
+
+				var catchup_query = "?op=rpc&method=catchupFeed&feed_id=" +
+						id + "&is_cat=false";
+
+				console.log(catchup_query);
+
+				notify_progress("Loading, please wait...", true);
+
+				new Ajax.Request("backend.php", {
+					parameters: catchup_query,
+					onComplete: function (transport) {
+						handle_rpc_json(transport);
+					}
+				} );
+			}
+
+			//return viewCurrentFeed('MarkAllReadGR:' + id);
 		}
 
 	} catch (e) {
