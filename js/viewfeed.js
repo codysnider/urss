@@ -1268,7 +1268,7 @@ function headlines_scroll_handler(e) {
 	try {
 
 		// rate-limit in case of smooth scrolling and similar abominations
-		if (e.scrollTop - _headlines_scroll_offset < 10) {
+		if (Math.max(e.scrollTop, _headlines_scroll_offset) - Math.min(e.scrollTop, _headlines_scroll_offset) < 25) {
 			return;
 		}
 
