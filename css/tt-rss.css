@@ -1131,6 +1131,11 @@ body#ttrssMain #feedTree .dijitTreeRow img.dijitTreeExpandoLeaf {
 	position : relative;
 } 
 
+#headlines-frame {
+	-webkit-transform: translateZ(0);
+	-webkit-backface-visibility: hidden;
+}
+
 :focus {
 	outline: none; 
 }
