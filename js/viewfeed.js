@@ -61,7 +61,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 					$("headlines-frame").scrollTop = 0;
 
 					$("floatingTitle").style.visibility = "hidden";
-					$("floatingTitle").setAttribute("rowid", 0);
+					$("floatingTitle").setAttribute("data-article-id", 0);
 					$("floatingTitle").innerHTML = "";
 				}
 			} catch (e) { };
@@ -436,7 +436,7 @@ function toggleMark(id, client_only) {
 
 		var ft = $("floatingTitle");
 
-		if (ft && ft.getAttribute("rowid") == "RROW-" + id) {
+		if (ft && ft.getAttribute("data-article-id") == id) {
 			var fte = ft.getElementsByClassName("markedPic");
 
 			for (var i = 0; i < fte.length; i++)
@@ -494,7 +494,7 @@ function togglePub(id, client_only, no_effects, note) {
 
 		var ft = $("floatingTitle");
 
-		if (ft && ft.getAttribute("rowid") == "RROW-" + id) {
+		if (ft && ft.getAttribute("data-article-id") == id) {
 			var fte = ft.getElementsByClassName("pubPic");
 
 			for (var i = 0; i < fte.length; i++)
@@ -916,7 +916,7 @@ function getSelectedArticleIds2() {
 
 	$$("#headlines-frame > div[id*=RROW][class*=Selected]").each(
 		function(child) {
-			rv.push(child.id.replace("RROW-", ""));
+			rv.push(child.getAttribute("data-article-id"));
 		});
 
 	return rv;
@@ -929,7 +929,7 @@ function getLoadedArticleIds() {
 
 	children.each(function(child) {
 		if (Element.visible(child)) {
-			rv.push(child.id.replace("RROW-", ""));
+			rv.push(child.getAttribute("data-article-id"));
 		}
 	});
 
@@ -946,7 +946,7 @@ function selectArticles(mode, query) {
 		var children = $$(query);
 
 		children.each(function(child) {
-			var id = child.id.replace("RROW-", "");
+			var id = child.getAttribute("data-article-id");
 
 			var cb = dijit.getEnclosingWidget(
 					child.getElementsByClassName("rchk")[0]);
@@ -1173,7 +1173,7 @@ function editArticleTags(id) {
 		});
 
 		var tmph = dojo.connect(dialog, 'onLoad', function() {
-	   	dojo.disconnect(tmph);
+	   		dojo.disconnect(tmph);
 
 			new Ajax.Autocompleter('tags_str', 'tags_choices',
 			   "backend.php?op=article&method=completeTags",
@@ -1231,7 +1231,7 @@ function unpackVisibleHeadlines() {
 				if (child.offsetTop <= $("headlines-frame").scrollTop +
 					$("headlines-frame").offsetHeight) {
 
-					var cencw = $("CENCW-" + child.id.replace("RROW-", ""));
+					var cencw = $("CENCW-" + child.getAttribute("data-article-id"));
 
 					if (cencw) {
 						cencw.innerHTML = htmlspecialchars_decode(cencw.innerHTML);
@@ -1276,14 +1276,14 @@ function headlines_scroll_handler(e) {
 
 				if ($("headlines-frame").scrollTop <= child.offsetTop &&
 					child.offsetTop - $("headlines-frame").scrollTop < 100 &&
-					child.id.replace("RROW-", "") != _active_article_id) {
+					child.getAttribute("data-article-id") != _active_article_id) {
 
 					if (_active_article_id) {
 						var row = $("RROW-" + _active_article_id);
 						if (row) row.removeClassName("active");
 					}
 
-					_active_article_id = child.id.replace("RROW-", "");
+					_active_article_id = child.getAttribute("data-article-id");
 					showArticleInHeadlines(_active_article_id, true);
 					updateSelectedPrompt();
 					break;
@@ -1320,7 +1320,7 @@ function headlines_scroll_handler(e) {
 					if (child.hasClassName("Unread") && $("headlines-frame").scrollTop >
 							(child.offsetTop + child.offsetHeight/2)) {
 
-						var id = child.id.replace("RROW-", "");
+						var id = child.getAttribute("data-article-id")
 
 						if (catchup_id_batch.indexOf(id) == -1)
 							catchup_id_batch.push(id);
@@ -1507,7 +1507,7 @@ function cdmCollapseArticle(event, id, unmark) {
 				scrollToRowId(row.id);
 
 			$("floatingTitle").style.visibility = "hidden";
-			$("floatingTitle").setAttribute("rowid", false);
+			$("floatingTitle").setAttribute("data-article-id", 0);
 		}
 
 	} catch (e) {
@@ -1832,12 +1832,12 @@ function initFloatingMenu() {
 				var callerNode = event.target, match = null, tries = 0;
 
 				while (match == null && callerNode && tries <= 3) {
-					match = callerNode.getAttribute("rowid").match("^[A-Z]+[-]([0-9]+)$");
+					match = callerNode.getAttribute("data-article-id");
 					callerNode = callerNode.parentNode;
 					++tries;
 				}
 
-				if (match) this.callerRowId = parseInt(match[1]);
+				if (match) this.callerRowId = match;
 
 			});
 
@@ -2004,12 +2004,13 @@ function initHeadlinesMenu() {
 			var callerNode = event.target, match = null, tries = 0;
 
 			while (match == null && callerNode && tries <= 3) {
-				match = callerNode.id.match("^[A-Z]+[-]([0-9]+)$");
+
+				match = callerNode.getAttribute("data-article-id")
 				callerNode = callerNode.parentNode;
 				++tries;
 			}
 
-			if (match) this.callerRowId = parseInt(match[1]);
+			if (match) this.callerRowId = match;
 
 		});
 
@@ -2039,12 +2040,12 @@ function initHeadlinesMenu() {
 				var callerNode = event.target, match = null, tries = 0;
 
 				while (match == null && callerNode && tries <= 3) {
-					match = callerNode.id.match("^[A-Z]+[-]([0-9]+)$");
+					match = callerNode.getAttribute("data-feed-id")
 					callerNode = callerNode.parentNode;
 					++tries;
 				}
 
-				if (match) this.callerRowId = parseInt(match[1]);
+				if (match) this.callerRowId = match;
 
 			});
 
@@ -2053,7 +2054,7 @@ function initHeadlinesMenu() {
 				onClick: function(event) {
 					selectArticles("all",
 						"#headlines-frame > div[id*=RROW]"+
-						"[orig-feed-id='"+menu.callerRowId+"']");
+						"[data-orig-feed-id='"+menu.callerRowId+"']");
 
 				}}));
 
@@ -2063,7 +2064,7 @@ function initHeadlinesMenu() {
 					selectArticles("none");
 					selectArticles("all",
 						"#headlines-frame > div[id*=RROW]"+
-						"[orig-feed-id='"+menu.callerRowId+"']");
+						"[data-orig-feed-id='"+menu.callerRowId+"']");
 
 					catchupSelection();
 				}}));
@@ -2271,9 +2272,10 @@ function updateFloatingTitle(unread_only) {
 
 				var header = child.getElementsByClassName("cdmHeader")[0];
 
-				if (unread_only || child.id != $("floatingTitle").getAttribute("rowid")) {
-					if (child.id != $("floatingTitle").getAttribute("rowid")) {
-						$("floatingTitle").setAttribute("rowid", child.id);
+				if (unread_only || child.getAttribute("data-article-id") != $("floatingTitle").getAttribute("data-article-id")) {
+					if (child.getAttribute("data-article-id") != $("floatingTitle").getAttribute("data-article-id")) {
+
+						$("floatingTitle").setAttribute("data-article-id", child.getAttribute("data-article-id"));
 						$("floatingTitle").innerHTML = header.innerHTML;
 						$("floatingTitle").firstChild.innerHTML = "<img class='anchor markedPic' src='images/page_white_go.png' onclick=\"scrollToRowId('"+child.id+"')\">" + $("floatingTitle").firstChild.innerHTML;
 

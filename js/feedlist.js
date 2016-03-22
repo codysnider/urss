@@ -447,7 +447,7 @@ function catchupFeedInGroup(id) {
 
 		if (getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
 
-			var rows = $$("#headlines-frame > div[id*=RROW][orig-feed-id='"+id+"']");
+			var rows = $$("#headlines-frame > div[id*=RROW][data-orig-feed-id='"+id+"']");
 
 			if (rows.length > 0) {
 

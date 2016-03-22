@@ -103,7 +103,7 @@ function updateFeedList() {
 		$("feeds-holder").appendChild(tree.domNode);
 
 		var tmph = dojo.connect(tree, 'onLoad', function() {
-	   	dojo.disconnect(tmph);
+	   		dojo.disconnect(tmph);
 			Element.hide("feedlistLoading");
 
 			feedlist_init();
