@@ -343,12 +343,6 @@ function init() {
 					editArticleTags(id);
 				};
 			}
-		hotkey_actions["dismiss_selected"] = function() {
-				dismissSelectedArticles();
-		};
-		hotkey_actions["dismiss_read"] = function() {
-				dismissReadArticles();
-		};
 		hotkey_actions["open_in_new_window"] = function() {
 				if (getActiveArticleId()) {
 					openArticleInNewWindow(getActiveArticleId());
@@ -375,8 +369,6 @@ function init() {
 				if (isCdmMode()) {
 					if (!getInitParam("cdm_expanded")) {
 						cdmCollapseArticle(false, getActiveArticleId());
-					} else {
-						dismissArticle(getActiveArticleId());
 					}
 				} else {
 					closeArticlePanel();
