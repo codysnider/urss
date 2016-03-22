@@ -1835,37 +1835,49 @@ function closeArticlePanel() {
 
 function initFloatingMenu() {
 	try {
-		if (dijit.byId("floatingMenu"))
-			dijit.byId("floatingMenu").destroyRecursive();
+		if (!dijit.byId("floatingMenu")) {
 
 			var menu = new dijit.Menu({
 				id: "floatingMenu",
 				targetNodeIds: ["floatingTitle"]
 			});
 
-			var id = $("floatingTitle").getAttribute("rowid").replace("RROW-", "");
+			var tmph = dojo.connect(menu, '_openMyself', function (event) {
+				var callerNode = event.target, match = null, tries = 0;
 
-			headlinesMenuCommon(menu, id);
+				while (match == null && callerNode && tries <= 3) {
+					match = callerNode.getAttribute("rowid").match("^[A-Z]+[-]([0-9]+)$");
+					callerNode = callerNode.parentNode;
+					++tries;
+				}
+
+				if (match) this.callerRowId = parseInt(match[1]);
+
+			});
+
+			headlinesMenuCommon(menu);
 
 			menu.startup();
+		}
+
 	} catch (e) {
 		exception_error("initFloatingMenu", e);
 	}
 }
 
-function headlinesMenuCommon(menu, base_id) {
+function headlinesMenuCommon(menu) {
 	try {
 
 		menu.addChild(new dijit.MenuItem({
 			label: __("Open original article"),
 			onClick: function(event) {
-				openArticleInNewWindow(base_id ? base_id : this.getParent().callerRowId);
+				openArticleInNewWindow(this.getParent().callerRowId);
 			}}));
 
 		menu.addChild(new dijit.MenuItem({
 			label: __("Display article URL"),
 			onClick: function(event) {
-				displayArticleUrl(base_id ? base_id : this.getParent().callerRowId);
+				displayArticleUrl(this.getParent().callerRowId);
 			}}));
 
 		menu.addChild(new dijit.MenuSeparator());
@@ -1875,7 +1887,7 @@ function headlinesMenuCommon(menu, base_id) {
 			onClick: function(event) {
 				var ids = getSelectedArticleIds2();
 				// cast to string
-				var id = (base_id ? base_id : this.getParent().callerRowId) + "";
+				var id = (this.getParent().callerRowId) + "";
 				ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 				selectionToggleUnread(undefined, false, true, ids);
@@ -1886,7 +1898,7 @@ function headlinesMenuCommon(menu, base_id) {
 			onClick: function(event) {
 				var ids = getSelectedArticleIds2();
 				// cast to string
-				var id = (base_id ? base_id : this.getParent().callerRowId) + "";
+				var id = (this.getParent().callerRowId) + "";
 				ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 				selectionToggleMarked(undefined, false, true, ids);
@@ -1897,7 +1909,7 @@ function headlinesMenuCommon(menu, base_id) {
 			onClick: function(event) {
 				var ids = getSelectedArticleIds2();
 				// cast to string
-				var id = (base_id ? base_id : this.getParent().callerRowId) + "";
+				var id = (this.getParent().callerRowId) + "";
 				ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 				selectionTogglePublished(undefined, false, true, ids);
@@ -1908,13 +1920,13 @@ function headlinesMenuCommon(menu, base_id) {
 		menu.addChild(new dijit.MenuItem({
 			label: __("Mark above as read"),
 			onClick: function(event) {
-				catchupRelativeToArticle(0, base_id ? base_id : this.getParent().callerRowId);
+				catchupRelativeToArticle(0, this.getParent().callerRowId);
 				}}));
 
 		menu.addChild(new dijit.MenuItem({
 			label: __("Mark below as read"),
 			onClick: function(event) {
-				catchupRelativeToArticle(1, base_id ? base_id : this.getParent().callerRowId);
+				catchupRelativeToArticle(1, this.getParent().callerRowId);
 				}}));
 
 
@@ -1940,7 +1952,7 @@ function headlinesMenuCommon(menu, base_id) {
 					onClick: function(event) {
 						var ids = getSelectedArticleIds2();
 						// cast to string
-						var id = (base_id ? base_id : this.getParent().ownerMenu.callerRowId) + "";
+						var id = (this.getParent().ownerMenu.callerRowId) + "";
 
 						ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
@@ -1953,7 +1965,7 @@ function headlinesMenuCommon(menu, base_id) {
 					onClick: function(event) {
 						var ids = getSelectedArticleIds2();
 						// cast to string
-						var id = (base_id ? base_id : this.getParent().ownerMenu.callerRowId) + "";
+						var id = (this.getParent().ownerMenu.callerRowId) + "";
 
 						ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
@@ -2015,7 +2027,7 @@ function initHeadlinesMenu() {
 
 		});
 
-		headlinesMenuCommon(menu, false);
+		headlinesMenuCommon(menu);
 
 		menu.startup();
 
@@ -2041,13 +2053,9 @@ function initHeadlinesMenu() {
 				var callerNode = event.target, match = null, tries = 0;
 
 				while (match == null && callerNode && tries <= 3) {
-					console.log(callerNode.id);
-
 					match = callerNode.id.match("^[A-Z]+[-]([0-9]+)$");
 					callerNode = callerNode.parentNode;
 					++tries;
-
-					console.log(match[1]);
 				}
 
 				if (match) this.callerRowId = parseInt(match[1]);
