@@ -451,8 +451,8 @@ function catchupFeedInGroup(id) {
 			if (rows.length > 0) {
 
 				rows.each(function (row) {
-					new Effect.Fade(row, {duration : 0.5, afterFinish: function() {
-						Element.remove(row);
+					new Effect.Fade(row, {duration : 0.5, afterFinish: function(obj) {
+						Element.remove(obj.element);
 					}});
 				});
 

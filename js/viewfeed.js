@@ -552,7 +552,7 @@ function moveToPost(mode, noscroll, noexpand) {
 
 	try {
 
-		var rows = getVisibleArticleIds();
+		var rows = getLoadedArticleIds();
 
 		var prev_id = false;
 		var next_id = false;
@@ -690,17 +690,6 @@ function updateSelectedPrompt() {
 
 	} catch (e) {
 		exception_error("updateSelectedPrompt", e);
-	}
-}
-
-function toggleUnread_afh(effect) {
-	try {
-
-		var elem = effect.element;
-		elem.style.backgroundColor = "";
-
-	} catch (e) {
-		exception_error("toggleUnread_afh", e);
 	}
 }
 
@@ -1428,7 +1417,7 @@ function catchupRelativeToArticle(below, id) {
 			return;
 		}
 
-		var visible_ids = getVisibleArticleIds();
+		var visible_ids = getLoadedArticleIds();
 
 		var ids_to_mark = new Array();
 
@@ -1642,26 +1631,36 @@ function show_labels_in_headlines(transport) {
 	}
 }
 
+function dismissArticles(ids) {
+	try {
+
+		console.log("dismissArticles: " + ids);
+
+		for (var i = 0; i < ids.length; i++) {
+			var elem = $("RROW-" + ids[i]);
+
+			new Effect.Fade(elem, {
+				duration: 0.5, afterFinish: function (obj) {
+					Element.remove(obj.element);
+				}
+			});
+
+			if (ids[i] == getActiveArticleId()) {
+				setActiveArticleId(0);
+			}
+		}
+
+		selectionToggleUnread(false, false, false, ids);
+
+	} catch (e) {
+		exception_error("dismissArticles", e);
+	}
+
+}
+
 function dismissArticle(id) {
 	try {
-		var elem = $("RROW-" + id);
-
-		if (!elem) return;
-
-		toggleUnread(id, 0, true);
-
-		new Effect.Fade(elem, {duration : 0.5});
-
-		// Remove the content, too
-		var elem_content = $("CICD-" + id);
-		if (elem_content) {
-			Element.remove(elem_content);
-		}
-
-		if (id == getActiveArticleId()) {
-			setActiveArticleId(0);
-		}
-
+		dismissArticles([id]);
 	} catch (e) {
 		exception_error("dismissArticle", e);
 	}
@@ -1669,33 +1668,7 @@ function dismissArticle(id) {
 
 function dismissSelectedArticles() {
 	try {
-
-		var ids = getVisibleArticleIds();
-		var tmp = [];
-		var sel = [];
-
-		for (var i = 0; i < ids.length; i++) {
-			var elem = $("RROW-" + ids[i]);
-
-			if (elem.className && elem.hasClassName("Selected") &&
-					ids[i] != getActiveArticleId()) {
-				new Effect.Fade(elem, {duration : 0.5});
-				sel.push(ids[i]);
-
-				// Remove the content, too
-				var elem_content = $("CICD-" + ids[i]);
-				if (elem_content) {
-					Element.remove(elem_content);
-				}
-			} else {
-				tmp.push(ids[i]);
-			}
-		}
-
-		if (sel.length > 0)
-			selectionToggleUnread(false);
-
-
+		dismissArticles(getSelectedArticleIds2());
 	} catch (e) {
 		exception_error("dismissSelectedArticles", e);
 	}
@@ -1703,52 +1676,23 @@ function dismissSelectedArticles() {
 
 function dismissReadArticles() {
 	try {
-
-		var ids = getVisibleArticleIds();
+		var ids = getLoadedArticleIds();
 		var tmp = [];
 
-		for (var i = 0; i < ids.length; i++) {
-			var elem = $("RROW-" + ids[i]);
+		ids.each(function(id) {
+			var elem = $("RROW-" + id);
 
-			if (elem.className && !elem.hasClassName("Unread") &&
-					!elem.hasClassName("Selected")) {
-
-				new Effect.Fade(elem, {duration : 0.5});
-
-				// Remove the content, too
-				var elem_content = $("CICD-" + ids[i]);
-				if (elem_content) {
-					Element.remove(elem_content);
-				}
-			} else {
-				tmp.push(ids[i]);
+			if (elem && !elem.hasClassName("Unread")) {
+				tmp.push(id);
 			}
-		}
+
+		});
+
+		dismissArticles(tmp);
 
 	} catch (e) {
 		exception_error("dismissReadArticles", e);
 	}
-}
-
-// we don't really hide rows anymore
-function getVisibleArticleIds() {
-	return getLoadedArticleIds();
-
-	/*var ids = [];
-
-	try {
-
-		getLoadedArticleIds().each(function(id) {
-			var elem = $("RROW-" + id);
-			if (elem && Element.visible(elem))
-				ids.push(id);
-			});
-
-	} catch (e) {
-		exception_error("getVisibleArticleIds", e);
-	}
-
-	return ids; */
 }
 
 function cdmClicked(event, id) {
@@ -1839,17 +1783,6 @@ function hlClicked(event, id) {
 	}
 }
 
-function getFirstVisibleHeadlineId() {
-	var rows = getVisibleArticleIds();
-	return rows[0];
-
-}
-
-function getLastVisibleHeadlineId() {
-	var rows = getVisibleArticleIds();
-	return rows[rows.length-1];
-}
-
 function openArticleInNewWindow(id) {
 	toggleUnread(id, 0, false);
 	window.open("backend.php?op=article&method=redirect&id=" + id);
@@ -1886,7 +1819,7 @@ function getRelativePostIds(id, limit) {
 
 		if (!limit) limit = 6; //3
 
-		var ids = getVisibleArticleIds();
+		var ids = getLoadedArticleIds();
 
 		for (var i = 0; i < ids.length; i++) {
 			if (ids[i] == id) {
