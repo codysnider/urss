@@ -273,33 +273,17 @@ function render_article(article) {
 function showArticleInHeadlines(id, noexpand) {
 
 	try {
-		selectArticles("none");
-
-		var crow = $("RROW-" + id);
-
-		if (!crow) return;
-
-		var article_is_unread = crow.hasClassName("Unread");
+		var row = $("RROW-" + id);
+		if (!row) return;
 
 		if (!noexpand)
-			crow.removeClassName("Unread");
-		crow.addClassName("active");
+			row.removeClassName("Unread");
+
+		row.addClassName("active");
 
 		selectArticles('none');
 
-		var view_mode = false;
-
-		try {
-			view_mode = document.forms['main_toolbar_form'].view_mode;
-			view_mode = view_mode[view_mode.selectedIndex].value;
-		} catch (e) {
-			//
-		}
-
 		markHeadline(id);
-
-		if (article_is_unread && !noexpand)
-			_force_scheduled_update = true;
 
 	} catch (e) {
 		exception_error("showArticleInHeadlines", e);
