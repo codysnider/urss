@@ -928,8 +928,10 @@ function getLoadedArticleIds() {
 	var children = $$("#headlines-frame > div[id*=RROW-]");
 
 	children.each(function(child) {
+		if (Element.visible(child)) {
 			rv.push(child.id.replace("RROW-", ""));
-		});
+		}
+	});
 
 	return rv;
 

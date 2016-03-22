@@ -453,7 +453,25 @@ function catchupFeedInGroup(id) {
 
 				rows.each(function (row) {
 					row.removeClassName("Unread");
+
+					if (row.getAttribute("data-article-id") != getActiveArticleId()) {
+						new Effect.Fade(row, {duration: 0.5});
+					}
+
 				});
+
+				var feedTitles = $$("#headlines-frame > div[class='cdmFeedTitle']");
+
+				for (var i = 0; i < feedTitles.length; i++) {
+					if (feedTitles[i].getAttribute("data-feed-id") == id) {
+
+						if (i < feedTitles.length - 1) {
+							new Effect.Fade(feedTitles[i], {duration: 0.5});
+						}
+
+						break;
+					}
+				}
 
 				updateFloatingTitle(true);
 			}

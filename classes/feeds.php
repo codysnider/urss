@@ -465,7 +465,7 @@ class Feeds extends Handler_Protected {
 
 							$vf_catchup_link = "<a class='catchup' onclick='catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
 
-							$reply['content'] .= "<div id='FTITLE-$feed_id' class='cdmFeedTitle'>".
+							$reply['content'] .= "<div data-feed-id='$feed_id' id='FTITLE-$feed_id' class='cdmFeedTitle'>".
 								"<div style='float : right'>$feed_icon_img</div>".
 								"<a class='title' href=\"#\" onclick=\"viewfeed({feed:$feed_id})\">".
 								$line["feed_title"]."</a>
@@ -478,7 +478,7 @@ class Feeds extends Handler_Protected {
 					$mouseover_attrs = "onmouseover='postMouseIn(event, $id)'
 						onmouseout='postMouseOut($id)'";
 
-					$reply['content'] .= "<div class='hl $class' orig-feed-id='$feed_id' id='RROW-$id' $mouseover_attrs>";
+					$reply['content'] .= "<div class='hl $class' orig-feed-id='$feed_id' data-article-id='$id' id='RROW-$id' $mouseover_attrs>";
 
 					$reply['content'] .= "<div class='hlLeft'>";
 
@@ -570,7 +570,7 @@ class Feeds extends Handler_Protected {
 								//$feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"images/blank_icon.gif\" alt=\"\">";
 							}
 
-							$reply['content'] .= "<div id='FTITLE-$feed_id' class='cdmFeedTitle'>".
+							$reply['content'] .= "<div data-feed-id='$feed_id' id='FTITLE-$feed_id' class='cdmFeedTitle'>".
 								"<div style=\"float : right\">$feed_icon_img</div>".
 								"<a href=\"#\" class='title' onclick=\"viewfeed({feed:$feed_id})\">".
 								$line["feed_title"]."</a> $vf_catchup_link</div>";
@@ -584,7 +584,7 @@ class Feeds extends Handler_Protected {
 					$expanded_class = $expand_cdm ? "expanded" : "expandable";
 
 					$reply['content'] .= "<div class=\"cdm $hlc_suffix $expanded_class $class\"
-						id=\"RROW-$id\" orig-feed-id='$feed_id' $mouseover_attrs>";
+						id=\"RROW-$id\" data-article-id='$id' orig-feed-id='$feed_id' $mouseover_attrs>";
 
 					$reply['content'] .= "<div class=\"cdmHeader\">";
 					$reply['content'] .= "<div style=\"vertical-align : middle\">";
