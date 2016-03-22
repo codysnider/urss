@@ -446,13 +446,19 @@ function catchupFeedInGroup(id) {
 
 		if (getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
 
-			var rows = $$("#headlines-frame > div[id*=RROW][class*=Unread][orig-feed-id='"+id+"']");
+			var rows = $$("#headlines-frame > div[id*=RROW][orig-feed-id='"+id+"']");
 
 			if (rows.length > 0) {
 
 				rows.each(function (row) {
-					row.removeClassName("Unread");
+					new Effect.Fade(row, {duration : 0.5, afterFinish: function() {
+						Element.remove(row);
+					}});
 				});
+
+				var feedTitle = $("FTITLE-" + id);
+
+				if (feedTitle) new Effect.Fade(feedTitle, {duration : 0.5});
 
 				updateFloatingTitle(true);
 			}
