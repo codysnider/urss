@@ -195,7 +195,7 @@ class Af_RedditImgur extends Plugin {
 				// linked albums & pages
 
 				if (preg_match("/^https?:\/\/(m\.)?imgur.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches) ||
-					preg_match("/^https?:\/\/imgur.com\/(a|album|gallery)\/[^\.]+$/", $entry->getAttribute("href"), $matches)) {
+					preg_match("/^https?:\/\/(m\.)?imgur.com\/(a|album|gallery)\/[^\.]+$/", $entry->getAttribute("href"), $matches)) {
 
 					_debug("Handling as an imgur page/album/gallery", $debug);
 
