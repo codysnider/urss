@@ -451,14 +451,8 @@ function catchupFeedInGroup(id) {
 			if (rows.length > 0) {
 
 				rows.each(function (row) {
-					new Effect.Fade(row, {duration : 0.5, afterFinish: function(obj) {
-						Element.remove(obj.element);
-					}});
+					row.removeClassName("Unread");
 				});
-
-				var feedTitle = $("FTITLE-" + id);
-
-				if (feedTitle) new Effect.Fade(feedTitle, {duration : 0.5});
 
 				updateFloatingTitle(true);
 			}
