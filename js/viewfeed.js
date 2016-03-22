@@ -13,6 +13,7 @@ var catchup_timeout_id = false;
 var cids_requested = [];
 var loaded_article_ids = [];
 var _last_headlines_update = 0;
+var _headlines_scroll_offset = 0;
 var current_first_id = 0;
 
 var _catchup_request_sent = false;
@@ -1265,6 +1266,14 @@ function unpackVisibleHeadlines() {
 
 function headlines_scroll_handler(e) {
 	try {
+
+		// rate-limit in case of smooth scrolling and similar abominations
+		if (e.scrollTop - _headlines_scroll_offset < 10) {
+			return;
+		}
+
+		_headlines_scroll_offset = e.scrollTop;
+
 		var hsp = $("headlines-spacer");
 
 		unpackVisibleHeadlines();
@@ -1273,6 +1282,7 @@ function headlines_scroll_handler(e) {
 		if (isCdmMode() && getInitParam("cdm_auto_catchup") == 1 &&
 				getSelectedArticleIds2().length <= 1 &&
 				getInitParam("cdm_expanded")) {
+
 			var rows = $$("#headlines-frame > div[id*=RROW]");
 
 			for (var i = 0; i < rows.length; i++) {
