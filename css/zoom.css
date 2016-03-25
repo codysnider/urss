@@ -43,7 +43,6 @@ body#ttrssZoom div.postContent {
 }
 
 body#ttrssZoom div.postContent p {
-	max-width : 650px;
 	-webkit-hyphens: auto;
 	-moz-hyphens: auto;
 	hyphens: auto;
