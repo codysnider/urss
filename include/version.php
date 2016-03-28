@@ -23,7 +23,7 @@
 					return VERSION_STATIC . " ($suffix)";
 
 				} else {
-					$suffix = trim($head, 0, 7);
+					$suffix = substr(trim($head), 0, 7);
 					$timestamp = filemtime("$root_dir/.git/HEAD");
 
 					define("GIT_VERSION_HEAD", $suffix);
