@@ -203,7 +203,7 @@
 
 	function check_for_update() {
 		if (defined("GIT_VERSION_TIMESTAMP")) {
-			$content = @fetch_file_contents2(array("url" => "http://tt-rss.org/version.json", "timeout" => 5));
+			$content = @fetch_file_contents(array("url" => "http://tt-rss.org/version.json", "timeout" => 5));
 
 			if ($content) {
 				$content = json_decode($content, true);
