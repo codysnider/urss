@@ -333,7 +333,25 @@
 		}
 	}
 
-	function fetch_file_contents($url, $type = false, $login = false, $pass = false, $post_query = false, $timeout = false, $timestamp = 0, $useragent = false) {
+	// TODO: deprecated, remove
+	function fetch_file_contents($url, $type = false, $login = false, $pass = false, $post_query = false, 
+				 $timeout = false, $timestamp = 0, $useragent = false) {
+		
+		$options = array(
+			"url" => $url,
+			"type" => $type,
+			"login" => $login,
+			"pass" => $pass,
+			"post_query" => $post_query,
+			"timeout" => $timeout,
+			"timestamp" => $timestamp,
+			"useragent" => $useragent
+		);
+			
+		return fetch_file_contents2($options);
+	}
+
+	function fetch_file_contents2($options) {
 
 		global $fetch_last_error;
 		global $fetch_last_error_code;
@@ -341,6 +359,15 @@
 		global $fetch_last_content_type;
 		global $fetch_curl_used;
 
+		$url = $options["url"];
+		$type = isset($options["type"]) ? $options["type"] : false;
+		$login = isset($options["login"]) ? $options["login"] : false;
+		$pass = isset($options["pass"]) ? $options["pass"] : false;		
+		$post_query = isset($options["post_query"]) ? $options["post_query"] : false;
+		$timeout = isset($options["timeout"]) ? $options["timeout"] : false;
+		$timestamp = isset($options["timestamp"]) ? $options["timestamp"] : 0;
+		$useragent = isset($options["useragent"]) ? $options["useragent"] : false;
+		
 		$url = ltrim($url, ' ');
 		$url = str_replace(' ', '%20', $url);
 
