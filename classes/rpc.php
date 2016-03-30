@@ -346,7 +346,7 @@ class RPC extends Handler_Protected {
 
 		if ($reply['error']['code'] == 0) {
 			$reply['init-params'] = make_init_params();
-			$reply['runtime-info'] = make_runtime_info();
+			$reply['runtime-info'] = make_runtime_info(true);
 		}
 
 		print json_encode($reply);

@@ -203,7 +203,7 @@
 
 	function check_for_update() {
 		if (defined("GIT_VERSION_TIMESTAMP")) {
-			$content = @fetch_file_contents("http://tt-rss.org/version.json");
+			$content = @fetch_file_contents(array("url" => "http://tt-rss.org/version.json", "timeout" => 5));
 
 			if ($content) {
 				$content = json_decode($content, true);
@@ -221,7 +221,7 @@
 		return "";
 	}
 
-	function make_runtime_info() {
+	function make_runtime_info($disable_update_check = false) {
 		$data = array();
 
 		$result = db_query("SELECT MAX(id) AS mid, COUNT(*) AS nf FROM
@@ -240,7 +240,7 @@
 		$data['reload_on_ts_change'] = !defined('_NO_RELOAD_ON_TS_CHANGE');
 
 
-		if (CHECK_FOR_UPDATES && $_SESSION["last_version_check"] + 86400 + rand(-1000, 1000) < time()) {
+		if (CHECK_FOR_UPDATES && !$disable_update_check && $_SESSION["last_version_check"] + 86400 + rand(-1000, 1000) < time()) {
 			$update_result = @check_for_update();
 
 			$data["update_result"] = $update_result;
