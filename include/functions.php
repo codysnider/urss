@@ -343,7 +343,7 @@
 		global $fetch_last_content_type;
 		global $fetch_curl_used;
 
-		if (!is_array($options) && func_num_args() > 1) {
+		if (!is_array($options)) {
 
 			// falling back on compatibility shim
 			$options = array(
