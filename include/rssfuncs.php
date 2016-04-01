@@ -193,9 +193,8 @@
 				ttrss_users.id = ttrss_user_prefs.owner_uid AND
 				ttrss_user_prefs.pref_name = 'DEFAULT_UPDATE_INTERVAL' AND
 				ttrss_user_prefs.profile IS NULL AND
-				feed_url = '".db_escape_string($feed)."' AND
-				(ttrss_feeds.update_interval > 0 OR
-					ttrss_user_prefs.value != '-1')
+				feed_url = '".db_escape_string($feed)."'
+				$update_limit_qpart
 				$login_thresh_qpart
 			ORDER BY ttrss_feeds.id $query_limit");
 
