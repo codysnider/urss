@@ -1,6 +1,7 @@
 <?php
 class Db_Mysqli implements IDb {
 	private $link;
+	private $last_error;
 
 	function connect($host, $user, $pass, $db, $port) {
 		if ($port)
@@ -26,10 +27,10 @@ class Db_Mysqli implements IDb {
 	function query($query, $die_on_error = true) {
 		$result = @mysqli_query($this->link, $query);
 		if (!$result) {
-			$error = @mysqli_error($this->link);
+			$this->last_error = @mysqli_error($this->link);
 
 			@mysqli_query($this->link, "ROLLBACK");
-			user_error("Query $query failed: " . ($this->link ? $error : "No connection"),
+			user_error("Query $query failed: " . ($this->link ? $this->last_error : "No connection"),
 				$die_on_error ? E_USER_ERROR : E_USER_WARNING);
 		}
 
@@ -64,6 +65,10 @@ class Db_Mysqli implements IDb {
 
 	function last_error() {
 		return mysqli_error();
+	}
+
+	function last_query_error() {
+		return $this->last_error;
 	}
 
 	function init() {

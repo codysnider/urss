@@ -9,5 +9,6 @@ interface IDb {
 	function close();
 	function affected_rows($result);
 	function last_error();
+	function last_query_error();
 }
 ?>

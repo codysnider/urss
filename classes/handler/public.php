@@ -980,7 +980,7 @@ class Handler_Public extends Handler {
 						for ($i = $updater->getSchemaVersion() + 1; $i <= SCHEMA_VERSION; $i++) {
 							print "<li>Performing update up to version $i...";
 
-							$result = $updater->performUpdateTo($i);
+							$result = $updater->performUpdateTo($i, true);
 
 							if (!$result) {
 								print "<span class='err'>FAILED!</span></li></ul>";
@@ -990,7 +990,7 @@ class Handler_Public extends Handler {
 								<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
 								</form>";
 
-								break;
+								return;
 							} else {
 								print "<span class='ok'>OK!</span></li>";
 							}

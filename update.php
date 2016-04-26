@@ -325,7 +325,7 @@
 			for ($i = $updater->getSchemaVersion() + 1; $i <= SCHEMA_VERSION; $i++) {
 				_debug("performing update up to version $i...");
 
-				$result = $updater->performUpdateTo($i);
+				$result = $updater->performUpdateTo($i, false);
 
 				_debug($result ? "OK!" : "FAILED!");
 

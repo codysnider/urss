@@ -94,5 +94,8 @@ class Db implements IDb {
 		return $this->adapter->last_error();
 	}
 
+	function last_query_error() {
+		return $this->adapter->last_query_error();
+	}
 }
 ?>

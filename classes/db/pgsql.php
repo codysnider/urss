@@ -1,6 +1,7 @@
 <?php
 class Db_Pgsql implements IDb {
 	private $link;
+	private $last_error;
 
 	function connect($host, $user, $pass, $db, $port) {
 		$string = "dbname=$db user=$user";
@@ -38,11 +39,11 @@ class Db_Pgsql implements IDb {
 		$result = @pg_query($this->link, $query);
 
 		if (!$result) {
-			$error = @pg_last_error($this->link);
+			$this->last_error = @pg_last_error($this->link);
 
 			@pg_query($this->link, "ROLLBACK");
 			$query = htmlspecialchars($query); // just in case
-			user_error("Query $query failed: " . ($this->link ? $error : "No connection"),
+			user_error("Query $query failed: " . ($this->link ? $this->last_error : "No connection"),
 				$die_on_error ? E_USER_ERROR : E_USER_WARNING);
 		}
 		return $result;
@@ -71,6 +72,10 @@ class Db_Pgsql implements IDb {
 
 	function last_error() {
 		return pg_last_error($this->link);
+	}
+
+	function last_query_error() {
+		return $this->last_error;
 	}
 
 	function init() {
