@@ -1034,7 +1034,14 @@
 
 		$res = $doc->saveHTML();
 
-		return $res;
+		/* strip everything outside of <body>...</body> */
+
+		$res_frag = array();
+		if (preg_match('/<body>(.*)<\/body>/is', $res, $res_frag)) {
+			return $res_frag[1];
+		} else {
+			return $res;
+		}
 	}
 
 	function strip_harmful_tags($doc, $allowed_elements, $disallowed_attributes) {
