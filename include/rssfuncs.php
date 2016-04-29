@@ -318,6 +318,7 @@
 
 		if (db_num_rows($result) == 0) {
 			_debug("feed $feed NOT FOUND/SKIPPED", $debug_enabled);
+			user_error("Attempt to update unknown/invalid feed $feed", E_USER_WARNING);
 			return false;
 		}
 
