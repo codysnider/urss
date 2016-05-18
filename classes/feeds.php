@@ -1072,10 +1072,12 @@ class Feeds extends Handler_Protected {
 
 				" <input dojoType=\"dijit.form.TextBox\" name='login'\"
 					placeHolder=\"".__("Login")."\"
+					autocomplete=\"new-password\"
 					style=\"width : 10em;\"> ".
 				" <input
 					placeHolder=\"".__("Password")."\"
 					dojoType=\"dijit.form.TextBox\" type='password'
+					autocomplete=\"new-password\"
 					style=\"width : 10em;\" name='pass'\">
 			</div></div>";
 
