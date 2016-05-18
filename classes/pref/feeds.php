@@ -641,7 +641,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<input dojoType=\"dijit.form.TextBox\" id=\"feedEditDlg_login\"
 			placeHolder=\"".__("Login")."\"
-			autocomplete=\"off\"
+			autocomplete=\"new-password\"
 			name=\"auth_login\" value=\"$auth_login\"><hr/>";
 
 		$auth_pass = $this->dbh->fetch_result($result, 0, "auth_pass");
@@ -654,7 +654,7 @@ class Pref_Feeds extends Handler_Protected {
 		$auth_pass = htmlspecialchars($auth_pass);
 
 		print "<input dojoType=\"dijit.form.TextBox\" type=\"password\" name=\"auth_pass\"
-			autocomplete=\"off\"
+			autocomplete=\"new-password\"
 			placeHolder=\"".__("Password")."\"
 			value=\"$auth_pass\">";
 
@@ -880,13 +880,13 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<input dojoType=\"dijit.form.TextBox\"
 			placeHolder=\"".__("Login")."\" disabled=\"1\"
-			autocomplete=\"off\"
+			autocomplete=\"new-password\"
 			name=\"auth_login\" value=\"\">";
 
 		$this->batch_edit_cbox("auth_login");
 
 		print "<hr/> <input dojoType=\"dijit.form.TextBox\" type=\"password\" name=\"auth_pass\"
-			autocomplete=\"off\"
+			autocomplete=\"new-password\"
 			placeHolder=\"".__("Password")."\" disabled=\"1\"
 			value=\"\">";
 
@@ -1844,7 +1844,7 @@ class Pref_Feeds extends Handler_Protected {
 				" <input
 					placeHolder=\"".__("Password")."\"
 					dojoType=\"dijit.form.TextBox\" type='password'
-					autocomplete=\"off\"
+					autocomplete=\"new-password\"
 					style=\"width : 10em;\" name='pass'\">".
 				"</div>";
 
