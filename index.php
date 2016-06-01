@@ -118,6 +118,7 @@
 	</script>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="referrer" content="none"/>
 
 	<script type="text/javascript">
 		Event.observe(window, 'load', function() {
