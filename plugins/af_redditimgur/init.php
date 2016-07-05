@@ -301,8 +301,9 @@ class Af_RedditImgur extends Plugin {
 			@$doc->loadHTML($article["content"]);
 			$xpath = new DOMXPath($doc);
 
+			$content_link = $xpath->query("(//a[contains(., '[link]')])")->item(0);
+
 			if ($this->host->get($this, "enable_content_dupcheck")) {
-				$content_link = $xpath->query("(//a[contains(., '[link]')])")->item(0);
 
 				if ($content_link) {
 					$content_href = db_escape_string($content_link->getAttribute("href"));
