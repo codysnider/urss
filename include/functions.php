@@ -16,7 +16,9 @@
 
 	libxml_disable_entity_loader(true);
 
-	mb_internal_encoding("UTF-8");
+	// separate test because this is included before sanity checks
+	if (function_exists("mb_internal_encoding")) mb_internal_encoding("UTF-8");
+
 	date_default_timezone_set('UTC');
 	if (defined('E_DEPRECATED')) {
 		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
