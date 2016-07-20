@@ -58,6 +58,16 @@
 	if (!init_plugins()) return;
 
 	if ($_SESSION["uid"]) {
+		if (!validate_session()) {
+			header("Content-Type: text/json");
+
+			print json_encode(array("seq" => -1,
+				"status" => 1,
+				"content" => array("error" => "NOT_LOGGED_IN")));
+
+			return;
+		}
+
 		load_user_plugins( $_SESSION["uid"]);
 	}
 
