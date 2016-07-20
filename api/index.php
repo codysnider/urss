@@ -57,6 +57,10 @@
 
 	if (!init_plugins()) return;
 
+	if ($_SESSION["uid"]) {
+		load_user_plugins( $_SESSION["uid"]);
+	}
+
 	$method = strtolower($_REQUEST["op"]);
 
 	$handler = new API($_REQUEST);
