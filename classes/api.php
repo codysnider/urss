@@ -330,7 +330,7 @@ class API extends Handler {
 
 		if ($article_id) {
 
-			$query = "SELECT id,title,link,content,feed_id,comments,int_id,
+			$query = "SELECT id,guid,title,link,content,feed_id,comments,int_id,
 				marked,unread,published,score,note,lang,
 				".SUBSTRING_FOR_DATE."(updated,1,16) as updated,
 				author,(SELECT title FROM ttrss_feeds WHERE id = feed_id) AS feed_title,
@@ -352,6 +352,7 @@ class API extends Handler {
 
 					$article = array(
 						"id" => $line["id"],
+						"guid" => $line["guid"],
 						"title" => $line["title"],
 						"link" => $line["link"],
 						"labels" => get_article_labels($line['id']),
@@ -753,6 +754,7 @@ class API extends Handler {
 
 					$headline_row = array(
 						"id" => (int)$line["id"],
+						"guid" => $line["guid"],
 						"unread" => sql_bool_to_bool($line["unread"]),
 						"marked" => sql_bool_to_bool($line["marked"]),
 						"published" => sql_bool_to_bool($line["published"]),
