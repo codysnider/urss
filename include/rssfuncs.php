@@ -778,7 +778,7 @@
 					foreach ($article as $k => $v) {
 
 						// i guess we'll have to take the risk of 4byte unicode labels & tags here
-						if (!is_array($article[$k])) {
+						if (is_string($article[$k])) {
 							$article[$k] = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $v);
 						}
 					}
