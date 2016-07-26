@@ -349,24 +349,27 @@ class Af_RedditImgur extends Plugin {
 					/* link may lead to a huge video file or whatever, we need to check content type before trying to
 					parse it which p much requires curl */
 
+					$useragent_compat = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)";
+
 					$ch = curl_init($content_link->getAttribute("href"));
 					curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 					curl_setopt($ch, CURLOPT_HEADER, true);
 					curl_setopt($ch, CURLOPT_NOBODY, true);
 					curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
-					curl_setopt($ch, CURLOPT_USERAGENT, SELF_USER_AGENT);
+					curl_setopt($ch, CURLOPT_USERAGENT, $useragent_compat);
 
 					@$result = curl_exec($ch);
 					$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 
 					if ($content_type && strpos($content_type, "text/html") !== FALSE) {
 
-						$tmp = fetch_file_contents($content_link->getAttribute("href"));
+						$tmp = fetch_file_contents(array("url" => $content_link->getAttribute("href"),
+							"useragent" => $useragent_compat));
 
 						//_debug("tmplen: " . mb_strlen($tmp));
 
-						if ($tmp && mb_strlen($tmp) < 65535 * 4) {
+						if ($tmp && mb_strlen($tmp) < 1024 * 250) {
 
 							$r = new Readability($tmp, $content_link->getAttribute("href"));
 
