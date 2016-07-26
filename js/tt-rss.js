@@ -441,6 +441,16 @@ function init() {
 		hotkey_actions["feed_reverse"] = function() {
 				reverseHeadlineOrder();
 		};
+		hotkey_actions["feed_toggle_vgroup"] = function() {
+			var query_str = "?op=rpc&method=togglepref&key=VFEED_GROUP_BY_FEED";
+
+			new Ajax.Request("backend.php", {
+				parameters: query_str,
+				onComplete: function(transport) {
+					viewCurrentFeed();
+			} });
+
+		};
 		hotkey_actions["catchup_all"] = function() {
 				catchupAllFeeds();
 		};
