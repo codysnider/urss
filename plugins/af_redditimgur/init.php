@@ -239,7 +239,7 @@ class Af_RedditImgur extends Plugin {
 
 							//if ($debug) print_r($album_content);
 
-							$aentries = $axpath->query("(//div[@class='post-image']/img[@src] | //a[@class='zoom']/img[@src])");
+							$aentries = $axpath->query("(//div[@class='post-image']/img[@src] | //a[@class='zoom']/img[@src] | //div[@class='video-elements']/source)");
 							$urls = [];
 
 							foreach ($aentries as $aentry) {
@@ -247,14 +247,27 @@ class Af_RedditImgur extends Plugin {
 								$url = $aentry->getAttribute("src");
 
 								if (!in_array($url, $urls)) {
-									$img = $doc->createElement('img');
-									$img->setAttribute("src", $url);
-									$entry->parentNode->insertBefore($doc->createElement('br'), $entry);
 
-									$br = $doc->createElement('br');
+									if ($aentry->tagName == "img") {
 
-									$entry->parentNode->insertBefore($img, $entry);
-									$entry->parentNode->insertBefore($br, $entry);
+										$img = $doc->createElement('img');
+										$img->setAttribute("src", $url);
+										$entry->parentNode->insertBefore($doc->createElement('br'), $entry);
+
+										$br = $doc->createElement('br');
+
+										$entry->parentNode->insertBefore($img, $entry);
+										$entry->parentNode->insertBefore($br, $entry);
+									} else if ($aentry->tagName == "source") {
+
+										if (strpos($url, "i.imgur.com") !== FALSE)
+											$poster_url = str_replace(".mp4", "h.jpg", $url);
+										else
+											$poster_url = "";
+
+										$this->handle_as_video($doc, $entry, $url, $poster_url);
+
+									}
 
 									array_push($urls, $url);
 
