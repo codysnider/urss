@@ -95,7 +95,6 @@ class Af_RedditImgur extends Plugin {
 
 				$matches = array();
 
-
 				if (preg_match("/^https?:\/\/twitter.com\/(.*?)\/status\/(.*)/", $entry->getAttribute("href"), $matches)) {
 					_debug("handling as twitter: " . $matches[1] . " " . $matches[2], $debug);
 
@@ -123,11 +122,11 @@ class Af_RedditImgur extends Plugin {
 					}
 				}
 
-				if (preg_match("/\.gfycat.com\/([a-z]+)?(\.[a-z]+)$/i", $entry->getAttribute("href"), $matches)) {
+				if (!$found && preg_match("/\.gfycat.com\/([a-z]+)?(\.[a-z]+)$/i", $entry->getAttribute("href"), $matches)) {
 					$entry->setAttribute("href", "http://www.gfycat.com/".$matches[1]);
 				}
 
-				if (preg_match("/https?:\/\/(www\.)?gfycat.com\/([a-z]+)$/i", $entry->getAttribute("href"), $matches)) {
+				if (!$found && preg_match("/https?:\/\/(www\.)?gfycat.com\/([a-z]+)$/i", $entry->getAttribute("href"), $matches)) {
 
 					_debug("Handling as Gfycat", $debug);
 
@@ -161,14 +160,14 @@ class Af_RedditImgur extends Plugin {
 				}
 
 				// imgur .gif -> .gifv
-				if (preg_match("/i\.imgur\.com\/(.*?)\.gif$/i", $entry->getAttribute("href"))) {
+				if (!$found && preg_match("/i\.imgur\.com\/(.*?)\.gif$/i", $entry->getAttribute("href"))) {
 					_debug("Handling as imgur gif (->gifv)", $debug);
 
 					$entry->setAttribute("href",
 						str_replace(".gif", ".gifv", $entry->getAttribute("href")));
 				}
 
-				if (preg_match("/\.(gifv)$/i", $entry->getAttribute("href"))) {
+				if (!$found && preg_match("/\.(gifv)$/i", $entry->getAttribute("href"))) {
 					_debug("Handling as imgur gifv", $debug);
 
 					$source_stream = str_replace(".gifv", ".mp4", $entry->getAttribute("href"));
@@ -182,7 +181,7 @@ class Af_RedditImgur extends Plugin {
 				}
 
 				$matches = array();
-				if (preg_match("/youtube\.com\/v\/([\w-]+)/", $entry->getAttribute("href"), $matches) ||
+				if (!$found && preg_match("/youtube\.com\/v\/([\w-]+)/", $entry->getAttribute("href"), $matches) ||
 					preg_match("/youtube\.com\/.*?[\&\?]v=([\w-]+)/", $entry->getAttribute("href"), $matches) ||
 					preg_match("/youtube\.com\/watch\?v=([\w-]+)/", $entry->getAttribute("href"), $matches) ||
 					preg_match("/\/\/youtu.be\/([\w-]+)/", $entry->getAttribute("href"), $matches)) {
@@ -207,7 +206,7 @@ class Af_RedditImgur extends Plugin {
 					$found = true;
 				}
 
-				if (preg_match("/\.(jpg|jpeg|gif|png)(\?[0-9][0-9]*)?$/i", $entry->getAttribute("href")) ||
+				if (!$found && preg_match("/\.(jpg|jpeg|gif|png)(\?[0-9][0-9]*)?$/i", $entry->getAttribute("href")) ||
 					mb_strpos($entry->getAttribute("href"), "i.reddituploads.com") !== FALSE ||
 					mb_strpos($this->get_content_type($entry->getAttribute("href")), "image/") !== FALSE) {
 
@@ -225,7 +224,7 @@ class Af_RedditImgur extends Plugin {
 
 				// linked albums & pages
 
-				if (preg_match("/^https?:\/\/(m\.)?imgur.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches) ||
+				if (!$found && preg_match("/^https?:\/\/(m\.)?imgur.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches) ||
 					preg_match("/^https?:\/\/(m\.)?imgur.com\/(a|album|gallery)\/[^\.]+$/", $entry->getAttribute("href"), $matches)) {
 
 					_debug("Handling as an imgur page/album/gallery", $debug);
@@ -238,35 +237,6 @@ class Af_RedditImgur extends Plugin {
 
 						if (@$adoc->loadHTML($album_content)) {
 							$axpath = new DOMXPath($adoc);
-
-							/*$aentries = $axpath->query("//meta[@property='og:image']");
-							$urls = array();
-
-							foreach ($aentries as $aentry) {
-
-								_debug("og:image content=" . $aentry->getAttribute("content"), $debug);
-
-								$url = str_replace("?fb", "", $aentry->getAttribute("content"));
-								$check_url = basename($url);
-								$check_url = mb_substr($check_url, 0, strrpos($check_url, "."));
-
-								if (!in_array($check_url, $urls)) {
-									$img = $doc->createElement('img');
-									$img->setAttribute("src", $url);
-									$entry->parentNode->insertBefore($doc->createElement('br'), $entry);
-
-									$br = $doc->createElement('br');
-
-									$entry->parentNode->insertBefore($img, $entry);
-									$entry->parentNode->insertBefore($br, $entry);
-
-									array_push($urls, $check_url);
-
-									$found = true;
-								}
-							} */
-
-							//if ($debug) print_r($album_content);
 
 							$aentries = $axpath->query("(//div[@class='post-image']/img[@src] | //a[@class='zoom']/img[@src] | //div[@class='video-elements']/source)");
 							$urls = [];
@@ -311,7 +281,7 @@ class Af_RedditImgur extends Plugin {
 				}
 
 				// wtf is this even
-				if (preg_match("/^https?:\/\/gyazo\.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches)) {
+				if (!$found && preg_match("/^https?:\/\/gyazo\.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches)) {
 					$img_id = $matches[1];
 
 					_debug("handling as gyazo: $img_id", $debug);
