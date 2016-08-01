@@ -29,7 +29,7 @@ class Af_RedditImgur extends Plugin {
 
 		$enable_content_dupcheck = $this->host->get($this, "enable_content_dupcheck");
 		$enable_content_dupcheck_checked = $enable_content_dupcheck ? "checked" : "";
-		
+
 		print "<form dojoType=\"dijit.form.Form\">";
 
 		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
@@ -59,7 +59,7 @@ class Af_RedditImgur extends Plugin {
 		print "<label for=\"enable_readability\">" . __("Extract missing content using Readability") . "</label>";
 
 		print "<br/>";
-		
+
 		print "<input dojoType=\"dijit.form.CheckBox\" id=\"enable_content_dupcheck\"
 			$enable_content_dupcheck_checked name=\"enable_content_dupcheck\">&nbsp;";
 
@@ -94,6 +94,34 @@ class Af_RedditImgur extends Plugin {
 				_debug("processing href: " . $entry->getAttribute("href"), $debug);
 
 				$matches = array();
+
+
+				if (preg_match("/^https?:\/\/twitter.com\/(.*?)\/status\/(.*)/", $entry->getAttribute("href"), $matches)) {
+					_debug("handling as twitter: " . $matches[1] . " " . $matches[2], $debug);
+
+					$oembed_result = fetch_file_contents("https://publish.twitter.com/oembed?url=" . urlencode($entry->getAttribute("href")));
+
+					if ($oembed_result) {
+						$oembed_result = json_decode($oembed_result, true);
+
+						if ($oembed_result && isset($oembed_result["html"])) {
+
+							$tmp = new DOMDocument();
+							if ($tmp->loadHTML($oembed_result["html"])) {
+								$p = $doc->createElement("p");
+
+								$p->appendChild($doc->importNode(
+									$tmp->getElementsByTagName("blockquote")->item(0), TRUE));
+
+								$br = $doc->createElement('br');
+								$entry->parentNode->insertBefore($p, $entry);
+								$entry->parentNode->insertBefore($br, $entry);
+
+								$found = 1;
+							}
+						}
+					}
+				}
 
 				if (preg_match("/\.gfycat.com\/([a-z]+)?(\.[a-z]+)$/i", $entry->getAttribute("href"), $matches)) {
 					$entry->setAttribute("href", "http://www.gfycat.com/".$matches[1]);
