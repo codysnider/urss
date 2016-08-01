@@ -274,7 +274,7 @@ class Af_Psql_Trgm extends Plugin {
 
 		$result = db_query("SELECT COUNT(id) AS nequal
 		  FROM ttrss_entries, ttrss_user_entries WHERE ref_id = id AND
-		  date_entered >= NOW() - interval '1 day' AND
+		  date_entered >= NOW() - interval '3 days' AND
 		  title = '$title_escaped' AND
 		  guid != '$entry_guid' AND
 		  owner_uid = $owner_uid");
