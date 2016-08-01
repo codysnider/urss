@@ -180,7 +180,8 @@ class Af_RedditImgur extends Plugin {
 				}
 
 				if (preg_match("/\.(jpg|jpeg|gif|png)(\?[0-9][0-9]*)?$/i", $entry->getAttribute("href")) ||
-					mb_strpos($entry->getAttribute("href"), "i.reddituploads.com") !== FALSE) {
+					mb_strpos($entry->getAttribute("href"), "i.reddituploads.com") !== FALSE ||
+					mb_strpos($this->get_content_type($entry->getAttribute("href")), "image/") !== FALSE) {
 
 					_debug("Handling as a picture", $debug);
 
@@ -364,16 +365,7 @@ class Af_RedditImgur extends Plugin {
 
 					$useragent_compat = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)";
 
-					$ch = curl_init($content_link->getAttribute("href"));
-					curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-					curl_setopt($ch, CURLOPT_HEADER, true);
-					curl_setopt($ch, CURLOPT_NOBODY, true);
-					curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
-					curl_setopt($ch, CURLOPT_USERAGENT, $useragent_compat);
-
-					@$result = curl_exec($ch);
-					$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+					$content_type = $this->get_content_type($content_link->getAttribute("href"), $useragent_compat);
 
 					if ($content_type && strpos($content_type, "text/html") !== FALSE) {
 
@@ -482,6 +474,25 @@ class Af_RedditImgur extends Plugin {
 
 		print $doc->saveHTML();
 
+	}
+
+	private function get_content_type($url, $useragent = SELF_USER_AGENT) {
+		$content_type = false;
+
+		if (function_exists("curl_init") && !defined("NO_CURL")) {
+			$ch = curl_init($url);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_HEADER, true);
+			curl_setopt($ch, CURLOPT_NOBODY, true);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
+			curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
+
+			@$result = curl_exec($ch);
+			$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+		}
+
+		return $content_type;
 	}
 }
 ?>
