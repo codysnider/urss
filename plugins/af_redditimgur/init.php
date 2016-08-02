@@ -167,7 +167,7 @@ class Af_RedditImgur extends Plugin {
 						str_replace(".gif", ".gifv", $entry->getAttribute("href")));
 				}
 
-				if (!$found && preg_match("/\.(gifv)$/i", $entry->getAttribute("href"))) {
+				if (!$found && preg_match("/\.(gifv|mp4)$/i", $entry->getAttribute("href"))) {
 					_debug("Handling as imgur gifv", $debug);
 
 					$source_stream = str_replace(".gifv", ".mp4", $entry->getAttribute("href"));
