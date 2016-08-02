@@ -172,7 +172,7 @@ class Af_RedditImgur extends Plugin {
 
 					$source_stream = str_replace(".gifv", ".mp4", $entry->getAttribute("href"));
 
-					if (strpos($source_stream, "i.imgur.com") !== FALSE)
+					if (strpos($source_stream, "imgur.com") !== FALSE)
 						$poster_url = str_replace(".mp4", "h.jpg", $source_stream);
 
 					$this->handle_as_video($doc, $entry, $source_stream, $poster_url, $debug);
@@ -259,7 +259,7 @@ class Af_RedditImgur extends Plugin {
 										$entry->parentNode->insertBefore($br, $entry);
 									} else if ($aentry->tagName == "source") {
 
-										if (strpos($url, "i.imgur.com") !== FALSE)
+										if (strpos($url, "imgur.com") !== FALSE)
 											$poster_url = str_replace(".mp4", "h.jpg", $url);
 										else
 											$poster_url = "";
