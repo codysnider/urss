@@ -106,7 +106,7 @@ class Af_RedditImgur extends Plugin {
 						if ($oembed_result && isset($oembed_result["html"])) {
 
 							$tmp = new DOMDocument();
-							if ($tmp->loadHTML($oembed_result["html"])) {
+							if ($tmp->loadHTML('<?xml encoding="utf-8" ?>' . $oembed_result["html"])) {
 								$p = $doc->createElement("p");
 
 								$p->appendChild($doc->importNode(
