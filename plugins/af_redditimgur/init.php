@@ -348,75 +348,12 @@ class Af_RedditImgur extends Plugin {
 
 			$found = $this->inline_stuff($article, $doc, $xpath);
 
-			if (!defined('NO_CURL') && function_exists("curl_init") && !$found && $this->host->get($this, "enable_readability") &&
-				mb_strlen(strip_tags($article["content"])) <= 150) {
-
-				if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
-
-				if ($content_link &&
-					strpos($content_link->getAttribute("href"), "twitter.com") === FALSE &&
-					strpos($content_link->getAttribute("href"), "youtube.com") === FALSE &&
-					strpos($content_link->getAttribute("href"), "reddit.com") === FALSE) {
-
-					/* link may lead to a huge video file or whatever, we need to check content type before trying to
-					parse it which p much requires curl */
-
-					$useragent_compat = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)";
-
-					$content_type = $this->get_content_type($content_link->getAttribute("href"), $useragent_compat);
-
-					if ($content_type && strpos($content_type, "text/html") !== FALSE) {
-
-						$tmp = fetch_file_contents(array("url" => $content_link->getAttribute("href"),
-							"useragent" => $useragent_compat));
-
-						//_debug("tmplen: " . mb_strlen($tmp));
-
-						if ($tmp && mb_strlen($tmp) < 1024 * 250) {
-
-							$r = new Readability($tmp, $content_link->getAttribute("href"));
-
-							if ($r->init()) {
-
-								$tmpxpath = new DOMXPath($r->dom);
-
-								$entries = $tmpxpath->query('(//a[@href]|//img[@src])');
-
-								foreach ($entries as $entry) {
-									if ($entry->hasAttribute("href")) {
-										$entry->setAttribute("href",
-											rewrite_relative_url($content_link->getAttribute("href"), $entry->getAttribute("href")));
-
-									}
-
-									if ($entry->hasAttribute("src")) {
-										$entry->setAttribute("src",
-											rewrite_relative_url($content_link->getAttribute("href"), $entry->getAttribute("src")));
-
-									}
-
-								}
-
-								$article["content"] = $r->articleContent->innerHTML . "<hr/>" . $article["content"];
-
-								// prob not a very good idea (breaks wikipedia pages, etc) -
-								// inliner currently is not really fit for any random web content
-
-								//$doc = new DOMDocument();
-								//@$doc->loadHTML($article["content"]);
-								//$xpath = new DOMXPath($doc);
-								//$found = $this->inline_stuff($article, $doc, $xpath);
-							}
-						}
-					}
-				}
-
-			}
-
 			$node = $doc->getElementsByTagName('body')->item(0);
 
 			if ($node && $found) {
 				$article["content"] = $doc->saveXML($node);
+			} else if ($content_link) {
+				$article = $this->readability($article, $content_link->getAttribute("href"), $doc, $xpath);
 			}
 		}
 
@@ -466,12 +403,21 @@ class Af_RedditImgur extends Plugin {
 		@$doc->loadHTML("<html><body><a href=\"$url\">[link]</a></body>");
 		$xpath = new DOMXPath($doc);
 
-		print "Inline result: " . $this->inline_stuff([], $doc, $xpath, true) . "\n";
+		$found = $this->inline_stuff([], $doc, $xpath, true);
 
-		print "\nResulting HTML:\n";
+		print "Inline result: $found\n";
 
-		print $doc->saveHTML();
+		if (!$found) {
+			print "\nReadability result:\n";
 
+			$article = $this->readability([], $url, $doc, $xpath, true);
+
+			print_r($article);
+		} else {
+			print "\nResulting HTML:\n";
+
+			print $doc->saveHTML();
+		}
 	}
 
 	private function get_content_type($url, $useragent = SELF_USER_AGENT) {
@@ -491,6 +437,67 @@ class Af_RedditImgur extends Plugin {
 		}
 
 		return $content_type;
+	}
+
+	private function readability($article, $url, $doc, $xpath, $debug = false) {
+
+		if (!defined('NO_CURL') && function_exists("curl_init") && $this->host->get($this, "enable_readability") &&
+			mb_strlen(strip_tags($article["content"])) <= 150) {
+
+			if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
+
+			if ($url &&
+				strpos($url, "twitter.com") === FALSE &&
+				strpos($url, "youtube.com") === FALSE &&
+				strpos($url, "reddit.com") === FALSE) {
+
+				/* link may lead to a huge video file or whatever, we need to check content type before trying to
+				parse it which p much requires curl */
+
+				$useragent_compat = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)";
+
+				$content_type = $this->get_content_type($url, $useragent_compat);
+
+				if ($content_type && strpos($content_type, "text/html") !== FALSE) {
+
+					$tmp = fetch_file_contents(array("url" => $url,
+						"useragent" => $useragent_compat));
+
+					if ($debug) _debug("tmplen: " . mb_strlen($tmp));
+
+					if ($tmp && mb_strlen($tmp) < 1024 * 500) {
+
+						$r = new Readability($tmp, $url);
+
+						if ($r->init()) {
+
+							$tmpxpath = new DOMXPath($r->dom);
+
+							$entries = $tmpxpath->query('(//a[@href]|//img[@src])');
+
+							foreach ($entries as $entry) {
+								if ($entry->hasAttribute("href")) {
+									$entry->setAttribute("href",
+										rewrite_relative_url($url, $entry->getAttribute("href")));
+
+								}
+
+								if ($entry->hasAttribute("src")) {
+									$entry->setAttribute("src",
+										rewrite_relative_url($url, $entry->getAttribute("src")));
+
+								}
+
+							}
+
+							$article["content"] = $r->articleContent->innerHTML . "<hr/>" . $article["content"];
+						}
+					}
+				}
+			}
+		}
+
+		return $article;
 	}
 }
 ?>

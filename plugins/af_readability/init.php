@@ -159,7 +159,7 @@ class Af_Readability extends Plugin {
 
 		$tmp = fetch_file_contents($url);
 
-		if ($tmp && mb_strlen($tmp) < 65535 * 4) {
+		if ($tmp && mb_strlen($tmp) < 1024 * 500) {
 			$tmpdoc = new DOMDocument("1.0", "UTF-8");
 
 			if (!$tmpdoc->loadHTML($tmp))
