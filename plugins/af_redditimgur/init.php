@@ -138,25 +138,18 @@ class Af_RedditImgur extends Plugin {
 						if (@$tmpdoc->loadHTML($tmp)) {
 							$tmpxpath = new DOMXPath($tmpdoc);
 
-							$source_meta = $tmpxpath->query("//meta[@name='twitter:player:stream' and contains(@content, '.mp4')]")->item(0);
-							$poster_meta = $tmpxpath->query("//meta[@property='og:image' and contains(@content,'thumbs.gfycat.com')]")->item(0);
+							$source_node = $tmpxpath->query("//video[contains(@class,'share-video')]//source[contains(@src, '.mp4')]")->item(0);
+							$poster_node = $tmpxpath->query("//video[contains(@class,'share-video') and @poster]")->item(0);
 
-							if ($source_meta) {
-								$source_stream = $source_meta->getAttribute("content");
-								$poster_url = false;
+							if ($source_node && $poster_node) {
+								$source_stream = $source_node->getAttribute("src");
+								$poster_url = $poster_node->getAttribute("poster");
 
-								if ($source_stream) {
-
-									if ($poster_meta)
-										$poster_url = $poster_meta->getAttribute("content");
-
-									$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
-									$found = 1;
-								}
+								$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
+								$found = 1;
 							}
 						}
 					}
-
 				}
 
 				// imgur .gif -> .gifv
