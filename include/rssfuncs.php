@@ -726,7 +726,8 @@
 					"language" => $entry_language,
 					"feed" => array("id" => $feed,
 						"fetch_url" => $fetch_url,
-						"site_url" => $site_url)
+						"site_url" => $site_url,
+						"cache_images" => $cache_images)
 					);
 
 				$entry_plugin_data = "";
