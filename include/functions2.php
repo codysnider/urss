@@ -1064,6 +1064,10 @@
 						array_push($attrs_to_remove, $attr);
 					}
 
+					if ($attr->nodeName == 'href' && stripos($attr->value, 'javascript:') === 0) {
+						array_push($attrs_to_remove, $attr);
+					}
+
 					if (in_array($attr->nodeName, $disallowed_attributes)) {
 						array_push($attrs_to_remove, $attr);
 					}
