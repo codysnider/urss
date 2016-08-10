@@ -1,5 +1,5 @@
 require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
-	dojo.addOnLoad(function () {
+	ready(function () {
 		PluginHost.register(PluginHost.HOOK_ARTICLE_RENDERED_CDM, function (row) {
 			if (row) {
 				console.log("af_zz_noautoplay!");
@@ -37,7 +37,5 @@ require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 
 			return true;
 		});
-
 	});
-
 });

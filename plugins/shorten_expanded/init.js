@@ -24,7 +24,7 @@ function expandSizeWrapper(id) {
 
 require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 
-	dojo.addOnLoad(function() {
+	ready(function() {
 		PluginHost.register(PluginHost.HOOK_ARTICLE_RENDERED_CDM, function(row) {
 			if (getInitParam('cdm_expanded')) {
 
