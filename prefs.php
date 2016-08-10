@@ -54,6 +54,16 @@
 	<link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
 	<link rel="icon" type="image/png" sizes="72x72" href="images/favicon-72px.png" />
 
+	<script>
+		dojoConfig = {
+			async: true,
+			packages: [
+				{ name: "lib", location: "../" },
+				{ name: "fox", location: "../../js" },
+			]
+		};
+	</script>
+
 	<?php
 	foreach (array("lib/prototype.js",
 				"lib/scriptaculous/scriptaculous.js?load=effects,controls",
@@ -72,11 +82,16 @@
 
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
 			if (method_exists($p, "get_prefs_js")) {
+				echo "try {";
 				echo JShrink\Minifier::minify($p->get_prefs_js());
+				echo "} catch (e) {
+				 	console.warn('failed to initialize plugin JS: $n');
+					console.warn(e);
+				}";
 			}
 		}
 
-		print get_minified_js(array("../lib/CheckBoxTree","functions", "deprecated", "prefs", "PrefFeedTree", "PrefFilterTree", "PrefLabelTree"));
+		print get_minified_js(array("functions", "deprecated", "prefs"));
 
 		init_js_translations();
 	?>
