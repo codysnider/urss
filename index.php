@@ -118,7 +118,12 @@
 
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
 			if (method_exists($p, "get_js")) {
+				echo "try {";
 				echo JShrink\Minifier::minify($p->get_js());
+				echo "} catch (e) {
+				 	console.warn('failed to initialize plugin JS: $n');
+					console.warn(e);
+				}";
 			}
 		}
 

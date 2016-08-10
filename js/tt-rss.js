@@ -218,10 +218,10 @@ function init() {
 	try {
 		//dojo.registerModulePath("fox", "../../js/");
 
-		require(['dojo/_base/kernel',
-				'dojo/ready',
-				'dojo/parser',
-				'dojo/_base/loader',
+		require(["dojo/_base/kernel",
+				"dojo/ready",
+				"dojo/parser",
+				"dojo/_base/loader",
 				"dijit/ProgressBar",
 				"dijit/ColorPalette",
 				"dijit/Dialog",
@@ -254,7 +254,7 @@ function init() {
 
 					dojo.require("fox.FeedTree");
 
-					dojo.parser.parse();
+					parser.parse();
 
 					if (!genericSanityCheck())
 						return false;
