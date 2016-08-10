@@ -943,15 +943,12 @@ function init() {
 			"dijit/Toolbar",
 			"dijit/Tree",
 			"dijit/tree/dndSource",
-			"dojo/data/ItemFileWriteStore"], function (dojo, ready, parser) {
+			"dojo/data/ItemFileWriteStore",
+			"fox/PrefFeedTree",
+			"fox/PrefFilterTree",
+			"fox/PrefLabelTree" ], function (dojo, ready, parser) {
 
 				ready(function() {
-
-					dojo.require("lib.CheckBoxTree");
-					dojo.require("fox.PrefFeedTree");
-					dojo.require("fox.PrefFilterTree");
-					dojo.require("fox.PrefLabelTree");
-
 					parser.parse();
 
 					loading_set_progress(50);

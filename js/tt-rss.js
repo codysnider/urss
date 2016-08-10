@@ -248,11 +248,10 @@ function init() {
 				"dijit/Tree",
 				"dijit/tree/dndSource",
 				"dijit/tree/ForestStoreModel",
-				"dojo/data/ItemFileWriteStore" ], function (dojo, ready, parser) {
+				"dojo/data/ItemFileWriteStore",
+				"fox/FeedTree" ], function (dojo, ready, parser) {
 
 				ready(function() {
-
-					dojo.require("fox.FeedTree");
 
 					parser.parse();
 
