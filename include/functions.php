@@ -833,14 +833,17 @@
 		return $csrf_token == $_SESSION['csrf_token'];
 	}
 
-	function load_user_plugins($owner_uid) {
+	function load_user_plugins($owner_uid, $pluginhost = false) {
+
+		if (!$pluginhost) $pluginhost = PluginHost::getInstance();
+
 		if ($owner_uid && SCHEMA_VERSION >= 100) {
 			$plugins = get_pref("_ENABLED_PLUGINS", $owner_uid);
 
-			PluginHost::getInstance()->load($plugins, PluginHost::KIND_USER, $owner_uid);
+			$pluginhost->load($plugins, PluginHost::KIND_USER, $owner_uid);
 
 			if (get_schema_version() > 100) {
-				PluginHost::getInstance()->load_data();
+				$pluginhost->load_data();
 			}
 		}
 	}
