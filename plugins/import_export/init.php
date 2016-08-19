@@ -425,34 +425,35 @@ class Import_Export extends Plugin implements IHandler {
 		print "<div style='text-align : center'>";
 
 		if ($_FILES['export_file']['error'] != 0) {
-			print_error(T_sprintf("Upload failed with error code %d",
-				$_FILES['export_file']['error']));
-			return;
-		}
+			print_error(T_sprintf("Upload failed with error code %d (%s)",
+				$_FILES['export_file']['error'],
+				get_upload_error_message($_FILES['export_file']['error'])));
+		} else {
 
-		$tmp_file = false;
+			$tmp_file = false;
 
-		if (is_uploaded_file($_FILES['export_file']['tmp_name'])) {
-			$tmp_file = tempnam(CACHE_DIR . '/upload', 'export');
+			if (is_uploaded_file($_FILES['export_file']['tmp_name'])) {
+				$tmp_file = tempnam(CACHE_DIR . '/upload', 'export');
 
-			$result = move_uploaded_file($_FILES['export_file']['tmp_name'],
-				$tmp_file);
+				$result = move_uploaded_file($_FILES['export_file']['tmp_name'],
+					$tmp_file);
 
-			if (!$result) {
-				print_error(__("Unable to move uploaded file."));
+				if (!$result) {
+					print_error(__("Unable to move uploaded file."));
+					return;
+				}
+			} else {
+				print_error(__('Error: please upload OPML file.'));
 				return;
 			}
-		} else {
-			print_error(__('Error: please upload OPML file.'));
-			return;
-		}
 
-		if (is_file($tmp_file)) {
-			$this->perform_data_import($tmp_file, $_SESSION['uid']);
-			unlink($tmp_file);
-		} else {
-			print_error(__('No file uploaded.'));
-			return;
+			if (is_file($tmp_file)) {
+				$this->perform_data_import($tmp_file, $_SESSION['uid']);
+				unlink($tmp_file);
+			} else {
+				print_error(__('No file uploaded.'));
+				return;
+			}
 		}
 
 		print "<button dojoType=\"dijit.form.Button\"
