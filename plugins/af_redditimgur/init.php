@@ -29,7 +29,7 @@ class Af_RedditImgur extends Plugin {
 
 		$enable_content_dupcheck = $this->host->get($this, "enable_content_dupcheck");
 		$enable_content_dupcheck_checked = $enable_content_dupcheck ? "checked" : "";
-		
+
 		print "<form dojoType=\"dijit.form.Form\">";
 
 		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
@@ -59,7 +59,7 @@ class Af_RedditImgur extends Plugin {
 		print "<label for=\"enable_readability\">" . __("Extract missing content using Readability") . "</label>";
 
 		print "<br/>";
-		
+
 		print "<input dojoType=\"dijit.form.CheckBox\" id=\"enable_content_dupcheck\"
 			$enable_content_dupcheck_checked name=\"enable_content_dupcheck\">&nbsp;";
 
@@ -95,11 +95,38 @@ class Af_RedditImgur extends Plugin {
 
 				$matches = array();
 
-				if (preg_match("/\.gfycat.com\/([a-z]+)?(\.[a-z]+)$/i", $entry->getAttribute("href"), $matches)) {
+				if (preg_match("/^https?:\/\/twitter.com\/(.*?)\/status\/(.*)/", $entry->getAttribute("href"), $matches)) {
+					_debug("handling as twitter: " . $matches[1] . " " . $matches[2], $debug);
+
+					$oembed_result = fetch_file_contents("https://publish.twitter.com/oembed?url=" . urlencode($entry->getAttribute("href")));
+
+					if ($oembed_result) {
+						$oembed_result = json_decode($oembed_result, true);
+
+						if ($oembed_result && isset($oembed_result["html"])) {
+
+							$tmp = new DOMDocument();
+							if ($tmp->loadHTML('<?xml encoding="utf-8" ?>' . $oembed_result["html"])) {
+								$p = $doc->createElement("p");
+
+								$p->appendChild($doc->importNode(
+									$tmp->getElementsByTagName("blockquote")->item(0), TRUE));
+
+								$br = $doc->createElement('br');
+								$entry->parentNode->insertBefore($p, $entry);
+								$entry->parentNode->insertBefore($br, $entry);
+
+								$found = 1;
+							}
+						}
+					}
+				}
+
+				if (!$found && preg_match("/\.gfycat.com\/([a-z]+)?(\.[a-z]+)$/i", $entry->getAttribute("href"), $matches)) {
 					$entry->setAttribute("href", "http://www.gfycat.com/".$matches[1]);
 				}
 
-				if (preg_match("/https?:\/\/(www\.)?gfycat.com\/([a-z]+)$/i", $entry->getAttribute("href"), $matches)) {
+				if (!$found && preg_match("/https?:\/\/(www\.)?gfycat.com\/([a-z]+)$/i", $entry->getAttribute("href"), $matches)) {
 
 					_debug("Handling as Gfycat", $debug);
 
@@ -111,41 +138,34 @@ class Af_RedditImgur extends Plugin {
 						if (@$tmpdoc->loadHTML($tmp)) {
 							$tmpxpath = new DOMXPath($tmpdoc);
 
-							$source_meta = $tmpxpath->query("//meta[@name='twitter:player:stream' and contains(@content, '.mp4')]")->item(0);
-							$poster_meta = $tmpxpath->query("//meta[@property='og:image' and contains(@content,'thumbs.gfycat.com')]")->item(0);
+							$source_node = $tmpxpath->query("//video[contains(@class,'share-video')]//source[contains(@src, '.mp4')]")->item(0);
+							$poster_node = $tmpxpath->query("//video[contains(@class,'share-video') and @poster]")->item(0);
 
-							if ($source_meta) {
-								$source_stream = $source_meta->getAttribute("content");
-								$poster_url = false;
+							if ($source_node && $poster_node) {
+								$source_stream = $source_node->getAttribute("src");
+								$poster_url = $poster_node->getAttribute("poster");
 
-								if ($source_stream) {
-
-									if ($poster_meta)
-										$poster_url = $poster_meta->getAttribute("content");
-
-									$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
-									$found = 1;
-								}
+								$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
+								$found = 1;
 							}
 						}
 					}
-
 				}
 
 				// imgur .gif -> .gifv
-				if (preg_match("/i\.imgur\.com\/(.*?)\.gif$/i", $entry->getAttribute("href"))) {
+				if (!$found && preg_match("/i\.imgur\.com\/(.*?)\.gif$/i", $entry->getAttribute("href"))) {
 					_debug("Handling as imgur gif (->gifv)", $debug);
 
 					$entry->setAttribute("href",
 						str_replace(".gif", ".gifv", $entry->getAttribute("href")));
 				}
 
-				if (preg_match("/\.(gifv)$/i", $entry->getAttribute("href"))) {
+				if (!$found && preg_match("/\.(gifv|mp4)$/i", $entry->getAttribute("href"))) {
 					_debug("Handling as imgur gifv", $debug);
 
 					$source_stream = str_replace(".gifv", ".mp4", $entry->getAttribute("href"));
 
-					if (strpos($source_stream, "i.imgur.com") !== FALSE)
+					if (strpos($source_stream, "imgur.com") !== FALSE)
 						$poster_url = str_replace(".mp4", "h.jpg", $source_stream);
 
 					$this->handle_as_video($doc, $entry, $source_stream, $poster_url, $debug);
@@ -154,7 +174,7 @@ class Af_RedditImgur extends Plugin {
 				}
 
 				$matches = array();
-				if (preg_match("/youtube\.com\/v\/([\w-]+)/", $entry->getAttribute("href"), $matches) ||
+				if (!$found && preg_match("/youtube\.com\/v\/([\w-]+)/", $entry->getAttribute("href"), $matches) ||
 					preg_match("/youtube\.com\/.*?[\&\?]v=([\w-]+)/", $entry->getAttribute("href"), $matches) ||
 					preg_match("/youtube\.com\/watch\?v=([\w-]+)/", $entry->getAttribute("href"), $matches) ||
 					preg_match("/\/\/youtu.be\/([\w-]+)/", $entry->getAttribute("href"), $matches)) {
@@ -179,7 +199,10 @@ class Af_RedditImgur extends Plugin {
 					$found = true;
 				}
 
-				if (preg_match("/\.(jpg|jpeg|gif|png)(\?[0-9][0-9]*)?$/i", $entry->getAttribute("href"))) {
+				if (!$found && preg_match("/\.(jpg|jpeg|gif|png)(\?[0-9][0-9]*)?$/i", $entry->getAttribute("href")) ||
+					mb_strpos($entry->getAttribute("href"), "i.reddituploads.com") !== FALSE ||
+					mb_strpos($this->get_content_type($entry->getAttribute("href")), "image/") !== FALSE) {
+
 					_debug("Handling as a picture", $debug);
 
 					$img = $doc->createElement('img');
@@ -194,7 +217,7 @@ class Af_RedditImgur extends Plugin {
 
 				// linked albums & pages
 
-				if (preg_match("/^https?:\/\/(m\.)?imgur.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches) ||
+				if (!$found && preg_match("/^https?:\/\/(m\.)?imgur.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches) ||
 					preg_match("/^https?:\/\/(m\.)?imgur.com\/(a|album|gallery)\/[^\.]+$/", $entry->getAttribute("href"), $matches)) {
 
 					_debug("Handling as an imgur page/album/gallery", $debug);
@@ -208,36 +231,7 @@ class Af_RedditImgur extends Plugin {
 						if (@$adoc->loadHTML($album_content)) {
 							$axpath = new DOMXPath($adoc);
 
-							/*$aentries = $axpath->query("//meta[@property='og:image']");
-							$urls = array();
-
-							foreach ($aentries as $aentry) {
-
-								_debug("og:image content=" . $aentry->getAttribute("content"), $debug);
-
-								$url = str_replace("?fb", "", $aentry->getAttribute("content"));
-								$check_url = basename($url);
-								$check_url = mb_substr($check_url, 0, strrpos($check_url, "."));
-
-								if (!in_array($check_url, $urls)) {
-									$img = $doc->createElement('img');
-									$img->setAttribute("src", $url);
-									$entry->parentNode->insertBefore($doc->createElement('br'), $entry);
-
-									$br = $doc->createElement('br');
-
-									$entry->parentNode->insertBefore($img, $entry);
-									$entry->parentNode->insertBefore($br, $entry);
-
-									array_push($urls, $check_url);
-
-									$found = true;
-								}
-							} */
-
-							//if ($debug) print_r($album_content);
-
-							$aentries = $axpath->query("(//div[@class='post-image']/img[@src] | //a[@class='zoom']/img[@src])");
+							$aentries = $axpath->query("(//div[@class='post-image']/img[@src] | //a[@class='zoom']/img[@src] | //div[@class='video-elements']/source)");
 							$urls = [];
 
 							foreach ($aentries as $aentry) {
@@ -245,14 +239,27 @@ class Af_RedditImgur extends Plugin {
 								$url = $aentry->getAttribute("src");
 
 								if (!in_array($url, $urls)) {
-									$img = $doc->createElement('img');
-									$img->setAttribute("src", $url);
-									$entry->parentNode->insertBefore($doc->createElement('br'), $entry);
 
-									$br = $doc->createElement('br');
+									if ($aentry->tagName == "img") {
 
-									$entry->parentNode->insertBefore($img, $entry);
-									$entry->parentNode->insertBefore($br, $entry);
+										$img = $doc->createElement('img');
+										$img->setAttribute("src", $url);
+										$entry->parentNode->insertBefore($doc->createElement('br'), $entry);
+
+										$br = $doc->createElement('br');
+
+										$entry->parentNode->insertBefore($img, $entry);
+										$entry->parentNode->insertBefore($br, $entry);
+									} else if ($aentry->tagName == "source") {
+
+										if (strpos($url, "imgur.com") !== FALSE)
+											$poster_url = str_replace(".mp4", "h.jpg", $url);
+										else
+											$poster_url = "";
+
+										$this->handle_as_video($doc, $entry, $url, $poster_url);
+
+									}
 
 									array_push($urls, $url);
 
@@ -267,7 +274,7 @@ class Af_RedditImgur extends Plugin {
 				}
 
 				// wtf is this even
-				if (preg_match("/^https?:\/\/gyazo\.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches)) {
+				if (!$found && preg_match("/^https?:\/\/gyazo\.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches)) {
 					$img_id = $matches[1];
 
 					_debug("handling as gyazo: $img_id", $debug);
@@ -301,8 +308,9 @@ class Af_RedditImgur extends Plugin {
 			@$doc->loadHTML($article["content"]);
 			$xpath = new DOMXPath($doc);
 
+			$content_link = $xpath->query("(//a[contains(., '[link]')])")->item(0);
+
 			if ($this->host->get($this, "enable_content_dupcheck")) {
-				$content_link = $xpath->query("(//a[contains(., '[link]')])")->item(0);
 
 				if ($content_link) {
 					$content_href = db_escape_string($content_link->getAttribute("href"));
@@ -333,81 +341,12 @@ class Af_RedditImgur extends Plugin {
 
 			$found = $this->inline_stuff($article, $doc, $xpath);
 
-			if (!defined('NO_CURL') && function_exists("curl_init") && !$found && $this->host->get($this, "enable_readability") &&
-				mb_strlen(strip_tags($article["content"])) <= 150) {
-
-				if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
-
-				if ($content_link &&
-					strpos($content_link->getAttribute("href"), "twitter.com") === FALSE &&
-					strpos($content_link->getAttribute("href"), "youtube.com") === FALSE &&
-					strpos($content_link->getAttribute("href"), "reddit.com") === FALSE) {
-
-					/* link may lead to a huge video file or whatever, we need to check content type before trying to
-					parse it which p much requires curl */
-
-					$ch = curl_init($content_link->getAttribute("href"));
-					curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-					curl_setopt($ch, CURLOPT_HEADER, true);
-					curl_setopt($ch, CURLOPT_NOBODY, true);
-					curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
-					curl_setopt($ch, CURLOPT_USERAGENT, SELF_USER_AGENT);
-
-					@$result = curl_exec($ch);
-					$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-
-					if ($content_type && strpos($content_type, "text/html") !== FALSE) {
-
-						$tmp = fetch_file_contents($content_link->getAttribute("href"));
-
-						//_debug("tmplen: " . mb_strlen($tmp));
-
-						if ($tmp && mb_strlen($tmp) < 65535 * 4) {
-
-							$r = new Readability($tmp, $content_link->getAttribute("href"));
-
-							if ($r->init()) {
-
-								$tmpxpath = new DOMXPath($r->dom);
-
-								$entries = $tmpxpath->query('(//a[@href]|//img[@src])');
-
-								foreach ($entries as $entry) {
-									if ($entry->hasAttribute("href")) {
-										$entry->setAttribute("href",
-											rewrite_relative_url($content_link->getAttribute("href"), $entry->getAttribute("href")));
-
-									}
-
-									if ($entry->hasAttribute("src")) {
-										$entry->setAttribute("src",
-											rewrite_relative_url($content_link->getAttribute("href"), $entry->getAttribute("src")));
-
-									}
-
-								}
-
-								$article["content"] = $r->articleContent->innerHTML . "<hr/>" . $article["content"];
-
-								// prob not a very good idea (breaks wikipedia pages, etc) -
-								// inliner currently is not really fit for any random web content
-
-								//$doc = new DOMDocument();
-								//@$doc->loadHTML($article["content"]);
-								//$xpath = new DOMXPath($doc);
-								//$found = $this->inline_stuff($article, $doc, $xpath);
-							}
-						}
-					}
-				}
-
-			}
-
 			$node = $doc->getElementsByTagName('body')->item(0);
 
 			if ($node && $found) {
 				$article["content"] = $doc->saveXML($node);
+			} else if ($content_link) {
+				$article = $this->readability($article, $content_link->getAttribute("href"), $doc, $xpath);
 			}
 		}
 
@@ -457,12 +396,101 @@ class Af_RedditImgur extends Plugin {
 		@$doc->loadHTML("<html><body><a href=\"$url\">[link]</a></body>");
 		$xpath = new DOMXPath($doc);
 
-		print "Inline result: " . $this->inline_stuff([], $doc, $xpath, true) . "\n";
+		$found = $this->inline_stuff([], $doc, $xpath, true);
 
-		print "\nResulting HTML:\n";
+		print "Inline result: $found\n";
 
-		print $doc->saveHTML();
+		if (!$found) {
+			print "\nReadability result:\n";
 
+			$article = $this->readability([], $url, $doc, $xpath, true);
+
+			print_r($article);
+		} else {
+			print "\nResulting HTML:\n";
+
+			print $doc->saveHTML();
+		}
+	}
+
+	private function get_content_type($url, $useragent = SELF_USER_AGENT) {
+		$content_type = false;
+
+		if (function_exists("curl_init") && !defined("NO_CURL")) {
+			$ch = curl_init($url);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_HEADER, true);
+			curl_setopt($ch, CURLOPT_NOBODY, true);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
+			curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
+
+			@$result = curl_exec($ch);
+			$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+		}
+
+		return $content_type;
+	}
+
+	private function readability($article, $url, $doc, $xpath, $debug = false) {
+
+		if (!defined('NO_CURL') && function_exists("curl_init") && $this->host->get($this, "enable_readability") &&
+			mb_strlen(strip_tags($article["content"])) <= 150) {
+
+			if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
+
+			if ($url &&
+				strpos($url, "twitter.com") === FALSE &&
+				strpos($url, "youtube.com") === FALSE &&
+				strpos($url, "reddit.com") === FALSE) {
+
+				/* link may lead to a huge video file or whatever, we need to check content type before trying to
+				parse it which p much requires curl */
+
+				$useragent_compat = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)";
+
+				$content_type = $this->get_content_type($url, $useragent_compat);
+
+				if ($content_type && strpos($content_type, "text/html") !== FALSE) {
+
+					$tmp = fetch_file_contents(array("url" => $url,
+						"useragent" => $useragent_compat));
+
+					if ($debug) _debug("tmplen: " . mb_strlen($tmp));
+
+					if ($tmp && mb_strlen($tmp) < 1024 * 500) {
+
+						$r = new Readability($tmp, $url);
+
+						if ($r->init()) {
+
+							$tmpxpath = new DOMXPath($r->dom);
+
+							$entries = $tmpxpath->query('(//a[@href]|//img[@src])');
+
+							foreach ($entries as $entry) {
+								if ($entry->hasAttribute("href")) {
+									$entry->setAttribute("href",
+										rewrite_relative_url($url, $entry->getAttribute("href")));
+
+								}
+
+								if ($entry->hasAttribute("src")) {
+									$entry->setAttribute("src",
+										rewrite_relative_url($url, $entry->getAttribute("src")));
+
+								}
+
+							}
+
+							$article["content"] = $r->articleContent->innerHTML . "<hr/>" . $article["content"];
+						}
+					}
+				}
+			}
+		}
+
+		return $article;
 	}
 }
 ?>

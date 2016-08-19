@@ -16,7 +16,9 @@
 
 	libxml_disable_entity_loader(true);
 
-	mb_internal_encoding("UTF-8");
+	// separate test because this is included before sanity checks
+	if (function_exists("mb_internal_encoding")) mb_internal_encoding("UTF-8");
+
 	date_default_timezone_set('UTC');
 	if (defined('E_DEPRECATED')) {
 		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
@@ -831,14 +833,17 @@
 		return $csrf_token == $_SESSION['csrf_token'];
 	}
 
-	function load_user_plugins($owner_uid) {
+	function load_user_plugins($owner_uid, $pluginhost = false) {
+
+		if (!$pluginhost) $pluginhost = PluginHost::getInstance();
+
 		if ($owner_uid && SCHEMA_VERSION >= 100) {
 			$plugins = get_pref("_ENABLED_PLUGINS", $owner_uid);
 
-			PluginHost::getInstance()->load($plugins, PluginHost::KIND_USER, $owner_uid);
+			$pluginhost->load($plugins, PluginHost::KIND_USER, $owner_uid);
 
 			if (get_schema_version() > 100) {
-				PluginHost::getInstance()->load_data();
+				$pluginhost->load_data();
 			}
 		}
 	}

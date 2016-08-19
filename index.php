@@ -88,6 +88,15 @@
 	<link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
 	<link rel="icon" type="image/png" sizes="72x72" href="images/favicon-72px.png" />
 
+	<script>
+		dojoConfig = {
+			async: true,
+			packages: [
+				{ name: "fox", location: "../../js" },
+			]
+		};
+	</script>
+
 	<?php
 	foreach (array("lib/prototype.js",
 				"lib/scriptaculous/scriptaculous.js?load=effects,controls",
@@ -105,11 +114,16 @@
 		require_once 'lib/jshrink/Minifier.php';
 
 		print get_minified_js(array("tt-rss",
-			"functions", "feedlist", "viewfeed", "FeedTree", "PluginHost"));
+			"functions", "feedlist", "viewfeed", "PluginHost"));
 
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
 			if (method_exists($p, "get_js")) {
+				echo "try {";
 				echo JShrink\Minifier::minify($p->get_js());
+				echo "} catch (e) {
+				 	console.warn('failed to initialize plugin JS: $n');
+					console.warn(e);
+				}";
 			}
 		}
 
@@ -118,6 +132,7 @@
 	</script>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="referrer" content="no-referrer"/>
 
 	<script type="text/javascript">
 		Event.observe(window, 'load', function() {

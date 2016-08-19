@@ -22,26 +22,30 @@ function expandSizeWrapper(id) {
 
 }
 
-dojo.addOnLoad(function() {
-	PluginHost.register(PluginHost.HOOK_ARTICLE_RENDERED_CDM, function(row) {
-		if (getInitParam('cdm_expanded')) {
+require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 
-			window.setTimeout(function() {
-				if (row) {
-					if (row.offsetHeight >= _shorten_expanded_threshold * window.innerHeight) {
-						var content = row.select(".cdmContentInner")[0];
+	ready(function() {
+		PluginHost.register(PluginHost.HOOK_ARTICLE_RENDERED_CDM, function(row) {
+			if (getInitParam('cdm_expanded')) {
 
-						if (content) {
-							content.innerHTML = "<div class='contentSizeWrapper'>" +
-								content.innerHTML + "</div><button class='expandPrompt' onclick='return expandSizeWrapper(\""+row.id+"\")' "+
-								"href='#'>" + __("Click to expand article") + "</button>";
+				window.setTimeout(function() {
+					if (row) {
+						if (row.offsetHeight >= _shorten_expanded_threshold * window.innerHeight) {
+							var content = row.select(".cdmContentInner")[0];
 
+							if (content) {
+								content.innerHTML = "<div class='contentSizeWrapper'>" +
+									content.innerHTML + "</div><button class='expandPrompt' onclick='return expandSizeWrapper(\""+row.id+"\")' "+
+									"href='#'>" + __("Click to expand article") + "</button>";
+
+							}
 						}
 					}
-				}
-			}, 150);
-		}
+				}, 150);
+			}
 
-		return true;
+			return true;
+		});
 	});
+
 });

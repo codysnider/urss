@@ -218,372 +218,395 @@ function init() {
 	try {
 		//dojo.registerModulePath("fox", "../../js/");
 
-		dojo.require("fox.FeedTree");
+		require(["dojo/_base/kernel",
+				"dojo/ready",
+				"dojo/parser",
+				"dojo/_base/loader",
+				"dijit/ProgressBar",
+				"dijit/ColorPalette",
+				"dijit/Dialog",
+				"dijit/form/Button",
+				"dijit/form/ComboButton",
+				"dijit/form/CheckBox",
+				"dijit/form/DropDownButton",
+				"dijit/form/FilteringSelect",
+				"dijit/form/Form",
+				"dijit/form/RadioButton",
+				"dijit/form/Select",
+				"dijit/form/SimpleTextarea",
+				"dijit/form/TextBox",
+				"dijit/form/ComboBox",
+				"dijit/form/ValidationTextBox",
+				"dijit/InlineEditBox",
+				"dijit/layout/AccordionContainer",
+				"dijit/layout/BorderContainer",
+				"dijit/layout/ContentPane",
+				"dijit/layout/TabContainer",
+				"dijit/PopupMenuItem",
+				"dijit/Menu",
+				"dijit/Toolbar",
+				"dijit/Tree",
+				"dijit/tree/dndSource",
+				"dijit/tree/ForestStoreModel",
+				"dojo/data/ItemFileWriteStore",
+				"fox/FeedTree" ], function (dojo, ready, parser) {
 
-		dojo.require("dijit.ColorPalette");
-		dojo.require("dijit.Dialog");
-		dojo.require("dijit.form.Button");
-		dojo.require("dijit.form.CheckBox");
-		dojo.require("dijit.form.DropDownButton");
-		dojo.require("dijit.form.FilteringSelect");
-		dojo.require("dijit.form.Form");
-		dojo.require("dijit.form.RadioButton");
-		dojo.require("dijit.form.Select");
-		dojo.require("dijit.form.SimpleTextarea");
-		dojo.require("dijit.form.TextBox");
-		dojo.require("dijit.form.ComboBox");
-		dojo.require("dijit.form.ValidationTextBox");
-		dojo.require("dijit.InlineEditBox");
-		dojo.require("dijit.layout.AccordionContainer");
-		dojo.require("dijit.layout.BorderContainer");
-		dojo.require("dijit.layout.ContentPane");
-		dojo.require("dijit.layout.TabContainer");
-		dojo.require("dijit.Menu");
-		dojo.require("dijit.ProgressBar");
-		dojo.require("dijit.ProgressBar");
-		dojo.require("dijit.Toolbar");
-		dojo.require("dijit.Tree");
-		dojo.require("dijit.tree.dndSource");
-		dojo.require("dojo.data.ItemFileWriteStore");
+				ready(function() {
 
-		dojo.parser.parse();
+					parser.parse();
 
-		if (!genericSanityCheck())
-			return false;
+					if (!genericSanityCheck())
+						return false;
 
-		loading_set_progress(30);
+					loading_set_progress(30);
 
-		var a = document.createElement('audio');
+					var a = document.createElement('audio');
 
-		var hasAudio = !!a.canPlayType;
-		var hasSandbox = "sandbox" in document.createElement("iframe");
-		var hasMp3 = !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
-		var clientTzOffset = new Date().getTimezoneOffset() * 60;
+					var hasAudio = !!a.canPlayType;
+					var hasSandbox = "sandbox" in document.createElement("iframe");
+					var hasMp3 = !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
+					var clientTzOffset = new Date().getTimezoneOffset() * 60;
 
-		new Ajax.Request("backend.php",	{
-			parameters: {op: "rpc", method: "sanityCheck", hasAudio: hasAudio,
-				hasMp3: hasMp3,
-			 	clientTzOffset: clientTzOffset,
-				hasSandbox: hasSandbox},
-			onComplete: function(transport) {
-					backend_sanity_check_callback(transport);
-				} });
+					init_hotkey_actions();
 
-		hotkey_actions["next_feed"] = function() {
-				var rv = dijit.byId("feedTree").getNextFeed(
-						getActiveFeedId(), activeFeedIsCat());
+					new Ajax.Request("backend.php",	{
+						parameters: {op: "rpc", method: "sanityCheck", hasAudio: hasAudio,
+							hasMp3: hasMp3,
+							clientTzOffset: clientTzOffset,
+							hasSandbox: hasSandbox},
+						onComplete: function(transport) {
+							backend_sanity_check_callback(transport);
+						} });
 
-				if (rv) viewfeed({feed: rv[0], is_cat: rv[1], can_wait: true})
-		};
-		hotkey_actions["prev_feed"] = function() {
-				var rv = dijit.byId("feedTree").getPreviousFeed(
-						getActiveFeedId(), activeFeedIsCat());
 
-				if (rv) viewfeed({feed: rv[0], is_cat: rv[1], can_wait: true})
-		};
-		hotkey_actions["next_article"] = function() {
-				moveToPost('next');
-		};
-		hotkey_actions["prev_article"] = function() {
-				moveToPost('prev');
-		};
-		hotkey_actions["next_article_noscroll"] = function() {
-				moveToPost('next', true);
-		};
-		hotkey_actions["prev_article_noscroll"] = function() {
-				moveToPost('prev', true);
-		};
-		hotkey_actions["next_article_noexpand"] = function() {
-				moveToPost('next', true, true);
-		};
-		hotkey_actions["prev_article_noexpand"] = function() {
-				moveToPost('prev', true, true);
-		};
-		hotkey_actions["collapse_article"] = function() {
-				var id = getActiveArticleId();
-				var elem = $("CICD-"+id);
+				});
 
-				if (elem) {
-					if (elem.visible()) {
-						cdmCollapseArticle(null, id);
-					}
-					else {
-						cdmExpandArticle(id);
-					}
-				}
-		};
-		hotkey_actions["toggle_expand"] = function() {
-				var id = getActiveArticleId();
-				var elem = $("CICD-"+id);
 
-				if (elem) {
-					if (elem.visible()) {
-						cdmCollapseArticle(null, id, false);
-					}
-					else {
-						cdmExpandArticle(id);
-					}
-				}
-		};
-		hotkey_actions["search_dialog"] = function() {
-				search();
-		};
-		hotkey_actions["toggle_mark"] = function() {
-				selectionToggleMarked(undefined, false, true);
-		};
-		hotkey_actions["toggle_publ"] = function() {
-				selectionTogglePublished(undefined, false, true);
-		};
-		hotkey_actions["toggle_unread"] = function() {
-				selectionToggleUnread(undefined, false, true);
-		};
-		hotkey_actions["edit_tags"] = function() {
-				var id = getActiveArticleId();
-				if (id) {
-					editArticleTags(id);
-				};
-			}
-		hotkey_actions["open_in_new_window"] = function() {
-				if (getActiveArticleId()) {
-					openArticleInNewWindow(getActiveArticleId());
-					return;
-				}
-		};
-		hotkey_actions["catchup_below"] = function() {
-				catchupRelativeToArticle(1);
-		};
-		hotkey_actions["catchup_above"] = function() {
-				catchupRelativeToArticle(0);
-		};
-		hotkey_actions["article_scroll_down"] = function() {
-				var ctr = $("content_insert") ? $("content_insert") : $("headlines-frame");
-
-				scrollArticle(40);
-		};
-		hotkey_actions["article_scroll_up"] = function() {
-				var ctr = $("content_insert") ? $("content_insert") : $("headlines-frame");
-
-				scrollArticle(-40);
-		};
-		hotkey_actions["close_article"] = function() {
-				if (isCdmMode()) {
-					if (!getInitParam("cdm_expanded")) {
-						cdmCollapseArticle(false, getActiveArticleId());
-					}
-				} else {
-					closeArticlePanel();
-				}
-		};
-		hotkey_actions["email_article"] = function() {
-				if (typeof emailArticle != "undefined") {
-					emailArticle();
-				} else if (typeof mailtoArticle != "undefined") {
-					mailtoArticle();
-				} else {
-					alert(__("Please enable mail plugin first."));
-				}
-		};
-		hotkey_actions["select_all"] = function() {
-				selectArticles('all');
-		};
-		hotkey_actions["select_unread"] = function() {
-				selectArticles('unread');
-		};
-		hotkey_actions["select_marked"] = function() {
-				selectArticles('marked');
-		};
-		hotkey_actions["select_published"] = function() {
-				selectArticles('published');
-		};
-		hotkey_actions["select_invert"] = function() {
-				selectArticles('invert');
-		};
-		hotkey_actions["select_none"] = function() {
-				selectArticles('none');
-		};
-		hotkey_actions["feed_refresh"] = function() {
-				if (getActiveFeedId() != undefined) {
-					viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat()});
-					return;
-				}
-		};
-		hotkey_actions["feed_unhide_read"] = function() {
-				toggleDispRead();
-		};
-		hotkey_actions["feed_subscribe"] = function() {
-				quickAddFeed();
-		};
-		hotkey_actions["feed_debug_update"] = function() {
-			if (!activeFeedIsCat() && parseInt(getActiveFeedId()) > 0) {
-				window.open("backend.php?op=feeds&method=update_debugger&feed_id=" + getActiveFeedId() +
-				"&csrf_token=" + getInitParam("csrf_token"));
-			} else {
-				alert("You can't debug this kind of feed.");
-			}
-		};
-
-		hotkey_actions["feed_debug_viewfeed"] = function() {
-			viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat(), viewfeed_debug: true});
-		};
-
-		hotkey_actions["feed_edit"] = function() {
-				if (activeFeedIsCat())
-					alert(__("You can't edit this kind of feed."));
-				else
-					editFeed(getActiveFeedId());
-		};
-		hotkey_actions["feed_catchup"] = function() {
-				if (getActiveFeedId() != undefined) {
-					catchupCurrentFeed();
-					return;
-				}
-		};
-		hotkey_actions["feed_reverse"] = function() {
-				reverseHeadlineOrder();
-		};
-		hotkey_actions["catchup_all"] = function() {
-				catchupAllFeeds();
-		};
-		hotkey_actions["cat_toggle_collapse"] = function() {
-				if (activeFeedIsCat()) {
-					dijit.byId("feedTree").collapseCat(getActiveFeedId());
-					return;
-				}
-		};
-		hotkey_actions["goto_all"] = function() {
-				viewfeed({feed: -4});
-		};
-		hotkey_actions["goto_fresh"] = function() {
-				viewfeed({feed: -3});
-		};
-		hotkey_actions["goto_marked"] = function() {
-				viewfeed({feed: -1});
-		};
-		hotkey_actions["goto_published"] = function() {
-				viewfeed({feed: -2});
-		};
-		hotkey_actions["goto_tagcloud"] = function() {
-				displayDlg(__("Tag cloud"), "printTagCloud");
-		};
-		hotkey_actions["goto_prefs"] = function() {
-				gotoPreferences();
-		};
-		hotkey_actions["select_article_cursor"] = function() {
-				var id = getArticleUnderPointer();
-				if (id) {
-					var row = $("RROW-" + id);
-
-					if (row) {
-						var cb = dijit.getEnclosingWidget(
-							row.getElementsByClassName("rchk")[0]);
-
-						if (cb) {
-							cb.attr("checked", !cb.attr("checked"));
-							toggleSelectRowById(cb, "RROW-" + id);
-							return false;
-						}
-					}
-				}
-		};
-		hotkey_actions["create_label"] = function() {
-				addLabel();
-		};
-		hotkey_actions["create_filter"] = function() {
-				quickAddFilter();
-		};
-		hotkey_actions["collapse_sidebar"] = function() {
-				collapse_feedlist();
-		};
-		hotkey_actions["toggle_embed_original"] = function() {
-				if (typeof embedOriginalArticle != "undefined") {
-					if (getActiveArticleId())
-						embedOriginalArticle(getActiveArticleId());
-				} else {
-					alert(__("Please enable embed_original plugin first."));
-				}
-		};
-		hotkey_actions["toggle_widescreen"] = function() {
-				if (!isCdmMode()) {
-					_widescreen_mode = !_widescreen_mode;
-
-					// reset stored sizes because geometry changed
-					setCookie("ttrss_ci_width", 0);
-					setCookie("ttrss_ci_height", 0);
-
-					switchPanelMode(_widescreen_mode);
-				} else {
-					alert(__("Widescreen is not available in combined mode."));
-				}
-		};
-		hotkey_actions["help_dialog"] = function() {
-				helpDialog("main");
-		};
-		hotkey_actions["toggle_combined_mode"] = function() {
-				notify_progress("Loading, please wait...");
-
-				var value = isCdmMode() ? "false" : "true";
-				var query = "?op=rpc&method=setpref&key=COMBINED_DISPLAY_MODE&value=" + value;
-
-				new Ajax.Request("backend.php",	{
-					parameters: query,
-					onComplete: function(transport) {
-						setInitParam("combined_display_mode",
-								!getInitParam("combined_display_mode"));
-
-						closeArticlePanel();
-						viewCurrentFeed();
-
-								} });
-		};
-		hotkey_actions["toggle_cdm_expanded"] = function() {
-				notify_progress("Loading, please wait...");
-
-				var value = getInitParam("cdm_expanded") ? "false" : "true";
-				var query = "?op=rpc&method=setpref&key=CDM_EXPANDED&value=" + value;
-
-				new Ajax.Request("backend.php",	{
-					parameters: query,
-					onComplete: function(transport) {
-						setInitParam("cdm_expanded", !getInitParam("cdm_expanded"));
-						viewCurrentFeed();
-					} });
-		};
-
+		});
 
 	} catch (e) {
 		exception_error("init", e);
 	}
 }
 
+function init_hotkey_actions() {
+	hotkey_actions["next_feed"] = function() {
+		var rv = dijit.byId("feedTree").getNextFeed(
+			getActiveFeedId(), activeFeedIsCat());
+
+		if (rv) viewfeed({feed: rv[0], is_cat: rv[1], can_wait: true})
+	};
+	hotkey_actions["prev_feed"] = function() {
+		var rv = dijit.byId("feedTree").getPreviousFeed(
+			getActiveFeedId(), activeFeedIsCat());
+
+		if (rv) viewfeed({feed: rv[0], is_cat: rv[1], can_wait: true})
+	};
+	hotkey_actions["next_article"] = function() {
+		moveToPost('next');
+	};
+	hotkey_actions["prev_article"] = function() {
+		moveToPost('prev');
+	};
+	hotkey_actions["next_article_noscroll"] = function() {
+		moveToPost('next', true);
+	};
+	hotkey_actions["prev_article_noscroll"] = function() {
+		moveToPost('prev', true);
+	};
+	hotkey_actions["next_article_noexpand"] = function() {
+		moveToPost('next', true, true);
+	};
+	hotkey_actions["prev_article_noexpand"] = function() {
+		moveToPost('prev', true, true);
+	};
+	hotkey_actions["collapse_article"] = function() {
+		var id = getActiveArticleId();
+		var elem = $("CICD-"+id);
+
+		if (elem) {
+			if (elem.visible()) {
+				cdmCollapseArticle(null, id);
+			}
+			else {
+				cdmExpandArticle(id);
+			}
+		}
+	};
+	hotkey_actions["toggle_expand"] = function() {
+		var id = getActiveArticleId();
+		var elem = $("CICD-"+id);
+
+		if (elem) {
+			if (elem.visible()) {
+				cdmCollapseArticle(null, id, false);
+			}
+			else {
+				cdmExpandArticle(id);
+			}
+		}
+	};
+	hotkey_actions["search_dialog"] = function() {
+		search();
+	};
+	hotkey_actions["toggle_mark"] = function() {
+		selectionToggleMarked(undefined, false, true);
+	};
+	hotkey_actions["toggle_publ"] = function() {
+		selectionTogglePublished(undefined, false, true);
+	};
+	hotkey_actions["toggle_unread"] = function() {
+		selectionToggleUnread(undefined, false, true);
+	};
+	hotkey_actions["edit_tags"] = function() {
+		var id = getActiveArticleId();
+		if (id) {
+			editArticleTags(id);
+		};
+	}
+	hotkey_actions["open_in_new_window"] = function() {
+		if (getActiveArticleId()) {
+			openArticleInNewWindow(getActiveArticleId());
+			return;
+		}
+	};
+	hotkey_actions["catchup_below"] = function() {
+		catchupRelativeToArticle(1);
+	};
+	hotkey_actions["catchup_above"] = function() {
+		catchupRelativeToArticle(0);
+	};
+	hotkey_actions["article_scroll_down"] = function() {
+		var ctr = $("content_insert") ? $("content_insert") : $("headlines-frame");
+
+		scrollArticle(40);
+	};
+	hotkey_actions["article_scroll_up"] = function() {
+		var ctr = $("content_insert") ? $("content_insert") : $("headlines-frame");
+
+		scrollArticle(-40);
+	};
+	hotkey_actions["close_article"] = function() {
+		if (isCdmMode()) {
+			if (!getInitParam("cdm_expanded")) {
+				cdmCollapseArticle(false, getActiveArticleId());
+			}
+		} else {
+			closeArticlePanel();
+		}
+	};
+	hotkey_actions["email_article"] = function() {
+		if (typeof emailArticle != "undefined") {
+			emailArticle();
+		} else if (typeof mailtoArticle != "undefined") {
+			mailtoArticle();
+		} else {
+			alert(__("Please enable mail plugin first."));
+		}
+	};
+	hotkey_actions["select_all"] = function() {
+		selectArticles('all');
+	};
+	hotkey_actions["select_unread"] = function() {
+		selectArticles('unread');
+	};
+	hotkey_actions["select_marked"] = function() {
+		selectArticles('marked');
+	};
+	hotkey_actions["select_published"] = function() {
+		selectArticles('published');
+	};
+	hotkey_actions["select_invert"] = function() {
+		selectArticles('invert');
+	};
+	hotkey_actions["select_none"] = function() {
+		selectArticles('none');
+	};
+	hotkey_actions["feed_refresh"] = function() {
+		if (getActiveFeedId() != undefined) {
+			viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat()});
+			return;
+		}
+	};
+	hotkey_actions["feed_unhide_read"] = function() {
+		toggleDispRead();
+	};
+	hotkey_actions["feed_subscribe"] = function() {
+		quickAddFeed();
+	};
+	hotkey_actions["feed_debug_update"] = function() {
+		if (!activeFeedIsCat() && parseInt(getActiveFeedId()) > 0) {
+			window.open("backend.php?op=feeds&method=update_debugger&feed_id=" + getActiveFeedId() +
+				"&csrf_token=" + getInitParam("csrf_token"));
+		} else {
+			alert("You can't debug this kind of feed.");
+		}
+	};
+
+	hotkey_actions["feed_debug_viewfeed"] = function() {
+		viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat(), viewfeed_debug: true});
+	};
+
+	hotkey_actions["feed_edit"] = function() {
+		if (activeFeedIsCat())
+			alert(__("You can't edit this kind of feed."));
+		else
+			editFeed(getActiveFeedId());
+	};
+	hotkey_actions["feed_catchup"] = function() {
+		if (getActiveFeedId() != undefined) {
+			catchupCurrentFeed();
+			return;
+		}
+	};
+	hotkey_actions["feed_reverse"] = function() {
+		reverseHeadlineOrder();
+	};
+	hotkey_actions["feed_toggle_vgroup"] = function() {
+		var query_str = "?op=rpc&method=togglepref&key=VFEED_GROUP_BY_FEED";
+
+		new Ajax.Request("backend.php", {
+			parameters: query_str,
+			onComplete: function(transport) {
+				viewCurrentFeed();
+			} });
+
+	};
+	hotkey_actions["catchup_all"] = function() {
+		catchupAllFeeds();
+	};
+	hotkey_actions["cat_toggle_collapse"] = function() {
+		if (activeFeedIsCat()) {
+			dijit.byId("feedTree").collapseCat(getActiveFeedId());
+			return;
+		}
+	};
+	hotkey_actions["goto_all"] = function() {
+		viewfeed({feed: -4});
+	};
+	hotkey_actions["goto_fresh"] = function() {
+		viewfeed({feed: -3});
+	};
+	hotkey_actions["goto_marked"] = function() {
+		viewfeed({feed: -1});
+	};
+	hotkey_actions["goto_published"] = function() {
+		viewfeed({feed: -2});
+	};
+	hotkey_actions["goto_tagcloud"] = function() {
+		displayDlg(__("Tag cloud"), "printTagCloud");
+	};
+	hotkey_actions["goto_prefs"] = function() {
+		gotoPreferences();
+	};
+	hotkey_actions["select_article_cursor"] = function() {
+		var id = getArticleUnderPointer();
+		if (id) {
+			var row = $("RROW-" + id);
+
+			if (row) {
+				var cb = dijit.getEnclosingWidget(
+					row.getElementsByClassName("rchk")[0]);
+
+				if (cb) {
+					cb.attr("checked", !cb.attr("checked"));
+					toggleSelectRowById(cb, "RROW-" + id);
+					return false;
+				}
+			}
+		}
+	};
+	hotkey_actions["create_label"] = function() {
+		addLabel();
+	};
+	hotkey_actions["create_filter"] = function() {
+		quickAddFilter();
+	};
+	hotkey_actions["collapse_sidebar"] = function() {
+		collapse_feedlist();
+	};
+	hotkey_actions["toggle_embed_original"] = function() {
+		if (typeof embedOriginalArticle != "undefined") {
+			if (getActiveArticleId())
+				embedOriginalArticle(getActiveArticleId());
+		} else {
+			alert(__("Please enable embed_original plugin first."));
+		}
+	};
+	hotkey_actions["toggle_widescreen"] = function() {
+		if (!isCdmMode()) {
+			_widescreen_mode = !_widescreen_mode;
+
+			// reset stored sizes because geometry changed
+			setCookie("ttrss_ci_width", 0);
+			setCookie("ttrss_ci_height", 0);
+
+			switchPanelMode(_widescreen_mode);
+		} else {
+			alert(__("Widescreen is not available in combined mode."));
+		}
+	};
+	hotkey_actions["help_dialog"] = function() {
+		helpDialog("main");
+	};
+	hotkey_actions["toggle_combined_mode"] = function() {
+		notify_progress("Loading, please wait...");
+
+		var value = isCdmMode() ? "false" : "true";
+		var query = "?op=rpc&method=setpref&key=COMBINED_DISPLAY_MODE&value=" + value;
+
+		new Ajax.Request("backend.php",	{
+			parameters: query,
+			onComplete: function(transport) {
+				setInitParam("combined_display_mode",
+					!getInitParam("combined_display_mode"));
+
+				closeArticlePanel();
+				viewCurrentFeed();
+
+			} });
+	};
+	hotkey_actions["toggle_cdm_expanded"] = function() {
+		notify_progress("Loading, please wait...");
+
+		var value = getInitParam("cdm_expanded") ? "false" : "true";
+		var query = "?op=rpc&method=setpref&key=CDM_EXPANDED&value=" + value;
+
+		new Ajax.Request("backend.php",	{
+			parameters: query,
+			onComplete: function(transport) {
+				setInitParam("cdm_expanded", !getInitParam("cdm_expanded"));
+				viewCurrentFeed();
+			} });
+	};
+}
+
 function init_second_stage() {
 
 	try {
-		dojo.addOnLoad(function() {
-			updateFeedList();
-			closeArticlePanel();
+		updateFeedList();
+		closeArticlePanel();
 
-			if (parseInt(getCookie("ttrss_fh_width")) > 0) {
-				dijit.byId("feeds-holder").domNode.setStyle(
-					{width: getCookie("ttrss_fh_width") + "px" });
-			}
+		if (parseInt(getCookie("ttrss_fh_width")) > 0) {
+			dijit.byId("feeds-holder").domNode.setStyle(
+				{width: getCookie("ttrss_fh_width") + "px" });
+		}
 
-			dijit.byId("main").resize();
+		dijit.byId("main").resize();
 
-			var tmph = dojo.connect(dijit.byId('feeds-holder'), 'resize',
-				function (args) {
-					if (args && args.w >= 0) {
-						setCookie("ttrss_fh_width", args.w, getInitParam("cookie_lifetime"));
-					}
-			});
+		var tmph = dojo.connect(dijit.byId('feeds-holder'), 'resize',
+			function (args) {
+				if (args && args.w >= 0) {
+					setCookie("ttrss_fh_width", args.w, getInitParam("cookie_lifetime"));
+				}
+		});
 
-			var tmph = dojo.connect(dijit.byId('content-insert'), 'resize',
-				function (args) {
-					if (args && args.w >= 0 && args.h >= 0) {
-						setCookie("ttrss_ci_width", args.w, getInitParam("cookie_lifetime"));
-						setCookie("ttrss_ci_height", args.h, getInitParam("cookie_lifetime"));
-					}
-			});
-
+		var tmph = dojo.connect(dijit.byId('content-insert'), 'resize',
+			function (args) {
+				if (args && args.w >= 0 && args.h >= 0) {
+					setCookie("ttrss_ci_width", args.w, getInitParam("cookie_lifetime"));
+					setCookie("ttrss_ci_height", args.h, getInitParam("cookie_lifetime"));
+				}
 		});
 
 		delCookie("ttrss_test");

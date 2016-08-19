@@ -889,22 +889,20 @@ function init_second_stage() {
 		loading_set_progress(50);
 		notify("");
 
-		dojo.addOnLoad(function() {
-			var tab = getURLParam('tab');
+		var tab = getURLParam('tab');
 
-			if (tab) {
-			  	tab = dijit.byId(tab + "Tab");
-				if (tab) dijit.byId("pref-tabs").selectChild(tab);
-			}
+		if (tab) {
+			tab = dijit.byId(tab + "Tab");
+			if (tab) dijit.byId("pref-tabs").selectChild(tab);
+		}
 
-			var method = getURLParam('method');
+		var method = getURLParam('method');
 
-			if (method == 'editFeed') {
-				var param = getURLParam('methodparam');
+		if (method == 'editFeed') {
+			var param = getURLParam('methodparam');
 
-				window.setTimeout('editFeed(' + param + ')', 100);
-			}
-		});
+			window.setTimeout('editFeed(' + param + ')', 100);
+		}
 
 		setTimeout("hotkey_prefix_timeout()", 5*1000);
 
@@ -916,53 +914,55 @@ function init_second_stage() {
 function init() {
 
 	try {
-		dojo.registerModulePath("lib", "..");
-		dojo.registerModulePath("fox", "../../js/");
 
-		dojo.require("dijit.ColorPalette");
-		dojo.require("dijit.Dialog");
-		dojo.require("dijit.form.Button");
-		dojo.require("dijit.form.CheckBox");
-		dojo.require("dijit.form.DropDownButton");
-		dojo.require("dijit.form.FilteringSelect");
-		dojo.require("dijit.form.Form");
-		dojo.require("dijit.form.RadioButton");
-		dojo.require("dijit.form.Select");
-		dojo.require("dijit.form.SimpleTextarea");
-		dojo.require("dijit.form.TextBox");
-		dojo.require("dijit.form.ValidationTextBox");
-		dojo.require("dijit.InlineEditBox");
-		dojo.require("dijit.layout.AccordionContainer");
-		dojo.require("dijit.layout.BorderContainer");
-		dojo.require("dijit.layout.ContentPane");
-		dojo.require("dijit.layout.TabContainer");
-		dojo.require("dijit.Menu");
-		dojo.require("dijit.ProgressBar");
-		dojo.require("dijit.ProgressBar");
-		dojo.require("dijit.Toolbar");
-		dojo.require("dijit.Tree");
-		dojo.require("dijit.tree.dndSource");
-		dojo.require("dojo.data.ItemFileWriteStore");
+		require(["dojo/_base/kernel",
+			"dojo/ready",
+			"dojo/parser",
+			"dojo/_base/loader",
+			"dijit/ColorPalette",
+			"dijit/Dialog",
+			"dijit/form/Button",
+			"dijit/form/CheckBox",
+			"dijit/form/DropDownButton",
+			"dijit/form/FilteringSelect",
+			"dijit/form/Form",
+			"dijit/form/RadioButton",
+			"dijit/form/ComboButton",
+			"dijit/form/Select",
+			"dijit/form/SimpleTextarea",
+			"dijit/form/TextBox",
+			"dijit/form/ValidationTextBox",
+			"dijit/InlineEditBox",
+			"dijit/layout/AccordionContainer",
+			"dijit/layout/AccordionPane",
+			"dijit/layout/BorderContainer",
+			"dijit/layout/ContentPane",
+			"dijit/layout/TabContainer",
+			"dijit/Menu",
+			"dijit/ProgressBar",
+			"dijit/Toolbar",
+			"dijit/Tree",
+			"dijit/tree/dndSource",
+			"dojo/data/ItemFileWriteStore",
+			"fox/PrefFeedTree",
+			"fox/PrefFilterTree",
+			"fox/PrefLabelTree" ], function (dojo, ready, parser) {
 
-		dojo.require("lib.CheckBoxTree");
-		dojo.require("fox.PrefFeedTree");
-		dojo.require("fox.PrefFilterTree");
-		dojo.require("fox.PrefLabelTree");
+				ready(function() {
+					parser.parse();
 
-		dojo.parser.parse();
+					loading_set_progress(50);
 
-		dojo.addOnLoad(function() {
-			loading_set_progress(50);
+					var clientTzOffset = new Date().getTimezoneOffset() * 60;
 
-			var clientTzOffset = new Date().getTimezoneOffset() * 60;
-
-			new Ajax.Request("backend.php", {
-				parameters: {op: "rpc", method: "sanityCheck",
-				 	clientTzOffset: clientTzOffset },
-					onComplete: function(transport) {
-					backend_sanity_check_callback(transport);
-				} });
-		});
+					new Ajax.Request("backend.php", {
+						parameters: {op: "rpc", method: "sanityCheck",
+							clientTzOffset: clientTzOffset },
+						onComplete: function(transport) {
+							backend_sanity_check_callback(transport);
+						} });
+				});
+			});
 
 	} catch (e) {
 		exception_error("init", e);

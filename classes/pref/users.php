@@ -37,7 +37,7 @@ class Pref_Users extends Handler_Protected {
 			$access_level = $this->dbh->fetch_result($result, 0, "access_level");
 			$email = $this->dbh->fetch_result($result, 0, "email");
 
-			$sel_disabled = ($id == $_SESSION["uid"]) ? "disabled" : "";
+			$sel_disabled = ($id == $_SESSION["uid"] || $login == "admin") ? "disabled" : "";
 
 			print "<div class=\"dlgSec\">".__("User")."</div>";
 			print "<div class=\"dlgSecCont\">";

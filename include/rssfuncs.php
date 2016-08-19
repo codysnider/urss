@@ -179,6 +179,8 @@
 		$nf = 0;
 		$bstarted = microtime(true);
 
+		$batch_owners = array();
+
 		// For each feed, we call the feed update function.
 		foreach ($feeds_to_update as $feed) {
 			if($debug) _debug("Base feed: $feed");
@@ -204,6 +206,9 @@
 				while ($tline = db_fetch_assoc($tmp_result)) {
 					if($debug) _debug(" => " . $tline["last_updated"] . ", " . $tline["id"] . " " . $tline["owner_uid"]);
 
+					if (array_search($tline["owner_uid"], $batch_owners) === FALSE)
+						array_push($batch_owners, $tline["owner_uid"]);
+
 					$fstarted = microtime(true);
 					$rss = update_rss_feed($tline["id"], true, false);
 					_debug_suppress(false);
@@ -218,6 +223,12 @@
 		if ($nf > 0) {
 			_debug(sprintf("Processed %d feeds in %.4f (sec), %.4f (sec/feed avg)", $nf,
 				microtime(true) - $bstarted, (microtime(true) - $bstarted) / $nf));
+		}
+
+		foreach ($batch_owners as $owner_uid) {
+			_debug("Running housekeeping tasks for user $owner_uid...");
+
+			housekeeping_user($owner_uid);
 		}
 
 		require_once "digest.php";
@@ -726,7 +737,8 @@
 					"language" => $entry_language,
 					"feed" => array("id" => $feed,
 						"fetch_url" => $fetch_url,
-						"site_url" => $site_url)
+						"site_url" => $site_url,
+						"cache_images" => $cache_images)
 					);
 
 				$entry_plugin_data = "";
@@ -778,7 +790,7 @@
 					foreach ($article as $k => $v) {
 
 						// i guess we'll have to take the risk of 4byte unicode labels & tags here
-						if (!is_array($article[$k])) {
+						if (is_string($article[$k])) {
 							$article[$k] = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $v);
 						}
 					}
@@ -1501,6 +1513,14 @@
 		_debug("Removed $frows (feeds) $crows (cats) orphaned counter cache entries.");
 	}
 
+	function housekeeping_user($owner_uid) {
+		$tmph = new PluginHost();
+
+		load_user_plugins($owner_uid, $tmph);
+
+		$tmph->run_hooks(PluginHost::HOOK_HOUSE_KEEPING, "hook_house_keeping", "");
+	}
+
 	function housekeeping_common($debug) {
 		expire_cached_files($debug);
 		expire_lock_files($debug);
@@ -1516,6 +1536,5 @@
 		//_debug("Cleaned $rc cached tags.");
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_HOUSE_KEEPING, "hook_house_keeping", "");
-
 	}
 ?>

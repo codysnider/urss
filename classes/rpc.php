@@ -438,7 +438,7 @@ class RPC extends Handler_Protected {
 					if ($this->dbh->num_rows($result) == 0) {
 						$result = $this->dbh->query("INSERT INTO ttrss_feeds
 										(owner_uid,feed_url,title,cat_id,site_url)
-									VALUES ('$id','".$_SESSION["uid"]."',
+									VALUES ('".$_SESSION["uid"]."',
 									'$feed_url', '$title', NULL, '$site_url')");
 					}
 				}
