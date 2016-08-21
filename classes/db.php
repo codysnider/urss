@@ -13,11 +13,7 @@ class Db implements IDb {
 		} else {
 			switch (DB_TYPE) {
 			case "mysql":
-				if (function_exists("mysqli_connect")) {
-					$this->adapter = new Db_Mysqli();
-				} else {
-					$this->adapter = new Db_Mysql();
-				}
+				$this->adapter = new Db_Mysqli();
 				break;
 			case "pgsql":
 				$this->adapter = new Db_Pgsql();

@@ -51,7 +51,7 @@
 			array_push($errors, "PHP support for JSON is required, but was not found.");
 		}
 
-		if ($db_type == "mysql" && !function_exists("mysql_connect") && !function_exists("mysqli_connect")) {
+		if ($db_type == "mysql" && !function_exists("mysqli_connect")) {
 			array_push($errors, "PHP support for MySQL is required for configured $db_type in config.php.");
 		}
 
@@ -112,19 +112,10 @@
 			return $link;
 
 		} else if ($type == "mysql") {
-			if (function_exists("mysqli_connect")) {
-				if ($port)
-					return mysqli_connect($host, $user, $pass, $db, $port);
-				else
-					return mysqli_connect($host, $user, $pass, $db);
-
-			} else {
-				$link = mysql_connect($host, $user, $pass);
-				if ($link) {
-					$result = mysql_select_db($db, $link);
-					if ($result) return $link;
-				}
-			}
+			if ($port)
+				return mysqli_connect($host, $user, $pass, $db, $port);
+			else
+				return mysqli_connect($host, $user, $pass, $db);
 		}
 	}
 
@@ -184,15 +175,12 @@
 			return $result;
 		} else if ($type == "mysql") {
 
-			if (function_exists("mysqli_connect")) {
-				$result = mysqli_query($link, $query);
-			} else {
-				$result = mysql_query($query, $link);
-			}
+			$result = mysqli_query($link, $query);
+
 			if (!$result) {
 				$query = htmlspecialchars($query);
 				if ($die_on_error) {
-					die("Query <i>$query</i> failed: " . ($link ? function_exists("mysqli_connect") ? mysqli_error($link) : mysql_error($link) : "No connection"));
+					die("Query <i>$query</i> failed: " . ($link ? mysqli_error($link) : "No connection"));
 				}
 			}
 			return $result;
