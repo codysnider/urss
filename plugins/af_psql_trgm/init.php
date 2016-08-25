@@ -119,90 +119,91 @@ class Af_Psql_Trgm extends Plugin {
 
 		if (DB_TYPE != "pgsql") {
 			print_error("Database type not supported.");
-		}
+		} else {
 
-		$result = db_query("select 'similarity'::regproc");
+			$result = db_query("select 'similarity'::regproc");
 
-		if (db_num_rows($result) == 0) {
-			print_error("pg_trgm extension not found.");
-		}
-
-		$similarity = $this->host->get($this, "similarity");
-		$min_title_length = $this->host->get($this, "min_title_length");
-		$enable_globally = $this->host->get($this, "enable_globally");
-
-		if (!$similarity) $similarity = '0.75';
-		if (!$min_title_length) $min_title_length = '32';
-
-		$enable_globally_checked = $enable_globally ? "checked" : "";
-
-		print "<form dojoType=\"dijit.form.Form\">";
-
-		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
-			evt.preventDefault();
-			if (this.validate()) {
-				console.log(dojo.objectToQuery(this.getValues()));
-				new Ajax.Request('backend.php', {
-					parameters: dojo.objectToQuery(this.getValues()),
-					onComplete: function(transport) {
-						notify_info(transport.responseText);
-					}
-				});
-				//this.reset();
+			if (db_num_rows($result) == 0) {
+				print_error("pg_trgm extension not found.");
 			}
-			</script>";
 
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pluginhandler\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"save\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"plugin\" value=\"af_psql_trgm\">";
+			$similarity = $this->host->get($this, "similarity");
+			$min_title_length = $this->host->get($this, "min_title_length");
+			$enable_globally = $this->host->get($this, "enable_globally");
 
-		print "<p>" . __("PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking.") . "</p>";
-		print_notice("Enable the plugin for specific feeds in the feed editor.");
+			if (!$similarity) $similarity = '0.75';
+			if (!$min_title_length) $min_title_length = '32';
 
-		print "<h3>" . __("Global settings") . "</h3>";
+			$enable_globally_checked = $enable_globally ? "checked" : "";
 
-		print "<table>";
+			print "<form dojoType=\"dijit.form.Form\">";
 
-		print "<tr><td width=\"40%\">".__("Minimum similarity:")."</td>";
-		print "<td>
-			<input dojoType=\"dijit.form.ValidationTextBox\"
-			placeholder=\"0.75\"
-			required=\"1\" name=\"similarity\" value=\"$similarity\"></td></tr>";
-		print "<tr><td width=\"40%\">".__("Minimum title length:")."</td>";
-		print "<td>
-			<input dojoType=\"dijit.form.ValidationTextBox\"
-			placeholder=\"32\"
-			required=\"1\" name=\"min_title_length\" value=\"$min_title_length\"></td></tr>";
-		print "<tr><td width=\"40%\">".__("Enable for all feeds:")."</td>";
-		print "<td>
-			<input dojoType=\"dijit.form.CheckBox\"
-			$enable_globally_checked name=\"enable_globally\"></td></tr>";
+			print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
+				evt.preventDefault();
+				if (this.validate()) {
+					console.log(dojo.objectToQuery(this.getValues()));
+					new Ajax.Request('backend.php', {
+						parameters: dojo.objectToQuery(this.getValues()),
+						onComplete: function(transport) {
+							notify_info(transport.responseText);
+						}
+					});
+					//this.reset();
+				}
+				</script>";
 
-		print "</table>";
+			print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pluginhandler\">";
+			print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"save\">";
+			print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"plugin\" value=\"af_psql_trgm\">";
 
-		print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".
-			__("Save")."</button>";
+			print "<p>" . __("PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking.") . "</p>";
+			print_notice("Enable the plugin for specific feeds in the feed editor.");
 
-		print "</form>";
+			print "<h3>" . __("Global settings") . "</h3>";
 
-		$enabled_feeds = $this->host->get($this, "enabled_feeds");
-		if (!array($enabled_feeds)) $enabled_feeds = array();
+			print "<table>";
 
-		$enabled_feeds = $this->filter_unknown_feeds($enabled_feeds);
-		$this->host->set($this, "enabled_feeds", $enabled_feeds);
+			print "<tr><td width=\"40%\">" . __("Minimum similarity:") . "</td>";
+			print "<td>
+				<input dojoType=\"dijit.form.ValidationTextBox\"
+				placeholder=\"0.75\"
+				required=\"1\" name=\"similarity\" value=\"$similarity\"></td></tr>";
+			print "<tr><td width=\"40%\">" . __("Minimum title length:") . "</td>";
+			print "<td>
+				<input dojoType=\"dijit.form.ValidationTextBox\"
+				placeholder=\"32\"
+				required=\"1\" name=\"min_title_length\" value=\"$min_title_length\"></td></tr>";
+			print "<tr><td width=\"40%\">" . __("Enable for all feeds:") . "</td>";
+			print "<td>
+				<input dojoType=\"dijit.form.CheckBox\"
+				$enable_globally_checked name=\"enable_globally\"></td></tr>";
 
-		if (count($enabled_feeds) > 0) {
-			print "<h3>" . __("Currently enabled for (click to edit):") . "</h3>";
+			print "</table>";
 
-			print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
-			foreach ($enabled_feeds as $f) {
-				print "<li>" .
-					"<img src='images/pub_set.png'
-						style='vertical-align : middle'> <a href='#'
-						onclick='editFeed($f)'>".
-					getFeedTitle($f) . "</a></li>";
+			print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">" .
+				__("Save") . "</button>";
+
+			print "</form>";
+
+			$enabled_feeds = $this->host->get($this, "enabled_feeds");
+			if (!array($enabled_feeds)) $enabled_feeds = array();
+
+			$enabled_feeds = $this->filter_unknown_feeds($enabled_feeds);
+			$this->host->set($this, "enabled_feeds", $enabled_feeds);
+
+			if (count($enabled_feeds) > 0) {
+				print "<h3>" . __("Currently enabled for (click to edit):") . "</h3>";
+
+				print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
+				foreach ($enabled_feeds as $f) {
+					print "<li>" .
+						"<img src='images/pub_set.png'
+							style='vertical-align : middle'> <a href='#'
+							onclick='editFeed($f)'>" .
+						getFeedTitle($f) . "</a></li>";
+				}
+				print "</ul>";
 			}
-			print "</ul>";
 		}
 
 		print "</div>";
