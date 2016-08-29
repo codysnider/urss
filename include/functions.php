@@ -1772,9 +1772,9 @@
 				set_basic_feed_info($feed_id);
 			}
 
-			return array("code" => 1, "feed_id" => $feed_id);
+			return array("code" => 1, "feed_id" => (int) $feed_id);
 		} else {
-			return array("code" => 0, "feed_id" => db_fetch_result($result, 0, "id"));
+			return array("code" => 0, "feed_id" => (int) db_fetch_result($result, 0, "id"));
 		}
 	}
 
