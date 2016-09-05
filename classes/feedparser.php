@@ -15,7 +15,11 @@ class FeedParser {
 
 	function normalize_encoding($data) {
 		if (preg_match('/^(<\?xml[\t\n\r ].*?encoding[\t\n\r ]*=[\t\n\r ]*["\'])(.+?)(["\'].*?\?>)/s', $data, $matches) === 1) {
-			$data = mb_convert_encoding($data, 'UTF-8', $matches[2]);
+
+			$encoding = strtolower($matches[2]);
+
+			if (in_array($encoding, mb_list_encodings()))
+				$data = mb_convert_encoding($data, 'UTF-8', $encoding);
 
 			$data = preg_replace('/^<\?xml[\t\n\r ].*?\?>/s', $matches[1] . "UTF-8" . $matches[3] , $data);
 		}
