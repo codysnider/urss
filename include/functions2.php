@@ -1378,9 +1378,7 @@
 			}
 
 			if ($zoom_mode) {
-				$feed_title = "<a href=\"".htmlspecialchars($line["site_url"]).
-					"\" target=\"_blank\">".
-					htmlspecialchars($line["feed_title"])."</a>";
+				$feed_title = htmlspecialchars($line["feed_title"]);
 
 				$rv['content'] .= "<div class=\"postFeedTitle\">$feed_title</div>";
 
