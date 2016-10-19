@@ -1382,29 +1382,29 @@
 
 				switch ($rule["type"]) {
 				case "title":
-					$match = @preg_match("/$reg_exp/i", $title);
+					$match = @preg_match("/$reg_exp/iu", $title);
 					break;
 				case "content":
 					// we don't need to deal with multiline regexps
 					$content = preg_replace("/[\r\n\t]/", "", $content);
 
-					$match = @preg_match("/$reg_exp/i", $content);
+					$match = @preg_match("/$reg_exp/iu", $content);
 					break;
 				case "both":
 					// we don't need to deal with multiline regexps
 					$content = preg_replace("/[\r\n\t]/", "", $content);
 
-					$match = (@preg_match("/$reg_exp/i", $title) || @preg_match("/$reg_exp/i", $content));
+					$match = (@preg_match("/$reg_exp/iu", $title) || @preg_match("/$reg_exp/iu", $content));
 					break;
 				case "link":
-					$match = @preg_match("/$reg_exp/i", $link);
+					$match = @preg_match("/$reg_exp/iu", $link);
 					break;
 				case "author":
-					$match = @preg_match("/$reg_exp/i", $author);
+					$match = @preg_match("/$reg_exp/iu", $author);
 					break;
 				case "tag":
 					foreach ($tags as $tag) {
-						if (@preg_match("/$reg_exp/i", $tag)) {
+						if (@preg_match("/$reg_exp/iu", $tag)) {
 							$match = true;
 							break;
 						}
