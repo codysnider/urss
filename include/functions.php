@@ -462,10 +462,13 @@
 				}
 			}
 
+			// TODO: should this support POST requests or not? idk
+
 			if (!$post_query && $timestamp) {
 				 $context = stream_context_create(array(
 					  'http' => array(
 							'method' => 'GET',
+						    'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
 							'protocol_version'=> 1.1,
 							'header' => "If-Modified-Since: ".gmdate("D, d M Y H:i:s \\G\\M\\T\r\n", $timestamp)
 					  )));
@@ -473,6 +476,7 @@
 				 $context = stream_context_create(array(
 					  'http' => array(
 							'method' => 'GET',
+						    'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
 							'protocol_version'=> 1.1
 					  )));
 			}
