@@ -157,6 +157,12 @@ require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
 				menu.row_id = bare_id;
 
 				menu.addChild(new dijit.MenuItem({
+					label: __("(Un)collapse"),
+					onClick: function() {
+						dijit.byId("feedTree").collapseCat(this.getParent().row_id);
+					}}));
+
+				menu.addChild(new dijit.MenuItem({
 					label: __("Mark as read"),
 					onClick: function() {
 						catchupFeed(this.getParent().row_id, true);
