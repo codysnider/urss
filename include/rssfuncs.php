@@ -263,7 +263,7 @@
 
 		$feed_data = fetch_file_contents($fetch_url, false,
 			$auth_login, $auth_pass, false,
-			FEED_FETCH_TIMEOUT_TIMEOUT,
+			FEED_FETCH_TIMEOUT,
 			0);
 
 		global $fetch_curl_used;
