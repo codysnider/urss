@@ -311,6 +311,13 @@
 
 		$result = db_query("SELECT title FROM ttrss_feeds
 			WHERE id = '$feed'");
+
+		if (db_num_rows($result) == 0) {
+			_debug("feed $feed NOT FOUND/SKIPPED", $debug_enabled);
+			user_error("Attempt to update unknown/invalid feed $feed", E_USER_WARNING);
+			return false;
+		}
+
 		$title = db_fetch_result($result, 0, "title");
 
 		// feed was batch-subscribed or something, we need to get basic info
@@ -326,12 +333,6 @@
 			pubsub_state, auth_pass_encrypted,
 			feed_language
 			FROM ttrss_feeds WHERE id = '$feed'");
-
-		if (db_num_rows($result) == 0) {
-			_debug("feed $feed NOT FOUND/SKIPPED", $debug_enabled);
-			user_error("Attempt to update unknown/invalid feed $feed", E_USER_WARNING);
-			return false;
-		}
 
 		$owner_uid = db_fetch_result($result, 0, "owner_uid");
 		$mark_unread_on_update = sql_bool_to_bool(db_fetch_result($result,
