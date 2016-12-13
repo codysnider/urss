@@ -1147,3 +1147,7 @@ body#ttrssMain #feedTree .dijitTreeRow img.dijitTreeExpandoLeaf {
 .dijitDropDownButton.attachments {
 	display : inline-block;
 }
+
+#editTagsDlg{
+	overflow: visible;
+}
