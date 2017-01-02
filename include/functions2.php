@@ -1776,6 +1776,16 @@
 			$url .= '/';
 		}
 
+		//convert IDNA hostname to punycode if possible
+		if (function_exists("idn_to_ascii")) {
+			$parts = parse_url($url);
+			if (mb_detect_encoding($parts['host']) != 'ASCII')
+			{
+				$parts['host'] = idn_to_ascii($parts['host']);
+				$url = build_url($parts);
+			}
+		}
+
 		if ($url != "http:///")
 			return $url;
 		else
