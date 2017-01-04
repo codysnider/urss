@@ -209,7 +209,7 @@ class Article extends Handler_Protected {
 		print "<table width='100%'><tr><td>";
 
 		print "<textarea dojoType=\"dijit.form.SimpleTextarea\" rows='4'
-			style='font-size : 12px; width : 98%' id=\"tags_str\"
+			style='height : 100px; font-size : 12px; width : 98%' id=\"tags_str\"
 			name='tags_str'>$tags_str</textarea>
 		<div class=\"autocomplete\" id=\"tags_choices\"
 				style=\"display:none\"></div>";
