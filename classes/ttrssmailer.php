@@ -7,6 +7,7 @@
 *
 */
 require_once 'lib/phpmailer/class.phpmailer.php';
+require_once 'lib/phpmailer/class.smtp.php';
 require_once "config.php";
 
 class ttrssMailer extends PHPMailer {
