@@ -404,6 +404,8 @@
 
 	PluginHost::getInstance()->run_commands($options);
 
-	if (file_exists(LOCK_DIRECTORY . "/$lock_filename"))
+	if (file_exists(LOCK_DIRECTORY . "/$lock_filename")) {
+		fclose($lock_handle);
 		unlink(LOCK_DIRECTORY . "/$lock_filename");
+	}
 ?>
