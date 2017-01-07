@@ -419,6 +419,12 @@ div.prefHelp {
 	margin-right : 4px;
 }
 
+@media (max-width: 992px) {
+	#main-toolbar #selected_prompt {
+		display : none;
+	}
+}
+
 span.contentPreview {
 	color : #999;
 	font-weight : normal;
