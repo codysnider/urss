@@ -254,7 +254,7 @@
 		$auth_login = db_fetch_result($result, 0, "auth_login");
 		$auth_pass = db_fetch_result($result, 0, "auth_pass");
 
-		if ($auth_pass_encrypted) {
+		if ($auth_pass_encrypted && function_exists("mcrypt_decrypt")) {
 			require_once "crypt.php";
 			$auth_pass = decrypt_string($auth_pass);
 		}
@@ -347,7 +347,7 @@
 		$auth_login = db_fetch_result($result, 0, "auth_login");
 		$auth_pass = db_fetch_result($result, 0, "auth_pass");
 
-		if ($auth_pass_encrypted) {
+		if ($auth_pass_encrypted && function_exists("mcrypt_decrypt")) {
 			require_once "crypt.php";
 			$auth_pass = decrypt_string($auth_pass);
 		}

@@ -1749,14 +1749,7 @@
 			"SELECT id FROM ttrss_feeds
 			WHERE feed_url = '$url' AND owner_uid = ".$_SESSION["uid"]);
 
-		if (strlen(FEED_CRYPT_KEY) > 0) {
-			require_once "crypt.php";
-			$auth_pass = substr(encrypt_string($auth_pass), 0, 250);
-			$auth_pass_encrypted = 'true';
-		} else {
-			$auth_pass_encrypted = 'false';
-		}
-
+		$auth_pass_encrypted = 'false';
 		$auth_pass = db_escape_string($auth_pass);
 
 		if (db_num_rows($result) == 0) {

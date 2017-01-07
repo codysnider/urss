@@ -25,6 +25,11 @@
 	// including PUSH, bookmarklets and browser integration will not work properly.
 
 	define('FEED_CRYPT_KEY', '');
+	// WARNING: mcrypt is deprecated in php 7.1. This directive exists for backwards
+	// compatibility with existing installs, new passwords are NOT going to be encrypted.
+	// Use update.php --decrypt-feeds to decrypt existing passwords in the database while
+	// mcrypt is still available.
+
 	// Key used for encryption of passwords for password-protected feeds
 	// in the database. A string of 24 random characters. If left blank, encryption
 	// is not used. Requires mcrypt functions.

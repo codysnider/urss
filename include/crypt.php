@@ -18,19 +18,4 @@
 
 		return false;
 	}
-
-	function encrypt_string($str) {
-		$key = hash('SHA256', FEED_CRYPT_KEY, true);
-
-		$iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128,
-			MCRYPT_MODE_CBC), MCRYPT_RAND);
-
-		$encstr = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $str,
-			MCRYPT_MODE_CBC, $iv);
-
-		$iv_base64 = base64_encode($iv);
-		$encstr_base64 = base64_encode($encstr);
-
-		return "$iv_base64:$encstr_base64";
-	}
 ?>

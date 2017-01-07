@@ -38,6 +38,7 @@
 			"debug-feed:",
 			"force-refetch",
 			"force-rehash",
+			"decrypt-feeds",
 			"help");
 
 	foreach (PluginHost::getInstance()->get_commands() as $command => $data) {
@@ -91,6 +92,7 @@
 		print "  --debug-feed N       - perform debug update of feed N\n";
 		print "  --force-refetch      - debug update: force refetch feed data\n";
 		print "  --force-rehash       - debug update: force rehash articles\n";
+		print "  --decrypt-feeds      - decrypt feed passwords\n";
 		print "  --help               - show this help\n";
 		print "Plugin options:\n";
 
@@ -400,6 +402,36 @@
 		$_REQUEST['xdebug'] = 1;
 
 		update_rss_feed($feed);
+	}
+
+	if (isset($options["decrypt-feeds"])) {
+		$result = db_query("SELECT id, auth_pass FROM ttrss_feeds WHERE auth_pass_encrypted = true");
+
+		if (!function_exists("mcrypt_decrypt")) {
+			_debug("mcrypt functions not available.");
+			return;
+		}
+
+		require_once "crypt.php";
+
+		$total = 0;
+
+		db_query("BEGIN");
+
+		while ($line = db_fetch_assoc($result)) {
+			_debug("processing feed id " . $line["id"]);
+
+			$auth_pass = db_escape_string(decrypt_string($line["auth_pass"]));
+
+			db_query("UPDATE ttrss_feeds SET auth_pass_encrypted = false, auth_pass = '$auth_pass' 
+				WHERE id = " . $line["id"]);
+
+			++$total;
+		}
+
+		db_query("COMMIT");
+
+		_debug("$total feeds processed.");
 	}
 
 	PluginHost::getInstance()->run_commands($options);
