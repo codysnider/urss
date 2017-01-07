@@ -86,17 +86,23 @@ class Feeds extends Handler_Protected {
 		$reply .= "<span class=\"main\">";
 		$reply .= "<span id='selected_prompt'></span>";
 
-		$reply .= "<span class=\"sel_links\">
+		/*$reply .= "<span class=\"sel_links\">
 			<a href=\"#\" onclick=\"$sel_all_link\">".__('All')."</a>,
 			<a href=\"#\" onclick=\"$sel_unread_link\">".__('Unread')."</a>,
 			<a href=\"#\" onclick=\"$sel_inv_link\">".__('Invert')."</a>,
 			<a href=\"#\" onclick=\"$sel_none_link\">".__('None')."</a></li>";
 
-		$reply .= "</span> ";
+		$reply .= "</span> "; */
 
 		$reply .= "<select dojoType=\"dijit.form.Select\"
 			onchange=\"headlineActionsChange(this)\">";
-		$reply .= "<option value=\"false\">".__('More...')."</option>";
+
+		$reply .= "<option value=\"0\" disabled='1'>".__('Select...')."</option>";
+
+		$reply .= "<option value=\"$sel_all_link\">".__('All')."</option>";
+		$reply .= "<option value=\"$sel_unread_link\">".__('Unread')."</option>";
+		$reply .= "<option value=\"$sel_inv_link\">".__('Invert')."</option>";
+		$reply .= "<option value=\"$sel_none_link\">".__('None')."</option>";
 
 		$reply .= "<option value=\"0\" disabled=\"1\">".__('Selection toggle:')."</option>";
 
