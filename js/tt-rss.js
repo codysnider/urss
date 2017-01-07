@@ -822,13 +822,7 @@ function parse_runtime_info(data) {
 function collapse_feedlist() {
 	try {
 
-		if (!Element.visible('feeds-holder')) {
-			Element.show('feeds-holder');
-			$("collapse_feeds_btn").innerHTML = "&lt;&lt;";
-		} else {
-			Element.hide('feeds-holder');
-			$("collapse_feeds_btn").innerHTML = "&gt;&gt;";
-		}
+		Element.toggle("feeds-holder");
 
 		dijit.byId("main").resize();
 
