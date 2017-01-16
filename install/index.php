@@ -309,6 +309,10 @@
 			array_push($notices, "CURL and open_basedir combination breaks support for HTTP redirects. See the FAQ for more information.");
 		}
 
+		if (!function_exists("idn_to_ascii")) {
+			array_push($notices, "PHP support for Internationalization Functions is required to handle Internationalized Domain Names.");
+		}
+
 		if (count($notices) > 0) {
 			print_notice("Configuration check succeeded with minor problems:");
 
