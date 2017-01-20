@@ -595,7 +595,7 @@
 				if ($feed_hub_url && $feed_self_url && function_exists('curl_init') &&
 					!ini_get("open_basedir")) {
 
-					require_once 'lib/pubsubhubbub/subscriber.php';
+					require_once 'lib/pubsubhubbub/Subscriber.php';
 
 					$callback_url = get_self_url_prefix() .
 						"/public.php?op=pubsub&id=$feed";
