@@ -159,7 +159,7 @@ function viewCurrentFeed(method) {
 function timeout() {
 	if (getInitParam("bw_limit") != "1") {
 		request_counters();
-		setTimeout("timeout()", 60*1000);
+		setTimeout(timeout, 60*1000);
 	}
 }
 
@@ -654,7 +654,7 @@ function init_second_stage() {
 
 		if (getInitParam("simple_update")) {
 			console.log("scheduling simple feed updater...");
-			window.setTimeout("update_random_feed()", 30*1000);
+			window.setTimeout(update_random_feed, 30*1000);
 		}
 
 	} catch (e) {
@@ -1130,7 +1130,7 @@ function update_random_feed() {
 			parameters: "op=rpc&method=updateRandomFeed",
 			onComplete: function(transport) {
 				handle_rpc_json(transport, true);
-				window.setTimeout("update_random_feed()", 30*1000);
+				window.setTimeout(update_random_feed, 30*1000);
 			} });
 
 	} catch (e) {
