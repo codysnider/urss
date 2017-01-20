@@ -159,15 +159,13 @@ body#ttrssMain #floatingTitle a.title {
 
 body#ttrssMain .dijitMenu,
 body#ttrssMain .dijitMenuTable,
-body#ttrssMain .dijitSelectMenu .dijitMenuItem td {
+body#ttrssMain .dijitMenu .dijitMenuItem td {
 	border-color : #666;
 	background : #666;
 }
 
-body#ttrssMain .dijitMenu .dijitMenuItem.dijitHover,
-body#ttrssMain .dijitMenu .dijitMenuItem.dijitFocused,
-body#ttrssMain .dijitMenuTable .dijitMenuItem.dijitHover .dijitMenuItemLabel,
-body#ttrssMain .dijitMenuTable .dijitMenuItem.dijitFocused .dijitMenuItemLabel {
+body#ttrssMain .dijitMenu .dijitMenuItemSelected,
+body#ttrssMain .dijitMenu .dijitMenuItemSelected td {
 	background : black;
 	color : white;
 }
