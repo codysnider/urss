@@ -61,6 +61,11 @@
 	height : 9px;
 }
 
+.claro .dijitTreeNode .loadingExpando {
+	left : -3px;
+	height : 21px;
+}
+
 .claro .dijitFolderClosed,
 .claro .dijitFolderOpened {
 	display : none;

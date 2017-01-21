@@ -386,6 +386,7 @@ require(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"]
 				} else {
 					var icon = dojo.doc.createElement('img');
 					icon.src = src;
+					icon.className = 'loadingExpando';
 					domConstruct.place(icon, treeNode.expandoNode, 'only');
 					return true;
 				}
