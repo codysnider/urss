@@ -25,6 +25,7 @@ Africa/Freetown
 Africa/Gaborone
 Africa/Harare
 Africa/Johannesburg
+Africa/Juba
 Africa/Kampala
 Africa/Khartoum
 Africa/Kigali
@@ -96,6 +97,7 @@ America/Chihuahua
 America/Coral_Harbour
 America/Cordoba
 America/Costa_Rica
+America/Creston
 America/Cuiaba
 America/Curacao
 America/Danmarkshavn
@@ -108,6 +110,7 @@ America/Edmonton
 America/Eirunepe
 America/El_Salvador
 America/Ensenada
+America/Fort_Nelson
 America/Fort_Wayne
 America/Fortaleza
 America/Glace_Bay
@@ -139,10 +142,12 @@ America/Juneau
 America/Kentucky/Louisville
 America/Kentucky/Monticello
 America/Knox_IN
+America/Kralendijk
 America/La_Paz
 America/Lima
 America/Los_Angeles
 America/Louisville
+America/Lower_Princes
 America/Maceio
 America/Managua
 America/Manaus
@@ -153,6 +158,7 @@ America/Mazatlan
 America/Mendoza
 America/Menominee
 America/Merida
+America/Metlakatla
 America/Mexico_City
 America/Miquelon
 America/Moncton
@@ -165,6 +171,7 @@ America/New_York
 America/Nipigon
 America/Nome
 America/Noronha
+America/North_Dakota/Beulah
 America/North_Dakota/Center
 America/North_Dakota/New_Salem
 America/Ojinaga
@@ -191,6 +198,7 @@ America/Santo_Domingo
 America/Sao_Paulo
 America/Scoresbysund
 America/Shiprock
+America/Sitka
 America/St_Barthelemy
 America/St_Johns
 America/St_Kitts
@@ -220,6 +228,7 @@ Antarctica/Palmer
 Antarctica/Rothera
 Antarctica/South_Pole
 Antarctica/Syowa
+Antarctica/Troll
 Antarctica/Vostok
 Arctic/Longyearbyen
 Asia/Aden
@@ -230,14 +239,17 @@ Asia/Aqtau
 Asia/Aqtobe
 Asia/Ashgabat
 Asia/Ashkhabad
+Asia/Atyrau
 Asia/Baghdad
 Asia/Bahrain
 Asia/Baku
 Asia/Bangkok
+Asia/Barnaul
 Asia/Beirut
 Asia/Bishkek
 Asia/Brunei
 Asia/Calcutta
+Asia/Chita
 Asia/Choibalsan
 Asia/Chongqing
 Asia/Chungking
@@ -248,8 +260,10 @@ Asia/Dhaka
 Asia/Dili
 Asia/Dubai
 Asia/Dushanbe
+Asia/Famagusta
 Asia/Gaza
 Asia/Harbin
+Asia/Hebron
 Asia/Ho_Chi_Minh
 Asia/Hong_Kong
 Asia/Hovd
@@ -264,6 +278,7 @@ Asia/Karachi
 Asia/Kashgar
 Asia/Kathmandu
 Asia/Katmandu
+Asia/Khandyga
 Asia/Kolkata
 Asia/Krasnoyarsk
 Asia/Kuala_Lumpur
@@ -293,6 +308,7 @@ Asia/Samarkand
 Asia/Seoul
 Asia/Shanghai
 Asia/Singapore
+Asia/Srednekolymsk
 Asia/Taipei
 Asia/Tashkent
 Asia/Tbilisi
@@ -301,13 +317,16 @@ Asia/Tel_Aviv
 Asia/Thimbu
 Asia/Thimphu
 Asia/Tokyo
+Asia/Tomsk
 Asia/Ujung_Pandang
 Asia/Ulaanbaatar
 Asia/Ulan_Bator
 Asia/Urumqi
+Asia/Ust-Nera
 Asia/Vientiane
 Asia/Vladivostok
 Asia/Yakutsk
+Asia/Yangon
 Asia/Yekaterinburg
 Asia/Yerevan
 Atlantic/Azores
@@ -405,6 +424,7 @@ Etc/UTC
 Etc/Zulu
 Europe/Amsterdam
 Europe/Andorra
+Europe/Astrakhan
 Europe/Athens
 Europe/Belfast
 Europe/Belgrade
@@ -413,6 +433,7 @@ Europe/Bratislava
 Europe/Brussels
 Europe/Bucharest
 Europe/Budapest
+Europe/Busingen
 Europe/Chisinau
 Europe/Copenhagen
 Europe/Dublin
@@ -424,6 +445,7 @@ Europe/Istanbul
 Europe/Jersey
 Europe/Kaliningrad
 Europe/Kiev
+Europe/Kirov
 Europe/Lisbon
 Europe/Ljubljana
 Europe/London
@@ -444,6 +466,7 @@ Europe/Rome
 Europe/Samara
 Europe/San_Marino
 Europe/Sarajevo
+Europe/Saratov
 Europe/Simferopol
 Europe/Skopje
 Europe/Sofia
@@ -451,6 +474,7 @@ Europe/Stockholm
 Europe/Tallinn
 Europe/Tirane
 Europe/Tiraspol
+Europe/Ulyanovsk
 Europe/Uzhgorod
 Europe/Vaduz
 Europe/Vatican
@@ -500,6 +524,7 @@ NZ
 NZ-CHAT
 Pacific/Apia
 Pacific/Auckland
+Pacific/Bougainville
 Pacific/Chatham
 Pacific/Chuuk
 Pacific/Easter
@@ -566,3 +591,4 @@ US/Samoa
 UTC
 W-SU
 WET
+Zulu

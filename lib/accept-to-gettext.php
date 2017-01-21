@@ -63,6 +63,8 @@
  * Revision 1.2  2003/08/14 10:23:59  wouter
  * Removed little error in Content-Type header syntaxis.
  *
+ * 2007-04-01
+ * add '@' before use of arrays, to avoid PHP warnings.
  */
 
 /* not really important, this one; perhaps I could've put it inline with
@@ -86,9 +88,9 @@ function find_match($curlscore,$curcscore,$curgtlang,$langval,$charval,
 function al2gt($gettextlangs, $mime) {
   /* default to "everything is acceptable", as RFC2616 specifies */
   $acceptLang=(($_SERVER["HTTP_ACCEPT_LANGUAGE"] == '') ? '*' :
-  	$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+      $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
   $acceptChar=(($_SERVER["HTTP_ACCEPT_CHARSET"] == '') ? '*' :
-  	$_SERVER["HTTP_ACCEPT_CHARSET"]);
+      $_SERVER["HTTP_ACCEPT_CHARSET"]);
   $alparts=@preg_split("/,/",$acceptLang);
   $acparts=@preg_split("/,/",$acceptChar);
   
@@ -147,22 +149,22 @@ function al2gt($gettextlangs, $mime) {
     $noct=@preg_split("/-/",$allang);
 
     $testvals=array(
-         array($alscores[$allang], $acscores[$gtcs]),
-	 array($alscores[$noct[0]], $acscores[$gtcs]),
-	 array($alscores[$allang], $acscores["*"]),
-	 array($alscores[$noct[0]], $acscores["*"]),
-	 array($alscores["*"], $acscores[$gtcs]),
-	 array($alscores["*"], $acscores["*"]));
+         array(@$alscores[$allang], @$acscores[$gtcs]),
+     array(@$alscores[$noct[0]], @$acscores[$gtcs]),
+     array(@$alscores[$allang], @$acscores["*"]),
+     array(@$alscores[$noct[0]], @$acscores["*"]),
+     array(@$alscores["*"], @$acscores[$gtcs]),
+     array(@$alscores["*"], @$acscores["*"]));
 
     $found=FALSE;
     foreach($testvals as $tval) {
       if(!$found && isset($tval[0]) && isset($tval[1])) {
         $arr=find_match($curlscore, $curcscore, $curgtlang, $tval[0],
-	          $tval[1], $gtlang);
+              $tval[1], $gtlang);
         $curlscore=$arr[0];
         $curcscore=$arr[1];
         $curgtlang=$arr[2];
-	$found=TRUE;
+    $found=TRUE;
       }
     }
   }
