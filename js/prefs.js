@@ -1808,4 +1808,6 @@ function clearSqlLog() {
 	}
 }
 
-
+function updateSelectedPrompt() {
+	// no-op shim for toggleSelectedRow()
+}
