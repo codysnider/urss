@@ -95,7 +95,7 @@ require(["dojo/_base/declare", "dijit/tree/ForestStoreModel"], function (declare
 	});
 });
 
-require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
+require(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"], function (declare, domConstruct) {
 
 	return declare("fox.FeedTree", dijit.Tree, {
 		_onKeyPress: function(/* Event */ e) {
@@ -121,7 +121,7 @@ require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
 					color: fg_color,
 					backgroundColor: bg_color});
 
-				dojo.place(span, tnode.iconNode, 'replace');
+				domConstruct.place(span, tnode.iconNode, 'replace');
 			}
 
 			if (id.match("FEED:")) {
@@ -176,7 +176,7 @@ require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
 				loading = dojo.doc.createElement('img');
 				loading.className = 'loadingNode';
 				loading.src = 'images/blank_icon.gif';
-				dojo.place(loading, tnode.labelNode, 'after');
+				domConstruct.place(loading, tnode.labelNode, 'after');
 				tnode.loadingNode = loading;
 			}
 
@@ -204,7 +204,7 @@ require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
 
 			args.item.unread == 0 && args.item.auxcounter > 0 ? ctr.addClassName("aux") : ctr.removeClassName("aux");
 
-			dojo.place(ctr, tnode.rowNode, 'first');
+			domConstruct.place(ctr, tnode.rowNode, 'first');
 			tnode.counterNode = ctr;
 
 			//tnode.labelNode.innerHTML = args.label;

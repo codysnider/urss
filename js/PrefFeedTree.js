@@ -17,7 +17,7 @@ require(["dojo/_base/declare", "dojo/data/ItemFileWriteStore"], function (declar
 
 });
 
-require(["dojo/_base/declare", "lib/CheckBoxTree"], function (declare) {
+require(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], function (declare, domConstruct) {
 
 	return declare("fox.PrefFeedTree", lib.CheckBoxTree, {
 		_createTreeNode: function(args) {
@@ -32,8 +32,8 @@ require(["dojo/_base/declare", "lib/CheckBoxTree"], function (declare) {
 				param = dojo.doc.createElement('span');
 				param.className = 'feedParam';
 				param.innerHTML = args.item.param[0];
-				//dojo.place(param, tnode.labelNode, 'after');
-				dojo.place(param, tnode.rowNode, 'first');
+				//domConstruct.place(param, tnode.labelNode, 'after');
+				domConstruct.place(param, tnode.rowNode, 'first');
 			}
 
 			var id = args.item.id[0];
