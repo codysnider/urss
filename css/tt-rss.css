@@ -1057,16 +1057,26 @@ span.sel_links {
 	vertical-align  : middle;
 }
 
-#feedTree img.feedIcon {
+/*#feedTree img.feedIcon {
 	position : relative;
 	top : -2px;
+}*/
+
+body#ttrssMain.claro #feedTree.dijitTree .dijitTreeNode .dijitTreeRowSelected {
+	box-shadow : -1px 0px 2px -1px rgba(0,0,0,0.1);
+	border-right-color : white;
 }
 
-body#ttrssMain #feedTree .dijitTreeRow {
+body#ttrssMain #feedTree.dijitTree .dijitTreeNode .dijitTreeRow {
 	padding : 2px 0px 2px;
 	height : 22px;
 	border-width : 1px;
 	color : #333;
+}
+
+body#ttrssMain #feedTree.dijitTree img.tinyFeedIcon {
+	position : relative;
+	top : -2px;
 }
 
 ul#filterDlg_Matches li div.dijitCheckBox, ul#filterDlg_Actions li div.dijitCheckBox {
@@ -1106,10 +1116,13 @@ body#ttrssMain #feedTree .counterNode {
 	height : 14px;
 }
 
-#feedTree img[src*='indicator_white.gif'] {
+body#ttrssMain #feedTree .dijitTreeNode .loadingExpando {
+	left : -3px;
+	height : 22px;
 	position : relative;
 	top : -2px;
 }
+
 
 span.highlight {
 	background-color : #ffff00;
