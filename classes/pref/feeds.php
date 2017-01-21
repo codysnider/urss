@@ -1411,6 +1411,7 @@ class Pref_Feeds extends Handler_Protected {
 		<div dojoType=\"fox.PrefFeedTree\" id=\"feedTree\"
 			dndController=\"dijit.tree.dndSource\"
 			betweenThreshold=\"5\"
+			autoExpand='true'
 			model=\"feedModel\" openOnClick=\"false\">
 		<script type=\"dojo/method\" event=\"onClick\" args=\"item\">
 			var id = String(item.id);
