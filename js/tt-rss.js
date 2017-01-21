@@ -84,6 +84,7 @@ function updateFeedList() {
 		},
 		openOnClick: false,
 		showRoot: false,
+		persist: true,
 		id: "feedTree",
 		}, "feedTree");
 
