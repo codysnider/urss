@@ -95,7 +95,7 @@ require(["dojo/_base/declare", "dijit/tree/ForestStoreModel"], function (declare
 	});
 });
 
-require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
+require(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"], function (declare, domConstruct) {
 
 	return declare("fox.FeedTree", dijit.Tree, {
 		_onKeyPress: function(/* Event */ e) {
@@ -104,8 +104,14 @@ require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
 		_createTreeNode: function(args) {
 			var tnode = new dijit._TreeNode(args);
 
-			if (args.item.icon && args.item.icon[0])
-				tnode.iconNode.src = args.item.icon[0];
+			var icon = dojo.doc.createElement('img');
+			if (args.item.icon && args.item.icon[0]) {
+				icon.src = args.item.icon[0];
+			} else {
+				icon.src = 'images/blank_icon.gif';
+			}
+			icon.className = 'tinyFeedIcon';
+			domConstruct.place(icon, tnode.iconNode, 'only');
 
 			var id = args.item.id[0];
 			var bare_id = parseInt(id.substr(id.indexOf(':')+1));
@@ -121,7 +127,7 @@ require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
 					color: fg_color,
 					backgroundColor: bg_color});
 
-				dojo.place(span, tnode.iconNode, 'replace');
+				domConstruct.place(span, tnode.iconNode, 'only');
 			}
 
 			if (id.match("FEED:")) {
@@ -176,7 +182,7 @@ require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
 				loading = dojo.doc.createElement('img');
 				loading.className = 'loadingNode';
 				loading.src = 'images/blank_icon.gif';
-				dojo.place(loading, tnode.labelNode, 'after');
+				domConstruct.place(loading, tnode.labelNode, 'after');
 				tnode.loadingNode = loading;
 			}
 
@@ -204,7 +210,7 @@ require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
 
 			args.item.unread == 0 && args.item.auxcounter > 0 ? ctr.addClassName("aux") : ctr.removeClassName("aux");
 
-			dojo.place(ctr, tnode.rowNode, 'first');
+			domConstruct.place(ctr, tnode.rowNode, 'first');
 			tnode.counterNode = ctr;
 
 			//tnode.labelNode.innerHTML = args.label;
@@ -358,7 +364,10 @@ require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
 
 			if (treeNode) {
 				treeNode = treeNode[0];
-				treeNode.iconNode.src = src;
+				var icon = dojo.doc.createElement('img');
+				icon.src = src;
+				icon.className = 'tinyFeedIcon';
+				domConstruct.place(icon, treeNode.iconNode, 'only');
 				return true;
 			}
 			return false;
@@ -375,7 +384,9 @@ require(["dojo/_base/declare", "dijit/Tree", "dijit/Menu"], function (declare) {
 					treeNode.loadingNode.src = src;
 					return true;
 				} else {
-					treeNode.expandoNode.src = src;
+					var icon = dojo.doc.createElement('img');
+					icon.src = src;
+					domConstruct.place(icon, treeNode.expandoNode, 'only');
 					return true;
 				}
 			}

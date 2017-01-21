@@ -417,10 +417,8 @@ button[disabled],
 	border-color: rgba(82, 168, 236, 0.8);
 }
 
-.claro .dijitMenu .dijitMenuItem.dijitHover,
-.claro .dijitMenu .dijitMenuItem.dijitFocused,
-.claro .dijitMenuTable .dijitMenuItem.dijitHover .dijitMenuItemLabel,
-.claro .dijitMenuTable .dijitMenuItem.dijitFocused .dijitMenuItemLabel {
+.claro .dijitMenu .dijitMenuItemSelected,
+.claro .dijitMenu .dijitMenuItemSelected td {
 	background :  rgb(82, 168, 236);
 	color : white;
 	border-color : rgba(82, 168, 236, 0.8);
