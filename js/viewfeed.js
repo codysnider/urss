@@ -2116,8 +2116,6 @@ function initHeadlinesMenu(append_rows) {
 		} else {
 			var menu = dijit.byId("headlinesFeedTitleMenu");
 
-			console.log(append_rows);
-
 			append_rows.each(function (row) {
 				if (row.hasClassName("cdmFeedTitle")) {
 					menu.bindDomNode(row);
