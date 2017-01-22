@@ -1583,7 +1583,7 @@
 
 			$cv = array("id" => $i,
 				"counter" => (int) $count,
-				"auxcounter" => $auxctr);
+				"auxcounter" => (int) $auxctr);
 
 //			if (get_pref('EXTENDED_FEEDLIST'))
 //				$cv["xmsg"] = getFeedArticles($i)." ".__("total");

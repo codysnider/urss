@@ -238,8 +238,10 @@ require(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"]
 					ctr = node.counterNode;
 					ctr.innerHTML = item.unread > 0 ? item.unread : item.auxcounter;
 					item.unread > 0 || item.auxcounter > 0 ?
-						Effect.Appear(ctr, {duration : 0.3,
-							queue: { position: 'end', scope: 'CAPPEAR-' + item.id, limit: 1 }}) :
+						item.unread > 0 ?
+							Effect.Appear(ctr, {duration : 0.3,
+								queue: { position: 'end', scope: 'CAPPEAR-' + item.id, limit: 1 }}) :
+							Element.show(ctr) :
 						Element.hide(ctr);
 
 					item.unread == 0 && item.auxcounter > 0 ? ctr.addClassName("aux") : ctr.removeClassName("aux");
