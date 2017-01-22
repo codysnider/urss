@@ -254,15 +254,41 @@ function request_counters(force) {
 	}
 }
 
+// NOTE: this implementation is incomplete
+// for general objects but good enough for counters
+// http://adripofjavascript.com/blog/drips/object-equality-in-javascript.html
+function counter_is_equal(a, b) {
+	// Create arrays of property names
+	var aProps = Object.getOwnPropertyNames(a);
+	var bProps = Object.getOwnPropertyNames(b);
+
+	// If number of properties is different,
+	// objects are not equivalent
+	if (aProps.length != bProps.length) {
+		return false;
+	}
+
+	for (var i = 0; i < aProps.length; i++) {
+		var propName = aProps[i];
+
+		// If values of same property are not equal,
+		// objects are not equivalent
+		if (a[propName] !== b[propName]) {
+			return false;
+		}
+	}
+
+	// If we made it this far, objects
+	// are considered equivalent
+	return true;
+}
+
+
 function parse_counters(elems) {
 	try {
 		for (var l = 0; l < elems.length; l++) {
 
-			if (_counters_prev[l]  &&
-				_counters_prev[l].id == elems[l].id &&
-				_counters_prev[l].updated == elems[l].updated &&
-				_counters_prev[l].counter == elems[l].counter) {
-
+			if (_counters_prev[l] && counter_is_equal(elems[l], _counters_prev[l])) {
 				continue;
 			}
 
@@ -285,9 +311,9 @@ function parse_counters(elems) {
 				continue;
 			}
 
-			if (getFeedUnread(id, (kind == "cat")) != ctr ||
+			/*if (getFeedUnread(id, (kind == "cat")) != ctr ||
 					(kind == "cat")) {
-			}
+			}*/
 
 			setFeedUnread(id, (kind == "cat"), ctr);
 			setFeedValue(id, (kind == "cat"), 'auxcounter', auxctr);
