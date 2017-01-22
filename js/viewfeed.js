@@ -1238,21 +1238,21 @@ function unpackVisibleHeadlines() {
 	try {
 		if (!isCdmMode() || !getInitParam("cdm_expanded")) return;
 
-		$$("#headlines-frame > div[id*=RROW]").each(
+		$$("#headlines-frame span.cencw[id]").each(
 			function(child) {
-				if (child.offsetTop <= $("headlines-frame").scrollTop +
+				var row = $("RROW-" + child.id.replace("CENCW-", ""));
+
+				if (row && row.offsetTop <= $("headlines-frame").scrollTop +
 					$("headlines-frame").offsetHeight) {
 
-					var cencw = $("CENCW-" + child.getAttribute("data-article-id"));
+					//console.log("unpacking: " + child.id);
 
-					if (cencw) {
-						cencw.innerHTML = htmlspecialchars_decode(cencw.innerHTML);
-						cencw.setAttribute('id', '');
+					child.innerHTML = htmlspecialchars_decode(child.innerHTML);
+					child.removeAttribute('id');
 
-						PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, child);
+					PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
 
-						Element.show(cencw);
-					}
+					Element.show(child);
 				}
 			}
 		);
