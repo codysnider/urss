@@ -823,8 +823,11 @@ function parse_runtime_info(data) {
 
 function collapse_feedlist() {
 	try {
-
 		Element.toggle("feeds-holder");
+
+		var splitter = $("feeds-holder_splitter");
+
+		Element.visible("feeds-holder") ? splitter.show() : splitter.hide();
 
 		dijit.byId("main").resize();
 
