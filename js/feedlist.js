@@ -6,11 +6,12 @@ var _viewfeed_last = 0;
 var _viewfeed_timeout = false;
 
 var counters_last_request = 0;
+var _counters_prev = [];
 
-function viewCategory(cat) {
+/*function viewCategory(cat) {
 	viewfeed({feed: cat, is_cat: true});
 	return false;
-}
+}*/
 
 function loadMoreHeadlines() {
 	try {
@@ -253,9 +254,17 @@ function request_counters(force) {
 	}
 }
 
-function parse_counters(elems, scheduled_call) {
+function parse_counters(elems) {
 	try {
 		for (var l = 0; l < elems.length; l++) {
+
+			if (_counters_prev[l]  &&
+				_counters_prev[l].id == elems[l].id &&
+				_counters_prev[l].updated == elems[l].updated &&
+				_counters_prev[l].counter == elems[l].counter) {
+
+				continue;
+			}
 
 			var id = elems[l].id;
 			var kind = elems[l].kind;
@@ -299,6 +308,8 @@ function parse_counters(elems, scheduled_call) {
 		}
 
 		hideOrShowFeeds(getInitParam("hide_read_feeds") == 1);
+
+		_counters_prev = elems;
 
 	} catch (e) {
 		exception_error("parse_counters", e);
