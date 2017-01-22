@@ -1067,6 +1067,15 @@ body#ttrssMain.claro #feedTree.dijitTree .dijitTreeNode .dijitTreeRowSelected {
 	border-right-color : white;
 }
 
+body#ttrssMain #feedTree.dijitTree .dijitTreeContainer {
+	max-width : 100%;
+}
+
+body#ttrssMain #feedTree.dijitTree .dijitTreeRow {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 body#ttrssMain #feedTree.dijitTree .dijitTreeNode .dijitTreeRow {
 	padding : 2px 0px 2px;
 	height : 22px;

@@ -84,11 +84,11 @@
 	border-width : 0px;
 }
 
-.claro .dijitTree .dijitTreeRow {
+/*.claro .dijitTree .dijitTreeRow {
 	max-width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
-}
+}*/
 
 .claro .dijitTree .dijitTreeRowSelected {
 	background : white;
