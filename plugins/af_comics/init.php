@@ -57,6 +57,8 @@ class Af_Comics extends Plugin {
 		}
 		print "</ul>";
 
+		print "<p>".__('GoComics requires a specific URL to workaround their lack of feed support: <code>http://feeds.feedburner.com/uclick/<em>comic_name</em></code> (e.g. <code>http://www.gocomics.com/garfield</code> uses <code>http://feeds.feedburner.com/uclick/garfield</code>).')."</p>";
+
 		print "</div>";
 	}
 
