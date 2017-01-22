@@ -1096,7 +1096,7 @@ class Pref_Filters extends Handler_Protected {
 
 		if (!$title) $title = __("[No caption]");
 
-		$title = sprintf(_ngettext("%s (%d rule)", "%s (%d rules)", $num_rules), $title, $num_rules);
+		$title = sprintf(_ngettext("%s (%d rule)", "%s (%d rules)", (int) $num_rules), $title, $num_rules);
 
 
 		$result = $this->dbh->query(
@@ -1114,7 +1114,7 @@ class Pref_Filters extends Handler_Protected {
 		if ($match_any_rule) $title .= " (" . __("matches any rule") . ")";
 
 		if ($num_actions > 0)
-			$actions = sprintf(_ngettext("%s (+%d action)", "%s (+%d actions)", $num_actions), $actions, $num_actions);
+			$actions = sprintf(_ngettext("%s (+%d action)", "%s (+%d actions)", (int) $num_actions), $actions, $num_actions);
 
 		return array($title, $actions);
 	}

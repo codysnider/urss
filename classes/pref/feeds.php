@@ -62,7 +62,7 @@ class Pref_Feeds extends Handler_Protected {
 			$cat['items'] = $this->get_category_items($line['id']);
 
 			$num_children = $this->calculate_children_count($cat);
-			$cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', $num_children), $num_children);
+			$cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
 
 			if ($num_children > 0 || $show_empty_cats)
 				array_push($items, $cat);
@@ -211,7 +211,7 @@ class Pref_Feeds extends Handler_Protected {
 				$cat['items'] = $this->get_category_items($line['id']);
 
 				$num_children = $this->calculate_children_count($cat);
-				$cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', $num_children), $num_children);
+				$cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
 
 				if ($num_children > 0 || $show_empty_cats)
 					array_push($root['items'], $cat);
@@ -261,7 +261,7 @@ class Pref_Feeds extends Handler_Protected {
 				array_push($root['items'], $cat);
 
 			$num_children = $this->calculate_children_count($root);
-			$root['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', $num_children), $num_children);
+			$root['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
 
 		} else {
 			$feed_result = $this->dbh->query("SELECT id, title, last_error,

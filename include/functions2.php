@@ -1316,7 +1316,7 @@
 				$line = $p->hook_render_article($line);
 			}
 
-			$num_comments = $line["num_comments"];
+			$num_comments = (int) $line["num_comments"];
 			$entry_comments = "";
 
 			if ($num_comments > 0) {

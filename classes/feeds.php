@@ -741,7 +741,7 @@ class Feeds extends Handler_Protected {
 						<a title=\"".__('Edit tags for this article')."\"
 						href=\"#\" onclick=\"editArticleTags($id)\">(+)</a>";
 
-					$num_comments = $line["num_comments"];
+					$num_comments = (int) $line["num_comments"];
 					$entry_comments = "";
 
 					if ($num_comments > 0) {
