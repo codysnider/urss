@@ -668,7 +668,7 @@ function hotkey_prefix_timeout() {
 			Element.hide('cmdline');
 		}
 
-		setTimeout("hotkey_prefix_timeout()", 1000);
+		setTimeout(hotkey_prefix_timeout, 1000);
 
 	} catch  (e) {
 		exception_error("hotkey_prefix_timeout", e);
@@ -1325,7 +1325,7 @@ function unsubscribeFeed(feed_id, title) {
 						updateFeedList();
 					} else {
 						if (feed_id == getActiveFeedId())
-							setTimeout("viewfeed({feed:-5})", 100);
+							setTimeout(function() { viewfeed({feed:-5}) }, 100);
 
 						if (feed_id < 0) updateFeedList();
 					}

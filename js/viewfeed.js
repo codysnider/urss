@@ -2315,7 +2315,7 @@ function updateFloatingTitle(unread_only) {
 function catchupCurrentBatchIfNeeded() {
 	if (catchup_id_batch.length > 0) {
 		window.clearTimeout(catchup_timeout_id);
-		catchup_timeout_id = window.setTimeout('catchupBatchedArticles()', 1000);
+		catchup_timeout_id = window.setTimeout(catchupBatchedArticles, 1000);
 
 		if (catchup_id_batch.length >= 10) {
 			catchupBatchedArticles();

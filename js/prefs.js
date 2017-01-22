@@ -901,10 +901,10 @@ function init_second_stage() {
 		if (method == 'editFeed') {
 			var param = getURLParam('methodparam');
 
-			window.setTimeout('editFeed(' + param + ')', 100);
+			window.setTimeout(function() { editFeed(param) }, 100);
 		}
 
-		setTimeout("hotkey_prefix_timeout()", 5*1000);
+		setTimeout(hotkey_prefix_timeout, 5*1000);
 
 	} catch (e) {
 		exception_error("init_second_stage", e);
