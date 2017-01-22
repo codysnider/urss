@@ -5,7 +5,7 @@ class Af_Comics extends Plugin {
 	private $filters = array();
 
 	function about() {
-		return array(1.0,
+		return array(2.0,
 			"Fixes RSS feeds of assorted comic strips",
 			"fox");
 	}
@@ -13,6 +13,7 @@ class Af_Comics extends Plugin {
 	function init($host) {
 		$this->host = $host;
 
+		$host->add_hook($host::HOOK_FETCH_FEED, $this);
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 
@@ -40,7 +41,7 @@ class Af_Comics extends Plugin {
 
 		print "<p>" . __("The following comics are currently supported:") . "</p>";
 
-		$comics = array();
+		$comics = array("GoComics");
 
 		foreach ($this->filters as $f) {
 			foreach ($f->supported() as $comic) {
@@ -69,6 +70,71 @@ class Af_Comics extends Plugin {
 
 		return $article;
 
+	}
+
+	// GoComics dropped feed support so it needs to be handled when fetching the feed.
+	function hook_fetch_feed($feed_data, $fetch_url, $owner_uid, $feed, $last_article_timestamp, $auth_login, $auth_pass) {
+		if ($auth_login || $auth_pass)
+			return $feed_data;
+
+		if (preg_match('#^https?://feeds.feedburner.com/uclick/([a-z]+)#', $fetch_url, $comic)) {
+			$site_url = 'http://www.gocomics.com/' . $comic[1];
+
+			$article_link = $site_url . date('/Y/m/d');
+
+			$body = fetch_file_contents(array('url' => $article_link, 'type' => 'text/html', 'followlocation' => false));
+
+			require_once 'lib/MiniTemplator.class.php';
+
+			$feed_title = htmlspecialchars($comic[1]);
+			$site_url = htmlspecialchars($site_url);
+			$article_link = htmlspecialchars($article_link);
+
+			$tpl = new MiniTemplator();
+
+			$tpl->readTemplateFromFile('templates/generated_feed.txt');
+
+			$tpl->setVariable('FEED_TITLE', $feed_title, true);
+			$tpl->setVariable('VERSION', VERSION, true);
+			$tpl->setVariable('FEED_URL', htmlspecialchars($fetch_url), true);
+			$tpl->setVariable('SELF_URL', $site_url, true);
+
+			$tpl->setVariable('ARTICLE_UPDATED_ATOM', date('c'), true);
+			$tpl->setVariable('ARTICLE_UPDATED_RFC822', date(DATE_RFC822), true);
+
+			if ($body) {
+				$doc = new DOMDocument();
+
+				if (@$doc->loadHTML($body)) {
+					$xpath = new DOMXPath($doc);
+
+					$node = $xpath->query('//picture[contains(@class, "item-comic-image")]/img')->item(0);
+
+					if ($node) {
+						$tpl->setVariable('ARTICLE_ID', $article_link, true);
+						$tpl->setVariable('ARTICLE_LINK', $article_link, true);
+						$tpl->setVariable('ARTICLE_TITLE', date('l, F d, Y'), true);
+						$tpl->setVariable('ARTICLE_EXCERPT', '', true);
+						$tpl->setVariable('ARTICLE_CONTENT', $doc->saveXML($node), true);
+
+						$tpl->setVariable('ARTICLE_AUTHOR', '', true);
+						$tpl->setVariable('ARTICLE_SOURCE_LINK', $site_url, true);
+						$tpl->setVariable('ARTICLE_SOURCE_TITLE', $feed_title, true);
+
+						$tpl->addBlock('entry');
+					}
+				}
+			}
+
+			$tpl->addBlock('feed');
+
+			$tmp_data = '';
+
+			if ($tpl->generateOutputToString($tmp_data))
+				$feed_data = $tmp_data;
+		}
+
+		return $feed_data;
 	}
 
 	function api_version() {
