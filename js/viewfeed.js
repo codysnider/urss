@@ -159,7 +159,16 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 							dijit.byId("headlines-frame").domNode.appendChild(row);
 
 							loaded_article_ids.push(row.id);
-							new_rows.push(row);
+
+							if (!isCdmMode() || row.hasClassName("cdmFeedTitle")) {
+								new_rows.push(row);
+							} else if (isCdmMode()) {
+								var titleWrap = $$("#" + row.id + " .titleWrap")[0];
+
+								if (titleWrap) {
+									new_rows.push(titleWrap);
+								}
+							}
 						}
 					}
 
