@@ -91,6 +91,7 @@
 	<script>
 		dojoConfig = {
 			async: true,
+			cacheBust: new Date(),
 			packages: [
 				{ name: "fox", location: "../../js" },
 			]
