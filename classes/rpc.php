@@ -281,7 +281,7 @@ class RPC extends Handler_Protected {
 				"/public.php?op=rss&id=-2&key=" .
 				get_feed_access_key(-2, false);
 
-			$p = new Publisher(PUBSUBHUBBUB_HUB);
+			$p = new pubsubhubbub\publisher\Publisher(PUBSUBHUBBUB_HUB);
 
 			$pubsub_result = $p->publish_update($rss_link);
 		}
@@ -624,7 +624,7 @@ class RPC extends Handler_Protected {
 				"/public.php?op=rss&id=-2&key=" .
 				get_feed_access_key(-2, false);
 
-			$p = new Publisher(PUBSUBHUBBUB_HUB);
+			$p = new pubsubhubbub\publisher\Publisher(PUBSUBHUBBUB_HUB);
 
 			/* $pubsub_result = */ $p->publish_update($rss_link);
 		}
