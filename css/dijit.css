@@ -145,8 +145,10 @@
 	border-width : 0px;
 }
 
-.claro .dijitMenuItemLabel {
+.claro .dijitMenu .dijitMenuItem .dijitMenuItemLabel {
 	font-size : 13px;
+	padding-top : 3px;
+	padding-bottom : 3px;
 }
 
 /* Checkbox */
