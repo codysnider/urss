@@ -900,7 +900,7 @@
 					$entry->setAttribute('href',
 						rewrite_relative_url($site_url, $entry->getAttribute('href')));
 
-					$entry->setAttribute('rel', 'noreferrer');
+					$entry->setAttribute('rel', 'noopener noreferrer');
 				}
 
 				if ($entry->hasAttribute('src')) {
