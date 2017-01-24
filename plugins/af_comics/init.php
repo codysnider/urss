@@ -79,7 +79,7 @@ class Af_Comics extends Plugin {
 		if ($auth_login || $auth_pass)
 			return $feed_data;
 
-		if (preg_match('#^https?://feeds.feedburner.com/uclick/([a-z]+)#', $fetch_url, $comic)) {
+		if (preg_match('#^https?://feeds.feedburner.com/uclick/([-a-z]+)#', $fetch_url, $comic)) {
 			$site_url = 'http://www.gocomics.com/' . $comic[1];
 
 			$article_link = $site_url . date('/Y/m/d');
