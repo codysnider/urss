@@ -975,7 +975,7 @@
 			}
 		}
 
-		$allowed_elements = array('a', 'address', 'audio', 'article', 'aside',
+		$allowed_elements = array('a', 'address', 'acronym', 'audio', 'article', 'aside',
 			'b', 'bdi', 'bdo', 'big', 'blockquote', 'body', 'br',
 			'caption', 'cite', 'center', 'code', 'col', 'colgroup',
 			'data', 'dd', 'del', 'details', 'description', 'div', 'dl', 'font',
