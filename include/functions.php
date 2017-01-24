@@ -348,7 +348,16 @@
 		if (!is_array($options)) {
 
 			// falling back on compatibility shim
-			$options = array(
+			$option_names = [ "url", "type", "login", "pass", "post_query", "timeout", "timestamp", "useragent" ];
+			$tmp = [];
+
+			for ($i = 0; $i < func_num_args(); $i++) {
+				$tmp[$option_names[$i]] = func_get_arg($i);
+			}
+
+			$options = $tmp;
+
+			/*$options = array(
 					"url" => func_get_arg(0),
 					"type" => @func_get_arg(1),
 					"login" => @func_get_arg(2),
@@ -357,7 +366,7 @@
 					"timeout" => @func_get_arg(5),
 					"timestamp" => @func_get_arg(6),
 					"useragent" => @func_get_arg(7)
-			);
+			); */
 		}
 
 		$url = $options["url"];
