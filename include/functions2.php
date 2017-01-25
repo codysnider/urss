@@ -1296,6 +1296,7 @@
 			num_comments,
 			tag_cache,
 			author,
+			guid,
 			orig_feed_id,
 			note
 			FROM ttrss_entries,ttrss_user_entries
