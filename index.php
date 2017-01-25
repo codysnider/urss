@@ -68,7 +68,7 @@
 		if ($theme && theme_valid("$theme")) {
 			echo stylesheet_tag(get_theme_path($theme));
 		} else {
-			echo stylesheet_tag("themes/default.css");
+			echo stylesheet_tag("themes/default.php");
 		}
 	}
 	?>

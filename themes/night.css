@@ -1,4 +1,4 @@
-@import "default.css";
+@import "default.php";
 
 body#ttrssMain #feeds-holder {
 	background : #222;
@@ -19,7 +19,7 @@ body#ttrssMain #content-insert {
 }
 
 body#ttrssMain #feedTree .dijitTreeRow {
-	color : #ccc;
+	color : #ccc ! important;
 }
 
 body#ttrssMain.claro .dijitTree .dijitTreeRowHover {
@@ -29,7 +29,7 @@ body#ttrssMain.claro .dijitTree .dijitTreeRowHover {
 
 body#ttrssMain.claro .dijitTree .dijitTreeRowSelected {
 	background : #555;
-	border-color : #666;
+	border-color : #666 ! important;
 }
 
 body#ttrssMain.claro .dijitTreeRowSelected .dijitTreeLabel {
