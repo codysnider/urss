@@ -570,6 +570,8 @@ class Pref_Prefs extends Handler_Protected {
 				$themes = array_filter($themes, "theme_valid");
 				asort($themes);
 
+				if (!theme_valid($value)) $value = "default.php";
+
 				print_select($pref_name, $value, $themes,
 					'dojoType="dijit.form.Select"');
 
