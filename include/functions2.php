@@ -2428,7 +2428,10 @@
 	}
 
 	function theme_valid($theme) {
-		if ($theme == "default.php" || $theme == "night.css") return true; // needed for array_filter
+		$bundled_themes = [ "default.php", "night.css", "compact.css" ];
+		
+		if (in_array($theme, $bundled_themes)) return true;
+
 		$file = "themes/" . basename($theme);
 
 		if (!file_exists($file)) $file = "themes.local/" . basename($theme);
