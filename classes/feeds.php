@@ -1030,6 +1030,8 @@ class Feeds extends Handler_Protected {
 		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"rpc\">";
 		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"addfeed\">";
 
+		print "<div id='fadd_error_message' style='display : none' class='alert alert-danger'></div>";
+
 		print "<div id='fadd_multiple_notify' style='display : none'>";
 		print_notice("Provided URL is a HTML page referencing multiple feeds, please select required feed from the dropdown menu below.");
 		print "<p></div>";

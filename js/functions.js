@@ -804,6 +804,15 @@ function quickAddFeed() {
 			id: "feedAddDlg",
 			title: __("Subscribe to Feed"),
 			style: "width: 600px",
+			show_error: function(msg) {
+				var elem = $("fadd_error_message");
+
+				elem.innerHTML = msg;
+
+				if (!Element.visible(elem))
+					new Effect.Appear(elem);
+
+			},
 			execute: function() {
 				if (this.validate()) {
 					console.log(dojo.objectToQuery(this.attr('value')));
@@ -811,6 +820,7 @@ function quickAddFeed() {
 					var feed_url = this.attr('value').feed;
 
 					Element.show("feed_add_spinner");
+					Element.hide("fadd_error_message");
 
 					new Ajax.Request("backend.php", {
 						parameters: dojo.objectToQuery(this.attr('value')),
@@ -841,10 +851,10 @@ function quickAddFeed() {
 									updateFeedList();
 									break;
 								case 2:
-									alert(__("Specified URL seems to be invalid."));
+									dialog.show_error(__("Specified URL seems to be invalid."));
 									break;
 								case 3:
-									alert(__("Specified URL doesn't seem to contain any feeds."));
+									dialog.show_error(__("Specified URL doesn't seem to contain any feeds."));
 									break;
 								case 4:
 									feeds = rc['feeds'];
@@ -868,16 +878,16 @@ function quickAddFeed() {
 
 									break;
 								case 5:
-									alert(__("Couldn't download the specified URL: %s").
+									dialog.show_error(__("Couldn't download the specified URL: %s").
 											replace("%s", rc['message']));
 									break;
 								case 6:
-									alert(__("XML validation failed: %s").
+									dialog.show_error(__("XML validation failed: %s").
 											replace("%s", rc['message']));
 									break;
 									break;
 								case 0:
-									alert(__("You are already subscribed to this feed."));
+									dialog.show_error(__("You are already subscribed to this feed."));
 									break;
 								}
 

@@ -345,6 +345,12 @@
 		global $fetch_last_content_type;
 		global $fetch_curl_used;
 
+		$fetch_last_error = false;
+		$fetch_last_error_code = -1;
+		$fetch_last_error_content = "";
+		$fetch_last_content_type = "";
+		$fetch_curl_used = false;
+
 		if (!is_array($options)) {
 
 			// falling back on compatibility shim
@@ -478,6 +484,7 @@
 				 $context = stream_context_create(array(
 					  'http' => array(
 							'method' => 'GET',
+						    'ignore_errors' => true,
 						    'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
 							'protocol_version'=> 1.1,
 							'header' => "If-Modified-Since: ".gmdate("D, d M Y H:i:s \\G\\M\\T\r\n", $timestamp)
@@ -486,6 +493,7 @@
 				 $context = stream_context_create(array(
 					  'http' => array(
 							'method' => 'GET',
+						    'ignore_errors' => true,
 						    'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
 							'protocol_version'=> 1.1
 					  )));
@@ -495,7 +503,6 @@
 
 			$data = @file_get_contents($url, false, $context);
 
-			$fetch_last_content_type = false;  // reset if no type was sent from server
 			if (isset($http_response_header) && is_array($http_response_header)) {
 				foreach ($http_response_header as $h) {
 					if (substr(strtolower($h), 0, 13) == 'content-type:') {
@@ -510,7 +517,7 @@
 				}
 			}
 
-			if (!$data) {
+			if ($fetch_last_error_code != 200) {
 				$error = error_get_last();
 
 				if ($error['message'] != $old_error['message']) {
@@ -518,6 +525,10 @@
 				} else {
 					$fetch_last_error = "HTTP Code: $fetch_last_error_code";
 				}
+
+				$fetch_last_error_content = $data;
+
+				return false;
 			}
 			return $data;
 		}
@@ -1720,6 +1731,8 @@
 			$auth_login = '', $auth_pass = '') {
 
 		global $fetch_last_error;
+		global $fetch_last_error_content;
+		global $fetch_last_error_code;
 
 		require_once "include/rssfuncs.php";
 
@@ -1730,6 +1743,10 @@
 		$contents = @fetch_file_contents($url, false, $auth_login, $auth_pass);
 
 		if (!$contents) {
+			if (preg_match("/cloudflare\.com/", $fetch_last_error_content)) {
+				$fetch_last_error .= " (feed behind Cloudflare)";
+			}
+
 			return array("code" => 5, "message" => $fetch_last_error);
 		}
 
