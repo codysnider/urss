@@ -152,6 +152,32 @@ class Af_RedditImgur extends Plugin {
 					}
 				}
 
+				if (!$found && preg_match("/https?:\/\/(www\.)?streamable.com\//i", $entry->getAttribute("href"))) {
+
+					_debug("Handling as Streamable", $debug);
+
+					$tmp = fetch_file_contents($entry->getAttribute("href"));
+
+					if ($tmp) {
+						$tmpdoc = new DOMDocument();
+
+						if (@$tmpdoc->loadHTML($tmp)) {
+							$tmpxpath = new DOMXPath($tmpdoc);
+
+							$source_node = $tmpxpath->query("//video[contains(@class,'video-player-tag')]//source[contains(@src, '.mp4')]")->item(0);
+							$poster_node = $tmpxpath->query("//video[contains(@class,'video-player-tag') and @poster]")->item(0);
+
+							if ($source_node && $poster_node) {
+								$source_stream = $source_node->getAttribute("src");
+								$poster_url = $poster_node->getAttribute("poster");
+
+								$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
+								$found = 1;
+							}
+						}
+					}
+				}
+
 				// imgur .gif -> .gifv
 				if (!$found && preg_match("/i\.imgur\.com\/(.*?)\.gif$/i", $entry->getAttribute("href"))) {
 					_debug("Handling as imgur gif (->gifv)", $debug);
