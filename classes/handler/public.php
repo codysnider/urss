@@ -1054,7 +1054,7 @@ class Handler_Public extends Handler {
 			$filename = CACHE_DIR . '/images/' . $hash;
 
 			if (file_exists($filename)) {
-				header("Content-Disposition: attachment; filename=\"".basename($filename)."\"");
+				header("Content-Disposition: attachment; filename=\"$hash\"");
 
 				/* See if we can use X-Sendfile */
 				$xsendfile = false;
