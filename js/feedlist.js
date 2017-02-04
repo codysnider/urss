@@ -310,10 +310,10 @@ function parse_counters(elems) {
 				continue;
 			}
 
-			/*if (id == "subscribed-feeds") {
-				feeds_found = ctr;
+			if (id == "subscribed-feeds") {
+				/* feeds_found = ctr; */
 				continue;
-			}*/
+			}
 
 			/*if (getFeedUnread(id, (kind == "cat")) != ctr ||
 					(kind == "cat")) {
