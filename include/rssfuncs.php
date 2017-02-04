@@ -1239,13 +1239,14 @@
 		$doc->loadHTML($charset_hack . $html);
 		$xpath = new DOMXPath($doc);
 
-		$entries = $xpath->query('(//img[@src])');
+		$entries = $xpath->query('(//img[@src])|(//video/source[@src])');
 
 		foreach ($entries as $entry) {
-			if ($entry->hasAttribute('src')) {
+			if ($entry->hasAttribute('src') && strpos($entry->getAttribute('src'), "data:") !== 0) {
 				$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
 
-				$local_filename = CACHE_DIR . "/images/" . sha1($src) . ".png";
+				$extension = $entry->tagName == 'source' ? '.mp4' : '.png';
+				$local_filename = CACHE_DIR . "/images/" . sha1($src) . $extension;
 
 				if ($debug) _debug("cache_images: downloading: $src to $local_filename");
 

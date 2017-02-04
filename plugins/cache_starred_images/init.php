@@ -180,7 +180,8 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 
 		foreach ($entries as $entry) {
 
-			if ($entry->hasAttribute('src')) {
+			if ($entry->hasAttribute('src') && strpos($entry->getAttribute('src'), "data:") !== 0) {
+
 				$has_images = true;
 				$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
 
