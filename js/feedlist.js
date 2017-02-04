@@ -13,6 +13,10 @@ var _counters_prev = [];
 	return false;
 }*/
 
+function resetCounterCache() {
+	_counters_prev = [];
+}
+
 function loadMoreHeadlines() {
 	try {
 		console.log("loadMoreHeadlines");
@@ -306,10 +310,10 @@ function parse_counters(elems) {
 				continue;
 			}
 
-			if (id == "subscribed-feeds") {
+			/*if (id == "subscribed-feeds") {
 				feeds_found = ctr;
 				continue;
-			}
+			}*/
 
 			/*if (getFeedUnread(id, (kind == "cat")) != ctr ||
 					(kind == "cat")) {

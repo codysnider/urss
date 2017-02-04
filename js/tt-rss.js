@@ -55,6 +55,8 @@ function updateFeedList() {
 //			__("Loading, please wait...") + "</div>";
 
 		Element.show("feedlistLoading");
+		
+		resetCounterCache();
 
 		if (dijit.byId("feedTree")) {
 			dijit.byId("feedTree").destroyRecursive();
