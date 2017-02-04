@@ -903,27 +903,28 @@
 					$entry->setAttribute('rel', 'noopener noreferrer');
 				}
 
-				if ($entry->hasAttribute('src')) {
-					$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
+				if ($entry->nodeName == 'img') {
 
-					$cached_filename = CACHE_DIR . '/images/' . sha1($src) . '.png';
+					if ($entry->hasAttribute('src')) {
+						$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
 
-					if (file_exists($cached_filename)) {
-						$src = SELF_URL_PATH . '/public.php?op=cached_image&hash=' . sha1($src);
+						$cached_filename = CACHE_DIR . '/images/' . sha1($src) . '.png';
 
-						if ($entry->hasAttribute('srcset')) {
-							$entry->removeAttribute('srcset');
+						if (file_exists($cached_filename)) {
+							$src = SELF_URL_PATH . '/public.php?op=cached_image&hash=' . sha1($src) . '.png';
+
+							if ($entry->hasAttribute('srcset')) {
+								$entry->removeAttribute('srcset');
+							}
+
+							if ($entry->hasAttribute('sizes')) {
+								$entry->removeAttribute('sizes');
+							}
 						}
 
-						if ($entry->hasAttribute('sizes')) {
-							$entry->removeAttribute('sizes');
-						}
+						$entry->setAttribute('src', $src);
 					}
 
-					$entry->setAttribute('src', $src);
-				}
-
-				if ($entry->nodeName == 'img') {
 					if ($entry->hasAttribute('src')) {
 						$is_https_url = parse_url($entry->getAttribute('src'), PHP_URL_SCHEME) === 'https';
 

@@ -1051,9 +1051,11 @@ class Handler_Public extends Handler {
 
 		if ($hash) {
 
-			$filename = CACHE_DIR . '/images/' . $hash . '.png';
+			$filename = CACHE_DIR . '/images/' . $hash;
 
 			if (file_exists($filename)) {
+				header("Content-Disposition: attachment; filename=\"".basename($filename)."\"");
+
 				/* See if we can use X-Sendfile */
 				$xsendfile = false;
 				if (function_exists('apache_get_modules') &&
