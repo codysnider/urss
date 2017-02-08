@@ -1729,7 +1729,10 @@ function hlClicked(event, id) {
 
 function openArticleInNewWindow(id) {
 	toggleUnread(id, 0, false);
-	window.open("backend.php?op=article&method=redirect&id=" + id);
+
+	var w = window.open("");
+	w.opener = null;
+	w.location = "backend.php?op=article&method=redirect&id=" + id;
 }
 
 function isCdmMode() {

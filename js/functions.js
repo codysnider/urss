@@ -2064,9 +2064,17 @@ function getSelectionText() {
 	return text.stripTags();
 }
 
+function openUrlPopup(url) {
+	var w = window.open("");
+
+	w.opener = null;
+	w.location = url;
+}
 function openArticlePopup(id) {
-	window.open("backend.php?op=article&method=view&mode=raw&html=1&zoom=1&id=" + id +
-		"&csrf_token=" + getInitParam("csrf_token"),
+	var w = window.open("",
 		"ttrss_article_popup",
 		"height=900,width=900,resizable=yes,status=no,location=no,menubar=no,directories=no,scrollbars=yes,toolbar=no");
+
+	w.opener = null;
+	w.location = "backend.php?op=article&method=view&mode=raw&html=1&zoom=1&id=" + id + "&csrf_token=" + getInitParam("csrf_token");
 }

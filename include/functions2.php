@@ -1957,7 +1957,7 @@
 #				$entry .= " <a target=\"_blank\" href=\"" . htmlspecialchars($url) . "\">" .
 #					$filename . " (" . $ctype . ")" . "</a>";
 
-				$entry = "<div onclick=\"window.open('".htmlspecialchars($url)."')\"
+				$entry = "<div onclick=\"openUrlPopup('".htmlspecialchars($url)."')\"
 					dojoType=\"dijit.MenuItem\">$filename ($ctype)</div>";
 
 				array_push($entries_html, $entry);
@@ -2038,7 +2038,7 @@
 				else
 					$filename = "";
 
-				$rv .= "<div onclick='window.open(\"".htmlspecialchars($entry["url"])."\")'
+				$rv .= "<div onclick='openUrlPopup(\"".htmlspecialchars($entry["url"])."\")'
 					dojoType=\"dijit.MenuItem\">".$filename . $title."</div>";
 
 			};
