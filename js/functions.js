@@ -212,15 +212,15 @@ function notify_real(msg, no_hide, n_type) {
 	msg = "<span class=\"msg\"> " + __(msg) + "</span>";
 
 	if (n_type == 2) {
-		msg = "<span><img src='images/indicator_white.gif'></span>" + msg;
+		msg = "<span><img src=\""+getInitParam("icon_indicator_white")+"\"></span>" + msg;
 		no_hide = true;
 	} else if (n_type == 3) {
-		msg = "<span><img src='images/alert.png'></span>" + msg;
+		msg = "<span><img src=\""+getInitParam("icon_alert")+"\"></span>" + msg;
 	} else if (n_type == 4) {
-		msg = "<span><img src='images/information.png'></span>" + msg;
+		msg = "<span><img src=\""+getInitParam("icon_information")+"\"></span>" + msg;
 	}
 
-	msg += " <span><img src=\"images/cross.png\" class=\"close\" title=\"" +
+	msg += " <span><img src=\""+getInitParam("icon_cross")+"\" class=\"close\" title=\"" +
 		__("Click to close") + "\" onclick=\"notify('')\"></span>";
 
 	n.innerHTML = msg;

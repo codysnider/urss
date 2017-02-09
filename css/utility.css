@@ -85,6 +85,7 @@ a:hover {
 	top: -2px;
 	right: -21px;
 	line-height: 20px;
+	cursor :  pointer;
 }
 
 .alert-success {

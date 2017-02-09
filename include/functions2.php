@@ -44,6 +44,11 @@
 
 		$params['simple_update'] = defined('SIMPLE_UPDATE_MODE') && SIMPLE_UPDATE_MODE;
 
+		$params["icon_alert"] = base64_img("images/alert.png");
+		$params["icon_information"] = base64_img("images/information.png");
+		$params["icon_cross"] = base64_img("images/cross.png");
+		$params["icon_indicator_white"] = base64_img("images/indicator_white.gif");
+
 		return $params;
 	}
 
@@ -2484,5 +2489,15 @@
 		);
 
 		return $errors[$code];
+	}
+
+	function base64_img($filename) {
+		if (file_exists($filename)) {
+			 $ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+			return "data:image/$ext;base64," . base64_encode(file_get_contents($filename));
+		} else {
+			return "";
+		}
 	}
 ?>

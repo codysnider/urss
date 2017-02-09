@@ -180,8 +180,8 @@ a:hover {
 	width : 100%;
 }
 
-#notify span.close {
-	text-align : right;
+#notify img.close {
+	cursor : pointer;
 }
 
 #notify span {
@@ -312,6 +312,7 @@ div.filterTestHolder {
 	top: -2px;
 	right: -21px;
 	line-height: 20px;
+	cursor : pointer;
 }
 
 .alert-success {
