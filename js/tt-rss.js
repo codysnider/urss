@@ -994,14 +994,14 @@ function reverseHeadlineOrder() {
 }
 
 function handle_rpc_json(transport, scheduled_call) {
+
+	var netalert_dijit = dijit.byId("net-alert");
+	var netalert = false;
+
+	if (netalert_dijit) netalert = netalert_dijit.domNode;
+
 	try {
 		var reply = JSON.parse(transport.responseText);
-
-		var netalert_dijit = dijit.byId("net-alert");
-		var netalert = false;
-
-		if (netalert_dijit)
-			netalert = netalert_dijit.domNode;
 
 		if (reply) {
 
@@ -1049,18 +1049,18 @@ function handle_rpc_json(transport, scheduled_call) {
 			if (runtime_info)
 				parse_runtime_info(runtime_info);
 
-			if (netalert) Element.hide(netalert);
+			if (netalert) netalert.hide();
 
 		} else {
 			if (netalert)
-				Element.show(netalert);
+				netalert.show();
 			else
 				notify_error("Communication problem with server.");
 		}
 
 	} catch (e) {
 		if (netalert)
-			Element.show(netalert);
+			netalert.show();
 		else
 			notify_error("Communication problem with server.");
 

@@ -232,8 +232,7 @@
 
 			<button id="net-alert" dojoType="dijit.form.Button" style="display : none" disabled="true"
 				title="<?php echo __("Communication problem with server.") ?>">
-			<img
-				src="images/error.png" />
+				<img src="images/error.png" />
 			</button>
 
 			<div dojoType="dijit.form.DropDownButton">
