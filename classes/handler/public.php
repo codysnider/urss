@@ -1054,7 +1054,8 @@ class Handler_Public extends Handler {
 			$filename = CACHE_DIR . '/images/' . $hash;
 
 			if (file_exists($filename)) {
-				header("Content-Disposition: attachment; filename=\"$hash\"");
+				header("Content-Disposition: inline; filename=\"$hash\"");
+				$mimetype = mime_content_type($filename);
 
 				/* See if we can use X-Sendfile */
 				$xsendfile = false;
@@ -1064,10 +1065,10 @@ class Handler_Public extends Handler {
 
 				if ($xsendfile) {
 					header("X-Sendfile: $filename");
-					header("Content-type: application/octet-stream");
-					header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
+					header("Content-type: $mimetype");
+					header('Content-Disposition: inline; filename="' . basename($filename) . '"');
 				} else {
-					header("Content-type: image/png");
+					header("Content-type: $mimetype");
 					$stamp = gmdate("D, d M Y H:i:s", filemtime($filename)). " GMT";
 					header("Last-Modified: $stamp", true);
 					readfile($filename);
