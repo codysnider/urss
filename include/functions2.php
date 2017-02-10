@@ -914,7 +914,7 @@
 				$cached_filename = CACHE_DIR . '/images/' . sha1($src) . $extension;
 
 				if (file_exists($cached_filename)) {
-					$src = SELF_URL_PATH . '/public.php?op=cached_image&hash=' . sha1($src) . $extension;
+					$src = get_self_url_prefix() . '/public.php?op=cached_image&hash=' . sha1($src) . $extension;
 
 					if ($entry->hasAttribute('srcset')) {
 						$entry->removeAttribute('srcset');
