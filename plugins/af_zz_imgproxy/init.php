@@ -33,7 +33,7 @@ class Af_Zz_ImgProxy extends Plugin {
 		$extension = $kind == 1 ? '.mp4' : '.png';
 		$local_filename = CACHE_DIR . "/images/" . sha1($url) . $extension;
 
-		//if ($_REQUEST["debug"] == "1") { print $local_filename; die; }
+		if ($_REQUEST["debug"] == "1") { print $url . "\n" . $local_filename; die; }
 
 		header("Content-Disposition: inline; filename=\"".basename($local_filename)."\"");
 
@@ -47,6 +47,10 @@ class Af_Zz_ImgProxy extends Plugin {
 			readfile($local_filename);
 		} else {
 			$data = fetch_file_contents(array("url" => $url));
+
+			global $fetch_last_error;
+			print $fetch_last_error;
+
 			if ($data) {
 				if (file_put_contents($local_filename, $data)) {
 					$mimetype = mime_content_type($local_filename);
@@ -73,7 +77,7 @@ class Af_Zz_ImgProxy extends Plugin {
 		if (($scheme != 'https' && $scheme != "") || $is_remote) {
 			if (strpos($url, "data:") !== 0) {
 				$url = "backend.php?op=pluginhandler&plugin=af_zz_imgproxy&method=imgproxy&kind=$kind&url=" .
-					htmlspecialchars($url);
+					urlencode($url);
 			}
 		}
 
