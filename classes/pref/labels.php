@@ -15,9 +15,9 @@ class Pref_Labels extends Handler_Protected {
 
 		$line = $this->dbh->fetch_assoc($result);
 
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"id\" value=\"$label_id\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pref-labels\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"save\">";
+		print_hidden("id", "$label_id");
+		print_hidden("op", "pref-labels");
+		print_hidden("method", "save");
 
 		print "<div class=\"dlgSec\">".__("Caption")."</div>";
 

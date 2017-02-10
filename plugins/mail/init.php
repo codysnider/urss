@@ -51,9 +51,9 @@ class Mail extends Plugin {
 			}
 			</script>";
 
-			print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pluginhandler\">";
-			print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"save\">";
-			print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"plugin\" value=\"mail\">";
+			print_hidden("op", "pluginhandler");
+			print_hidden("method", "save");
+			print_hidden("plugin", "mail");
 
 			$addresslist = $this->host->get($this, "addresslist");
 
@@ -79,9 +79,9 @@ class Mail extends Plugin {
 
 		$param = db_escape_string($_REQUEST['param']);
 
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pluginhandler\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"plugin\" value=\"mail\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"sendEmail\">";
+		print_hidden("op", "pluginhandler");
+		print_hidden("plugin", "mail");
+		print_hidden("method", "sendEmail");
 
 		$result = db_query("SELECT email, full_name FROM ttrss_users WHERE
 			id = " . $_SESSION["uid"]);
@@ -91,8 +91,8 @@ class Mail extends Plugin {
 
 		if (!$user_name) $user_name = $_SESSION['name'];
 
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"from_email\" value=\"$user_email\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"from_name\" value=\"$user_name\">";
+		print_hidden("from_email", "$user_email");
+		print_hidden("from_name", "$user_name");
 
 		require_once "lib/MiniTemplator.class.php";
 

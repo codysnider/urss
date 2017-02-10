@@ -34,10 +34,10 @@ class Note extends Plugin {
 
 		$note = db_fetch_result($result, 0, "note");
 
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"id\" value=\"$param\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pluginhandler\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"setNote\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"plugin\" value=\"note\">";
+		print_hidden("id", "$param");
+		print_hidden("op", "pluginhandler");
+		print_hidden("method", "setNote");
+		print_hidden("plugin", "note");
 
 		print "<table width='100%'><tr><td>";
 		print "<textarea dojoType=\"dijit.form.SimpleTextarea\"

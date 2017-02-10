@@ -27,9 +27,9 @@ class Pref_Users extends Handler_Protected {
 
 			$id = (int) $this->dbh->escape_string($_REQUEST["id"]);
 
-			print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"id\" value=\"$id\">";
-			print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pref-users\">";
-			print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"editSave\">";
+			print_hidden("id", "$id");
+			print_hidden("op", "pref-users");
+			print_hidden("method", "editSave");
 
 			$result = $this->dbh->query("SELECT * FROM ttrss_users WHERE id = '$id'");
 
@@ -43,7 +43,7 @@ class Pref_Users extends Handler_Protected {
 			print "<div class=\"dlgSecCont\">";
 
 			if ($sel_disabled) {
-				print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"login\" value=\"$login\">";
+				print_hidden("login", "$login");
 			}
 
 			print "<input size=\"30\" style=\"font-size : 16px\"
@@ -64,7 +64,7 @@ class Pref_Users extends Handler_Protected {
 			} else {
 				print_select_hash("", $access_level, $access_level_names,
 					"dojoType=\"dijit.form.Select\" $sel_disabled");
-				print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"access_level\" value=\"$access_level\">";
+				print_hidden("access_level", "$access_level");
 			}
 
 			print "<hr/>";

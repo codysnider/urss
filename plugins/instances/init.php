@@ -197,9 +197,9 @@ class Instances extends Plugin implements IHandler {
 		$result = db_query("SELECT * FROM ttrss_linked_instances WHERE
 			id = '$id'");
 
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\"  name=\"id\" value=\"$id\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\"  name=\"op\" value=\"pref-instances\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\"  name=\"method\" value=\"editSave\">";
+		print_hidden("id", "$id");
+		print_hidden("op", "pref-instances");
+		print_hidden("method", "editSave");
 
 		print "<div class=\"dlgSec\">".__("Instance")."</div>";
 
@@ -389,8 +389,8 @@ class Instances extends Plugin implements IHandler {
 	}
 
 	function addInstance() {
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\"  name=\"op\" value=\"pref-instances\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\"  name=\"method\" value=\"add\">";
+		print_hidden("op", "pref-instances");
+		print_hidden("method", "add");
 
 		print "<div class=\"dlgSec\">".__("Instance")."</div>";
 

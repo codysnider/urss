@@ -548,9 +548,9 @@ class Pref_Feeds extends Handler_Protected {
 		$title = htmlspecialchars($this->dbh->fetch_result($result,
 			0, "title"));
 
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"id\" value=\"$feed_id\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pref-feeds\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"editSave\">";
+		print_hidden("id", "$feed_id");
+		print_hidden("op", "pref-feeds");
+		print_hidden("method", "editSave");
 
 		print "<div class=\"dlgSec\">".__("Feed")."</div>";
 		print "<div class=\"dlgSecCont\">";
@@ -816,9 +816,9 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<p>";
 
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"ids\" value=\"$feed_ids\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pref-feeds\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"batchEditSave\">";
+		print_hidden("ids", "$feed_ids");
+		print_hidden("op", "pref-feeds");
+		print_hidden("method", "batchEditSave");
 
 		print "<div class=\"dlgSec\">".__("Feed")."</div>";
 		print "<div class=\"dlgSecCont\">";
@@ -1812,8 +1812,8 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	function batchSubscribe() {
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pref-feeds\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"batchaddfeeds\">";
+		print_hidden("op", "pref-feeds");
+		print_hidden("method", "batchaddfeeds");
 
 		print "<table width='100%'><tr><td>
 			".__("Add one valid RSS feed per line (no feed detection is done)")."

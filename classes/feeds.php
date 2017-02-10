@@ -1027,8 +1027,8 @@ class Feeds extends Handler_Protected {
 	}
 
 	function quickAddFeed() {
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"rpc\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"addfeed\">";
+		print_hidden("op", "rpc");
+		print_hidden("method", "addfeed");
 
 		print "<div id='fadd_error_message' style='display : none' class='alert alert-danger'></div>";
 
@@ -1111,8 +1111,8 @@ class Feeds extends Handler_Protected {
 
 		$browser_search = $this->dbh->escape_string($_REQUEST["search"]);
 
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"rpc\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"updateFeedBrowser\">";
+		print_hidden("op", "rpc");
+		print_hidden("method", "updateFeedBrowser");
 
 		print "<div dojoType=\"dijit.Toolbar\">
 			<div style='float : right'>

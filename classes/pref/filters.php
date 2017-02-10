@@ -340,10 +340,10 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<form id=\"filter_edit_form\" onsubmit='return false'>";
 
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pref-filters\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"id\" value=\"$filter_id\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"editSave\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"csrf_token\" value=\"".$_SESSION['csrf_token']."\">";
+		print_hidden("op", "pref-filters");
+		print_hidden("id", "$filter_id");
+		print_hidden("method", "editSave");
+		print_hidden("csrf_token", $_SESSION['csrf_token']);
 
 		print "<div class=\"dlgSec\">".__("Caption")."</div>";
 
@@ -816,9 +816,9 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<form name='filter_new_form' id='filter_new_form'>";
 
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op\" value=\"pref-filters\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"add\">";
-		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"csrf_token\" value=\"".$_SESSION['csrf_token']."\">";
+		print_hidden("op", "pref-filters");
+		print_hidden("method", "add");
+		print_hidden("csrf_token", $_SESSION['csrf_token']);
 
 		print "<div class=\"dlgSec\">".__("Caption")."</div>";
 
