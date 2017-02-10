@@ -8,16 +8,14 @@ class Af_Zz_ImgProxy extends Plugin {
 			"fox");
 	}
 
-	function flags() {
-		return array("needs_curl" => true);
-	}
-
 	function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_RENDER_ARTICLE, $this);
 		$host->add_hook($host::HOOK_RENDER_ARTICLE_CDM, $this);
 		$host->add_hook($host::HOOK_RENDER_ARTICLE_API, $this);
+
+		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 	}
 
 	function hook_render_article($article) {
@@ -60,12 +58,23 @@ class Af_Zz_ImgProxy extends Plugin {
 		}
 	}
 
-	function rewrite_url_if_needed($url, $kind = 0) {
+	function rewrite_url_if_needed($url, $kind, $all_remote = false) {
 		$scheme = parse_url($url, PHP_URL_SCHEME);
 
-		if ($scheme != 'https' && $scheme != "" && strpos($url, "data:") !== 0) {
-			$url = "backend.php?op=pluginhandler&plugin=af_zz_imgproxy&method=imgproxy&kind=$kind&url=" .
-				htmlspecialchars($url);
+		if ($all_remote) {
+			$host = parse_url($url, PHP_URL_HOST);
+			$self_host = parse_url(SELF_URL_PATH, PHP_URL_HOST);
+
+			$is_remote = $host != $self_host;
+		} else {
+			$is_remote = false;
+		}
+
+		if (($scheme != 'https' && $scheme != "") || $is_remote) {
+			if (strpos($url, "data:") !== 0) {
+				$url = "backend.php?op=pluginhandler&plugin=af_zz_imgproxy&method=imgproxy&kind=$kind&url=" .
+					htmlspecialchars($url);
+			}
 		}
 
 		return $url;
@@ -74,6 +83,7 @@ class Af_Zz_ImgProxy extends Plugin {
 	function hook_render_article_cdm($article, $api_mode = false) {
 
 		$need_saving = false;
+		$proxy_all = $this->host->get($this, "proxy_all");
 
 		$doc = new DOMDocument();
 		if (@$doc->loadHTML($article["content"])) {
@@ -81,7 +91,7 @@ class Af_Zz_ImgProxy extends Plugin {
 			$imgs = $xpath->query("//img[@src]");
 
 			foreach ($imgs as $img) {
-				$new_src = $this->rewrite_url_if_needed($img->getAttribute("src"));
+				$new_src = $this->rewrite_url_if_needed($img->getAttribute("src"), 0, $proxy_all);
 
 				if ($new_src != $img->getAttribute("src")) {
 					$img->setAttribute("src", $new_src);
@@ -94,7 +104,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 			foreach ($vids as $vid) {
 				if ($vid->hasAttribute("poster")) {
-					$new_src = $this->rewrite_url_if_needed($vid->getAttribute("poster"));
+					$new_src = $this->rewrite_url_if_needed($vid->getAttribute("poster"), 0, $proxy_all);
 
 					if ($new_src != $vid->getAttribute("poster")) {
 						$vid->setAttribute("poster", $new_src);
@@ -106,7 +116,7 @@ class Af_Zz_ImgProxy extends Plugin {
 				$vsrcs = $xpath->query("source", $vid);
 
 				foreach ($vsrcs as $vsrc) {
-					$new_src = $this->rewrite_url_if_needed($vsrc->getAttribute("src"), 1);
+					$new_src = $this->rewrite_url_if_needed($vsrc->getAttribute("src"), 1, $proxy_all);
 
 					if ($new_src != $vsrc->getAttribute("src")) {
 						$vid->setAttribute("src", $new_src);
@@ -120,6 +130,51 @@ class Af_Zz_ImgProxy extends Plugin {
 		if ($need_saving) $article["content"] = $doc->saveXML();
 
 		return $article;
+	}
+
+	function hook_prefs_tab($args) {
+		if ($args != "prefFeeds") return;
+
+		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('af_zz_imgproxy Settings')."\">";
+
+		print "<form dojoType=\"dijit.form.Form\">";
+
+		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
+			evt.preventDefault();
+			if (this.validate()) {
+				console.log(dojo.objectToQuery(this.getValues()));
+				new Ajax.Request('backend.php', {
+					parameters: dojo.objectToQuery(this.getValues()),
+					onComplete: function(transport) {
+						notify_info(transport.responseText);
+					}
+				});
+				//this.reset();
+			}
+			</script>";
+
+		print_hidden("op", "pluginhandler");
+		print_hidden("method", "save");
+		print_hidden("plugin", "af_zz_imgproxy");
+
+		$proxy_all = $this->host->get($this, "proxy_all");
+		print_checkbox("proxy_all", $proxy_all);
+
+		print "&nbsp;<label for=\"proxy_all\">" . __("Enable proxy for all remote images.") . "</label>";
+
+		print "<p>"; print_button("submit", __("Save"));
+
+		print "</form>";
+
+		print "</div>";
+	}
+
+	function save() {
+		$proxy_all = checkbox_to_sql_bool($_POST["proxy_all"]) == "true";
+
+		$this->host->set($this, "proxy_all", $proxy_all);
+
+		echo __("Configuration saved");
 	}
 
 	function api_version() {

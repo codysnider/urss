@@ -663,6 +663,20 @@
 		print "</select>";
 	}
 
+	function print_hidden($name, $value) {
+		print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"$name\" value=\"$value\">";
+	}
+
+	function print_checkbox($id, $checked, $attributes = "") {
+		$checked_str = $checked ? "checked" : "";
+
+		print "<input dojoType=\"dijit.form.CheckBox\" id=\"$id\" $checked_str $attributes name=\"$id\">";
+	}
+
+	function print_button($type, $value, $attributes = "") {
+		print "<p><button dojoType=\"dijit.form.Button\" $attributes type=\"$type\">$value</button>";
+	}
+
 	function print_radio($id, $default, $true_is, $values, $attributes = "") {
 		foreach ($values as $v) {
 
