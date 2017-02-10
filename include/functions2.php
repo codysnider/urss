@@ -893,29 +893,47 @@
 		$doc->loadHTML($charset_hack . $res);
 		$xpath = new DOMXPath($doc);
 
-		$entries = $xpath->query('(//a[@href]|//img[@src]|//video/source[@src])');
-
 		$ttrss_uses_https = parse_url(get_self_url_prefix(), PHP_URL_SCHEME) === 'https';
+		$rewrite_base_url = $site_url ? $site_url : SELF_URL_PATH;
+
+		$entries = $xpath->query('(//a[@href]|//img[@src]|//video/source[@src])');
 
 		foreach ($entries as $entry) {
 
-			if ($site_url) {
+			if ($entry->hasAttribute('href')) {
+				$entry->setAttribute('href',
+					rewrite_relative_url($rewrite_base_url, $entry->getAttribute('href')));
 
-				if ($entry->hasAttribute('href')) {
-					$entry->setAttribute('href',
-						rewrite_relative_url($site_url, $entry->getAttribute('href')));
+				$entry->setAttribute('rel', 'noopener noreferrer');
+			}
 
-					$entry->setAttribute('rel', 'noopener noreferrer');
+			if ($entry->hasAttribute('src')) {
+				$src = rewrite_relative_url($rewrite_base_url, $entry->getAttribute('src'));
+
+				$extension = $entry->tagName == 'source' ? '.mp4' : '.png';
+				$cached_filename = CACHE_DIR . '/images/' . sha1($src) . $extension;
+
+				if (file_exists($cached_filename)) {
+					$src = SELF_URL_PATH . '/public.php?op=cached_image&hash=' . sha1($src) . $extension;
+
+					if ($entry->hasAttribute('srcset')) {
+						$entry->removeAttribute('srcset');
+					}
+
+					if ($entry->hasAttribute('sizes')) {
+						$entry->removeAttribute('sizes');
+					}
 				}
 
+				$entry->setAttribute('src', $src);
+			}
+
+			if ($entry->nodeName == 'img') {
+
 				if ($entry->hasAttribute('src')) {
-					$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
+					$is_https_url = parse_url($entry->getAttribute('src'), PHP_URL_SCHEME) === 'https';
 
-					$extension = $entry->tagName == 'source' ? '.mp4' : '.png';
-					$cached_filename = CACHE_DIR . '/images/' . sha1($src) . $extension;
-
-					if (file_exists($cached_filename)) {
-						$src = SELF_URL_PATH . '/public.php?op=cached_image&hash=' . sha1($src) . $extension;
+					if ($ttrss_uses_https && !$is_https_url) {
 
 						if ($entry->hasAttribute('srcset')) {
 							$entry->removeAttribute('srcset');
@@ -925,42 +943,22 @@
 							$entry->removeAttribute('sizes');
 						}
 					}
-
-					$entry->setAttribute('src', $src);
 				}
-				
-				if ($entry->nodeName == 'img') {
 
-					if ($entry->hasAttribute('src')) {
-						$is_https_url = parse_url($entry->getAttribute('src'), PHP_URL_SCHEME) === 'https';
+				if (($owner && get_pref("STRIP_IMAGES", $owner)) ||
+						$force_remove_images || $_SESSION["bw_limit"]) {
 
-						if ($ttrss_uses_https && !$is_https_url) {
+					$p = $doc->createElement('p');
 
-							if ($entry->hasAttribute('srcset')) {
-								$entry->removeAttribute('srcset');
-							}
+					$a = $doc->createElement('a');
+					$a->setAttribute('href', $entry->getAttribute('src'));
 
-							if ($entry->hasAttribute('sizes')) {
-								$entry->removeAttribute('sizes');
-							}
-						}
-					}
+					$a->appendChild(new DOMText($entry->getAttribute('src')));
+					$a->setAttribute('target', '_blank');
 
-					if (($owner && get_pref("STRIP_IMAGES", $owner)) ||
-							$force_remove_images || $_SESSION["bw_limit"]) {
+					$p->appendChild($a);
 
-						$p = $doc->createElement('p');
-
-						$a = $doc->createElement('a');
-						$a->setAttribute('href', $entry->getAttribute('src'));
-
-						$a->appendChild(new DOMText($entry->getAttribute('src')));
-						$a->setAttribute('target', '_blank');
-
-						$p->appendChild($a);
-
-						$entry->parentNode->replaceChild($p, $entry);
-					}
+					$entry->parentNode->replaceChild($p, $entry);
 				}
 			}
 
