@@ -134,8 +134,6 @@ class Af_Psql_Trgm extends Plugin {
 			if (!$similarity) $similarity = '0.75';
 			if (!$min_title_length) $min_title_length = '32';
 
-			$enable_globally_checked = $enable_globally ? "checked" : "";
-
 			print "<form dojoType=\"dijit.form.Form\">";
 
 			print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
@@ -174,15 +172,13 @@ class Af_Psql_Trgm extends Plugin {
 				placeholder=\"32\"
 				required=\"1\" name=\"min_title_length\" value=\"$min_title_length\"></td></tr>";
 			print "<tr><td width=\"40%\">" . __("Enable for all feeds:") . "</td>";
-			print "<td>
-				<input dojoType=\"dijit.form.CheckBox\"
-				$enable_globally_checked name=\"enable_globally\"></td></tr>";
+			print "<td>";
+			print_checkbox("enable_globally", $enable_globally);
+			print "</td></tr>";
 
 			print "</table>";
 
-			print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">" .
-				__("Save") . "</button>";
-
+			print "<p>"; print_button("submit", __("Save"));
 			print "</form>";
 
 			$enabled_feeds = $this->host->get($this, "enabled_feeds");

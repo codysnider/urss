@@ -36,7 +36,7 @@ class Af_Readability extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('af_readability settings')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Readability settings (af_readability)')."\">";
 
 		print_notice("Enable the plugin for specific feeds in the feed editor.");
 
@@ -61,15 +61,11 @@ class Af_Readability extends Plugin {
 		print_hidden("plugin", "af_readability");
 
 		$enable_share_anything = $this->host->get($this, "enable_share_anything");
-		$enable_share_anything_checked = $enable_share_anything ? "checked" : "";
 
-		print "<input dojoType=\"dijit.form.CheckBox\"
-			$enable_share_anything_checked name=\"enable_share_anything\" id=\"enable_share_anything\">
-			<label for=\"enable_share_anything\">" . __("Use Readability for pages shared via bookmarklet.") . "</label>";
+		print_checkbox("enable_share_anything", $enable_share_anything);
+		print "&nbsp;<label for=\"enable_share_anything\">" . __("Use Readability for pages shared via bookmarklet.") . "</label>";
 
-		print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".
-				__("Save")."</button>";
-
+		print "<p>"; print_button("submit", __("Save"));
 		print "</form>";
 
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
