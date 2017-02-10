@@ -22,6 +22,10 @@ class Plugin {
 		return array();
 	}
 
+	function is_public_method($method) {
+		return false;
+	}
+
 	function get_js() {
 		return "";
 	}

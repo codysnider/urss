@@ -1086,5 +1086,37 @@ class Handler_Public extends Handler {
 
 		return "tag:" . parse_url(get_self_url_prefix(), PHP_URL_HOST) . ",$timestamp:/$id";
 	}
+
+	// this should be used very carefully because this endpoint is exposed to unauthenticated users
+	// plugin data is not loaded because there's no user context and owner_uid/session may or may not be available
+	// in general, don't do anything user-related in here and do not modify $_SESSION
+	public function pluginhandler() {
+		$host = new PluginHost();
+
+		$plugin = basename($_REQUEST["plugin"]);
+		$method = $_REQUEST["pmethod"];
+
+		$host->load($plugin, PluginHost::KIND_USER, 0);
+		$host->load_data();
+
+		$pclass = $host->get_plugin($plugin);
+
+		if ($pclass) {
+			if (method_exists($pclass, $method)) {
+				if ($pclass->is_public_method($method)) {
+					$pclass->$method();
+				} else {
+					header("Content-Type: text/json");
+					print error_json(6);
+				}
+			} else {
+				header("Content-Type: text/json");
+				print error_json(13);
+			}
+		} else {
+			header("Content-Type: text/json");
+			print error_json(14);
+		}
+	}
 }
 ?>

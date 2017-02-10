@@ -8,6 +8,10 @@ class Af_Zz_ImgProxy extends Plugin {
 			"fox");
 	}
 
+	function is_public_method($method) {
+		return $method === "imgproxy";
+	}
+
 	function init($host) {
 		$this->host = $host;
 
@@ -27,6 +31,7 @@ class Af_Zz_ImgProxy extends Plugin {
 	}
 
 	public function imgproxy() {
+
 		$url = rewrite_relative_url(SELF_URL_PATH, $_REQUEST["url"]);
 		$kind = (int) $_REQUEST["kind"]; // 1 = video
 
@@ -47,9 +52,6 @@ class Af_Zz_ImgProxy extends Plugin {
 			readfile($local_filename);
 		} else {
 			$data = fetch_file_contents(array("url" => $url));
-
-			global $fetch_last_error;
-			print $fetch_last_error;
 
 			if ($data) {
 				if (file_put_contents($local_filename, $data)) {
@@ -76,7 +78,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 		if (($scheme != 'https' && $scheme != "") || $is_remote) {
 			if (strpos($url, "data:") !== 0) {
-				$url = "backend.php?op=pluginhandler&plugin=af_zz_imgproxy&method=imgproxy&kind=$kind&url=" .
+				$url = "public.php?op=pluginhandler&plugin=af_zz_imgproxy&pmethod=imgproxy&kind=$kind&url=" .
 					urlencode($url);
 			}
 		}
