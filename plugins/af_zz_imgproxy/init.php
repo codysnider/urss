@@ -4,7 +4,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 	function about() {
 		return array(1.0,
-			"Load insecure images via built-in proxy (no caching)",
+			"Load insecure images via built-in proxy",
 			"fox");
 	}
 
@@ -28,49 +28,34 @@ class Af_Zz_ImgProxy extends Plugin {
 		return $this->hook_render_article_cdm($headline["headline"], true);
 	}
 
-	/*public function vidproxy() {
-		$url = $_REQUEST["url"];
-
-		if (preg_match("/\.(mp4|webm|gifv)/", $url, $matches)) {
-			$type = $matches[1];
-			$embed_url = $url;
-
-			if ($type == "gifv") {
-				$type = "mp4";
-				$embed_url = str_replace(".gifv", ".mp4", $embed_url);
-			}
-
-			header("Content-type: text/html");
-
-			$embed_url = htmlspecialchars("backend.php?op=pluginhandler&plugin=af_zz_imgproxy&method=imgproxy&url=" .
-				urlencode($embed_url));
-
-			print "<video class=\"\" autoplay=\"true\" controls=\"true\" loop=\"true\">";
-			print "<source src=\"$embed_url\" type=\"video/$type\">";
-			print "</video>";
-		} else {
-			header("Location: " . htmlspecialchars($url));
-		}
-	}*/
-
 	public function imgproxy() {
 		$url = rewrite_relative_url(SELF_URL_PATH, $_REQUEST["url"]);
+		$kind = (int) $_REQUEST["kind"]; // 1 = video
 
-		if (function_exists("getimagesize")) {
-			$is = @getimagesize($url);
-			header("Content-type: " . $is["mime"]);
+		$extension = $kind == 1 ? '.mp4' : '.png';
+		$local_filename = CACHE_DIR . "/images/" . sha1($url) . $extension;
+
+		if ($_REQUEST["debug"] == "1") { print $local_filename; die; }
+
+		header("Content-Disposition: attachment; filename=\"".basename($local_filename)."\"");
+
+		if (file_exists($local_filename)) {
+			readfile($local_filename);
+		} else {
+			$data = fetch_file_contents(array("url" => $url));
+			if ($data) {
+				file_put_contents($local_filename, $data);
+				print $data;
+			}
 		}
-
-		print fetch_file_contents(array("url" => $url));
 	}
 
-	function rewrite_url_if_needed($url) {
+	function rewrite_url_if_needed($url, $kind = 0) {
 		$scheme = parse_url($url, PHP_URL_SCHEME);
 
-		if ($scheme != 'https' && $scheme != "") {
-			$url = "backend.php?op=pluginhandler&plugin=af_zz_imgproxy&method=imgproxy&url=" .
+		if ($scheme != 'https' && $scheme != "" && strpos($url, "data:") !== 0) {
+			$url = "backend.php?op=pluginhandler&plugin=af_zz_imgproxy&method=imgproxy&kind=$kind&url=" .
 				htmlspecialchars($url);
-
 		}
 
 		return $url;
@@ -111,7 +96,7 @@ class Af_Zz_ImgProxy extends Plugin {
 				$vsrcs = $xpath->query("source", $vid);
 
 				foreach ($vsrcs as $vsrc) {
-					$new_src = $this->rewrite_url_if_needed($vsrc->getAttribute("src"));
+					$new_src = $this->rewrite_url_if_needed($vsrc->getAttribute("src"), 1);
 
 					if ($new_src != $vsrc->getAttribute("src")) {
 						$vid->setAttribute("src", $new_src);
