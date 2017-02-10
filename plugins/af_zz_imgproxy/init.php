@@ -35,6 +35,12 @@ class Af_Zz_ImgProxy extends Plugin {
 		$url = rewrite_relative_url(SELF_URL_PATH, $_REQUEST["url"]);
 		$kind = (int) $_REQUEST["kind"]; // 1 = video
 
+		// called without user context, let's just redirect to original URL
+		if (!$_SESSION["uid"]) {
+			header("Location: $url");
+			return;
+		}
+
 		$extension = $kind == 1 ? '.mp4' : '.png';
 		$local_filename = CACHE_DIR . "/images/" . sha1($url) . $extension;
 
