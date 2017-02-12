@@ -85,7 +85,7 @@ class Af_Psql_Trgm extends Plugin {
 				style='vertical-align : middle'>";
 
 			$article_link = htmlspecialchars($line["link"]);
-			print " <a target=\"_blank\" href=\"$article_link\">".
+			print " <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"$article_link\">".
 				$line["title"]."</a>";
 
 			print " (<a href=\"#\" onclick=\"viewfeed({feed:".$line["feed_id"]."})\">".

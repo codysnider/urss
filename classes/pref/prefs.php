@@ -776,7 +776,7 @@ class Pref_Prefs extends Handler_Protected {
 				print "<td><label><img src='images/$plugin_icon' alt=''> $name</label></td>";
 				print "<td>" . htmlspecialchars($about[1]);
 				if (@$about[4]) {
-					print " &mdash; <a target=\"_blank\" class=\"visibleLink\"
+					print " &mdash; <a target=\"_blank\" rel=\"noopener noreferrer\" class=\"visibleLink\"
 						href=\"".htmlspecialchars($about[4])."\">".__("more info")."</a>";
 				}
 				print "</td>";
@@ -835,7 +835,7 @@ class Pref_Prefs extends Handler_Protected {
 				print "<td><label for='FPCHK-$name'><img src='images/$plugin_icon' alt=''> $name</label></td>";
 				print "<td><label for='FPCHK-$name'>" . htmlspecialchars($about[1]) . "</label>";
 				if (@$about[4]) {
-					print " &mdash; <a target=\"_blank\" class=\"visibleLink\"
+					print " &mdash; <a target=\"_blank\" rel=\"noopener noreferrer\" class=\"visibleLink\"
 						href=\"".htmlspecialchars($about[4])."\">".__("more info")."</a>";
 				}
 				print "</td>";

@@ -398,7 +398,7 @@ class Feeds extends Handler_Protected {
 						alt=\"Publish article\" onclick='togglePub($id)'>";
 				}
 
-#				$content_link = "<a target=\"_blank\" href=\"".$line["link"]."\">" .
+#				$content_link = "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"".$line["link"]."\">" .
 #					$line["title"] . "</a>";
 
 #				$content_link = "<a
@@ -616,7 +616,7 @@ class Feeds extends Handler_Protected {
 						class=\"titleWrap $hlc_suffix\">
 						<a class=\"title $hlc_suffix\"
 						title=\"".htmlspecialchars($line["title"])."\"
-						target=\"_blank\" href=\"".
+						target=\"_blank\" rel=\"noopener noreferrer\" href=\"".
 						htmlspecialchars($line["link"])."\">".
 						$line["title"] .
 						"</a> <span class=\"author\">$entry_author</span>";
@@ -691,13 +691,13 @@ class Feeds extends Handler_Protected {
 
 							$tmp_line = $this->dbh->fetch_assoc($tmp_result);
 
-							$reply['content'] .= "<a target='_blank'
+							$reply['content'] .= "<a target='_blank' rel='noopener noreferrer'
 								href=' " . htmlspecialchars($tmp_line['site_url']) . "'>" .
 								$tmp_line['title'] . "</a>";
 
 							$reply['content'] .= "&nbsp;";
 
-							$reply['content'] .= "<a target='_blank' href='" . htmlspecialchars($tmp_line['feed_url']) . "'>";
+							$reply['content'] .= "<a target='_blank' rel='noopener noreferrer' href='" . htmlspecialchars($tmp_line['feed_url']) . "'>";
 							$reply['content'] .= "<img title='".__('Feed URL')."'class='tinyFeedIcon' src='images/pub_unset.png'></a>";
 
 							$reply['content'] .= "</div>";
@@ -746,12 +746,12 @@ class Feeds extends Handler_Protected {
 							$comments_url = htmlspecialchars($line["link"]);
 						}
 						$entry_comments = "<a class=\"postComments\"
-							target='_blank' href=\"$comments_url\">$num_comments ".
+							target='_blank' rel='noopener noreferrer' href=\"$comments_url\">$num_comments ".
 							_ngettext("comment", "comments", $num_comments)."</a>";
 
 					} else {
 						if ($line["comments"] && $line["link"] != $line["comments"]) {
-							$entry_comments = "<a class=\"postComments\" target='_blank' href=\"".htmlspecialchars($line["comments"])."\">".__("comments")."</a>";
+							$entry_comments = "<a class=\"postComments\" target='_blank' rel='noopener noreferrer' href=\"".htmlspecialchars($line["comments"])."\">".__("comments")."</a>";
 						}
 					}
 

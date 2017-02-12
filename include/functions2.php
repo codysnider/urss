@@ -955,6 +955,7 @@
 
 					$a->appendChild(new DOMText($entry->getAttribute('src')));
 					$a->setAttribute('target', '_blank');
+					$a->setAttribute('rel', 'noopener noreferrer');
 
 					$p->appendChild($a);
 
@@ -964,6 +965,7 @@
 
 			if (strtolower($entry->nodeName) == "a") {
 				$entry->setAttribute("target", "_blank");
+				$entry->setAttribute("rel", "noopener noreferrer");
 			}
 		}
 
@@ -1249,7 +1251,7 @@
 					</object>";
 			}
 
-			if ($entry) $entry .= "&nbsp; <a target=\"_blank\"
+			if ($entry) $entry .= "&nbsp; <a target=\"_blank\" rel=\"noopener noreferrer\"
 				href=\"$url\">" . basename($url) . "</a>";
 
 			return $entry;
@@ -1260,7 +1262,7 @@
 
 /*		$filename = substr($url, strrpos($url, "/")+1);
 
-		$entry .= " <a target=\"_blank\" href=\"" . htmlspecialchars($url) . "\">" .
+		$entry .= " <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"" . htmlspecialchars($url) . "\">" .
 			$filename . " (" . $ctype . ")" . "</a>"; */
 
 	}
@@ -1332,12 +1334,12 @@
 					$comments_url = htmlspecialchars($line["link"]);
 				}
 				$entry_comments = "<a class=\"postComments\"
-					target='_blank' href=\"$comments_url\">$num_comments ".
+					target='_blank' rel=\"noopener noreferrer\" href=\"$comments_url\">$num_comments ".
 					_ngettext("comment", "comments", $num_comments)."</a>";
 
 			} else {
 				if ($line["comments"] && $line["link"] != $line["comments"]) {
-					$entry_comments = "<a class=\"postComments\" target='_blank' href=\"".htmlspecialchars($line["comments"])."\">".__("comments")."</a>";
+					$entry_comments = "<a class=\"postComments\" target='_blank' rel=\"noopener noreferrer\" href=\"".htmlspecialchars($line["comments"])."\">".__("comments")."</a>";
 				}
 			}
 
@@ -1373,7 +1375,7 @@
 				$rv['content'] .= "<div class=\"postDate\">$parsed_updated</div>";
 
 			if ($line["link"]) {
-				$rv['content'] .= "<div class='postTitle'><a target='_blank'
+				$rv['content'] .= "<div class='postTitle'><a target='_blank' rel='noopener noreferrer'
 					title=\"".htmlspecialchars($line['title'])."\"
 					href=\"" .
 					htmlspecialchars($line["link"]) . "\">" .
@@ -1442,13 +1444,13 @@
 
 					$tmp_line = db_fetch_assoc($tmp_result);
 
-					$rv['content'] .= "<a target='_blank'
+					$rv['content'] .= "<a target='_blank' rel='noopener noreferrer'
 						href=' " . htmlspecialchars($tmp_line['site_url']) . "'>" .
 						$tmp_line['title'] . "</a>";
 
 					$rv['content'] .= "&nbsp;";
 
-					$rv['content'] .= "<a target='_blank' href='" . htmlspecialchars($tmp_line['feed_url']) . "'>";
+					$rv['content'] .= "<a target='_blank' rel='noopener noreferrer' href='" . htmlspecialchars($tmp_line['feed_url']) . "'>";
 					$rv['content'] .= "<img title='".__('Feed URL')."' class='tinyFeedIcon' src='images/pub_set.png'></a>";
 
 					$rv['content'] .= "</div>";
@@ -1957,7 +1959,7 @@
 
 				if ($player) array_push($entries_inline, $player);
 
-#				$entry .= " <a target=\"_blank\" href=\"" . htmlspecialchars($url) . "\">" .
+#				$entry .= " <a target=\"_blank\" href=\"" . htmlspecialchars($url) . "\" rel=\"noopener noreferrer\">" .
 #					$filename . " (" . $ctype . ")" . "</a>";
 
 				$entry = "<div onclick=\"openUrlPopup('".htmlspecialchars($url)."')\"
@@ -2005,7 +2007,7 @@
 										src=\"" .htmlspecialchars($entry["url"]) . "\"
 										" . $encsize . " /></p>";
 									} else {
-										$rv .= "<p><a target=\"_blank\"
+										$rv .= "<p><a target=\"_blank\" rel=\"noopener noreferrer\"
 										href=\"".htmlspecialchars($entry["url"])."\"
 										>" .htmlspecialchars($entry["url"]) . "</a></p>";
 									}

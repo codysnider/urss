@@ -59,12 +59,12 @@
 
 				$class = ($feedctr % 2) ? "even" : "odd";
 
-				$site_url = "<a target=\"_blank\"
+				$site_url = "<a target=\"_blank\" rel=\"noopener noreferrer\"
 							href=\"$site_url\">
 							<span class=\"fb_feedTitle\">".
 				htmlspecialchars($line["title"])."</span></a>";
 
-				$feed_url = "<a target=\"_blank\" class=\"fb_feedUrl\"
+				$feed_url = "<a target=\"_blank\" rel=\"noopener noreferrer\" class=\"fb_feedUrl\"
 							href=\"$feed_url\"><img src='images/pub_set.png'
 							style='vertical-align : middle'></a>";
 
@@ -87,12 +87,12 @@
 					$archived = '';
 				}
 
-				$site_url = "<a target=\"_blank\"
+				$site_url = "<a target=\"_blank\" rel=\"noopener noreferrer\"
 							href=\"$site_url\">
 							<span class=\"fb_feedTitle\">".
 				htmlspecialchars($line["title"])."</span></a>";
 
-				$feed_url = "<a target=\"_blank\" class=\"fb_feedUrl\"
+				$feed_url = "<a target=\"_blank\" rel=\"noopener noreferrer\" class=\"fb_feedUrl\"
 							href=\"$feed_url\"><img src='images/pub_set.png'
 							style='vertical-align : middle'></a>";
 
