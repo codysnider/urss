@@ -1945,7 +1945,7 @@
 			foreach ($result as $line) {
 
 				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ENCLOSURE_ENTRY) as $plugin) {
-					$line = $plugin->hook_render_enclosure($line);
+					$line = $plugin->hook_enclosure_entry($line);
 				}
 				
 				$url = $line["content_url"];

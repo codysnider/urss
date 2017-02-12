@@ -26,7 +26,7 @@ class Af_Zz_ImgProxy extends Plugin {
 	function hook_enclosure_entry($enc) {
 		$proxy_all = $this->host->get($this, "proxy_all");
 
-		$enc["url"] = $this->rewrite_url_if_needed($enc["url"], $proxy_all);
+		$enc["content_url"] = $this->rewrite_url_if_needed($enc["content_url"], $proxy_all);
 
 		return $enc;
 	}
