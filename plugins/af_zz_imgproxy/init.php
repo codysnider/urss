@@ -18,8 +18,17 @@ class Af_Zz_ImgProxy extends Plugin {
 		$host->add_hook($host::HOOK_RENDER_ARTICLE, $this);
 		$host->add_hook($host::HOOK_RENDER_ARTICLE_CDM, $this);
 		$host->add_hook($host::HOOK_RENDER_ARTICLE_API, $this);
+		$host->add_hook($host::HOOK_ENCLOSURE_ENTRY, $this);
 
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
+	}
+
+	function hook_enclosure_entry($enc) {
+		$proxy_all = $this->host->get($this, "proxy_all");
+
+		$enc["url"] = $this->rewrite_url_if_needed($enc["url"], $proxy_all);
+
+		return $enc;
 	}
 
 	function hook_render_article($article) {
