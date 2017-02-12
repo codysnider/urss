@@ -100,7 +100,7 @@ class Share extends Plugin {
 			$url_path .= "/public.php?op=share&key=$uuid";
 
 			print "<div class=\"tagCloudContainer\">";
-			print "<a id='gen_article_url' href='$url_path' target='_blank'>$url_path</a>";
+			print "<a id='gen_article_url' href='$url_path' target='_blank' rel='noopener noreferrer'>$url_path</a>";
 			print "</div>";
 
 			/* if (!label_find_id(__('Shared'), $_SESSION["uid"]))
