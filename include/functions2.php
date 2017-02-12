@@ -1998,7 +1998,7 @@
 						} else {
 
 							if (preg_match("/image/", $entry["type"]) ||
-									preg_match("/\.(jpg|png|gif|bmp)/i", $entry["filename"])) {
+									preg_match("/\.(jpe?g|png|gif|bmp)/i", $entry["filename"])) {
 
 									if (!$hide_images) {
 										$encsize = '';
