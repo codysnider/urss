@@ -78,15 +78,15 @@ class Af_Zz_ImgProxy extends Plugin {
 				global $fetch_last_error_content;
 
 				if (function_exists("imagecreate")) {
-					$img = imagecreate(400, 75);
+					$img = imagecreate(450, 75);
 
 					$bg = imagecolorallocate($img, 255, 255, 255);
 					$textcolor = imagecolorallocate($img, 255, 0, 0);
 
-					imagerectangle($img, 0, 0, 400-1, 75-1, $textcolor);
+					imagerectangle($img, 0, 0, 450-1, 75-1, $textcolor);
 
 					imagestring($img, 5, 5, 5, "Proxy request failed", $textcolor);
-					imagestring($img, 5, 5, 30, $url, $textcolor);
+					imagestring($img, 5, 5, 30, truncate_middle($url, 46, "..."), $textcolor);
 					imagestring($img, 5, 5, 55, "HTTP Code: $fetch_last_error_code", $textcolor);
 
 					header("Content-type: image/png");
