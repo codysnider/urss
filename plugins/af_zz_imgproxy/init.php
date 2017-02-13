@@ -63,7 +63,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 			readfile($local_filename);
 		} else {
-			$data = fetch_file_contents(array("url" => $url));
+			$data = fetch_file_contents(array("url" => $url, "useragent" => "Mozilla/5.0"));
 
 			if ($data) {
 				if (file_put_contents($local_filename, $data)) {
@@ -72,6 +72,37 @@ class Af_Zz_ImgProxy extends Plugin {
 				}
 
 				print $data;
+			} else {
+				global $fetch_last_error;
+				global $fetch_last_error_code;
+				global $fetch_last_error_content;
+
+				if (function_exists("imagecreate")) {
+					$img = imagecreate(400, 75);
+
+					$bg = imagecolorallocate($img, 255, 255, 255);
+					$textcolor = imagecolorallocate($img, 255, 0, 0);
+
+					imagerectangle($img, 0, 0, 400-1, 75-1, $textcolor);
+
+					imagestring($img, 5, 5, 5, "Proxy request failed", $textcolor);
+					imagestring($img, 5, 5, 30, $url, $textcolor);
+					imagestring($img, 5, 5, 55, "HTTP Code: $fetch_last_error_code", $textcolor);
+
+					header("Content-type: image/png");
+					print imagepng($img);
+					imagedestroy($img);
+
+				} else {
+					header("Content-type: text/html");
+
+					http_response_code(400);
+
+					print "<h1>Proxy request failed.</h1>";
+					print "<p>Fetch error $fetch_last_error ($fetch_last_error_code)</p>";
+					print "<p>URL: $url</p>";
+					print "<textarea cols='80' rows='25'>" . htmlspecialchars($fetch_last_error_content) . "</textarea>";
+				}
 			}
 		}
 	}
