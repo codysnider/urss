@@ -27,7 +27,7 @@ class Af_Zz_ImgProxy extends Plugin {
 		if (preg_match("/image/", $enc["content_type"]) || preg_match("/\.(jpe?g|png|gif|bmp)$/i", $enc["filename"])) {
 			$proxy_all = $this->host->get($this, "proxy_all");
 
-			$enc["content_url"] = $this->rewrite_url_if_needed($enc["content_url"], $proxy_all);
+			$enc["content_url"] = $this->rewrite_url_if_needed($enc["content_url"], 0, $proxy_all);
 		}
 
 		return $enc;
