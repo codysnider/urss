@@ -1492,8 +1492,7 @@ function cdmCollapseArticle(event, id, unmark) {
 		var elem = $("CICD-" + id);
 
 		if (elem && row) {
-			var collapse = $$("div#RROW-" + id +
-				" span[class='collapseBtn']")[0];
+			var collapse = row.select("span[class='collapseBtn']")[0];
 
 		  	Element.hide(elem);
 			Element.show("CEXC-" + id);
@@ -1531,7 +1530,9 @@ function cdmExpandArticle(id, noexpand) {
 	try {
 		console.log("cdmExpandArticle " + id);
 
-		if (!$("RROW-" + id)) return false;
+		var row = $("RROW-" + id);
+
+		if (!row) return false;
 
 		var oldrow = $("RROW-" + getActiveArticleId());
 
@@ -1542,11 +1543,10 @@ function cdmExpandArticle(id, noexpand) {
 
 		selectArticles("none");
 
-		var old_offset = $("RROW-" + id).offsetTop;
+		var old_offset = row.offsetTop;
 
 		if (getActiveArticleId() && elem && !getInitParam("cdm_expanded")) {
-			var collapse = $$("div#RROW-" + getActiveArticleId() +
-				" span[class='collapseBtn']")[0];
+			var collapse = oldrow.select("span[class='collapseBtn']")[0];
 
 		  	Element.hide(elem);
 			Element.show("CEXC-" + getActiveArticleId());
@@ -1559,8 +1559,7 @@ function cdmExpandArticle(id, noexpand) {
 
 		elem = $("CICD-" + id);
 
-		var collapse = $$("div#RROW-" + id +
-				" span[class='collapseBtn']")[0];
+		var collapse = row.select("span[class='collapseBtn']")[0];
 
 		var cencw = $("CENCW-" + id);
 
@@ -1576,7 +1575,7 @@ function cdmExpandArticle(id, noexpand) {
 			Element.show(collapse);
 		}
 
-		var new_offset = $("RROW-" + id).offsetTop;
+		var new_offset = row.offsetTop;
 
 		if (old_offset > new_offset)
 			$("headlines-frame").scrollTop -= (old_offset-new_offset);
@@ -1589,7 +1588,7 @@ function cdmExpandArticle(id, noexpand) {
 		}
 
 		toggleSelected(id);
-		$("RROW-" + id).addClassName("active");
+		row.addClassName("active");
 
 		PluginHost.run(PluginHost.HOOK_ARTICLE_EXPANDED, id);
 
