@@ -2074,6 +2074,13 @@
 		return $parts['scheme'] . "://" . $parts['host'] . $parts['path'];
 	}
 
+	function cleanup_url_path($path) {
+		$path = str_replace("/./", "/", $path);
+		$path = str_replace("//", "/", $path);
+
+		return $path;
+	}
+
 	/**
 	 * Converts a (possibly) relative URL to a absolute one.
 	 *
@@ -2094,6 +2101,7 @@
 		} else if (strpos($rel_url, "/") === 0) {
 			$parts = parse_url($url);
 			$parts['path'] = $rel_url;
+			$parts['path'] = cleanup_url_path($parts['path']);
 
 			return build_url($parts);
 
@@ -2108,6 +2116,7 @@
 				$dir !== '/' && $dir .= '/';
 			}
 			$parts['path'] = $dir . $rel_url;
+			$parts['path'] = cleanup_url_path($parts['path']);
 
 			return build_url($parts);
 		}
