@@ -1015,6 +1015,10 @@ span.collapseBtn {
 	cursor : pointer;
 }
 
+span.collapseBtn img {
+	vertical-align : middle;
+}
+
 div.postContent h1 {
 	font-size : 16px;
 }
