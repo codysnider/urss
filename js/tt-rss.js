@@ -226,6 +226,7 @@ function init() {
 				"dojo/parser",
 				"dojo/_base/loader",
 				"dojo/_base/html",
+				"dojo/query",
 				"dijit/ProgressBar",
 				"dijit/ColorPalette",
 				"dijit/Dialog",

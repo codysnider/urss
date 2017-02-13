@@ -484,7 +484,7 @@ class Feeds extends Handler_Protected {
 					$mouseover_attrs = "onmouseover='postMouseIn(event, $id)'
 						onmouseout='postMouseOut($id)'";
 
-					$reply['content'] .= "<div class='hl $class' data-orig-feed-id='$feed_id' data-article-id='$id' id='RROW-$id' $mouseover_attrs>";
+					$reply['content'] .= "<div class='hl hlMenuAttach $class' data-orig-feed-id='$feed_id' data-article-id='$id' id='RROW-$id' $mouseover_attrs>";
 
 					$reply['content'] .= "<div class='hlLeft'>";
 
@@ -613,7 +613,7 @@ class Feeds extends Handler_Protected {
 
 					$reply['content'] .= "<span id=\"RTITLE-$id\"
 						onclick=\"return cdmClicked(event, $id);\"
-						class=\"titleWrap $hlc_suffix\">
+						class=\"titleWrap hlMenuAttach $hlc_suffix\">
 						<a class=\"title $hlc_suffix\"
 						title=\"".htmlspecialchars($line["title"])."\"
 						target=\"_blank\" rel=\"noopener noreferrer\" href=\"".
