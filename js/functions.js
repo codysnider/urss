@@ -66,7 +66,7 @@ function exception_error(location, e, ext_info) {
 			"<pre>" + msg + "</pre>";
 
 		content += "<form name=\"exceptionForm\" id=\"exceptionForm\" target=\"_blank\" "+
-		  "action=\"http://tt-rss.org/report.php\" method=\"POST\">";
+		  "action=\"https://tt-rss.org/report.php\" method=\"POST\">";
 
 		content += "<textarea style=\"display : none\" name=\"message\">" + msg + "</textarea>";
 		content += "<textarea style=\"display : none\" name=\"params\">N/A</textarea>";
