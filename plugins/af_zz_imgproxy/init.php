@@ -18,7 +18,6 @@ class Af_Zz_ImgProxy extends Plugin {
 		$host->add_hook($host::HOOK_RENDER_ARTICLE, $this);
 		$host->add_hook($host::HOOK_RENDER_ARTICLE_CDM, $this);
 		$host->add_hook($host::HOOK_ENCLOSURE_ENTRY, $this);
-		//$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 	}
@@ -31,10 +30,6 @@ class Af_Zz_ImgProxy extends Plugin {
 		}
 
 		return $enc;
-	}
-
-	function hook_article_filter($article) {
-		return $this->hook_render_article_cdm($article);
 	}
 
 	function hook_render_article($article) {
