@@ -18,6 +18,7 @@ class Af_Zz_ImgProxy extends Plugin {
 		$host->add_hook($host::HOOK_RENDER_ARTICLE, $this);
 		$host->add_hook($host::HOOK_RENDER_ARTICLE_CDM, $this);
 		$host->add_hook($host::HOOK_ENCLOSURE_ENTRY, $this);
+		//$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 	}
@@ -30,6 +31,10 @@ class Af_Zz_ImgProxy extends Plugin {
 		}
 
 		return $enc;
+	}
+
+	function hook_article_filter($article) {
+		return $this->hook_render_article_cdm($article);
 	}
 
 	function hook_render_article($article) {
@@ -63,7 +68,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 			readfile($local_filename);
 		} else {
-			$data = fetch_file_contents(array("url" => $url, "useragent" => "Mozilla/5.0"));
+			$data = fetch_file_contents(array("url" => $url));
 
 			if ($data) {
 				if (file_put_contents($local_filename, $data)) {
@@ -77,7 +82,7 @@ class Af_Zz_ImgProxy extends Plugin {
 				global $fetch_last_error_code;
 				global $fetch_last_error_content;
 
-				if (function_exists("imagecreate")) {
+				if (function_exists("imagecreate") && !isset($_REQUEST["text"])) {
 					$img = imagecreate(450, 75);
 
 					$bg = imagecolorallocate($img, 255, 255, 255);
@@ -121,7 +126,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 		if (($scheme != 'https' && $scheme != "") || $is_remote) {
 			if (strpos($url, "data:") !== 0) {
-				$url = "public.php?op=pluginhandler&plugin=af_zz_imgproxy&pmethod=imgproxy&kind=$kind&url=" .
+				$url = get_self_url_prefix() . "/public.php?op=pluginhandler&plugin=af_zz_imgproxy&pmethod=imgproxy&kind=$kind&url=" .
 					urlencode($url);
 			}
 		}
@@ -144,6 +149,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 				if ($new_src != $img->getAttribute("src")) {
 					$img->setAttribute("src", $new_src);
+					$img->removeAttribute("srcset");
 
 					$need_saving = true;
 				}
