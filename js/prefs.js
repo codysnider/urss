@@ -205,10 +205,10 @@ function editFilter(id) {
 			addAction: function() { addFilterAction(); },
 			addRule: function() { addFilterRule(); },
 			deleteAction: function() {
-				$$("#filterDlg_Actions li.[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
+				$$("#filterDlg_Actions li[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
 			},
 			deleteRule: function() {
-				$$("#filterDlg_Matches li.[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
+				$$("#filterDlg_Matches li[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
 			},
 			execute: function() {
 				if (this.validate()) {
