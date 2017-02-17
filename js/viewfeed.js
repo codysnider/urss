@@ -1830,19 +1830,6 @@ function initFloatingMenu() {
 				targetNodeIds: ["floatingTitle"]
 			});
 
-			var tmph = dojo.connect(menu, '_openMyself', function (event) {
-				var callerNode = event.target, match = null, tries = 0;
-
-				while (match == null && callerNode && tries <= 3) {
-					match = callerNode.getAttribute("data-article-id");
-					callerNode = callerNode.parentNode;
-					++tries;
-				}
-
-				if (match) this.callerRowId = match;
-
-			});
-
 			headlinesMenuCommon(menu);
 
 			menu.startup();
@@ -1859,13 +1846,13 @@ function headlinesMenuCommon(menu) {
 		menu.addChild(new dijit.MenuItem({
 			label: __("Open original article"),
 			onClick: function(event) {
-				openArticleInNewWindow(this.getParent().callerRowId);
+				openArticleInNewWindow(this.getParent().currentTarget.getAttribute("data-article-id"));
 			}}));
 
 		menu.addChild(new dijit.MenuItem({
 			label: __("Display article URL"),
 			onClick: function(event) {
-				displayArticleUrl(this.getParent().callerRowId);
+				displayArticleUrl(this.getParent().currentTarget.getAttribute("data-article-id"));
 			}}));
 
 		menu.addChild(new dijit.MenuSeparator());
@@ -1873,9 +1860,10 @@ function headlinesMenuCommon(menu) {
 		menu.addChild(new dijit.MenuItem({
 			label: __("Toggle unread"),
 			onClick: function(event) {
+
 				var ids = getSelectedArticleIds2();
 				// cast to string
-				var id = (this.getParent().callerRowId) + "";
+				var id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 				ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 				selectionToggleUnread(undefined, false, true, ids);
@@ -1886,7 +1874,7 @@ function headlinesMenuCommon(menu) {
 			onClick: function(event) {
 				var ids = getSelectedArticleIds2();
 				// cast to string
-				var id = (this.getParent().callerRowId) + "";
+				var id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 				ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 				selectionToggleMarked(undefined, false, true, ids);
@@ -1897,7 +1885,7 @@ function headlinesMenuCommon(menu) {
 			onClick: function(event) {
 				var ids = getSelectedArticleIds2();
 				// cast to string
-				var id = (this.getParent().callerRowId) + "";
+				var id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 				ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 				selectionTogglePublished(undefined, false, true, ids);
@@ -1908,13 +1896,13 @@ function headlinesMenuCommon(menu) {
 		menu.addChild(new dijit.MenuItem({
 			label: __("Mark above as read"),
 			onClick: function(event) {
-				catchupRelativeToArticle(0, this.getParent().callerRowId);
+				catchupRelativeToArticle(0, this.getParent().currentTarget.getAttribute("data-article-id"));
 				}}));
 
 		menu.addChild(new dijit.MenuItem({
 			label: __("Mark below as read"),
 			onClick: function(event) {
-				catchupRelativeToArticle(1, this.getParent().callerRowId);
+				catchupRelativeToArticle(1, this.getParent().currentTarget.getAttribute("data-article-id"));
 				}}));
 
 
@@ -1938,9 +1926,10 @@ function headlinesMenuCommon(menu) {
 					label: name,
 					labelId: bare_id,
 					onClick: function(event) {
+
 						var ids = getSelectedArticleIds2();
 						// cast to string
-						var id = (this.getParent().ownerMenu.callerRowId) + "";
+						var id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
 
 						ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
@@ -1953,7 +1942,7 @@ function headlinesMenuCommon(menu) {
 					onClick: function(event) {
 						var ids = getSelectedArticleIds2();
 						// cast to string
-						var id = (this.getParent().ownerMenu.callerRowId) + "";
+						var id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
 
 						ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
@@ -1990,20 +1979,6 @@ function initHeadlinesMenu() {
 				selector: ".hlMenuAttach"
 			});
 
-			var tmph = dojo.connect(menu, '_openMyself', function (event) {
-				var callerNode = event.target, match = null, tries = 0;
-
-				while (match == null && callerNode && tries <= 3) {
-
-					match = callerNode.getAttribute("data-article-id")
-					callerNode = callerNode.parentNode;
-					++tries;
-				}
-
-				if (match) this.callerRowId = match;
-
-			});
-
 			headlinesMenuCommon(menu);
 
 			menu.startup();
@@ -2019,25 +1994,12 @@ function initHeadlinesMenu() {
 				selector: "div.cdmFeedTitle"
 			});
 
-			var tmph = dojo.connect(menu, '_openMyself', function (event) {
-				var callerNode = event.target, match = null, tries = 0;
-
-				while (match == null && callerNode && tries <= 3) {
-					match = callerNode.getAttribute("data-feed-id")
-					callerNode = callerNode.parentNode;
-					++tries;
-				}
-
-				if (match) this.callerRowId = match;
-
-			});
-
 			menu.addChild(new dijit.MenuItem({
 				label: __("Select articles in group"),
 				onClick: function (event) {
 					selectArticles("all",
 						"#headlines-frame > div[id*=RROW]" +
-						"[data-orig-feed-id='" + menu.callerRowId + "']");
+						"[data-orig-feed-id='" + this.getParent().currentTarget.getAttribute("data-feed-id") + "']");
 
 				}
 			}));
@@ -2048,7 +2010,7 @@ function initHeadlinesMenu() {
 					selectArticles("none");
 					selectArticles("all",
 						"#headlines-frame > div[id*=RROW]" +
-						"[data-orig-feed-id='" + menu.callerRowId + "']");
+						"[data-orig-feed-id='" + this.getParent().currentTarget.getAttribute("data-feed-id") + "']");
 
 					catchupSelection();
 				}
@@ -2057,14 +2019,14 @@ function initHeadlinesMenu() {
 			menu.addChild(new dijit.MenuItem({
 				label: __("Mark feed as read"),
 				onClick: function (event) {
-					catchupFeedInGroup(menu.callerRowId);
+					catchupFeedInGroup(this.getParent().currentTarget.getAttribute("data-feed-id"));
 				}
 			}));
 
 			menu.addChild(new dijit.MenuItem({
 				label: __("Edit feed"),
 				onClick: function (event) {
-					editFeed(menu.callerRowId);
+					editFeed(this.getParent().currentTarget.getAttribute("data-feed-id"));
 				}
 			}));
 

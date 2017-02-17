@@ -611,9 +611,11 @@ class Feeds extends Handler_Protected {
 						}
 					}
 
+					// data-article-id included for context menu
 					$reply['content'] .= "<span id=\"RTITLE-$id\"
 						onclick=\"return cdmClicked(event, $id);\"
-						class=\"titleWrap hlMenuAttach $hlc_suffix\">
+						data-article-id=\"$id\"
+						class=\"titleWrap hlMenuAttach $hlc_suffix\">						
 						<a class=\"title $hlc_suffix\"
 						title=\"".htmlspecialchars($line["title"])."\"
 						target=\"_blank\" rel=\"noopener noreferrer\" href=\"".
