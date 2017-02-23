@@ -66,7 +66,7 @@
 		<div class="floatingLogo"><img src="images/logo_small.png"></div>
 		<h1><?php echo __("Tiny Tiny RSS data update script.") ?></h1>
 
-		<?php print_error("Please run this script from the command line. Use option \"-help\" to display command help if this error is displayed erroneously."); ?>
+		<?php print_error("Please run this script from the command line. Use option \"--help\" to display command help if this error is displayed erroneously."); ?>
 
 		</body></html>
 	<?php
@@ -423,7 +423,7 @@
 
 			$auth_pass = db_escape_string(decrypt_string($line["auth_pass"]));
 
-			db_query("UPDATE ttrss_feeds SET auth_pass_encrypted = false, auth_pass = '$auth_pass' 
+			db_query("UPDATE ttrss_feeds SET auth_pass_encrypted = false, auth_pass = '$auth_pass'
 				WHERE id = " . $line["id"]);
 
 			++$total;
