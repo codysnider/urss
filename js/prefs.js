@@ -25,217 +25,208 @@ function updateFeedList(sort_key) {
 }
 
 function checkInactiveFeeds() {
-	try {
-		new Ajax.Request("backend.php", {
-			parameters: "?op=pref-feeds&method=getinactivefeeds",
-			onComplete: function(transport) {
-				if (parseInt(transport.responseText) > 0) {
-					Element.show(dijit.byId("pref_feeds_inactive_btn").domNode);
-				}
-			} });
-
-	} catch (e) {
-		exception_error("checkInactiveFeeds", e);
-	}
+	new Ajax.Request("backend.php", {
+		parameters: "?op=pref-feeds&method=getinactivefeeds",
+		onComplete: function (transport) {
+			if (parseInt(transport.responseText) > 0) {
+				Element.show(dijit.byId("pref_feeds_inactive_btn").domNode);
+			}
+		}
+	});
 }
 
 function updateUsersList(sort_key) {
-	try {
-		var user_search = $("user_search");
-		var search = "";
-		if (user_search) { search = user_search.value; }
-
-		var query = "?op=pref-users&sort="
-			+ param_escape(sort_key) +
-			"&search=" + param_escape(search);
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-				dijit.byId('userConfigTab').attr('content', transport.responseText);
-				selectTab("userConfig", true)
-				notify("");
-			} });
-
-	} catch (e) {
-		exception_error("updateUsersList", e);
+	var user_search = $("user_search");
+	var search = "";
+	if (user_search) {
+		search = user_search.value;
 	}
+
+	var query = "?op=pref-users&sort="
+		+ param_escape(sort_key) +
+		"&search=" + param_escape(search);
+
+	new Ajax.Request("backend.php", {
+		parameters: query,
+		onComplete: function (transport) {
+			dijit.byId('userConfigTab').attr('content', transport.responseText);
+			selectTab("userConfig", true)
+			notify("");
+		}
+	});
 }
 
 function addUser() {
+	var login = prompt(__("Please enter login:"), "");
 
-	try {
-
-		var login = prompt(__("Please enter login:"), "");
-
-		if (login == null) {
-			return false;
-		}
-
-		if (login == "") {
-			alert(__("Can't create user: no login specified."));
-			return false;
-		}
-
-		notify_progress("Adding user...");
-
-		var query = "?op=pref-users&method=add&login=" +
-			param_escape(login);
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-				notify_callback2(transport);
-				updateUsersList();
-			} });
-
-	} catch (e) {
-		exception_error("addUser", e);
+	if (login == null) {
+		return false;
 	}
+
+	if (login == "") {
+		alert(__("Can't create user: no login specified."));
+		return false;
+	}
+
+	notify_progress("Adding user...");
+
+	var query = "?op=pref-users&method=add&login=" +
+		param_escape(login);
+
+	new Ajax.Request("backend.php", {
+		parameters: query,
+		onComplete: function (transport) {
+			notify_callback2(transport);
+			updateUsersList();
+		}
+	});
+
 }
 
 function editUser(id, event) {
 
-	try {
-		var query = "backend.php?op=pref-users&method=edit&id=" +
-			param_escape(id);
+	var query = "backend.php?op=pref-users&method=edit&id=" +
+		param_escape(id);
 
-		if (dijit.byId("userEditDlg"))
-			dijit.byId("userEditDlg").destroyRecursive();
+	if (dijit.byId("userEditDlg"))
+		dijit.byId("userEditDlg").destroyRecursive();
 
-		dialog = new dijit.Dialog({
-			id: "userEditDlg",
-			title: __("User Editor"),
-			style: "width: 600px",
-			execute: function() {
-				if (this.validate()) {
-					notify_progress("Saving data...", true);
+	dialog = new dijit.Dialog({
+		id: "userEditDlg",
+		title: __("User Editor"),
+		style: "width: 600px",
+		execute: function () {
+			if (this.validate()) {
+				notify_progress("Saving data...", true);
 
-					var query = dojo.formToQuery("user_edit_form");
+				var query = dojo.formToQuery("user_edit_form");
 
-					new Ajax.Request("backend.php", {
-						parameters: query,
-						onComplete: function(transport) {
-							dialog.hide();
-							updateUsersList();
-						}});
-				}
-			},
-			href: query});
+				new Ajax.Request("backend.php", {
+					parameters: query,
+					onComplete: function (transport) {
+						dialog.hide();
+						updateUsersList();
+					}
+				});
+			}
+		},
+		href: query
+	});
 
-		dialog.show();
-
-	} catch (e) {
-		exception_error("editUser", e);
-	}
-
+	dialog.show();
 }
 
 function editFilter(id) {
-	try {
 
-		var query = "backend.php?op=pref-filters&method=edit&id=" + param_escape(id);
+	var query = "backend.php?op=pref-filters&method=edit&id=" + param_escape(id);
 
-		if (dijit.byId("feedEditDlg"))
-			dijit.byId("feedEditDlg").destroyRecursive();
+	if (dijit.byId("feedEditDlg"))
+		dijit.byId("feedEditDlg").destroyRecursive();
 
-		if (dijit.byId("filterEditDlg"))
-			dijit.byId("filterEditDlg").destroyRecursive();
+	if (dijit.byId("filterEditDlg"))
+		dijit.byId("filterEditDlg").destroyRecursive();
 
-		dialog = new dijit.Dialog({
-			id: "filterEditDlg",
-			title: __("Edit Filter"),
-			style: "width: 600px",
+	dialog = new dijit.Dialog({
+		id: "filterEditDlg",
+		title: __("Edit Filter"),
+		style: "width: 600px",
 
-			test: function() {
-				var query = "backend.php?" + dojo.formToQuery("filter_edit_form") + "&savemode=test";
+		test: function () {
+			var query = "backend.php?" + dojo.formToQuery("filter_edit_form") + "&savemode=test";
 
-				editFilterTest(query);
-			},
-			selectRules: function(select) {
-				$$("#filterDlg_Matches input[type=checkbox]").each(function(e) {
-					e.checked = select;
-					if (select)
-						e.parentNode.addClassName("Selected");
-					else
-						e.parentNode.removeClassName("Selected");
+			editFilterTest(query);
+		},
+		selectRules: function (select) {
+			$$("#filterDlg_Matches input[type=checkbox]").each(function (e) {
+				e.checked = select;
+				if (select)
+					e.parentNode.addClassName("Selected");
+				else
+					e.parentNode.removeClassName("Selected");
+			});
+		},
+		selectActions: function (select) {
+			$$("#filterDlg_Actions input[type=checkbox]").each(function (e) {
+				e.checked = select;
+
+				if (select)
+					e.parentNode.addClassName("Selected");
+				else
+					e.parentNode.removeClassName("Selected");
+
+			});
+		},
+		editRule: function (e) {
+			var li = e.parentNode;
+			var rule = li.getElementsByTagName("INPUT")[1].value;
+			addFilterRule(li, rule);
+		},
+		editAction: function (e) {
+			var li = e.parentNode;
+			var action = li.getElementsByTagName("INPUT")[1].value;
+			addFilterAction(li, action);
+		},
+		removeFilter: function () {
+			var msg = __("Remove filter?");
+
+			if (confirm(msg)) {
+				this.hide();
+
+				notify_progress("Removing filter...");
+
+				var id = this.attr('value').id;
+
+				var query = "?op=pref-filters&method=remove&ids=" +
+					param_escape(id);
+
+				new Ajax.Request("backend.php", {
+					parameters: query,
+					onComplete: function (transport) {
+						updateFilterList();
+					}
 				});
-			},
-			selectActions: function(select) {
-				$$("#filterDlg_Actions input[type=checkbox]").each(function(e) {
-					e.checked = select;
+			}
+		},
+		addAction: function () {
+			addFilterAction();
+		},
+		addRule: function () {
+			addFilterRule();
+		},
+		deleteAction: function () {
+			$$("#filterDlg_Actions li[class*=Selected]").each(function (e) {
+				e.parentNode.removeChild(e)
+			});
+		},
+		deleteRule: function () {
+			$$("#filterDlg_Matches li[class*=Selected]").each(function (e) {
+				e.parentNode.removeChild(e)
+			});
+		},
+		execute: function () {
+			if (this.validate()) {
 
-					if (select)
-						e.parentNode.addClassName("Selected");
-					else
-						e.parentNode.removeClassName("Selected");
+				notify_progress("Saving data...", true);
 
+				var query = dojo.formToQuery("filter_edit_form");
+
+				console.log(query);
+
+				new Ajax.Request("backend.php", {
+					parameters: query,
+					onComplete: function (transport) {
+						dialog.hide();
+						updateFilterList();
+					}
 				});
-			},
-			editRule: function(e) {
-				var li = e.parentNode;
-				var rule = li.getElementsByTagName("INPUT")[1].value;
-				addFilterRule(li, rule);
-			},
-			editAction: function(e) {
-				var li = e.parentNode;
-				var action = li.getElementsByTagName("INPUT")[1].value;
-				addFilterAction(li, action);
-			},
-			removeFilter: function() {
-				var msg = __("Remove filter?");
+			}
+		},
+		href: query
+	});
 
-				if (confirm(msg)) {
-					this.hide();
-
-					notify_progress("Removing filter...");
-
-					var id = this.attr('value').id;
-
-					var query = "?op=pref-filters&method=remove&ids="+
-						param_escape(id);
-
-					new Ajax.Request("backend.php",	{
-						parameters: query,
-						onComplete: function(transport) {
-							updateFilterList();
-						} });
-				}
-			},
-			addAction: function() { addFilterAction(); },
-			addRule: function() { addFilterRule(); },
-			deleteAction: function() {
-				$$("#filterDlg_Actions li[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
-			},
-			deleteRule: function() {
-				$$("#filterDlg_Matches li[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
-			},
-			execute: function() {
-				if (this.validate()) {
-
-					notify_progress("Saving data...", true);
-
-					var query = dojo.formToQuery("filter_edit_form");
-
-					console.log(query);
-
-					new Ajax.Request("backend.php", {
-						parameters: query,
-						onComplete: function(transport) {
-							dialog.hide();
-							updateFilterList();
-						}});
-				}
-			},
-			href: query});
-
-		dialog.show();
-
-
-	} catch (e) {
-		exception_error("editFilter", e);
-	}
+	dialog.show();
 }
+
 
 function getSelectedLabels() {
 	var tree = dijit.byId("labelTree");
@@ -322,34 +313,29 @@ function removeSelectedLabels() {
 
 function removeSelectedUsers() {
 
-	try {
+	var sel_rows = getSelectedUsers();
 
-		var sel_rows = getSelectedUsers();
+	if (sel_rows.length > 0) {
 
-		if (sel_rows.length > 0) {
+		var ok = confirm(__("Remove selected users? Neither default admin nor your account will be removed."));
 
-			var ok = confirm(__("Remove selected users? Neither default admin nor your account will be removed."));
+		if (ok) {
+			notify_progress("Removing selected users...");
 
-			if (ok) {
-				notify_progress("Removing selected users...");
+			var query = "?op=pref-users&method=remove&ids=" +
+				param_escape(sel_rows.toString());
 
-				var query = "?op=pref-users&method=remove&ids="+
-					param_escape(sel_rows.toString());
+			new Ajax.Request("backend.php", {
+				parameters: query,
+				onComplete: function (transport) {
+					updateUsersList();
+				}
+			});
 
-				new Ajax.Request("backend.php", {
-					parameters: query,
-					onComplete: function(transport) {
-						updateUsersList();
-					} });
-
-			}
-
-		} else {
-			alert(__("No users are selected."));
 		}
 
-	} catch (e) {
-		exception_error("removeSelectedUsers", e);
+	} else {
+		alert(__("No users are selected."));
 	}
 
 	return false;
@@ -357,70 +343,59 @@ function removeSelectedUsers() {
 
 function removeSelectedFilters() {
 
-	try {
+	var sel_rows = getSelectedFilters();
 
-		var sel_rows = getSelectedFilters();
+	if (sel_rows.length > 0) {
 
-		if (sel_rows.length > 0) {
+		var ok = confirm(__("Remove selected filters?"));
 
-			var ok = confirm(__("Remove selected filters?"));
+		if (ok) {
+			notify_progress("Removing selected filters...");
 
-			if (ok) {
-				notify_progress("Removing selected filters...");
+			var query = "?op=pref-filters&method=remove&ids=" +
+				param_escape(sel_rows.toString());
 
-				var query = "?op=pref-filters&method=remove&ids="+
-					param_escape(sel_rows.toString());
-
-				new Ajax.Request("backend.php",	{
-						parameters: query,
-						onComplete: function(transport) {
-							updateFilterList();
-						} });
-			}
-		} else {
-			alert(__("No filters are selected."));
+			new Ajax.Request("backend.php", {
+				parameters: query,
+				onComplete: function (transport) {
+					updateFilterList();
+				}
+			});
 		}
-
-	} catch (e) {
-		exception_error("removeSelectedFilters", e);
+	} else {
+		alert(__("No filters are selected."));
 	}
 
 	return false;
 }
 
-
 function removeSelectedFeeds() {
 
-	try {
+	var sel_rows = getSelectedFeeds();
 
-		var sel_rows = getSelectedFeeds();
+	if (sel_rows.length > 0) {
 
-		if (sel_rows.length > 0) {
+		var ok = confirm(__("Unsubscribe from selected feeds?"));
 
-			var ok = confirm(__("Unsubscribe from selected feeds?"));
+		if (ok) {
 
-			if (ok) {
+			notify_progress("Unsubscribing from selected feeds...", true);
 
-				notify_progress("Unsubscribing from selected feeds...", true);
+			var query = "?op=pref-feeds&method=remove&ids=" +
+				param_escape(sel_rows.toString());
 
-				var query = "?op=pref-feeds&method=remove&ids="+
-					param_escape(sel_rows.toString());
+			console.log(query);
 
-				console.log(query);
-
-				new Ajax.Request("backend.php",	{
-					parameters: query,
-					onComplete: function(transport) {
-						updateFeedList();
-						} });
-			}
-
-		} else {
-			alert(__("No feeds are selected."));
+			new Ajax.Request("backend.php", {
+				parameters: query,
+				onComplete: function (transport) {
+					updateFeedList();
+				}
+			});
 		}
 
-	} catch (e) {
-		exception_error("removeSelectedFeeds", e);
+	} else {
+		alert(__("No feeds are selected."));
 	}
 
 	return false;
@@ -505,80 +480,70 @@ function editSelectedUser() {
 
 function resetSelectedUserPass() {
 
-	try {
+	var rows = getSelectedUsers();
 
-		var rows = getSelectedUsers();
+	if (rows.length == 0) {
+		alert(__("No users are selected."));
+		return;
+	}
 
-		if (rows.length == 0) {
-			alert(__("No users are selected."));
-			return;
-		}
+	if (rows.length > 1) {
+		alert(__("Please select only one user."));
+		return;
+	}
 
-		if (rows.length > 1) {
-			alert(__("Please select only one user."));
-			return;
-		}
+	var ok = confirm(__("Reset password of selected user?"));
 
-		var ok = confirm(__("Reset password of selected user?"));
+	if (ok) {
+		notify_progress("Resetting password for selected user...");
 
-		if (ok) {
-			notify_progress("Resetting password for selected user...");
+		var id = rows[0];
 
-			var id = rows[0];
+		var query = "?op=pref-users&method=resetPass&id=" +
+			param_escape(id);
 
-			var query = "?op=pref-users&method=resetPass&id=" +
-				param_escape(id);
+		new Ajax.Request("backend.php", {
+			parameters: query,
+			onComplete: function (transport) {
+				notify_info(transport.responseText, true);
+			}
+		});
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function(transport) {
-					notify_info(transport.responseText, true);
-				} });
-
-		}
-
-	} catch (e) {
-		exception_error("resetSelectedUserPass", e);
 	}
 }
 
 function selectedUserDetails() {
 
-	try {
+	var rows = getSelectedUsers();
 
-		var rows = getSelectedUsers();
-
-		if (rows.length == 0) {
-			alert(__("No users are selected."));
-			return;
-		}
-
-		if (rows.length > 1) {
-			alert(__("Please select only one user."));
-			return;
-		}
-
-		var id = rows[0];
-
-		var query = "backend.php?op=pref-users&method=userdetails&id=" + id;
-
-		if (dijit.byId("userDetailsDlg"))
-			dijit.byId("userDetailsDlg").destroyRecursive();
-
-		dialog = new dijit.Dialog({
-			id: "userDetailsDlg",
-			title: __("User details"),
-			style: "width: 600px",
-			execute: function() {
-				dialog.hide();
-			},
-			href: query});
-
-		dialog.show();
-
-	} catch (e) {
-		exception_error("selectedUserDetails", e);
+	if (rows.length == 0) {
+		alert(__("No users are selected."));
+		return;
 	}
+
+	if (rows.length > 1) {
+		alert(__("Please select only one user."));
+		return;
+	}
+
+	var id = rows[0];
+
+	var query = "backend.php?op=pref-users&method=userdetails&id=" + id;
+
+	if (dijit.byId("userDetailsDlg"))
+		dijit.byId("userDetailsDlg").destroyRecursive();
+
+	dialog = new dijit.Dialog({
+		id: "userDetailsDlg",
+		title: __("User details"),
+		style: "width: 600px",
+		execute: function () {
+			dialog.hide();
+		},
+		href: query
+	});
+
+	dialog.show();
 }
 
 
@@ -646,154 +611,149 @@ function editSelectedFeed() {
 }
 
 function editSelectedFeeds() {
+	var rows = getSelectedFeeds();
 
-	try {
-		var rows = getSelectedFeeds();
-
-		if (rows.length == 0) {
-			alert(__("No feeds are selected."));
-			return;
-		}
-
-		notify_progress("Loading, please wait...");
-
-		var query = "backend.php?op=pref-feeds&method=editfeeds&ids=" +
-			param_escape(rows.toString());
-
-		console.log(query);
-
-		if (dijit.byId("feedEditDlg"))
-			dijit.byId("feedEditDlg").destroyRecursive();
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-
-				notify("");
-
-				var dialog = new dijit.Dialog({
-					id: "feedEditDlg",
-					title: __("Edit Multiple Feeds"),
-					style: "width: 600px",
-					getChildByName: function (name) {
-						var rv = null;
-						this.getChildren().each(
-							function(child) {
-								if (child.name == name) {
-									rv = child;
-									return;
-								}
-							});
-						return rv;
-					},
-					toggleField: function (checkbox, elem, label) {
-						this.getChildByName(elem).attr('disabled', !checkbox.checked);
-
-						if ($(label))
-							if (checkbox.checked)
-								$(label).removeClassName('insensitive');
-							else
-								$(label).addClassName('insensitive');
-
-					},
-					execute: function() {
-						if (this.validate() && confirm(__("Save changes to selected feeds?"))) {
-							var query = dojo.objectToQuery(this.attr('value'));
-
-							/* Form.serialize ignores unchecked checkboxes */
-
-							if (!query.match("&private=") &&
-									this.getChildByName('private').attr('disabled') == false) {
-								query = query + "&private=false";
-							}
-
-							try {
-								if (!query.match("&cache_images=") &&
-										this.getChildByName('cache_images').attr('disabled') == false) {
-									query = query + "&cache_images=false";
-								}
-							} catch (e) { }
-
-							try {
-								if (!query.match("&hide_images=") &&
-										this.getChildByName('hide_images').attr('disabled') == false) {
-									query = query + "&hide_images=false";
-								}
-							} catch (e) { }
-
-							if (!query.match("&include_in_digest=") &&
-									this.getChildByName('include_in_digest').attr('disabled') == false) {
-								query = query + "&include_in_digest=false";
-							}
-
-							if (!query.match("&always_display_enclosures=") &&
-									this.getChildByName('always_display_enclosures').attr('disabled') == false) {
-								query = query + "&always_display_enclosures=false";
-							}
-
-							if (!query.match("&mark_unread_on_update=") &&
-									this.getChildByName('mark_unread_on_update').attr('disabled') == false) {
-								query = query + "&mark_unread_on_update=false";
-							}
-
-							console.log(query);
-
-							notify_progress("Saving data...", true);
-
-							new Ajax.Request("backend.php", {
-								parameters: query,
-								onComplete: function(transport) {
-									dialog.hide();
-									updateFeedList();
-							}});
-						}
-					},
-					content: transport.responseText});
-
-					dialog.show();
-
-			} });
-
-	} catch (e) {
-		exception_error("editSelectedFeeds", e);
+	if (rows.length == 0) {
+		alert(__("No feeds are selected."));
+		return;
 	}
+
+	notify_progress("Loading, please wait...");
+
+	var query = "backend.php?op=pref-feeds&method=editfeeds&ids=" +
+		param_escape(rows.toString());
+
+	console.log(query);
+
+	if (dijit.byId("feedEditDlg"))
+		dijit.byId("feedEditDlg").destroyRecursive();
+
+	new Ajax.Request("backend.php", {
+		parameters: query,
+		onComplete: function (transport) {
+
+			notify("");
+
+			var dialog = new dijit.Dialog({
+				id: "feedEditDlg",
+				title: __("Edit Multiple Feeds"),
+				style: "width: 600px",
+				getChildByName: function (name) {
+					var rv = null;
+					this.getChildren().each(
+						function (child) {
+							if (child.name == name) {
+								rv = child;
+								return;
+							}
+						});
+					return rv;
+				},
+				toggleField: function (checkbox, elem, label) {
+					this.getChildByName(elem).attr('disabled', !checkbox.checked);
+
+					if ($(label))
+						if (checkbox.checked)
+							$(label).removeClassName('insensitive');
+						else
+							$(label).addClassName('insensitive');
+
+				},
+				execute: function () {
+					if (this.validate() && confirm(__("Save changes to selected feeds?"))) {
+						var query = dojo.objectToQuery(this.attr('value'));
+
+						/* Form.serialize ignores unchecked checkboxes */
+
+						if (!query.match("&private=") &&
+							this.getChildByName('private').attr('disabled') == false) {
+							query = query + "&private=false";
+						}
+
+						try {
+							if (!query.match("&cache_images=") &&
+								this.getChildByName('cache_images').attr('disabled') == false) {
+								query = query + "&cache_images=false";
+							}
+						} catch (e) {
+						}
+
+						try {
+							if (!query.match("&hide_images=") &&
+								this.getChildByName('hide_images').attr('disabled') == false) {
+								query = query + "&hide_images=false";
+							}
+						} catch (e) {
+						}
+
+						if (!query.match("&include_in_digest=") &&
+							this.getChildByName('include_in_digest').attr('disabled') == false) {
+							query = query + "&include_in_digest=false";
+						}
+
+						if (!query.match("&always_display_enclosures=") &&
+							this.getChildByName('always_display_enclosures').attr('disabled') == false) {
+							query = query + "&always_display_enclosures=false";
+						}
+
+						if (!query.match("&mark_unread_on_update=") &&
+							this.getChildByName('mark_unread_on_update').attr('disabled') == false) {
+							query = query + "&mark_unread_on_update=false";
+						}
+
+						console.log(query);
+
+						notify_progress("Saving data...", true);
+
+						new Ajax.Request("backend.php", {
+							parameters: query,
+							onComplete: function (transport) {
+								dialog.hide();
+								updateFeedList();
+							}
+						});
+					}
+				},
+				content: transport.responseText
+			});
+
+			dialog.show();
+
+		}
+	});
 }
 
 function opmlImportComplete(iframe) {
-	try {
-		if (!iframe.contentDocument.body.innerHTML) return false;
+	if (!iframe.contentDocument.body.innerHTML) return false;
 
-		Element.show(iframe);
+	Element.show(iframe);
 
-		notify('');
+	notify('');
 
-		if (dijit.byId('opmlImportDlg'))
-			dijit.byId('opmlImportDlg').destroyRecursive();
+	if (dijit.byId('opmlImportDlg'))
+		dijit.byId('opmlImportDlg').destroyRecursive();
 
-		var content = iframe.contentDocument.body.innerHTML;
+	var content = iframe.contentDocument.body.innerHTML;
 
-		dialog = new dijit.Dialog({
-			id: "opmlImportDlg",
-			title: __("OPML Import"),
-			style: "width: 600px",
-			onCancel: function() {
-				updateFeedList();
-				updateFilterList();
-				updateLabelList();
-			},
-			execute: function() {
-				updateFeedList();
-				updateFilterList();
-				updateLabelList();
-				this.hide();
-			},
-			content: content});
+	dialog = new dijit.Dialog({
+		id: "opmlImportDlg",
+		title: __("OPML Import"),
+		style: "width: 600px",
+		onCancel: function () {
+			updateFeedList();
+			updateFilterList();
+			updateLabelList();
+		},
+		execute: function () {
+			updateFeedList();
+			updateFilterList();
+			updateLabelList();
+			this.hide();
+		},
+		content: content
+	});
 
-		dialog.show();
-
-	} catch (e) {
-		exception_error("opmlImportComplete", e);
-	}
+	dialog.show();
 }
 
 function opmlImport() {
@@ -854,142 +814,131 @@ function updateSystemList() {
 }
 
 function selectTab(id, noupdate, method) {
-	try {
-		if (!noupdate) {
-			notify_progress("Loading, please wait...");
+	if (!noupdate) {
+		notify_progress("Loading, please wait...");
 
-			if (id == "feedConfig") {
-				updateFeedList();
-			} else if (id == "filterConfig") {
-				updateFilterList();
-			} else if (id == "labelConfig") {
-				updateLabelList();
-			} else if (id == "genConfig") {
-				updatePrefsList();
-			} else if (id == "userConfig") {
-				updateUsersList();
-			} else if (id == "systemConfig") {
-				updateSystemList();
-			}
-
-			var tab = dijit.byId(id + "Tab");
-			dijit.byId("pref-tabs").selectChild(tab);
-
+		if (id == "feedConfig") {
+			updateFeedList();
+		} else if (id == "filterConfig") {
+			updateFilterList();
+		} else if (id == "labelConfig") {
+			updateLabelList();
+		} else if (id == "genConfig") {
+			updatePrefsList();
+		} else if (id == "userConfig") {
+			updateUsersList();
+		} else if (id == "systemConfig") {
+			updateSystemList();
 		}
 
-	} catch (e) {
-		exception_error("selectTab", e);
+		var tab = dijit.byId(id + "Tab");
+		dijit.byId("pref-tabs").selectChild(tab);
+
 	}
 }
 
 function init_second_stage() {
-	try {
+	document.onkeydown = pref_hotkey_handler;
+	loading_set_progress(50);
+	notify("");
 
-		document.onkeydown = pref_hotkey_handler;
-		loading_set_progress(50);
-		notify("");
+	var tab = getURLParam('tab');
 
-		var tab = getURLParam('tab');
-
-		if (tab) {
-			tab = dijit.byId(tab + "Tab");
-			if (tab) dijit.byId("pref-tabs").selectChild(tab);
-		}
-
-		var method = getURLParam('method');
-
-		if (method == 'editFeed') {
-			var param = getURLParam('methodparam');
-
-			window.setTimeout(function() { editFeed(param) }, 100);
-		}
-
-		setTimeout(hotkey_prefix_timeout, 5*1000);
-
-	} catch (e) {
-		exception_error("init_second_stage", e);
+	if (tab) {
+		tab = dijit.byId(tab + "Tab");
+		if (tab) dijit.byId("pref-tabs").selectChild(tab);
 	}
+
+	var method = getURLParam('method');
+
+	if (method == 'editFeed') {
+		var param = getURLParam('methodparam');
+
+		window.setTimeout(function() { editFeed(param) }, 100);
+	}
+
+	setTimeout(hotkey_prefix_timeout, 5*1000);
 }
 
 function init() {
+	window.onerror = function (message, filename, lineno, colno, error) {
+		report_error(message, filename, lineno, colno, error);
+	};
 
-	try {
+	require(["dojo/_base/kernel",
+		"dojo/ready",
+		"dojo/parser",
+		"dojo/_base/loader",
+		"dojo/_base/html",
+		"dijit/ColorPalette",
+		"dijit/Dialog",
+		"dijit/form/Button",
+		"dijit/form/CheckBox",
+		"dijit/form/DropDownButton",
+		"dijit/form/FilteringSelect",
+		"dijit/form/Form",
+		"dijit/form/RadioButton",
+		"dijit/form/ComboButton",
+		"dijit/form/Select",
+		"dijit/form/SimpleTextarea",
+		"dijit/form/TextBox",
+		"dijit/form/ValidationTextBox",
+		"dijit/InlineEditBox",
+		"dijit/layout/AccordionContainer",
+		"dijit/layout/AccordionPane",
+		"dijit/layout/BorderContainer",
+		"dijit/layout/ContentPane",
+		"dijit/layout/TabContainer",
+		"dijit/Menu",
+		"dijit/ProgressBar",
+		"dijit/Toolbar",
+		"dijit/Tree",
+		"dijit/tree/dndSource",
+		"dojo/data/ItemFileWriteStore",
+		"fox/PrefFeedTree",
+		"fox/PrefFilterTree",
+		"fox/PrefLabelTree"], function (dojo, ready, parser) {
 
-		require(["dojo/_base/kernel",
-			"dojo/ready",
-			"dojo/parser",
-			"dojo/_base/loader",
-			"dojo/_base/html",
-			"dijit/ColorPalette",
-			"dijit/Dialog",
-			"dijit/form/Button",
-			"dijit/form/CheckBox",
-			"dijit/form/DropDownButton",
-			"dijit/form/FilteringSelect",
-			"dijit/form/Form",
-			"dijit/form/RadioButton",
-			"dijit/form/ComboButton",
-			"dijit/form/Select",
-			"dijit/form/SimpleTextarea",
-			"dijit/form/TextBox",
-			"dijit/form/ValidationTextBox",
-			"dijit/InlineEditBox",
-			"dijit/layout/AccordionContainer",
-			"dijit/layout/AccordionPane",
-			"dijit/layout/BorderContainer",
-			"dijit/layout/ContentPane",
-			"dijit/layout/TabContainer",
-			"dijit/Menu",
-			"dijit/ProgressBar",
-			"dijit/Toolbar",
-			"dijit/Tree",
-			"dijit/tree/dndSource",
-			"dojo/data/ItemFileWriteStore",
-			"fox/PrefFeedTree",
-			"fox/PrefFilterTree",
-			"fox/PrefLabelTree" ], function (dojo, ready, parser) {
+		ready(function () {
+			try {
+				parser.parse();
 
-				ready(function() {
-					parser.parse();
+				loading_set_progress(50);
 
-					loading_set_progress(50);
+				var clientTzOffset = new Date().getTimezoneOffset() * 60;
 
-					var clientTzOffset = new Date().getTimezoneOffset() * 60;
-
-					new Ajax.Request("backend.php", {
-						parameters: {op: "rpc", method: "sanityCheck",
-							clientTzOffset: clientTzOffset },
-						onComplete: function(transport) {
-							backend_sanity_check_callback(transport);
-						} });
+				new Ajax.Request("backend.php", {
+					parameters: {
+						op: "rpc", method: "sanityCheck",
+						clientTzOffset: clientTzOffset
+					},
+					onComplete: function (transport) {
+						backend_sanity_check_callback(transport);
+					}
 				});
-			});
-
-	} catch (e) {
-		exception_error("init", e);
-	}
+			} catch (e) {
+				exception_error(e);
+			}
+		});
+	});
 }
 
+
 function validatePrefsReset() {
-	try {
-		var ok = confirm(__("Reset to defaults?"));
+	var ok = confirm(__("Reset to defaults?"));
 
-		if (ok) {
+	if (ok) {
 
-			query = "?op=pref-prefs&method=resetconfig";
-			console.log(query);
+		query = "?op=pref-prefs&method=resetconfig";
+		console.log(query);
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function(transport) {
-					updatePrefsList();
-					notify_info(transport.responseText);
-				} });
+		new Ajax.Request("backend.php", {
+			parameters: query,
+			onComplete: function(transport) {
+				updatePrefsList();
+				notify_info(transport.responseText);
+			} });
 
-		}
-
-	} catch (e) {
-		exception_error("validatePrefsReset", e);
 	}
 
 	return false;
@@ -997,71 +946,70 @@ function validatePrefsReset() {
 }
 
 function pref_hotkey_handler(e) {
+
+	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
+
+	var keycode = false;
+	var shift_key = false;
+
+	var cmdline = $('cmdline');
+
 	try {
+		shift_key = e.shiftKey;
+	} catch (e) {
 
-		if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
+	}
 
-		var keycode = false;
-		var shift_key = false;
+	if (window.event) {
+		keycode = window.event.keyCode;
+	} else if (e) {
+		keycode = e.which;
+	}
 
-		var cmdline = $('cmdline');
+	var keychar = String.fromCharCode(keycode);
 
-		try {
-			shift_key = e.shiftKey;
-		} catch (e) {
-
-		}
-
-		if (window.event) {
-			keycode = window.event.keyCode;
-		} else if (e) {
-			keycode = e.which;
-		}
-
-		var keychar = String.fromCharCode(keycode);
-
-		if (keycode == 27) { // escape
-			hotkey_prefix = false;
-		}
-
-		if (keycode == 16) return; // ignore lone shift
-		if (keycode == 17) return; // ignore lone ctrl
-
-		if (!shift_key) keychar = keychar.toLowerCase();
-
-		var hotkeys = getInitParam("hotkeys");
-
-		if (!hotkey_prefix && hotkeys[0].indexOf(keychar) != -1) {
-
-			var date = new Date();
-			var ts = Math.round(date.getTime() / 1000);
-
-			hotkey_prefix = keychar;
-			hotkey_prefix_pressed = ts;
-
-			cmdline.innerHTML = keychar;
-			Element.show(cmdline);
-
-			return true;
-		}
-
-		Element.hide(cmdline);
-
-		var hotkey = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
-		hotkey = hotkey_prefix ? hotkey_prefix + " " + hotkey : hotkey;
+	if (keycode == 27) { // escape
 		hotkey_prefix = false;
+	}
 
-		var hotkey_action = false;
-		var hotkeys = getInitParam("hotkeys");
+	if (keycode == 16) return; // ignore lone shift
+	if (keycode == 17) return; // ignore lone ctrl
 
-		for (sequence in hotkeys[1]) {
-			if (sequence == hotkey) {
-				hotkey_action = hotkeys[1][sequence];
-				break;
-			}
+	if (!shift_key) keychar = keychar.toLowerCase();
+
+	var hotkeys = getInitParam("hotkeys");
+
+	if (!hotkey_prefix && hotkeys[0].indexOf(keychar) != -1) {
+
+		var date = new Date();
+		var ts = Math.round(date.getTime() / 1000);
+
+		hotkey_prefix = keychar;
+		hotkey_prefix_pressed = ts;
+
+		cmdline.innerHTML = keychar;
+		Element.show(cmdline);
+
+		return true;
+	}
+
+	Element.hide(cmdline);
+
+	var hotkey = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
+	hotkey = hotkey_prefix ? hotkey_prefix + " " + hotkey : hotkey;
+	hotkey_prefix = false;
+
+	var hotkey_action = false;
+	var hotkeys = getInitParam("hotkeys");
+
+	for (sequence in hotkeys[1]) {
+		if (sequence == hotkey) {
+			hotkey_action = hotkeys[1][sequence];
+			break;
 		}
+	}
 
-		switch (hotkey_action) {
+	switch (hotkey_action) {
 		case "feed_subscribe":
 			quickAddFeed();
 			return false;
@@ -1076,34 +1024,26 @@ function pref_hotkey_handler(e) {
 			return false;
 		default:
 			console.log("unhandled action: " + hotkey_action + "; hotkey: " + hotkey);
-		}
-
-	} catch (e) {
-		exception_error("hotkey_handler", e);
 	}
 }
 
 function removeCategory(id, item) {
-	try {
 
-		var ok = confirm(__("Remove category %s? Any nested feeds would be placed into Uncategorized.").replace("%s", item.name));
+	var ok = confirm(__("Remove category %s? Any nested feeds would be placed into Uncategorized.").replace("%s", item.name));
 
-		if (ok) {
-			var query = "?op=pref-feeds&method=removeCat&ids="+
-				param_escape(id);
+	if (ok) {
+		var query = "?op=pref-feeds&method=removeCat&ids=" +
+			param_escape(id);
 
-			notify_progress("Removing category...");
+		notify_progress("Removing category...");
 
-			new Ajax.Request("backend.php",	{
-				parameters: query,
-				onComplete: function(transport) {
-					notify('');
-					updateFeedList();
-				} });
+		new Ajax.Request("backend.php", {
+			parameters: query,
+			onComplete: function (transport) {
+				notify('');
+				updateFeedList();
 			}
-
-	} catch (e) {
-		exception_error("removeCategory", e);
+		});
 	}
 }
 
@@ -1136,171 +1076,149 @@ function removeSelectedCategories() {
 }
 
 function createCategory() {
-	try {
-		var title = prompt(__("Category title:"));
+	var title = prompt(__("Category title:"));
 
-		if (title) {
+	if (title) {
 
-			notify_progress("Creating category...");
+		notify_progress("Creating category...");
 
-			var query = "?op=pref-feeds&method=addCat&cat=" +
-				param_escape(title);
+		var query = "?op=pref-feeds&method=addCat&cat=" +
+			param_escape(title);
 
-			new Ajax.Request("backend.php",	{
-				parameters: query,
-				onComplete: function(transport) {
-					notify('');
-					updateFeedList();
-				} });
-		}
-
-	} catch (e) {
-		exception_error("createCategory", e);
+		new Ajax.Request("backend.php", {
+			parameters: query,
+			onComplete: function (transport) {
+				notify('');
+				updateFeedList();
+			}
+		});
 	}
 }
 
 function showInactiveFeeds() {
-	try {
-		var query = "backend.php?op=pref-feeds&method=inactiveFeeds";
+	var query = "backend.php?op=pref-feeds&method=inactiveFeeds";
 
-		if (dijit.byId("inactiveFeedsDlg"))
-			dijit.byId("inactiveFeedsDlg").destroyRecursive();
+	if (dijit.byId("inactiveFeedsDlg"))
+		dijit.byId("inactiveFeedsDlg").destroyRecursive();
 
-		dialog = new dijit.Dialog({
-			id: "inactiveFeedsDlg",
-			title: __("Feeds without recent updates"),
-			style: "width: 600px",
-			getSelectedFeeds: function() {
-				return getSelectedTableRowIds("prefInactiveFeedList");
-			},
-			removeSelected: function() {
-				var sel_rows = this.getSelectedFeeds();
+	dialog = new dijit.Dialog({
+		id: "inactiveFeedsDlg",
+		title: __("Feeds without recent updates"),
+		style: "width: 600px",
+		getSelectedFeeds: function () {
+			return getSelectedTableRowIds("prefInactiveFeedList");
+		},
+		removeSelected: function () {
+			var sel_rows = this.getSelectedFeeds();
 
-				console.log(sel_rows);
+			console.log(sel_rows);
 
-				if (sel_rows.length > 0) {
-					var ok = confirm(__("Remove selected feeds?"));
+			if (sel_rows.length > 0) {
+				var ok = confirm(__("Remove selected feeds?"));
 
-					if (ok) {
-						notify_progress("Removing selected feeds...", true);
+				if (ok) {
+					notify_progress("Removing selected feeds...", true);
 
-						var query = "?op=pref-feeds&method=remove&ids="+
-							param_escape(sel_rows.toString());
+					var query = "?op=pref-feeds&method=remove&ids=" +
+						param_escape(sel_rows.toString());
 
-						new Ajax.Request("backend.php",	{
-							parameters: query,
-							onComplete: function(transport) {
-								notify('');
-								dialog.hide();
-								updateFeedList();
-							} });
-					}
-
-				} else {
-					alert(__("No feeds are selected."));
+					new Ajax.Request("backend.php", {
+						parameters: query,
+						onComplete: function (transport) {
+							notify('');
+							dialog.hide();
+							updateFeedList();
+						}
+					});
 				}
-			},
-			execute: function() {
-				if (this.validate()) {
-				}
-			},
-			href: query});
 
-		dialog.show();
+			} else {
+				alert(__("No feeds are selected."));
+			}
+		},
+		execute: function () {
+			if (this.validate()) {
+			}
+		},
+		href: query
+	});
 
-	} catch (e) {
-		exception_error("showInactiveFeeds", e);
-	}
-
+	dialog.show();
 }
 
 function opmlRegenKey() {
+	var ok = confirm(__("Replace current OPML publishing address with a new one?"));
 
-	try {
-		var ok = confirm(__("Replace current OPML publishing address with a new one?"));
+	if (ok) {
 
-		if (ok) {
+		notify_progress("Trying to change address...", true);
 
-			notify_progress("Trying to change address...", true);
+		var query = "?op=pref-feeds&method=regenOPMLKey";
 
-			var query = "?op=pref-feeds&method=regenOPMLKey";
+		new Ajax.Request("backend.php", {
+			parameters: query,
+			onComplete: function (transport) {
+				var reply = JSON.parse(transport.responseText);
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function(transport) {
-						var reply = JSON.parse(transport.responseText);
+				var new_link = reply.link;
 
-						var new_link = reply.link;
+				var e = $('pub_opml_url');
 
-						var e = $('pub_opml_url');
+				if (new_link) {
+					e.href = new_link;
+					e.innerHTML = new_link;
 
-						if (new_link) {
-							e.href = new_link;
-							e.innerHTML = new_link;
+					new Effect.Highlight(e);
 
-							new Effect.Highlight(e);
+					notify('');
 
-							notify('');
-
-						} else {
-							notify_error("Could not change feed URL.");
-						}
-				} });
-		}
-	} catch (e) {
-		exception_error("opmlRegenKey", e);
+				} else {
+					notify_error("Could not change feed URL.");
+				}
+			}
+		});
 	}
 	return false;
 }
 
 function feedActionChange() {
-	try {
-		var chooser = $("feedActionChooser");
-		var opid = chooser[chooser.selectedIndex].value;
+	var chooser = $("feedActionChooser");
+	var opid = chooser[chooser.selectedIndex].value;
 
-		chooser.selectedIndex = 0;
-		feedActionGo(opid);
-	} catch (e) {
-		exception_error("feedActionChange", e);
-	}
+	chooser.selectedIndex = 0;
+	feedActionGo(opid);
 }
 
 function feedActionGo(op) {
-	try {
-		if (op == "facEdit") {
+	if (op == "facEdit") {
 
-			var rows = getSelectedFeeds();
+		var rows = getSelectedFeeds();
 
-			if (rows.length > 1) {
-				editSelectedFeeds();
-			} else {
-				editSelectedFeed();
-			}
+		if (rows.length > 1) {
+			editSelectedFeeds();
+		} else {
+			editSelectedFeed();
 		}
+	}
 
-		if (op == "facClear") {
-			clearSelectedFeeds();
-		}
+	if (op == "facClear") {
+		clearSelectedFeeds();
+	}
 
-		if (op == "facPurge") {
-			purgeSelectedFeeds();
-		}
+	if (op == "facPurge") {
+		purgeSelectedFeeds();
+	}
 
-		if (op == "facEditCats") {
-			editFeedCats();
-		}
+	if (op == "facEditCats") {
+		editFeedCats();
+	}
 
-		if (op == "facRescore") {
-			rescoreSelectedFeeds();
-		}
+	if (op == "facRescore") {
+		rescoreSelectedFeeds();
+	}
 
-		if (op == "facUnsubscribe") {
-			removeSelectedFeeds();
-		}
-
-	} catch (e) {
-		exception_error("feedActionGo", e);
-
+	if (op == "facUnsubscribe") {
+		removeSelectedFeeds();
 	}
 }
 
@@ -1365,127 +1283,122 @@ function rescore_all_feeds() {
 }
 
 function labelColorReset() {
-	try {
-		var labels = getSelectedLabels();
+	var labels = getSelectedLabels();
 
-		if (labels.length > 0) {
-			var ok = confirm(__("Reset selected labels to default colors?"));
+	if (labels.length > 0) {
+		var ok = confirm(__("Reset selected labels to default colors?"));
 
-			if (ok) {
-				var query = "?op=pref-labels&method=colorreset&ids="+
-					param_escape(labels.toString());
+		if (ok) {
+			var query = "?op=pref-labels&method=colorreset&ids=" +
+				param_escape(labels.toString());
 
-				new Ajax.Request("backend.php", {
-					parameters: query,
-					onComplete: function(transport) {
-						updateLabelList();
-					} });
-			}
-
-		} else {
-			alert(__("No labels are selected."));
+			new Ajax.Request("backend.php", {
+				parameters: query,
+				onComplete: function (transport) {
+					updateLabelList();
+				}
+			});
 		}
 
-	} catch (e) {
-		exception_error("labelColorReset", e);
+	} else {
+		alert(__("No labels are selected."));
 	}
 }
-
 
 function inPreferences() {
 	return true;
 }
 
 function editProfiles() {
-	try {
 
-		if (dijit.byId("profileEditDlg"))
-			dijit.byId("profileEditDlg").destroyRecursive();
+	if (dijit.byId("profileEditDlg"))
+		dijit.byId("profileEditDlg").destroyRecursive();
 
-		var query = "backend.php?op=pref-prefs&method=editPrefProfiles";
+	var query = "backend.php?op=pref-prefs&method=editPrefProfiles";
 
-		dialog = new dijit.Dialog({
-			id: "profileEditDlg",
-			title: __("Settings Profiles"),
-			style: "width: 600px",
-			getSelectedProfiles: function() {
-				return getSelectedTableRowIds("prefFeedProfileList");
-			},
-			removeSelected: function() {
-				var sel_rows = this.getSelectedProfiles();
+	dialog = new dijit.Dialog({
+		id: "profileEditDlg",
+		title: __("Settings Profiles"),
+		style: "width: 600px",
+		getSelectedProfiles: function () {
+			return getSelectedTableRowIds("prefFeedProfileList");
+		},
+		removeSelected: function () {
+			var sel_rows = this.getSelectedProfiles();
 
-				if (sel_rows.length > 0) {
-					var ok = confirm(__("Remove selected profiles? Active and default profiles will not be removed."));
+			if (sel_rows.length > 0) {
+				var ok = confirm(__("Remove selected profiles? Active and default profiles will not be removed."));
 
-					if (ok) {
-						notify_progress("Removing selected profiles...", true);
+				if (ok) {
+					notify_progress("Removing selected profiles...", true);
 
-						var query = "?op=rpc&method=remprofiles&ids="+
-							param_escape(sel_rows.toString());
+					var query = "?op=rpc&method=remprofiles&ids=" +
+						param_escape(sel_rows.toString());
 
-						new Ajax.Request("backend.php",	{
-							parameters: query,
-							onComplete: function(transport) {
-								notify('');
-								editProfiles();
-							} });
-
-					}
-
-				} else {
-					alert(__("No profiles are selected."));
-				}
-			},
-			activateProfile: function() {
-				var sel_rows = this.getSelectedProfiles();
-
-				if (sel_rows.length == 1) {
-
-					var ok = confirm(__("Activate selected profile?"));
-
-					if (ok) {
-						notify_progress("Loading, please wait...");
-
-						var query = "?op=rpc&method=setprofile&id="+
-							param_escape(sel_rows.toString());
-
-						new Ajax.Request("backend.php",	{
-							parameters: query,
-							onComplete: function(transport) {
-								window.location.reload();
-							} });
-					}
-
-				} else {
-					alert(__("Please choose a profile to activate."));
-				}
-			},
-			addProfile: function() {
-				if (this.validate()) {
-					notify_progress("Creating profile...", true);
-
-					var query = "?op=rpc&method=addprofile&title=" +
-						param_escape(dialog.attr('value').newprofile);
-
-					new Ajax.Request("backend.php",	{
+					new Ajax.Request("backend.php", {
 						parameters: query,
-						onComplete: function(transport) {
+						onComplete: function (transport) {
 							notify('');
 							editProfiles();
-						} });
+						}
+					});
 
 				}
-			},
-			execute: function() {
-				if (this.validate()) {
-				}
-			},
-			href: query});
 
-		dialog.show();
-	} catch (e) {
-		exception_error("editProfiles", e);
-	}
+			} else {
+				alert(__("No profiles are selected."));
+			}
+		},
+		activateProfile: function () {
+			var sel_rows = this.getSelectedProfiles();
+
+			if (sel_rows.length == 1) {
+
+				var ok = confirm(__("Activate selected profile?"));
+
+				if (ok) {
+					notify_progress("Loading, please wait...");
+
+					var query = "?op=rpc&method=setprofile&id=" +
+						param_escape(sel_rows.toString());
+
+					new Ajax.Request("backend.php", {
+						parameters: query,
+						onComplete: function (transport) {
+							window.location.reload();
+						}
+					});
+				}
+
+			} else {
+				alert(__("Please choose a profile to activate."));
+			}
+		},
+		addProfile: function () {
+			if (this.validate()) {
+				notify_progress("Creating profile...", true);
+
+				var query = "?op=rpc&method=addprofile&title=" +
+					param_escape(dialog.attr('value').newprofile);
+
+				new Ajax.Request("backend.php", {
+					parameters: query,
+					onComplete: function (transport) {
+						notify('');
+						editProfiles();
+					}
+				});
+
+			}
+		},
+		execute: function () {
+			if (this.validate()) {
+			}
+		},
+		href: query
+	});
+
+	dialog.show();
 }
 
 function activatePrefProfile() {
@@ -1536,187 +1449,159 @@ function clearFeedAccessKeys() {
 }
 
 function resetFilterOrder() {
-	try {
-		notify_progress("Loading, please wait...");
+	notify_progress("Loading, please wait...");
 
-		new Ajax.Request("backend.php", {
-			parameters: "?op=pref-filters&method=filtersortreset",
-			onComplete: function(transport) {
-		  		updateFilterList();
-			} });
-
-
-	} catch (e) {
-		exception_error("resetFilterOrder");
-	}
+	new Ajax.Request("backend.php", {
+		parameters: "?op=pref-filters&method=filtersortreset",
+		onComplete: function (transport) {
+			updateFilterList();
+		}
+	});
 }
+
 
 
 function resetFeedOrder() {
-	try {
-		notify_progress("Loading, please wait...");
+	notify_progress("Loading, please wait...");
 
-		new Ajax.Request("backend.php", {
-			parameters: "?op=pref-feeds&method=feedsortreset",
-			onComplete: function(transport) {
-		  		updateFeedList();
-			} });
-
-
-	} catch (e) {
-		exception_error("resetFeedOrder");
-	}
+	new Ajax.Request("backend.php", {
+		parameters: "?op=pref-feeds&method=feedsortreset",
+		onComplete: function (transport) {
+			updateFeedList();
+		}
+	});
 }
 
 function resetCatOrder() {
-	try {
-		notify_progress("Loading, please wait...");
+	notify_progress("Loading, please wait...");
 
-		new Ajax.Request("backend.php", {
-			parameters: "?op=pref-feeds&method=catsortreset",
-			onComplete: function(transport) {
-		  		updateFeedList();
-			} });
-
-
-	} catch (e) {
-		exception_error("resetCatOrder");
-	}
+	new Ajax.Request("backend.php", {
+		parameters: "?op=pref-feeds&method=catsortreset",
+		onComplete: function (transport) {
+			updateFeedList();
+		}
+	});
 }
 
 function editCat(id, item, event) {
-	try {
-		var new_name = prompt(__('Rename category to:'), item.name);
+	var new_name = prompt(__('Rename category to:'), item.name);
 
-		if (new_name && new_name != item.name) {
+	if (new_name && new_name != item.name) {
 
-			notify_progress("Loading, please wait...");
+		notify_progress("Loading, please wait...");
 
-			new Ajax.Request("backend.php", {
+		new Ajax.Request("backend.php", {
 			parameters: {
 				op: 'pref-feeds',
 				method: 'renamecat',
 				id: id,
 				title: new_name,
 			},
-			onComplete: function(transport) {
-		  		updateFeedList();
-			} });
-		}
-
-	} catch (e) {
-		exception_error("editCat", e);
+			onComplete: function (transport) {
+				updateFeedList();
+			}
+		});
 	}
 }
 
 function editLabel(id, event) {
-	try {
-		var query = "backend.php?op=pref-labels&method=edit&id=" +
-			param_escape(id);
+	var query = "backend.php?op=pref-labels&method=edit&id=" +
+		param_escape(id);
 
-		if (dijit.byId("labelEditDlg"))
-			dijit.byId("labelEditDlg").destroyRecursive();
+	if (dijit.byId("labelEditDlg"))
+		dijit.byId("labelEditDlg").destroyRecursive();
 
-		dialog = new dijit.Dialog({
-			id: "labelEditDlg",
-			title: __("Label Editor"),
-			style: "width: 600px",
-			setLabelColor: function(id, fg, bg) {
+	dialog = new dijit.Dialog({
+		id: "labelEditDlg",
+		title: __("Label Editor"),
+		style: "width: 600px",
+		setLabelColor: function (id, fg, bg) {
 
-				var kind = '';
-				var color = '';
+			var kind = '';
+			var color = '';
 
-				if (fg && bg) {
-					kind = 'both';
-				} else if (fg) {
-					kind = 'fg';
-					color = fg;
-				} else if (bg) {
-					kind = 'bg';
-					color = bg;
-				}
+			if (fg && bg) {
+				kind = 'both';
+			} else if (fg) {
+				kind = 'fg';
+				color = fg;
+			} else if (bg) {
+				kind = 'bg';
+				color = bg;
+			}
 
-				var query = "?op=pref-labels&method=colorset&kind="+kind+
-					"&ids=" + param_escape(id) + "&fg=" + param_escape(fg) +
-					"&bg=" + param_escape(bg) + "&color=" + param_escape(color);
+			var query = "?op=pref-labels&method=colorset&kind=" + kind +
+				"&ids=" + param_escape(id) + "&fg=" + param_escape(fg) +
+				"&bg=" + param_escape(bg) + "&color=" + param_escape(color);
 
-		//		console.log(query);
+			//		console.log(query);
 
-				var e = $("LICID-" + id);
+			var e = $("LICID-" + id);
 
-				if (e) {
-					if (fg) e.style.color = fg;
-					if (bg) e.style.backgroundColor = bg;
-				}
+			if (e) {
+				if (fg) e.style.color = fg;
+				if (bg) e.style.backgroundColor = bg;
+			}
 
-				new Ajax.Request("backend.php", { parameters: query });
+			new Ajax.Request("backend.php", {parameters: query});
 
-				updateFilterList();
-			},
-			execute: function() {
-				if (this.validate()) {
-					var caption = this.attr('value').caption;
-					var fg_color = this.attr('value').fg_color;
-					var bg_color = this.attr('value').bg_color;
-					var query = dojo.objectToQuery(this.attr('value'));
+			updateFilterList();
+		},
+		execute: function () {
+			if (this.validate()) {
+				var caption = this.attr('value').caption;
+				var fg_color = this.attr('value').fg_color;
+				var bg_color = this.attr('value').bg_color;
+				var query = dojo.objectToQuery(this.attr('value'));
 
-					dijit.byId('labelTree').setNameById(id, caption);
-					this.setLabelColor(id, fg_color, bg_color);
-					this.hide();
+				dijit.byId('labelTree').setNameById(id, caption);
+				this.setLabelColor(id, fg_color, bg_color);
+				this.hide();
 
-					new Ajax.Request("backend.php", {
-						parameters: query,
-						onComplete: function(transport) {
-					  		updateFilterList();
-					} });
-				}
-			},
-			href: query});
+				new Ajax.Request("backend.php", {
+					parameters: query,
+					onComplete: function (transport) {
+						updateFilterList();
+					}
+				});
+			}
+		},
+		href: query
+	});
 
-		dialog.show();
-
-	} catch (e) {
-		exception_error("editLabel", e);
-	}
+	dialog.show();
 }
 
 
 function customizeCSS() {
-	try {
-		var query = "backend.php?op=pref-prefs&method=customizeCSS";
+	var query = "backend.php?op=pref-prefs&method=customizeCSS";
 
-		if (dijit.byId("cssEditDlg"))
-			dijit.byId("cssEditDlg").destroyRecursive();
+	if (dijit.byId("cssEditDlg"))
+		dijit.byId("cssEditDlg").destroyRecursive();
 
-		dialog = new dijit.Dialog({
-			id: "cssEditDlg",
-			title: __("Customize stylesheet"),
-			style: "width: 600px",
-			execute: function() {
-				notify_progress('Saving data...', true);
-				new Ajax.Request("backend.php", {
-					parameters: dojo.objectToQuery(this.attr('value')),
-					onComplete: function(transport) {
-						notify('');
-						window.location.reload();
-				} });
+	dialog = new dijit.Dialog({
+		id: "cssEditDlg",
+		title: __("Customize stylesheet"),
+		style: "width: 600px",
+		execute: function () {
+			notify_progress('Saving data...', true);
+			new Ajax.Request("backend.php", {
+				parameters: dojo.objectToQuery(this.attr('value')),
+				onComplete: function (transport) {
+					notify('');
+					window.location.reload();
+				}
+			});
 
-			},
-			href: query});
+		},
+		href: query
+	});
 
-		dialog.show();
-
-	} catch (e) {
-		exception_error("customizeCSS", e);
-	}
+	dialog.show();
 }
 
 function insertSSLserial(value) {
-	try {
-		dijit.byId("SSL_CERT_SERIAL").attr('value', value);
-	} catch (e) {
-		exception_error("insertSSLcerial", e);
-	}
+	dijit.byId("SSL_CERT_SERIAL").attr('value', value);
 }
 
 function gotoExportOpml(filename, settings) {
@@ -1726,70 +1611,48 @@ function gotoExportOpml(filename, settings) {
 
 
 function batchSubscribe() {
-	try {
-		var query = "backend.php?op=pref-feeds&method=batchSubscribe";
+	var query = "backend.php?op=pref-feeds&method=batchSubscribe";
 
-		// overlapping widgets
-		if (dijit.byId("batchSubDlg")) dijit.byId("batchSubDlg").destroyRecursive();
-		if (dijit.byId("feedAddDlg"))	dijit.byId("feedAddDlg").destroyRecursive();
+	// overlapping widgets
+	if (dijit.byId("batchSubDlg")) dijit.byId("batchSubDlg").destroyRecursive();
+	if (dijit.byId("feedAddDlg"))    dijit.byId("feedAddDlg").destroyRecursive();
 
-		var dialog = new dijit.Dialog({
-			id: "batchSubDlg",
-			title: __("Batch subscribe"),
-			style: "width: 600px",
-			execute: function() {
-				if (this.validate()) {
-					console.log(dojo.objectToQuery(this.attr('value')));
+	var dialog = new dijit.Dialog({
+		id: "batchSubDlg",
+		title: __("Batch subscribe"),
+		style: "width: 600px",
+		execute: function () {
+			if (this.validate()) {
+				console.log(dojo.objectToQuery(this.attr('value')));
 
-					notify_progress(__("Subscribing to feeds..."), true);
+				notify_progress(__("Subscribing to feeds..."), true);
 
-					new Ajax.Request("backend.php", {
-						parameters: dojo.objectToQuery(this.attr('value')),
-						onComplete: function(transport) {
-							notify("");
-							updateFeedList();
-							dialog.hide();
-						} });
+				new Ajax.Request("backend.php", {
+					parameters: dojo.objectToQuery(this.attr('value')),
+					onComplete: function (transport) {
+						notify("");
+						updateFeedList();
+						dialog.hide();
 					}
-			},
-			href: query});
+				});
+			}
+		},
+		href: query
+	});
 
-		dialog.show();
-	} catch (e) {
-		exception_error("batchSubscribe", e);
-	}
-}
-
-
-function toggleAdvancedPrefs() {
-	try {
-		notify_progress("Loading, please wait...");
-
-		new Ajax.Request("backend.php", {
-			parameters: "?op=pref-prefs&method=toggleadvanced",
-			onComplete: function(transport) {
-				updatePrefsList();
-			} });
-
-	} catch (e) {
-		exception_error("toggleAdvancedPrefs", e);
-	}
+	dialog.show();
 }
 
 function clearPluginData(name) {
-	try {
-		if (confirm(__("Clear stored data for this plugin?"))) {
-			notify_progress("Loading, please wait...");
+	if (confirm(__("Clear stored data for this plugin?"))) {
+		notify_progress("Loading, please wait...");
 
-			new Ajax.Request("backend.php", {
-				parameters: "?op=pref-prefs&method=clearplugindata&name=" + param_escape(name),
-				onComplete: function(transport) {
-					notify('');
-					updatePrefsList();
-				} });
-		}
-	} catch (e) {
-		exception_error("clearPluginData", e);
+		new Ajax.Request("backend.php", {
+			parameters: "?op=pref-prefs&method=clearplugindata&name=" + param_escape(name),
+			onComplete: function(transport) {
+				notify('');
+				updatePrefsList();
+			} });
 	}
 }
 

@@ -1917,7 +1917,7 @@
 		$attributes, $include_all_cats = true, $root_id = false, $nest_level = 0) {
 
 			if (!$root_id) {
-					print "<select id=\"$id\" name=\"$id\" default=\"$default_id\" onchange=\"catSelectOnChange(this)\" $attributes>";
+					print "<select id=\"$id\" name=\"$id\" default=\"$default_id\" $attributes>";
 			}
 
 			if ($root_id)

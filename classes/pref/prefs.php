@@ -686,16 +686,6 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "&nbsp;";
 
-		/* $checked = $_SESSION["prefs_show_advanced"] ? "checked='1'" : "";
-
-		print "<input onclick='toggleAdvancedPrefs()'
-				id='prefs_show_advanced'
-				dojoType=\"dijit.form.CheckBox\"
-				$checked
-				type=\"checkbox\"></input>
-				<label for='prefs_show_advanced'>" .
-				__("Show additional preferences") . "</label>"; */
-
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB_SECTION,
 			"hook_prefs_tab_section", "prefPrefsPrefsOutside");
 

@@ -30,22 +30,17 @@ Array.prototype.remove = function(s) {
 	}
 };
 
-/* create console.log if it doesn't exist */
 
-if (!window.console) console = {};
-console.log = console.log || function(msg) { };
-console.warn = console.warn || function(msg) { };
-console.error = console.error || function(msg) { };
+function report_error(message, filename, lineno, colno, error) {
+	exception_error(error);
+}
 
-function exception_error(location, e, ext_info) {
-	var msg = format_exception_error(location, e);
+function exception_error(e, e_compat) {
+	if (typeof e == "string") e = e_compat;
 
-	if (!ext_info) ext_info = false;
+	if (!e) return; // no exception object, nothing to report.
 
 	try {
-
-		if (ext_info)
-			ext_info = JSON.stringify(ext_info);
 
 		try {
 			new Ajax.Request("backend.php", {
@@ -54,13 +49,16 @@ function exception_error(location, e, ext_info) {
 					console.log(transport.responseText);
 				} });
 
-		} catch (eii) {
-			console.log("Exception while trying to log the error.");
-			console.log(eii);
+		} catch (e) {
+			console.error("Exception while trying to log the error.", e);
 		}
+
+		var msg = e.toString();
 
 		msg += "<p>"+ __("The error will be reported to the configured log destination.") +
 			"</p>";
+
+		console.error(msg);
 
 		var content = "<div class=\"fatalError\">" +
 			"<pre>" + msg + "</pre>";
@@ -71,13 +69,10 @@ function exception_error(location, e, ext_info) {
 		content += "<textarea style=\"display : none\" name=\"message\">" + msg + "</textarea>";
 		content += "<textarea style=\"display : none\" name=\"params\">N/A</textarea>";
 
-		if (ext_info) {
-			content += "<div><b>Additional information:</b></div>" +
-			"<textarea name=\"xinfo\" readonly=\"1\">" + ext_info + "</textarea>";
+		if (e) {
+			content += "<div><b>Stack trace:</b></div>" +
+				"<textarea name=\"stack\" readonly=\"1\">" + e.stack + "</textarea>";
 		}
-
-		content += "<div><b>Stack trace:</b></div>" +
-			"<textarea name=\"stack\" readonly=\"1\">" + e.stack + "</textarea>";
 
 		content += "</form>";
 
@@ -121,51 +116,13 @@ function exception_error(location, e, ext_info) {
 		dialog.show();
 
 	} catch (ei) {
-		console.log("Exception while trying to report an exception. Oh boy.");
-		console.log(ei);
-		console.log("Original exception:");
-		console.log(e);
+		console.error("Exception while trying to report an exception:", ei);
+		console.error("Original exception:", e);
 
-		msg += "\n\nAdditional exception caught while trying to show the error dialog.\n\n" +  format_exception_error('exception_error', ei);
-
-		try {
-			new Ajax.Request("backend.php", {
-				parameters: {op: "rpc", method: "log", logmsg: msg},
-				onComplete: function (transport) {
-					console.log(transport.responseText);
-				} });
-
-		} catch (eii) {
-			console.log("Third exception while trying to log the error! Seriously?");
-			console.log(eii);
-		}
-
-		msg += "\n\nThe error will be reported to the configured log destination.";
-
-		alert(msg);
+		alert("Exception occured while trying to report an exception.\n" +
+			ei.stack + "\n\nOriginal exception:\n" + e.stack);
 	}
 
-}
-
-function format_exception_error(location, e) {
-	var msg;
-
-	if (e.fileName) {
-		var base_fname = e.fileName.substring(e.fileName.lastIndexOf("/") + 1);
-
-		msg = "Exception: " + e.name + ", " + e.message +
-			"\nFunction: " + location + "()" +
-			"\nLocation: " + base_fname + ":" + e.lineNumber;
-
-	} else if (e.description) {
-		msg = "Exception: " + e.description + "\nFunction: " + location + "()";
-	} else {
-		msg = "Exception: " + e + "\nFunction: " + location + "()";
-	}
-
-	console.error("EXCEPTION: " + msg);
-
-	return msg;
 }
 
 function param_escape(arg) {
@@ -432,14 +389,10 @@ function getURLParam(param){
 }
 
 function closeInfoBox(cleanup) {
-	try {
-		dialog = dijit.byId("infoBox");
+	dialog = dijit.byId("infoBox");
 
-		if (dialog)	dialog.hide();
+	if (dialog)	dialog.hide();
 
-	} catch (e) {
-		//exception_error("closeInfoBox", e);
-	}
 	return false;
 }
 
@@ -462,44 +415,40 @@ function displayDlg(title, id, param, callback) {
 }
 
 function infobox_callback2(transport, title) {
-	try {
-		var dialog = false;
+	var dialog = false;
 
-		if (dijit.byId("infoBox")) {
-			dialog = dijit.byId("infoBox");
-		}
-
-		//console.log("infobox_callback2");
-		notify('');
-
-		var content = transport.responseText;
-
-		if (!dialog) {
-			dialog = new dijit.Dialog({
-				title: title,
-				id: 'infoBox',
-				style: "width: 600px",
-				onCancel: function() {
-					return true;
-				},
-				onExecute: function() {
-					return true;
-				},
-				onClose: function() {
-					return true;
-					},
-				content: content});
-		} else {
-			dialog.attr('title', title);
-			dialog.attr('content', content);
-		}
-
-		dialog.show();
-
-		notify("");
-	} catch (e) {
-		exception_error("infobox_callback2", e);
+	if (dijit.byId("infoBox")) {
+		dialog = dijit.byId("infoBox");
 	}
+
+	//console.log("infobox_callback2");
+	notify('');
+
+	var content = transport.responseText;
+
+	if (!dialog) {
+		dialog = new dijit.Dialog({
+			title: title,
+			id: 'infoBox',
+			style: "width: 600px",
+			onCancel: function() {
+				return true;
+			},
+			onExecute: function() {
+				return true;
+			},
+			onClose: function() {
+				return true;
+				},
+			content: content});
+	} else {
+		dialog.attr('title', title);
+		dialog.attr('content', content);
+	}
+
+	dialog.show();
+
+	notify("");
 }
 
 function getInitParam(key) {
@@ -511,88 +460,75 @@ function setInitParam(key, value) {
 }
 
 function fatalError(code, msg, ext_info) {
-	try {
+	if (code == 6) {
+		window.location.href = "index.php";
+	} else if (code == 5) {
+		window.location.href = "public.php?op=dbupdate";
+	} else {
 
-		if (code == 6) {
-			window.location.href = "index.php";
-		} else if (code == 5) {
-			window.location.href = "public.php?op=dbupdate";
-		} else {
+		if (msg == "") msg = "Unknown error";
 
-			if (msg == "") msg = "Unknown error";
-
-			if (ext_info) {
-				if (ext_info.responseText) {
-					ext_info = ext_info.responseText;
-				}
+		if (ext_info) {
+			if (ext_info.responseText) {
+				ext_info = ext_info.responseText;
 			}
-
-			if (ERRORS && ERRORS[code] && !msg) {
-				msg = ERRORS[code];
-			}
-
-			var content = "<div><b>Error code:</b> " + code + "</div>" +
-				"<p>" + msg + "</p>";
-
-			if (ext_info) {
-				content = content + "<div><b>Additional information:</b></div>" +
-					"<textarea style='width: 100%' readonly=\"1\">" +
-					ext_info + "</textarea>";
-			}
-
-			var dialog = new dijit.Dialog({
-				title: "Fatal error",
-				style: "width: 600px",
-				content: content});
-
-			dialog.show();
-
 		}
 
-		return false;
+		if (ERRORS && ERRORS[code] && !msg) {
+			msg = ERRORS[code];
+		}
 
-	} catch (e) {
-		exception_error("fatalError", e);
+		var content = "<div><b>Error code:</b> " + code + "</div>" +
+			"<p>" + msg + "</p>";
+
+		if (ext_info) {
+			content = content + "<div><b>Additional information:</b></div>" +
+				"<textarea style='width: 100%' readonly=\"1\">" +
+				ext_info + "</textarea>";
+		}
+
+		var dialog = new dijit.Dialog({
+			title: "Fatal error",
+			style: "width: 600px",
+			content: content});
+
+		dialog.show();
+
 	}
+
+	return false;
+
 }
 
 function filterDlgCheckAction(sender) {
+	var action = sender.value;
 
-	try {
+	var action_param = $("filterDlg_paramBox");
 
-		var action = sender.value;
-
-		var action_param = $("filterDlg_paramBox");
-
-		if (!action_param) {
-			console.log("filterDlgCheckAction: can't find action param box!");
-			return;
-		}
-
-		// if selected action supports parameters, enable params field
-		if (action == 4 || action == 6 || action == 7 || action == 9) {
-			new Effect.Appear(action_param, {duration : 0.5});
-
-			Element.hide(dijit.byId("filterDlg_actionParam").domNode);
-			Element.hide(dijit.byId("filterDlg_actionParamLabel").domNode);
-			Element.hide(dijit.byId("filterDlg_actionParamPlugin").domNode);
-
-			if (action == 7) {
-				Element.show(dijit.byId("filterDlg_actionParamLabel").domNode);
-			} else if (action == 9) {
-				Element.show(dijit.byId("filterDlg_actionParamPlugin").domNode);
-			} else {
-				Element.show(dijit.byId("filterDlg_actionParam").domNode);
-			}
-
-		} else {
-			Element.hide(action_param);
-		}
-
-	} catch (e) {
-		exception_error("filterDlgCheckAction", e);
+	if (!action_param) {
+		console.log("filterDlgCheckAction: can't find action param box!");
+		return;
 	}
 
+	// if selected action supports parameters, enable params field
+	if (action == 4 || action == 6 || action == 7 || action == 9) {
+		new Effect.Appear(action_param, {duration : 0.5});
+
+		Element.hide(dijit.byId("filterDlg_actionParam").domNode);
+		Element.hide(dijit.byId("filterDlg_actionParamLabel").domNode);
+		Element.hide(dijit.byId("filterDlg_actionParamPlugin").domNode);
+
+		if (action == 7) {
+			Element.show(dijit.byId("filterDlg_actionParamLabel").domNode);
+		} else if (action == 9) {
+			Element.show(dijit.byId("filterDlg_actionParamPlugin").domNode);
+		} else {
+			Element.show(dijit.byId("filterDlg_actionParam").domNode);
+		}
+
+	} else {
+		Element.hide(action_param);
+	}
 }
 
 
@@ -601,18 +537,14 @@ function explainError(code) {
 }
 
 function loading_set_progress(p) {
-	try {
-		loading_progress += p;
+	loading_progress += p;
 
-		if (dijit.byId("loading_bar"))
-			dijit.byId("loading_bar").update({progress: loading_progress});
+	if (dijit.byId("loading_bar"))
+		dijit.byId("loading_bar").update({progress: loading_progress});
 
-		if (loading_progress >= 90)
-			remove_splash();
+	if (loading_progress >= 90)
+		remove_splash();
 
-	} catch (e) {
-		exception_error("loading_set_progress", e);
-	}
 }
 
 function remove_splash() {
@@ -622,26 +554,6 @@ function remove_splash() {
 		Element.hide("overlay");
 		console.log("removed splash!");
 	}
-}
-
-function transport_error_check(transport) {
-	try {
-		if (transport.responseXML) {
-			var error = transport.responseXML.getElementsByTagName("error")[0];
-
-			if (error) {
-				var code = error.getAttribute("error-code");
-				var msg = error.getAttribute("error-msg");
-				if (code != 0) {
-					fatalError(code, msg);
-					return false;
-				}
-			}
-		}
-	} catch (e) {
-		exception_error("check_for_error_xml", e);
-	}
-	return true;
 }
 
 function strip_tags(s) {
@@ -656,643 +568,589 @@ function truncate_string(s, length) {
 }
 
 function hotkey_prefix_timeout() {
-	try {
 
-		var date = new Date();
-		var ts = Math.round(date.getTime() / 1000);
+	var date = new Date();
+	var ts = Math.round(date.getTime() / 1000);
 
-		if (hotkey_prefix_pressed && ts - hotkey_prefix_pressed >= 5) {
-			console.log("hotkey_prefix seems to be stuck, aborting");
-			hotkey_prefix_pressed = false;
-			hotkey_prefix = false;
-			Element.hide('cmdline');
-		}
-
-		setTimeout(hotkey_prefix_timeout, 1000);
-
-	} catch  (e) {
-		exception_error("hotkey_prefix_timeout", e);
+	if (hotkey_prefix_pressed && ts - hotkey_prefix_pressed >= 5) {
+		console.log("hotkey_prefix seems to be stuck, aborting");
+		hotkey_prefix_pressed = false;
+		hotkey_prefix = false;
+		Element.hide('cmdline');
 	}
+
+	setTimeout(hotkey_prefix_timeout, 1000);
+
 }
 
 function uploadIconHandler(rc) {
-	try {
-		switch (rc) {
-			case 0:
-				notify_info("Upload complete.");
+	switch (rc) {
+		case 0:
+			notify_info("Upload complete.");
+			if (inPreferences()) {
+				updateFeedList();
+			} else {
+				setTimeout('updateFeedList(false, false)', 50);
+			}
+			break;
+		case 1:
+			notify_error("Upload failed: icon is too big.");
+			break;
+		case 2:
+			notify_error("Upload failed.");
+			break;
+	}
+}
+
+function removeFeedIcon(id) {
+	if (confirm(__("Remove stored feed icon?"))) {
+		var query = "backend.php?op=pref-feeds&method=removeicon&feed_id=" + param_escape(id);
+
+		console.log(query);
+
+		notify_progress("Removing feed icon...", true);
+
+		new Ajax.Request("backend.php", {
+			parameters: query,
+			onComplete: function(transport) {
+				notify_info("Feed icon removed.");
 				if (inPreferences()) {
 					updateFeedList();
 				} else {
 					setTimeout('updateFeedList(false, false)', 50);
 				}
-				break;
-			case 1:
-				notify_error("Upload failed: icon is too big.");
-				break;
-			case 2:
-				notify_error("Upload failed.");
-				break;
-		}
-
-	} catch (e) {
-		exception_error("uploadIconHandler", e);
+			} });
 	}
-}
 
-function removeFeedIcon(id) {
-
-	try {
-
-		if (confirm(__("Remove stored feed icon?"))) {
-			var query = "backend.php?op=pref-feeds&method=removeicon&feed_id=" + param_escape(id);
-
-			console.log(query);
-
-			notify_progress("Removing feed icon...", true);
-
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function(transport) {
-					notify_info("Feed icon removed.");
-					if (inPreferences()) {
-						updateFeedList();
-					} else {
-						setTimeout('updateFeedList(false, false)', 50);
-					}
-				} });
-		}
-
-		return false;
-	} catch (e) {
-		exception_error("removeFeedIcon", e);
-	}
+	return false;
 }
 
 function uploadFeedIcon() {
+	var file = $("icon_file");
 
-	try {
-
-		var file = $("icon_file");
-
-		if (file.value.length == 0) {
-			alert(__("Please select an image file to upload."));
-		} else {
-			if (confirm(__("Upload new icon for this feed?"))) {
-				notify_progress("Uploading, please wait...", true);
-				return true;
-			}
+	if (file.value.length == 0) {
+		alert(__("Please select an image file to upload."));
+	} else {
+		if (confirm(__("Upload new icon for this feed?"))) {
+			notify_progress("Uploading, please wait...", true);
+			return true;
 		}
-
-		return false;
-
-	} catch (e) {
-		exception_error("uploadFeedIcon", e);
 	}
+
+	return false;
 }
 
 function addLabel(select, callback) {
 
-	try {
+	var caption = prompt(__("Please enter label caption:"), "");
 
-		var caption = prompt(__("Please enter label caption:"), "");
+	if (caption != undefined) {
 
-		if (caption != undefined) {
-
-			if (caption == "") {
-				alert(__("Can't create label: missing caption."));
-				return false;
-			}
-
-			var query = "?op=pref-labels&method=add&caption=" +
-				param_escape(caption);
-
-			if (select)
-				query += "&output=select";
-
-			notify_progress("Loading, please wait...", true);
-
-			if (inPreferences() && !select) active_tab = "labelConfig";
-
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function(transport) {
-					if (callback) {
-						callback(transport);
-					} else if (inPreferences()) {
-						updateLabelList();
-					} else {
-						updateFeedList();
-					}
-			} });
-
+		if (caption == "") {
+			alert(__("Can't create label: missing caption."));
+			return false;
 		}
 
-	} catch (e) {
-		exception_error("addLabel", e);
+		var query = "?op=pref-labels&method=add&caption=" +
+			param_escape(caption);
+
+		if (select)
+			query += "&output=select";
+
+		notify_progress("Loading, please wait...", true);
+
+		if (inPreferences() && !select) active_tab = "labelConfig";
+
+		new Ajax.Request("backend.php", {
+			parameters: query,
+			onComplete: function(transport) {
+				if (callback) {
+					callback(transport);
+				} else if (inPreferences()) {
+					updateLabelList();
+				} else {
+					updateFeedList();
+				}
+		} });
+
 	}
+
 }
 
 function quickAddFeed() {
-	try {
-		var query = "backend.php?op=feeds&method=quickAddFeed";
+	var query = "backend.php?op=feeds&method=quickAddFeed";
 
-		// overlapping widgets
-		if (dijit.byId("batchSubDlg")) dijit.byId("batchSubDlg").destroyRecursive();
-		if (dijit.byId("feedAddDlg"))	dijit.byId("feedAddDlg").destroyRecursive();
+	// overlapping widgets
+	if (dijit.byId("batchSubDlg")) dijit.byId("batchSubDlg").destroyRecursive();
+	if (dijit.byId("feedAddDlg"))	dijit.byId("feedAddDlg").destroyRecursive();
 
-		var dialog = new dijit.Dialog({
-			id: "feedAddDlg",
-			title: __("Subscribe to Feed"),
-			style: "width: 600px",
-			show_error: function(msg) {
-				var elem = $("fadd_error_message");
+	var dialog = new dijit.Dialog({
+		id: "feedAddDlg",
+		title: __("Subscribe to Feed"),
+		style: "width: 600px",
+		show_error: function(msg) {
+			var elem = $("fadd_error_message");
 
-				elem.innerHTML = msg;
+			elem.innerHTML = msg;
 
-				if (!Element.visible(elem))
-					new Effect.Appear(elem);
+			if (!Element.visible(elem))
+				new Effect.Appear(elem);
 
-			},
-			execute: function() {
-				if (this.validate()) {
-					console.log(dojo.objectToQuery(this.attr('value')));
+		},
+		execute: function() {
+			if (this.validate()) {
+				console.log(dojo.objectToQuery(this.attr('value')));
 
-					var feed_url = this.attr('value').feed;
+				var feed_url = this.attr('value').feed;
 
-					Element.show("feed_add_spinner");
-					Element.hide("fadd_error_message");
+				Element.show("feed_add_spinner");
+				Element.hide("fadd_error_message");
 
-					new Ajax.Request("backend.php", {
-						parameters: dojo.objectToQuery(this.attr('value')),
-						onComplete: function(transport) {
+				new Ajax.Request("backend.php", {
+					parameters: dojo.objectToQuery(this.attr('value')),
+					onComplete: function(transport) {
+						try {
+
 							try {
-
-								try {
-									var reply = JSON.parse(transport.responseText);
-								} catch (e) {
-									Element.hide("feed_add_spinner");
-									alert(__("Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."));
-									console.log('quickAddFeed, backend returned:' + transport.responseText);
-									return;
-								}
-
-								var rc = reply['result'];
-
-								notify('');
-								Element.hide("feed_add_spinner");
-
-								console.log(rc);
-
-								switch (parseInt(rc['code'])) {
-								case 1:
-									dialog.hide();
-									notify_info(__("Subscribed to %s").replace("%s", feed_url));
-
-									updateFeedList();
-									break;
-								case 2:
-									dialog.show_error(__("Specified URL seems to be invalid."));
-									break;
-								case 3:
-									dialog.show_error(__("Specified URL doesn't seem to contain any feeds."));
-									break;
-								case 4:
-									feeds = rc['feeds'];
-
-									Element.show("fadd_multiple_notify");
-
-									var select = dijit.byId("feedDlg_feedContainerSelect");
-
-									while (select.getOptions().length > 0)
-										select.removeOption(0);
-
-									select.addOption({value: '', label: __("Expand to select feed")});
-
-									var count = 0;
-									for (var feedUrl in feeds) {
-										select.addOption({value: feedUrl, label: feeds[feedUrl]});
-										count++;
-									}
-
-									Effect.Appear('feedDlg_feedsContainer', {duration : 0.5});
-
-									break;
-								case 5:
-									dialog.show_error(__("Couldn't download the specified URL: %s").
-											replace("%s", rc['message']));
-									break;
-								case 6:
-									dialog.show_error(__("XML validation failed: %s").
-											replace("%s", rc['message']));
-									break;
-									break;
-								case 0:
-									dialog.show_error(__("You are already subscribed to this feed."));
-									break;
-								}
-
+								var reply = JSON.parse(transport.responseText);
 							} catch (e) {
-								exception_error("subscribeToFeed", e, transport);
+								Element.hide("feed_add_spinner");
+								alert(__("Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."));
+								console.log('quickAddFeed, backend returned:' + transport.responseText);
+								return;
 							}
 
-						} });
+							var rc = reply['result'];
 
-					}
-			},
-			href: query});
+							notify('');
+							Element.hide("feed_add_spinner");
 
-		dialog.show();
-	} catch (e) {
-		exception_error("quickAddFeed", e);
-	}
+							console.log(rc);
+
+							switch (parseInt(rc['code'])) {
+							case 1:
+								dialog.hide();
+								notify_info(__("Subscribed to %s").replace("%s", feed_url));
+
+								updateFeedList();
+								break;
+							case 2:
+								dialog.show_error(__("Specified URL seems to be invalid."));
+								break;
+							case 3:
+								dialog.show_error(__("Specified URL doesn't seem to contain any feeds."));
+								break;
+							case 4:
+								feeds = rc['feeds'];
+
+								Element.show("fadd_multiple_notify");
+
+								var select = dijit.byId("feedDlg_feedContainerSelect");
+
+								while (select.getOptions().length > 0)
+									select.removeOption(0);
+
+								select.addOption({value: '', label: __("Expand to select feed")});
+
+								var count = 0;
+								for (var feedUrl in feeds) {
+									select.addOption({value: feedUrl, label: feeds[feedUrl]});
+									count++;
+								}
+
+								Effect.Appear('feedDlg_feedsContainer', {duration : 0.5});
+
+								break;
+							case 5:
+								dialog.show_error(__("Couldn't download the specified URL: %s").
+										replace("%s", rc['message']));
+								break;
+							case 6:
+								dialog.show_error(__("XML validation failed: %s").
+										replace("%s", rc['message']));
+								break;
+								break;
+							case 0:
+								dialog.show_error(__("You are already subscribed to this feed."));
+								break;
+							}
+
+						} catch (e) {
+							console.error(transport.responseText);
+							exception_error(e);
+						}
+
+					} });
+
+				}
+		},
+		href: query});
+
+	dialog.show();
 }
 
 function createNewRuleElement(parentNode, replaceNode) {
-	try {
-		var form = document.forms["filter_new_rule_form"];
+	var form = document.forms["filter_new_rule_form"];
 
-		//form.reg_exp.value = form.reg_exp.value.replace(/(<([^>]+)>)/ig,"");
+	//form.reg_exp.value = form.reg_exp.value.replace(/(<([^>]+)>)/ig,"");
 
-		var query = "backend.php?op=pref-filters&method=printrulename&rule="+
-			param_escape(dojo.formToJson(form));
+	var query = "backend.php?op=pref-filters&method=printrulename&rule="+
+		param_escape(dojo.formToJson(form));
 
-		console.log(query);
+	console.log(query);
 
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function (transport) {
-				try {
-					var li = dojo.create("li");
+	new Ajax.Request("backend.php", {
+		parameters: query,
+		onComplete: function (transport) {
+			try {
+				var li = dojo.create("li");
 
-					var cb = dojo.create("input", { type: "checkbox" }, li);
+				var cb = dojo.create("input", { type: "checkbox" }, li);
 
-					new dijit.form.CheckBox({
-						onChange: function() {
-							toggleSelectListRow2(this) },
-					}, cb);
+				new dijit.form.CheckBox({
+					onChange: function() {
+						toggleSelectListRow2(this) },
+				}, cb);
 
-					dojo.create("input", { type: "hidden",
-						name: "rule[]",
-						value: dojo.formToJson(form) }, li);
+				dojo.create("input", { type: "hidden",
+					name: "rule[]",
+					value: dojo.formToJson(form) }, li);
 
-					dojo.create("span", {
-						onclick: function() {
-							dijit.byId('filterEditDlg').editRule(this);
-						},
-						innerHTML: transport.responseText }, li);
+				dojo.create("span", {
+					onclick: function() {
+						dijit.byId('filterEditDlg').editRule(this);
+					},
+					innerHTML: transport.responseText }, li);
 
-					if (replaceNode) {
-						parentNode.replaceChild(li, replaceNode);
-					} else {
-						parentNode.appendChild(li);
-					}
-				} catch (e) {
-					exception_error("createNewRuleElement", e);
+				if (replaceNode) {
+					parentNode.replaceChild(li, replaceNode);
+				} else {
+					parentNode.appendChild(li);
 				}
-		} });
-	} catch (e) {
-		exception_error("createNewRuleElement", e);
-	}
+			} catch (e) {
+				exception_error(e);
+			}
+	} });
 }
 
 function createNewActionElement(parentNode, replaceNode) {
-	try {
-		var form = document.forms["filter_new_action_form"];
+	var form = document.forms["filter_new_action_form"];
 
-		if (form.action_id.value == 7) {
-			form.action_param.value = form.action_param_label.value;
-		} else if (form.action_id.value == 9) {
-			form.action_param.value = form.action_param_plugin.value;
-		}
-
-		var query = "backend.php?op=pref-filters&method=printactionname&action="+
-			param_escape(dojo.formToJson(form));
-
-		console.log(query);
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function (transport) {
-				try {
-					var li = dojo.create("li");
-
-					var cb = dojo.create("input", { type: "checkbox" }, li);
-
-					new dijit.form.CheckBox({
-						onChange: function() {
-							toggleSelectListRow2(this) },
-					}, cb);
-
-					dojo.create("input", { type: "hidden",
-						name: "action[]",
-						value: dojo.formToJson(form) }, li);
-
-					dojo.create("span", {
-						onclick: function() {
-							dijit.byId('filterEditDlg').editAction(this);
-						},
-						innerHTML: transport.responseText }, li);
-
-					if (replaceNode) {
-						parentNode.replaceChild(li, replaceNode);
-					} else {
-						parentNode.appendChild(li);
-					}
-
-				} catch (e) {
-					exception_error("createNewActionElement", e);
-				}
-			} });
-	} catch (e) {
-		exception_error("createNewActionElement", e);
+	if (form.action_id.value == 7) {
+		form.action_param.value = form.action_param_label.value;
+	} else if (form.action_id.value == 9) {
+		form.action_param.value = form.action_param_plugin.value;
 	}
+
+	var query = "backend.php?op=pref-filters&method=printactionname&action="+
+		param_escape(dojo.formToJson(form));
+
+	console.log(query);
+
+	new Ajax.Request("backend.php", {
+		parameters: query,
+		onComplete: function (transport) {
+			try {
+				var li = dojo.create("li");
+
+				var cb = dojo.create("input", { type: "checkbox" }, li);
+
+				new dijit.form.CheckBox({
+					onChange: function() {
+						toggleSelectListRow2(this) },
+				}, cb);
+
+				dojo.create("input", { type: "hidden",
+					name: "action[]",
+					value: dojo.formToJson(form) }, li);
+
+				dojo.create("span", {
+					onclick: function() {
+						dijit.byId('filterEditDlg').editAction(this);
+					},
+					innerHTML: transport.responseText }, li);
+
+				if (replaceNode) {
+					parentNode.replaceChild(li, replaceNode);
+				} else {
+					parentNode.appendChild(li);
+				}
+
+			} catch (e) {
+				exception_error(e);
+			}
+		} });
 }
 
 
 function addFilterRule(replaceNode, ruleStr) {
-	try {
-		if (dijit.byId("filterNewRuleDlg"))
-			dijit.byId("filterNewRuleDlg").destroyRecursive();
+	if (dijit.byId("filterNewRuleDlg"))
+		dijit.byId("filterNewRuleDlg").destroyRecursive();
 
-		var query = "backend.php?op=pref-filters&method=newrule&rule=" +
-			param_escape(ruleStr);
+	var query = "backend.php?op=pref-filters&method=newrule&rule=" +
+		param_escape(ruleStr);
 
-		var rule_dlg = new dijit.Dialog({
-			id: "filterNewRuleDlg",
-			title: ruleStr ? __("Edit rule") : __("Add rule"),
-			style: "width: 600px",
-			execute: function() {
-				if (this.validate()) {
-					createNewRuleElement($("filterDlg_Matches"), replaceNode);
-					this.hide();
-				}
-			},
-			href: query});
+	var rule_dlg = new dijit.Dialog({
+		id: "filterNewRuleDlg",
+		title: ruleStr ? __("Edit rule") : __("Add rule"),
+		style: "width: 600px",
+		execute: function() {
+			if (this.validate()) {
+				createNewRuleElement($("filterDlg_Matches"), replaceNode);
+				this.hide();
+			}
+		},
+		href: query});
 
-		rule_dlg.show();
-	} catch (e) {
-		exception_error("addFilterRule", e);
-	}
+	rule_dlg.show();
 }
 
 function addFilterAction(replaceNode, actionStr) {
-	try {
-		if (dijit.byId("filterNewActionDlg"))
-			dijit.byId("filterNewActionDlg").destroyRecursive();
+	if (dijit.byId("filterNewActionDlg"))
+		dijit.byId("filterNewActionDlg").destroyRecursive();
 
-		var query = "backend.php?op=pref-filters&method=newaction&action=" +
-			param_escape(actionStr);
+	var query = "backend.php?op=pref-filters&method=newaction&action=" +
+		param_escape(actionStr);
 
-		var rule_dlg = new dijit.Dialog({
-			id: "filterNewActionDlg",
-			title: actionStr ? __("Edit action") : __("Add action"),
-			style: "width: 600px",
-			execute: function() {
-				if (this.validate()) {
-					createNewActionElement($("filterDlg_Actions"), replaceNode);
-					this.hide();
-				}
-			},
-			href: query});
+	var rule_dlg = new dijit.Dialog({
+		id: "filterNewActionDlg",
+		title: actionStr ? __("Edit action") : __("Add action"),
+		style: "width: 600px",
+		execute: function() {
+			if (this.validate()) {
+				createNewActionElement($("filterDlg_Actions"), replaceNode);
+				this.hide();
+			}
+		},
+		href: query});
 
-		rule_dlg.show();
-	} catch (e) {
-		exception_error("addFilterAction", e);
-	}
+	rule_dlg.show();
 }
 
 function editFilterTest(query) {
-	try {
 
-		if (dijit.byId("filterTestDlg"))
-			dijit.byId("filterTestDlg").destroyRecursive();
+	if (dijit.byId("filterTestDlg"))
+		dijit.byId("filterTestDlg").destroyRecursive();
 
-		var test_dlg = new dijit.Dialog({
-			id: "filterTestDlg",
-			title: "Test Filter",
-			style: "width: 600px",
-			results: 0,
-			limit: 100,
-			max_offset: 10000,
-			getTestResults: function(query, offset) {
-				var updquery = query + "&offset=" + offset + "&limit=" + test_dlg.limit;
+	var test_dlg = new dijit.Dialog({
+		id: "filterTestDlg",
+		title: "Test Filter",
+		style: "width: 600px",
+		results: 0,
+		limit: 100,
+		max_offset: 10000,
+		getTestResults: function(query, offset) {
+			var updquery = query + "&offset=" + offset + "&limit=" + test_dlg.limit;
 
-				console.log("getTestResults:" + offset);
+			console.log("getTestResults:" + offset);
 
-				new Ajax.Request("backend.php", {
-					parameters: updquery,
-					onComplete: function (transport) {
-						try {
-							var result = JSON.parse(transport.responseText);
+			new Ajax.Request("backend.php", {
+				parameters: updquery,
+				onComplete: function (transport) {
+					try {
+						var result = JSON.parse(transport.responseText);
 
-							if (result && dijit.byId("filterTestDlg") && dijit.byId("filterTestDlg").open) {
-								test_dlg.results += result.size();
+						if (result && dijit.byId("filterTestDlg") && dijit.byId("filterTestDlg").open) {
+							test_dlg.results += result.size();
 
-								console.log("got results:" + result.size());
+							console.log("got results:" + result.size());
 
-								$("prefFilterProgressMsg").innerHTML = __("Looking for articles (%d processed, %f found)...")
-									.replace("%f", test_dlg.results)
-									.replace("%d", offset);
+							$("prefFilterProgressMsg").innerHTML = __("Looking for articles (%d processed, %f found)...")
+								.replace("%f", test_dlg.results)
+								.replace("%d", offset);
 
-								console.log(offset + " " + test_dlg.max_offset);
+							console.log(offset + " " + test_dlg.max_offset);
 
-								for (var i = 0; i < result.size(); i++) {
-									var tmp = new Element("table");
-									tmp.innerHTML = result[i];
-									dojo.parser.parse(tmp);
+							for (var i = 0; i < result.size(); i++) {
+								var tmp = new Element("table");
+								tmp.innerHTML = result[i];
+								dojo.parser.parse(tmp);
 
-									$("prefFilterTestResultList").innerHTML += tmp.innerHTML;
-								}
+								$("prefFilterTestResultList").innerHTML += tmp.innerHTML;
+							}
 
-								if (test_dlg.results < 30 && offset < test_dlg.max_offset) {
+							if (test_dlg.results < 30 && offset < test_dlg.max_offset) {
 
-									// get the next batch
-									window.setTimeout(function () {
-										test_dlg.getTestResults(query, offset + test_dlg.limit);
-									}, 0);
+								// get the next batch
+								window.setTimeout(function () {
+									test_dlg.getTestResults(query, offset + test_dlg.limit);
+								}, 0);
 
-								} else {
-									// all done
-
-									Element.hide("prefFilterLoadingIndicator");
-
-									if (test_dlg.results == 0) {
-										$("prefFilterTestResultList").innerHTML = "<tr><td align='center'>No recent articles matching this filter have been found.</td></tr>";
-										$("prefFilterProgressMsg").innerHTML = "Articles matching this filter:";
-									} else {
-										$("prefFilterProgressMsg").innerHTML = __("Found %d articles matching this filter:")
-											.replace("%d", test_dlg.results);
-									}
-
-								}
-
-							} else if (!result) {
-								console.log("getTestResults: can't parse results object");
+							} else {
+								// all done
 
 								Element.hide("prefFilterLoadingIndicator");
 
-								notify_error("Error while trying to get filter test results.");
+								if (test_dlg.results == 0) {
+									$("prefFilterTestResultList").innerHTML = "<tr><td align='center'>No recent articles matching this filter have been found.</td></tr>";
+									$("prefFilterProgressMsg").innerHTML = "Articles matching this filter:";
+								} else {
+									$("prefFilterProgressMsg").innerHTML = __("Found %d articles matching this filter:")
+										.replace("%d", test_dlg.results);
+								}
 
-							} else {
-								console.log("getTestResults: dialog closed, bailing out.");
 							}
-						} catch (e) {
-							exception_error("editFilterTest/inner", e);
+
+						} else if (!result) {
+							console.log("getTestResults: can't parse results object");
+
+							Element.hide("prefFilterLoadingIndicator");
+
+							notify_error("Error while trying to get filter test results.");
+
+						} else {
+							console.log("getTestResults: dialog closed, bailing out.");
 						}
+					} catch (e) {
+						exception_error(e);
+					}
 
-					} });
-			},
-			href: query});
+				} });
+		},
+		href: query});
 
-		dojo.connect(test_dlg, "onLoad", null, function(e) {
-			test_dlg.getTestResults(query, 0);
-		});
+	dojo.connect(test_dlg, "onLoad", null, function(e) {
+		test_dlg.getTestResults(query, 0);
+	});
 
-		test_dlg.show();
+	test_dlg.show();
 
-	} catch (e) {
-		exception_error("editFilterTest", e);
-	}
 }
 
 function quickAddFilter() {
-	try {
-		var query = "";
-		if (!inPreferences()) {
-			query = "backend.php?op=pref-filters&method=newfilter&feed=" +
-				param_escape(getActiveFeedId()) + "&is_cat=" +
-				param_escape(activeFeedIsCat());
-		} else {
-			query = "backend.php?op=pref-filters&method=newfilter";
-		}
+	var query = "";
+	if (!inPreferences()) {
+		query = "backend.php?op=pref-filters&method=newfilter&feed=" +
+			param_escape(getActiveFeedId()) + "&is_cat=" +
+			param_escape(activeFeedIsCat());
+	} else {
+		query = "backend.php?op=pref-filters&method=newfilter";
+	}
 
-		console.log(query);
+	console.log(query);
 
-		if (dijit.byId("feedEditDlg"))
-			dijit.byId("feedEditDlg").destroyRecursive();
+	if (dijit.byId("feedEditDlg"))
+		dijit.byId("feedEditDlg").destroyRecursive();
 
-		if (dijit.byId("filterEditDlg"))
-			dijit.byId("filterEditDlg").destroyRecursive();
+	if (dijit.byId("filterEditDlg"))
+		dijit.byId("filterEditDlg").destroyRecursive();
 
-		dialog = new dijit.Dialog({
-			id: "filterEditDlg",
-			title: __("Create Filter"),
-			style: "width: 600px",
-			test: function() {
-				var query = "backend.php?" + dojo.formToQuery("filter_new_form") + "&savemode=test";
+	dialog = new dijit.Dialog({
+		id: "filterEditDlg",
+		title: __("Create Filter"),
+		style: "width: 600px",
+		test: function() {
+			var query = "backend.php?" + dojo.formToQuery("filter_new_form") + "&savemode=test";
 
-				editFilterTest(query);
-			},
-			selectRules: function(select) {
-				$$("#filterDlg_Matches input[type=checkbox]").each(function(e) {
-					e.checked = select;
-					if (select)
-						e.parentNode.addClassName("Selected");
-					else
-						e.parentNode.removeClassName("Selected");
-				});
-			},
-			selectActions: function(select) {
-				$$("#filterDlg_Actions input[type=checkbox]").each(function(e) {
-					e.checked = select;
+			editFilterTest(query);
+		},
+		selectRules: function(select) {
+			$$("#filterDlg_Matches input[type=checkbox]").each(function(e) {
+				e.checked = select;
+				if (select)
+					e.parentNode.addClassName("Selected");
+				else
+					e.parentNode.removeClassName("Selected");
+			});
+		},
+		selectActions: function(select) {
+			$$("#filterDlg_Actions input[type=checkbox]").each(function(e) {
+				e.checked = select;
 
-					if (select)
-						e.parentNode.addClassName("Selected");
-					else
-						e.parentNode.removeClassName("Selected");
-
-				});
-			},
-			editRule: function(e) {
-				var li = e.parentNode;
-				var rule = li.getElementsByTagName("INPUT")[1].value;
-				addFilterRule(li, rule);
-			},
-			editAction: function(e) {
-				var li = e.parentNode;
-				var action = li.getElementsByTagName("INPUT")[1].value;
-				addFilterAction(li, action);
-			},
-			addAction: function() { addFilterAction(); },
-			addRule: function() { addFilterRule(); },
-			deleteAction: function() {
-				$$("#filterDlg_Actions li.[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
-			},
-			deleteRule: function() {
-				$$("#filterDlg_Matches li.[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
-			},
-			execute: function() {
-				if (this.validate()) {
-
-					var query = dojo.formToQuery("filter_new_form");
-
-					console.log(query);
-
-					new Ajax.Request("backend.php", {
-						parameters: query,
-						onComplete: function (transport) {
-							if (inPreferences()) {
-								updateFilterList();
-							}
-
-							dialog.hide();
-					} });
-				}
-			},
-			href: query});
-
-		if (!inPreferences()) {
-			var selectedText = getSelectionText();
-
-			var lh = dojo.connect(dialog, "onLoad", function(){
-				dojo.disconnect(lh);
-
-				if (selectedText != "") {
-
-					var feed_id = activeFeedIsCat() ? 'CAT:' + parseInt(getActiveFeedId()) :
-						getActiveFeedId();
-
-					var rule = { reg_exp: selectedText, feed_id: feed_id, filter_type: 1 };
-
-					addFilterRule(null, dojo.toJson(rule));
-
-				} else {
-
-					var query = "op=rpc&method=getlinktitlebyid&id=" + getActiveArticleId();
-
-					new Ajax.Request("backend.php", {
-					parameters: query,
-					onComplete: function(transport) {
-						var reply = JSON.parse(transport.responseText);
-
-						var title = false;
-
-						if (reply && reply) title = reply.title;
-
-						if (title || getActiveFeedId() || activeFeedIsCat()) {
-
-							console.log(title + " " + getActiveFeedId());
-
-							var feed_id = activeFeedIsCat() ? 'CAT:' + parseInt(getActiveFeedId()) :
-								getActiveFeedId();
-
-							var rule = { reg_exp: title, feed_id: feed_id, filter_type: 1 };
-
-							addFilterRule(null, dojo.toJson(rule));
-						}
-
-					} });
-
-				}
+				if (select)
+					e.parentNode.addClassName("Selected");
+				else
+					e.parentNode.removeClassName("Selected");
 
 			});
-		}
+		},
+		editRule: function(e) {
+			var li = e.parentNode;
+			var rule = li.getElementsByTagName("INPUT")[1].value;
+			addFilterRule(li, rule);
+		},
+		editAction: function(e) {
+			var li = e.parentNode;
+			var action = li.getElementsByTagName("INPUT")[1].value;
+			addFilterAction(li, action);
+		},
+		addAction: function() { addFilterAction(); },
+		addRule: function() { addFilterRule(); },
+		deleteAction: function() {
+			$$("#filterDlg_Actions li.[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
+		},
+		deleteRule: function() {
+			$$("#filterDlg_Matches li.[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
+		},
+		execute: function() {
+			if (this.validate()) {
 
-		dialog.show();
+				var query = dojo.formToQuery("filter_new_form");
 
-	} catch (e) {
-		exception_error("quickAddFilter", e);
+				console.log(query);
+
+				new Ajax.Request("backend.php", {
+					parameters: query,
+					onComplete: function (transport) {
+						if (inPreferences()) {
+							updateFilterList();
+						}
+
+						dialog.hide();
+				} });
+			}
+		},
+		href: query});
+
+	if (!inPreferences()) {
+		var selectedText = getSelectionText();
+
+		var lh = dojo.connect(dialog, "onLoad", function(){
+			dojo.disconnect(lh);
+
+			if (selectedText != "") {
+
+				var feed_id = activeFeedIsCat() ? 'CAT:' + parseInt(getActiveFeedId()) :
+					getActiveFeedId();
+
+				var rule = { reg_exp: selectedText, feed_id: feed_id, filter_type: 1 };
+
+				addFilterRule(null, dojo.toJson(rule));
+
+			} else {
+
+				var query = "op=rpc&method=getlinktitlebyid&id=" + getActiveArticleId();
+
+				new Ajax.Request("backend.php", {
+				parameters: query,
+				onComplete: function(transport) {
+					var reply = JSON.parse(transport.responseText);
+
+					var title = false;
+
+					if (reply && reply) title = reply.title;
+
+					if (title || getActiveFeedId() || activeFeedIsCat()) {
+
+						console.log(title + " " + getActiveFeedId());
+
+						var feed_id = activeFeedIsCat() ? 'CAT:' + parseInt(getActiveFeedId()) :
+							getActiveFeedId();
+
+						var rule = { reg_exp: title, feed_id: feed_id, filter_type: 1 };
+
+						addFilterRule(null, dojo.toJson(rule));
+					}
+
+				} });
+
+			}
+
+		});
 	}
+
+	dialog.show();
+
 }
 
 function resetPubSub(feed_id, title) {
@@ -1349,598 +1207,442 @@ function unsubscribeFeed(feed_id, title) {
 
 function backend_sanity_check_callback(transport) {
 
-	try {
-
-		if (sanity_check_done) {
-			fatalError(11, "Sanity check request received twice. This can indicate "+
-		      "presence of Firebug or some other disrupting extension. "+
-				"Please disable it and try again.");
-			return;
-		}
-
-		var reply = JSON.parse(transport.responseText);
-
-		if (!reply) {
-			fatalError(3, "Sanity check: invalid RPC reply", transport.responseText);
-			return;
-		}
-
-		var error_code = reply['error']['code'];
-
-		if (error_code && error_code != 0) {
-			return fatalError(error_code, reply['error']['message']);
-		}
-
-		console.log("sanity check ok");
-
-		var params = reply['init-params'];
-
-		if (params) {
-			console.log('reading init-params...');
-
-			for (k in params) {
-				console.log("IP: " + k + " => " + JSON.stringify(params[k]));
-				if (k == "label_base_index") _label_base_index = parseInt(params[k]);
-			}
-
-			init_params = params;
-
-			// PluginHost might not be available on non-index pages
-			window.PluginHost && PluginHost.run(PluginHost.HOOK_PARAMS_LOADED, init_params);
-		}
-
-		sanity_check_done = true;
-
-		init_second_stage();
-
-	} catch (e) {
-		exception_error("backend_sanity_check_callback", e, transport);
+	if (sanity_check_done) {
+		fatalError(11, "Sanity check request received twice. This can indicate "+
+		  "presence of Firebug or some other disrupting extension. "+
+			"Please disable it and try again.");
+		return;
 	}
-}
 
-/*function has_local_storage() {
-	try {
-		return 'sessionStorage' in window && window['sessionStorage'] != null;
-	} catch (e) {
-		return false;
+	var reply = JSON.parse(transport.responseText);
+
+	if (!reply) {
+		fatalError(3, "Sanity check: invalid RPC reply", transport.responseText);
+		return;
 	}
-} */
 
-function catSelectOnChange(elem) {
-	try {
-/*		var value = elem[elem.selectedIndex].value;
-		var def = elem.getAttribute('default');
+	var error_code = reply['error']['code'];
 
-		if (value == "ADD_CAT") {
-
-			if (def)
-				dropboxSelect(elem, def);
-			else
-				elem.selectedIndex = 0;
-
-			quickAddCat(elem);
-		} */
-
-	} catch (e) {
-		exception_error("catSelectOnChange", e);
+	if (error_code && error_code != 0) {
+		return fatalError(error_code, reply['error']['message']);
 	}
+
+	console.log("sanity check ok");
+
+	var params = reply['init-params'];
+
+	if (params) {
+		console.log('reading init-params...');
+
+		for (k in params) {
+			console.log("IP: " + k + " => " + JSON.stringify(params[k]));
+			if (k == "label_base_index") _label_base_index = parseInt(params[k]);
+		}
+
+		init_params = params;
+
+		// PluginHost might not be available on non-index pages
+		window.PluginHost && PluginHost.run(PluginHost.HOOK_PARAMS_LOADED, init_params);
+	}
+
+	sanity_check_done = true;
+
+	init_second_stage();
+
 }
 
 function quickAddCat(elem) {
-	try {
-		var cat = prompt(__("Please enter category title:"));
+	var cat = prompt(__("Please enter category title:"));
 
-		if (cat) {
+	if (cat) {
 
-			var query = "?op=rpc&method=quickAddCat&cat=" + param_escape(cat);
+		var query = "?op=rpc&method=quickAddCat&cat=" + param_escape(cat);
 
-			notify_progress("Loading, please wait...", true);
+		notify_progress("Loading, please wait...", true);
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function (transport) {
-					var response = transport.responseXML;
-					var select = response.getElementsByTagName("select")[0];
-					var options = select.getElementsByTagName("option");
+		new Ajax.Request("backend.php", {
+			parameters: query,
+			onComplete: function (transport) {
+				var response = transport.responseXML;
+				var select = response.getElementsByTagName("select")[0];
+				var options = select.getElementsByTagName("option");
 
-					dropbox_replace_options(elem, options);
+				dropbox_replace_options(elem, options);
 
-					notify('');
+				notify('');
 
-			} });
+		} });
 
-		}
-
-	} catch (e) {
-		exception_error("quickAddCat", e);
 	}
 }
 
 function genUrlChangeKey(feed, is_cat) {
+	var ok = confirm(__("Generate new syndication address for this feed?"));
 
-	try {
-		var ok = confirm(__("Generate new syndication address for this feed?"));
+	if (ok) {
 
-		if (ok) {
+		notify_progress("Trying to change address...", true);
 
-			notify_progress("Trying to change address...", true);
+		var query = "?op=pref-feeds&method=regenFeedKey&id=" + param_escape(feed) +
+			"&is_cat=" + param_escape(is_cat);
 
-			var query = "?op=pref-feeds&method=regenFeedKey&id=" + param_escape(feed) +
-				"&is_cat=" + param_escape(is_cat);
+		new Ajax.Request("backend.php", {
+			parameters: query,
+			onComplete: function(transport) {
+					var reply = JSON.parse(transport.responseText);
+					var new_link = reply.link;
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function(transport) {
-						var reply = JSON.parse(transport.responseText);
-						var new_link = reply.link;
+					var e = $('gen_feed_url');
 
-						var e = $('gen_feed_url');
+					if (new_link) {
 
-						if (new_link) {
+						e.innerHTML = e.innerHTML.replace(/\&amp;key=.*$/,
+							"&amp;key=" + new_link);
 
-							e.innerHTML = e.innerHTML.replace(/\&amp;key=.*$/,
-								"&amp;key=" + new_link);
+						e.href = e.href.replace(/\&key=.*$/,
+							"&key=" + new_link);
 
-							e.href = e.href.replace(/\&key=.*$/,
-								"&key=" + new_link);
+						new Effect.Highlight(e);
 
-							new Effect.Highlight(e);
+						notify('');
 
-							notify('');
-
-						} else {
-							notify_error("Could not change feed URL.");
-						}
-				} });
-		}
-	} catch (e) {
-		exception_error("genUrlChangeKey", e);
+					} else {
+						notify_error("Could not change feed URL.");
+					}
+			} });
 	}
 	return false;
 }
 
-function labelSelectOnChange(elem) {
-	try {
-/*		var value = elem[elem.selectedIndex].value;
-		var def = elem.getAttribute('default');
-
-		if (value == "ADD_LABEL") {
-
-			if (def)
-				dropboxSelect(elem, def);
-			else
-				elem.selectedIndex = 0;
-
-			addLabel(elem, function(transport) {
-
-					try {
-
-						var response = transport.responseXML;
-						var select = response.getElementsByTagName("select")[0];
-						var options = select.getElementsByTagName("option");
-
-						dropbox_replace_options(elem, options);
-
-						notify('');
-					} catch (e) {
-						exception_error("addLabel", e);
-					}
-			});
-		} */
-
-	} catch (e) {
-		exception_error("labelSelectOnChange", e);
-	}
-}
-
 function dropbox_replace_options(elem, options) {
+	while (elem.hasChildNodes())
+		elem.removeChild(elem.firstChild);
 
-	try {
-		while (elem.hasChildNodes())
-			elem.removeChild(elem.firstChild);
+	var sel_idx = -1;
 
-		var sel_idx = -1;
+	for (var i = 0; i < options.length; i++) {
+		var text = options[i].firstChild.nodeValue;
+		var value = options[i].getAttribute("value");
 
-		for (var i = 0; i < options.length; i++) {
-			var text = options[i].firstChild.nodeValue;
-			var value = options[i].getAttribute("value");
+		if (value == undefined) value = text;
 
-			if (value == undefined) value = text;
+		var issel = options[i].getAttribute("selected") == "1";
 
-			var issel = options[i].getAttribute("selected") == "1";
+		var option = new Option(text, value, issel);
 
-			var option = new Option(text, value, issel);
+		if (options[i].getAttribute("disabled"))
+			option.setAttribute("disabled", true);
 
-			if (options[i].getAttribute("disabled"))
-				option.setAttribute("disabled", true);
+		elem.insert(option);
 
-			elem.insert(option);
-
-			if (issel) sel_idx = i;
-		}
-
-		// Chrome doesn't seem to just select stuff when you pass new Option(x, y, true)
-		if (sel_idx >= 0) elem.selectedIndex = sel_idx;
-
-	} catch (e) {
-		exception_error("dropbox_replace_options", e);
+		if (issel) sel_idx = i;
 	}
+
+	// Chrome doesn't seem to just select stuff when you pass new Option(x, y, true)
+	if (sel_idx >= 0) elem.selectedIndex = sel_idx;
 }
 
 // mode = all, none, invert
 function selectTableRows(id, mode) {
-	try {
-		var rows = $(id).rows;
+	var rows = $(id).rows;
 
-		for (var i = 0; i < rows.length; i++) {
-			var row = rows[i];
-			var cb = false;
-			var dcb = false;
+	for (var i = 0; i < rows.length; i++) {
+		var row = rows[i];
+		var cb = false;
+		var dcb = false;
 
-			if (row.id && row.className) {
-				var bare_id = row.id.replace(/^[A-Z]*?-/, "");
-				var inputs = rows[i].getElementsByTagName("input");
+		if (row.id && row.className) {
+			var bare_id = row.id.replace(/^[A-Z]*?-/, "");
+			var inputs = rows[i].getElementsByTagName("input");
 
-				for (var j = 0; j < inputs.length; j++) {
-					var input = inputs[j];
+			for (var j = 0; j < inputs.length; j++) {
+				var input = inputs[j];
 
-					if (input.getAttribute("type") == "checkbox" &&
-							input.id.match(bare_id)) {
+				if (input.getAttribute("type") == "checkbox" &&
+						input.id.match(bare_id)) {
 
-						cb = input;
-						dcb = dijit.getEnclosingWidget(cb);
-						break;
-					}
+					cb = input;
+					dcb = dijit.getEnclosingWidget(cb);
+					break;
 				}
+			}
 
-				if (cb || dcb) {
-					var issel = row.hasClassName("Selected");
+			if (cb || dcb) {
+				var issel = row.hasClassName("Selected");
 
-					if (mode == "all" && !issel) {
-						row.addClassName("Selected");
-						cb.checked = true;
-						if (dcb) dcb.set("checked", true);
-					} else if (mode == "none" && issel) {
+				if (mode == "all" && !issel) {
+					row.addClassName("Selected");
+					cb.checked = true;
+					if (dcb) dcb.set("checked", true);
+				} else if (mode == "none" && issel) {
+					row.removeClassName("Selected");
+					cb.checked = false;
+					if (dcb) dcb.set("checked", false);
+
+				} else if (mode == "invert") {
+
+					if (issel) {
 						row.removeClassName("Selected");
 						cb.checked = false;
 						if (dcb) dcb.set("checked", false);
-
-					} else if (mode == "invert") {
-
-						if (issel) {
-							row.removeClassName("Selected");
-							cb.checked = false;
-							if (dcb) dcb.set("checked", false);
-						} else {
-							row.addClassName("Selected");
-							cb.checked = true;
-							if (dcb) dcb.set("checked", true);
-						}
+					} else {
+						row.addClassName("Selected");
+						cb.checked = true;
+						if (dcb) dcb.set("checked", true);
 					}
 				}
 			}
 		}
-
-	} catch (e) {
-		exception_error("selectTableRows", e);
-
 	}
+
 }
 
 function getSelectedTableRowIds(id) {
 	var rows = [];
 
-	try {
-		var elem_rows = $(id).rows;
+	var elem_rows = $(id).rows;
 
-		for (var i = 0; i < elem_rows.length; i++) {
-			if (elem_rows[i].hasClassName("Selected")) {
-				var bare_id = elem_rows[i].id.replace(/^[A-Z]*?-/, "");
-				rows.push(bare_id);
-			}
+	for (var i = 0; i < elem_rows.length; i++) {
+		if (elem_rows[i].hasClassName("Selected")) {
+			var bare_id = elem_rows[i].id.replace(/^[A-Z]*?-/, "");
+			rows.push(bare_id);
 		}
-
-	} catch (e) {
-		exception_error("getSelectedTableRowIds", e);
 	}
 
 	return rows;
 }
 
 function editFeed(feed, event) {
-	try {
-		if (feed <= 0)
-			return alert(__("You can't edit this kind of feed."));
+	if (feed <= 0)
+		return alert(__("You can't edit this kind of feed."));
 
-		var query = "backend.php?op=pref-feeds&method=editfeed&id=" +
-			param_escape(feed);
+	var query = "backend.php?op=pref-feeds&method=editfeed&id=" +
+		param_escape(feed);
 
-		console.log(query);
+	console.log(query);
 
-		if (dijit.byId("filterEditDlg"))
-			dijit.byId("filterEditDlg").destroyRecursive();
+	if (dijit.byId("filterEditDlg"))
+		dijit.byId("filterEditDlg").destroyRecursive();
 
-		if (dijit.byId("feedEditDlg"))
-			dijit.byId("feedEditDlg").destroyRecursive();
+	if (dijit.byId("feedEditDlg"))
+		dijit.byId("feedEditDlg").destroyRecursive();
 
-		dialog = new dijit.Dialog({
-			id: "feedEditDlg",
-			title: __("Edit Feed"),
-			style: "width: 600px",
-			execute: function() {
-				if (this.validate()) {
+	dialog = new dijit.Dialog({
+		id: "feedEditDlg",
+		title: __("Edit Feed"),
+		style: "width: 600px",
+		execute: function() {
+			if (this.validate()) {
 //					console.log(dojo.objectToQuery(this.attr('value')));
 
-					notify_progress("Saving data...", true);
+				notify_progress("Saving data...", true);
 
-					new Ajax.Request("backend.php", {
-						parameters: dojo.objectToQuery(dialog.attr('value')),
-						onComplete: function(transport) {
-							dialog.hide();
-							notify('');
-							updateFeedList();
-					}});
-				}
-			},
-			href: query});
+				new Ajax.Request("backend.php", {
+					parameters: dojo.objectToQuery(dialog.attr('value')),
+					onComplete: function(transport) {
+						dialog.hide();
+						notify('');
+						updateFeedList();
+				}});
+			}
+		},
+		href: query});
 
-		dialog.show();
-
-	} catch (e) {
-		exception_error("editFeed", e);
-	}
+	dialog.show();
 }
 
 function feedBrowser() {
-	try {
-		var query = "backend.php?op=feeds&method=feedBrowser";
+	var query = "backend.php?op=feeds&method=feedBrowser";
 
-		if (dijit.byId("feedAddDlg"))
-			dijit.byId("feedAddDlg").hide();
+	if (dijit.byId("feedAddDlg"))
+		dijit.byId("feedAddDlg").hide();
 
-		if (dijit.byId("feedBrowserDlg"))
-			dijit.byId("feedBrowserDlg").destroyRecursive();
+	if (dijit.byId("feedBrowserDlg"))
+		dijit.byId("feedBrowserDlg").destroyRecursive();
 
-		var dialog = new dijit.Dialog({
-			id: "feedBrowserDlg",
-			title: __("More Feeds"),
-			style: "width: 600px",
-			getSelectedFeedIds: function() {
-				var list = $$("#browseFeedList li[id*=FBROW]");
-				var selected = new Array();
+	var dialog = new dijit.Dialog({
+		id: "feedBrowserDlg",
+		title: __("More Feeds"),
+		style: "width: 600px",
+		getSelectedFeedIds: function () {
+			var list = $$("#browseFeedList li[id*=FBROW]");
+			var selected = new Array();
 
-				list.each(function(child) {
-					var id = child.id.replace("FBROW-", "");
+			list.each(function (child) {
+				var id = child.id.replace("FBROW-", "");
 
-					if (child.hasClassName('Selected')) {
-						selected.push(id);
-					}
-				});
-
-				return selected;
-			},
-			getSelectedFeeds: function() {
-				var list = $$("#browseFeedList li.Selected");
-				var selected = new Array();
-
-				list.each(function(child) {
-					var title = child.getElementsBySelector("span.fb_feedTitle")[0].innerHTML;
-					var url = child.getElementsBySelector("a.fb_feedUrl")[0].href;
-
-					selected.push([title,url]);
-
-				});
-
-				return selected;
-			},
-
-			subscribe: function() {
-				var mode = this.attr('value').mode;
-				var selected = [];
-
-				if (mode == "1")
-					selected = this.getSelectedFeeds();
-				else
-					selected = this.getSelectedFeedIds();
-
-				if (selected.length > 0) {
-					dijit.byId("feedBrowserDlg").hide();
-
-					notify_progress("Loading, please wait...", true);
-
-					// we use dojo.toJson instead of JSON.stringify because
-					// it somehow escapes everything TWICE, at least in Chrome 9
-
-					var query = "?op=rpc&method=massSubscribe&payload="+
-						param_escape(dojo.toJson(selected)) + "&mode=" + param_escape(mode);
-
-					console.log(query);
-
-					new Ajax.Request("backend.php", {
-						parameters: query,
-						onComplete: function(transport) {
-							notify('');
-							updateFeedList();
-						} });
-
-				} else {
-					alert(__("No feeds are selected."));
+				if (child.hasClassName('Selected')) {
+					selected.push(id);
 				}
+			});
 
-			},
-			update: function() {
-				var query = dojo.objectToQuery(dialog.attr('value'));
+			return selected;
+		},
+		getSelectedFeeds: function () {
+			var list = $$("#browseFeedList li.Selected");
+			var selected = new Array();
 
-				Element.show('feed_browser_spinner');
+			list.each(function (child) {
+				var title = child.getElementsBySelector("span.fb_feedTitle")[0].innerHTML;
+				var url = child.getElementsBySelector("a.fb_feedUrl")[0].href;
+
+				selected.push([title, url]);
+
+			});
+
+			return selected;
+		},
+
+		subscribe: function () {
+			var mode = this.attr('value').mode;
+			var selected = [];
+
+			if (mode == "1")
+				selected = this.getSelectedFeeds();
+			else
+				selected = this.getSelectedFeedIds();
+
+			if (selected.length > 0) {
+				dijit.byId("feedBrowserDlg").hide();
+
+				notify_progress("Loading, please wait...", true);
+
+				// we use dojo.toJson instead of JSON.stringify because
+				// it somehow escapes everything TWICE, at least in Chrome 9
+
+				var query = "?op=rpc&method=massSubscribe&payload=" +
+					param_escape(dojo.toJson(selected)) + "&mode=" + param_escape(mode);
+
+				console.log(query);
 
 				new Ajax.Request("backend.php", {
 					parameters: query,
-					onComplete: function(transport) {
+					onComplete: function (transport) {
 						notify('');
-
-						Element.hide('feed_browser_spinner');
-
-						var c = $("browseFeedList");
-
-						var reply = JSON.parse(transport.responseText);
-
-						var r = reply['content'];
-						var mode = reply['mode'];
-
-						if (c && r) {
-							c.innerHTML = r;
-						}
-
-						dojo.parser.parse("browseFeedList");
-
-						if (mode == 2) {
-							Element.show(dijit.byId('feed_archive_remove').domNode);
-						} else {
-							Element.hide(dijit.byId('feed_archive_remove').domNode);
-						}
-
-					} });
-			},
-			removeFromArchive: function() {
-				var selected = this.getSelectedFeedIds();
-
-				if (selected.length > 0) {
-
-					var pr = __("Remove selected feeds from the archive? Feeds with stored articles will not be removed.");
-
-					if (confirm(pr)) {
-						Element.show('feed_browser_spinner');
-
-						var query = "?op=rpc&method=remarchive&ids=" +
-							param_escape(selected.toString());;
-
-						new Ajax.Request("backend.php", {
-							parameters: query,
-							onComplete: function(transport) {
-								dialog.update();
-							} });
+						updateFeedList();
 					}
-				}
-			},
-			execute: function() {
-				if (this.validate()) {
-					this.subscribe();
-				}
-			},
-			href: query});
+				});
 
-		dialog.show();
+			} else {
+				alert(__("No feeds are selected."));
+			}
 
-	} catch (e) {
-		exception_error("editFeed", e);
-	}
+		},
+		update: function () {
+			var query = dojo.objectToQuery(dialog.attr('value'));
+
+			Element.show('feed_browser_spinner');
+
+			new Ajax.Request("backend.php", {
+				parameters: query,
+				onComplete: function (transport) {
+					notify('');
+
+					Element.hide('feed_browser_spinner');
+
+					var c = $("browseFeedList");
+
+					var reply = JSON.parse(transport.responseText);
+
+					var r = reply['content'];
+					var mode = reply['mode'];
+
+					if (c && r) {
+						c.innerHTML = r;
+					}
+
+					dojo.parser.parse("browseFeedList");
+
+					if (mode == 2) {
+						Element.show(dijit.byId('feed_archive_remove').domNode);
+					} else {
+						Element.hide(dijit.byId('feed_archive_remove').domNode);
+					}
+
+				}
+			});
+		},
+		removeFromArchive: function () {
+			var selected = this.getSelectedFeedIds();
+
+			if (selected.length > 0) {
+
+				var pr = __("Remove selected feeds from the archive? Feeds with stored articles will not be removed.");
+
+				if (confirm(pr)) {
+					Element.show('feed_browser_spinner');
+
+					var query = "?op=rpc&method=remarchive&ids=" +
+						param_escape(selected.toString());
+					;
+
+					new Ajax.Request("backend.php", {
+						parameters: query,
+						onComplete: function (transport) {
+							dialog.update();
+						}
+					});
+				}
+			}
+		},
+		execute: function () {
+			if (this.validate()) {
+				this.subscribe();
+			}
+		},
+		href: query
+	});
+
+	dialog.show();
 }
 
 function showFeedsWithErrors() {
-	try {
-		var query = "backend.php?op=pref-feeds&method=feedsWithErrors";
+	var query = "backend.php?op=pref-feeds&method=feedsWithErrors";
 
-		if (dijit.byId("errorFeedsDlg"))
-			dijit.byId("errorFeedsDlg").destroyRecursive();
+	if (dijit.byId("errorFeedsDlg"))
+		dijit.byId("errorFeedsDlg").destroyRecursive();
 
-		dialog = new dijit.Dialog({
-			id: "errorFeedsDlg",
-			title: __("Feeds with update errors"),
-			style: "width: 600px",
-			getSelectedFeeds: function() {
-				return getSelectedTableRowIds("prefErrorFeedList");
-			},
-			removeSelected: function() {
-				var sel_rows = this.getSelectedFeeds();
+	dialog = new dijit.Dialog({
+		id: "errorFeedsDlg",
+		title: __("Feeds with update errors"),
+		style: "width: 600px",
+		getSelectedFeeds: function() {
+			return getSelectedTableRowIds("prefErrorFeedList");
+		},
+		removeSelected: function() {
+			var sel_rows = this.getSelectedFeeds();
 
-				console.log(sel_rows);
+			console.log(sel_rows);
 
-				if (sel_rows.length > 0) {
-					var ok = confirm(__("Remove selected feeds?"));
+			if (sel_rows.length > 0) {
+				var ok = confirm(__("Remove selected feeds?"));
 
-					if (ok) {
-						notify_progress("Removing selected feeds...", true);
+				if (ok) {
+					notify_progress("Removing selected feeds...", true);
 
-						var query = "?op=pref-feeds&method=remove&ids="+
-							param_escape(sel_rows.toString());
+					var query = "?op=pref-feeds&method=remove&ids="+
+						param_escape(sel_rows.toString());
 
-						new Ajax.Request("backend.php",	{
-							parameters: query,
-							onComplete: function(transport) {
-								notify('');
-								dialog.hide();
-								updateFeedList();
-							} });
-					}
-
-				} else {
-					alert(__("No feeds are selected."));
+					new Ajax.Request("backend.php",	{
+						parameters: query,
+						onComplete: function(transport) {
+							notify('');
+							dialog.hide();
+							updateFeedList();
+						} });
 				}
-			},
-			execute: function() {
-				if (this.validate()) {
-				}
-			},
-			href: query});
 
-		dialog.show();
-
-	} catch (e) {
-		exception_error("showFeedsWithErrors", e);
-	}
-
-}
-
-/* new support functions for SelectByTag */
-
-function get_all_tags(selObj){
-	try {
-		if( !selObj ) return "";
-
-		var result = "";
-		var len = selObj.options.length;
-
-		for (var i=0; i < len; i++){
-			if (selObj.options[i].selected) {
-				result += selObj[i].value + "%2C";   // is really a comma
-			}
-		}
-
-		if (result.length > 0){
-			result = result.substr(0, result.length-3);  // remove trailing %2C
-		}
-
-		return(result);
-
-	} catch (e) {
-		exception_error("get_all_tags", e);
-	}
-}
-
-function get_radio_checked(radioObj) {
-	try {
-		if (!radioObj) return "";
-
-		var len = radioObj.length;
-
-		if (len == undefined){
-			if(radioObj.checked){
-				return(radioObj.value);
 			} else {
-				return("");
+				alert(__("No feeds are selected."));
 			}
-		}
-
-		for( var i=0; i < len; i++ ){
-			if( radioObj[i].checked ){
-				return( radioObj[i].value);
+		},
+		execute: function() {
+			if (this.validate()) {
 			}
-		}
+		},
+		href: query});
 
-	} catch (e) {
-		exception_error("get_radio_checked", e);
-	}
-	return("");
+	dialog.show();
 }
 
 function get_timestamp() {
@@ -1949,24 +1651,19 @@ function get_timestamp() {
 }
 
 function helpDialog(topic) {
-	try {
-		var query = "backend.php?op=backend&method=help&topic=" + param_escape(topic);
+	var query = "backend.php?op=backend&method=help&topic=" + param_escape(topic);
 
-		if (dijit.byId("helpDlg"))
-			dijit.byId("helpDlg").destroyRecursive();
+	if (dijit.byId("helpDlg"))
+		dijit.byId("helpDlg").destroyRecursive();
 
-		dialog = new dijit.Dialog({
-			id: "helpDlg",
-			title: __("Help"),
-			style: "width: 600px",
-			href: query,
-		});
+	dialog = new dijit.Dialog({
+		id: "helpDlg",
+		title: __("Help"),
+		style: "width: 600px",
+		href: query,
+	});
 
-		dialog.show();
-
-	} catch (e) {
-		exception_error("helpDialog", e);
-	}
+	dialog.show();
 }
 
 function htmlspecialchars_decode (string, quote_style) {

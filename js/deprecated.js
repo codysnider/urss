@@ -8,22 +8,16 @@ function selectTableRow(r, do_select) {
 }
 
 function selectTableRowById(elem_id, check_id, do_select) {
+	var row = $(elem_id);
 
-	try {
+	if (row) {
+		selectTableRow(row, do_select);
+	}
 
-		var row = $(elem_id);
+	var check = $(check_id);
 
-		if (row) {
-			selectTableRow(row, do_select);
-		}		
-
-		var check = $(check_id);
-
-		if (check) {
-			check.checked = do_select;
-		}
-	} catch (e) {
-		exception_error("selectTableRowById", e);
+	if (check) {
+		check.checked = do_select;
 	}
 }
 

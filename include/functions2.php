@@ -1902,7 +1902,7 @@
 			WHERE owner_uid = '".$_SESSION["uid"]."' ORDER BY caption");
 
 		print "<select default=\"$value\" name=\"" . htmlspecialchars($name) .
-			"\" $attributes onchange=\"labelSelectOnChange(this)\" >";
+			"\" $attributes>";
 
 		while ($line = db_fetch_assoc($result)) {
 
