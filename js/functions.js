@@ -55,34 +55,19 @@ function exception_error(e, e_compat) {
 
 		var msg = e.toString();
 
-		msg += "<p>"+ __("The error will be reported to the configured log destination.") +
-			"</p>";
-
 		console.error(msg);
 
-		var content = "<div class=\"fatalError\">" +
-			"<pre>" + msg + "</pre>";
+		var content = "<div class='fatalError'><p>" + msg + "</p>";
 
-		content += "<form name=\"exceptionForm\" id=\"exceptionForm\" target=\"_blank\" "+
-		  "action=\"https://tt-rss.org/report.php\" method=\"POST\">";
-
-		content += "<textarea style=\"display : none\" name=\"message\">" + msg + "</textarea>";
-		content += "<textarea style=\"display : none\" name=\"params\">N/A</textarea>";
-
-		if (e) {
+		if (e.stack) {
 			content += "<div><b>Stack trace:</b></div>" +
 				"<textarea name=\"stack\" readonly=\"1\">" + e.stack + "</textarea>";
 		}
-
-		content += "</form>";
 
 		content += "</div>";
 
 		content += "<div class='dlgButtons'>";
 
-		content += "<button dojoType=\"dijit.form.Button\""+
-				"onclick=\"dijit.byId('exceptionDlg').report()\">" +
-				__('Report to tt-rss.org') + "</button> ";
 		content += "<button dojoType=\"dijit.form.Button\" "+
 				"onclick=\"dijit.byId('exceptionDlg').hide()\">" +
 				__('Close') + "</button>";
@@ -95,22 +80,6 @@ function exception_error(e, e_compat) {
 			id: "exceptionDlg",
 			title: "Unhandled exception",
 			style: "width: 600px",
-			report: function() {
-				if (confirm(__("Are you sure to report this exception to tt-rss.org? The report will include information about your web browser and tt-rss configuration. Your IP will be saved in the database."))) {
-
-					document.forms['exceptionForm'].params.value = $H({
-						browserName: navigator.appName,
-						browserVersion: navigator.appVersion,
-						browserPlatform: navigator.platform,
-						browserCookies: navigator.cookieEnabled,
-						ttrssVersion: __ttrss_version,
-						initParams: JSON.stringify(init_params),
-					}).toQueryString();
-
-					document.forms['exceptionForm'].submit();
-
-				}
-			},
 			content: content});
 
 		dialog.show();
