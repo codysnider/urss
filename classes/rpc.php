@@ -647,14 +647,19 @@ class RPC extends Handler_Protected {
 	}
 
 	function log() {
-		$logmsg = $this->dbh->escape_string($_REQUEST['logmsg']);
+		$msg = $this->dbh->escape_string($_REQUEST['msg']);
+		$file = $this->dbh->escape_string(basename($_REQUEST['file']));
+		$line = (int) $_REQUEST['line'];
+		$context = $this->dbh->escape_string($_REQUEST['context']);
 
-		if ($logmsg) {
+		if ($msg) {
 			Logger::get()->log_error(E_USER_WARNING,
-				$logmsg, '[client-js]', 0, false);
-		}
+				$msg, 'client-js:' . $file, $line, $context);
 
-		echo json_encode(array("message" => "HOST_ERROR_LOGGED"));
+			echo json_encode(array("message" => "HOST_ERROR_LOGGED"));
+		} else {
+			echo json_encode(array("error" => "MESSAGE_NOT_FOUND"));
+		}
 
 	}
 }

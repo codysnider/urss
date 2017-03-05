@@ -32,30 +32,31 @@ Array.prototype.remove = function(s) {
 
 
 function report_error(message, filename, lineno, colno, error) {
-	exception_error(error);
+	exception_error(error, null, filename, lineno);
 }
 
-function exception_error(e, e_compat) {
+function exception_error(e, e_compat, filename, lineno, colno) {
 	if (typeof e == "string") e = e_compat;
 
 	if (!e) return; // no exception object, nothing to report.
 
 	try {
+		console.error(e);
+		var msg = e.toString();
 
 		try {
 			new Ajax.Request("backend.php", {
-				parameters: {op: "rpc", method: "log", logmsg: msg},
+				parameters: {op: "rpc", method: "log",
+					file: e.fileName ? e.fileName : filename,
+					line: e.lineNumber ? e.lineNumber : lineno,
+					msg: msg, context: e.stack},
 				onComplete: function (transport) {
-					console.log(transport.responseText);
+					console.warn(transport.responseText);
 				} });
 
 		} catch (e) {
 			console.error("Exception while trying to log the error.", e);
 		}
-
-		var msg = e.toString();
-
-		console.error(msg);
 
 		var content = "<div class='fatalError'><p>" + msg + "</p>";
 
