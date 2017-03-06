@@ -896,7 +896,7 @@
 		$ttrss_uses_https = parse_url(get_self_url_prefix(), PHP_URL_SCHEME) === 'https';
 		$rewrite_base_url = $site_url ? $site_url : SELF_URL_PATH;
 
-		$entries = $xpath->query('(//a[@href]|//img[@src]|//video/source[@src])');
+		$entries = $xpath->query('(//a[@href]|//img[@src]|//video/source[@src]|//audio/source[@src])');
 
 		foreach ($entries as $entry) {
 
@@ -910,18 +910,22 @@
 			if ($entry->hasAttribute('src')) {
 				$src = rewrite_relative_url($rewrite_base_url, $entry->getAttribute('src'));
 
-				$extension = $entry->tagName == 'source' ? '.mp4' : '.png';
-				$cached_filename = CACHE_DIR . '/images/' . sha1($src) . $extension;
+				// check cache only for video and images for the time being
+				if ($entry->nodeName == 'img' || ($entry->parentNode && $entry->parentNode->nodeName == "video")) {
 
-				if (file_exists($cached_filename)) {
-					$src = get_self_url_prefix() . '/public.php?op=cached_image&hash=' . sha1($src) . $extension;
+					$extension = $entry->tagName == 'source' ? '.mp4' : '.png';
+					$cached_filename = CACHE_DIR . '/images/' . sha1($src) . $extension;
 
-					if ($entry->hasAttribute('srcset')) {
-						$entry->removeAttribute('srcset');
-					}
+					if (file_exists($cached_filename)) {
+						$src = get_self_url_prefix() . '/public.php?op=cached_image&hash=' . sha1($src) . $extension;
 
-					if ($entry->hasAttribute('sizes')) {
-						$entry->removeAttribute('sizes');
+						if ($entry->hasAttribute('srcset')) {
+							$entry->removeAttribute('srcset');
+						}
+
+						if ($entry->hasAttribute('sizes')) {
+							$entry->removeAttribute('sizes');
+						}
 					}
 				}
 
