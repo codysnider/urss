@@ -666,7 +666,7 @@ class Feeds extends Handler_Protected {
 					$reply['content'] .= "</div>";
 
 					$reply['content'] .= "<div class=\"cdmContent\" $content_hidden
-						onclick=\"return cdmClicked(event, $id);\"
+						onclick=\"return cdmClicked(event, $id, true);\"
 						id=\"CICD-$id\">";
 
 					$reply['content'] .= "<div id=\"POSTNOTE-$id\">";

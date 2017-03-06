@@ -1479,7 +1479,7 @@ function show_labels_in_headlines(transport) {
 	}
 }
 
-function cdmClicked(event, id) {
+function cdmClicked(event, id, in_body) {
 	//var shift_key = event.shiftKey;
 
 	if (!event.ctrlKey && !event.metaKey) {
@@ -1521,7 +1521,7 @@ function cdmClicked(event, id) {
 			return !event.shiftKey;
 		}
 
-	} else if (event.target.parents(".cdmHeader").length > 0) {
+	} else if (!in_body) {
 
 		toggleSelected(id, true);
 
@@ -1535,6 +1535,8 @@ function cdmClicked(event, id) {
 		toggleUnread(id, 0, false);
 
 		openArticleInNewWindow(id);
+	} else {
+		return true;
 	}
 
 	var unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length
