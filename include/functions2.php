@@ -912,7 +912,19 @@
 				$cached_filename = CACHE_DIR . '/images/' . sha1($src);
 
 				if (file_exists($cached_filename)) {
-					$src = get_self_url_prefix() . '/public.php?op=cached_url&hash=' . sha1($src);
+
+					// this is strictly cosmetic
+					if ($entry->tagName == 'img') {
+						$suffix = ".png";
+					} else if ($entry->parentNode && $entry->parentNode->tagName == "video") {
+						$suffix = ".mp4";
+					} else if ($entry->parentNode && $entry->parentNode->tagName == "audio") {
+						$suffix = ".ogg";
+					} else {
+						$suffix = "";
+					}
+
+					$src = get_self_url_prefix() . '/public.php?op=cached_url&hash=' . sha1($src) . $suffix;
 
 					if ($entry->hasAttribute('srcset')) {
 						$entry->removeAttribute('srcset');
