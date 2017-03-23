@@ -1083,6 +1083,9 @@
 					}
 				}
 
+				if ($cache_images && is_writable(CACHE_DIR . '/images'))
+					cache_enclosures($enclosures, $site_url, $debug_enabled);
+
 				if ($debug_enabled) {
 					_debug("article enclosures:", $debug_enabled);
 					print_r($enclosures);
@@ -1227,6 +1230,30 @@
 		return $rss;
 	}
 
+	function cache_enclosures($enclosures, $site_url, $debug) {
+		foreach ($enclosures as $enc) {
+
+			if (preg_match("/(image|audio|video)/", $enc[1])) {
+
+				$src = rewrite_relative_url($site_url, $enc[0]);
+
+				$local_filename = CACHE_DIR . "/images/" . sha1($src);
+
+				if ($debug) _debug("cache_enclosures: downloading: $src to $local_filename");
+
+				if (!file_exists($local_filename)) {
+					$file_content = fetch_file_contents($src);
+
+					if ($file_content && strlen($file_content) > _MIN_CACHE_FILE_SIZE) {
+						file_put_contents($local_filename, $file_content);
+					}
+				} else {
+					touch($local_filename);
+				}
+			}
+		}
+	}
+
 	function cache_media($html, $site_url, $debug) {
 		libxml_use_internal_errors(true);
 
@@ -1238,7 +1265,7 @@
 		$doc->loadHTML($charset_hack . $html);
 		$xpath = new DOMXPath($doc);
 
-		$entries = $xpath->query('(//img[@src])|(//video/source[@src])');
+		$entries = $xpath->query('(//img[@src])|(//video/source[@src])|(//audio/source[@src])');
 
 		foreach ($entries as $entry) {
 			if ($entry->hasAttribute('src') && strpos($entry->getAttribute('src'), "data:") !== 0) {

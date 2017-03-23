@@ -1816,6 +1816,11 @@
 
 		if (db_num_rows($result) > 0) {
 			while ($line = db_fetch_assoc($result)) {
+
+				if (file_exists(CACHE_DIR . '/images/' . sha1($line["content_url"]))) {
+					$line["content_url"] = get_self_url_prefix() . '/public.php?op=cached_url&hash=' . sha1($line["content_url"]);
+				}
+
 				array_push($rv, $line);
 			}
 		}
