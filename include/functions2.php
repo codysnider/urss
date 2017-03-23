@@ -2000,8 +2000,7 @@
 							$rv .= $retval;
 						} else {
 
-							if (preg_match("/image/", $entry["type"]) ||
-									preg_match("/\.(jpe?g|png|gif|bmp)/i", $entry["filename"])) {
+							if (preg_match("/image/", $entry["type"])) {
 
 									if (!$hide_images) {
 										$encsize = '';
