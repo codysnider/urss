@@ -2,7 +2,7 @@
 	define_default('DAEMON_UPDATE_LOGIN_LIMIT', 30);
 	define_default('DAEMON_FEED_LIMIT', 500);
 	define_default('DAEMON_SLEEP_INTERVAL', 120);
-	define_default('_MIN_CACHE_IMAGE_SIZE', 1024);
+	define_default('_MIN_CACHE_FILE_SIZE', 1024);
 
 	function calculate_article_hash($article, $pluginhost) {
 		$tmp = "";
@@ -864,7 +864,7 @@
 				_debug("force catchup: $entry_force_catchup");
 
 				if ($cache_images && is_writable(CACHE_DIR . '/images'))
-					cache_images($entry_content, $site_url, $debug_enabled);
+					cache_media($entry_content, $site_url, $debug_enabled);
 
 				$entry_content = db_escape_string($entry_content, false);
 
@@ -1227,7 +1227,7 @@
 		return $rss;
 	}
 
-	function cache_images($html, $site_url, $debug) {
+	function cache_media($html, $site_url, $debug) {
 		libxml_use_internal_errors(true);
 
 		$charset_hack = '<head>
@@ -1244,15 +1244,14 @@
 			if ($entry->hasAttribute('src') && strpos($entry->getAttribute('src'), "data:") !== 0) {
 				$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
 
-				$extension = $entry->tagName == 'source' ? '.mp4' : '.png';
-				$local_filename = CACHE_DIR . "/images/" . sha1($src) . $extension;
+				$local_filename = CACHE_DIR . "/images/" . sha1($src);
 
-				if ($debug) _debug("cache_images: downloading: $src to $local_filename");
+				if ($debug) _debug("cache_media: downloading: $src to $local_filename");
 
 				if (!file_exists($local_filename)) {
 					$file_content = fetch_file_contents($src);
 
-					if ($file_content && strlen($file_content) > _MIN_CACHE_IMAGE_SIZE) {
+					if ($file_content && strlen($file_content) > _MIN_CACHE_FILE_SIZE) {
 						file_put_contents($local_filename, $file_content);
 					}
 				} else {

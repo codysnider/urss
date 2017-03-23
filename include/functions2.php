@@ -913,11 +913,11 @@
 				// check cache only for video and images for the time being
 				if ($entry->nodeName == 'img' || ($entry->parentNode && $entry->parentNode->nodeName == "video")) {
 
+					$cached_filename = CACHE_DIR . '/images/' . sha1($src);
 					$extension = $entry->tagName == 'source' ? '.mp4' : '.png';
-					$cached_filename = CACHE_DIR . '/images/' . sha1($src) . $extension;
 
 					if (file_exists($cached_filename)) {
-						$src = get_self_url_prefix() . '/public.php?op=cached_image&hash=' . sha1($src) . $extension;
+						$src = get_self_url_prefix() . '/public.php?op=cached_url&hash=' . sha1($src) . $extension;
 
 						if ($entry->hasAttribute('srcset')) {
 							$entry->removeAttribute('srcset');

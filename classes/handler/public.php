@@ -1046,8 +1046,11 @@ class Handler_Public extends Handler {
 		<?php
 	}
 
-	function cached_image() {
+	function cached_url() {
 		@$hash = basename($_GET['hash']);
+
+		// we don't need an extension to find the file, hash is a complete URL
+		$hash = preg_replace("/\.[^\.]*$/", "", $hash);
 
 		if ($hash) {
 
