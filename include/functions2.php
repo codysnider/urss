@@ -909,23 +909,17 @@
 
 			if ($entry->hasAttribute('src')) {
 				$src = rewrite_relative_url($rewrite_base_url, $entry->getAttribute('src'));
+				$cached_filename = CACHE_DIR . '/images/' . sha1($src);
 
-				// check cache only for video and images for the time being
-				if ($entry->nodeName == 'img' || ($entry->parentNode && $entry->parentNode->nodeName == "video")) {
+				if (file_exists($cached_filename)) {
+					$src = get_self_url_prefix() . '/public.php?op=cached_url&hash=' . sha1($src);
 
-					$cached_filename = CACHE_DIR . '/images/' . sha1($src);
-					$extension = $entry->tagName == 'source' ? '.mp4' : '.png';
+					if ($entry->hasAttribute('srcset')) {
+						$entry->removeAttribute('srcset');
+					}
 
-					if (file_exists($cached_filename)) {
-						$src = get_self_url_prefix() . '/public.php?op=cached_url&hash=' . sha1($src) . $extension;
-
-						if ($entry->hasAttribute('srcset')) {
-							$entry->removeAttribute('srcset');
-						}
-
-						if ($entry->hasAttribute('sizes')) {
-							$entry->removeAttribute('sizes');
-						}
+					if ($entry->hasAttribute('sizes')) {
+						$entry->removeAttribute('sizes');
 					}
 				}
 
