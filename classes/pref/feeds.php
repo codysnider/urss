@@ -729,7 +729,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"cache_images\"
 		name=\"cache_images\"
 			$checked>&nbsp;<label for=\"cache_images\">".
-		__('Cache images locally')."</label>";
+		__('Cache media')."</label>";
 
 		$mark_unread_on_update = sql_bool_to_bool($this->dbh->fetch_result($result, 0, "mark_unread_on_update"));
 
@@ -925,7 +925,7 @@ class Pref_Feeds extends Handler_Protected {
 			name=\"cache_images\"
 			dojoType=\"dijit.form.CheckBox\">&nbsp;<label class='insensitive' id=\"cache_images_l\"
 			for=\"cache_images\">".
-		__('Cache images locally')."</label>";
+		__('Cache media')."</label>";
 
 		print "&nbsp;"; $this->batch_edit_cbox("cache_images", "cache_images_l");
 
