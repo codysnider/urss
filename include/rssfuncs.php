@@ -1078,7 +1078,8 @@
 				if (is_array($encs)) {
 					foreach ($encs as $e) {
 						$e_item = array(
-							$e->link, $e->type, $e->length, $e->title, $e->width, $e->height);
+							rewrite_relative_url($site_url, $e->link),
+							$e->type, $e->length, $e->title, $e->width, $e->height);
 						array_push($enclosures, $e_item);
 					}
 				}
