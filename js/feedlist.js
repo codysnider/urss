@@ -484,28 +484,31 @@ function catchupFeed(feed, is_cat, mode) {
 
 	switch (mode) {
 	case "1day":
-		str = __("Mark all articles in %s older than 1 day as read?");
+		str = __("Mark %w in %s older than 1 day as read?");
 		break;
 	case "1week":
-		str = __("Mark all articles in %s older than 1 week as read?");
+		str = __("Mark %w in %s older than 1 week as read?");
 		break;
 	case "2week":
-		str = __("Mark all articles in %s older than 2 weeks as read?");
+		str = __("Mark %w in %s older than 2 weeks as read?");
 		break;
 	default:
-		str = __("Mark all articles in %s as read?");
+		str = __("Mark %w in %s as read?");
 	}
 
+	var mark_what = last_search_query && last_search_query[0] ? __("search results") : __("all articles");
 	var fn = getFeedName(feed, is_cat);
 
-	str = str.replace("%s", fn);
+	str = str.replace("%s", fn)
+		.replace("%w", mark_what);
 
 	if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
 		return;
 	}
 
-	var catchup_query = "?op=rpc&method=catchupFeed&feed_id=" +
-		feed + "&is_cat=" + is_cat + "&mode=" + mode;
+	var catchup_query = {op: 'rpc', method: 'catchupFeed', feed_id: feed,
+		is_cat: is_cat, mode: mode, search_query: last_search_query[0],
+		search_lang: last_search_query[1]};
 
 	console.log(catchup_query);
 

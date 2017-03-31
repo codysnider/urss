@@ -300,6 +300,7 @@ class Feeds extends Handler_Protected {
 			make_local_datetime($qfh_ret[4], false) : __("Never");
 		$highlight_words = $qfh_ret[5];
 		$reply['first_id'] = $qfh_ret[6];
+		$reply['search_query'] = [$search, $search_language];
 
 		$vgroup_last_feed = $vgr_last_feed;
 

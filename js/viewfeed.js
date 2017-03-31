@@ -13,6 +13,7 @@ var loaded_article_ids = [];
 var _last_headlines_update = 0;
 var _headlines_scroll_offset = 0;
 var current_first_id = 0;
+var last_search_query;
 
 var _catchup_request_sent = false;
 
@@ -38,6 +39,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 
 		is_cat = reply['headlines']['is_cat'];
 		feed_id = reply['headlines']['id'];
+		last_search_query = reply['headlines']['search_query'];
 
 		if (background) {
 			var content = reply['headlines']['content'];
