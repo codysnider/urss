@@ -8,6 +8,8 @@ class Af_Zz_ImgProxy extends Plugin {
 			"fox");
 	}
 
+	private $ssl_known_whitelist = "imgur.com i.reddituploads.com pbs.twimg.com i.redd.it i.sli.mg media.tumblr.com";
+
 	function is_public_method($method) {
 		return $method === "imgproxy";
 	}
@@ -119,7 +121,17 @@ class Af_Zz_ImgProxy extends Plugin {
 
 		if (($scheme != 'https' && $scheme != "") || $is_remote) {
 			if (strpos($url, "data:") !== 0) {
-				$url = get_self_url_prefix() . "/public.php?op=pluginhandler&plugin=af_zz_imgproxy&pmethod=imgproxy&url=" .
+				$parts = parse_url($url);
+
+				foreach (explode(" " , $this->ssl_known_whitelist) as $host) {
+					if (strpos($parts['host'], $host) !== FALSE) {
+						$parts['scheme'] = 'https';
+
+						return build_url($parts);
+					}
+				}
+
+				return get_self_url_prefix() . "/public.php?op=pluginhandler&plugin=af_zz_imgproxy&pmethod=imgproxy&url=" .
 					urlencode($url);
 			}
 		}
