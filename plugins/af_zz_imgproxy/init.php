@@ -8,7 +8,7 @@ class Af_Zz_ImgProxy extends Plugin {
 			"fox");
 	}
 
-	private $ssl_known_whitelist = "imgur.com i.reddituploads.com pbs.twimg.com i.redd.it i.sli.mg media.tumblr.com";
+	private $ssl_known_whitelist = "imgur.com gfycat.com i.reddituploads.com pbs.twimg.com i.redd.it i.sli.mg media.tumblr.com";
 
 	function is_public_method($method) {
 		return $method === "imgproxy";
