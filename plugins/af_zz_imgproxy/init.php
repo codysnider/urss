@@ -124,10 +124,14 @@ class Af_Zz_ImgProxy extends Plugin {
 				$parts = parse_url($url);
 
 				foreach (explode(" " , $this->ssl_known_whitelist) as $host) {
-					if (strpos($parts['host'], $host) !== FALSE) {
+					if (substr(strtolower($parts['host']), -strlen($host)) === strtolower($host)) {
 						$parts['scheme'] = 'https';
-
-						return build_url($parts);
+						$url = build_url($parts);
+						if ($all_remote && $is_remote) {
+							break;
+						} else {
+							return $url;
+						}
 					}
 				}
 
