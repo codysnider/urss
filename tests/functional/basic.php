@@ -9,7 +9,7 @@ class BasicTest extends PHPUnit_Extensions_Selenium2TestCase {
 	}
 
 	public function setUpPage() {
-		$this->timeouts()->implicitWait(10000);
+		$this->timeouts()->implicitWait(5000);
 	}
 
 	public function testLogin() {
