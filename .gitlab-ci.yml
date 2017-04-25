@@ -16,8 +16,7 @@ stages:
   - test
 
 jobs:
-  only:
-    - triggers
+  when: manual
   stage: test
   script:
     - sh ./utils/gitlab-ci/php-lint.sh 
