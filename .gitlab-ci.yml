@@ -1,0 +1,26 @@
+image: fox/selenium-ci
+
+before_script:
+  - pwd
+  - ln -s `pwd` ../../tt-rss
+  - cp utils/gitlab-ci/nginx-default /etc/nginx/sites-enabled/default
+  - /etc/init.d/postgresql start
+  - /etc/init.d/nginx start
+  - /etc/init.d/php5-fpm start
+  - /usr/local/sbin/init-database.sh
+  - cp utils/gitlab-ci/config-template.php config.php
+  - chmod -R 777 cache lock feed-icons
+  - /usr/local/sbin/init-selenium.sh
+
+stages:
+  - test
+
+jobs:
+  only:
+    - triggers
+  stage: test
+  script:
+    - sh ./utils/gitlab-ci/php-lint.sh 
+    - sh ./utils/gitlab-ci/check-schema.sh
+    - su -s /bin/bash -m www-data -c "php ./update.php --debug-feed 1"
+    - phpunit ./tests/functional/*.php
