@@ -21,7 +21,8 @@ class Db_Pgsql implements IDb {
 		$this->link = pg_connect($string);
 
 		if (!$this->link) {
-			die("Unable to connect to database (as $user to $host, database $db):" . pg_last_error());
+			print("Unable to connect to database (as $user to $host, database $db):" . pg_last_error());
+			exit(102);
 		}
 
 		$this->init();

@@ -401,7 +401,9 @@
 
 		$_REQUEST['xdebug'] = 1;
 
-		update_rss_feed($feed);
+		$rc = is_object(update_rss_feed($feed)) ? 0 : 1;
+
+		exit($rc);
 	}
 
 	if (isset($options["decrypt-feeds"])) {
