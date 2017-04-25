@@ -22,6 +22,20 @@ class BasicTest extends PHPUnit_Extensions_Selenium2TestCase {
 		$this->byCssSelector('#feedTree')->displayed();
 	}
 
+	public function testBasicDialogs() {
+		$this->testLogin();
+
+		$this->execute(["script" => "quickAddFilter()", "args" => []]);
+		$this->byCssSelector("#filterEditDlg")->displayed();
+
+		$this->execute(["script" => "dijit.byId('filterEditDlg').hide();", "args" => []]);
+
+		$this->execute(["script" => "quickAddFeed()", "args" => []]);
+		$this->byCssSelector("#feedAddDlg")->displayed();
+
+		$this->execute(["script" => "dijit.byId('feedAddDlg').hide();", "args" => []]);
+	}
+
 	public function testOpenFeed() {
 		$this->testLogin();
 
