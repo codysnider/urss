@@ -7,8 +7,6 @@ class Af_Comics_ComicPress extends Af_ComicFilter {
 	}
 
 	function process(&$article) {
-		$owner_uid = $article["owner_uid"];
-
 		if (strpos($article["guid"], "bunicomic.com") !== FALSE ||
 				strpos($article["guid"], "buttersafe.com") !== FALSE ||
 				strpos($article["guid"], "extrafabulouscomics.com") !== FALSE ||
@@ -23,11 +21,8 @@ class Af_Comics_ComicPress extends Af_ComicFilter {
 					 "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)");
 
 				$doc = new DOMDocument();
-				@$doc->loadHTML($res);
 
-				$basenode = false;
-
-				if ($doc) {
+				if (@$doc->loadHTML($res)) {
 					$xpath = new DOMXPath($doc);
 					$basenode = $xpath->query('//div[@id="comic"]')->item(0);
 
@@ -42,4 +37,3 @@ class Af_Comics_ComicPress extends Af_ComicFilter {
 		return false;
 	}
 }
-?>

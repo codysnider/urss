@@ -8,16 +8,13 @@ class Af_Comics_Pa extends Af_ComicFilter {
 	function process(&$article) {
 		if (strpos($article["link"], "penny-arcade.com") !== FALSE && strpos($article["title"], "Comic:") !== FALSE) {
 
-				if ($debug_enabled) {
+				/*if ($debug_enabled) {
 					_debug("af_pennyarcade: Processing comic");
-				}
+				}*/
 
 				$doc = new DOMDocument();
-				$doc->loadHTML(fetch_file_contents($article["link"]));
 
-				$basenode = false;
-
-				if ($doc) {
+				if ($doc->loadHTML(fetch_file_contents($article["link"]))) {
 					$xpath = new DOMXPath($doc);
 					$basenode = $xpath->query('(//div[@id="comicFrame"])')->item(0);
 
@@ -30,13 +27,12 @@ class Af_Comics_Pa extends Af_ComicFilter {
 		}
 
 		if (strpos($article["link"], "penny-arcade.com") !== FALSE && strpos($article["title"], "News Post:") !== FALSE) {
-				if ($debug_enabled) {
+				/*if ($debug_enabled) {
 					_debug("af_pennyarcade: Processing news post");
-				}
+				}*/
 				$doc = new DOMDocument();
-				$doc->loadHTML(fetch_file_contents($article["link"]));
 
-				if ($doc) {
+				if ($doc->loadHTML(fetch_file_contents($article["link"]))) {
 					$xpath = new DOMXPath($doc);
 					$entries = $xpath->query('(//div[@class="post"])');
 
@@ -76,4 +72,3 @@ class Af_Comics_Pa extends Af_ComicFilter {
 		return false;
 	}
 }
-?>

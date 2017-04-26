@@ -14,6 +14,9 @@ class Af_Youtube_Embed extends Plugin {
 		$host->add_hook($host::HOOK_RENDER_ENCLOSURE, $this);
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function hook_render_enclosure($entry, $hide_images) {
 
 		$matches = array();
@@ -37,4 +40,3 @@ class Af_Youtube_Embed extends Plugin {
 	}
 
 }
-?>

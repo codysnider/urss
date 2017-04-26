@@ -11,10 +11,16 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 			true);
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function csrf_ignore($method) {
 		return false;
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function before($method) {
 		return true;
 	}
@@ -88,6 +94,9 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 		}
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+	 */
 	function hook_house_keeping() {
 		$files = glob($this->cache_dir . "/*.{png,mp4}", GLOB_BRACE);
 
@@ -112,6 +121,9 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 		}
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function hook_sanitize($doc, $site_url, $allowed_elements, $disallowed_attributes, $article_id) {
 		$xpath = new DOMXpath($doc);
 
@@ -162,6 +174,9 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 		}
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function cache_article_images($content, $site_url, $owner_uid, $article_id) {
 		libxml_use_internal_errors(true);
 
@@ -211,4 +226,3 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 		return 2;
 	}
 }
-?>

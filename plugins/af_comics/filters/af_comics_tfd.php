@@ -15,11 +15,8 @@ class Af_Comics_Tfd extends Af_ComicFilter {
 			if (!$res) return $article;
 
 			$doc = new DOMDocument();
-			@$doc->loadHTML(fetch_file_contents($article["link"]));
-			
-			$basenode = false;
 
-			if ($doc) {
+			if (@$doc->loadHTML(fetch_file_contents($article["link"]))) {
 				$xpath = new DOMXPath($doc);
 				$basenode = $xpath->query('//img[contains(@src, ".gif")]')->item(0);
 
@@ -33,4 +30,3 @@ class Af_Comics_Tfd extends Af_ComicFilter {
 		return false;
 	}
 }
-?>

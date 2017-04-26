@@ -73,6 +73,9 @@ class Af_RedditImgur extends Plugin {
 		echo __("Configuration saved");
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	private function inline_stuff($article, &$doc, $xpath, $debug = false) {
 
 		$entries = $xpath->query('(//a[@href]|//img[@src])');
@@ -442,13 +445,16 @@ class Af_RedditImgur extends Plugin {
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
 			curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
 
-			@$result = curl_exec($ch);
+			@curl_exec($ch);
 			$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 		}
 
 		return $content_type;
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	private function readability($article, $url, $doc, $xpath, $debug = false) {
 
 		if (!defined('NO_CURL') && function_exists("curl_init") && $this->host->get($this, "enable_readability") &&
@@ -510,4 +516,3 @@ class Af_RedditImgur extends Plugin {
 		return $article;
 	}
 }
-?>

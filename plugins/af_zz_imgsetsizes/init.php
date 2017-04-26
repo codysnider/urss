@@ -90,4 +90,3 @@ class Af_Zz_ImgSetSizes extends Plugin {
 	}
 
 }
-?>

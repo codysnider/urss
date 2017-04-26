@@ -34,4 +34,3 @@ class Af_Comics_Whomp extends Af_ComicFilter {
 		return false;
 	}
 }
-?>

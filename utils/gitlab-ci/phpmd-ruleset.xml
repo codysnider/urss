@@ -9,6 +9,11 @@
 
 	<!-- phpmd author is a bit weird i guess -->
 
+	<!-- <rule ref="rulesets/cleancode.xml">
+		<exclude name="BooleanArgumentFlag" />
+		<exclude name="ElseExpression" />
+	</rule> -->
+
 	<rule ref="rulesets/unusedcode.xml" />
 
 </ruleset>	

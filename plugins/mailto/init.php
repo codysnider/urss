@@ -32,12 +32,11 @@ class MailTo extends Plugin {
 		require_once "lib/MiniTemplator.class.php";
 
 		$tpl = new MiniTemplator;
-		$tpl_t = new MiniTemplator;
 
 		$tpl->readTemplateFromFile("templates/email_article_template.txt");
 
 		$tpl->setVariable('USER_NAME', $_SESSION["name"], true);
-		$tpl->setVariable('USER_EMAIL', $user_email, true);
+		//$tpl->setVariable('USER_EMAIL', $user_email, true);
 		$tpl->setVariable('TTRSS_HOST', $_SERVER["HTTP_HOST"], true);
 
 
@@ -91,4 +90,3 @@ class MailTo extends Plugin {
 	}
 
 }
-?>

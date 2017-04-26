@@ -91,6 +91,9 @@ class Import_Export extends Plugin implements IHandler {
 		return in_array($method, array("exportget"));
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function before($method) {
 		return $_SESSION["uid"] != false;
 	}
@@ -99,6 +102,9 @@ class Import_Export extends Plugin implements IHandler {
 		return true;
 	}
 
+	/**
+	 * @SuppressWarnings(unused)
+	 */
 	function exportget() {
 		$exportname = CACHE_DIR . "/export/" .
 			sha1($_SESSION['uid'] . $_SESSION['login']) . ".xml";
@@ -469,4 +475,3 @@ class Import_Export extends Plugin implements IHandler {
 	}
 
 }
-?>

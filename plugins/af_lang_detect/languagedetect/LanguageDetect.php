@@ -64,6 +64,8 @@ require_once __DIR__ . '/Text/LanguageDetect/ISO639.php';
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/Text_LanguageDetect/
  * @todo      allow users to generate their own language models
+ *
+ * @SuppressWarnings(PHPMD)
  */
 class Text_LanguageDetect
 {
@@ -1704,5 +1706,3 @@ class Text_LanguageDetect
 }
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-?>

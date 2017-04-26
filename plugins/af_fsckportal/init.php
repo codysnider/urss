@@ -49,4 +49,3 @@ class Af_Fsckportal extends Plugin {
 	}
 
 }
-?>

@@ -225,4 +225,3 @@ class Mail extends Plugin {
 	}
 
 }
-?>

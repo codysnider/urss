@@ -80,7 +80,7 @@ class Af_Zz_ImgProxy extends Plugin {
 				if (function_exists("imagecreate") && !isset($_REQUEST["text"])) {
 					$img = imagecreate(450, 75);
 
-					$bg = imagecolorallocate($img, 255, 255, 255);
+					/*$bg =*/ imagecolorallocate($img, 255, 255, 255);
 					$textcolor = imagecolorallocate($img, 255, 0, 0);
 
 					imagerectangle($img, 0, 0, 450-1, 75-1, $textcolor);
@@ -143,6 +143,9 @@ class Af_Zz_ImgProxy extends Plugin {
 		return $url;
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function hook_render_article_cdm($article, $api_mode = false) {
 
 		$need_saving = false;

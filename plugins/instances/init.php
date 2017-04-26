@@ -25,6 +25,9 @@ class Instances extends Plugin implements IHandler {
 		$host->add_hook($host::HOOK_UPDATE_TASK, $this);
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function hook_update_task($args) {
 		_debug("Get linked feeds...");
 		$this->get_linked_feeds();
@@ -134,6 +137,9 @@ class Instances extends Plugin implements IHandler {
 		return file_get_contents(dirname(__FILE__) . "/instances.js");
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function hook_prefs_tabs($args) {
 		if ($_SESSION["access_level"] >= 10 || SINGLE_USER_MODE) {
 			?><div id="instanceConfigTab" dojoType="dijit.layout.ContentPane"
@@ -148,6 +154,9 @@ class Instances extends Plugin implements IHandler {
 		return array_search($method, $csrf_ignored) !== false;
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function before($method) {
 		if ($_SESSION["uid"]) {
 			if ($_SESSION["access_level"] < 10) {
@@ -171,7 +180,7 @@ class Instances extends Plugin implements IHandler {
 	}
 
 	function add() {
-		$id = db_escape_string($_REQUEST["id"]);
+		//$id = db_escape_string($_REQUEST["id"]);
 		$access_url = db_escape_string($_REQUEST["access_url"]);
 		$access_key = db_escape_string($_REQUEST["access_key"]);
 
@@ -449,4 +458,3 @@ class Instances extends Plugin implements IHandler {
 	}
 
 }
-?>

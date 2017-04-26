@@ -63,18 +63,18 @@ class Af_Comics extends Plugin {
 	}
 
 	function hook_article_filter($article) {
-		$owner_uid = $article["owner_uid"];
-
 		foreach ($this->filters as $f) {
 			if ($f->process($article))
 				break;
 		}
 
 		return $article;
-
 	}
 
 	// GoComics dropped feed support so it needs to be handled when fetching the feed.
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function hook_fetch_feed($feed_data, $fetch_url, $owner_uid, $feed, $last_article_timestamp, $auth_login, $auth_pass) {
 		if ($auth_login || $auth_pass)
 			return $feed_data;
@@ -144,4 +144,3 @@ class Af_Comics extends Plugin {
 	}
 
 }
-?>

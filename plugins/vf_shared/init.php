@@ -20,12 +20,18 @@ class VF_Shared extends Plugin {
 		return 2;
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function get_unread($feed_id) {
 		$result = db_query("select count(int_id) AS count from ttrss_user_entries where owner_uid = ".$_SESSION["uid"]." and unread = true and uuid != ''");
 
 		return db_fetch_result($result, 0, "count");
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function get_total($feed_id) {
 		$result = db_query("select count(int_id) AS count from ttrss_user_entries where owner_uid = ".$_SESSION["uid"]." and uuid != ''");
 
@@ -34,6 +40,9 @@ class VF_Shared extends Plugin {
 
 	//function queryFeedHeadlines($feed, $limit, $view_mode, $cat_view, $search, $search_mode, $override_order = false, $offset = 0, $owner_uid = 0, $filter = false, $since_id = 0, $include_children = false, $ignore_vfeed_group = false, $override_strategy = false, $override_vfeed = false) {
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function get_headlines($feed_id, $options) {
 		/*$qfh_ret = queryFeedHeadlines(-4,
 			$options['limit'],
@@ -72,4 +81,3 @@ class VF_Shared extends Plugin {
 	}
 
 }
-?>

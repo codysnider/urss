@@ -43,4 +43,3 @@ class Af_Lang_Detect extends Plugin {
 	}
 
 }
-?>
