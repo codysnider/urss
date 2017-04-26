@@ -1,6 +1,7 @@
 phpmd:
   image: php:5.6
   script:
+    - sh utils/php-lint.sh
     - curl -o /usr/bin/phpmd -L http://static.phpmd.org/php/2.6.0/phpmd.phar
     - chmod +x /usr/bin/phpmd
     - sh utils/gitlab-ci/phpmd.sh
