@@ -1,16 +1,8 @@
-image: fox/selenium-ci
+image: php:5.6
 
 before_script:
-  - pwd
-  - ln -s `pwd` ../../tt-rss
-  - cp utils/gitlab-ci/nginx-default /etc/nginx/sites-enabled/default
-  - /etc/init.d/postgresql start
-  - /etc/init.d/nginx start
-  - /etc/init.d/php5-fpm start
-  - /usr/local/sbin/init-database.sh
-  - cp utils/gitlab-ci/config-template.php config.php
-  - chmod -R 777 cache lock feed-icons
-  - /usr/local/sbin/init-selenium.sh
+  - curl -o /usr/bin/phpmd -L http://static.phpmd.org/php/2.6.0/phpmd.phar
+  - chmod +x /usr/bin/phpmd
 
 stages:
   - test
@@ -19,7 +11,6 @@ jobs:
   when: manual
   stage: test
   script:
-    - sh ./utils/gitlab-ci/php-lint.sh 
-    - sh ./utils/gitlab-ci/check-schema.sh
-    - su -s /bin/bash -m www-data -c "php ./update.php --debug-feed 1"
-    - phpunit ./tests/functional/*.php
+    - phpmd.phar include text utils/gitlab-ci/phpmd-ruleset.xml 
+    - phpmd.phar classes text utils/gitlab-ci/phpmd-ruleset.xml 
+
