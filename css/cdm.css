@@ -65,6 +65,8 @@ div.cdmContentInner {
 	font-size : 16px;
 }
 
+div.cdmIntermediate img,
+div.cdmIntermediate video,
 div.cdmContentInner img,
 div.cdmContentInner video {
 	border-width : 0px;
