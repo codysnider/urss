@@ -174,7 +174,7 @@ class Db_Prefs {
 			db_query("UPDATE ttrss_user_prefs SET
 				value = '$value' WHERE pref_name = '$pref_name'
 					$profile_qpart
-					AND owner_uid = " . $_SESSION["uid"]);
+					AND owner_uid = " . $user_id);
 
 			if ($user_id == $_SESSION["uid"]) {
 				$this->cache[$pref_name]["type"] = $type_name;
