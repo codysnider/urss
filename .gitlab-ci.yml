@@ -11,6 +11,6 @@ jobs:
   when: manual
   stage: test
   script:
-    - phpmd.phar include text utils/gitlab-ci/phpmd-ruleset.xml 
-    - phpmd.phar classes text utils/gitlab-ci/phpmd-ruleset.xml 
+    - phpmd include text utils/gitlab-ci/phpmd-ruleset.xml 
+    - phpmd classes text utils/gitlab-ci/phpmd-ruleset.xml 
 
