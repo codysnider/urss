@@ -401,7 +401,7 @@
 
 		$_REQUEST['xdebug'] = 1;
 
-		$rc = is_object(update_rss_feed($feed)) ? 0 : 1;
+		$rc = update_rss_feed($feed) != false ? 0 : 1;
 
 		exit($rc);
 	}

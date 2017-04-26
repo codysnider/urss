@@ -361,7 +361,7 @@ class Article extends Handler_Protected {
 				$labels = get_article_labels($id, $_SESSION["uid"]);
 
 				array_push($reply["info-for-headlines"],
-				array("id" => $id, "labels" => format_article_labels($labels, $id)));
+				array("id" => $id, "labels" => format_article_labels($labels)));
 
 			}
 		}

@@ -13,7 +13,7 @@ class Feeds extends Handler_Protected {
 
 	private function format_headline_subtoolbar($feed_site_url, $feed_title,
 			$feed_id, $is_cat, $search,
-			$view_mode, $error, $feed_last_updated) {
+			$error, $feed_last_updated) {
 
 		$catchup_sel_link = "catchupSelection()";
 
@@ -153,7 +153,7 @@ class Feeds extends Handler_Protected {
 	}
 
 	private function format_headlines_list($feed, $method, $view_mode, $limit, $cat_view,
-					$next_unread_feed, $offset, $vgr_last_feed = false,
+					$offset, $vgr_last_feed = false,
 					$override_order = false, $include_children = false, $check_first_id = false,
 					$skip_first_id_check = false) {
 
@@ -203,7 +203,7 @@ class Feeds extends Handler_Protected {
 
 					if (!$cache_images && time() - $last_updated > 120) {
 						include "rssfuncs.php";
-						update_rss_feed($feed, true, true);
+						update_rss_feed($feed, true);
 					} else {
 						$this->dbh->query("UPDATE ttrss_feeds SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
 								WHERE id = '$feed'");
@@ -306,7 +306,7 @@ class Feeds extends Handler_Protected {
 
 		$reply['toolbar'] = $this->format_headline_subtoolbar($feed_site_url,
 			$feed_title,
-			$feed, $cat_view, $search, $view_mode,
+			$feed, $cat_view, $search,
 			$last_error, $last_updated);
 
 		$headlines_count = is_numeric($result) ? 0 : $this->dbh->num_rows($result);
@@ -361,7 +361,7 @@ class Feeds extends Handler_Protected {
 				if (!is_array($labels)) $labels = get_article_labels($id);
 
 				$labels_str = "<span class=\"HLLCTR-$id\">";
-				$labels_str .= format_article_labels($labels, $id);
+				$labels_str .= format_article_labels($labels);
 				$labels_str .= "</span>";
 
 				if (count($topmost_article_ids) < 3) {
@@ -937,7 +937,7 @@ class Feeds extends Handler_Protected {
 		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("04", $timing_info);
 
 		$ret = $this->format_headlines_list($feed, $method,
-			$view_mode, $limit, $cat_view, $next_unread_feed, $offset,
+			$view_mode, $limit, $cat_view, $offset,
 			$vgroup_last_feed, $override_order, true, $check_first_id, $skip_first_id_check);
 
 		//$topmost_article_ids = $ret[0];
@@ -1231,7 +1231,7 @@ class Feeds extends Handler_Protected {
 
 		if ($do_update) {
 			include "rssfuncs.php";
-			update_rss_feed($feed_id, true, true);
+			update_rss_feed($feed_id, true);
 		}
 
 		?></pre>

@@ -23,8 +23,6 @@ class Db_Prefs {
 	}
 
 	function cache() {
-		$profile = false;
-
 		$user_id = $_SESSION["uid"];
 		@$profile = $_SESSION["profile"];
 
@@ -129,7 +127,6 @@ class Db_Prefs {
 			@$profile = $_SESSION["profile"];
 		} else {
 			$user_id = sprintf("%d", $user_id);
-			$prefs_cache = false;
 		}
 
 		if ($profile) {

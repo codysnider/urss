@@ -1163,7 +1163,7 @@
 		}
 	}
 
-	function catchup_feed($feed, $cat_view, $owner_uid = false, $max_id = false, $mode = 'all', $search = false) {
+	function catchup_feed($feed, $cat_view, $owner_uid = false, $mode = 'all', $search = false) {
 
 		if (!$owner_uid) $owner_uid = $_SESSION['uid'];
 
@@ -1746,7 +1746,6 @@
 
 		global $fetch_last_error;
 		global $fetch_last_error_content;
-		global $fetch_last_error_code;
 
 		require_once "include/rssfuncs.php";
 
@@ -2066,5 +2065,3 @@
 
 	// TODO: less dumb splitting
 	require_once "functions2.php";
-
-?>

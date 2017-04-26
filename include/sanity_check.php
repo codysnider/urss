@@ -1,6 +1,5 @@
 <?php
-	/*
-	 * WARNING!
+	/* WARNING!
 	 *
 	 * If you modify this file, you are ON YOUR OWN!
 	 *
@@ -21,6 +20,9 @@
 		return $url_path;
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+	 */
 	function initial_sanity_check() {
 
 		$errors = array();

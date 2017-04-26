@@ -22,6 +22,9 @@ class Plugin {
 		return array();
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function is_public_method($method) {
 		return false;
 	}

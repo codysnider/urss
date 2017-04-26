@@ -32,8 +32,6 @@ function format_backtrace($trace) {
 }
 
 function ttrss_error_handler($errno, $errstr, $file, $line, $context) {
-	global $logger;
-
 	if (error_reporting() == 0 || !$errno) return false;
 
 	$file = substr(str_replace(dirname(dirname(__FILE__)), "", $file), 1);
@@ -46,7 +44,6 @@ function ttrss_error_handler($errno, $errstr, $file, $line, $context) {
 }
 
 function ttrss_fatal_handler() {
-	global $logger;
 	global $last_query;
 
 	$error = error_get_last();

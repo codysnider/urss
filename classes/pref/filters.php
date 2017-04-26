@@ -130,7 +130,7 @@ class Pref_Filters extends Handler_Protected {
 			while ($line = db_fetch_assoc($result)) {
 
 				$rc = get_article_filters(array($filter), $line['title'], $line['content'], $line['link'],
-					false, $line['author'], explode(",", $line['tag_cache']));
+					$line['author'], explode(",", $line['tag_cache']));
 
 				if (count($rc) > 0) {
 

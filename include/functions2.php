@@ -1557,7 +1557,7 @@
 		}
 	} // function encrypt_password
 
-	function load_filters($feed_id, $owner_uid, $action_id = false) {
+	function load_filters($feed_id, $owner_uid) {
 		$filters = array();
 
 		$cat_id = (int)getFeedCategory($feed_id);
@@ -1655,7 +1655,7 @@
 		return true;
 	}
 
-	function format_tags_string($tags, $id) {
+	function format_tags_string($tags) {
 		if (!is_array($tags) || count($tags) == 0) {
 			return __("no tags");
 		} else {
@@ -1675,7 +1675,7 @@
 		}
 	}
 
-	function format_article_labels($labels, $id) {
+	function format_article_labels($labels) {
 
 		if (!is_array($labels)) return '';
 
@@ -2484,6 +2484,9 @@
 		return false;
 	}
 
+	/**
+	 * @SuppressWarnings(unused)
+	 */
 	function error_json($code) {
 		require_once "errors.php";
 

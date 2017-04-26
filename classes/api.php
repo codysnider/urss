@@ -1,5 +1,4 @@
 <?php
-
 class API extends Handler {
 
 	const API_LEVEL  = 14;
@@ -309,7 +308,7 @@ class API extends Handler {
 						get_feed_access_key(-2, false);
 
 					$p = new pubsubhubbub\publisher\Publisher(PUBSUBHUBBUB_HUB);
-					$pubsub_result = $p->publish_update($rss_link);
+					$p->publish_update($rss_link);
 				}
 			}
 
@@ -418,7 +417,7 @@ class API extends Handler {
 		$feed_id = (int) $this->dbh->escape_string($_REQUEST["feed_id"]);
 
 		if (!ini_get("open_basedir")) {
-			update_rss_feed($feed_id, true);
+			update_rss_feed($feed_id);
 		}
 
 		$this->wrap(self::STATUS_OK, array("status" => "OK"));
@@ -658,6 +657,9 @@ class API extends Handler {
 		return $feeds;
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	static function api_get_headlines($feed_id, $limit, $offset,
 				$filter, $is_cat, $show_excerpt, $show_content, $view_mode, $order,
 				$include_attachments, $since_id,
@@ -677,7 +679,7 @@ class API extends Handler {
 
 					if (!$cache_images && time() - $last_updated > 120) {
 						include "rssfuncs.php";
-						update_rss_feed($feed_id, true, true);
+						update_rss_feed($feed_id, true);
 					} else {
 						db_query("UPDATE ttrss_feeds SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
 							WHERE id = '$feed_id'");

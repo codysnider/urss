@@ -1,6 +1,9 @@
 <?php
 class Logger_Syslog {
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function log_error($errno, $errstr, $file, $line, $context) {
 
 		switch ($errno) {

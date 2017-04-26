@@ -288,7 +288,7 @@ class PluginHost {
 		}
 	}
 
-	function load_data($force = false) {
+	function load_data() {
 		if ($this->owner_uid)  {
 			$result = $this->dbh->query("SELECT name, content FROM ttrss_plugin_storage
 				WHERE owner_uid = '".$this->owner_uid."'");

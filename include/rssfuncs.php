@@ -60,20 +60,7 @@
 
 	}
 
-
-	/**
-	 * Update a feed batch.
-	 * Used by daemons to update n feeds by run.
-	 * Only update feed needing a update, and not being processed
-	 * by another process.
-	 *
-	 * @param mixed $link Database link
-	 * @param integer $limit Maximum number of feeds in update batch. Default to DAEMON_FEED_LIMIT.
-	 * @param boolean $from_http Set to true if you call this function from http to disable cli specific code.
-	 * @param boolean $debug Set to false to disable debug output. Default to true.
-	 * @return void
-	 */
-	function update_daemon_common($limit = DAEMON_FEED_LIMIT, $from_http = false, $debug = true) {
+	function update_daemon_common($limit = DAEMON_FEED_LIMIT, $debug = true) {
 		// Process all other feeds using last_updated and interval parameters
 
 		$schema_version = get_schema_version();
@@ -200,8 +187,6 @@
 			ORDER BY ttrss_feeds.id $query_limit");
 
 			if (db_num_rows($tmp_result) > 0) {
-				$rss = false;
-
 				while ($tline = db_fetch_assoc($tmp_result)) {
 					if($debug) _debug(" => " . $tline["last_updated"] . ", " . $tline["id"] . " " . $tline["owner_uid"]);
 
@@ -209,7 +194,7 @@
 						array_push($batch_owners, $tline["owner_uid"]);
 
 					$fstarted = microtime(true);
-					$rss = update_rss_feed($tline["id"], true, false);
+					update_rss_feed($tline["id"], true, false);
 					_debug_suppress(false);
 
 					_debug(sprintf("    %.4f (sec)", microtime(true) - $fstarted));
@@ -237,7 +222,7 @@
 
 		return $nf;
 
-	} // function update_daemon_common
+	}
 
 	// this is used when subscribing
 	function set_basic_feed_info($feed) {
@@ -300,8 +285,10 @@
 		}
 	}
 
-	// ignore_daemon is not used
-	function update_rss_feed($feed, $ignore_daemon = false, $no_cache = false, $rss = false) {
+	/**
+	  * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	*/
+	function update_rss_feed($feed, $no_cache = false) {
 
 		$debug_enabled = defined('DAEMON_EXTENDED_DEBUG') || $_REQUEST['xdebug'];
 
@@ -370,94 +357,90 @@
 		$pluginhost->load($user_plugins, PluginHost::KIND_USER, $owner_uid);
 		$pluginhost->load_data();
 
-		if ($rss && is_object($rss) && get_class($rss) == "FeedParser") {
-			_debug("using previously initialized parser object");
+		$rss_hash = false;
+
+		$force_refetch = isset($_REQUEST["force_refetch"]);
+		$feed_data = "";
+
+		foreach ($pluginhost->get_hooks(PluginHost::HOOK_FETCH_FEED) as $plugin) {
+			$feed_data = $plugin->hook_fetch_feed($feed_data, $fetch_url, $owner_uid, $feed, 0, $auth_login, $auth_pass);
+		}
+
+		// try cache
+		if (!$feed_data &&
+			file_exists($cache_filename) &&
+			is_readable($cache_filename) &&
+			!$auth_login && !$auth_pass &&
+			filemtime($cache_filename) > time() - 30) {
+
+			_debug("using local cache [$cache_filename].", $debug_enabled);
+
+			@$feed_data = file_get_contents($cache_filename);
+
+			if ($feed_data) {
+				$rss_hash = sha1($feed_data);
+			}
+
 		} else {
-			$rss_hash = false;
+			_debug("local cache will not be used for this feed", $debug_enabled);
+		}
 
-			$force_refetch = isset($_REQUEST["force_refetch"]);
-			$feed_data = "";
+		// fetch feed from source
+		if (!$feed_data) {
+			_debug("fetching [$fetch_url]...", $debug_enabled);
 
-			foreach ($pluginhost->get_hooks(PluginHost::HOOK_FETCH_FEED) as $plugin) {
-				$feed_data = $plugin->hook_fetch_feed($feed_data, $fetch_url, $owner_uid, $feed, 0, $auth_login, $auth_pass);
+			if (ini_get("open_basedir") && function_exists("curl_init")) {
+				_debug("not using CURL due to open_basedir restrictions");
 			}
 
-			// try cache
-			if (!$feed_data &&
-				file_exists($cache_filename) &&
-				is_readable($cache_filename) &&
-				!$auth_login && !$auth_pass &&
-				filemtime($cache_filename) > time() - 30) {
+			$feed_data = fetch_file_contents($fetch_url, false,
+				$auth_login, $auth_pass, false,
+				$no_cache ? FEED_FETCH_NO_CACHE_TIMEOUT : FEED_FETCH_TIMEOUT,
+				0);
 
-				_debug("using local cache [$cache_filename].", $debug_enabled);
+			global $fetch_curl_used;
 
-				@$feed_data = file_get_contents($cache_filename);
+			if (!$fetch_curl_used) {
+				$tmp = @gzdecode($feed_data);
 
-				if ($feed_data) {
-					$rss_hash = sha1($feed_data);
+				if ($tmp) $feed_data = $tmp;
+			}
+
+			$feed_data = trim($feed_data);
+
+			_debug("fetch done.", $debug_enabled);
+
+			// cache vanilla feed data for re-use
+			if ($feed_data && !$auth_pass && !$auth_login && is_writable(CACHE_DIR . "/simplepie")) {
+				$new_rss_hash = sha1($feed_data);
+
+				if ($new_rss_hash != $rss_hash) {
+					_debug("saving $cache_filename", $debug_enabled);
+					@file_put_contents($cache_filename, $feed_data);
 				}
+			}
+		}
 
+		if (!$feed_data) {
+			global $fetch_last_error;
+			global $fetch_last_error_code;
+
+			_debug("unable to fetch: $fetch_last_error [$fetch_last_error_code]", $debug_enabled);
+
+			$error_escaped = '';
+
+			// If-Modified-Since
+			if ($fetch_last_error_code != 304) {
+				$error_escaped = db_escape_string($fetch_last_error);
 			} else {
-				_debug("local cache will not be used for this feed", $debug_enabled);
+				_debug("source claims data not modified, nothing to do.", $debug_enabled);
 			}
 
-			// fetch feed from source
-			if (!$feed_data) {
-				_debug("fetching [$fetch_url]...", $debug_enabled);
+			db_query(
+				"UPDATE ttrss_feeds SET last_error = '$error_escaped',
+					last_updated = NOW() WHERE id = '$feed'");
 
-				if (ini_get("open_basedir") && function_exists("curl_init")) {
-					_debug("not using CURL due to open_basedir restrictions");
-				}
-
-				$feed_data = fetch_file_contents($fetch_url, false,
-					$auth_login, $auth_pass, false,
-					$no_cache ? FEED_FETCH_NO_CACHE_TIMEOUT : FEED_FETCH_TIMEOUT,
-					0);
-
-				global $fetch_curl_used;
-
-				if (!$fetch_curl_used) {
-					$tmp = @gzdecode($feed_data);
-
-					if ($tmp) $feed_data = $tmp;
-				}
-
-				$feed_data = trim($feed_data);
-
-				_debug("fetch done.", $debug_enabled);
-
-				// cache vanilla feed data for re-use
-				if ($feed_data && !$auth_pass && !$auth_login && is_writable(CACHE_DIR . "/simplepie")) {
-					$new_rss_hash = sha1($feed_data);
-
-					if ($new_rss_hash != $rss_hash) {
-						_debug("saving $cache_filename", $debug_enabled);
-						@file_put_contents($cache_filename, $feed_data);
-					}
-				}
-			}
-
-			if (!$feed_data) {
-				global $fetch_last_error;
-				global $fetch_last_error_code;
-
-				_debug("unable to fetch: $fetch_last_error [$fetch_last_error_code]", $debug_enabled);
-
-				$error_escaped = '';
-
-				// If-Modified-Since
-				if ($fetch_last_error_code != 304) {
-					$error_escaped = db_escape_string($fetch_last_error);
-				} else {
-					_debug("source claims data not modified, nothing to do.", $debug_enabled);
-				}
-
-				db_query(
-					"UPDATE ttrss_feeds SET last_error = '$error_escaped',
-						last_updated = NOW() WHERE id = '$feed'");
-
-				return;
-			}
+			return;
 		}
 
 		foreach ($pluginhost->get_hooks(PluginHost::HOOK_FEED_FETCHED) as $plugin) {
@@ -797,7 +780,7 @@
 				$matched_rules = array();
 
 				$article_filters = get_article_filters($filters, $article["title"],
-					$article["content"], $article["link"], 0, $article["author"],
+					$article["content"], $article["link"], $article["author"],
 					$article["tags"], $matched_rules);
 
 				if ($debug_enabled) {
@@ -1224,11 +1207,12 @@
 				last_updated = NOW() WHERE id = '$feed'");
 
 			unset($rss);
+			return;
 		}
 
 		_debug("done", $debug_enabled);
 
-		return $rss;
+		return true;
 	}
 
 	function cache_enclosures($enclosures, $site_url, $debug) {
@@ -1369,7 +1353,7 @@
 		return $params;
 	}
 
-	function get_article_filters($filters, $title, $content, $link, $timestamp, $author, $tags, &$matched_rules = false) {
+	function get_article_filters($filters, $title, $content, $link, $author, $tags, &$matched_rules = false) {
 		$matches = array();
 
 		foreach ($filters as $filter) {
@@ -1505,15 +1489,6 @@
 			mb_strtolower(strip_tags($title), 'utf-8'));
 	}
 
-	/* function verify_feed_xml($feed_data) {
-		libxml_use_internal_errors(true);
-		$doc = new DOMDocument();
-		$doc->loadXML($feed_data);
-		$error = libxml_get_last_error();
-		libxml_clear_errors();
-		return $error;
-	} */
-
 	function cleanup_counters_cache($debug) {
 		$result = db_query("DELETE FROM ttrss_counters_cache
 			WHERE feed_id > 0 AND
@@ -1529,7 +1504,7 @@
 				ttrss_cat_counters_cache.owner_uid = ttrss_feed_categories.owner_uid) = 0");
 		$crows = db_affected_rows($result);
 
-		_debug("Removed $frows (feeds) $crows (cats) orphaned counter cache entries.");
+		if ($debug) _debug("Removed $frows (feeds) $crows (cats) orphaned counter cache entries.");
 	}
 
 	function housekeeping_user($owner_uid) {
