@@ -12,3 +12,17 @@ schema:
     - /etc/init.d/postgresql start
     - /usr/local/sbin/init-database.sh
     - sh ./utils/gitlab-ci/check-schema.sh
+
+selenium:
+  image: fox/selenium-ci
+  when: manual
+  script:
+    - /etc/init.d/postgresql start
+    - /etc/init.d/nginx start
+    - /etc/init.d/php5-fpm start
+    - /usr/local/sbin/init-database.sh
+    - sh ./utils/gitlab-ci/check-schema.sh
+    - ln -s `pwd` ../../tt-rss
+    - cp utils/gitlab-ci/config-template.php config.php
+    - chmod -R 777 cache lock feed-icons
+    - /usr/local/sbin/init-selenium.sh
