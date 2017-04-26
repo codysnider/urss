@@ -78,7 +78,7 @@ class Share extends Plugin {
 	function shareArticle() {
 		$param = db_escape_string($_REQUEST['param']);
 
-		$result = db_query("SELECT uuid, ref_id FROM ttrss_user_entries WHERE int_id = '$param'
+		$result = db_query("SELECT uuid FROM ttrss_user_entries WHERE int_id = '$param'
 			AND owner_uid = " . $_SESSION['uid']);
 
 		if (db_num_rows($result) == 0) {
@@ -86,7 +86,6 @@ class Share extends Plugin {
 		} else {
 
 			$uuid = db_fetch_result($result, 0, "uuid");
-			$ref_id = db_fetch_result($result, 0, "ref_id");
 
 			if (!$uuid) {
 				$uuid = db_escape_string(uniqid_short());
@@ -128,4 +127,3 @@ class Share extends Plugin {
 	}
 
 }
-?>

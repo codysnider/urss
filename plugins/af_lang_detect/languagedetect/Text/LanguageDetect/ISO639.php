@@ -25,6 +25,8 @@
  * @copyright 2011 Christian Weiske <cweiske@php.net>
  * @license   http://www.debian.org/misc/bsd.license BSD
  * @link      http://www.loc.gov/standards/iso639-2/php/code_list.php
+ *
+ * @SuppressWarnings(PHPMD)
  */
 class Text_LanguageDetect_ISO639
 {
@@ -337,5 +339,3 @@ class Text_LanguageDetect_ISO639
         return self::$code3ToName[$code];
     }
 }
-
-?>

@@ -34,7 +34,9 @@ class Auth_Remote extends Plugin implements IAuthModule {
 		return "";
 	}
 
-
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function authenticate($login, $password) {
 		$try_login = db_escape_string($_SERVER["REMOTE_USER"]);
 
@@ -43,7 +45,6 @@ class Auth_Remote extends Plugin implements IAuthModule {
 		if (!$try_login) $try_login = db_escape_string($_SERVER["PHP_AUTH_USER"]);
 
 		if (!$try_login) $try_login = $this->get_login_by_ssl_certificate();
-#	  	if (!$try_login) $try_login = "test_qqq";
 
 		if ($try_login) {
 			$user_id = $this->base->auto_create_user($try_login, $password);
@@ -84,5 +85,3 @@ class Auth_Remote extends Plugin implements IAuthModule {
 	}
 
 }
-
-?>

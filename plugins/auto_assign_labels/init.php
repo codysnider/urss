@@ -54,4 +54,3 @@ class Auto_Assign_Labels extends Plugin {
 		return 2;
 	}
 }
-?>

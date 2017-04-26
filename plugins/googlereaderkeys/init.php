@@ -38,4 +38,3 @@ class GoogleReaderKeys extends Plugin {
 	}
 
 }
-?>

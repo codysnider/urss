@@ -973,6 +973,10 @@ class SphinxClient
 		return pack ( "N", $t2 );
 	}
 
+	/**
+	 * @SuppressWarnings(unused)
+	 */
+
 	/// add query to multi-query batch
 	/// returns index into results array from RunQueries() call
 	function AddQuery ( $query, $index="*", $comment="" )

@@ -6,9 +6,8 @@ class Af_Comics_Template extends Af_ComicFilter {
 	}
 
 	function process(&$article) {
-		$owner_uid = $article["owner_uid"];
+		//$owner_uid = $article["owner_uid"];
 
 		return false;
 	}
 }
-?>

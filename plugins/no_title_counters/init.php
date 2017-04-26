@@ -22,4 +22,3 @@ class No_Title_Counters extends Plugin {
 	}
 
 }
-?>

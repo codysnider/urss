@@ -13,9 +13,8 @@ class Af_Comics_Pvp extends Af_ComicFilter {
 					 "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)");
 
 				$doc = new DOMDocument();
-				@$doc->loadHTML($res);
 
-				if ($doc) {
+				if (@$doc->loadHTML($res)) {
 					$xpath = new DOMXPath($doc);
 					$basenode = $xpath->query('//section[@class="comic-art"]')->item(0);
 
@@ -30,4 +29,3 @@ class Af_Comics_Pvp extends Af_ComicFilter {
 		return false;
 	}
 }
-?>

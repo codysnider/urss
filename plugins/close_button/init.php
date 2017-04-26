@@ -14,6 +14,9 @@ class Close_Button extends Plugin {
 			"fox");
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function hook_article_button($line) {
 		if (!get_pref("COMBINED_DISPLAY_MODE")) {
 			$rv = "<img src=\"plugins/close_button/button.png\"
@@ -30,4 +33,3 @@ class Close_Button extends Plugin {
 	}
 
 }
-?>

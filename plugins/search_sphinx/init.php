@@ -62,4 +62,3 @@ class Search_Sphinx extends Plugin {
 		return 2;
 	}
 }
-?>

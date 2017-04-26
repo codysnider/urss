@@ -82,4 +82,3 @@ class Af_Unburn extends Plugin {
 	}
 
 }
-?>

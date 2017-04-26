@@ -40,4 +40,3 @@ class Mark_Button extends Plugin {
 	}
 
 }
-?>

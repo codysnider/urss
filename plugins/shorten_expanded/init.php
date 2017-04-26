@@ -26,4 +26,3 @@ class Shorten_Expanded extends Plugin {
 	}
 
 }
-?>

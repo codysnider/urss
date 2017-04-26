@@ -322,4 +322,3 @@ class Af_Psql_Trgm extends Plugin {
 	}
 
 }
-?>

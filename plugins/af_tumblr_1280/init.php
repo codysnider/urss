@@ -80,4 +80,3 @@ class Af_Tumblr_1280 extends Plugin {
 	}
 
 }
-?>

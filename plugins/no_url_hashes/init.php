@@ -22,4 +22,3 @@ class No_URL_Hashes extends Plugin {
 	}
 
 }
-?>

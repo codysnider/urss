@@ -28,4 +28,3 @@ class Swap_JK extends Plugin {
 	}
 
 }
-?>

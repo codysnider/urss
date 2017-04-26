@@ -51,4 +51,3 @@ class Bookmarklets extends Plugin {
 	}
 
 }
-?>

@@ -21,4 +21,3 @@ class Af_Zz_NoAutoPlay extends Plugin {
 	}
 
 }
-?>

@@ -19,29 +19,10 @@ class Af_Comics_Dilbert extends Af_ComicFilter {
 				$doc = new DOMDocument();
 				@$doc->loadHTML($res);
 
-				$basenode = false;
-
 				if ($doc) {
 					$xpath = new DOMXPath($doc);
 
 					$basenode = $xpath->query('//img[contains(@class, "img-comic")]')->item(0);
-
-					/* $entries = $xpath->query('(//img[@src])'); // we might also check for img[@class='strip'] I guess...
-
-					$matches = array();
-
-					foreach ($entries as $entry) {
-
-						if (preg_match("/dyn\/str_strip\/.*strip\.gif$/", $entry->getAttribute("src"), $matches)) {
-
-							$entry->setAttribute("src",
-								rewrite_relative_url("http://dilbert.com/",
-								$matches[0]));
-
-							$basenode = $entry;
-							break;
-						}
-					} */
 
 					if ($basenode) {
 						$article["content"] = $doc->saveXML($basenode);
@@ -54,4 +35,3 @@ class Af_Comics_Dilbert extends Af_ComicFilter {
 		return false;
 	}
 }
-?>

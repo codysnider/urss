@@ -6,7 +6,6 @@ class Af_Comics_DarkLegacy extends Af_ComicFilter {
 	}
 
 	function process(&$article) {
-		$owner_uid = $article["owner_uid"];
 
 		if (strpos($article["guid"], "darklegacycomics.com") !== FALSE) {
 
@@ -20,11 +19,8 @@ class Af_Comics_DarkLegacy extends Af_ComicFilter {
 					$res = $fetch_last_error_content;
 
 				$doc = new DOMDocument();
-				@$doc->loadHTML($res);
 
-				$basenode = false;
-
-				if ($doc) {
+				if (@$doc->loadHTML($res)) {
 					$xpath = new DOMXPath($doc);
 					$basenode = $xpath->query('//div[@class="comic"]')->item(0);
 
@@ -40,4 +36,3 @@ class Af_Comics_DarkLegacy extends Af_ComicFilter {
 		return false;
 	}
 }
-?>

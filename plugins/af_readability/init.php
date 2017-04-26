@@ -128,6 +128,9 @@ class Af_Readability extends Plugin {
 		$this->host->set($this, "enabled_feeds", $enabled_feeds);
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function hook_article_filter_action($article, $action) {
 		return $this->process_article($article);
 	}
@@ -146,7 +149,7 @@ class Af_Readability extends Plugin {
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 			curl_setopt($ch, CURLOPT_USERAGENT, SELF_USER_AGENT);
 
-			@$result = curl_exec($ch);
+			@curl_exec($ch);
 			$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 
 			if (strpos($content_type, "text/html") === FALSE)
@@ -243,4 +246,3 @@ class Af_Readability extends Plugin {
 	}
 
 }
-?>

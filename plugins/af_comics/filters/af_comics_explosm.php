@@ -6,16 +6,12 @@ class Af_Comics_Explosm extends Af_ComicFilter {
 	}
 
 	function process(&$article) {
-		$owner_uid = $article["owner_uid"];
 
 		if (strpos($article["link"], "explosm.net/comics") !== FALSE) {
 
 				$doc = new DOMDocument();
-				@$doc->loadHTML(fetch_file_contents($article["link"]));
 
-				$basenode = false;
-
-				if ($doc) {
+				if (@$doc->loadHTML(fetch_file_contents($article["link"]))) {
 					$xpath = new DOMXPath($doc);
 					$basenode = $xpath->query('(//img[@id="main-comic"])')->item(0);
 
@@ -30,4 +26,3 @@ class Af_Comics_Explosm extends Af_ComicFilter {
 		return false;
 	}
 }
-?>

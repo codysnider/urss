@@ -14,6 +14,9 @@ class No_Iframes extends Plugin {
 		$host->add_hook($host::HOOK_SANITIZE, $this);
 	}
 
+	/**
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
 	function hook_sanitize($doc, $site_url, $allowed_elements, $disallowed_attributes) {
 
 		$xpath = new DOMXpath($doc);
@@ -32,4 +35,3 @@ class No_Iframes extends Plugin {
 	}
 
 }
-?>
