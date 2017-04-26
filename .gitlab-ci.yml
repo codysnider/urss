@@ -1,15 +1,16 @@
-image: php:5.6
-
 before_script:
   - curl -o /usr/bin/phpmd -L http://static.phpmd.org/php/2.6.0/phpmd.phar
   - chmod +x /usr/bin/phpmd
 
-stages:
-  - test
-
-jobs:
-  when: manual
-  stage: test
+phpmd:
+  image: php:5.6
   script:
     - sh utils/gitlab-ci/phpmd.sh
 
+schema:
+  image: fox/selenium-ci
+  when: manual
+  script:
+    - /etc/init.d/postgresql start
+    - /usr/local/sbin/init-database.sh
+    - sh ./utils/gitlab-ci/check-schema.sh
