@@ -36,5 +36,3 @@ function db_last_query_error() {
 function db_quote($str){
 	return Db::get()->quote($str);
 }
-
-?>

@@ -190,4 +190,3 @@ class FeedItem_RSS extends FeedItem_Common {
 	}
 
 }
-?>

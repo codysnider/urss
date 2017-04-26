@@ -83,4 +83,3 @@ abstract class FeedItem_Common extends FeedItem {
 	}
 
 }
-?>

@@ -453,6 +453,4 @@ class Pref_Users extends Handler_Protected {
 			print "</div>"; #container
 
 		}
-
 	}
-?>

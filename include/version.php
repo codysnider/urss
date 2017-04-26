@@ -39,4 +39,3 @@
 	}
 
 	define('VERSION', get_version());
-?>

@@ -1193,4 +1193,3 @@ class Pref_Filters extends Handler_Protected {
 		$this->dbh->query("COMMIT");
 	}
 }
-?>

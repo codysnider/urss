@@ -63,5 +63,3 @@ class Auth_Base {
 
 	}
 }
-
-?>

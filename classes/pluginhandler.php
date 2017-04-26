@@ -18,5 +18,3 @@ class PluginHandler extends Handler_Protected {
 		}
 	}
 }
-
-?>

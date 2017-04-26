@@ -2,4 +2,3 @@
 interface IAuthModule {
 	function authenticate($login, $password);
 }
-?>

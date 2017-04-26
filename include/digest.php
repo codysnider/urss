@@ -189,4 +189,4 @@
 
 		return array($tmp, $headlines_count, $affected_ids, $tmp_t);
 	}
-?>
+

@@ -8,4 +8,3 @@
 	function set_pref($pref_name, $value, $user_id = false, $strip_tags = true) {
 		return Db_Prefs::get()->write($pref_name, $value, $user_id, $strip_tags);
 	}
-?>

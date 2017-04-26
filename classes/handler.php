@@ -21,4 +21,3 @@ class Handler implements IHandler {
 	}
 
 }
-?>

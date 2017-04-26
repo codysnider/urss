@@ -89,4 +89,3 @@ class Db_Pgsql implements IDb {
 		return true;
 	}
 }
-?>

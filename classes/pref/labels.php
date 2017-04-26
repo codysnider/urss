@@ -312,5 +312,3 @@ class Pref_Labels extends Handler_Protected {
 
 	}
 }
-
-?>

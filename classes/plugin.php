@@ -41,4 +41,3 @@ class Plugin {
 		return Plugin::API_VERSION_COMPAT;
 	}
 }
-?>

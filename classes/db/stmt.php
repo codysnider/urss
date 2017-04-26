@@ -29,4 +29,3 @@ class Db_Stmt {
 		return $this->stmt->fetch();
 	}
 }
-?>

@@ -283,4 +283,4 @@ class FeedParser {
 
 		return $rv;
 	}
-} ?>
+}

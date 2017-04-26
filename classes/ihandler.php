@@ -4,4 +4,3 @@ interface IHandler {
 	function before($method);
 	function after();
 }
-?>

@@ -184,4 +184,3 @@ class Db_Prefs {
 	}
 
 }
-?>

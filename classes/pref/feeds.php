@@ -1977,4 +1977,3 @@ class Pref_Feeds extends Handler_Protected {
 		print (int) $this->dbh->fetch_result($result, 0, "num_inactive");
 	}
 }
-?>

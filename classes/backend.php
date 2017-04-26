@@ -116,4 +116,3 @@ class Backend extends Handler {
 
 	}
 }
-?>

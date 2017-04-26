@@ -87,4 +87,3 @@ class Pref_System extends Handler_Protected {
 	}
 
 }
-?>

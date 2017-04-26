@@ -98,4 +98,3 @@ class Db_PDO implements IDb {
 	}
 
 }
-?>

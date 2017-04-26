@@ -12,4 +12,4 @@ abstract class FeedItem {
 	abstract function get_enclosures();
 	abstract function get_author();
 }
-?>
+

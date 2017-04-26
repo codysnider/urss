@@ -98,4 +98,3 @@ class Db implements IDb {
 		return $this->adapter->last_query_error();
 	}
 }
-?>

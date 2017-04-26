@@ -31,4 +31,3 @@ class Logger_Syslog {
 	}
 
 }
-?>

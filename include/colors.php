@@ -348,4 +348,4 @@ function hsl2rgb($arr) {
 		}
 		return '';
 	}
-?>
+

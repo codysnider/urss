@@ -83,4 +83,3 @@ class Db_Mysqli implements IDb {
 	}
 
 }
-?>

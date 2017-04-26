@@ -888,5 +888,3 @@ class API extends Handler {
 
 
 }
-
-?>

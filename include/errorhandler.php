@@ -71,4 +71,4 @@ function ttrss_fatal_handler() {
 
 register_shutdown_function('ttrss_fatal_handler');
 set_error_handler('ttrss_error_handler');
-?>
+

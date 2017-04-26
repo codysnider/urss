@@ -198,4 +198,3 @@ class FeedItem_Atom extends FeedItem_Common {
 	}
 
 }
-?>

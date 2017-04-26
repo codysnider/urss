@@ -435,4 +435,3 @@ class PluginHost {
 		return $this->plugin_actions;
 	}
 }
-?>

@@ -197,5 +197,3 @@
 
 		return $result;
 	}
-
-?>

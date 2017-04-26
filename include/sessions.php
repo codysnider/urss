@@ -140,4 +140,3 @@
 			@session_start();
 		}
 	}
-?>

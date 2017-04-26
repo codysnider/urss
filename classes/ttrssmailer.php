@@ -61,5 +61,3 @@ class ttrssMailer extends PHPMailer {
 		return $rc;
 	}
 }
-
-?>

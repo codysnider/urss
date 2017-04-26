@@ -5,4 +5,3 @@ class Handler_Protected extends Handler {
 		return parent::before($method) && $_SESSION['uid'];
 	}
 }
-?>

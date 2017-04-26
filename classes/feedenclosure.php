@@ -7,4 +7,4 @@ class FeedEnclosure {
 	public $height;
 	public $width;
 }
-?>
+
