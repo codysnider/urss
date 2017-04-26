@@ -45,6 +45,9 @@
 
 	$last_checkpoint = -1;
 
+	/**
+	 * @SuppressWarnings(unused)
+	 */
 	function reap_children() {
 		global $children;
 		global $ctimes;
@@ -85,6 +88,9 @@
 		}
 	}
 
+	/**
+	* @SuppressWarnings(unused)
+ 	*/
 	function sigchld_handler($signal) {
 		$running_jobs = reap_children();
 
