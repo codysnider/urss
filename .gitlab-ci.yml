@@ -20,7 +20,8 @@ phpunit_basic:
   script:
     - /etc/init.d/postgresql start
     - /usr/local/sbin/init-database.sh
-    - sudo -s /bin/bash -u www-data php ./update.php --debug-feed 1
+    - sh ./utils/gitlab-ci/check-schema.sh
+    - su -s /bin/bash -u www-data -c "php ./update.php --debug-feed 1"
     - phpunit tests/*.php
 
 phpunit_functional:
