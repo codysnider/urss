@@ -26,6 +26,8 @@ final class ApiTest extends TestCase {
 		$rv = json_decode(ob_get_contents(), true);
 		ob_end_clean();
 
+		$this->assertEquals(API::STATUS_OK, $rv['status']);
+
 		return $rv;
 	}
 
@@ -63,8 +65,166 @@ final class ApiTest extends TestCase {
 		$this->testLogin();
 		$ret = $this->apiCall([], "getFeeds");
 
+		$this->assertInternalType('array', $ret['content']);
+
 		$this->assertEquals("http://tt-rss.org/forum/rss.php",
 			$ret['content'][0]['feed_url']);
 
 	}
+
+	public function testGetCategories() {
+		$this->testLogin();
+		$ret = $this->apiCall([], "getCategories");
+
+		$this->assertInternalType('array', $ret['content']);
+
+		$this->assertEquals(2, sizeof($ret['content']));
+
+		foreach ($ret['content'] as $cat) {
+
+			$this->assertNotEmpty($cat['title']);
+			$this->assertNotNull($cat['id']);
+			$this->assertGreaterThanOrEqual(0, $cat['unread']);
+		}
+	}
+
+	public function testGetHeadlines() {
+		$this->testLogin();
+		$ret = $this->apiCall(['feed_id' => -4, 'view_mode' => 'adaptive'], "getHeadlines");
+
+		$this->assertInternalType('array', $ret['content']);
+
+		foreach ($ret['content'] as $hl) {
+			$this->assertInternalType('array', $hl);
+
+			$this->assertNotEmpty($hl['guid']);
+			$this->assertNotEmpty($hl['title']);
+			$this->assertNotEmpty($hl['link']);
+		}
+
+		$ret = $this->apiCall(['feed_id' => 1, 'view_mode' => 'all_articles'], "getHeadlines");
+
+		$this->assertInternalType('array', $ret['content']);
+
+		foreach ($ret['content'] as $hl) {
+			$this->assertInternalType('array', $hl);
+
+			$this->assertNotEmpty($hl['guid']);
+			$this->assertNotEmpty($hl['title']);
+			$this->assertNotEmpty($hl['link']);
+		}
+	}
+
+	public function testArticle() {
+
+		$this->testLogin();
+		$ret = $this->apiCall(['feed_id' => -4], "getHeadlines");
+
+		$this->assertInternalType('array', $ret['content'][0]);
+		$id = $ret['content'][0]['id'];
+		$title = $ret['content'][0]['title'];
+
+		$ret = $this->apiCall(['article_id' => $id], "getArticle");
+
+		$this->assertInternalType('array', $ret['content']);
+		$this->assertNotEmpty($ret['content'][0]['content']);
+		$this->assertEquals($title, $ret['content'][0]['title']);
+
+	}
+
+	public function testCounters() {
+
+		$this->testLogin();
+		$ret = $this->apiCall(['output_mode' => 'flc'], "getCounters");
+
+		$this->assertInternalType('array', $ret['content']);
+
+		foreach ($ret['content'] as $ctr) {
+			$this->assertInternalType('array', $ctr);
+
+			$this->assertNotNull($ctr['id']);
+			$this->assertGreaterThanOrEqual(0, $ctr['counter']);
+		}
+	}
+
+	public function testGetConfig() {
+
+		$this->testLogin();
+		$ret = $this->apiCall([], "getConfig");
+
+		$this->assertInternalType('array', $ret['content']);
+
+		foreach ($ret['content'] as $k => $v) {
+			$this->assertInternalType('string', $k);
+			$this->assertNotEmpty($k);
+		}
+	}
+
+	public function testBasicPrefs() {
+
+		$this->testLogin();
+		$ret = $this->apiCall(['pref_name' => 'ENABLE_API_ACCESS'], "getPref");
+		$this->assertEquals(1, $ret['content']['value']);
+
+		set_pref('ENABLE_API_ACCESS', false, 1);
+
+		$ret = $this->apiCall(['pref_name' => 'ENABLE_API_ACCESS'], "getPref");
+		$this->assertEquals(0, $ret['content']['value']);
+
+		set_pref('ENABLE_API_ACCESS', true, 1);
+
+		$ret = $this->apiCall(['pref_name' => 'ENABLE_API_ACCESS'], "getPref");
+		$this->assertEquals(1, $ret['content']['value']);
+	}
+
+	public function testFeedTree() {
+
+		$this->testLogin();
+		$ret = $this->apiCall([], "getFeedTree");
+		$this->assertInternalType('array', $ret['content']);
+
+		// root
+		foreach ($ret['content'] as $tr) {
+			$this->assertInternalType('array', $tr);
+
+			$this->assertInternalType('array', $tr['items']);
+
+			// cats
+			foreach ($tr['items'] as $cr) {
+				$this->assertInternalType('array', $cr['items']);
+
+				$this->assertNotEmpty($cr['id']);
+				$this->assertNotEmpty($cr['name']);
+
+				// feeds
+				foreach ($cr['items'] as $fr) {
+					$this->assertNotEmpty($fr['id']);
+					$this->assertNotEmpty($fr['name']);
+				}
+			}
+		}
+	}
+
+
+	public function testLabels() {
+		label_create('Test', '', '', 1);
+
+		$this->testLogin();
+		$ret = $this->apiCall([], "getLabels");
+		$this->assertInternalType('array', $ret['content']);
+
+		$this->assertEquals('Test', $ret['content'][0]['caption']);
+		$label_id = feed_to_label_id($ret['content'][0]['id']);
+
+		$this->assertGreaterThan(0, $label_id);
+
+		// TODO: assign label to article
+
+		label_remove($label_id, 1);
+
+		$ret = $this->apiCall([], "getLabels");
+		$this->assertEmpty($ret['content']);
+	}
+
+
 }
