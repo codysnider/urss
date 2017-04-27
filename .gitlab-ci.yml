@@ -23,6 +23,8 @@ phpunit_basic:
     - sh ./utils/gitlab-ci/check-schema.sh
     - cp utils/gitlab-ci/config-template.php config.php
     - su -s /bin/bash www-data -c "php ./update.php --debug-feed 1"
+    - wget -O /usr/bin/phpunit https://phar.phpunit.de/phpunit-5.7.phar
+    - chmod +x /usr/bin/phpunit
     - phpunit tests/*.php
 
 phpunit_functional:
