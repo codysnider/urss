@@ -78,13 +78,16 @@ final class ApiTest extends TestCase {
 
 		$this->assertInternalType('array', $ret['content']);
 
-		$this->assertEquals(2, sizeof($ret['content']));
+		$this->assertGreaterThanOrEqual(2, sizeof($ret['content']));
 
 		foreach ($ret['content'] as $cat) {
 
 			$this->assertNotEmpty($cat['title']);
 			$this->assertNotNull($cat['id']);
 			$this->assertGreaterThanOrEqual(0, $cat['unread']);
+
+			$this->assertContains($cat['title'],
+				['Special', 'Labels', 'Uncategorized']);
 		}
 	}
 
@@ -121,15 +124,14 @@ final class ApiTest extends TestCase {
 		$ret = $this->apiCall(['feed_id' => -4], "getHeadlines");
 
 		$this->assertInternalType('array', $ret['content'][0]);
-		$id = $ret['content'][0]['id'];
+		$article_id = $ret['content'][0]['id'];
 		$title = $ret['content'][0]['title'];
 
-		$ret = $this->apiCall(['article_id' => $id], "getArticle");
+		$ret = $this->apiCall(['article_id' => $article_id], "getArticle");
 
 		$this->assertInternalType('array', $ret['content']);
 		$this->assertNotEmpty($ret['content'][0]['content']);
 		$this->assertEquals($title, $ret['content'][0]['title']);
-
 	}
 
 	public function testCounters() {
@@ -207,6 +209,8 @@ final class ApiTest extends TestCase {
 
 
 	public function testLabels() {
+		// create label
+
 		label_create('Test', '', '', 1);
 
 		$this->testLogin();
@@ -214,11 +218,33 @@ final class ApiTest extends TestCase {
 		$this->assertInternalType('array', $ret['content']);
 
 		$this->assertEquals('Test', $ret['content'][0]['caption']);
-		$label_id = feed_to_label_id($ret['content'][0]['id']);
+		$label_feed_id = $ret['content'][0]['id'];
+		$label_id = feed_to_label_id($label_feed_id);
 
+		$this->assertLessThan(0, $label_feed_id);
 		$this->assertGreaterThan(0, $label_id);
 
-		// TODO: assign label to article
+		// assign/remove label to article
+
+		$ret = $this->apiCall(['feed_id' => -4, 'view_mode' => 'adaptive'], "getHeadlines");
+		$this->assertInternalType('array', $ret['content'][0]);
+		$article_id = $ret['content'][0]['id'];
+
+		$ret = $this->apiCall(['article_ids' => $article_id,
+			'label_id' => $label_feed_id, "assign" => "true"],
+			"setArticleLabel");
+
+		$ret = $this->apiCall(['article_id' => $article_id], "getArticle");
+		$this->assertContains($label_feed_id, $ret['content'][0]['labels'][0]);
+
+		$ret = $this->apiCall(['article_ids' => $article_id,
+			'label_id' => $label_feed_id, "assign" => "false"],
+			"setArticleLabel");
+
+		$ret = $this->apiCall(['article_id' => $article_id], "getArticle");
+		$this->assertEmpty($ret['content'][0]['labels']);
+
+		// clean up and check
 
 		label_remove($label_id, 1);
 
