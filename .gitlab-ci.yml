@@ -14,7 +14,16 @@ schema:
     - /usr/local/sbin/init-database.sh
     - sh ./utils/gitlab-ci/check-schema.sh
 
-selenium:
+phpunit_basic:
+  image: fox/selenium-ci
+  when: manual
+  script:
+    - /etc/init.d/postgresql start
+    - /usr/local/sbin/init-database.sh
+    - sudo -s /bin/bash -u www-data php ./update.php --debug-feed 1
+    - phpunit tests/*.php
+
+phpunit_functional:
   image: fox/selenium-ci
   when: manual
   script:
@@ -27,3 +36,4 @@ selenium:
     - cp utils/gitlab-ci/config-template.php config.php
     - chmod -R 777 cache lock feed-icons
     - /usr/local/sbin/init-selenium.sh
+    - phpunit tests/functional/*.php
