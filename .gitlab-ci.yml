@@ -21,6 +21,7 @@ phpunit_basic:
     - /etc/init.d/postgresql start
     - /usr/local/sbin/init-database.sh
     - sh ./utils/gitlab-ci/check-schema.sh
+    - cp utils/gitlab-ci/config-template.php config.php
     - su -s /bin/bash www-data -c "php ./update.php --debug-feed 1"
     - phpunit tests/*.php
 
