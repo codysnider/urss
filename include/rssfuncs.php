@@ -447,16 +447,8 @@
 			$feed_data = $plugin->hook_feed_fetched($feed_data, $fetch_url, $owner_uid, $feed);
 		}
 
-		// set last update to now so if anything *simplepie* crashes later we won't be
-		// continuously failing on the same feed
-		//db_query("UPDATE ttrss_feeds SET last_updated = NOW() WHERE id = '$feed'");
-
-		if (!$rss) {
-			$rss = new FeedParser($feed_data);
-			$rss->init();
-		}
-
-//		print_r($rss);
+		$rss = new FeedParser($feed_data);
+		$rss->init();
 
 		$feed = db_escape_string($feed);
 
@@ -858,11 +850,11 @@
 
 				if (db_num_rows($result) == 0) {
 
-					_debug("base guid [$entry_guid] not found", $debug_enabled);
+					_debug("base guid [$entry_guid or $entry_guid_hashed] not found, creating...", $debug_enabled);
 
 					// base post entry does not exist, create it
 
-					$result = db_query(
+					db_query(
 						"INSERT INTO ttrss_entries
 							(title,
 							guid,
@@ -894,8 +886,6 @@
 							'$entry_language',
 							'$entry_author')");
 
-				} else {
-					$base_entry_id = db_fetch_result($result, 0, "id");
 				}
 
 				// now it should exist, if not - bad luck then
