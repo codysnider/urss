@@ -361,7 +361,7 @@ class Feeds extends Handler_Protected {
 				if (!is_array($labels)) $labels = get_article_labels($id);
 
 				$labels_str = "<span class=\"HLLCTR-$id\">";
-				$labels_str .= format_article_labels($labels);
+				$labels_str .= Article::format_article_labels($labels);
 				$labels_str .= "</span>";
 
 				if (count($topmost_article_ids) < 3) {
@@ -672,7 +672,7 @@ class Feeds extends Handler_Protected {
 
 					$reply['content'] .= "<div id=\"POSTNOTE-$id\">";
 					if ($line['note']) {
-						$reply['content'] .= format_article_note($id, $line['note']);
+						$reply['content'] .= Article::format_article_note($id, $line['note']);
 					}
 					$reply['content'] .= "</div>";
 
@@ -720,7 +720,7 @@ class Feeds extends Handler_Protected {
 					$reply['content'] .= "<div class=\"cdmIntermediate\">";
 
 					$always_display_enclosures = sql_bool_to_bool($line["always_display_enclosures"]);
-					$reply['content'] .= format_article_enclosures($id, $always_display_enclosures, $line["content"], sql_bool_to_bool($line["hide_images"]));
+					$reply['content'] .= Article::format_article_enclosures($id, $always_display_enclosures, $line["content"], sql_bool_to_bool($line["hide_images"]));
 
 					$reply['content'] .= "</div>";
 
@@ -730,7 +730,7 @@ class Feeds extends Handler_Protected {
 						$reply['content'] .= $p->hook_article_left_button($line);
 					}
 
-					$tags_str = format_tags_string($tags, $id);
+					$tags_str = Article::format_tags_string($tags, $id);
 
 					$reply['content'] .= "<span class='left'>";
 

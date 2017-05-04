@@ -347,7 +347,7 @@ class API extends Handler {
 
 				while ($line = $this->dbh->fetch_assoc($result)) {
 
-					$attachments = get_article_enclosures($line['id']);
+					$attachments = Article::get_article_enclosures($line['id']);
 
 					$article = array(
 						"id" => $line["id"],
@@ -769,7 +769,7 @@ class API extends Handler {
 					);
 
 					if ($include_attachments)
-						$headline_row['attachments'] = get_article_enclosures(
+						$headline_row['attachments'] = Article::get_article_enclosures(
 							$line['id']);
 
 					if ($show_excerpt)

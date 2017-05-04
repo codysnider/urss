@@ -166,14 +166,14 @@ class Handler_Public extends Handler {
 				$tpl->setVariable('ARTICLE_SOURCE_LINK', htmlspecialchars($line['site_url'] ? $line["site_url"] : get_self_url_prefix()), true);
 				$tpl->setVariable('ARTICLE_SOURCE_TITLE', htmlspecialchars($line['feed_title'] ? $line['feed_title'] : $feed_title), true);
 
-				$tags = get_article_tags($line["id"], $owner_uid);
+				$tags = Article::get_article_tags($line["id"], $owner_uid);
 
 				foreach ($tags as $tag) {
 					$tpl->setVariable('ARTICLE_CATEGORY', htmlspecialchars($tag), true);
 					$tpl->addBlock('category');
 				}
 
-				$enclosures = get_article_enclosures($line["id"]);
+				$enclosures = Article::get_article_enclosures($line["id"]);
 
 				foreach ($enclosures as $e) {
 					$type = htmlspecialchars($e['content_type']);
@@ -252,7 +252,7 @@ class Handler_Public extends Handler {
 					}
 				}
 
-				$enclosures = get_article_enclosures($line["id"]);
+				$enclosures = Article::get_article_enclosures($line["id"]);
 
 				if (count($enclosures) > 0) {
 					$article['enclosures'] = array();
@@ -402,7 +402,7 @@ class Handler_Public extends Handler {
 			$id = $this->dbh->fetch_result($result, 0, "ref_id");
 			$owner_uid = $this->dbh->fetch_result($result, 0, "owner_uid");
 
-			$article = format_article($id, false, true, $owner_uid);
+			$article = Article::format_article($id, false, true, $owner_uid);
 
 			print_r($article['content']);
 
