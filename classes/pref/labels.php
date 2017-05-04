@@ -136,7 +136,7 @@ class Pref_Labels extends Handler_Protected {
 					AND owner_uid = " . $_SESSION["uid"]);
 			}
 
-			$caption = $this->dbh->escape_string(label_find_caption($id, $_SESSION["uid"]));
+			$caption = $this->dbh->escape_string(Labels::find_caption($id, $_SESSION["uid"]));
 
 			/* Remove cached data */
 
@@ -156,7 +156,7 @@ class Pref_Labels extends Handler_Protected {
 				fg_color = '', bg_color = '' WHERE id = '$id'
 				AND owner_uid = " . $_SESSION["uid"]);
 
-			$caption = $this->dbh->escape_string(label_find_caption($id, $_SESSION["uid"]));
+			$caption = $this->dbh->escape_string(Labels::find_caption($id, $_SESSION["uid"]));
 
 			/* Remove cached data */
 
@@ -216,7 +216,7 @@ class Pref_Labels extends Handler_Protected {
 		$ids = explode(",", $this->dbh->escape_string($_REQUEST["ids"]));
 
 		foreach ($ids as $id) {
-			label_remove($id, $_SESSION["uid"]);
+			Labels::remove($id, $_SESSION["uid"]);
 		}
 
 	}
@@ -227,7 +227,7 @@ class Pref_Labels extends Handler_Protected {
 
 		if ($caption) {
 
-			if (label_create($caption)) {
+			if (Labels::create($caption)) {
 				if (!$output) {
 					print T_sprintf("Created label <b>%s</b>", htmlspecialchars($caption));
 				}

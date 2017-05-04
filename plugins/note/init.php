@@ -62,7 +62,7 @@ class Note extends Plugin {
 		db_query("UPDATE ttrss_user_entries SET note = '$note'
 			WHERE ref_id = '$id' AND owner_uid = " . $_SESSION["uid"]);
 
-		$formatted_note = format_article_note($id, $note);
+		$formatted_note = Article::format_article_note($id, $note);
 
 		print json_encode(array("note" => $formatted_note,
 				"raw_length" => mb_strlen($note)));

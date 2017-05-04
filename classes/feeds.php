@@ -870,7 +870,7 @@ class Feeds extends Handler_Protected {
 		$result = false;
 
 		if ($feed < LABEL_BASE_INDEX) {
-			$label_feed = feed_to_label_id($feed);
+			$label_feed = Labels::feed_to_label_id($feed);
 			$result = $this->dbh->query("SELECT id FROM ttrss_labels2 WHERE
 							id = '$label_feed' AND owner_uid = " . $_SESSION['uid']);
 		} else if (!$cat_view && is_numeric($feed) && $feed > 0) {
@@ -1354,7 +1354,7 @@ class Feeds extends Handler_Protected {
 
 			} else if ($feed < LABEL_BASE_INDEX) { // label
 
-				$label_id = feed_to_label_id($feed);
+				$label_id = Labels::feed_to_label_id($feed);
 
 				db_query("UPDATE ttrss_user_entries
 					SET unread = false, last_read = NOW() WHERE ref_id IN
@@ -1435,7 +1435,7 @@ class Feeds extends Handler_Protected {
 
 		} else if ($feed < LABEL_BASE_INDEX) {
 
-			$label_id = feed_to_label_id($feed);
+			$label_id = Labels::feed_to_label_id($feed);
 
 			return Feeds::getLabelUnread($label_id, $owner_uid);
 
@@ -1608,7 +1608,7 @@ class Feeds extends Handler_Protected {
 		} else if ($id == -6) {
 			return __("Recently read");
 		} else if ($id < LABEL_BASE_INDEX) {
-			$label_id = feed_to_label_id($id);
+			$label_id = Labels::feed_to_label_id($id);
 			$result = db_query("SELECT caption FROM ttrss_labels2 WHERE id = '$label_id'");
 			if (db_num_rows($result) == 1) {
 				return db_fetch_result($result, 0, "caption");
@@ -1931,7 +1931,7 @@ class Feeds extends Handler_Protected {
 			$query_strategy_part = "true";
 			$vfeed_query_part = "ttrss_feeds.title AS feed_title,";
 		} else if ($feed <= LABEL_BASE_INDEX) { // labels
-			$label_id = feed_to_label_id($feed);
+			$label_id = Labels::feed_to_label_id($feed);
 
 			$query_strategy_part = "label_id = '$label_id' AND
 					ttrss_labels2.id = ttrss_user_labels2.label_id AND

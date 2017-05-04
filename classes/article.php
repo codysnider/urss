@@ -154,7 +154,7 @@ class Article extends Handler_Protected {
 
 			if (count($labels) != 0) {
 				foreach ($labels as $label) {
-					label_add_article($ref_id, trim($label), $owner_uid);
+					Labels::add_article($ref_id, trim($label), $owner_uid);
 				}
 			}
 
@@ -179,7 +179,7 @@ class Article extends Handler_Protected {
 
 				if (count($labels) != 0) {
 					foreach ($labels as $label) {
-						label_add_article($ref_id, trim($label), $owner_uid);
+						Labels::add_article($ref_id, trim($label), $owner_uid);
 					}
 				}
 
@@ -344,7 +344,7 @@ class Article extends Handler_Protected {
 		$ids = explode(",", $this->dbh->escape_string($_REQUEST["ids"]));
 		$label_id = $this->dbh->escape_string($_REQUEST["lid"]);
 
-		$label = $this->dbh->escape_string(label_find_caption($label_id,
+		$label = $this->dbh->escape_string(Labels::find_caption($label_id,
 		$_SESSION["uid"]));
 
 		$reply["info-for-headlines"] = array();
@@ -354,9 +354,9 @@ class Article extends Handler_Protected {
 			foreach ($ids as $id) {
 
 				if ($assign)
-					label_add_article($id, $label, $_SESSION["uid"]);
+					Labels::add_article($id, $label, $_SESSION["uid"]);
 				else
-					label_remove_article($id, $label, $_SESSION["uid"]);
+					Labels::remove_article($id, $label, $_SESSION["uid"]);
 
 				$labels = $this->get_article_labels($id, $_SESSION["uid"]);
 
@@ -955,16 +955,16 @@ class Article extends Handler_Protected {
 			ORDER BY caption");
 
 		while ($line = db_fetch_assoc($result)) {
-			$rk = array(label_to_feed_id($line["label_id"]),
+			$rk = array(Labels::label_to_feed_id($line["label_id"]),
 				$line["caption"], $line["fg_color"],
 				$line["bg_color"]);
 			array_push($rv, $rk);
 		}
 
 		if (count($rv) > 0)
-			label_update_cache($owner_uid, $id, $rv);
+			Labels::update_cache($owner_uid, $id, $rv);
 		else
-			label_update_cache($owner_uid, $id, array("no-labels" => 1));
+			Labels::update_cache($owner_uid, $id, array("no-labels" => 1));
 
 		return $rv;
 	}

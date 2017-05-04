@@ -171,7 +171,7 @@ class Pref_Feeds extends Handler_Protected {
 
 				while ($line = $this->dbh->fetch_assoc($result)) {
 
-					$label_id = label_to_feed_id($line['id']);
+					$label_id = Labels::label_to_feed_id($line['id']);
 
 					$feed = $this->feedlist_init_feed($label_id, false, 0);
 
@@ -1806,7 +1806,7 @@ class Pref_Feeds extends Handler_Protected {
 			CCache::remove($id, $owner_uid);
 
 		} else {
-			label_remove(feed_to_label_id($id), $owner_uid);
+			Labels::remove(Labels::feed_to_label_id($id), $owner_uid);
 			//CCache::remove($id, $owner_uid); don't think labels are cached
 		}
 	}

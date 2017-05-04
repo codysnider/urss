@@ -1032,7 +1032,7 @@
 				_debug("assigning labels [other]...", $debug_enabled);
 
 				foreach ($article_labels as $label) {
-					label_add_article($entry_ref_id, $label[1], $owner_uid);
+					Labels::add_article($entry_ref_id, $label[1], $owner_uid);
 				}
 
 				_debug("assigning labels [filters]...", $debug_enabled);
@@ -1468,7 +1468,7 @@
 		foreach ($filters as $f) {
 			if ($f["type"] == "label") {
 				if (!labels_contains_caption($article_labels, $f["param"])) {
-					label_add_article($id, $f["param"], $owner_uid);
+					Labels::add_article($id, $f["param"], $owner_uid);
 				}
 			}
 		}

@@ -211,7 +211,7 @@ final class ApiTest extends TestCase {
 	public function testLabels() {
 		// create label
 
-		label_create('Test', '', '', 1);
+		Labels::create('Test', '', '', 1);
 
 		$this->testLogin();
 		$ret = $this->apiCall([], "getLabels");
@@ -219,7 +219,7 @@ final class ApiTest extends TestCase {
 
 		$this->assertEquals('Test', $ret['content'][0]['caption']);
 		$label_feed_id = $ret['content'][0]['id'];
-		$label_id = feed_to_label_id($label_feed_id);
+		$label_id = Labels::feed_to_label_id($label_feed_id);
 
 		$this->assertLessThan(0, $label_feed_id);
 		$this->assertGreaterThan(0, $label_id);
@@ -246,7 +246,7 @@ final class ApiTest extends TestCase {
 
 		// clean up and check
 
-		label_remove($label_id, 1);
+		Labels::remove($label_id, 1);
 
 		$ret = $this->apiCall([], "getLabels");
 		$this->assertEmpty($ret['content']);

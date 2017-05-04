@@ -458,14 +458,14 @@ class API extends Handler {
 
 			$checked = false;
 			foreach ($article_labels as $al) {
-				if (feed_to_label_id($al[0]) == $line['id']) {
+				if (Labels::feed_to_label_id($al[0]) == $line['id']) {
 					$checked = true;
 					break;
 				}
 			}
 
 			array_push($rv, array(
-				"id" => (int)label_to_feed_id($line['id']),
+				"id" => (int)Labels::label_to_feed_id($line['id']),
 				"caption" => $line['caption'],
 				"fg_color" => $line['fg_color'],
 				"bg_color" => $line['bg_color'],
@@ -481,8 +481,8 @@ class API extends Handler {
 		$label_id = (int) $this->dbh->escape_string($_REQUEST['label_id']);
 		$assign = (bool) ($this->dbh->escape_string($_REQUEST['assign']) == "true");
 
-		$label = $this->dbh->escape_string(label_find_caption(
-			feed_to_label_id($label_id), $_SESSION["uid"]));
+		$label = $this->dbh->escape_string(Labels::find_caption(
+			Labels::feed_to_label_id($label_id), $_SESSION["uid"]));
 
 		$num_updated = 0;
 
@@ -491,9 +491,9 @@ class API extends Handler {
 			foreach ($article_ids as $id) {
 
 				if ($assign)
-					label_add_article($id, $label, $_SESSION["uid"]);
+					Labels::add_article($id, $label, $_SESSION["uid"]);
 				else
-					label_remove_article($id, $label, $_SESSION["uid"]);
+					Labels::remove_article($id, $label, $_SESSION["uid"]);
 
 				++$num_updated;
 

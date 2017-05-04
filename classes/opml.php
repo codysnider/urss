@@ -292,9 +292,9 @@ class Opml extends Handler_Protected {
 			$fg_color = $this->dbh->escape_string($attrs->getNamedItem('label-fg-color')->nodeValue);
 			$bg_color = $this->dbh->escape_string($attrs->getNamedItem('label-bg-color')->nodeValue);
 
-			if (!label_find_id($label_name, $_SESSION['uid'])) {
+			if (!Labels::find_id($label_name, $_SESSION['uid'])) {
 				$this->opml_notice(T_sprintf("Adding label %s", htmlspecialchars($label_name)));
-				label_create($label_name, $fg_color, $bg_color, $owner_uid);
+				Labels::create($label_name, $fg_color, $bg_color, $owner_uid);
 			} else {
 				$this->opml_notice(T_sprintf("Duplicate label: %s", htmlspecialchars($label_name)));
 			}

@@ -1,13 +1,15 @@
 <?php
-	function label_to_feed_id($label) {
+class Labels
+{
+	static function label_to_feed_id($label) {
 		return LABEL_BASE_INDEX - 1 - abs($label);
 	}
 
-	function feed_to_label_id($feed) {
+	static function feed_to_label_id($feed) {
 		return LABEL_BASE_INDEX - 1 + abs($feed);
 	}
 
-	function label_find_id($label, $owner_uid) {
+	static function find_id($label, $owner_uid) {
 		$result = db_query(
 			"SELECT id FROM ttrss_labels2 WHERE caption = '$label'
 				AND owner_uid = '$owner_uid' LIMIT 1");
@@ -19,7 +21,7 @@
 		}
 	}
 
-	function label_find_caption($label, $owner_uid) {
+	static function find_caption($label, $owner_uid) {
 		$result = db_query(
 			"SELECT caption FROM ttrss_labels2 WHERE id = '$label'
 				AND owner_uid = '$owner_uid' LIMIT 1");
@@ -31,7 +33,7 @@
 		}
 	}
 
-	function get_all_labels($owner_uid) {
+	static function get_all_labels($owner_uid)	{
 		$rv = array();
 
 		$result = db_query("SELECT fg_color, bg_color, caption FROM ttrss_labels2 WHERE owner_uid = " . $owner_uid);
@@ -43,13 +45,13 @@
 		return $rv;
 	}
 
-	function label_update_cache($owner_uid, $id, $labels = false, $force = false) {
+	static function update_cache($owner_uid, $id, $labels = false, $force = false) {
 
 		if ($force)
-			label_clear_cache($id);
+			Labels::clear_cache($id);
 
 		if (!$labels)
-			$labels = get_article_labels($id);
+			$labels = Article::get_article_labels($id);
 
 		$labels = db_escape_string(json_encode($labels));
 
@@ -58,16 +60,16 @@
 
 	}
 
-	function label_clear_cache($id) {
+	static function clear_cache($id)	{
 
 		db_query("UPDATE ttrss_user_entries SET
 			label_cache = '' WHERE ref_id = '$id'");
 
 	}
 
-	function label_remove_article($id, $label, $owner_uid) {
+	static function remove_article($id, $label, $owner_uid) {
 
-		$label_id = label_find_id($label, $owner_uid);
+		$label_id = Labels::find_id($label, $owner_uid);
 
 		if (!$label_id) return;
 
@@ -77,12 +79,12 @@
 				label_id = '$label_id' AND
 				article_id = '$id'");
 
-		label_clear_cache($id);
+		Labels::clear_cache($id);
 	}
 
-	function label_add_article($id, $label, $owner_uid) {
+	static function add_article($id, $label, $owner_uid)	{
 
-		$label_id = label_find_id($label, $owner_uid);
+		$label_id = Labels::find_id($label, $owner_uid);
 
 		if (!$label_id) return;
 
@@ -100,11 +102,11 @@
 				(label_id, article_id) VALUES ('$label_id', '$id')");
 		}
 
-		label_clear_cache($id);
+		Labels::clear_cache($id);
 
 	}
 
-	function label_remove($id, $owner_uid) {
+	static function remove($id, $owner_uid) {
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
 		db_query("BEGIN");
@@ -136,13 +138,11 @@
 		db_query("COMMIT");
 	}
 
-	function label_create($caption, $fg_color = '', $bg_color = '', $owner_uid = false) {
+	static function create($caption, $fg_color = '', $bg_color = '', $owner_uid = false)	{
 
 		if (!$owner_uid) $owner_uid = $_SESSION['uid'];
 
 		db_query("BEGIN");
-
-		$result = false;
 
 		$result = db_query("SELECT id FROM ttrss_labels2
 			WHERE caption = '$caption' AND owner_uid = $owner_uid");
@@ -159,3 +159,4 @@
 
 		return $result;
 	}
+}

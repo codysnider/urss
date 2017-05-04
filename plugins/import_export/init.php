@@ -378,10 +378,10 @@ class Import_Export extends Plugin implements IHandler {
 								if (is_array($label_cache) && $label_cache["no-labels"] != 1) {
 									foreach ($label_cache as $label) {
 
-										label_create($label[1],
+										Labels::create($label[1],
 											$label[2], $label[3], $owner_uid);
 
-										label_add_article($ref_id, $label[1], $owner_uid);
+										Labels::add_article($ref_id, $label[1], $owner_uid);
 
 									}
 								}

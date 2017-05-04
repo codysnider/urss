@@ -134,7 +134,6 @@
 
 	require_once 'db-prefs.php';
 	require_once 'version.php';
-	require_once 'labels.php';
 	require_once 'controls.php';
 
 	define('SELF_USER_AGENT', 'Tiny Tiny RSS/' . VERSION . ' (http://tt-rss.org/)');
@@ -1169,7 +1168,7 @@
 
 		while ($line = db_fetch_assoc($result)) {
 
-			$id = label_to_feed_id($line["id"]);
+			$id = Labels::label_to_feed_id($line["id"]);
 
 			$cv = array("id" => $id,
 				"counter" => (int) $line["unread"],
