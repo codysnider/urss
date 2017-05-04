@@ -354,7 +354,7 @@ class API extends Handler {
 						"guid" => $line["guid"],
 						"title" => $line["title"],
 						"link" => $line["link"],
-						"labels" => get_article_labels($line['id']),
+						"labels" => Article::get_article_labels($line['id']),
 						"unread" => sql_bool_to_bool($line["unread"]),
 						"marked" => sql_bool_to_bool($line["marked"]),
 						"published" => sql_bool_to_bool($line["published"]),
@@ -450,7 +450,7 @@ class API extends Handler {
 			WHERE owner_uid = '".$_SESSION['uid']."' ORDER BY caption");
 
 		if ($article_id)
-			$article_labels = get_article_labels($article_id);
+			$article_labels = Article::get_article_labels($article_id);
 		else
 			$article_labels = array();
 
@@ -740,10 +740,7 @@ class API extends Handler {
 						}
 					}
 
-					if (!is_array($labels)) $labels = get_article_labels($line["id"]);
-
-					//if (!$tags) $tags = get_article_tags($line["id"]);
-					//if (!$labels) $labels = get_article_labels($line["id"]);
+					if (!is_array($labels)) $labels = Article::get_article_labels($line["id"]);
 
 					$headline_row = array(
 						"id" => (int)$line["id"],

@@ -683,7 +683,7 @@
 				if (db_num_rows($result) != 0) {
 					$base_entry_id = db_fetch_result($result, 0, "id");
 					$entry_stored_hash = db_fetch_result($result, 0, "content_hash");
-					$article_labels = get_article_labels($base_entry_id, $owner_uid);
+					$article_labels = Article::get_article_labels($base_entry_id, $owner_uid);
 					$entry_language = db_fetch_result($result, 0, "lang");
 
 					$existing_tags = Article::get_article_tags($base_entry_id, $owner_uid);
