@@ -101,7 +101,7 @@ class API extends Handler {
 		if ($feed_id) {
 			$this->wrap(self::STATUS_OK, array("unread" => getFeedUnread($feed_id, $is_cat)));
 		} else {
-			$this->wrap(self::STATUS_OK, array("unread" => getGlobalUnread()));
+			$this->wrap(self::STATUS_OK, array("unread" => Feeds::getGlobalUnread()));
 		}
 	}
 
@@ -170,7 +170,7 @@ class API extends Handler {
 
 				if ($unread || !$unread_only) {
 					array_push($cats, array("id" => $cat_id,
-						"title" => getCategoryTitle($cat_id),
+						"title" => Feeds::getCategoryTitle($cat_id),
 						"unread" => $unread));
 				}
 			}

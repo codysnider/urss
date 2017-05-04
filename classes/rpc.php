@@ -151,7 +151,7 @@ class RPC extends Handler_Protected {
 		$this->dbh->query("DELETE FROM ttrss_user_entries
 			WHERE ref_id IN ($ids) AND owner_uid = " . $_SESSION["uid"]);
 
-		purge_orphans();
+		Article::purge_orphans();
 
 		print json_encode(array("message" => "UPDATE_COUNTERS"));
 	}
@@ -556,7 +556,7 @@ class RPC extends Handler_Protected {
 		}
 
 		// Purge orphans and cleanup tags
-		purge_orphans();
+		Article::purge_orphans();
 		//cleanup_tags(14, 50000);
 
 		if ($num_updated > 0) {

@@ -287,7 +287,7 @@ class Handler_Public extends Handler {
 		if ($this->dbh->num_rows($result) == 1) {
 			$uid = $this->dbh->fetch_result($result, 0, "id");
 
-			print getGlobalUnread($uid);
+			print Feeds::getGlobalUnread($uid);
 
 			if ($fresh) {
 				print ";";

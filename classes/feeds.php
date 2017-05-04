@@ -1445,7 +1445,7 @@ class Feeds extends Handler_Protected {
 
 			$label_id = feed_to_label_id($feed);
 
-			return getLabelUnread($label_id, $owner_uid);
+			return Feeds::getLabelUnread($label_id, $owner_uid);
 
 		}
 
@@ -1602,7 +1602,7 @@ class Feeds extends Handler_Protected {
 
 	static function getFeedTitle($id, $cat = false) {
 		if ($cat) {
-			return getCategoryTitle($id);
+			return Feeds::getCategoryTitle($id);
 		} else if ($id == -1) {
 			return __("Starred articles");
 		} else if ($id == -2) {
@@ -1705,6 +1705,52 @@ class Feeds extends Handler_Protected {
 		}
 
 		return $unread;
+	}
+
+	static function getGlobalUnread($user_id = false) {
+
+		if (!$user_id) {
+			$user_id = $_SESSION["uid"];
+		}
+
+		$result = db_query("SELECT SUM(value) AS c_id FROM ttrss_counters_cache
+			WHERE owner_uid = '$user_id' AND feed_id > 0");
+
+		$c_id = db_fetch_result($result, 0, "c_id");
+
+		return $c_id;
+	}
+
+	static function getCategoryTitle($cat_id) {
+
+		if ($cat_id == -1) {
+			return __("Special");
+		} else if ($cat_id == -2) {
+			return __("Labels");
+		} else {
+
+			$result = db_query("SELECT title FROM ttrss_feed_categories WHERE
+				id = '$cat_id'");
+
+			if (db_num_rows($result) == 1) {
+				return db_fetch_result($result, 0, "title");
+			} else {
+				return __("Uncategorized");
+			}
+		}
+	}
+
+	static function getLabelUnread($label_id, $owner_uid = false) {
+		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
+
+		$result = db_query("SELECT COUNT(ref_id) AS unread FROM ttrss_user_entries, ttrss_user_labels2
+			WHERE owner_uid = '$owner_uid' AND unread = true AND label_id = '$label_id' AND article_id = ref_id");
+
+		if (db_num_rows($result) != 0) {
+			return db_fetch_result($result, 0, "unread");
+		} else {
+			return 0;
+		}
 	}
 
 }

@@ -1542,7 +1542,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		$obj['id'] = 'CAT:' . $cat_id;
 		$obj['items'] = array();
-		$obj['name'] = getCategoryTitle($cat_id);
+		$obj['name'] = Feeds::getCategoryTitle($cat_id);
 		$obj['type'] = 'category';
 		$obj['unread'] = (int) $cat_unread;
 		$obj['bare_id'] = $cat_id;

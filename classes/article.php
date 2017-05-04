@@ -864,4 +864,17 @@ class Article extends Handler_Protected {
 		return $rv;
 	}
 
+	static function purge_orphans($do_output = false) {
+
+		// purge orphaned posts in main content table
+		$result = db_query("DELETE FROM ttrss_entries WHERE
+			NOT EXISTS (SELECT ref_id FROM ttrss_user_entries WHERE ref_id = id)");
+
+		if ($do_output) {
+			$rows = db_affected_rows($result);
+			_debug("Purged $rows orphaned posts.");
+		}
+	}
+
+
 }

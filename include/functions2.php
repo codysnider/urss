@@ -506,7 +506,7 @@
 					$unread = getFeedUnread($feed, $cat_view);
 
 					if ($cat_view && $feed > 0 && $include_children)
-						$unread += getCategoryChildrenUnread($feed);
+						$unread += Feeds::getCategoryChildrenUnread($feed);
 
 					if ($unread > 0) {
 						$view_query_part = " unread = true AND ";
@@ -670,7 +670,7 @@
 				$feed_title = T_sprintf("Search results: %s", $search);
 			} else {
 				if ($cat_view) {
-					$feed_title = getCategoryTitle($feed);
+					$feed_title = Feeds::getCategoryTitle($feed);
 				} else {
 					if (is_numeric($feed) && $feed > 0) {
 						$result = db_query("SELECT title,site_url,last_error,last_updated

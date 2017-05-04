@@ -305,19 +305,7 @@
 		}
 	}
 
-	function purge_orphans($do_output = false) {
-
-		// purge orphaned posts in main content table
-		$result = db_query("DELETE FROM ttrss_entries WHERE
-			NOT EXISTS (SELECT ref_id FROM ttrss_user_entries WHERE ref_id = id)");
-
-		if ($do_output) {
-			$rows = db_affected_rows($result);
-			_debug("Purged $rows orphaned posts.");
-		}
-	}
-
-	function get_feed_update_interval($feed_id) {
+	/*function get_feed_update_interval($feed_id) {
 		$result = db_query("SELECT owner_uid, update_interval FROM
 			ttrss_feeds WHERE id = '$feed_id'");
 
@@ -334,7 +322,7 @@
 		} else {
 			return -1;
 		}
-	}
+	}*/
 
 	// TODO: multiple-argument way is deprecated, first parameter is a hash now
 	function fetch_file_contents($options /* previously: 0: $url , 1: $type = false, 2: $login = false, 3: $pass = false,
@@ -577,57 +565,6 @@
 
 		return $favicon_url;
 	} // function get_favicon_url
-
-	function check_feed_favicon($site_url, $feed) {
-#		print "FAVICON [$site_url]: $favicon_url\n";
-
-		$icon_file = ICONS_DIR . "/$feed.ico";
-
-		if (!file_exists($icon_file)) {
-			$favicon_url = get_favicon_url($site_url);
-
-			if ($favicon_url) {
-				// Limiting to "image" type misses those served with text/plain
-				$contents = fetch_file_contents($favicon_url); // , "image");
-
-				if ($contents) {
-					// Crude image type matching.
-					// Patterns gleaned from the file(1) source code.
-					if (preg_match('/^\x00\x00\x01\x00/', $contents)) {
-						// 0       string  \000\000\001\000        MS Windows icon resource
-						//error_log("check_feed_favicon: favicon_url=$favicon_url isa MS Windows icon resource");
-					}
-					elseif (preg_match('/^GIF8/', $contents)) {
-						// 0       string          GIF8            GIF image data
-						//error_log("check_feed_favicon: favicon_url=$favicon_url isa GIF image");
-					}
-					elseif (preg_match('/^\x89PNG\x0d\x0a\x1a\x0a/', $contents)) {
-						// 0       string          \x89PNG\x0d\x0a\x1a\x0a         PNG image data
-						//error_log("check_feed_favicon: favicon_url=$favicon_url isa PNG image");
-					}
-					elseif (preg_match('/^\xff\xd8/', $contents)) {
-						// 0       beshort         0xffd8          JPEG image data
-						//error_log("check_feed_favicon: favicon_url=$favicon_url isa JPG image");
-					}
-					else {
-						//error_log("check_feed_favicon: favicon_url=$favicon_url isa UNKNOWN type");
-						$contents = "";
-					}
-				}
-
-				if ($contents) {
-					$fp = @fopen($icon_file, "w");
-
-					if ($fp) {
-						fwrite($fp, $contents);
-						fclose($fp);
-						chmod($icon_file, 0644);
-					}
-				}
-			}
-            return $icon_file;
-		}
-	}
 
 	function initialize_user_prefs($uid, $profile = false) {
 
@@ -1105,26 +1042,6 @@
 		return $data;
 	}
 
-	function getCategoryTitle($cat_id) {
-
-		if ($cat_id == -1) {
-			return __("Special");
-		} else if ($cat_id == -2) {
-			return __("Labels");
-		} else {
-
-			$result = db_query("SELECT title FROM ttrss_feed_categories WHERE
-				id = '$cat_id'");
-
-			if (db_num_rows($result) == 1) {
-				return db_fetch_result($result, 0, "title");
-			} else {
-				return __("Uncategorized");
-			}
-		}
-	}
-
-
 	function getCategoryCounters() {
 		$ret_arr = array();
 
@@ -1147,7 +1064,7 @@
 			$line["cat_id"] = (int) $line["cat_id"];
 
 			if ($line["num_children"] > 0) {
-				$child_counter = getCategoryChildrenUnread($line["cat_id"], $_SESSION["uid"]);
+				$child_counter = Feeds::getCategoryChildrenUnread($line["cat_id"], $_SESSION["uid"]);
 			} else {
 				$child_counter = 0;
 			}
@@ -1172,38 +1089,11 @@
 		return Feeds::getFeedArticles($feed, $is_cat, true, $_SESSION["uid"]);
 	}
 
-	function getLabelUnread($label_id, $owner_uid = false) {
-		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
-
-		$result = db_query("SELECT COUNT(ref_id) AS unread FROM ttrss_user_entries, ttrss_user_labels2
-			WHERE owner_uid = '$owner_uid' AND unread = true AND label_id = '$label_id' AND article_id = ref_id");
-
-		if (db_num_rows($result) != 0) {
-			return db_fetch_result($result, 0, "unread");
-		} else {
-			return 0;
-		}
-	}
-
-	function getGlobalUnread($user_id = false) {
-
-		if (!$user_id) {
-			$user_id = $_SESSION["uid"];
-		}
-
-		$result = db_query("SELECT SUM(value) AS c_id FROM ttrss_counters_cache
-			WHERE owner_uid = '$user_id' AND feed_id > 0");
-
-		$c_id = db_fetch_result($result, 0, "c_id");
-
-		return $c_id;
-	}
-
 	function getGlobalCounters($global_unread = -1) {
 		$ret_arr = array();
 
 		if ($global_unread == -1) {
-			$global_unread = getGlobalUnread();
+			$global_unread = Feeds::getGlobalUnread();
 		}
 
 		$cv = array("id" => "global-unread",

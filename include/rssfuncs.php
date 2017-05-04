@@ -4,6 +4,8 @@
 	define_default('DAEMON_SLEEP_INTERVAL', 120);
 	define_default('_MIN_CACHE_FILE_SIZE', 1024);
 
+	// TODO: this needs to be removed from global namespace into classes/RSS.php or something
+
 	function calculate_article_hash($article, $pluginhost) {
 		$tmp = "";
 
@@ -1513,7 +1515,7 @@
 		$count = update_feedbrowser_cache();
 		_debug("Feedbrowser updated, $count feeds processed.");
 
-		purge_orphans( true);
+		Article::purge_orphans( true);
 		cleanup_counters_cache($debug);
 
 		//$rc = cleanup_tags( 14, 50000);
@@ -1522,3 +1524,53 @@
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_HOUSE_KEEPING, "hook_house_keeping", "");
 	}
 
+	function check_feed_favicon($site_url, $feed) {
+	#		print "FAVICON [$site_url]: $favicon_url\n";
+
+		$icon_file = ICONS_DIR . "/$feed.ico";
+
+		if (!file_exists($icon_file)) {
+			$favicon_url = get_favicon_url($site_url);
+
+			if ($favicon_url) {
+				// Limiting to "image" type misses those served with text/plain
+				$contents = fetch_file_contents($favicon_url); // , "image");
+
+				if ($contents) {
+					// Crude image type matching.
+					// Patterns gleaned from the file(1) source code.
+					if (preg_match('/^\x00\x00\x01\x00/', $contents)) {
+						// 0       string  \000\000\001\000        MS Windows icon resource
+						//error_log("check_feed_favicon: favicon_url=$favicon_url isa MS Windows icon resource");
+					}
+					elseif (preg_match('/^GIF8/', $contents)) {
+						// 0       string          GIF8            GIF image data
+						//error_log("check_feed_favicon: favicon_url=$favicon_url isa GIF image");
+					}
+					elseif (preg_match('/^\x89PNG\x0d\x0a\x1a\x0a/', $contents)) {
+						// 0       string          \x89PNG\x0d\x0a\x1a\x0a         PNG image data
+						//error_log("check_feed_favicon: favicon_url=$favicon_url isa PNG image");
+					}
+					elseif (preg_match('/^\xff\xd8/', $contents)) {
+						// 0       beshort         0xffd8          JPEG image data
+						//error_log("check_feed_favicon: favicon_url=$favicon_url isa JPG image");
+					}
+					else {
+						//error_log("check_feed_favicon: favicon_url=$favicon_url isa UNKNOWN type");
+						$contents = "";
+					}
+				}
+
+				if ($contents) {
+					$fp = @fopen($icon_file, "w");
+
+					if ($fp) {
+						fwrite($fp, $contents);
+						fclose($fp);
+						chmod($icon_file, 0644);
+					}
+				}
+			}
+			return $icon_file;
+		}
+	}
