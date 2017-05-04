@@ -291,7 +291,7 @@ class Handler_Public extends Handler {
 
 			if ($fresh) {
 				print ";";
-				print getFeedArticles(-3, false, true, $uid);
+				print Feeds::getFeedArticles(-3, false, true, $uid);
 			}
 
 		} else {
@@ -671,7 +671,7 @@ class Handler_Public extends Handler {
 			  		alt=\"Tiny Tiny RSS\"/>
 					<h1>".__("Subscribe to feed...")."</h1><div class='content'>";
 
-			$rc = subscribe_to_feed($feed_url);
+			$rc = Feeds::subscribe_to_feed($feed_url);
 
 			switch ($rc['code']) {
 			case 0:

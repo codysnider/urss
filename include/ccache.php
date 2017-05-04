@@ -145,7 +145,7 @@
 			$unread = (int) db_fetch_result($result, 0, "sv");
 
 		} else {
-			$unread = (int) getFeedArticles($feed_id, $is_cat, true, $owner_uid);
+			$unread = (int) Feeds::getFeedArticles($feed_id, $is_cat, true, $owner_uid);
 		}
 
 		db_query("BEGIN");

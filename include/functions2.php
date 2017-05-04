@@ -681,7 +681,7 @@
 						$last_error = db_fetch_result($result, 0, "last_error");
 						$last_updated = db_fetch_result($result, 0, "last_updated");
 					} else {
-						$feed_title = getFeedTitle($feed);
+						$feed_title = Feeds::getFeedTitle($feed);
 					}
 				}
 			}

@@ -83,7 +83,7 @@ class Af_Readability extends Plugin {
 					"<img src='images/pub_set.png'
 						style='vertical-align : middle'> <a href='#'
 						onclick='editFeed($f)'>".
-					getFeedTitle($f) . "</a></li>";
+					Feeds::getFeedTitle($f) . "</a></li>";
 			}
 			print "</ul>";
 		}

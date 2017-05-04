@@ -226,7 +226,7 @@ class Pref_Filters extends Handler_Protected {
 			$where = sql_bool_to_bool($line["cat_filter"]) ?
 				getCategoryTitle($line["cat_id"]) :
 				($line["feed_id"] ?
-					getFeedTitle($line["feed_id"]) : __("All feeds"));
+					Feeds::getFeedTitle($line["feed_id"]) : __("All feeds"));
 
 #			$where = $line["cat_id"] . "/" . $line["feed_id"];
 
@@ -502,7 +502,7 @@ class Pref_Filters extends Handler_Protected {
 			$feed_id = (int) $feed_id;
 
 			if ($rule["feed_id"])
-				$feed = getFeedTitle((int)$rule["feed_id"]);
+				$feed = Feeds::getFeedTitle((int)$rule["feed_id"]);
 			else
 				$feed = __("All feeds");
 		}

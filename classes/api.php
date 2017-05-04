@@ -152,7 +152,7 @@ class API extends Handler {
 				$unread = getFeedUnread($line["id"], true);
 
 				if ($enable_nested)
-					$unread += getCategoryChildrenUnread($line["id"]);
+					$unread += Feeds::getCategoryChildrenUnread($line["id"]);
 
 				if ($unread || !$unread_only) {
 					array_push($cats, array("id" => $line["id"],
@@ -427,7 +427,7 @@ class API extends Handler {
 		$feed_id = $this->dbh->escape_string($_REQUEST["feed_id"]);
 		$is_cat = $this->dbh->escape_string($_REQUEST["is_cat"]);
 
-		catchup_feed($feed_id, $is_cat);
+		Feeds::catchup_feed($feed_id, $is_cat);
 
 		$this->wrap(self::STATUS_OK, array("status" => "OK"));
 	}
@@ -564,7 +564,7 @@ class API extends Handler {
 					$unread = getFeedUnread($i);
 
 					if ($unread || !$unread_only) {
-						$title = getFeedTitle($i);
+						$title = Feeds::getFeedTitle($i);
 
 						$row = array(
 								"id" => $i,
@@ -588,7 +588,7 @@ class API extends Handler {
 
 				while ($line = db_fetch_assoc($result)) {
 					$unread = getFeedUnread($line["id"], true) +
-						getCategoryChildrenUnread($line["id"]);
+						Feeds::getCategoryChildrenUnread($line["id"]);
 
 					if ($unread || !$unread_only) {
 						$row = array(
@@ -840,7 +840,7 @@ class API extends Handler {
 		$password = $this->dbh->escape_string($_REQUEST["password"]);
 
 		if ($feed_url) {
-			$rc = subscribe_to_feed($feed_url, $category_id, $login, $password);
+			$rc = Feeds::subscribe_to_feed($feed_url, $category_id, $login, $password);
 
 			$this->wrap(self::STATUS_OK, array("status" => $rc));
 		} else {

@@ -105,7 +105,7 @@ class RPC extends Handler_Protected {
 		$login = $this->dbh->escape_string($_REQUEST['login']);
 		$pass = trim($_REQUEST['pass']); // escaped later
 
-		$rc = subscribe_to_feed($feed, $cat, $login, $pass);
+		$rc = Feeds::subscribe_to_feed($feed, $cat, $login, $pass);
 
 		print json_encode(array("result" => $rc));
 	}
@@ -453,7 +453,7 @@ class RPC extends Handler_Protected {
 		$search_query = $this->dbh->escape_string($_REQUEST['search_query']);
 		$search_lang = $this->dbh->escape_string($_REQUEST['search_lang']);
 
-		catchup_feed($feed_id, $is_cat, false, $mode, [$search_query, $search_lang]);
+		Feeds::catchup_feed($feed_id, $is_cat, false, $mode, [$search_query, $search_lang]);
 
 		print json_encode(array("message" => "UPDATE_COUNTERS"));
 	}

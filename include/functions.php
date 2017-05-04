@@ -1094,150 +1094,6 @@
 		}
 	}
 
-	function catchup_feed($feed, $cat_view, $owner_uid = false, $mode = 'all', $search = false) {
-
-		if (!$owner_uid) $owner_uid = $_SESSION['uid'];
-
-		// Todo: all this interval stuff needs some generic generator function
-
-		$date_qpart = "false";
-		$search_qpart = is_array($search) && $search[0] ? search_to_sql($search[0], $search[1])[0] : 'true';
-
-		switch ($mode) {
-		case "1day":
-			if (DB_TYPE == "pgsql") {
-				$date_qpart = "date_entered < NOW() - INTERVAL '1 day' ";
-			} else {
-				$date_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 1 DAY) ";
-			}
-			break;
-		case "1week":
-			if (DB_TYPE == "pgsql") {
-				$date_qpart = "date_entered < NOW() - INTERVAL '1 week' ";
-			} else {
-				$date_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 1 WEEK) ";
-			}
-			break;
-		case "2week":
-			if (DB_TYPE == "pgsql") {
-				$date_qpart = "date_entered < NOW() - INTERVAL '2 week' ";
-			} else {
-				$date_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 2 WEEK) ";
-			}
-			break;
-		default:
-			$date_qpart = "true";
-		}
-
-		if (is_numeric($feed)) {
-			if ($cat_view) {
-
-				if ($feed >= 0) {
-
-					if ($feed > 0) {
-						$children = getChildCategories($feed, $owner_uid);
-						array_push($children, $feed);
-
-						$children = join(",", $children);
-
-						$cat_qpart = "cat_id IN ($children)";
-					} else {
-						$cat_qpart = "cat_id IS NULL";
-					}
-
-					db_query("UPDATE ttrss_user_entries
-						SET unread = false, last_read = NOW() WHERE ref_id IN
-							(SELECT id FROM
-								(SELECT DISTINCT id FROM ttrss_entries, ttrss_user_entries WHERE ref_id = id
-									AND owner_uid = $owner_uid AND unread = true AND feed_id IN
-										(SELECT id FROM ttrss_feeds WHERE $cat_qpart) AND $date_qpart AND $search_qpart) as tmp)");
-
-				} else if ($feed == -2) {
-
-					db_query("UPDATE ttrss_user_entries
-						SET unread = false,last_read = NOW() WHERE (SELECT COUNT(*)
-							FROM ttrss_user_labels2, ttrss_entries WHERE article_id = ref_id AND id = ref_id AND $date_qpart AND $search_qpart) > 0
-							AND unread = true AND owner_uid = $owner_uid");
-				}
-
-			} else if ($feed > 0) {
-
-				db_query("UPDATE ttrss_user_entries
-					SET unread = false, last_read = NOW() WHERE ref_id IN
-						(SELECT id FROM
-							(SELECT DISTINCT id FROM ttrss_entries, ttrss_user_entries WHERE ref_id = id
-								AND owner_uid = $owner_uid AND unread = true AND feed_id = $feed AND $date_qpart AND $search_qpart) as tmp)");
-
-			} else if ($feed < 0 && $feed > LABEL_BASE_INDEX) { // special, like starred
-
-				if ($feed == -1) {
-					db_query("UPDATE ttrss_user_entries
-						SET unread = false, last_read = NOW() WHERE ref_id IN
-							(SELECT id FROM
-								(SELECT DISTINCT id FROM ttrss_entries, ttrss_user_entries WHERE ref_id = id
-									AND owner_uid = $owner_uid AND unread = true AND marked = true AND $date_qpart AND $search_qpart) as tmp)");
-				}
-
-				if ($feed == -2) {
-					db_query("UPDATE ttrss_user_entries
-						SET unread = false, last_read = NOW() WHERE ref_id IN
-							(SELECT id FROM
-								(SELECT DISTINCT id FROM ttrss_entries, ttrss_user_entries WHERE ref_id = id
-									AND owner_uid = $owner_uid AND unread = true AND published = true AND $date_qpart AND $search_qpart) as tmp)");
-				}
-
-				if ($feed == -3) {
-
-					$intl = get_pref("FRESH_ARTICLE_MAX_AGE");
-
-					if (DB_TYPE == "pgsql") {
-						$match_part = "date_entered > NOW() - INTERVAL '$intl hour' ";
-					} else {
-						$match_part = "date_entered > DATE_SUB(NOW(),
-							INTERVAL $intl HOUR) ";
-					}
-
-					db_query("UPDATE ttrss_user_entries
-						SET unread = false, last_read = NOW() WHERE ref_id IN
-							(SELECT id FROM
-								(SELECT DISTINCT id FROM ttrss_entries, ttrss_user_entries WHERE ref_id = id
-									AND owner_uid = $owner_uid AND score >= 0 AND unread = true AND $date_qpart AND $match_part AND $search_qpart) as tmp)");
-				}
-
-				if ($feed == -4) {
-					db_query("UPDATE ttrss_user_entries
-						SET unread = false, last_read = NOW() WHERE ref_id IN
-							(SELECT id FROM
-								(SELECT DISTINCT id FROM ttrss_entries, ttrss_user_entries WHERE ref_id = id
-									AND owner_uid = $owner_uid AND unread = true AND $date_qpart AND $search_qpart) as tmp)");
-				}
-
-			} else if ($feed < LABEL_BASE_INDEX) { // label
-
-				$label_id = feed_to_label_id($feed);
-
-				db_query("UPDATE ttrss_user_entries
-					SET unread = false, last_read = NOW() WHERE ref_id IN
-						(SELECT id FROM
-							(SELECT DISTINCT ttrss_entries.id FROM ttrss_entries, ttrss_user_entries, ttrss_user_labels2 WHERE ref_id = id
-								AND label_id = '$label_id' AND ref_id = article_id
-								AND owner_uid = $owner_uid AND unread = true AND $date_qpart AND $search_qpart) as tmp)");
-
-			}
-
-			ccache_update($feed, $owner_uid, $cat_view);
-
-		} else { // tag
-			db_query("UPDATE ttrss_user_entries
-				SET unread = false, last_read = NOW() WHERE ref_id IN
-					(SELECT id FROM
-						(SELECT DISTINCT ttrss_entries.id FROM ttrss_entries, ttrss_user_entries, ttrss_tags WHERE ref_id = ttrss_entries.id
-							AND post_int_id = int_id AND tag_name = '$feed'
-							AND ttrss_user_entries.owner_uid = $owner_uid AND unread = true AND $date_qpart AND $search_qpart) as tmp)");
-
-		}
-	}
-
 	function getAllCounters() {
 		$data = getGlobalCounters();
 
@@ -1275,7 +1131,7 @@
 		/* Labels category */
 
 		$cv = array("id" => -2, "kind" => "cat",
-			"counter" => getCategoryUnread(-2));
+			"counter" => Feeds::getCategoryUnread(-2));
 
 		array_push($ret_arr, $cv);
 
@@ -1312,79 +1168,8 @@
 		return $ret_arr;
 	}
 
-	// only accepts real cats (>= 0)
-	function getCategoryChildrenUnread($cat, $owner_uid = false) {
-		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
-
-		$result = db_query("SELECT id FROM ttrss_feed_categories WHERE parent_cat = '$cat'
-				AND owner_uid = $owner_uid");
-
-		$unread = 0;
-
-		while ($line = db_fetch_assoc($result)) {
-			$unread += getCategoryUnread($line["id"], $owner_uid);
-			$unread += getCategoryChildrenUnread($line["id"], $owner_uid);
-		}
-
-		return $unread;
-	}
-
-	function getCategoryUnread($cat, $owner_uid = false) {
-
-		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
-
-		if ($cat >= 0) {
-
-			if ($cat != 0) {
-				$cat_query = "cat_id = '$cat'";
-			} else {
-				$cat_query = "cat_id IS NULL";
-			}
-
-			$result = db_query("SELECT id FROM ttrss_feeds WHERE $cat_query
-					AND owner_uid = " . $owner_uid);
-
-			$cat_feeds = array();
-			while ($line = db_fetch_assoc($result)) {
-				array_push($cat_feeds, "feed_id = " . $line["id"]);
-			}
-
-			if (count($cat_feeds) == 0) return 0;
-
-			$match_part = implode(" OR ", $cat_feeds);
-
-			$result = db_query("SELECT COUNT(int_id) AS unread
-				FROM ttrss_user_entries
-				WHERE	unread = true AND ($match_part)
-				AND owner_uid = " . $owner_uid);
-
-			$unread = 0;
-
-			# this needs to be rewritten
-			while ($line = db_fetch_assoc($result)) {
-				$unread += $line["unread"];
-			}
-
-			return $unread;
-		} else if ($cat == -1) {
-			return getFeedUnread(-1) + getFeedUnread(-2) + getFeedUnread(-3) + getFeedUnread(0);
-		} else if ($cat == -2) {
-
-			$result = db_query("
-				SELECT COUNT(unread) AS unread FROM
-					ttrss_user_entries, ttrss_user_labels2
-				WHERE article_id = ref_id AND unread = true
-					AND ttrss_user_entries.owner_uid = '$owner_uid'");
-
-			$unread = db_fetch_result($result, 0, "unread");
-
-			return $unread;
-
-		}
-	}
-
 	function getFeedUnread($feed, $is_cat = false) {
-		return getFeedArticles($feed, $is_cat, true, $_SESSION["uid"]);
+		return Feeds::getFeedArticles($feed, $is_cat, true, $_SESSION["uid"]);
 	}
 
 	function getLabelUnread($label_id, $owner_uid = false) {
@@ -1398,100 +1183,6 @@
 		} else {
 			return 0;
 		}
-	}
-
-	function getFeedArticles($feed, $is_cat = false, $unread_only = false,
-		$owner_uid = false) {
-
-		$n_feed = (int) $feed;
-		$need_entries = false;
-
-		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
-
-		if ($unread_only) {
-			$unread_qpart = "unread = true";
-		} else {
-			$unread_qpart = "true";
-		}
-
-		if ($is_cat) {
-			return getCategoryUnread($n_feed, $owner_uid);
-		} else if ($n_feed == -6) {
-			return 0;
-		} else if ($feed != "0" && $n_feed == 0) {
-
-			$feed = db_escape_string($feed);
-
-			$result = db_query("SELECT SUM((SELECT COUNT(int_id)
-				FROM ttrss_user_entries,ttrss_entries WHERE int_id = post_int_id
-					AND ref_id = id AND $unread_qpart)) AS count FROM ttrss_tags
-				WHERE owner_uid = $owner_uid AND tag_name = '$feed'");
-			return db_fetch_result($result, 0, "count");
-
-		} else if ($n_feed == -1) {
-			$match_part = "marked = true";
-		} else if ($n_feed == -2) {
-			$match_part = "published = true";
-		} else if ($n_feed == -3) {
-			$match_part = "unread = true AND score >= 0";
-
-			$intl = get_pref("FRESH_ARTICLE_MAX_AGE", $owner_uid);
-
-			if (DB_TYPE == "pgsql") {
-				$match_part .= " AND date_entered > NOW() - INTERVAL '$intl hour' ";
-			} else {
-				$match_part .= " AND date_entered > DATE_SUB(NOW(), INTERVAL $intl HOUR) ";
-			}
-
-			$need_entries = true;
-
-		} else if ($n_feed == -4) {
-			$match_part = "true";
-		} else if ($n_feed >= 0) {
-
-			if ($n_feed != 0) {
-				$match_part = "feed_id = '$n_feed'";
-			} else {
-				$match_part = "feed_id IS NULL";
-			}
-
-		} else if ($feed < LABEL_BASE_INDEX) {
-
-			$label_id = feed_to_label_id($feed);
-
-			return getLabelUnread($label_id, $owner_uid);
-
-		}
-
-		if ($match_part) {
-
-			if ($need_entries) {
-				$from_qpart = "ttrss_user_entries,ttrss_entries";
-				$from_where = "ttrss_entries.id = ttrss_user_entries.ref_id AND";
-			} else {
-				$from_qpart = "ttrss_user_entries";
-				$from_where = "";
-			}
-
-			$query = "SELECT count(int_id) AS unread
-				FROM $from_qpart WHERE
-				$unread_qpart AND $from_where ($match_part) AND ttrss_user_entries.owner_uid = $owner_uid";
-
-			//echo "[$feed/$query]\n";
-
-			$result = db_query($query);
-
-		} else {
-
-			$result = db_query("SELECT COUNT(post_int_id) AS unread
-				FROM ttrss_tags,ttrss_user_entries,ttrss_entries
-				WHERE tag_name = '$feed' AND post_int_id = int_id AND ref_id = ttrss_entries.id
-				AND $unread_qpart AND ttrss_tags.owner_uid = " . $owner_uid);
-		}
-
-		$unread = db_fetch_result($result, 0, "unread");
-
-		return $unread;
 	}
 
 	function getGlobalUnread($user_id = false) {
@@ -1542,7 +1233,7 @@
 			$count = getFeedUnread($i);
 
 			if ($i == 0 || $i == -1 || $i == -2)
-				$auxctr = getFeedArticles($i, false);
+				$auxctr = Feeds::getFeedArticles($i, false);
 			else
 				$auxctr = 0;
 
@@ -1653,104 +1344,17 @@
 		return $ret_arr;
 	}
 
-	function get_pgsql_version() {
+	/*function get_pgsql_version() {
 		$result = db_query("SELECT version() AS version");
 		$version = explode(" ", db_fetch_result($result, 0, "version"));
 		return $version[1];
-	}
-
-	/**
-	 * @return array (code => Status code, message => error message if available)
-	 *
-	 *                 0 - OK, Feed already exists
-	 *                 1 - OK, Feed added
-	 *                 2 - Invalid URL
-	 *                 3 - URL content is HTML, no feeds available
-	 *                 4 - URL content is HTML which contains multiple feeds.
-	 *                     Here you should call extractfeedurls in rpc-backend
-	 *                     to get all possible feeds.
-	 *                 5 - Couldn't download the URL content.
-	 *                 6 - Content is an invalid XML.
-	 */
-	function subscribe_to_feed($url, $cat_id = 0,
-			$auth_login = '', $auth_pass = '') {
-
-		global $fetch_last_error;
-		global $fetch_last_error_content;
-
-		require_once "include/rssfuncs.php";
-
-		$url = fix_url($url);
-
-		if (!$url || !validate_feed_url($url)) return array("code" => 2);
-
-		$contents = @fetch_file_contents($url, false, $auth_login, $auth_pass);
-
-		if (!$contents) {
-			if (preg_match("/cloudflare\.com/", $fetch_last_error_content)) {
-				$fetch_last_error .= " (feed behind Cloudflare)";
-			}
-
-			return array("code" => 5, "message" => $fetch_last_error);
-		}
-
-		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_SUBSCRIBE_FEED) as $plugin) {
-			$contents = $plugin->hook_subscribe_feed($contents, $url, $auth_login, $auth_pass);
-		}
-
-		if (is_html($contents)) {
-			$feedUrls = get_feeds_from_html($url, $contents);
-
-			if (count($feedUrls) == 0) {
-				return array("code" => 3);
-			} else if (count($feedUrls) > 1) {
-				return array("code" => 4, "feeds" => $feedUrls);
-			}
-			//use feed url as new URL
-			$url = key($feedUrls);
-		}
-
-		if ($cat_id == "0" || !$cat_id) {
-			$cat_qpart = "NULL";
-		} else {
-			$cat_qpart = "'$cat_id'";
-		}
-
-		$result = db_query(
-			"SELECT id FROM ttrss_feeds
-			WHERE feed_url = '$url' AND owner_uid = ".$_SESSION["uid"]);
-
-		$auth_pass_encrypted = 'false';
-		$auth_pass = db_escape_string($auth_pass);
-
-		if (db_num_rows($result) == 0) {
-			$result = db_query(
-				"INSERT INTO ttrss_feeds
-					(owner_uid,feed_url,title,cat_id, auth_login,auth_pass,update_method,auth_pass_encrypted)
-				VALUES ('".$_SESSION["uid"]."', '$url',
-				'[Unknown]', $cat_qpart, '$auth_login', '$auth_pass', 0, $auth_pass_encrypted)");
-
-			$result = db_query(
-				"SELECT id FROM ttrss_feeds WHERE feed_url = '$url'
-					AND owner_uid = " . $_SESSION["uid"]);
-
-			$feed_id = db_fetch_result($result, 0, "id");
-
-			if ($feed_id) {
-				set_basic_feed_info($feed_id);
-			}
-
-			return array("code" => 1, "feed_id" => (int) $feed_id);
-		} else {
-			return array("code" => 0, "feed_id" => (int) db_fetch_result($result, 0, "id"));
-		}
-	}
+	}*/
 
 	function checkbox_to_sql_bool($val) {
 		return ($val == "on") ? "true" : "false";
 	}
 
-	function getFeedCatTitle($id) {
+	/*function getFeedCatTitle($id) {
 		if ($id == -1) {
 			return __("Special");
 		} else if ($id < LABEL_BASE_INDEX) {
@@ -1768,76 +1372,7 @@
 			return "getFeedCatTitle($id) failed";
 		}
 
-	}
-
-	function getFeedIcon($id) {
-		switch ($id) {
-		case 0:
-			return "images/archive.png";
-			break;
-		case -1:
-			return "images/star.png";
-			break;
-		case -2:
-			return "images/feed.png";
-			break;
-		case -3:
-			return "images/fresh.png";
-			break;
-		case -4:
-			return "images/folder.png";
-			break;
-		case -6:
-			return "images/time.png";
-			break;
-		default:
-			if ($id < LABEL_BASE_INDEX) {
-				return "images/label.png";
-			} else {
-				if (file_exists(ICONS_DIR . "/$id.ico"))
-					return ICONS_URL . "/$id.ico";
-			}
-			break;
-		}
-
-		return false;
-	}
-
-	function getFeedTitle($id, $cat = false) {
-		if ($cat) {
-			return getCategoryTitle($id);
-		} else if ($id == -1) {
-			return __("Starred articles");
-		} else if ($id == -2) {
-			return __("Published articles");
-		} else if ($id == -3) {
-			return __("Fresh articles");
-		} else if ($id == -4) {
-			return __("All articles");
-		} else if ($id === 0 || $id === "0") {
-			return __("Archived articles");
-		} else if ($id == -6) {
-			return __("Recently read");
-		} else if ($id < LABEL_BASE_INDEX) {
-			$label_id = feed_to_label_id($id);
-			$result = db_query("SELECT caption FROM ttrss_labels2 WHERE id = '$label_id'");
-			if (db_num_rows($result) == 1) {
-				return db_fetch_result($result, 0, "caption");
-			} else {
-				return "Unknown label ($label_id)";
-			}
-
-		} else if (is_numeric($id) && $id > 0) {
-			$result = db_query("SELECT title FROM ttrss_feeds WHERE id = '$id'");
-			if (db_num_rows($result) == 1) {
-				return db_fetch_result($result, 0, "title");
-			} else {
-				return "Unknown feed ($id)";
-			}
-		} else {
-			return $id;
-		}
-	}
+	}*/
 
 	function uniqid_short() {
 		return uniqid(base_convert(rand(), 10, 36));

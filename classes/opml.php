@@ -182,7 +182,7 @@ class Opml extends Handler_Protected {
 					$cat_filter = sql_bool_to_bool($tmp_line["cat_filter"]);
 
 					if ($cat_filter && $tmp_line["cat_id"] || $tmp_line["feed_id"]) {
-						$tmp_line["feed"] = getFeedTitle(
+						$tmp_line["feed"] = Feeds::getFeedTitle(
 							$cat_filter ? $tmp_line["cat_id"] : $tmp_line["feed_id"],
 							$cat_filter);
 					} else {

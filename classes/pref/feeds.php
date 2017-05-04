@@ -84,7 +84,7 @@ class Pref_Feeds extends Handler_Protected {
 			$feed['checkbox'] = false;
 			$feed['unread'] = 0;
 			$feed['error'] = $feed_line['last_error'];
-			$feed['icon'] = getFeedIcon($feed_line['id']);
+			$feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
 			$feed['param'] = make_local_datetime(
 				$feed_line['last_updated'], true);
 
@@ -246,7 +246,7 @@ class Pref_Feeds extends Handler_Protected {
 				$feed['name'] = $feed_line['title'];
 				$feed['checkbox'] = false;
 				$feed['error'] = $feed_line['last_error'];
-				$feed['icon'] = getFeedIcon($feed_line['id']);
+				$feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
 				$feed['param'] = make_local_datetime(
 					$feed_line['last_updated'], true);
 				$feed['unread'] = 0;
@@ -278,7 +278,7 @@ class Pref_Feeds extends Handler_Protected {
 				$feed['name'] = $feed_line['title'];
 				$feed['checkbox'] = false;
 				$feed['error'] = $feed_line['last_error'];
-				$feed['icon'] = getFeedIcon($feed_line['id']);
+				$feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
 				$feed['param'] = make_local_datetime(
 					$feed_line['last_updated'], true);
 				$feed['unread'] = 0;
@@ -1537,7 +1537,7 @@ class Pref_Feeds extends Handler_Protected {
 		if ($cat_id > 0) {
 			$cat_unread = ccache_find($cat_id, $_SESSION["uid"], true);
 		} else if ($cat_id == 0 || $cat_id == -2) {
-			$cat_unread = getCategoryUnread($cat_id);
+			$cat_unread = Feeds::getCategoryUnread($cat_id);
 		}
 
 		$obj['id'] = 'CAT:' . $cat_id;
@@ -1555,7 +1555,7 @@ class Pref_Feeds extends Handler_Protected {
 		$feed_id = (int) $feed_id;
 
 		if (!$title)
-			$title = getFeedTitle($feed_id, false);
+			$title = Feeds::getFeedTitle($feed_id, false);
 
 		if ($unread === false)
 			$unread = getFeedUnread($feed_id, false);
@@ -1566,7 +1566,7 @@ class Pref_Feeds extends Handler_Protected {
 		$obj['type'] = 'feed';
 		$obj['error'] = $error;
 		$obj['updated'] = $updated;
-		$obj['icon'] = getFeedIcon($feed_id);
+		$obj['icon'] = Feeds::getFeedIcon($feed_id);
 		$obj['bare_id'] = $feed_id;
 		$obj['auxcounter'] = 0;
 
