@@ -217,10 +217,8 @@
 			housekeeping_user($owner_uid);
 		}
 
-		require_once "digest.php";
-
 		// Send feed digests by email if needed.
-		send_headlines_digests($debug);
+		Digest::send_headlines_digests($debug);
 
 		return $nf;
 

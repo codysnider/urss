@@ -1,4 +1,7 @@
 <?php
+class Digest
+{
+
 	/**
 	 * Send by mail a digest of last articles.
 	 *
@@ -6,7 +9,7 @@
 	 * @param integer $limit The maximum number of articles by digest.
 	 * @return boolean Return false if digests are not enabled.
 	 */
-	function send_headlines_digests($debug = false) {
+	static function send_headlines_digests($debug = false) {
 
 		require_once 'classes/ttrssmailer.php';
 
@@ -31,7 +34,8 @@
 
 				// try to send digests within 2 hours of preferred time
 				if ($preferred_ts && time() >= $preferred_ts &&
-						time() - $preferred_ts <= 7200) {
+					time() - $preferred_ts <= 7200
+				) {
 
 					if ($debug) _debug("Sending digest for UID:" . $line['id'] . " - " . $line["email"]);
 
@@ -42,7 +46,7 @@
 					// reset tz_offset global to prevent tz cache clash between users
 					$tz_offset = -1;
 
-					$tuple = prepare_headlines_digest($line["id"], 1, $limit);
+					$tuple = Digest::prepare_headlines_digest($line["id"], 1, $limit);
 					$digest = $tuple[0];
 					$headlines_count = $tuple[1];
 					$affected_ids = $tuple[2];
@@ -52,7 +56,7 @@
 
 						$mail = new ttrssMailer();
 
-						$rc = $mail->quickMail($line["email"], $line["login"] , DIGEST_SUBJECT, $digest, $digest_text);
+						$rc = $mail->quickMail($line["email"], $line["login"], DIGEST_SUBJECT, $digest, $digest_text);
 
 						if (!$rc && $debug) _debug("ERROR: " . $mail->ErrorInfo);
 
@@ -77,7 +81,7 @@
 
 	}
 
-	function prepare_headlines_digest($user_id, $days = 1, $limit = 1000) {
+	static function prepare_headlines_digest($user_id, $days = 1, $limit = 1000) {
 
 		require_once "lib/MiniTemplator.class.php";
 
@@ -106,13 +110,13 @@
 
 		$result = db_query("SELECT ttrss_entries.title,
 				ttrss_feeds.title AS feed_title,
-				COALESCE(ttrss_feed_categories.title, '".__('Uncategorized')."') AS cat_title,
+				COALESCE(ttrss_feed_categories.title, '" . __('Uncategorized') . "') AS cat_title,
 				date_updated,
 				ttrss_user_entries.ref_id,
 				link,
 				score,
 				content,
-				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated
+				" . SUBSTRING_FOR_DATE . "(last_updated,1,19) AS last_updated
 			FROM
 				ttrss_user_entries,ttrss_entries,ttrss_feeds
 			LEFT JOIN
@@ -144,11 +148,11 @@
 			$updated = make_local_datetime($line['last_updated'], false,
 				$user_id);
 
-/*			if ($line["score"] != 0) {
-				if ($line["score"] > 0) $line["score"] = '+' . $line["score"];
+			/*			if ($line["score"] != 0) {
+							if ($line["score"] > 0) $line["score"] = '+' . $line["score"];
 
-				$line["title"] .= " (".$line['score'].")";
-			} */
+							$line["title"] .= " (".$line['score'].")";
+						} */
 
 			if (get_pref('ENABLE_FEED_CATS', $user_id)) {
 				$line['feed_title'] = $line['cat_title'] . " / " . $line['feed_title'];
@@ -174,7 +178,7 @@
 
 			$tpl_t->addBlock('article');
 
-			if ($headlines[$i]['feed_title'] != $headlines[$i+1]['feed_title']) {
+			if ($headlines[$i]['feed_title'] != $headlines[$i + 1]['feed_title']) {
 				$tpl->addBlock('feed');
 				$tpl_t->addBlock('feed');
 			}
@@ -190,3 +194,4 @@
 		return array($tmp, $headlines_count, $affected_ids, $tmp_t);
 	}
 
+}
