@@ -1206,75 +1206,9 @@
 		exit;
 	}
 
-	function format_warning($msg, $id = "") {
-		return "<div class=\"alert\" id=\"$id\">$msg</div>";
-	}
-
-	function format_notice($msg, $id = "") {
-		return "<div class=\"alert alert-info\" id=\"$id\">$msg</div>";
-	}
-
-	function format_error($msg, $id = "") {
-		return "<div class=\"alert alert-danger\" id=\"$id\">$msg</div>";
-	}
-
-	function print_notice($msg) {
-		return print format_notice($msg);
-	}
-
-	function print_warning($msg) {
-		return print format_warning($msg);
-	}
-
-	function print_error($msg) {
-		return print format_error($msg);
-	}
-
-
 	function T_sprintf() {
 		$args = func_get_args();
 		return vsprintf(__(array_shift($args)), $args);
-	}
-
-	function format_inline_player($url, $ctype) {
-
-		$entry = "";
-
-		$url = htmlspecialchars($url);
-
-		if (strpos($ctype, "audio/") === 0) {
-
-			if ($_SESSION["hasAudio"] && (strpos($ctype, "ogg") !== false ||
-				$_SESSION["hasMp3"])) {
-
-				$entry .= "<audio preload=\"none\" controls>
-					<source type=\"$ctype\" src=\"$url\"/>
-					</audio>";
-
-			} else {
-
-				$entry .= "<object type=\"application/x-shockwave-flash\"
-					data=\"lib/button/musicplayer.swf?song_url=$url\"
-					width=\"17\" height=\"17\" style='float : left; margin-right : 5px;'>
-					<param name=\"movie\"
-						value=\"lib/button/musicplayer.swf?song_url=$url\" />
-					</object>";
-			}
-
-			if ($entry) $entry .= "&nbsp; <a target=\"_blank\" rel=\"noopener noreferrer\"
-				href=\"$url\">" . basename($url) . "</a>";
-
-			return $entry;
-
-		}
-
-		return "";
-
-/*		$filename = substr($url, strrpos($url, "/")+1);
-
-		$entry .= " <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"" . htmlspecialchars($url) . "\">" .
-			$filename . " (" . $ctype . ")" . "</a>"; */
-
 	}
 
 	function format_article($id, $mark_as_read = true, $zoom_mode = false, $owner_uid = false) {
@@ -2305,19 +2239,6 @@
 		return null;
 	}
 
-	function tmpdirname($path, $prefix) {
-		// Use PHP's tmpfile function to create a temporary
-		// directory name. Delete the file and keep the name.
-		$tempname = tempnam($path,$prefix);
-		if (!$tempname)
-			return false;
-
-		if (!unlink($tempname))
-			return false;
-
-       return $tempname;
-	}
-
 	function getFeedCategory($feed) {
 		$result = db_query("SELECT cat_id FROM ttrss_feeds
 			WHERE id = '$feed'");
@@ -2367,27 +2288,6 @@
 		}
 
 		return $rv;
-	}
-
-	function stylesheet_tag($filename) {
-		$timestamp = filemtime($filename);
-
-		return "<link rel=\"stylesheet\" type=\"text/css\" href=\"$filename?$timestamp\"/>\n";
-	}
-
-	function javascript_tag($filename) {
-		$query = "";
-
-		if (!(strpos($filename, "?") === FALSE)) {
-			$query = substr($filename, strpos($filename, "?")+1);
-			$filename = substr($filename, 0, strpos($filename, "?"));
-		}
-
-		$timestamp = filemtime($filename);
-
-		if ($query) $timestamp .= "&$query";
-
-		return "<script type=\"text/javascript\" charset=\"utf-8\" src=\"$filename?$timestamp\"></script>\n";
 	}
 
 	function calculate_dep_timestamp() {
