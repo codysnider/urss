@@ -687,15 +687,6 @@ class API extends Handler {
 				}
 			}
 
-			/*$qfh_ret = queryFeedHeadlines($feed_id, $limit,
-				$view_mode, $is_cat, $search, false,
-				$order, $offset, 0, false, $since_id, $include_nested);*/
-
-			//function queryFeedHeadlines($feed, $limit,
-			// $view_mode, $cat_view, $search, $search_mode,
-			// $override_order = false, $offset = 0, $owner_uid = 0, $filter = false, $since_id = 0, $include_children = false,
-			// $ignore_vfeed_group = false, $override_strategy = false, $override_vfeed = false, $start_ts = false, $check_top_id = false) {
-
 			$params = array(
 				"feed" => $feed_id,
 				"limit" => $limit,
@@ -710,7 +701,7 @@ class API extends Handler {
 				"skip_first_id_check" => $skip_first_id_check
 			);
 
-			$qfh_ret = queryFeedHeadlines($params);
+			$qfh_ret = Feeds::queryFeedHeadlines($params);
 
 			$result = $qfh_ret[0];
 			$feed_title = $qfh_ret[1];

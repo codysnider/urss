@@ -297,7 +297,7 @@ class RPC extends Handler_Protected {
 
 		if (!empty($_REQUEST['seq'])) $reply['seq'] = (int) $_REQUEST['seq'];
 
-		if ($last_article_id != getLastArticleId()) {
+		if ($last_article_id != Article::getLastArticleId()) {
 			$reply['counters'] = getAllCounters();
 		}
 
@@ -311,7 +311,7 @@ class RPC extends Handler_Protected {
 		$ids = explode(",", $this->dbh->escape_string($_REQUEST["ids"]));
 		$cmode = sprintf("%d", $_REQUEST["cmode"]);
 
-		catchupArticlesById($ids, $cmode);
+		Article::catchupArticlesById($ids, $cmode);
 
 		print json_encode(array("message" => "UPDATE_COUNTERS", "ids" => $ids));
 	}

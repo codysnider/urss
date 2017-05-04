@@ -60,7 +60,7 @@
 
 						if ($rc && $do_catchup) {
 							if ($debug) _debug("Marking affected articles as read...");
-							catchupArticlesById($affected_ids, 0, $line["id"]);
+							Article::catchupArticlesById($affected_ids, 0, $line["id"]);
 						}
 					} else {
 						if ($debug) _debug("No headlines");

@@ -876,5 +876,52 @@ class Article extends Handler_Protected {
 		}
 	}
 
+	static function catchupArticlesById($ids, $cmode, $owner_uid = false) {
+
+		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
+		if (count($ids) == 0) return;
+
+		$tmp_ids = array();
+
+		foreach ($ids as $id) {
+			array_push($tmp_ids, "ref_id = '$id'");
+		}
+
+		$ids_qpart = join(" OR ", $tmp_ids);
+
+		if ($cmode == 0) {
+			db_query("UPDATE ttrss_user_entries SET
+			unread = false,last_read = NOW()
+			WHERE ($ids_qpart) AND owner_uid = $owner_uid");
+		} else if ($cmode == 1) {
+			db_query("UPDATE ttrss_user_entries SET
+			unread = true
+			WHERE ($ids_qpart) AND owner_uid = $owner_uid");
+		} else {
+			db_query("UPDATE ttrss_user_entries SET
+			unread = NOT unread,last_read = NOW()
+			WHERE ($ids_qpart) AND owner_uid = $owner_uid");
+		}
+
+		/* update ccache */
+
+		$result = db_query("SELECT DISTINCT feed_id FROM ttrss_user_entries
+			WHERE ($ids_qpart) AND owner_uid = $owner_uid");
+
+		while ($line = db_fetch_assoc($result)) {
+			ccache_update($line["feed_id"], $owner_uid);
+		}
+	}
+
+	static function getLastArticleId() {
+		$result = db_query("SELECT ref_id AS id FROM ttrss_user_entries
+			WHERE owner_uid = " . $_SESSION["uid"] . " ORDER BY ref_id DESC LIMIT 1");
+
+		if (db_num_rows($result) == 1) {
+			return db_fetch_result($result, 0, "id");
+		} else {
+			return -1;
+		}
+	}
 
 }
