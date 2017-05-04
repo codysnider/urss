@@ -2010,7 +2010,7 @@
 	function load_filters($feed_id, $owner_uid) {
 		$filters = array();
 
-		$cat_id = (int)getFeedCategory($feed_id);
+		$cat_id = (int)Feeds::getFeedCategory($feed_id);
 
 		if ($cat_id == 0)
 			$null_cat_qpart = "cat_id IS NULL OR";
@@ -2482,18 +2482,6 @@
 		return null;
 	}
 
-	function getFeedCategory($feed) {
-		$result = db_query("SELECT cat_id FROM ttrss_feeds
-				WHERE id = '$feed'");
-
-		if (db_num_rows($result) > 0) {
-			return db_fetch_result($result, 0, "cat_id");
-		} else {
-			return false;
-		}
-
-	}
-
 	function implements_interface($class, $interface) {
 		return in_array($interface, class_implements($class));
 	}
@@ -2586,14 +2574,6 @@
 				print T_js_decl($orig, $translation);
 			}
 		}
-	}
-
-	function label_to_feed_id($label) {
-		return LABEL_BASE_INDEX - 1 - abs($label);
-	}
-
-	function feed_to_label_id($feed) {
-		return LABEL_BASE_INDEX - 1 + abs($feed);
 	}
 
 	function get_theme_path($theme) {

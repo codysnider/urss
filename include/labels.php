@@ -1,4 +1,12 @@
 <?php
+	function label_to_feed_id($label) {
+		return LABEL_BASE_INDEX - 1 - abs($label);
+	}
+
+	function feed_to_label_id($feed) {
+		return LABEL_BASE_INDEX - 1 + abs($feed);
+	}
+
 	function label_find_id($label, $owner_uid) {
 		$result = db_query(
 			"SELECT id FROM ttrss_labels2 WHERE caption = '$label'
