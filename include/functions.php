@@ -134,7 +134,6 @@
 
 	require_once 'db-prefs.php';
 	require_once 'version.php';
-	require_once 'ccache.php';
 	require_once 'labels.php';
 	require_once 'controls.php';
 
@@ -233,7 +232,7 @@
 
 		if ($purge_interval == -1 || !$purge_interval) {
 			if ($owner_uid) {
-				ccache_update($feed_id, $owner_uid);
+				CCache::update($feed_id, $owner_uid);
 			}
 			return;
 		}
@@ -277,7 +276,7 @@
 
 		$rows = db_affected_rows($result);
 
-		ccache_update($feed_id, $owner_uid);
+		CCache::update($feed_id, $owner_uid);
 
 		if ($debug) {
 			_debug("Purged feed $feed_id ($purge_interval): deleted $rows articles");
@@ -1078,7 +1077,7 @@
 		/* Special case: NULL category doesn't actually exist in the DB */
 
 		$cv = array("id" => 0, "kind" => "cat",
-			"counter" => (int) ccache_find(0, $_SESSION["uid"], true));
+			"counter" => (int) CCache::find(0, $_SESSION["uid"], true));
 
 		array_push($ret_arr, $cv);
 

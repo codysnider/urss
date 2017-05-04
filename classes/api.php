@@ -297,7 +297,7 @@ class API extends Handler {
 					WHERE ref_id IN ($article_ids)");
 
 				while ($line = $this->dbh->fetch_assoc($result)) {
-					ccache_update($line["feed_id"], $_SESSION["uid"]);
+					CCache::update($line["feed_id"], $_SESSION["uid"]);
 				}
 			}
 

@@ -836,7 +836,7 @@ class Feeds extends Handler_Protected {
 	function catchupAll() {
 		$this->dbh->query("UPDATE ttrss_user_entries SET
 						last_read = NOW(), unread = false WHERE unread = true AND owner_uid = " . $_SESSION["uid"]);
-		ccache_zero_all($_SESSION["uid"]);
+		CCache::zero_all($_SESSION["uid"]);
 	}
 
 	function view() {
@@ -890,7 +890,7 @@ class Feeds extends Handler_Protected {
 		 * so for performance reasons we don't do that here */
 
 		if ($feed >= 0) {
-			ccache_update($feed, $_SESSION["uid"], $cat_view);
+			CCache::update($feed, $_SESSION["uid"], $cat_view);
 		}
 
 		set_pref("_DEFAULT_VIEW_MODE", $view_mode);
@@ -1365,7 +1365,7 @@ class Feeds extends Handler_Protected {
 
 			}
 
-			ccache_update($feed, $owner_uid, $cat_view);
+			CCache::update($feed, $owner_uid, $cat_view);
 
 		} else { // tag
 			db_query("UPDATE ttrss_user_entries

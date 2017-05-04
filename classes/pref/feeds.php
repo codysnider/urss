@@ -1168,7 +1168,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			while ($line = $this->dbh->fetch_assoc($result)) {
 
-				$tags = get_article_tags($line["ref_id"]);
+				$tags = Article::get_article_tags($line["ref_id"]);
 
 				$article_filters = get_article_filters($filters, $line['title'],
 					$line['content'], $line['link'], strtotime($line['updated']),
@@ -1225,7 +1225,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			while ($line = $this->dbh->fetch_assoc($tmp_result)) {
 
-				$tags = get_article_tags($line["ref_id"]);
+				$tags = Article::get_article_tags($line["ref_id"]);
 
 				$article_filters = get_article_filters($filters, $line['title'],
 					$line['content'], $line['link'], strtotime($line['updated']),
@@ -1535,7 +1535,7 @@ class Pref_Feeds extends Handler_Protected {
 		$cat_id = (int) $cat_id;
 
 		if ($cat_id > 0) {
-			$cat_unread = ccache_find($cat_id, $_SESSION["uid"], true);
+			$cat_unread = CCache::find($cat_id, $_SESSION["uid"], true);
 		} else if ($cat_id == 0 || $cat_id == -2) {
 			$cat_unread = Feeds::getCategoryUnread($cat_id);
 		}
@@ -1740,7 +1740,7 @@ class Pref_Feeds extends Handler_Protected {
 		$result = $this->dbh->query("DELETE FROM ttrss_entries WHERE
 			(SELECT COUNT(int_id) FROM ttrss_user_entries WHERE ref_id = id) = 0");
 
-		ccache_update($id, $_SESSION['uid']);
+		CCache::update($id, $_SESSION['uid']);
 	} // function clear_feed_articles
 
 	private function remove_feed_category($id, $owner_uid) {
@@ -1748,7 +1748,7 @@ class Pref_Feeds extends Handler_Protected {
 		$this->dbh->query("DELETE FROM ttrss_feed_categories
 			WHERE id = '$id' AND owner_uid = $owner_uid");
 
-		ccache_remove($id, $owner_uid, true);
+		CCache::remove($id, $owner_uid, true);
 	}
 
 	static function remove_feed($id, $owner_uid) {
@@ -1803,11 +1803,11 @@ class Pref_Feeds extends Handler_Protected {
 				unlink(ICONS_DIR . "/$id.ico");
 			}
 
-			ccache_remove($id, $owner_uid);
+			CCache::remove($id, $owner_uid);
 
 		} else {
 			label_remove(feed_to_label_id($id), $owner_uid);
-			//ccache_remove($id, $owner_uid); don't think labels are cached
+			//CCache::remove($id, $owner_uid); don't think labels are cached
 		}
 	}
 

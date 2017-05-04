@@ -227,7 +227,7 @@ class Handler_Public extends Handler {
 				if ($line['note']) $article['note'] = $line['note'];
 				if ($article['author']) $article['author'] = $line['author'];
 
-				$tags = get_article_tags($line["id"], $owner_uid);
+				$tags = Article::get_article_tags($line["id"], $owner_uid);
 
 				if (count($tags) > 0) {
 					$article['tags'] = array();

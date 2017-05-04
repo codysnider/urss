@@ -81,7 +81,7 @@ class Article extends Handler_Protected {
 		}
 
 		$feed_id = $this->getArticleFeed($id);
-		ccache_update($feed_id, $_SESSION["uid"]);
+		CCache::update($feed_id, $_SESSION["uid"]);
 	}
 
 	static function create_published_article($title, $url, $content, $labels_str,
@@ -544,7 +544,7 @@ class Article extends Handler_Protected {
 				SET unread = false,last_read = NOW()
 				WHERE ref_id = '$id' AND owner_uid = $owner_uid");
 
-			ccache_update($feed_id, $owner_uid);
+			CCache::update($feed_id, $owner_uid);
 		}
 
 		$result = db_query("SELECT id,title,link,content,feed_id,comments,int_id,lang,
@@ -909,7 +909,7 @@ class Article extends Handler_Protected {
 			WHERE ($ids_qpart) AND owner_uid = $owner_uid");
 
 		while ($line = db_fetch_assoc($result)) {
-			ccache_update($line["feed_id"], $owner_uid);
+			CCache::update($line["feed_id"], $owner_uid);
 		}
 	}
 

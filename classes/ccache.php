@@ -1,11 +1,12 @@
 <?php
+class CCache {
 	/* function ccache_zero($feed_id, $owner_uid) {
 		db_query("UPDATE ttrss_counters_cache SET
 			value = 0, updated = NOW() WHERE
 			feed_id = '$feed_id' AND owner_uid = '$owner_uid'");
 	} */
 
-	function ccache_zero_all($owner_uid) {
+	static function zero_all($owner_uid) {
 		db_query("UPDATE ttrss_counters_cache SET
 			value = 0 WHERE owner_uid = '$owner_uid'");
 
@@ -13,7 +14,7 @@
 			value = 0 WHERE owner_uid = '$owner_uid'");
 	}
 
-	function ccache_remove($feed_id, $owner_uid, $is_cat = false) {
+	static function remove($feed_id, $owner_uid, $is_cat = false) {
 
 		if (!$is_cat) {
 			$table = "ttrss_counters_cache";
@@ -26,7 +27,7 @@
 
 	}
 
-	function ccache_update_all($owner_uid) {
+	static function update_all($owner_uid) {
 
 		if (get_pref('ENABLE_FEED_CATS', $owner_uid)) {
 
@@ -34,27 +35,27 @@
 				WHERE feed_id > 0 AND owner_uid = '$owner_uid'");
 
 			while ($line = db_fetch_assoc($result)) {
-				ccache_update($line["feed_id"], $owner_uid, true);
+				CCache::update($line["feed_id"], $owner_uid, true);
 			}
 
 			/* We have to manually include category 0 */
 
-			ccache_update(0, $owner_uid, true);
+			CCache::update(0, $owner_uid, true);
 
 		} else {
 			$result = db_query("SELECT feed_id FROM ttrss_counters_cache
 				WHERE feed_id > 0 AND owner_uid = '$owner_uid'");
 
 			while ($line = db_fetch_assoc($result)) {
-				print ccache_update($line["feed_id"], $owner_uid);
+				print CCache::update($line["feed_id"], $owner_uid);
 
 			}
 
 		}
 	}
 
-	function ccache_find($feed_id, $owner_uid, $is_cat = false,
-		$no_update = false) {
+	static function find($feed_id, $owner_uid, $is_cat = false,
+						 $no_update = false) {
 
 		if (!is_numeric($feed_id)) return;
 
@@ -85,14 +86,14 @@
 			if ($no_update) {
 				return -1;
 			} else {
-				return ccache_update($feed_id, $owner_uid, $is_cat);
+				return CCache::update($feed_id, $owner_uid, $is_cat);
 			}
 		}
 
 	}
 
-	function ccache_update($feed_id, $owner_uid, $is_cat = false,
-		$update_pcat = true, $pcat_fast = false) {
+	static function update($feed_id, $owner_uid, $is_cat = false,
+						   $update_pcat = true, $pcat_fast = false) {
 
 		if (!is_numeric($feed_id)) return;
 
@@ -102,13 +103,13 @@
 			$owner_uid = db_fetch_result($tmp_result, 0, "owner_uid");
 		} */
 
-		$prev_unread = ccache_find($feed_id, $owner_uid, $is_cat, true);
+		$prev_unread = CCache::find($feed_id, $owner_uid, $is_cat, true);
 
 		/* When updating a label, all we need to do is recalculate feed counters
 		 * because labels are not cached */
 
 		if ($feed_id < 0) {
-			ccache_update_all($owner_uid);
+			CCache::update_all($owner_uid);
 			return;
 		}
 
@@ -132,7 +133,7 @@
 						WHERE owner_uid = '$owner_uid' AND $cat_qpart");
 
 				while ($line = db_fetch_assoc($result)) {
-					ccache_update($line["id"], $owner_uid, false, false);
+					CCache::update($line["id"], $owner_uid, false, false);
 				}
 			}
 
@@ -180,12 +181,12 @@
 
 					$cat_id = (int) db_fetch_result($result, 0, "cat_id");
 
-					ccache_update($cat_id, $owner_uid, true, true, true);
+					CCache::update($cat_id, $owner_uid, true, true, true);
 
 				}
 			}
 		} else if ($feed_id < 0) {
-			ccache_update_all($owner_uid);
+			CCache::update_all($owner_uid);
 		}
 
 		return $unread;
@@ -223,3 +224,5 @@
 		}
 	} */
 
+
+}
