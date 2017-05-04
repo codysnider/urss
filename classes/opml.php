@@ -386,7 +386,7 @@ class Opml extends Handler_Protected {
 	}
 
 	private function opml_import_category($doc, $root_node, $owner_uid, $parent_id) {
-		$default_cat_id = (int) get_feed_category('Imported feeds', false);
+		$default_cat_id = (int) $this->get_feed_category('Imported feeds', false);
 
 		if ($root_node) {
 			$cat_title = $this->dbh->escape_string(mb_substr($root_node->attributes->getNamedItem('text')->nodeValue, 0, 250));
@@ -395,11 +395,11 @@ class Opml extends Handler_Protected {
 				$cat_title = $this->dbh->escape_string(mb_substr($root_node->attributes->getNamedItem('title')->nodeValue, 0, 250));
 
 			if (!in_array($cat_title, array("tt-rss-filters", "tt-rss-labels", "tt-rss-prefs"))) {
-				$cat_id = get_feed_category($cat_title, $parent_id);
+				$cat_id = $this->get_feed_category($cat_title, $parent_id);
 				$this->dbh->query("BEGIN");
 				if ($cat_id === false) {
 					add_feed_category($cat_title, $parent_id);
-					$cat_id = get_feed_category($cat_title, $parent_id);
+					$cat_id = $this->get_feed_category($cat_title, $parent_id);
 				}
 				$this->dbh->query("COMMIT");
 			} else {
@@ -511,6 +511,26 @@ class Opml extends Handler_Protected {
 			get_feed_access_key('OPML:Publish', false, $_SESSION["uid"]);
 
 		return $url_path;
+	}
+
+	function get_feed_category($feed_cat, $parent_cat_id = false) {
+		if ($parent_cat_id) {
+			$parent_qpart = "parent_cat = '$parent_cat_id'";
+			$parent_insert = "'$parent_cat_id'";
+		} else {
+			$parent_qpart = "parent_cat IS NULL";
+			$parent_insert = "NULL";
+		}
+
+		$result = db_query(
+			"SELECT id FROM ttrss_feed_categories
+			WHERE $parent_qpart AND title = '$feed_cat' AND owner_uid = ".$_SESSION["uid"]);
+
+		if (db_num_rows($result) == 0) {
+			return false;
+		} else {
+			return db_fetch_result($result, 0, "id");
+		}
 	}
 
 

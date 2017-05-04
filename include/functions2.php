@@ -1635,26 +1635,6 @@
 	}
 
 
-	function get_feed_category($feed_cat, $parent_cat_id = false) {
-		if ($parent_cat_id) {
-			$parent_qpart = "parent_cat = '$parent_cat_id'";
-			$parent_insert = "'$parent_cat_id'";
-		} else {
-			$parent_qpart = "parent_cat IS NULL";
-			$parent_insert = "NULL";
-		}
-
-		$result = db_query(
-			"SELECT id FROM ttrss_feed_categories
-			WHERE $parent_qpart AND title = '$feed_cat' AND owner_uid = ".$_SESSION["uid"]);
-
-		if (db_num_rows($result) == 0) {
-			return false;
-		} else {
-			return db_fetch_result($result, 0, "id");
-		}
-	}
-
 	function add_feed_category($feed_cat, $parent_cat_id = false) {
 
 		if (!$feed_cat) return false;
