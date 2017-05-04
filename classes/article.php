@@ -80,7 +80,7 @@ class Article extends Handler_Protected {
 			WHERE ref_id = '$id' AND owner_uid = " . $_SESSION["uid"]);
 		}
 
-		$feed_id = getArticleFeed($id);
+		$feed_id = $this->getArticleFeed($id);
 		ccache_update($feed_id, $_SESSION["uid"]);
 	}
 
@@ -371,6 +371,16 @@ class Article extends Handler_Protected {
 		print json_encode($reply);
 	}
 
+	function getArticleFeed($id) {
+		$result = db_query("SELECT feed_id FROM ttrss_user_entries
+			WHERE ref_id = '$id' AND owner_uid = " . $_SESSION["uid"]);
+
+		if (db_num_rows($result) != 0) {
+			return db_fetch_result($result, 0, "feed_id");
+		} else {
+			return 0;
+		}
+	}
 
 
 }

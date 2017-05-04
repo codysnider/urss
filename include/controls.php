@@ -300,3 +300,28 @@ function format_inline_player($url, $ctype) {
 
 	return "";
 }
+
+function print_label_select($name, $value, $attributes = "") {
+
+	$result = db_query("SELECT caption FROM ttrss_labels2
+			WHERE owner_uid = '".$_SESSION["uid"]."' ORDER BY caption");
+
+	print "<select default=\"$value\" name=\"" . htmlspecialchars($name) .
+		"\" $attributes>";
+
+	while ($line = db_fetch_assoc($result)) {
+
+		$issel = ($line["caption"] == $value) ? "selected=\"1\"" : "";
+
+		print "<option value=\"".htmlspecialchars($line["caption"])."\"
+				$issel>" . htmlspecialchars($line["caption"]) . "</option>";
+
+	}
+
+#		print "<option value=\"ADD_LABEL\">" .__("Add label...") . "</option>";
+
+	print "</select>";
+
+
+}
+

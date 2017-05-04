@@ -1669,17 +1669,6 @@
 		return false;
 	}
 
-	function getArticleFeed($id) {
-		$result = db_query("SELECT feed_id FROM ttrss_user_entries
-			WHERE ref_id = '$id' AND owner_uid = " . $_SESSION["uid"]);
-
-		if (db_num_rows($result) != 0) {
-			return db_fetch_result($result, 0, "feed_id");
-		} else {
-			return 0;
-		}
-	}
-
 	/**
 	 * Fixes incomplete URLs by prepending "http://".
 	 * Also replaces feed:// with http://, and
@@ -1823,30 +1812,6 @@
 
 	function url_is_html($url, $login = false, $pass = false) {
 		return is_html(fetch_file_contents($url, false, $login, $pass));
-	}
-
-	function print_label_select($name, $value, $attributes = "") {
-
-		$result = db_query("SELECT caption FROM ttrss_labels2
-			WHERE owner_uid = '".$_SESSION["uid"]."' ORDER BY caption");
-
-		print "<select default=\"$value\" name=\"" . htmlspecialchars($name) .
-			"\" $attributes>";
-
-		while ($line = db_fetch_assoc($result)) {
-
-			$issel = ($line["caption"] == $value) ? "selected=\"1\"" : "";
-
-			print "<option value=\"".htmlspecialchars($line["caption"])."\"
-				$issel>" . htmlspecialchars($line["caption"]) . "</option>";
-
-		}
-
-#		print "<option value=\"ADD_LABEL\">" .__("Add label...") . "</option>";
-
-		print "</select>";
-
-
 	}
 
 	function format_article_enclosures($id, $always_display_enclosures,
