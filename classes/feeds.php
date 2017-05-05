@@ -202,8 +202,7 @@ class Feeds extends Handler_Protected {
 					$cache_images = sql_bool_to_bool($this->dbh->fetch_result($result, 0, "cache_images"));
 
 					if (!$cache_images && time() - $last_updated > 120) {
-						include "rssfuncs.php";
-						update_rss_feed($feed, true);
+						RSSUtils::update_rss_feed($feed, true);
 					} else {
 						$this->dbh->query("UPDATE ttrss_feeds SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
 								WHERE id = '$feed'");
@@ -1222,8 +1221,7 @@ class Feeds extends Handler_Protected {
 		<pre><?php
 
 		if ($do_update) {
-			include "rssfuncs.php";
-			update_rss_feed($feed_id, true);
+			RSSUtils::update_rss_feed($feed_id, true);
 		}
 
 		?></pre>
@@ -1491,8 +1489,6 @@ class Feeds extends Handler_Protected {
 		global $fetch_last_error;
 		global $fetch_last_error_content;
 
-		require_once "include/rssfuncs.php";
-
 		$url = fix_url($url);
 
 		if (!$url || !validate_feed_url($url)) return array("code" => 2);
@@ -1550,7 +1546,7 @@ class Feeds extends Handler_Protected {
 			$feed_id = db_fetch_result($result, 0, "id");
 
 			if ($feed_id) {
-				set_basic_feed_info($feed_id);
+				RSSUtils::set_basic_feed_info($feed_id);
 			}
 
 			return array("code" => 1, "feed_id" => (int) $feed_id);

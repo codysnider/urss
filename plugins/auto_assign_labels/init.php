@@ -40,8 +40,7 @@ class Auto_Assign_Labels extends Plugin {
 
 			if ($caption && preg_match("/\b$caption\b/i", "$tags_str " . strip_tags($article["content"]) . " " . $article["title"])) {
 
-				# defined in rssfuncs.php
-				if (!labels_contains_caption($article["labels"], $caption)) {
+				if (!RSSUtils::labels_contains_caption($article["labels"], $caption)) {
 					array_push($article["labels"], $label);
 				}
 			}

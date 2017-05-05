@@ -1024,9 +1024,7 @@ class Pref_Feeds extends Handler_Protected {
 			WHERE id = '$feed_id' AND owner_uid = " . $_SESSION["uid"]);
 
 			if ($reset_basic_info) {
-				require_once "rssfuncs.php";
-
-				set_basic_feed_info($feed_id);
+				RSSUtils::set_basic_feed_info($feed_id);
 			}
 
 			PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_SAVE_FEED,
@@ -1147,8 +1145,6 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	function rescore() {
-		require_once "rssfuncs.php";
-
 		$ids = explode(",", $this->dbh->escape_string($_REQUEST["ids"]));
 
 		foreach ($ids as $id) {
@@ -1170,11 +1166,11 @@ class Pref_Feeds extends Handler_Protected {
 
 				$tags = Article::get_article_tags($line["ref_id"]);
 
-				$article_filters = get_article_filters($filters, $line['title'],
+				$article_filters = RSSUtils::get_article_filters($filters, $line['title'],
 					$line['content'], $line['link'], strtotime($line['updated']),
 					$line['author'], $tags);
 
-				$new_score = calculate_article_score($article_filters);
+				$new_score = RSSUtils::calculate_article_score($article_filters);
 
 				if (!$scores[$new_score]) $scores[$new_score] = array();
 
@@ -1227,11 +1223,11 @@ class Pref_Feeds extends Handler_Protected {
 
 				$tags = Article::get_article_tags($line["ref_id"]);
 
-				$article_filters = get_article_filters($filters, $line['title'],
+				$article_filters = RSSUtils::get_article_filters($filters, $line['title'],
 					$line['content'], $line['link'], strtotime($line['updated']),
 					$line['author'], $tags);
 
-				$new_score = calculate_article_score($article_filters);
+				$new_score = RSSUtils::calculate_article_score($article_filters);
 
 				if (!$scores[$new_score]) $scores[$new_score] = array();
 

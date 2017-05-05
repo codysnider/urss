@@ -1,12 +1,11 @@
 <?php
-	define_default('DAEMON_UPDATE_LOGIN_LIMIT', 30);
-	define_default('DAEMON_FEED_LIMIT', 500);
-	define_default('DAEMON_SLEEP_INTERVAL', 120);
-	define_default('_MIN_CACHE_FILE_SIZE', 1024);
+define_default('DAEMON_UPDATE_LOGIN_LIMIT', 30);
+define_default('DAEMON_FEED_LIMIT', 500);
+define_default('DAEMON_SLEEP_INTERVAL', 120);
+define_default('_MIN_CACHE_FILE_SIZE', 1024);
 
-	// TODO: this needs to be removed from global namespace into classes/RSS.php or something
-
-	function calculate_article_hash($article, $pluginhost) {
+class RSSUtils {
+	static function calculate_article_hash($article, $pluginhost) {
 		$tmp = "";
 
 		foreach ($article as $k => $v) {
@@ -22,7 +21,7 @@
 		return sha1(implode(",", $pluginhost->get_plugin_names()) . $tmp);
 	}
 
-	function update_feedbrowser_cache() {
+	static function update_feedbrowser_cache() {
 
 		$result = db_query("SELECT feed_url, site_url, title, COUNT(id) AS subscribers
 			FROM ttrss_feeds WHERE feed_url NOT IN (SELECT feed_url FROM ttrss_feeds
@@ -62,7 +61,7 @@
 
 	}
 
-	function update_daemon_common($limit = DAEMON_FEED_LIMIT, $debug = true) {
+	static function update_daemon_common($limit = DAEMON_FEED_LIMIT, $debug = true) {
 		// Process all other feeds using last_updated and interval parameters
 
 		$schema_version = get_schema_version();
@@ -196,7 +195,7 @@
 						array_push($batch_owners, $tline["owner_uid"]);
 
 					$fstarted = microtime(true);
-					update_rss_feed($tline["id"], true, false);
+					RSSUtils::update_rss_feed($tline["id"], true, false);
 					_debug_suppress(false);
 
 					_debug(sprintf("    %.4f (sec)", microtime(true) - $fstarted));
@@ -214,7 +213,7 @@
 		foreach ($batch_owners as $owner_uid) {
 			_debug("Running housekeeping tasks for user $owner_uid...");
 
-			housekeeping_user($owner_uid);
+			RSSUtils::housekeeping_user($owner_uid);
 		}
 
 		// Send feed digests by email if needed.
@@ -225,7 +224,7 @@
 	}
 
 	// this is used when subscribing
-	function set_basic_feed_info($feed) {
+	static function set_basic_feed_info($feed) {
 
 		$feed = db_escape_string($feed);
 
@@ -286,9 +285,9 @@
 	}
 
 	/**
-	  * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	*/
-	function update_rss_feed($feed, $no_cache = false) {
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 */
+	static function update_rss_feed($feed, $no_cache = false) {
 
 		$debug_enabled = defined('DAEMON_EXTENDED_DEBUG') || $_REQUEST['xdebug'];
 
@@ -310,7 +309,7 @@
 		// this is not optimal currently as it fetches stuff separately TODO: optimize
 		if ($title == "[Unknown]") {
 			_debug("setting basic feed info for $feed...");
-			set_basic_feed_info($feed);
+			RSSUtils::set_basic_feed_info($feed);
 		}
 
 		$result = db_query("SELECT id,update_interval,auth_login,
@@ -494,22 +493,22 @@
 
 				_debug("checking favicon...", $debug_enabled);
 
-				check_feed_favicon($site_url, $feed);
+				RSSUtils::check_feed_favicon($site_url, $feed);
 				$favicon_modified_new = @filemtime($favicon_file);
 
 				if ($favicon_modified_new > $favicon_modified)
 					$favicon_avg_color = '';
 
 				if (file_exists($favicon_file) && function_exists("imagecreatefromstring") && $favicon_avg_color == '') {
-						require_once "colors.php";
+					require_once "colors.php";
 
-						db_query("UPDATE ttrss_feeds SET favicon_avg_color = 'fail' WHERE
+					db_query("UPDATE ttrss_feeds SET favicon_avg_color = 'fail' WHERE
 							id = '$feed'");
 
-						$favicon_color = db_escape_string(
-							calculate_avg_color($favicon_file));
+					$favicon_color = db_escape_string(
+						calculate_avg_color($favicon_file));
 
-						$favicon_colorstring = ",favicon_avg_color = '".$favicon_color."'";
+					$favicon_colorstring = ",favicon_avg_color = '".$favicon_color."'";
 				} else if ($favicon_avg_color == 'fail') {
 					_debug("floicon failed on this file, not trying to recalculate avg color", $debug_enabled);
 				}
@@ -601,7 +600,7 @@
 
 				$entry_guid = $item->get_id();
 				if (!$entry_guid) $entry_guid = $item->get_link();
-				if (!$entry_guid) $entry_guid = make_guid_from_title($item->get_title());
+				if (!$entry_guid) $entry_guid = RSSUtils::make_guid_from_title($item->get_title());
 				if (!$entry_guid) continue;
 
 				$entry_guid = "$owner_uid,$entry_guid";
@@ -710,10 +709,10 @@
 						"fetch_url" => $fetch_url,
 						"site_url" => $site_url,
 						"cache_images" => $cache_images)
-					);
+				);
 
 				$entry_plugin_data = "";
-				$entry_current_hash = calculate_article_hash($article, $pluginhost);
+				$entry_current_hash = RSSUtils::calculate_article_hash($article, $pluginhost);
 
 				_debug("article hash: $entry_current_hash [stored=$entry_stored_hash]", $debug_enabled);
 
@@ -771,7 +770,7 @@
 
 				$matched_rules = array();
 
-				$article_filters = get_article_filters($filters, $article["title"],
+				$article_filters = RSSUtils::get_article_filters($filters, $article["title"],
 					$article["content"], $article["link"], $article["author"],
 					$article["tags"], $matched_rules);
 
@@ -789,7 +788,7 @@
 					}
 				}
 
-				$plugin_filter_names = find_article_filters($article_filters, "plugin");
+				$plugin_filter_names = RSSUtils::find_article_filters($article_filters, "plugin");
 				$plugin_filter_actions = $pluginhost->get_filter_actions();
 
 				if (count($plugin_filter_names) > 0) {
@@ -839,7 +838,7 @@
 				_debug("force catchup: $entry_force_catchup");
 
 				if ($cache_images && is_writable(CACHE_DIR . '/images'))
-					cache_media($entry_content, $site_url, $debug_enabled);
+					RSSUtils::cache_media($entry_content, $site_url, $debug_enabled);
 
 				$entry_content = db_escape_string($entry_content, false);
 
@@ -911,12 +910,12 @@
 							id = '$ref_id'");
 					} */
 
-					if (find_article_filter($article_filters, "filter")) {
+					if (RSSUtils::find_article_filter($article_filters, "filter")) {
 						//db_query("COMMIT"); // close transaction in progress
 						continue;
 					}
 
-					$score = calculate_article_score($article_filters) + $entry_score_modifier;
+					$score = RSSUtils::calculate_article_score($article_filters) + $entry_score_modifier;
 
 					_debug("initial score: $score [including plugin modifier: $entry_score_modifier]", $debug_enabled);
 
@@ -934,7 +933,7 @@
 
 						_debug("user record not found, creating...", $debug_enabled);
 
-						if ($score >= -500 && !find_article_filter($article_filters, 'catchup') && !$entry_force_catchup) {
+						if ($score >= -500 && !RSSUtils::find_article_filter($article_filters, 'catchup') && !$entry_force_catchup) {
 							$unread = 'true';
 							$last_read_qpart = 'NULL';
 						} else {
@@ -942,13 +941,13 @@
 							$last_read_qpart = 'NOW()';
 						}
 
-						if (find_article_filter($article_filters, 'mark') || $score > 1000) {
+						if (RSSUtils::find_article_filter($article_filters, 'mark') || $score > 1000) {
 							$marked = 'true';
 						} else {
 							$marked = 'false';
 						}
 
-						if (find_article_filter($article_filters, 'publish')) {
+						if (RSSUtils::find_article_filter($article_filters, 'publish')) {
 							$published = 'true';
 						} else {
 							$published = 'false';
@@ -994,7 +993,7 @@
 					_debug("RID: $entry_ref_id, IID: $entry_int_id", $debug_enabled);
 
 					if (DB_TYPE == "pgsql") {
-					   $tsvector_combined = db_escape_string(mb_substr($entry_title . ' ' . strip_tags(str_replace('<', ' <', $entry_content)),
+						$tsvector_combined = db_escape_string(mb_substr($entry_title . ' ' . strip_tags(str_replace('<', ' <', $entry_content)),
 							0, 1000000));
 
 						$tsvector_qpart = "tsvector_combined = to_tsvector('$feed_language', '$tsvector_combined'),";
@@ -1037,7 +1036,7 @@
 
 				_debug("assigning labels [filters]...", $debug_enabled);
 
-				assign_article_to_label_filters($entry_ref_id, $article_filters,
+				RSSUtils::assign_article_to_label_filters($entry_ref_id, $article_filters,
 					$owner_uid, $article_labels);
 
 				_debug("looking for enclosures...", $debug_enabled);
@@ -1058,7 +1057,7 @@
 				}
 
 				if ($cache_images && is_writable(CACHE_DIR . '/images'))
-					cache_enclosures($enclosures, $site_url, $debug_enabled);
+					RSSUtils::cache_enclosures($enclosures, $site_url, $debug_enabled);
 
 				if ($debug_enabled) {
 					_debug("article enclosures:", $debug_enabled);
@@ -1145,12 +1144,12 @@
 							WHERE tag_name = '$tag' AND post_int_id = '$entry_int_id' AND
 							owner_uid = '$owner_uid' LIMIT 1");
 
-							if ($result && db_num_rows($result) == 0) {
+						if ($result && db_num_rows($result) == 0) {
 
-								db_query("INSERT INTO ttrss_tags
+							db_query("INSERT INTO ttrss_tags
 									(owner_uid,tag_name,post_int_id)
 									VALUES ('$owner_uid','$tag', '$entry_int_id')");
-							}
+						}
 
 						array_push($tags_to_cache, $tag);
 					}
@@ -1205,7 +1204,7 @@
 		return true;
 	}
 
-	function cache_enclosures($enclosures, $site_url, $debug) {
+	static function cache_enclosures($enclosures, $site_url, $debug) {
 		foreach ($enclosures as $enc) {
 
 			if (preg_match("/(image|audio|video)/", $enc[1])) {
@@ -1229,7 +1228,7 @@
 		}
 	}
 
-	function cache_media($html, $site_url, $debug) {
+	static function cache_media($html, $site_url, $debug) {
 		libxml_use_internal_errors(true);
 
 		$charset_hack = '<head>
@@ -1263,7 +1262,7 @@
 		}
 	}
 
-	function expire_error_log($debug) {
+	static function expire_error_log($debug) {
 		if ($debug) _debug("Removing old error log entries...");
 
 		if (DB_TYPE == "pgsql") {
@@ -1276,7 +1275,7 @@
 
 	}
 
-	function expire_lock_files($debug) {
+	static function expire_lock_files($debug) {
 		//if ($debug) _debug("Removing old lock files...");
 
 		$num_deleted = 0;
@@ -1297,7 +1296,7 @@
 		if ($debug) _debug("Removed $num_deleted old lock files.");
 	}
 
-	function expire_cached_files($debug) {
+	static function expire_cached_files($debug) {
 		foreach (array("simplepie", "images", "export", "upload") as $dir) {
 			$cache_dir = CACHE_DIR . "/$dir";
 
@@ -1324,13 +1323,13 @@
 	}
 
 	/**
-	* Source: http://www.php.net/manual/en/function.parse-url.php#104527
-	* Returns the url query as associative array
-	*
-	* @param    string    query
-	* @return    array    params
-	*/
-	function convertUrlQuery($query) {
+	 * Source: http://www.php.net/manual/en/function.parse-url.php#104527
+	 * Returns the url query as associative array
+	 *
+	 * @param    string    query
+	 * @return    array    params
+	 */
+	static function convertUrlQuery($query) {
 		$queryParts = explode('&', $query);
 
 		$params = array();
@@ -1343,7 +1342,7 @@
 		return $params;
 	}
 
-	function get_article_filters($filters, $title, $content, $link, $author, $tags, &$matched_rules = false) {
+	static function get_article_filters($filters, $title, $content, $link, $author, $tags, &$matched_rules = false) {
 		$matches = array();
 
 		foreach ($filters as $filter) {
@@ -1360,35 +1359,35 @@
 					continue;
 
 				switch ($rule["type"]) {
-				case "title":
-					$match = @preg_match("/$reg_exp/iu", $title);
-					break;
-				case "content":
-					// we don't need to deal with multiline regexps
-					$content = preg_replace("/[\r\n\t]/", "", $content);
+					case "title":
+						$match = @preg_match("/$reg_exp/iu", $title);
+						break;
+					case "content":
+						// we don't need to deal with multiline regexps
+						$content = preg_replace("/[\r\n\t]/", "", $content);
 
-					$match = @preg_match("/$reg_exp/iu", $content);
-					break;
-				case "both":
-					// we don't need to deal with multiline regexps
-					$content = preg_replace("/[\r\n\t]/", "", $content);
+						$match = @preg_match("/$reg_exp/iu", $content);
+						break;
+					case "both":
+						// we don't need to deal with multiline regexps
+						$content = preg_replace("/[\r\n\t]/", "", $content);
 
-					$match = (@preg_match("/$reg_exp/iu", $title) || @preg_match("/$reg_exp/iu", $content));
-					break;
-				case "link":
-					$match = @preg_match("/$reg_exp/iu", $link);
-					break;
-				case "author":
-					$match = @preg_match("/$reg_exp/iu", $author);
-					break;
-				case "tag":
-					foreach ($tags as $tag) {
-						if (@preg_match("/$reg_exp/iu", $tag)) {
-							$match = true;
-							break;
+						$match = (@preg_match("/$reg_exp/iu", $title) || @preg_match("/$reg_exp/iu", $content));
+						break;
+					case "link":
+						$match = @preg_match("/$reg_exp/iu", $link);
+						break;
+					case "author":
+						$match = @preg_match("/$reg_exp/iu", $author);
+						break;
+					case "tag":
+						foreach ($tags as $tag) {
+							if (@preg_match("/$reg_exp/iu", $tag)) {
+								$match = true;
+								break;
+							}
 						}
-					}
-					break;
+						break;
 				}
 
 				if ($rule_inverse) $match = !$match;
@@ -1423,7 +1422,7 @@
 		return $matches;
 	}
 
-	function find_article_filter($filters, $filter_name) {
+	static function find_article_filter($filters, $filter_name) {
 		foreach ($filters as $f) {
 			if ($f["type"] == $filter_name) {
 				return $f;
@@ -1432,7 +1431,7 @@
 		return false;
 	}
 
-	function find_article_filters($filters, $filter_name) {
+	static function find_article_filters($filters, $filter_name) {
 		$results = array();
 
 		foreach ($filters as $f) {
@@ -1443,7 +1442,7 @@
 		return $results;
 	}
 
-	function calculate_article_score($filters) {
+	static function calculate_article_score($filters) {
 		$score = 0;
 
 		foreach ($filters as $f) {
@@ -1454,7 +1453,7 @@
 		return $score;
 	}
 
-	function labels_contains_caption($labels, $caption) {
+	static function labels_contains_caption($labels, $caption) {
 		foreach ($labels as $label) {
 			if ($label[1] == $caption) {
 				return true;
@@ -1464,22 +1463,22 @@
 		return false;
 	}
 
-	function assign_article_to_label_filters($id, $filters, $owner_uid, $article_labels) {
+	static function assign_article_to_label_filters($id, $filters, $owner_uid, $article_labels) {
 		foreach ($filters as $f) {
 			if ($f["type"] == "label") {
-				if (!labels_contains_caption($article_labels, $f["param"])) {
+				if (!RSSUtils::labels_contains_caption($article_labels, $f["param"])) {
 					Labels::add_article($id, $f["param"], $owner_uid);
 				}
 			}
 		}
 	}
 
-	function make_guid_from_title($title) {
+	static function make_guid_from_title($title) {
 		return preg_replace("/[ \"\',.:;]/", "-",
 			mb_strtolower(strip_tags($title), 'utf-8'));
 	}
 
-	function cleanup_counters_cache($debug) {
+	static function cleanup_counters_cache($debug) {
 		$result = db_query("DELETE FROM ttrss_counters_cache
 			WHERE feed_id > 0 AND
 			(SELECT COUNT(id) FROM ttrss_feeds WHERE
@@ -1497,7 +1496,7 @@
 		if ($debug) _debug("Removed $frows (feeds) $crows (cats) orphaned counter cache entries.");
 	}
 
-	function housekeeping_user($owner_uid) {
+	static function housekeeping_user($owner_uid) {
 		$tmph = new PluginHost();
 
 		load_user_plugins($owner_uid, $tmph);
@@ -1505,16 +1504,16 @@
 		$tmph->run_hooks(PluginHost::HOOK_HOUSE_KEEPING, "hook_house_keeping", "");
 	}
 
-	function housekeeping_common($debug) {
-		expire_cached_files($debug);
-		expire_lock_files($debug);
-		expire_error_log($debug);
+	static function housekeeping_common($debug) {
+		RSSUtils::expire_cached_files($debug);
+		RSSUtils::expire_lock_files($debug);
+		RSSUtils::expire_error_log($debug);
 
-		$count = update_feedbrowser_cache();
+		$count = RSSUtils::update_feedbrowser_cache();
 		_debug("Feedbrowser updated, $count feeds processed.");
 
 		Article::purge_orphans( true);
-		cleanup_counters_cache($debug);
+		RSSUtils::cleanup_counters_cache($debug);
 
 		//$rc = cleanup_tags( 14, 50000);
 		//_debug("Cleaned $rc cached tags.");
@@ -1522,8 +1521,8 @@
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_HOUSE_KEEPING, "hook_house_keeping", "");
 	}
 
-	function check_feed_favicon($site_url, $feed) {
-	#		print "FAVICON [$site_url]: $favicon_url\n";
+	static function check_feed_favicon($site_url, $feed) {
+		#		print "FAVICON [$site_url]: $favicon_url\n";
 
 		$icon_file = ICONS_DIR . "/$feed.ico";
 
@@ -1572,3 +1571,7 @@
 			return $icon_file;
 		}
 	}
+
+
+
+}

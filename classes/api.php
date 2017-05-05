@@ -412,12 +412,10 @@ class API extends Handler {
 	}
 
 	function updateFeed() {
-		require_once "include/rssfuncs.php";
-
 		$feed_id = (int) $this->dbh->escape_string($_REQUEST["feed_id"]);
 
 		if (!ini_get("open_basedir")) {
-			update_rss_feed($feed_id);
+			RSSUtils::update_rss_feed($feed_id);
 		}
 
 		$this->wrap(self::STATUS_OK, array("status" => "OK"));
@@ -678,8 +676,7 @@ class API extends Handler {
 					$cache_images = sql_bool_to_bool(db_fetch_result($result, 0, "cache_images"));
 
 					if (!$cache_images && time() - $last_updated > 120) {
-						include "rssfuncs.php";
-						update_rss_feed($feed_id, true);
+						RSSUtils::update_rss_feed($feed_id, true);
 					} else {
 						db_query("UPDATE ttrss_feeds SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
 							WHERE id = '$feed_id'");

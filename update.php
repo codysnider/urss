@@ -9,7 +9,6 @@
 
 	require_once "autoload.php";
 	require_once "functions.php";
-	require_once "rssfuncs.php";
 	require_once "config.php";
 	require_once "sanity_check.php";
 	require_once "db.php";
@@ -165,14 +164,14 @@
 	}
 
 	if (isset($options["feeds"])) {
-		update_daemon_common();
-		housekeeping_common(true);
+		RSSUtils::update_daemon_common();
+		RSSUtils::housekeeping_common(true);
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_UPDATE_TASK, "hook_update_task", $op);
 	}
 
 	if (isset($options["feedbrowser"])) {
-		$count = update_feedbrowser_cache();
+		$count = RSSUtils::update_feedbrowser_cache();
 		print "Finished, $count feeds processed.\n";
 	}
 
@@ -192,10 +191,10 @@
 			_debug("warning: unable to create stampfile\n");
 		}
 
-		update_daemon_common(isset($options["pidlock"]) ? 50 : DAEMON_FEED_LIMIT);
+		RSSUtils::update_daemon_common(isset($options["pidlock"]) ? 50 : DAEMON_FEED_LIMIT);
 
 		if (!isset($options["pidlock"]) || $options["task"] == 0)
-			housekeeping_common(true);
+			RSSUtils::housekeeping_common(true);
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_UPDATE_TASK, "hook_update_task", $op);
 	}
@@ -401,7 +400,7 @@
 
 		$_REQUEST['xdebug'] = 1;
 
-		$rc = update_rss_feed($feed) != false ? 0 : 1;
+		$rc = RSSUtils::update_rss_feed($feed) != false ? 0 : 1;
 
 		exit($rc);
 	}

@@ -538,8 +538,6 @@ class RPC extends Handler_Protected {
 
 		$feed_id = -1;
 
-		require_once "rssfuncs.php";
-
 		$num_updated = 0;
 
 		$tstart = time();
@@ -548,7 +546,7 @@ class RPC extends Handler_Protected {
 			$feed_id = $line["id"];
 
 			if (time() - $tstart < ini_get("max_execution_time") * 0.7) {
-				update_rss_feed($feed_id, true);
+				RSSUtils::update_rss_feed($feed_id, true);
 				++$num_updated;
 			} else {
 				break;

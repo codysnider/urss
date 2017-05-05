@@ -44,8 +44,6 @@ class Pref_Filters extends Handler_Protected {
 	}
 
 	function testFilterDo() {
-		require_once "include/rssfuncs.php";
-
 		$offset = (int) db_escape_string($_REQUEST["offset"]);
 		$limit = (int) db_escape_string($_REQUEST["limit"]);
 
@@ -129,7 +127,7 @@ class Pref_Filters extends Handler_Protected {
 
 			while ($line = db_fetch_assoc($result)) {
 
-				$rc = get_article_filters(array($filter), $line['title'], $line['content'], $line['link'],
+				$rc = RSSUtils::get_article_filters(array($filter), $line['title'], $line['content'], $line['link'],
 					$line['author'], explode(",", $line['tag_cache']));
 
 				if (count($rc) > 0) {
