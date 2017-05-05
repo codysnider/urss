@@ -860,8 +860,6 @@ function hotkey_handler(e) {
 		keycode = e.which;
 	}
 
-	var keychar = String.fromCharCode(keycode).toLowerCase();
-
 	if (keycode == 27) { // escape
 		hotkey_prefix = false;
 	}
@@ -870,6 +868,7 @@ function hotkey_handler(e) {
 	if (keycode == 17) return; // ignore lone ctrl
 
 	var hotkeys = getInitParam("hotkeys");
+	var keychar = String.fromCharCode(keycode).toLowerCase();
 
 	if (!hotkey_prefix && hotkeys[0].indexOf(keychar) != -1) {
 
