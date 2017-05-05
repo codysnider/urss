@@ -851,17 +851,8 @@ function hotkey_handler(e) {
 	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
 
 	var keycode = false;
-	var shift_key = false;
-	var ctrl_key = false;
-	var alt_key = false;
-	var meta_key = false;
 
 	var cmdline = $('cmdline');
-
-	shift_key = e.shiftKey;
-	ctrl_key = e.ctrlKey;
-	alt_key = e.altKey;
-	meta_key = e.metaKey;
 
 	if (window.event) {
 		keycode = window.event.keyCode;
@@ -869,7 +860,7 @@ function hotkey_handler(e) {
 		keycode = e.which;
 	}
 
-	var keychar = String.fromCharCode(keycode);
+	var keychar = String.fromCharCode(keycode).toLowerCase();
 
 	if (keycode == 27) { // escape
 		hotkey_prefix = false;
@@ -877,8 +868,6 @@ function hotkey_handler(e) {
 
 	if (keycode == 16) return; // ignore lone shift
 	if (keycode == 17) return; // ignore lone ctrl
-
-	keychar = keychar.toLowerCase();
 
 	var hotkeys = getInitParam("hotkeys");
 
@@ -904,10 +893,10 @@ function hotkey_handler(e) {
 	var hotkey = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
 
 	// ensure ^*char notation
-	if (shift_key) hotkey = "*" + hotkey;
-	if (ctrl_key) hotkey = "^" + hotkey;
-	if (alt_key) hotkey = "+" + hotkey;
-	if (meta_key) hotkey = "%" + hotkey;
+	if (e.shiftKey) hotkey = "*" + hotkey;
+	if (e.ctrlKey) hotkey = "^" + hotkey;
+	if (e.altKey) hotkey = "+" + hotkey;
+	if (e.metaKey) hotkey = "%" + hotkey;
 
 	hotkey = hotkey_prefix ? hotkey_prefix + " " + hotkey : hotkey;
 	hotkey_prefix = false;
