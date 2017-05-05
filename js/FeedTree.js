@@ -356,6 +356,7 @@ require(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"]
 				treeNode = treeNode[0];
 				if (!is_cat) this._expandNode(treeNode);
 				this.set("selectedNodes", [treeNode]);
+				this.focusNode(treeNode);
 			}
 		},
 		setFeedIcon: function(feed, is_cat, src) {
