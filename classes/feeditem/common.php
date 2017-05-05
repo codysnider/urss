@@ -21,6 +21,10 @@ abstract class FeedItem_Common extends FeedItem {
 		}
 	}
 
+	function get_element() {
+		return $this->elem;
+	}
+
 	function get_author() {
 		$author = $this->elem->getElementsByTagName("author")->item(0);
 
