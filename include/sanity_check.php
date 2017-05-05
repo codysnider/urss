@@ -147,6 +147,12 @@
 			if (!class_exists("DOMDocument")) {
 				array_push($errors, "PHP support for DOMDocument is required, but was not found.");
 			}
+
+			$self_scheme = parse_url(SELF_URL_PATH, PHP_URL_SCHEME);
+
+			if ($_SERVER['HTTPS'] && $self_scheme == 'http') {
+				array_push($errors, "You are accessing tt-rss over SSL but SELF_URL_PATH in config.php refers to a http:// URL.");
+			}
 		}
 
 		if (count($errors) > 0 && $_SERVER['REQUEST_URI']) { ?>
