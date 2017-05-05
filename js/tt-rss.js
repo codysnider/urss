@@ -894,7 +894,9 @@ function hotkey_handler(e) {
 		Element.show(cmdline);
 
 		e.stopPropagation();
-		return false;
+
+		// returning false here literally disables ctrl-c in browser lol (because C is a valid prefix)
+		return true;
 	}
 
 	Element.hide(cmdline);
