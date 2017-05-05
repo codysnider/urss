@@ -107,7 +107,7 @@ class API extends Handler {
 
 	/* Method added for ttrss-reader for Android */
 	function getCounters() {
-		$this->wrap(self::STATUS_OK, getAllCounters());
+		$this->wrap(self::STATUS_OK, Counters::getAllCounters());
 	}
 
 	function getFeeds() {
@@ -537,7 +537,7 @@ class API extends Handler {
 			/* Labels */
 
 			if ($cat_id == -4 || $cat_id == -2) {
-				$counters = getLabelCounters(true);
+				$counters = Counters::getLabelCounters(true);
 
 				foreach (array_values($counters) as $cv) {
 
