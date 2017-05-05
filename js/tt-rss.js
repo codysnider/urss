@@ -893,7 +893,8 @@ function hotkey_handler(e) {
 		cmdline.innerHTML = keychar;
 		Element.show(cmdline);
 
-		return true;
+		e.stopPropagation();
+		return false;
 	}
 
 	Element.hide(cmdline);
@@ -923,6 +924,7 @@ function hotkey_handler(e) {
 
 	if (action != null) {
 		action();
+		e.stopPropagation();
 		return false;
 	}
 }
