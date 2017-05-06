@@ -53,6 +53,12 @@
 	// How many seconds to wait for initial response from website when
 	// fetching files from remote sites
 
+	// feed updating stuff
+	define_default('DAEMON_UPDATE_LOGIN_LIMIT', 30);
+	define_default('DAEMON_FEED_LIMIT', 500);
+	define_default('DAEMON_SLEEP_INTERVAL', 120);
+	define_default('_MIN_CACHE_FILE_SIZE', 1024);
+
 	if (DB_TYPE == "pgsql") {
 		define('SUBSTRING_FOR_DATE', 'SUBSTRING_FOR_DATE');
 	} else {

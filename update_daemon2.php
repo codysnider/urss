@@ -166,6 +166,10 @@
 		$spawn_interval = SPAWN_INTERVAL;
 	}
 
+	// let's enforce a minimum spawn interval as to not forkbomb the host
+	$spawn_interval = max(60, $spawn_interval);
+	_debug("Spawn interval: $spawn_interval sec");
+
 	if (isset($options["log"])) {
 		_debug("Logging to " . $options["log"]);
 		define('LOGFILE', $options["log"]);

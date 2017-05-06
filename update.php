@@ -181,8 +181,12 @@
          $log = isset($options['log']) ? '--log '.$options['log'] : '';
 
 			passthru(PHP_EXECUTABLE . " " . $argv[0] ." --daemon-loop $quiet $log");
-			_debug("Sleeping for " . DAEMON_SLEEP_INTERVAL . " seconds...");
-			sleep(DAEMON_SLEEP_INTERVAL);
+
+			// let's enforce a minimum spawn interval as to not forkbomb the host
+			$spawn_interval = max(60, DAEMON_SLEEP_INTERVAL);
+
+			_debug("Sleeping for $spawn_interval seconds...");
+			sleep($spawn_interval);
 		}
 	}
 
