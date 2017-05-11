@@ -600,7 +600,7 @@ class Article extends Handler_Protected {
 				header("Content-Type: text/html");
 				$rv['content'] .= "<html><head>
 						<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
-						<title>Tiny Tiny RSS - ".$line["title"]."</title>".
+						<title>".$line["title"]."</title>".
 					stylesheet_tag("css/tt-rss.css").
 					stylesheet_tag("css/zoom.css").
 					stylesheet_tag("css/dijit.css")."
