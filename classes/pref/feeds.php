@@ -1489,7 +1489,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<button onclick='window.navigator.registerContentHandler(" .
                       "\"application/vnd.mozilla.maybe.feed\", " .
-                      "\"" . add_feed_url() . "\", " . " \"Tiny Tiny RSS\")'>" .
+                      "\"" . $this->subscribe_to_feed_url() . "\", " . " \"Tiny Tiny RSS\")'>" .
 							 __('Click here to register this site as a feed reader.') .
 				"</button>";
 
@@ -1972,4 +1972,11 @@ class Pref_Feeds extends Handler_Protected {
 
 		print (int) $this->dbh->fetch_result($result, 0, "num_inactive");
 	}
+
+	static function subscribe_to_feed_url() {
+		$url_path = get_self_url_prefix() .
+			"/public.php?op=subscribe&feed_url=%s";
+		return $url_path;
+	}
+
 }

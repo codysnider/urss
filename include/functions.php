@@ -1791,19 +1791,6 @@
 		}
 	}
 
-	/**
-	 * Compute the Mozilla Firefox feed adding URL from server HOST and REQUEST_URI.
-	 *
-	 * @return string The Mozilla Firefox feed adding URL.
-	 */
-	function add_feed_url() {
-		//$url_path = ($_SERVER['HTTPS'] != "on" ? 'http://' :  'https://') . $_SERVER["HTTP_HOST"] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-
-		$url_path = get_self_url_prefix() .
-			"/public.php?op=subscribe&feed_url=%s";
-		return $url_path;
-	} // function add_feed_url
-
 	function encrypt_password($pass, $salt = '', $mode2 = false) {
 		if ($salt && $mode2) {
 			return "MODE2:" . hash('sha256', $salt . $pass);

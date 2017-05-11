@@ -21,7 +21,7 @@ class Bookmarklets extends Plugin {
 
 		print "<p>" . __("Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it.") . "</p>";
 
-		$bm_subscribe_url = str_replace('%s', '', add_feed_url());
+		$bm_subscribe_url = str_replace('%s', '', Pref_Feeds::subscribe_to_feed_url());
 
 		$confirm_str = str_replace("'", "\'", __('Subscribe to %s in Tiny Tiny RSS?'));
 
