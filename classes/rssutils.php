@@ -310,14 +310,12 @@ class RSSUtils {
 		$result = db_query("SELECT id,update_interval,auth_login,
 			feed_url,auth_pass,cache_images,
 			mark_unread_on_update, owner_uid,
-			pubsub_state, auth_pass_encrypted,
-			feed_language
+			auth_pass_encrypted, feed_language
 			FROM ttrss_feeds WHERE id = '$feed'");
 
 		$owner_uid = db_fetch_result($result, 0, "owner_uid");
 		$mark_unread_on_update = sql_bool_to_bool(db_fetch_result($result,
 			0, "mark_unread_on_update"));
-		$pubsub_state = db_fetch_result($result, 0, "pubsub_state");
 		$auth_pass_encrypted = sql_bool_to_bool(db_fetch_result($result,
 			0, "auth_pass_encrypted"));
 
@@ -528,55 +526,6 @@ class RSSUtils {
 					SET last_updated = NOW(), last_error = '' WHERE id = '$feed'");
 
 				return; // no articles
-			}
-
-			if ($pubsub_state != 2 && PUBSUBHUBBUB_ENABLED) {
-
-				_debug("checking for PUSH hub...", $debug_enabled);
-
-				$feed_hub_url = false;
-
-				$links = $rss->get_links('hub');
-
-				if ($links && is_array($links)) {
-					foreach ($links as $l) {
-						$feed_hub_url = $l;
-						break;
-					}
-				}
-
-				_debug("feed hub url: $feed_hub_url", $debug_enabled);
-
-				$feed_self_url = $fetch_url;
-
-				$links = $rss->get_links('self');
-
-				if ($links && is_array($links)) {
-					foreach ($links as $l) {
-						$feed_self_url = $l;
-						break;
-					}
-				}
-
-				_debug("feed self url = $feed_self_url");
-
-				if ($feed_hub_url && $feed_self_url && function_exists('curl_init') &&
-					!ini_get("open_basedir")) {
-
-					require_once 'lib/pubsubhubbub/Subscriber.php';
-
-					$callback_url = get_self_url_prefix() .
-						"/public.php?op=pubsub&id=$feed";
-
-					$s = new Pubsubhubbub\Subscriber\Subscriber($feed_hub_url, $callback_url);
-
-					$rc = $s->subscribe($feed_self_url);
-
-					_debug("feed hub url found, subscribe request sent. [rc=$rc]", $debug_enabled);
-
-					db_query("UPDATE ttrss_feeds SET pubsub_state = 1
-						WHERE id = '$feed'");
-				}
 			}
 
 			_debug("processing articles...", $debug_enabled);
@@ -959,16 +908,6 @@ class RSSUtils {
 							VALUES ('$ref_id', '$owner_uid', '$feed', $unread,
 								$last_read_qpart, $marked, $published, '$score', '', '',
 								'', $last_marked, $last_published)");
-
-						if (PUBSUBHUBBUB_HUB && $published == 'true') {
-							$rss_link = get_self_url_prefix() .
-								"/public.php?op=rss&id=-2&key=" .
-								get_feed_access_key(-2, false, $owner_uid);
-
-							$p = new pubsubhubbub\publisher\Publisher(PUBSUBHUBBUB_HUB);
-
-							/* $pubsub_result = */ $p->publish_update($rss_link);
-						}
 
 						$result = db_query(
 							"SELECT int_id FROM ttrss_user_entries WHERE

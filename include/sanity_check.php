@@ -140,10 +140,6 @@
 				array_push($errors, "PHP safe mode setting is obsolete and not supported by tt-rss.");
 			}
 
-			if ((PUBSUBHUBBUB_HUB || PUBSUBHUBBUB_ENABLED) && !function_exists("curl_init")) {
-				array_push($errors, "PHP support for CURL is required for PubSubHubbub.");
-			}
-
 			if (!class_exists("DOMDocument")) {
 				array_push($errors, "PHP support for DOMDocument is required, but was not found.");
 			}

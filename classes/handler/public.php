@@ -105,11 +105,6 @@ class Handler_Public extends Handler {
 			$tpl->setVariable('VERSION', VERSION, true);
 			$tpl->setVariable('FEED_URL', htmlspecialchars($feed_self_url), true);
 
-			if (PUBSUBHUBBUB_HUB && $feed == -2) {
-				$tpl->setVariable('HUB_URL', htmlspecialchars(PUBSUBHUBBUB_HUB), true);
-				$tpl->addBlock('feed_hub');
-			}
-
 			$tpl->setVariable('SELF_URL', htmlspecialchars(get_self_url_prefix()), true);
 			while ($line = $this->dbh->fetch_assoc($result)) {
 
@@ -194,10 +189,6 @@ class Handler_Public extends Handler {
 			$feed['title'] = $feed_title;
 			$feed['version'] = VERSION;
 			$feed['feed_url'] = $feed_self_url;
-
-			if (PUBSUBHUBBUB_HUB && $feed == -2) {
-				$feed['hub_url'] = PUBSUBHUBBUB_HUB;
-			}
 
 			$feed['self_url'] = get_self_url_prefix();
 
@@ -303,71 +294,6 @@ class Handler_Public extends Handler {
 		}
 
 		print "</select>";
-	}
-
-	function pubsub() {
-		$mode = $this->dbh->escape_string($_REQUEST['hub_mode']);
-		if (!$mode) $mode = $this->dbh->escape_string($_REQUEST['hub.mode']);
-
-		$feed_id = (int) $this->dbh->escape_string($_REQUEST['id']);
-		$feed_url = $this->dbh->escape_string($_REQUEST['hub_topic']);
-
-		if (!$feed_url) $feed_url = $this->dbh->escape_string($_REQUEST['hub.topic']);
-
-		if (!PUBSUBHUBBUB_ENABLED) {
-			header('HTTP/1.0 404 Not Found');
-			echo "404 Not found (Disabled by server)";
-			return;
-		}
-
-		// TODO: implement hub_verifytoken checking
-		// TODO: store requested rel=self or whatever for verification
-		// (may be different from stored feed url) e.g. http://url/ or http://url
-
-		$result = $this->dbh->query("SELECT feed_url FROM ttrss_feeds
-			WHERE id = '$feed_id'");
-
-		if ($this->dbh->num_rows($result) != 0) {
-
-			$check_feed_url = $this->dbh->fetch_result($result, 0, "feed_url");
-
-			// ignore url checking for the time being
-			if ($check_feed_url && (true || $check_feed_url == $feed_url || !$feed_url)) {
-				if ($mode == "subscribe") {
-
-					$this->dbh->query("UPDATE ttrss_feeds SET pubsub_state = 2
-						WHERE id = '$feed_id'");
-
-					print $_REQUEST['hub_challenge'];
-					return;
-
-				} else if ($mode == "unsubscribe") {
-
-					$this->dbh->query("UPDATE ttrss_feeds SET pubsub_state = 0
-						WHERE id = '$feed_id'");
-
-					print $_REQUEST['hub_challenge'];
-					return;
-
-				} else if (!$mode) {
-
-					// Received update ping, schedule feed update.
-					//update_rss_feed($feed_id, true, true);
-
-					$this->dbh->query("UPDATE ttrss_feeds SET
-						last_update_started = '1970-01-01',
-						last_updated = '1970-01-01' WHERE id = '$feed_id'");
-
-				}
-			} else {
-				header('HTTP/1.0 404 Not Found');
-				echo "404 Not found (URL check failed)";
-			}
-		} else {
-			header('HTTP/1.0 404 Not Found');
-			echo "404 Not found (Feed not found)";
-		}
-
 	}
 
 	function logout() {

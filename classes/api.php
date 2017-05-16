@@ -301,17 +301,6 @@ class API extends Handler {
 				}
 			}
 
-			if ($num_updated > 0 && $field == "published") {
-				if (PUBSUBHUBBUB_HUB) {
-					$rss_link = get_self_url_prefix() .
-						"/public.php?op=rss&id=-2&key=" .
-						get_feed_access_key(-2, false);
-
-					$p = new pubsubhubbub\publisher\Publisher(PUBSUBHUBBUB_HUB);
-					$p->publish_update($rss_link);
-				}
-			}
-
 			$this->wrap(self::STATUS_OK, array("status" => "OK",
 				"updated" => $num_updated));
 

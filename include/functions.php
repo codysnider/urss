@@ -145,8 +145,6 @@
 	define('SELF_USER_AGENT', 'Tiny Tiny RSS/' . VERSION . ' (http://tt-rss.org/)');
 	ini_set('user_agent', SELF_USER_AGENT);
 
-	require_once 'lib/pubsubhubbub/Publisher.php';
-
 	$schema_version = false;
 
 	function _debug_suppress($suppress) {

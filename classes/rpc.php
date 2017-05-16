@@ -274,20 +274,7 @@ class RPC extends Handler_Protected {
 			published = $pub, last_published = NOW()
 			WHERE ref_id = '$id' AND owner_uid = " . $_SESSION["uid"]);
 
-		$pubsub_result = false;
-
-		if (PUBSUBHUBBUB_HUB) {
-			$rss_link = get_self_url_prefix() .
-				"/public.php?op=rss&id=-2&key=" .
-				get_feed_access_key(-2, false);
-
-			$p = new pubsubhubbub\publisher\Publisher(PUBSUBHUBBUB_HUB);
-
-			$pubsub_result = $p->publish_update($rss_link);
-		}
-
-		print json_encode(array("message" => "UPDATE_COUNTERS",
-			"pubsub_result" => $pubsub_result));
+		print json_encode(array("message" => "UPDATE_COUNTERS"));
 	}
 
 	function getAllCounters() {
@@ -617,16 +604,6 @@ class RPC extends Handler_Protected {
 			$this->dbh->query("UPDATE ttrss_user_entries SET
 			published = NOT published,last_published = NOW()
 			WHERE ($ids_qpart) AND owner_uid = " . $_SESSION["uid"]);
-		}
-
-		if (PUBSUBHUBBUB_HUB) {
-			$rss_link = get_self_url_prefix() .
-				"/public.php?op=rss&id=-2&key=" .
-				get_feed_access_key(-2, false);
-
-			$p = new pubsubhubbub\publisher\Publisher(PUBSUBHUBBUB_HUB);
-
-			/* $pubsub_result = */ $p->publish_update($rss_link);
 		}
 	}
 
