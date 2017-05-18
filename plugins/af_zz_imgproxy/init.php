@@ -66,9 +66,14 @@ class Af_Zz_ImgProxy extends Plugin {
 			$data = fetch_file_contents(array("url" => $url));
 
 			if ($data) {
-				if (file_put_contents($local_filename, $data)) {
-					$mimetype = mime_content_type($local_filename);
-					header("Content-type: $mimetype");
+
+				$disable_cache = $this->host->get($this, "disable_cache");
+
+				if (!$disable_cache) {
+					if (file_put_contents($local_filename, $data)) {
+						$mimetype = mime_content_type($local_filename);
+						header("Content-type: $mimetype");
+					}
 				}
 
 				print $data;
@@ -226,8 +231,11 @@ class Af_Zz_ImgProxy extends Plugin {
 
 		$proxy_all = $this->host->get($this, "proxy_all");
 		print_checkbox("proxy_all", $proxy_all);
+		print "&nbsp;<label for=\"proxy_all\">" . __("Enable proxy for all remote images.") . "</label><br/>";
 
-		print "&nbsp;<label for=\"proxy_all\">" . __("Enable proxy for all remote images.") . "</label>";
+		$disable_cache = $this->host->get($this, "disable_cache");
+		print_checkbox("disable_cache", $disable_cache);
+		print "&nbsp;<label for=\"disable_cache\">" . __("Don't cache files locally.") . "</label>";
 
 		print "<p>"; print_button("submit", __("Save"));
 
@@ -238,8 +246,10 @@ class Af_Zz_ImgProxy extends Plugin {
 
 	function save() {
 		$proxy_all = checkbox_to_sql_bool($_POST["proxy_all"]) == "true";
+		$disable_cache = checkbox_to_sql_bool($_POST["disable_cache"]) == "true";
 
-		$this->host->set($this, "proxy_all", $proxy_all);
+		$this->host->set($this, "proxy_all", $proxy_all, false);
+		$this->host->set($this, "disable_cache", $disable_cache);
 
 		echo __("Configuration saved");
 	}
