@@ -580,21 +580,21 @@ class Feeds extends Handler_Protected {
 						onmouseout='postMouseOut($id)'";
 
 					$expanded_class = $expand_cdm ? "expanded" : "expandable";
-
-					$reply['content'] .= "<div class=\"cdm $hlc_suffix $expanded_class $class\"
+					
+					$tmp_content = "<div class=\"cdm $hlc_suffix $expanded_class $class\"
 						id=\"RROW-$id\" data-article-id='$id' data-orig-feed-id='$feed_id' $mouseover_attrs>";
 
-					$reply['content'] .= "<div class=\"cdmHeader\">";
-					$reply['content'] .= "<div style=\"vertical-align : middle\">";
+					$tmp_content .= "<div class=\"cdmHeader\">";
+					$tmp_content .= "<div style=\"vertical-align : middle\">";
 
-					$reply['content'] .= "<input dojoType=\"dijit.form.CheckBox\"
+					$tmp_content .= "<input dojoType=\"dijit.form.CheckBox\"
 							type=\"checkbox\" onclick=\"toggleSelectRow2(this, false, true)\"
 							class='rchk'>";
 
-					$reply['content'] .= "$marked_pic";
-					$reply['content'] .= "$published_pic";
+					$tmp_content .= "$marked_pic";
+					$tmp_content .= "$published_pic";
 
-					$reply['content'] .= "</div>";
+					$tmp_content .= "</div>";
 
 					if ($highlight_words && count($highlight_words > 0)) {
 						foreach ($highlight_words as $word) {
@@ -604,7 +604,7 @@ class Feeds extends Handler_Protected {
 					}
 
 					// data-article-id included for context menu
-					$reply['content'] .= "<span id=\"RTITLE-$id\"
+					$tmp_content .= "<span id=\"RTITLE-$id\"
 						onclick=\"return cdmClicked(event, $id);\"
 						data-article-id=\"$id\"
 						class=\"titleWrap hlMenuAttach $hlc_suffix\">						
@@ -615,9 +615,9 @@ class Feeds extends Handler_Protected {
 						$line["title"] .
 						"</a> <span class=\"author\">$entry_author</span>";
 
-					$reply['content'] .= $labels_str;
+					$tmp_content .= $labels_str;
 
-					$reply['content'] .= "<span class='collapseBtn' style='display : none'>
+					$tmp_content .= "<span class='collapseBtn' style='display : none'>
 						<img src=\"images/collapse.png\" onclick=\"cdmCollapseArticle(event, $id)\"
 						title=\"".__("Collapse article")."\"/></span>";
 
@@ -626,15 +626,15 @@ class Feeds extends Handler_Protected {
 					else
 						$excerpt_hidden = "style=\"display : none\"";
 
-					$reply['content'] .= "<span $excerpt_hidden id=\"CEXC-$id\" class=\"cdmExcerpt\">" . $content_preview . "</span>";
+					$tmp_content .= "<span $excerpt_hidden id=\"CEXC-$id\" class=\"cdmExcerpt\">" . $content_preview . "</span>";
 
-					$reply['content'] .= "</span>";
+					$tmp_content .= "</span>";
 
 					if (!$vfeed_group_enabled) {
 						if (@$line["feed_title"]) {
 							$rgba = @$rgba_cache[$feed_id];
 
-							$reply['content'] .= "<div class=\"hlFeed\">
+							$tmp_content .= "<div class=\"hlFeed\">
 								<a href=\"#\" style=\"background-color: rgba($rgba,0.3)\"
 								onclick=\"viewfeed({feed:$feed_id})\">".
 								truncate_string($line["feed_title"],30)."</a>
@@ -642,90 +642,87 @@ class Feeds extends Handler_Protected {
 						}
 					}
 
-					$reply['content'] .= "<span class='updated' title='$date_entered_fmt'>
-						$updated_fmt</span>";
+					$tmp_content .= "<span class='updated' title='$date_entered_fmt'>$updated_fmt</span>";
 
-					$reply['content'] .= "<div class='scoreWrap' style=\"vertical-align : middle\">";
-					$reply['content'] .= "$score_pic";
+					$tmp_content .= "<div class='scoreWrap' style=\"vertical-align : middle\">";
+					$tmp_content .= "$score_pic";
 
 					if (!get_pref("VFEED_GROUP_BY_FEED") && $line["feed_title"]) {
-						$reply['content'] .= "<span style=\"cursor : pointer\"
+						$tmp_content .= "<span style=\"cursor : pointer\"
 							title=\"".htmlspecialchars($line["feed_title"])."\"
 							onclick=\"viewfeed({feed:$feed_id})\">$feed_icon_img</span>";
 					}
-					$reply['content'] .= "</div>";
+					$tmp_content .= "</div>"; //scoreWrap
 
-					$reply['content'] .= "</div>";
+					$tmp_content .= "</div>"; //cdmHeader
 
-					$reply['content'] .= "<div class=\"cdmContent\" $content_hidden
+					$tmp_content .= "<div class=\"cdmContent\" $content_hidden
 						onclick=\"return cdmClicked(event, $id, true);\"
 						id=\"CICD-$id\">";
 
-					$reply['content'] .= "<div id=\"POSTNOTE-$id\">";
+					$tmp_content .= "<div id=\"POSTNOTE-$id\">";
 					if ($line['note']) {
-						$reply['content'] .= Article::format_article_note($id, $line['note']);
+						$tmp_content .= Article::format_article_note($id, $line['note']);
 					}
-					$reply['content'] .= "</div>";
+					$tmp_content .= "</div>"; //POSTNOTE
 
 					if (!$line['lang']) $line['lang'] = 'en';
 
-					$reply['content'] .= "<div class=\"cdmContentInner\" lang=\"".$line['lang']."\">";
+					$tmp_content .= "<div class=\"cdmContentInner\" lang=\"".$line['lang']."\">";
 
-			if ($line["orig_feed_id"]) {
+					if ($line["orig_feed_id"]) {
 
-				$tmp_result = $this->dbh->query("SELECT * FROM ttrss_archived_feeds
-					WHERE id = ".$line["orig_feed_id"] . " AND owner_uid = " . $_SESSION["uid"]);
+						$tmp_result = $this->dbh->query("SELECT * FROM ttrss_archived_feeds
+							WHERE id = ".$line["orig_feed_id"] . " AND owner_uid = " . $_SESSION["uid"]);
 
 						if ($this->dbh->num_rows($tmp_result) != 0) {
 
-							$reply['content'] .= "<div clear='both'>";
-							$reply['content'] .= __("Originally from:");
+							$tmp_content .= "<div clear='both'>";
+							$tmp_content .= __("Originally from:");
 
-							$reply['content'] .= "&nbsp;";
+							$tmp_content .= "&nbsp;";
 
 							$tmp_line = $this->dbh->fetch_assoc($tmp_result);
 
-							$reply['content'] .= "<a target='_blank' rel='noopener noreferrer'
+							$tmp_content .= "<a target='_blank' rel='noopener noreferrer'
 								href=' " . htmlspecialchars($tmp_line['site_url']) . "'>" .
 								$tmp_line['title'] . "</a>";
 
-							$reply['content'] .= "&nbsp;";
+							$tmp_content .= "&nbsp;";
 
-							$reply['content'] .= "<a target='_blank' rel='noopener noreferrer' href='" . htmlspecialchars($tmp_line['feed_url']) . "'>";
-							$reply['content'] .= "<img title='".__('Feed URL')."'class='tinyFeedIcon' src='images/pub_unset.png'></a>";
+							$tmp_content .= "<a target='_blank' rel='noopener noreferrer' href='" . htmlspecialchars($tmp_line['feed_url']) . "'>";
+							$tmp_content .= "<img title='".__('Feed URL')."'class='tinyFeedIcon' src='images/pub_unset.png'></a>";
 
-							$reply['content'] .= "</div>";
+							$tmp_content .= "</div>";
 						}
 					}
 
-					$reply['content'] .= "<span id=\"CWRAP-$id\">";
+					$tmp_content .= "<span id=\"CWRAP-$id\">";
+					$tmp_content .= "<span id=\"CENCW-$id\" class=\"cencw\" style=\"display : none\">";
+					$tmp_content .= htmlspecialchars($line["content"]);
+					$tmp_content .= "</span>";
+					$tmp_content .= "</span>";
 
-					$reply['content'] .= "<span id=\"CENCW-$id\" class=\"cencw\" style=\"display : none\">";
-					$reply['content'] .= htmlspecialchars($line["content"]);
-					$reply['content'] .= "</span>";
+					$tmp_content .= "</div>"; //cdmContentInner
 
-					$reply['content'] .= "</span>";
-
-					$reply['content'] .= "</div>";
-
-					$reply['content'] .= "<div class=\"cdmIntermediate\">";
+					$tmp_content .= "<div class=\"cdmIntermediate\">";
 
 					$always_display_enclosures = sql_bool_to_bool($line["always_display_enclosures"]);
-					$reply['content'] .= Article::format_article_enclosures($id, $always_display_enclosures, $line["content"], sql_bool_to_bool($line["hide_images"]));
+					$tmp_content .= Article::format_article_enclosures($id, $always_display_enclosures, $line["content"], sql_bool_to_bool($line["hide_images"]));
 
-					$reply['content'] .= "</div>";
+					$tmp_content .= "</div>"; // cdmIntermediate
 
-					$reply['content'] .= "<div class=\"cdmFooter\" onclick=\"cdmFooterClick(event)\">";
+					$tmp_content .= "<div class=\"cdmFooter\" onclick=\"cdmFooterClick(event)\">";
 
 					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_LEFT_BUTTON) as $p) {
-						$reply['content'] .= $p->hook_article_left_button($line);
+						$tmp_content .= $p->hook_article_left_button($line);
 					}
 
 					$tags_str = Article::format_tags_string($tags, $id);
 
-					$reply['content'] .= "<span class='left'>";
+					$tmp_content .= "<span class='left'>";
 
-					$reply['content'] .= "<img src='images/tag.png' alt='Tags' title='Tags'>
+					$tmp_content .= "<img src='images/tag.png' alt='Tags' title='Tags'>
 						<span id=\"ATSTR-$id\">$tags_str</span>
 						<a title=\"".__('Edit tags for this article')."\"
 						href=\"#\" onclick=\"editArticleTags($id)\">(+)</a>";
@@ -749,25 +746,29 @@ class Feeds extends Handler_Protected {
 						}
 					}
 
-					if ($entry_comments) $reply['content'] .= "&nbsp;($entry_comments)";
+					if ($entry_comments) $tmp_content .= "&nbsp;($entry_comments)";
 
-					$reply['content'] .= "</span>";
-					$reply['content'] .= "<div>";
+					$tmp_content .= "</span>";
+					$tmp_content .= "<div>";
 
-//					$reply['content'] .= "$marked_pic";
-//					$reply['content'] .= "$published_pic";
+//					$tmp_content .= "$marked_pic";
+//					$tmp_content .= "$published_pic";
 
 					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_BUTTON) as $p) {
-						$reply['content'] .= $p->hook_article_button($line);
+						$tmp_content .= $p->hook_article_button($line);
 					}
 
-					$reply['content'] .= "</div>";
-					$reply['content'] .= "</div>";
+					$tmp_content .= "</div>"; // buttons
 
-					$reply['content'] .= "</div>";
+					$tmp_content .= "</div>"; // cdmFooter
+					$tmp_content .= "</div>"; // cdmContent
+					$tmp_content .= "</div>"; // RROW.cdm
 
-					$reply['content'] .= "</div>";
+					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FORMAT_ARTICLE_CDM) as $p) {
+						$tmp_content = $p->hook_format_article_cdm($tmp_content, $line);
+					}
 
+					$reply['content'] .= $tmp_content;
 				}
 
 				++$lnum;

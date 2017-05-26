@@ -745,6 +745,10 @@ class Article extends Handler_Protected {
 			$rv['content'] .= "</body></html>";
 		}
 
+		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FORMAT_ARTICLE) as $p) {
+			$rv['content'] = $p->hook_format_article($rv['content'], $line, $zoom_mode);
+		}
+
 		return $rv;
 
 	}

@@ -52,6 +52,8 @@ class PluginHost {
 	const HOOK_ARTICLE_EXPORT_FEED = 31;
 	const HOOK_MAIN_TOOLBAR_BUTTON = 32;
 	const HOOK_ENCLOSURE_ENTRY = 33;
+	const HOOK_FORMAT_ARTICLE = 34;
+	const HOOK_FORMAT_ARTICLE_CDM = 35;
 
 	const KIND_ALL = 1;
 	const KIND_SYSTEM = 2;
