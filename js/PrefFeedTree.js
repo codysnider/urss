@@ -23,12 +23,14 @@ require(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functi
 		_createTreeNode: function(args) {
 			var tnode = this.inherited(arguments);
 
-			if (args.item.icon) {
-				var icon = dojo.doc.createElement('img');
+			var icon = dojo.doc.createElement('img');
+			if (args.item.icon && args.item.icon[0]) {
 				icon.src = args.item.icon[0];
-				icon.className = 'tinyFeedIcon';
-				domConstruct.place(icon, tnode.iconNode, 'only');
+			} else {
+				icon.src = 'images/blank_icon.gif';
 			}
+			icon.className = 'tinyFeedIcon';
+			domConstruct.place(icon, tnode.iconNode, 'only');
 
 			var param = this.model.store.getValue(args.item, 'param');
 
