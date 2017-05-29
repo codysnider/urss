@@ -1152,7 +1152,7 @@ class RSSUtils {
 				if (!file_exists($local_filename)) {
 					$file_content = fetch_file_contents($src);
 
-					if ($file_content && strlen($file_content) > _MIN_CACHE_FILE_SIZE) {
+					if ($file_content && strlen($file_content) > MIN_CACHE_FILE_SIZE) {
 						file_put_contents($local_filename, $file_content);
 					}
 				} else {
@@ -1186,7 +1186,7 @@ class RSSUtils {
 				if (!file_exists($local_filename)) {
 					$file_content = fetch_file_contents($src);
 
-					if ($file_content && strlen($file_content) > _MIN_CACHE_FILE_SIZE) {
+					if ($file_content && strlen($file_content) > MIN_CACHE_FILE_SIZE) {
 						file_put_contents($local_filename, $file_content);
 					}
 				} else {
@@ -1243,7 +1243,7 @@ class RSSUtils {
 
 				if ($files) {
 					foreach ($files as $file) {
-						if (time() - filemtime($file) > 86400*7) {
+						if (time() - filemtime($file) > 86400*CACHE_MAX_DAYS) {
 							unlink($file);
 
 							++$num_deleted;

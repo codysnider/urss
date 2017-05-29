@@ -69,7 +69,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 				$disable_cache = $this->host->get($this, "disable_cache");
 
-				if (!$disable_cache) {
+				if (!$disable_cache && strlen($data) > MIN_CACHE_FILE_SIZE) {
 					if (file_put_contents($local_filename, $data)) {
 						$mimetype = mime_content_type($local_filename);
 						header("Content-type: $mimetype");

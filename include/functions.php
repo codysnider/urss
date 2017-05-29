@@ -30,17 +30,12 @@
 
 	/**
 	 * Define a constant if not already defined
-	 *
-	 * @param string $name The constant name.
-	 * @param mixed $value The constant value.
-	 * @access public
-	 * @return boolean True if defined successfully or not.
 	 */
 	function define_default($name, $value) {
 		defined($name) or define($name, $value);
 	}
 
-	///// Some defaults that you can override in config.php //////
+	/* Some tunables you can override in config.php using define():	*/
 
 	define_default('FEED_FETCH_TIMEOUT', 45);
 	// How may seconds to wait for response when requesting feed from a site
@@ -52,12 +47,18 @@
 	define_default('FILE_FETCH_CONNECT_TIMEOUT', 15);
 	// How many seconds to wait for initial response from website when
 	// fetching files from remote sites
-
-	// feed updating stuff
 	define_default('DAEMON_UPDATE_LOGIN_LIMIT', 30);
+	// stop updating feeds if users haven't logged in for X days
 	define_default('DAEMON_FEED_LIMIT', 500);
+	// feed limit for one update batch
 	define_default('DAEMON_SLEEP_INTERVAL', 120);
-	define_default('_MIN_CACHE_FILE_SIZE', 1024);
+	// default sleep interval between feed updates (sec)
+	define_default('MIN_CACHE_FILE_SIZE', 1024);
+	// do not cache files smaller than that (bytes)
+	define_default('CACHE_MAX_DAYS', 7);
+	// max age in days for various automatically cached (temporary) files
+
+	/* tunables end here */
 
 	if (DB_TYPE == "pgsql") {
 		define('SUBSTRING_FOR_DATE', 'SUBSTRING_FOR_DATE');

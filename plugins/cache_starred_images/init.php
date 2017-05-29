@@ -209,7 +209,7 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 				if (!file_exists($local_filename)) {
 					$file_content = fetch_file_contents($src);
 
-					if ($file_content && strlen($file_content) > 0) {
+					if ($file_content && strlen($file_content) > MIN_CACHE_FILE_SIZE) {
 						file_put_contents($local_filename, $file_content);
 						$success = true;
 					}
