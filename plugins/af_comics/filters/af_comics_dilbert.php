@@ -7,7 +7,7 @@ class Af_Comics_Dilbert extends Af_ComicFilter {
 	}
 
 	function process(&$article) {
-		if (strpos($article["guid"], "dilbert.com") !== FALSE ||
+		if (strpos($article["link"], "dilbert.com") !== FALSE ||
 			strpos($article["link"], "/DilbertDailyStrip") !== FALSE) {
 
 				$res = fetch_file_contents($article["link"], false, false, false,
@@ -20,11 +20,8 @@ class Af_Comics_Dilbert extends Af_ComicFilter {
 					$res = $fetch_last_error_content;
 
 				$doc = new DOMDocument();
-				@$doc->loadHTML($res);
 
-				$basenode = false;
-
-				if ($doc) {
+				if (@$doc->loadHTML($res)) {
 					$xpath = new DOMXPath($doc);
 
 					// Get the image container
