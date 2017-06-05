@@ -19,23 +19,31 @@ class Af_Comics extends Plugin {
 
 		require_once __DIR__ . "/filter_base.php";
 
-		$filters = glob(__DIR__ . "/filters/*.php");
+		$filters = array_merge(glob(__DIR__ . "/filters.local/*.php"), glob(__DIR__ . "/filters/*.php"));
+		$names = [];
 
 		foreach ($filters as $file) {
-			require_once $file;
 			$filter_name = preg_replace("/\..*$/", "", basename($file));
 
-			$filter = new $filter_name();
+			if (array_search($filter_name, $names) === FALSE) {
+				if (!class_exists($filter_name)) {
+					require_once $file;
+				}
 
-			if (is_subclass_of($filter, "Af_ComicFilter")) {
-				array_push($this->filters, $filter);
+				array_push($names, $filter_name);
+
+				$filter = new $filter_name();
+
+				if (is_subclass_of($filter, "Af_ComicFilter")) {
+					array_push($this->filters, $filter);
+					array_push($names, $filter_name);
+				}
 			}
 		}
-
 	}
 
 	function hook_prefs_tab($args) {
-		if ($args != "prefPrefs") return;
+		if ($args != "prefFeeds") return;
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Feeds supported by af_comics')."\">";
 
@@ -58,6 +66,8 @@ class Af_Comics extends Plugin {
 		print "</ul>";
 
 		print "<p>".__('GoComics requires a specific URL to workaround their lack of feed support: <code>http://feeds.feedburner.com/uclick/<em>comic_name</em></code> (e.g. <code>http://www.gocomics.com/garfield</code> uses <code>http://feeds.feedburner.com/uclick/garfield</code>).')."</p>";
+
+		print "<p>".__('Drop any updated filters into <code>filters.local</code> in plugin directory.')."</p>";
 
 		print "</div>";
 	}
