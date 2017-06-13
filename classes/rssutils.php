@@ -57,17 +57,12 @@ class RSSUtils {
 	}
 
 	static function update_daemon_common($limit = DAEMON_FEED_LIMIT, $debug = true) {
-		// Process all other feeds using last_updated and interval parameters
-
 		$schema_version = get_schema_version();
 
 		if ($schema_version != SCHEMA_VERSION) {
 			die("Schema version is wrong, please upgrade the database.\n");
 		}
 
-		define('PREFS_NO_CACHE', true);
-
-		// Test if the user has loggued in recently. If not, it does not update its feeds.
 		if (!SINGLE_USER_MODE && DAEMON_UPDATE_LOGIN_LIMIT > 0) {
 			if (DB_TYPE == "pgsql") {
 				$login_thresh_qpart = "AND ttrss_users.last_login >= NOW() - INTERVAL '".DAEMON_UPDATE_LOGIN_LIMIT." days'";
@@ -78,7 +73,6 @@ class RSSUtils {
 			$login_thresh_qpart = "";
 		}
 
-		// Test if the feed need a update (update interval exceeded).
 		if (DB_TYPE == "pgsql") {
 			$update_limit_qpart = "AND ((
 					ttrss_feeds.update_interval = 0
@@ -112,9 +106,7 @@ class RSSUtils {
 			$updstart_thresh_qpart = "AND (ttrss_feeds.last_update_started IS NULL OR ttrss_feeds.last_update_started < DATE_SUB(NOW(), INTERVAL 10 MINUTE))";
 		}
 
-		// Test if there is a limit to number of updated feeds
-		$query_limit = "";
-		if($limit) $query_limit = sprintf("LIMIT %d", $limit);
+		$query_limit = $limit ? sprintf("LIMIT %d", $limit) : "";
 
 		// Update the least recently updated feeds first
 		$query_order = "ORDER BY last_updated";
@@ -132,27 +124,19 @@ class RSSUtils {
 				$updstart_thresh_qpart
 				$query_order $query_limit";
 
-		// We search for feed needing update.
 		$result = db_query($query);
 
-		if($debug) _debug(sprintf("Scheduled %d feeds to update...", db_num_rows($result)));
+		if ($debug) _debug(sprintf("Scheduled %d feeds to update...", db_num_rows($result)));
 
-		// Here is a little cache magic in order to minimize risk of double feed updates.
 		$feeds_to_update = array();
 		while ($line = db_fetch_assoc($result)) {
-			array_push($feeds_to_update, db_escape_string($line['feed_url']));
+			array_push($feeds_to_update, $line['feed_url']);
 		}
 
-		// We update the feed last update started date before anything else.
-		// There is no lag due to feed contents downloads
-		// It prevent an other process to update the same feed.
-
-		if(count($feeds_to_update) > 0) {
-			$feeds_quoted = array();
-
-			foreach ($feeds_to_update as $feed) {
-				array_push($feeds_quoted, "'" . db_escape_string($feed) . "'");
-			}
+		// Update last_update_started before actually starting the batch
+		// in order to minimize collision risk for parallel daemon tasks
+		if (count($feeds_to_update) > 0) {
+			$feeds_quoted = array_map(function ($s) { return "'" . db_escape_string($s) . "'"; }, $feeds_to_update);
 
 			db_query(sprintf("UPDATE ttrss_feeds SET last_update_started = NOW()
 				WHERE feed_url IN (%s)", implode(',', $feeds_quoted)));
@@ -163,14 +147,12 @@ class RSSUtils {
 
 		$batch_owners = array();
 
-		// For each feed, we call the feed update function.
 		foreach ($feeds_to_update as $feed) {
 			if($debug) _debug("Base feed: $feed");
 
 			//update_rss_feed($line["id"], true);
 
 			// since we have the data cached, we can deal with other feeds with the same url
-
 			$tmp_result = db_query("SELECT DISTINCT ttrss_feeds.id,last_updated,ttrss_feeds.owner_uid
 			FROM ttrss_feeds, ttrss_users, ttrss_user_prefs WHERE
 				ttrss_user_prefs.owner_uid = ttrss_feeds.owner_uid AND
@@ -184,7 +166,7 @@ class RSSUtils {
 
 			if (db_num_rows($tmp_result) > 0) {
 				while ($tline = db_fetch_assoc($tmp_result)) {
-					if($debug) _debug(" => " . $tline["last_updated"] . ", " . $tline["id"] . " " . $tline["owner_uid"]);
+					if ($debug) _debug(" => " . $tline["last_updated"] . ", " . $tline["id"] . " " . $tline["owner_uid"]);
 
 					if (array_search($tline["owner_uid"], $batch_owners) === FALSE)
 						array_push($batch_owners, $tline["owner_uid"]);
