@@ -32,7 +32,7 @@ div.postReply div.postTitle {
 	font-weight : 600;
 	text-rendering: optimizelegibility;
 	font-family : "Segoe WP Semibold", "Segoe UI Semibold", 
-		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "DejaVu Sans", "Helvetica Neue",
+		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue",
 		Helvetica, Arial, sans-serif;
 }
 
@@ -87,7 +87,7 @@ h1 {
 	font-weight : 600;
 	text-rendering: optimizelegibility;
 	font-family : "Segoe WP Semibold", "Segoe UI Semibold", 
-		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "DejaVu Sans", "Helvetica Neue",
+		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue",
 		Helvetica, Arial, sans-serif;
 }
 
@@ -99,7 +99,7 @@ h2 {
 	border-color : #ecf4ff;
 	text-rendering: optimizelegibility;
 	font-family : "Segoe WP Semibold", "Segoe UI Semibold", 
-		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "DejaVu Sans", "Helvetica Neue",
+		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue",
 		Helvetica, Arial, sans-serif;
 }
 
@@ -111,7 +111,7 @@ h3 {
 	font-weight : 600;
 	text-rendering: optimizelegibility;
 	font-family : "Segoe WP Semibold", "Segoe UI Semibold", 
-		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "DejaVu Sans", "Helvetica Neue",
+		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue",
 		Helvetica, Arial, sans-serif;
 }
 
@@ -120,7 +120,7 @@ h4 {
 	font-weight : 600;
 	text-rendering: optimizelegibility;
 	font-family : "Segoe WP Semibold", "Segoe UI Semibold", 
-		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "DejaVu Sans", "Helvetica Neue",
+		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue",
 		Helvetica, Arial, sans-serif;
 }
 
@@ -214,7 +214,7 @@ a:hover {
 	font-weight : 600;
 	text-rendering: optimizelegibility;
 	font-family : "Segoe WP Semibold", "Segoe UI Semibold", 
-		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "DejaVu Sans", "Helvetica Neue",
+		"Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue",
 		Helvetica, Arial, sans-serif;
 	color : #777;
 }
@@ -376,7 +376,7 @@ div.prefHelp {
 #main-toolbar table *,
 #main-toolbar .actionChooser * {
 	text-rendering: optimizelegibility;
-	font-family : "Segoe WP", "Segoe UI Web", "Segoe UI", Ubuntu, "DejaVu Sans", "Helvetica Neue",
+	font-family : "Segoe WP", "Segoe UI Web", "Segoe UI", Ubuntu, "Helvetica Neue",
 		Helvetica, Arial, sans-serif;
 	font-size : 12px;
 
@@ -1102,7 +1102,7 @@ body#ttrssMain #feedTree {
 	height : 100%;
 	overflow-x : hidden;
 	text-rendering: optimizelegibility;
-	font-family : "Segoe UI Web", "Segoe UI", Ubuntu, "DejaVu Sans", "Helvetica Neue",
+	font-family : "Segoe UI Web", "Segoe UI", Ubuntu, "Helvetica Neue",
 		Helvetica, Arial, sans-serif;
 }
 
