@@ -67,7 +67,7 @@ class Db_Prefs {
 			$user_id = sprintf("%d", $user_id);
 		}
 
-		if (isset($this->cache[$pref_name])) {
+		if (isset($this->cache[$pref_name]) && !$user_id) {
 			$tuple = $this->cache[$pref_name];
 			return $this->convert($tuple["value"], $tuple["type"]);
 		}
