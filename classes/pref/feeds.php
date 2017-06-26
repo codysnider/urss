@@ -339,7 +339,7 @@ class Pref_Feeds extends Handler_Protected {
 				owner_uid = " . $_SESSION["uid"]);
 		}
 
-		$order_id = 0;
+		$order_id = 1;
 
 		$cat = $data_map[$item_id];
 
