@@ -740,15 +740,10 @@ function opmlImportComplete(iframe) {
 		title: __("OPML Import"),
 		style: "width: 600px",
 		onCancel: function () {
-			updateFeedList();
-			updateFilterList();
-			updateLabelList();
+            window.location.reload();
 		},
 		execute: function () {
-			updateFeedList();
-			updateFilterList();
-			updateLabelList();
-			this.hide();
+			window.location.reload();
 		},
 		content: content
 	});
@@ -876,6 +871,7 @@ function init() {
 		"dijit/form/CheckBox",
 		"dijit/form/DropDownButton",
 		"dijit/form/FilteringSelect",
+        "dijit/form/MultiSelect",
 		"dijit/form/Form",
 		"dijit/form/RadioButton",
 		"dijit/form/ComboButton",
