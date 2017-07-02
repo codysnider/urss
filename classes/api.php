@@ -569,7 +569,7 @@ class API extends Handler {
 
 			if ($include_nested && $cat_id) {
 				$result = db_query("SELECT
-					id, title FROM ttrss_feed_categories
+					id, title, order_id FROM ttrss_feed_categories
 					WHERE parent_cat = '$cat_id' AND owner_uid = " . $_SESSION["uid"] .
 				" ORDER BY id, title");
 
@@ -583,6 +583,7 @@ class API extends Handler {
 								"title" => $line["title"],
 								"unread" => $unread,
 								"is_cat" => true,
+                                "order_id" => (int) $line["order_id"]
 							);
 						array_push($feeds, $row);
 					}
