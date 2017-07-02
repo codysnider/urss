@@ -956,7 +956,7 @@ class Pref_Filters extends Handler_Protected {
 		} else {
 			$reg_exp = "";
 			$filter_type = 1;
-			$feed_id = [];
+			$feed_id = ["0"];
 			$inverse_checked = "";
 		}
 
