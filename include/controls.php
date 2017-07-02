@@ -168,7 +168,7 @@ function print_feed_multi_select($id, $default_ids = [],
 }
 
 
-function print_feed_select($id, $default_id = "",
+/*function print_feed_select($id, $default_id = "",
 						   $attributes = "", $include_all_feeds = true,
 						   $root_id = false, $nest_level = 0) {
 
@@ -262,7 +262,7 @@ function print_feed_select($id, $default_id = "",
 	if (!$root_id) {
 		print "</select>";
 	}
-}
+}*/
 
 function print_feed_cat_select($id, $default_id,
 							   $attributes, $include_all_cats = true, $root_id = false, $nest_level = 0) {
