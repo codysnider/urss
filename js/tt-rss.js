@@ -228,6 +228,7 @@ function init() {
 			"dijit/form/Form",
 			"dijit/form/RadioButton",
 			"dijit/form/Select",
+        	"dijit/form/MultiSelect",
 			"dijit/form/SimpleTextarea",
 			"dijit/form/TextBox",
 			"dijit/form/ComboBox",

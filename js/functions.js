@@ -1083,7 +1083,7 @@ function quickAddFilter() {
 				var feed_id = activeFeedIsCat() ? 'CAT:' + parseInt(getActiveFeedId()) :
 					getActiveFeedId();
 
-				var rule = { reg_exp: selectedText, feed_id: feed_id, filter_type: 1 };
+				var rule = { reg_exp: selectedText, feed_id: [feed_id], filter_type: 1 };
 
 				addFilterRule(null, dojo.toJson(rule));
 
@@ -1107,7 +1107,7 @@ function quickAddFilter() {
 						var feed_id = activeFeedIsCat() ? 'CAT:' + parseInt(getActiveFeedId()) :
 							getActiveFeedId();
 
-						var rule = { reg_exp: title, feed_id: feed_id, filter_type: 1 };
+						var rule = { reg_exp: title, feed_id: [feed_id], filter_type: 1 };
 
 						addFilterRule(null, dojo.toJson(rule));
 					}
