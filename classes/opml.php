@@ -181,13 +181,37 @@ class Opml extends Handler_Protected {
 
 					$cat_filter = sql_bool_to_bool($tmp_line["cat_filter"]);
 
-					if ($cat_filter && $tmp_line["cat_id"] || $tmp_line["feed_id"]) {
-						$tmp_line["feed"] = Feeds::getFeedTitle(
-							$cat_filter ? $tmp_line["cat_id"] : $tmp_line["feed_id"],
-							$cat_filter);
-					} else {
-						$tmp_line["feed"] = "";
-					}
+					if (!$tmp_line["match_on"]) {
+                        if ($cat_filter && $tmp_line["cat_id"] || $tmp_line["feed_id"]) {
+                            $tmp_line["feed"] = Feeds::getFeedTitle(
+                                $cat_filter ? $tmp_line["cat_id"] : $tmp_line["feed_id"],
+                                $cat_filter);
+                        } else {
+                            $tmp_line["feed"] = "";
+                        }
+                    } else {
+					    $match = [];
+					    foreach (json_decode($tmp_line["match_on"], true) as $feed_id) {
+
+                            if (strpos($feed_id, "CAT:") === 0) {
+                                $feed_id = (int)substr($feed_id, 4);
+                                if ($feed_id) {
+                                    array_push($match, [Feeds::getCategoryTitle($feed_id), true, false]);
+                                } else {
+                                    array_push($match, [0, true, true]);
+                                }
+                            } else {
+                                if ($feed_id) {
+                                    array_push($match, [Feeds::getFeedTitle((int)$feed_id), false, false]);
+                                } else {
+                                    array_push($match, [0, false, true]);
+                                }
+                            }
+                        }
+
+                        $tmp_line["match"] = $match;
+					    unset($tmp_line["match_on"]);
+                    }
 
 					$tmp_line["cat_filter"] = sql_bool_to_bool($tmp_line["cat_filter"]);
 					$tmp_line["inverse"] = sql_bool_to_bool($tmp_line["inverse"]);
@@ -346,28 +370,71 @@ class Opml extends Handler_Protected {
 						$feed_id = "NULL";
 						$cat_id = "NULL";
 
-						if (!$rule["cat_filter"]) {
-							$tmp_result = $this->dbh->query("SELECT id FROM ttrss_feeds
-								WHERE title = '".$this->dbh->escape_string($rule["feed"])."' AND owner_uid = ".$_SESSION["uid"]);
-							if ($this->dbh->num_rows($tmp_result) > 0) {
-								$feed_id = $this->dbh->fetch_result($tmp_result, 0, "id");
-							}
-						} else {
-							$tmp_result = $this->dbh->query("SELECT id FROM ttrss_feed_categories
-								WHERE title = '".$this->dbh->escape_string($rule["feed"])."' AND owner_uid = ".$_SESSION["uid"]);
+						if ($rule["match"]) {
 
-							if ($this->dbh->num_rows($tmp_result) > 0) {
-								$cat_id = $this->dbh->fetch_result($tmp_result, 0, "id");
-							}
-						}
+                            $match_on = [];
 
-						$cat_filter = bool_to_sql_bool($rule["cat_filter"]);
-						$reg_exp = $this->dbh->escape_string($rule["reg_exp"]);
-						$filter_type = (int)$rule["filter_type"];
-						$inverse = bool_to_sql_bool($rule["inverse"]);
+						    foreach ($rule["match"] as $match) {
+						        list ($name, $is_cat, $is_id) = $match;
 
-						$this->dbh->query("INSERT INTO ttrss_filters2_rules (feed_id,cat_id,filter_id,filter_type,reg_exp,cat_filter,inverse)
-							VALUES ($feed_id, $cat_id, $filter_id, $filter_type, '$reg_exp', $cat_filter,$inverse)");
+						        if ($is_id) {
+						            array_push($match_on, ($is_cat ? "CAT:" : "") . $name);
+                                } else {
+
+						            $match_id = false;
+
+                                    if (!$is_cat) {
+                                        $tmp_result = $this->dbh->query("SELECT id FROM ttrss_feeds
+                                    WHERE title = '" . $this->dbh->escape_string($name) . "' AND owner_uid = " . $_SESSION["uid"]);
+                                        if ($this->dbh->num_rows($tmp_result) > 0) {
+                                            $match_id = $this->dbh->fetch_result($tmp_result, 0, "id");
+                                        }
+                                    } else {
+                                        $tmp_result = $this->dbh->query("SELECT id FROM ttrss_feed_categories
+                                    WHERE title = '" . $this->dbh->escape_string($name) . "' AND owner_uid = " . $_SESSION["uid"]);
+
+                                        if ($this->dbh->num_rows($tmp_result) > 0) {
+                                            $match_id = 'CAT:' . $this->dbh->fetch_result($tmp_result, 0, "id");
+                                        }
+                                    }
+
+                                    if ($match_id) array_push($match_on, $match_id);
+                                }
+                            }
+
+                            $reg_exp = $this->dbh->escape_string($rule["reg_exp"]);
+                            $filter_type = (int)$rule["filter_type"];
+                            $inverse = bool_to_sql_bool($rule["inverse"]);
+                            $match_on = $this->dbh->escape_string(json_encode($match_on));
+
+                            $this->dbh->query("INSERT INTO ttrss_filters2_rules (feed_id,cat_id,match_on,filter_id,filter_type,reg_exp,cat_filter,inverse)
+                                VALUES (NULL, NULL, '$match_on',$filter_id, $filter_type, '$reg_exp', false, $inverse)");
+
+                        } else {
+
+                            if (!$rule["cat_filter"]) {
+                                $tmp_result = $this->dbh->query("SELECT id FROM ttrss_feeds
+                                    WHERE title = '" . $this->dbh->escape_string($rule["feed"]) . "' AND owner_uid = " . $_SESSION["uid"]);
+                                if ($this->dbh->num_rows($tmp_result) > 0) {
+                                    $feed_id = $this->dbh->fetch_result($tmp_result, 0, "id");
+                                }
+                            } else {
+                                $tmp_result = $this->dbh->query("SELECT id FROM ttrss_feed_categories
+                                    WHERE title = '" . $this->dbh->escape_string($rule["feed"]) . "' AND owner_uid = " . $_SESSION["uid"]);
+
+                                if ($this->dbh->num_rows($tmp_result) > 0) {
+                                    $cat_id = $this->dbh->fetch_result($tmp_result, 0, "id");
+                                }
+                            }
+
+                            $cat_filter = bool_to_sql_bool($rule["cat_filter"]);
+                            $reg_exp = $this->dbh->escape_string($rule["reg_exp"]);
+                            $filter_type = (int)$rule["filter_type"];
+                            $inverse = bool_to_sql_bool($rule["inverse"]);
+
+                            $this->dbh->query("INSERT INTO ttrss_filters2_rules (feed_id,cat_id,filter_id,filter_type,reg_exp,cat_filter,inverse)
+                                VALUES ($feed_id, $cat_id, $filter_id, $filter_type, '$reg_exp', $cat_filter,$inverse)");
+                        }
 					}
 
 					foreach ($filter["actions"] as $action) {

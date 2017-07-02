@@ -75,18 +75,20 @@ class Pref_Filters extends Handler_Protected {
 				$rule["type"] = $filter_types[$rule["filter_type"]];
 				unset($rule["filter_type"]);
 
-				if (strpos($rule["feed_id"], "CAT:") === 0) {
-					$rule["cat_id"] = (int) substr($rule["feed_id"], 4);
-					unset($rule["feed_id"]);
-				}
+				$scope_inner_qparts = [];
+				foreach ($rule["feed_id"] as $feed_id) {
 
-				if (isset($rule["feed_id"]) && $rule['feed_id'] > 0) {
-					array_push($scope_qparts, "feed_id = " . $rule["feed_id"]);
-				} else if (isset($rule["cat_id"])) {
-					array_push($scope_qparts, "cat_id = " . $rule["cat_id"]);
-				} else {
-					array_push($scope_qparts, "true");
-				}
+                    if (strpos($feed_id, "CAT:") === 0) {
+                        $cat_id = (int) substr($feed_id, 4);
+                        array_push($scope_inner_qparts, "cat_id = " . $cat_id);
+                    } else if ($feed_id > 0) {
+                        array_push($scope_inner_qparts, "feed_id = " . $feed_id);
+                    }
+                }
+
+                if (count($scope_inner_qparts) > 0) {
+				    array_push($scope_qparts, "(" . implode(" OR ", $scope_inner_qparts) . ")");
+                }
 
 				array_push($filter["rules"], $rule);
 
@@ -95,6 +97,8 @@ class Pref_Filters extends Handler_Protected {
 				break;
 			}
 		}
+
+		if (count($scope_qparts) == 0) $scope_qparts = ["true"];
 
 		$glue = $filter['match_any_rule'] ? " OR " :  " AND ";
 		$scope_qpart = join($glue, $scope_qparts);
@@ -207,6 +211,7 @@ class Pref_Filters extends Handler_Protected {
 	private function getfilterrules_concise($filter_id) {
 		$result = $this->dbh->query("SELECT reg_exp,
 			inverse,
+			match_on,
 			feed_id,
 			cat_id,
 			cat_filter,
@@ -221,10 +226,32 @@ class Pref_Filters extends Handler_Protected {
 
 		while ($line = $this->dbh->fetch_assoc($result)) {
 
-			$where = sql_bool_to_bool($line["cat_filter"]) ?
-				Feeds::getCategoryTitle($line["cat_id"]) :
-				($line["feed_id"] ?
-					Feeds::getFeedTitle($line["feed_id"]) : __("All feeds"));
+		    if ($line["match_on"]) {
+		        $feeds = json_decode($line["match_on"], true);
+		        $feeds_fmt = [];
+
+                foreach ($feeds as $feed_id) {
+
+                    if (strpos($feed_id, "CAT:") === 0) {
+                        $feed_id = (int)substr($feed_id, 4);
+                        array_push($feeds_fmt, Feeds::getCategoryTitle($feed_id));
+                    } else {
+                        if ($feed_id)
+                            array_push($feeds_fmt, Feeds::getFeedTitle((int)$feed_id));
+                        else
+                            array_push($feeds_fmt, __("All feeds"));
+                    }
+                }
+
+                $where = implode(", ", $feeds_fmt);
+
+            } else {
+
+                $where = sql_bool_to_bool($line["cat_filter"]) ?
+                    Feeds::getCategoryTitle($line["cat_id"]) :
+                    ($line["feed_id"] ?
+                        Feeds::getFeedTitle($line["feed_id"]) : __("All feeds"));
+            }
 
 #			$where = $line["cat_id"] . "/" . $line["feed_id"];
 
@@ -376,17 +403,26 @@ class Pref_Filters extends Handler_Protected {
 			WHERE filter_id = '$filter_id' ORDER BY reg_exp, id");
 
 		while ($line = $this->dbh->fetch_assoc($rules_result)) {
-			if (sql_bool_to_bool($line["cat_filter"])) {
-				$line["feed_id"] = "CAT:" . (int)$line["cat_id"];
-			}
+            if ($line["match_on"]) {
+                $line["feed_id"] = json_decode($line["match_on"], true);
+            } else {
+                if (sql_bool_to_bool($line["cat_filter"])) {
+                    $feed_id = "CAT:" . (int)$line["cat_id"];
+                } else {
+                    $feed_id = (int)$line["cat_id"];
+                }
 
-			unset($line["cat_filter"]);
-			unset($line["cat_id"]);
-			unset($line["filter_id"]);
-			unset($line["id"]);
-			if (!sql_bool_to_bool($line["inverse"])) unset($line["inverse"]);
+                $line["feed_id"] = ["" . $feed_id]; // set item type to string for in_array()
+            }
 
-			$data = htmlspecialchars(json_encode($line));
+            unset($line["cat_filter"]);
+            unset($line["cat_id"]);
+            unset($line["filter_id"]);
+            unset($line["id"]);
+            if (!sql_bool_to_bool($line["inverse"])) unset($line["inverse"]);
+            unset($line["match_on"]);
+
+            $data = htmlspecialchars(json_encode($line));
 
 			print "<li><input dojoType='dijit.form.CheckBox' type='checkbox' onclick='toggleSelectListRow2(this)'>".
 				"<span onclick=\"dijit.byId('filterEditDlg').editRule(this)\">".$this->getRuleName($line)."</span>".
@@ -491,19 +527,25 @@ class Pref_Filters extends Handler_Protected {
 	private function getRuleName($rule) {
 		if (!$rule) $rule = json_decode($_REQUEST["rule"], true);
 
-		$feed_id = $rule["feed_id"];
+		$feeds = $rule["feed_id"];
+		$feeds_fmt = [];
 
-		if (strpos($feed_id, "CAT:") === 0) {
-			$feed_id = (int) substr($feed_id, 4);
-			$feed = Feeds::getCategoryTitle($feed_id);
-		} else {
-			$feed_id = (int) $feed_id;
+		if (!is_array($feeds)) $feeds = [$feeds];
 
-			if ($rule["feed_id"])
-				$feed = Feeds::getFeedTitle((int)$rule["feed_id"]);
-			else
-				$feed = __("All feeds");
-		}
+		foreach ($feeds as $feed_id) {
+
+            if (strpos($feed_id, "CAT:") === 0) {
+                $feed_id = (int)substr($feed_id, 4);
+                array_push($feeds_fmt, Feeds::getCategoryTitle($feed_id));
+            } else {
+                if ($feed_id)
+                    array_push($feeds_fmt, Feeds::getFeedTitle((int)$feed_id));
+                else
+                    array_push($feeds_fmt, __("All feeds"));
+            }
+        }
+
+        $feed = implode(", ", $feeds_fmt);
 
 		$result = $this->dbh->query("SELECT description FROM ttrss_filter_types
 			WHERE id = ".(int)$rule["filter_type"]);
@@ -621,9 +663,9 @@ class Pref_Filters extends Handler_Protected {
 					$inverse = isset($rule["inverse"]) ? "true" : "false";
 
 					$filter_type = (int) $this->dbh->escape_string(trim($rule["filter_type"]));
-					$feed_id = $this->dbh->escape_string(trim($rule["feed_id"]));
+					$match_on = $this->dbh->escape_string(json_encode($rule["feed_id"]));
 
-					if (strpos($feed_id, "CAT:") === 0) {
+					/*if (strpos($feed_id, "CAT:") === 0) {
 
 						$cat_filter = bool_to_sql_bool(true);
 						$cat_id = (int) substr($feed_id, 4);
@@ -636,11 +678,11 @@ class Pref_Filters extends Handler_Protected {
 						$cat_id = "NULL";
 
 						if (!$feed_id) $feed_id = "NULL"; // Uncategorized
-					}
+					}*/
 
 					$query = "INSERT INTO ttrss_filters2_rules
-						(filter_id, reg_exp,filter_type,feed_id,cat_id,cat_filter,inverse) VALUES
-						('$filter_id', '$reg_exp', '$filter_type', $feed_id, $cat_id, $cat_filter, $inverse)";
+						(filter_id, reg_exp,filter_type,feed_id,cat_id,match_on,inverse) VALUES
+						('$filter_id', '$reg_exp', '$filter_type', NULL, NULL, '$match_on', $inverse)";
 
 					$this->dbh->query($query);
 				}
@@ -914,17 +956,16 @@ class Pref_Filters extends Handler_Protected {
 		} else {
 			$reg_exp = "";
 			$filter_type = 1;
-			$feed_id = 0;
+			$feed_id = [];
 			$inverse_checked = "";
 		}
 
-		if (strpos($feed_id, "CAT:") === 0) {
+		/*if (strpos($feed_id, "CAT:") === 0) {
 			$feed_id = substr($feed_id, 4);
 			$cat_filter = true;
 		} else {
 			$cat_filter = false;
-		}
-
+		}*/
 
 		print "<form name='filter_new_rule_form' id='filter_new_rule_form'>";
 
@@ -960,9 +1001,9 @@ class Pref_Filters extends Handler_Protected {
 		print __("in") . " ";
 
 		print "<span id='filterDlg_feeds'>";
-		print_feed_select("feed_id",
-			$cat_filter ? "CAT:$feed_id" : $feed_id,
-			'dojoType="dijit.form.FilteringSelect"');
+		print_feed_multi_select("feed_id",
+			$feed_id,
+			'dojoType="dijit.form.MultiSelect" style="height : 150px"');
 		print "</span>";
 
 		print "</div>";
