@@ -252,6 +252,7 @@ create table ttrss_filters2_rules(id integer primary key auto_increment,
 	feed_id integer default null,
 	cat_id integer default null,
 	cat_filter boolean not null default false,
+	match_on text,
 	index (filter_id),
 	foreign key (filter_id) references ttrss_filters2(id) on delete cascade,
 	index (filter_type),
@@ -281,7 +282,7 @@ create table ttrss_tags (id integer primary key auto_increment,
 
 create table ttrss_version (schema_version int not null) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert into ttrss_version values (130);
+insert into ttrss_version values (131);
 
 create table ttrss_enclosures (id integer primary key auto_increment,
 	content_url text not null,
