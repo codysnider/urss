@@ -1813,20 +1813,26 @@
 		$result = db_query("SELECT * FROM ttrss_filters2 WHERE
 				owner_uid = $owner_uid AND enabled = true ORDER BY order_id, title");
 
-		$check_cats = join(",", array_merge(
+		$check_cats = array_merge(
 			Feeds::getParentCategories($cat_id, $owner_uid),
-			array($cat_id)));
+			[$cat_id]);
+
+		$check_cats_str = join(",", $check_cats);
+		$check_cats_fullids = array_map(function($a) { return "CAT:$a"; }, $check_cats);
 
 		while ($line = db_fetch_assoc($result)) {
 			$filter_id = $line["id"];
 
+            $match_any_rule = sql_bool_to_bool($line["match_any_rule"]);
+
 			$result2 = db_query("SELECT
-					r.reg_exp, r.inverse, r.feed_id, r.cat_id, r.cat_filter, t.name AS type_name
+					r.reg_exp, r.inverse, r.feed_id, r.cat_id, r.cat_filter, r.match_on, t.name AS type_name
 					FROM ttrss_filters2_rules AS r,
 					ttrss_filter_types AS t
 					WHERE
-						($null_cat_qpart (cat_id IS NULL AND cat_filter = false) OR cat_id IN ($check_cats)) AND
-						(feed_id IS NULL OR feed_id = '$feed_id') AND
+					    (match_on IS NOT NULL OR 
+						  (($null_cat_qpart (cat_id IS NULL AND cat_filter = false) OR cat_id IN ($check_cats_str)) AND
+						  (feed_id IS NULL OR feed_id = '$feed_id'))) AND
 						filter_type = t.id AND filter_id = '$filter_id'");
 
 			$rules = array();
@@ -1835,30 +1841,53 @@
 			while ($rule_line = db_fetch_assoc($result2)) {
 	#				print_r($rule_line);
 
-				$rule = array();
-				$rule["reg_exp"] = $rule_line["reg_exp"];
-				$rule["type"] = $rule_line["type_name"];
-				$rule["inverse"] = sql_bool_to_bool($rule_line["inverse"]);
+                if ($rule_line["match_on"]) {
+                    $match_on = json_decode($rule_line["match_on"], true);
 
-				array_push($rules, $rule);
+                    if (in_array("0", $match_on) || in_array($feed_id, $match_on) || count(array_intersect($check_cats_fullids, $match_on)) > 0) {
+
+                        $rule = array();
+                        $rule["reg_exp"] = $rule_line["reg_exp"];
+                        $rule["type"] = $rule_line["type_name"];
+                        $rule["inverse"] = sql_bool_to_bool($rule_line["inverse"]);
+
+                        array_push($rules, $rule);
+                    } else if (!$match_any_rule) {
+                        // this filter contains a rule that doesn't match to this feed/category combination
+                        // thus filter has to be rejected
+
+                        $rules = [];
+                        break;
+                    }
+
+                } else {
+
+                    $rule = array();
+                    $rule["reg_exp"] = $rule_line["reg_exp"];
+                    $rule["type"] = $rule_line["type_name"];
+                    $rule["inverse"] = sql_bool_to_bool($rule_line["inverse"]);
+
+                    array_push($rules, $rule);
+                }
 			}
 
-			$result2 = db_query("SELECT a.action_param,t.name AS type_name
-					FROM ttrss_filters2_actions AS a,
-					ttrss_filter_actions AS t
-					WHERE
-						action_id = t.id AND filter_id = '$filter_id'");
+			if (count($rules) > 0) {
+                $result2 = db_query("SELECT a.action_param,t.name AS type_name
+                        FROM ttrss_filters2_actions AS a,
+                        ttrss_filter_actions AS t
+                        WHERE
+                            action_id = t.id AND filter_id = '$filter_id'");
 
-			while ($action_line = db_fetch_assoc($result2)) {
-	#				print_r($action_line);
+                while ($action_line = db_fetch_assoc($result2)) {
+                    #				print_r($action_line);
 
-				$action = array();
-				$action["type"] = $action_line["type_name"];
-				$action["param"] = $action_line["action_param"];
+                    $action = array();
+                    $action["type"] = $action_line["type_name"];
+                    $action["param"] = $action_line["action_param"];
 
-				array_push($actions, $action);
-			}
-
+                    array_push($actions, $action);
+                }
+            }
 
 			$filter = array();
 			$filter["match_any_rule"] = sql_bool_to_bool($line["match_any_rule"]);

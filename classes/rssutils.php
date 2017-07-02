@@ -497,6 +497,10 @@ class RSSUtils {
 
 			$filters = load_filters($feed, $owner_uid);
 
+			if ($debug_enabled) {
+			    print_r($filters);
+            }
+
 			_debug("" . count($filters) . " filters loaded.", $debug_enabled);
 
 			$items = $rss->get_items();
