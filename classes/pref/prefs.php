@@ -697,9 +697,7 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Plugins')."\">";
 
-		print "<p>" . __("You will need to reload Tiny Tiny RSS for plugin changes to take effect.") . "</p>";
-
-		print_notice(__("Download more plugins at tt-rss.org <a class=\"visibleLink\" target=\"_blank\" href=\"http://tt-rss.org/forum/viewforum.php?f=22\">forums</a> or <a target=\"_blank\" class=\"visibleLink\" href=\"http://tt-rss.org/wiki/Plugins\">wiki</a>."));
+		print_notice(__("You will need to reload Tiny Tiny RSS for plugin changes to take effect."));
 
 		if (ini_get("open_basedir") && function_exists("curl_init") && !defined("NO_CURL")) {
 			print_warning("Your PHP configuration has open_basedir restrictions enabled. Some plugins relying on CURL for functionality may not work correctly.");
@@ -729,7 +727,9 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "<table width='100%' class='prefPluginsList'>";
 
-		print "<tr><td colspan='4'><h3>".__("System plugins")."</h3></td></tr>";
+		print "<tr><td colspan='5'><h3>".__("System plugins")."</h3>".
+            format_notice(__("System plugins are enabled in <strong>config.php</strong> for all users.")).
+            "</td></tr>";
 
 		print "<tr class=\"title\">
 				<td width=\"5%\">&nbsp;</td>
