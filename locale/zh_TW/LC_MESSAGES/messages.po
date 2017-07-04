@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-23 15:25+0300\n"
+"POT-Creation-Date: 2017-07-04 16:29+0300\n"
 "PO-Revision-Date: 2014-02-17 23:12+0800\n"
 "Last-Translator: Yuan Chiu <me@yuaner.tw>\n"
 "Language-Team: Yuan Chiu <me@yuaner.tw>\n"
@@ -174,31 +174,30 @@ msgstr "未找到使用者"
 #: prefs.php:118
 #: classes/backend.php:5
 #: classes/pref/labels.php:282
-#: classes/pref/feeds.php:1402
-#: classes/pref/filters.php:779
+#: classes/pref/filters.php:819
+#: classes/pref/feeds.php:1376
 #: js/feedlist.js:149
-#: js/functions.js:1131
-#: js/functions.js:1231
-#: js/functions.js:1478
+#: js/functions.js:1210
+#: js/functions.js:1457
 #: js/prefs.js:621
-#: js/prefs.js:818
-#: js/prefs.js:1648
-#: js/prefs.js:1663
-#: js/tt-rss.js:550
-#: js/viewfeed.js:1182
+#: js/prefs.js:813
+#: js/prefs.js:1644
+#: js/prefs.js:1659
+#: js/tt-rss.js:551
+#: js/viewfeed.js:1184
 #: plugins/import_export/import_export.js:17
 #: js/feedlist.js:467
-#: js/feedlist.js:512
+#: js/feedlist.js:515
 #: js/functions.js:372
 #: js/functions.js:630
-#: js/prefs.js:1360
-#: js/prefs.js:1413
-#: js/prefs.js:1452
-#: js/prefs.js:1465
-#: js/prefs.js:1476
-#: js/prefs.js:1491
-#: js/tt-rss.js:567
-#: js/viewfeed.js:762
+#: js/prefs.js:1356
+#: js/prefs.js:1409
+#: js/prefs.js:1448
+#: js/prefs.js:1461
+#: js/prefs.js:1472
+#: js/prefs.js:1487
+#: js/tt-rss.js:568
+#: js/viewfeed.js:764
 msgid "Loading, please wait..."
 msgstr "載入中，請稍候……"
 
@@ -215,13 +214,13 @@ msgid "All Articles"
 msgstr "全部文章"
 
 #: index.php:192
-#: include/functions2.php:107
+#: include/functions.php:1181
 #: classes/feeds.php:110
 msgid "Starred"
 msgstr "星標"
 
 #: index.php:193
-#: include/functions2.php:108
+#: include/functions.php:1182
 #: classes/feeds.php:111
 msgid "Published"
 msgstr "已發布"
@@ -262,7 +261,7 @@ msgstr "標題"
 
 #: index.php:209
 #: index.php:249
-#: include/functions2.php:95
+#: include/functions.php:1169
 #: classes/feeds.php:115
 #: js/FeedTree.js:138
 #: js/FeedTree.js:166
@@ -302,7 +301,7 @@ msgid "Feed actions:"
 msgstr "摘要操作："
 
 #: index.php:244
-#: classes/handler/public.php:672
+#: classes/handler/public.php:583
 msgid "Subscribe to feed..."
 msgstr "訂閱摘要"
 
@@ -316,8 +315,8 @@ msgstr "為摘要重新評分"
 
 #: index.php:247
 #: classes/pref/feeds.php:785
-#: classes/pref/feeds.php:1357
-#: js/PrefFeedTree.js:78
+#: classes/pref/feeds.php:1331
+#: js/PrefFeedTree.js:80
 msgid "Unsubscribe"
 msgstr "取消訂閱"
 
@@ -334,7 +333,7 @@ msgid "Other actions:"
 msgstr "其他操作："
 
 #: index.php:252
-#: include/functions2.php:81
+#: include/functions.php:1155
 msgid "Toggle widescreen mode"
 msgstr "切換版面顯示"
 
@@ -360,7 +359,7 @@ msgstr ""
 
 #: prefs.php:33
 #: prefs.php:136
-#: include/functions2.php:110
+#: include/functions.php:1184
 #: classes/pref/prefs.php:435
 msgid "Preferences"
 msgstr "偏好設定"
@@ -375,20 +374,19 @@ msgstr "退出偏好設定"
 
 #: prefs.php:139
 #: classes/pref/feeds.php:112
-#: classes/pref/feeds.php:1297
-#: classes/pref/feeds.php:1346
+#: classes/pref/feeds.php:1271
+#: classes/pref/feeds.php:1320
 msgid "Feeds"
 msgstr "摘要"
 
 #: prefs.php:142
-#: classes/pref/filters.php:248
+#: classes/pref/filters.php:273
 msgid "Filters"
 msgstr "過濾器"
 
 #: prefs.php:145
-#: include/functions.php:1327
-#: include/functions.php:1979
 #: classes/pref/labels.php:90
+#: classes/feeds.php:1718
 msgid "Labels"
 msgstr "預定義標籤"
 
@@ -417,13 +415,13 @@ msgstr "新使用者註冊功能被管理員禁用。"
 #: register.php:337
 #: register.php:347
 #: register.php:359
-#: classes/handler/public.php:742
-#: classes/handler/public.php:813
-#: classes/handler/public.php:911
-#: classes/handler/public.php:990
-#: classes/handler/public.php:1004
-#: classes/handler/public.php:1011
-#: classes/handler/public.php:1036
+#: classes/handler/public.php:653
+#: classes/handler/public.php:724
+#: classes/handler/public.php:822
+#: classes/handler/public.php:901
+#: classes/handler/public.php:915
+#: classes/handler/public.php:922
+#: classes/handler/public.php:947
 msgid "Return to Tiny Tiny RSS"
 msgstr "返回 Tiny Tiny RSS"
 
@@ -440,12 +438,12 @@ msgid "Check availability"
 msgstr "檢查可用性"
 
 #: register.php:229
-#: classes/handler/public.php:829
+#: classes/handler/public.php:740
 msgid "Email:"
 msgstr "電子郵箱："
 
 #: register.php:232
-#: classes/handler/public.php:834
+#: classes/handler/public.php:745
 msgid "How much is two plus two:"
 msgstr "二加二等於几："
 
@@ -473,17 +471,23 @@ msgstr "帳號建立成功。"
 msgid "New user registrations are currently closed."
 msgstr "使用者註冊功能目前沒有啟用。"
 
-#: update.php:67
+#: update.php:66
 msgid "Tiny Tiny RSS data update script."
 msgstr "Tiny Tiny RSS 資料庫是最新版。"
 
-#: include/digest.php:109
-#: include/functions.php:1336
-#: include/functions.php:1880
-#: include/functions.php:1965
-#: include/functions.php:1987
-#: classes/opml.php:421
+#: include/controls.php:83
+#: classes/pref/filters.php:242
+#: classes/pref/filters.php:253
+#: classes/pref/filters.php:544
+msgid "All feeds"
+msgstr "全部摘要"
+
+#: include/controls.php:134
+#: include/controls.php:316
 #: classes/pref/feeds.php:228
+#: classes/opml.php:486
+#: classes/feeds.php:1727
+#: classes/digest.php:113
 msgid "Uncategorized"
 msgstr "未分類"
 
@@ -497,401 +501,298 @@ msgstr[0] "%d 個存檔的文章"
 msgid "No feeds found."
 msgstr "未找到摘要。"
 
-#: include/functions.php:1029
+#: include/functions.php:900
 #, php-format
 msgid "%d min"
 msgstr ""
 
-#: include/functions.php:1325
-#: include/functions.php:1977
-msgid "Special"
-msgstr "特殊區域"
-
-#: include/functions.php:1828
-#: classes/pref/filters.php:229
-#: classes/pref/filters.php:507
-msgid "All feeds"
-msgstr "全部摘要"
-
-#: include/functions.php:2032
-msgid "Starred articles"
-msgstr "加星標文章"
-
-#: include/functions.php:2034
-msgid "Published articles"
-msgstr "已發布文章"
-
-#: include/functions.php:2036
-msgid "Fresh articles"
-msgstr "最新更新的文章"
-
-#: include/functions.php:2038
-#: include/functions2.php:105
-msgid "All articles"
-msgstr "全部文章"
-
-#: include/functions.php:2040
-msgid "Archived articles"
-msgstr "已儲存的文章"
-
-#: include/functions.php:2042
-msgid "Recently read"
-msgstr "閱讀紀錄"
-
-#: include/functions2.php:57
+#: include/functions.php:1131
 msgid "Navigation"
 msgstr "導航"
 
-#: include/functions2.php:58
+#: include/functions.php:1132
 msgid "Open next feed"
 msgstr "顯示下一個摘要"
 
-#: include/functions2.php:59
+#: include/functions.php:1133
 msgid "Open previous feed"
 msgstr ""
 
-#: include/functions2.php:60
+#: include/functions.php:1134
 msgid "Open next article"
 msgstr "開啟下一個文章"
 
-#: include/functions2.php:61
+#: include/functions.php:1135
 msgid "Open previous article"
 msgstr "開啟上一個文章"
 
-#: include/functions2.php:62
+#: include/functions.php:1136
 msgid "Open next article (don't scroll long articles)"
 msgstr ""
 
-#: include/functions2.php:63
+#: include/functions.php:1137
 msgid "Open previous article (don't scroll long articles)"
 msgstr ""
 
-#: include/functions2.php:64
+#: include/functions.php:1138
 msgid "Move to next article (don't expand or mark read)"
 msgstr ""
 
-#: include/functions2.php:65
+#: include/functions.php:1139
 msgid "Move to previous article (don't expand or mark read)"
 msgstr ""
 
-#: include/functions2.php:66
+#: include/functions.php:1140
 msgid "Show search dialog"
 msgstr "顯示搜尋對話框"
 
-#: include/functions2.php:67
+#: include/functions.php:1141
 msgid "Article"
 msgstr "文章"
 
-#: include/functions2.php:68
-#: js/viewfeed.js:1699
+#: include/functions.php:1142
+#: js/viewfeed.js:1701
 msgid "Toggle starred"
 msgstr "鎖定加星標的項"
 
-#: include/functions2.php:69
-#: js/viewfeed.js:1711
+#: include/functions.php:1143
+#: js/viewfeed.js:1713
 msgid "Toggle published"
 msgstr "鎖定發布的項"
 
-#: include/functions2.php:70
-#: js/viewfeed.js:1686
+#: include/functions.php:1144
+#: js/viewfeed.js:1688
 msgid "Toggle unread"
 msgstr "鎖定未讀項"
 
-#: include/functions2.php:71
+#: include/functions.php:1145
 msgid "Edit tags"
 msgstr "編輯自訂標籤"
 
-#: include/functions2.php:72
+#: include/functions.php:1146
 msgid "Open in new window"
 msgstr "在新視窗打開文章"
 
-#: include/functions2.php:73
-#: js/viewfeed.js:1732
+#: include/functions.php:1147
+#: js/viewfeed.js:1734
 msgid "Mark below as read"
 msgstr "以下標記為已讀"
 
-#: include/functions2.php:74
-#: js/viewfeed.js:1725
+#: include/functions.php:1148
+#: js/viewfeed.js:1727
 msgid "Mark above as read"
 msgstr "以上標記為已讀"
 
-#: include/functions2.php:75
+#: include/functions.php:1149
 msgid "Scroll down"
 msgstr "向下捲動"
 
-#: include/functions2.php:76
+#: include/functions.php:1150
 msgid "Scroll up"
 msgstr "向上捲動"
 
-#: include/functions2.php:77
+#: include/functions.php:1151
 #, fuzzy
 msgid "Select article under cursor"
 msgstr "選擇鼠標指向的文章"
 
-#: include/functions2.php:78
+#: include/functions.php:1152
 #, fuzzy
 msgid "Email article"
 msgstr "透過郵件發送文章"
 
-#: include/functions2.php:79
+#: include/functions.php:1153
 #, fuzzy
 msgid "Close/collapse article"
 msgstr "選擇所有文章"
 
-#: include/functions2.php:80
+#: include/functions.php:1154
 #, fuzzy
 msgid "Toggle article expansion (combined mode)"
 msgstr "鎖定發布的項"
 
-#: include/functions2.php:82
+#: include/functions.php:1156
 #: plugins/embed_original/init.php:31
 msgid "Toggle embed original"
 msgstr "切換為原網頁顯示"
 
-#: include/functions2.php:83
+#: include/functions.php:1157
 msgid "Article selection"
 msgstr "選擇文章"
 
-#: include/functions2.php:84
+#: include/functions.php:1158
 msgid "Select all articles"
 msgstr "選擇所有文章"
 
-#: include/functions2.php:85
+#: include/functions.php:1159
 msgid "Select unread"
 msgstr "選擇未讀文章"
 
-#: include/functions2.php:86
+#: include/functions.php:1160
 msgid "Select starred"
 msgstr "選擇星標的"
 
-#: include/functions2.php:87
+#: include/functions.php:1161
 msgid "Select published"
 msgstr "選擇已發佈文章"
 
-#: include/functions2.php:88
+#: include/functions.php:1162
 msgid "Invert selection"
 msgstr "反向選取"
 
-#: include/functions2.php:89
+#: include/functions.php:1163
 msgid "Deselect everything"
 msgstr "取消選擇所有文章"
 
-#: include/functions2.php:90
+#: include/functions.php:1164
 #: classes/pref/feeds.php:555
-#: classes/pref/feeds.php:823
+#: classes/pref/feeds.php:811
 msgid "Feed"
 msgstr "摘要"
 
-#: include/functions2.php:91
+#: include/functions.php:1165
 msgid "Refresh current feed"
 msgstr "重新整理目前摘要"
 
-#: include/functions2.php:92
+#: include/functions.php:1166
 msgid "Un/hide read feeds"
 msgstr "隱藏（顯示）已讀信息"
 
-#: include/functions2.php:93
-#: classes/pref/feeds.php:1349
+#: include/functions.php:1167
+#: classes/pref/feeds.php:1323
 msgid "Subscribe to feed"
 msgstr "訂閱摘要"
 
-#: include/functions2.php:94
+#: include/functions.php:1168
 #: js/FeedTree.js:145
-#: js/PrefFeedTree.js:72
-#: js/viewfeed.js:1853
+#: js/PrefFeedTree.js:74
+#: js/viewfeed.js:1855
 msgid "Edit feed"
 msgstr "編輯摘要"
 
-#: include/functions2.php:96
+#: include/functions.php:1170
 #, fuzzy
 msgid "Reverse headlines"
 msgstr "反向排序"
 
-#: include/functions2.php:97
+#: include/functions.php:1171
 msgid "Toggle headline grouping"
 msgstr ""
 
-#: include/functions2.php:98
+#: include/functions.php:1172
 #, fuzzy
 msgid "Debug feed update"
 msgstr "禁用更新"
 
-#: include/functions2.php:99
+#: include/functions.php:1173
 #, fuzzy
 msgid "Debug viewfeed()"
 msgstr "禁用更新"
 
-#: include/functions2.php:100
+#: include/functions.php:1174
 #: js/FeedTree.js:194
 msgid "Mark all feeds as read"
 msgstr "標記所有摘要為已讀"
 
-#: include/functions2.php:101
+#: include/functions.php:1175
 #, fuzzy
 msgid "Un/collapse current category"
 msgstr "加入到類別："
 
-#: include/functions2.php:102
+#: include/functions.php:1176
 #, fuzzy
 msgid "Toggle combined mode"
 msgstr "鎖定發布的項"
 
-#: include/functions2.php:103
+#: include/functions.php:1177
 #, fuzzy
 msgid "Toggle auto expand in combined mode"
 msgstr "鎖定發布的項"
 
-#: include/functions2.php:104
+#: include/functions.php:1178
 msgid "Go to"
 msgstr "跳到……"
 
-#: include/functions2.php:106
+#: include/functions.php:1179
+#: classes/feeds.php:1602
+msgid "All articles"
+msgstr "全部文章"
+
+#: include/functions.php:1180
 msgid "Fresh"
 msgstr ""
 
-#: include/functions2.php:109
-#: js/tt-rss.js:494
-#: js/tt-rss.js:663
+#: include/functions.php:1183
+#: js/tt-rss.js:495
+#: js/tt-rss.js:664
 msgid "Tag cloud"
 msgstr "標籤雲"
 
-#: include/functions2.php:111
+#: include/functions.php:1185
 msgid "Other"
 msgstr "其他"
 
-#: include/functions2.php:112
+#: include/functions.php:1186
 #: classes/pref/labels.php:267
 msgid "Create label"
 msgstr "建立預定義標籤"
 
-#: include/functions2.php:113
-#: classes/pref/filters.php:753
+#: include/functions.php:1187
+#: classes/pref/filters.php:793
 msgid "Create filter"
 msgstr "建立過濾器"
 
-#: include/functions2.php:114
+#: include/functions.php:1188
 #, fuzzy
 msgid "Un/collapse sidebar"
 msgstr "折疊側邊欄"
 
-#: include/functions2.php:115
+#: include/functions.php:1189
 #, fuzzy
 msgid "Show help dialog"
 msgstr "顯示搜尋對話框"
 
-#: include/functions2.php:670
-#, php-format
-msgid "Search results: %s"
-msgstr "搜尋結果： %s"
-
-#: include/functions2.php:1336
-#: classes/feeds.php:752
-msgid "comment"
-msgid_plural "comments"
-msgstr[0] "回應"
-
-#: include/functions2.php:1340
-#: classes/feeds.php:756
-msgid "comments"
-msgstr "回應"
-
-#: include/functions2.php:1366
-msgid " - "
-msgstr " - "
-
-#: include/functions2.php:1397
-#: include/functions2.php:1648
-#: classes/article.php:311
-msgid "no tags"
-msgstr "無標籤"
-
-#: include/functions2.php:1407
-#: classes/feeds.php:738
-msgid "Edit tags for this article"
-msgstr "為本文編輯自訂標籤"
-
-#: include/functions2.php:1439
-#: classes/feeds.php:690
-msgid "Originally from:"
-msgstr "來源："
-
-#: include/functions2.php:1452
-#: classes/pref/feeds.php:574
-#: classes/feeds.php:703
-msgid "Feed URL"
-msgstr "摘要 URL"
-
-#: include/functions2.php:1489
-#: classes/backend.php:105
-#: classes/dlg.php:37
-#: classes/dlg.php:60
-#: classes/dlg.php:93
-#: classes/dlg.php:159
-#: classes/dlg.php:186
-#: classes/pref/feeds.php:1652
-#: classes/pref/feeds.php:1718
-#: classes/pref/filters.php:204
-#: classes/pref/prefs.php:1097
-#: plugins/af_psql_trgm/init.php:102
-#: plugins/import_export/init.php:415
-#: plugins/import_export/init.php:461
-#: plugins/share/init.php:121
-msgid "Close this window"
-msgstr "關閉本視窗"
-
-#: include/functions2.php:1686
-msgid "(edit note)"
-msgstr "（編輯註記）"
-
-#: include/functions2.php:1960
-msgid "unknown type"
-msgstr "未知類型"
-
-#: include/functions2.php:2037
-msgid "Attachments"
-msgstr "附件："
-
-#: include/functions2.php:2496
+#: include/functions.php:2456
 msgid "There is no error, the file uploaded with success"
 msgstr ""
 
-#: include/functions2.php:2497
+#: include/functions.php:2457
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 
-#: include/functions2.php:2498
+#: include/functions.php:2458
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
 
-#: include/functions2.php:2499
+#: include/functions.php:2459
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
-#: include/functions2.php:2500
+#: include/functions.php:2460
 #, fuzzy
 msgid "No file was uploaded"
 msgstr "沒有上傳檔案"
 
-#: include/functions2.php:2501
+#: include/functions.php:2461
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: include/functions2.php:2502
+#: include/functions.php:2462
 msgid "Failed to write file to disk."
 msgstr ""
 
-#: include/functions2.php:2503
+#: include/functions.php:2463
 msgid "A PHP extension stopped the file upload."
 msgstr ""
 
 #: include/login_form.php:197
-#: classes/handler/public.php:569
-#: classes/handler/public.php:824
+#: classes/handler/public.php:480
+#: classes/handler/public.php:735
 msgid "Login:"
 msgstr "登入："
 
 #: include/login_form.php:207
-#: classes/handler/public.php:572
+#: classes/handler/public.php:483
 msgid "Password:"
 msgstr "密碼："
 
@@ -904,7 +805,7 @@ msgid "Profile:"
 msgstr "偏好："
 
 #: include/login_form.php:223
-#: classes/handler/public.php:311
+#: classes/handler/public.php:287
 #: classes/pref/prefs.php:1035
 #: classes/rpc.php:63
 msgid "Default profile"
@@ -923,7 +824,7 @@ msgid "Remember me"
 msgstr "記住我"
 
 #: include/login_form.php:249
-#: classes/handler/public.php:577
+#: classes/handler/public.php:488
 msgid "Log in"
 msgstr "登入"
 
@@ -941,146 +842,43 @@ msgstr "無法驗證會話（IP 錯誤）"
 msgid "Session failed to validate (password changed)"
 msgstr "無法驗證會話（IP 錯誤）"
 
-#: classes/article.php:25
-msgid "Article not found."
-msgstr "找不到文章。"
-
-#: classes/article.php:197
-msgid "Tags for this article (separated by commas):"
-msgstr "本文的標籤，請用逗號分開："
-
-#: classes/article.php:222
-#: classes/pref/labels.php:79
-#: classes/pref/users.php:98
-#: classes/pref/feeds.php:801
-#: classes/pref/feeds.php:943
-#: classes/pref/filters.php:485
-#: classes/pref/prefs.php:981
-#: plugins/instances/init.php:245
-#: plugins/nsfw/init.php:85
-#: plugins/note/init.php:51
-#: plugins/af_readability/init.php:68
-#: plugins/af_redditimgur/init.php:60
-#: plugins/af_psql_trgm/init.php:181
-#: plugins/mail/init.php:64
-#: plugins/af_zz_imgproxy/init.php:213
-msgid "Save"
-msgstr "儲存"
-
-#: classes/article.php:224
-#: classes/handler/public.php:546
-#: classes/handler/public.php:580
-#: classes/pref/labels.php:81
-#: classes/pref/users.php:100
-#: classes/pref/feeds.php:802
-#: classes/pref/feeds.php:946
-#: classes/pref/feeds.php:1859
-#: classes/pref/filters.php:488
-#: classes/pref/filters.php:902
-#: classes/pref/filters.php:983
-#: classes/pref/filters.php:1076
-#: classes/pref/prefs.php:983
-#: classes/feeds.php:1105
-#: classes/feeds.php:1155
-#: classes/feeds.php:1192
-#: plugins/instances/init.php:248
-#: plugins/instances/init.php:436
-#: plugins/note/init.php:53
-#: plugins/mail/init.php:173
-msgid "Cancel"
-msgstr "取消"
-
-#: classes/opml.php:28
-#: classes/opml.php:33
-msgid "OPML Utility"
-msgstr "OPML 工具"
-
-#: classes/opml.php:37
-msgid "Importing OPML..."
-msgstr "正在匯入 OPML ……"
-
-#: classes/opml.php:41
-msgid "Return to preferences"
-msgstr "返回偏好設定"
-
-#: classes/opml.php:271
-#, php-format
-msgid "Adding feed: %s"
-msgstr "新增摘要: %s"
-
-#: classes/opml.php:282
-#, fuzzy, php-format
-msgid "Duplicate feed: %s"
-msgstr "更新摘要"
-
-#: classes/opml.php:296
-#, php-format
-msgid "Adding label %s"
-msgstr "新增標籤: %s"
-
-#: classes/opml.php:299
-#, php-format
-msgid "Duplicate label: %s"
-msgstr "重複的標籤: %s"
-
-#: classes/opml.php:311
-#, php-format
-msgid "Setting preference key %s to %s"
-msgstr "將偏好按鍵從 %s 設定為 %s"
-
-#: classes/opml.php:343
-msgid "Adding filter..."
-msgstr "建立過濾器"
-
-#: classes/opml.php:421
-#, fuzzy, php-format
-msgid "Processing category: %s"
-msgstr "加入到類別："
-
-#: classes/opml.php:470
-#, php-format
-msgid "Upload failed with error code %d"
-msgstr "上傳失敗，失敗碼 %d"
-
-#: classes/opml.php:484
-#: plugins/import_export/init.php:442
-#, fuzzy
-msgid "Unable to move uploaded file."
-msgstr "錯誤：無法載入文章。"
-
-#: classes/opml.php:488
-#: plugins/import_export/init.php:446
-msgid "Error: please upload OPML file."
-msgstr "錯誤：請上傳 OPML 文件。"
-
-#: classes/opml.php:499
-#, fuzzy
-msgid "Error: unable to find moved OPML file."
-msgstr "錯誤：無法載入文章。"
-
-#: classes/opml.php:506
-msgid "Error while parsing document."
-msgstr "解析文檔時發生錯誤。"
-
-#: classes/backend.php:33
+#: classes/backend.php:31
 msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
 msgstr "在 Tiny Tiny RSS 的維基上可以找到其他界面技巧。"
 
-#: classes/backend.php:38
+#: classes/backend.php:36
 msgid "Keyboard Shortcuts"
 msgstr "快捷鍵"
 
-#: classes/backend.php:61
+#: classes/backend.php:59
 msgid "Shift"
 msgstr ""
 
-#: classes/backend.php:64
+#: classes/backend.php:62
 msgid "Ctrl"
 msgstr ""
 
-#: classes/backend.php:99
+#: classes/backend.php:97
 msgid "Help topic not found."
 msgstr "未找到幫助主題。"
+
+#: classes/backend.php:103
+#: classes/dlg.php:37
+#: classes/dlg.php:60
+#: classes/dlg.php:93
+#: classes/dlg.php:159
+#: classes/dlg.php:186
+#: classes/article.php:744
+#: classes/pref/filters.php:206
+#: classes/pref/prefs.php:1097
+#: classes/pref/feeds.php:1626
+#: classes/pref/feeds.php:1692
+#: plugins/import_export/init.php:421
+#: plugins/import_export/init.php:467
+#: plugins/af_psql_trgm/init.php:102
+#: plugins/share/init.php:120
+msgid "Close this window"
+msgstr "關閉本視窗"
 
 #: classes/dlg.php:17
 msgid "If you have imported labels and/or filters, you might need to reload preferences to see your new data."
@@ -1092,7 +890,7 @@ msgstr "你的公共 OPML URL 是："
 
 #: classes/dlg.php:57
 #: classes/dlg.php:183
-#: plugins/share/init.php:118
+#: plugins/share/init.php:117
 msgid "Generate new URL"
 msgstr "產生一個新的 URL"
 
@@ -1113,131 +911,224 @@ msgstr "更新進程在抓取信息更新時花費了太長時間，可能已經
 msgid "You can view this feed as RSS using the following URL:"
 msgstr "您可以透過如下 URL 以 RSS 方式查看本摘要："
 
-#: classes/handler/public.php:510
+#: classes/article.php:25
+msgid "Article not found."
+msgstr "找不到文章。"
+
+#: classes/article.php:197
+msgid "Tags for this article (separated by commas):"
+msgstr "本文的標籤，請用逗號分開："
+
+#: classes/article.php:222
+#: classes/pref/labels.php:79
+#: classes/pref/filters.php:519
+#: classes/pref/users.php:98
+#: classes/pref/prefs.php:981
+#: classes/pref/feeds.php:789
+#: classes/pref/feeds.php:931
+#: plugins/af_psql_trgm/init.php:181
+#: plugins/nsfw/init.php:85
+#: plugins/af_readability/init.php:68
+#: plugins/mail/init.php:64
+#: plugins/af_redditimgur/init.php:60
+#: plugins/note/init.php:51
+#: plugins/af_zz_imgproxy/init.php:240
+msgid "Save"
+msgstr "儲存"
+
+#: classes/article.php:224
+#: classes/handler/public.php:457
+#: classes/handler/public.php:491
+#: classes/pref/labels.php:81
+#: classes/pref/filters.php:522
+#: classes/pref/filters.php:942
+#: classes/pref/filters.php:1022
+#: classes/pref/filters.php:1115
+#: classes/pref/users.php:100
+#: classes/pref/prefs.php:983
+#: classes/pref/feeds.php:790
+#: classes/pref/feeds.php:934
+#: classes/pref/feeds.php:1833
+#: classes/feeds.php:1098
+#: classes/feeds.php:1148
+#: classes/feeds.php:1185
+#: plugins/mail/init.php:173
+#: plugins/note/init.php:53
+msgid "Cancel"
+msgstr "取消"
+
+#: classes/article.php:311
+#: classes/article.php:652
+#: classes/article.php:805
+msgid "no tags"
+msgstr "無標籤"
+
+#: classes/article.php:419
+msgid "unknown type"
+msgstr "未知類型"
+
+#: classes/article.php:496
+msgid "Attachments"
+msgstr "附件："
+
+#: classes/article.php:591
+#: classes/feeds.php:741
+msgid "comment"
+msgid_plural "comments"
+msgstr[0] "回應"
+
+#: classes/article.php:595
+#: classes/feeds.php:745
+msgid "comments"
+msgstr "回應"
+
+#: classes/article.php:621
+msgid " - "
+msgstr " - "
+
+#: classes/article.php:662
+#: classes/feeds.php:727
+msgid "Edit tags for this article"
+msgstr "為本文編輯自訂標籤"
+
+#: classes/article.php:694
+#: classes/feeds.php:681
+msgid "Originally from:"
+msgstr "來源："
+
+#: classes/article.php:707
+#: classes/pref/feeds.php:574
+#: classes/feeds.php:694
+msgid "Feed URL"
+msgstr "摘要 URL"
+
+#: classes/article.php:843
+msgid "(edit note)"
+msgstr "（編輯註記）"
+
+#: classes/handler/public.php:421
 #: plugins/bookmarklets/init.php:40
 msgid "Share with Tiny Tiny RSS"
 msgstr "分享 Tiny Tiny RSS 中訂閱"
 
-#: classes/handler/public.php:518
+#: classes/handler/public.php:429
 msgid "Title:"
 msgstr "標題： "
 
-#: classes/handler/public.php:520
+#: classes/handler/public.php:431
 #: classes/pref/feeds.php:572
-#: plugins/instances/init.php:212
-#: plugins/instances/init.php:401
 msgid "URL:"
 msgstr "URL："
 
-#: classes/handler/public.php:522
+#: classes/handler/public.php:433
 msgid "Content:"
 msgstr "內容： "
 
-#: classes/handler/public.php:524
+#: classes/handler/public.php:435
 msgid "Labels:"
 msgstr "標籤"
 
-#: classes/handler/public.php:543
+#: classes/handler/public.php:454
 msgid "Shared article will appear in the Published feed."
 msgstr ""
 
-#: classes/handler/public.php:545
+#: classes/handler/public.php:456
 msgid "Share"
 msgstr "分享"
 
-#: classes/handler/public.php:567
+#: classes/handler/public.php:478
 msgid "Not logged in"
 msgstr "沒有登入"
 
-#: classes/handler/public.php:626
+#: classes/handler/public.php:537
 msgid "Incorrect username or password"
 msgstr "使用者名或密碼錯誤"
 
-#: classes/handler/public.php:678
+#: classes/handler/public.php:589
 #, php-format
 msgid "Already subscribed to <b>%s</b>."
 msgstr "已經訂閱到 <b>%s</b>."
 
-#: classes/handler/public.php:681
+#: classes/handler/public.php:592
 #, php-format
 msgid "Subscribed to <b>%s</b>."
 msgstr "訂閱到 <b>%s</b>."
 
-#: classes/handler/public.php:684
+#: classes/handler/public.php:595
 #, php-format
 msgid "Could not subscribe to <b>%s</b>."
 msgstr "無法訂閱 <b>%s</b>。"
 
-#: classes/handler/public.php:687
+#: classes/handler/public.php:598
 #, php-format
 msgid "No feeds found in <b>%s</b>."
 msgstr "在 <b>%s</b> 中沒有找到摘要。"
 
-#: classes/handler/public.php:690
+#: classes/handler/public.php:601
 #, fuzzy
 msgid "Multiple feed URLs found."
 msgstr "未找到摘要。"
 
-#: classes/handler/public.php:694
+#: classes/handler/public.php:605
 #, php-format
 msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "無法訂閱 <b>%s</b>。<br>無法下載摘要的 URL。"
 
-#: classes/handler/public.php:712
+#: classes/handler/public.php:623
 msgid "Subscribe to selected feed"
 msgstr "訂閱選取的摘要"
 
-#: classes/handler/public.php:737
+#: classes/handler/public.php:648
 msgid "Edit subscription options"
 msgstr "編輯訂閱選項"
 
-#: classes/handler/public.php:774
+#: classes/handler/public.php:685
 msgid "Password recovery"
 msgstr "密碼救援"
 
-#: classes/handler/public.php:817
+#: classes/handler/public.php:728
 #, fuzzy
 msgid "You will need to provide valid account name and email. A password reset link will be sent to your email address."
 msgstr "你需要提供有效的電子郵件以及帳號名稱，新密碼將以電子郵件寄給你。"
 
-#: classes/handler/public.php:839
-#: classes/pref/users.php:350
+#: classes/handler/public.php:750
+#: classes/pref/users.php:349
 msgid "Reset password"
 msgstr "重設密碼"
 
-#: classes/handler/public.php:849
+#: classes/handler/public.php:760
 msgid "Some of the required form parameters are missing or incorrect."
 msgstr ""
 
-#: classes/handler/public.php:853
-#: classes/handler/public.php:919
+#: classes/handler/public.php:764
+#: classes/handler/public.php:830
 msgid "Go back"
 msgstr "回去"
 
-#: classes/handler/public.php:890
+#: classes/handler/public.php:801
 #, fuzzy
 msgid "[tt-rss] Password reset request"
 msgstr "[tt-rss] 密碼更換提醒"
 
-#: classes/handler/public.php:915
+#: classes/handler/public.php:826
 msgid "Sorry, login and email combination not found."
 msgstr "對不起，沒有找到符合的帳號密碼。"
 
-#: classes/handler/public.php:937
+#: classes/handler/public.php:848
 msgid "Your access level is insufficient to run this script."
 msgstr "此帳號等級不足，無法運行腳本。"
 
-#: classes/handler/public.php:963
+#: classes/handler/public.php:874
 msgid "Database Updater"
 msgstr "資料庫更新管理器"
 
-#: classes/handler/public.php:1028
+#: classes/handler/public.php:939
 msgid "Perform updates"
 msgstr "執行更新"
 
 #: classes/pref/labels.php:22
-#: classes/pref/filters.php:348
-#: classes/pref/filters.php:823
+#: classes/pref/filters.php:373
+#: classes/pref/filters.php:863
 msgid "Caption"
 msgstr "標題"
 
@@ -1259,59 +1150,55 @@ msgid "Created label <b>%s</b>"
 msgstr "建立預定義標籤 <b>%s</b>"
 
 #: classes/pref/labels.php:258
-#: classes/pref/users.php:334
-#: classes/pref/feeds.php:1337
-#: classes/pref/feeds.php:1600
-#: classes/pref/feeds.php:1664
-#: classes/pref/filters.php:359
-#: classes/pref/filters.php:407
-#: classes/pref/filters.php:744
-#: classes/pref/filters.php:832
-#: classes/pref/filters.php:859
+#: classes/pref/filters.php:384
+#: classes/pref/filters.php:441
+#: classes/pref/filters.php:784
+#: classes/pref/filters.php:872
+#: classes/pref/filters.php:899
+#: classes/pref/users.php:333
 #: classes/pref/prefs.php:992
-#: plugins/instances/init.php:284
+#: classes/pref/feeds.php:1311
+#: classes/pref/feeds.php:1574
+#: classes/pref/feeds.php:1638
 msgid "Select"
 msgstr "選擇"
 
 #: classes/pref/labels.php:261
-#: classes/pref/users.php:337
-#: classes/pref/feeds.php:1340
-#: classes/pref/feeds.php:1603
-#: classes/pref/feeds.php:1667
-#: classes/pref/filters.php:362
-#: classes/pref/filters.php:410
-#: classes/pref/filters.php:747
-#: classes/pref/filters.php:835
-#: classes/pref/filters.php:862
+#: classes/pref/filters.php:387
+#: classes/pref/filters.php:444
+#: classes/pref/filters.php:787
+#: classes/pref/filters.php:875
+#: classes/pref/filters.php:902
+#: classes/pref/users.php:336
 #: classes/pref/prefs.php:995
+#: classes/pref/feeds.php:1314
+#: classes/pref/feeds.php:1577
+#: classes/pref/feeds.php:1641
 #: classes/feeds.php:102
-#: plugins/instances/init.php:287
 msgid "All"
 msgstr "全部"
 
 #: classes/pref/labels.php:263
-#: classes/pref/users.php:339
-#: classes/pref/feeds.php:1342
-#: classes/pref/feeds.php:1605
-#: classes/pref/feeds.php:1669
-#: classes/pref/filters.php:364
-#: classes/pref/filters.php:412
-#: classes/pref/filters.php:749
-#: classes/pref/filters.php:837
-#: classes/pref/filters.php:864
+#: classes/pref/filters.php:389
+#: classes/pref/filters.php:446
+#: classes/pref/filters.php:789
+#: classes/pref/filters.php:877
+#: classes/pref/filters.php:904
+#: classes/pref/users.php:338
 #: classes/pref/prefs.php:997
+#: classes/pref/feeds.php:1316
+#: classes/pref/feeds.php:1579
+#: classes/pref/feeds.php:1643
 #: classes/feeds.php:105
-#: plugins/instances/init.php:289
 msgid "None"
 msgstr "無"
 
 #: classes/pref/labels.php:270
-#: classes/pref/users.php:348
+#: classes/pref/filters.php:512
+#: classes/pref/filters.php:806
+#: classes/pref/users.php:347
 #: classes/pref/feeds.php:767
-#: classes/pref/filters.php:478
-#: classes/pref/filters.php:766
-#: classes/feeds.php:1154
-#: plugins/instances/init.php:294
+#: classes/feeds.php:1147
 msgid "Remove"
 msgstr "移除"
 
@@ -1319,9 +1206,174 @@ msgstr "移除"
 msgid "Clear colors"
 msgstr "清空顏色"
 
+#: classes/pref/filters.php:153
+#, fuzzy
+msgid "Preview article"
+msgstr "最新更新的文章"
+
+#: classes/pref/filters.php:264
+#: classes/pref/filters.php:558
+msgid "(inverse)"
+msgstr "反向選取"
+
+#: classes/pref/filters.php:260
+#: classes/pref/filters.php:557
+#, php-format
+msgid "%s on %s in %s %s"
+msgstr ""
+
+#: classes/pref/filters.php:379
+#: classes/pref/filters.php:867
+#: classes/pref/filters.php:981
+msgid "Match"
+msgstr "匹配"
+
+#: classes/pref/filters.php:393
+#: classes/pref/filters.php:450
+#: classes/pref/filters.php:881
+#: classes/pref/filters.php:908
+msgid "Add"
+msgstr "新增"
+
+#: classes/pref/filters.php:396
+#: classes/pref/filters.php:453
+#: classes/pref/filters.php:884
+#: classes/pref/filters.php:911
+#: classes/feeds.php:122
+msgid "Delete"
+msgstr "刪除"
+
+#: classes/pref/filters.php:436
+#: classes/pref/filters.php:894
+#, fuzzy
+msgid "Apply actions"
+msgstr "摘要動作"
+
+#: classes/pref/filters.php:486
+#: classes/pref/filters.php:923
+msgid "Enabled"
+msgstr "已啟用"
+
+#: classes/pref/filters.php:495
+#: classes/pref/filters.php:926
+msgid "Match any rule"
+msgstr ""
+
+#: classes/pref/filters.php:504
+#: classes/pref/filters.php:929
+#, fuzzy
+msgid "Inverse matching"
+msgstr "反向匹配"
+
+#: classes/pref/filters.php:516
+#: classes/pref/filters.php:936
+msgid "Test"
+msgstr "測試"
+
+#: classes/pref/filters.php:780
+#: classes/pref/users.php:323
+#: classes/pref/feeds.php:1307
+#: classes/feeds.php:1118
+#: classes/feeds.php:1184
+#: js/tt-rss.js:165
+msgid "Search"
+msgstr "搜尋"
+
+#: classes/pref/filters.php:796
+msgid "Combine"
+msgstr ""
+
+#: classes/pref/filters.php:799
+#: classes/pref/users.php:345
+msgid "Edit"
+msgstr "編輯"
+
+#: classes/pref/filters.php:802
+#: classes/pref/feeds.php:1327
+#: classes/pref/feeds.php:1341
+msgid "Reset sort order"
+msgstr "重新排序"
+
+#: classes/pref/filters.php:810
+#: classes/pref/feeds.php:1363
+msgid "Rescore articles"
+msgstr "為文章重新評分"
+
+#: classes/pref/filters.php:939
+msgid "Create"
+msgstr "建立"
+
+#: classes/pref/filters.php:993
+msgid "Inverse regular expression matching"
+msgstr ""
+
+#: classes/pref/filters.php:995
+msgid "on field"
+msgstr "on field"
+
+#: classes/pref/filters.php:1001
+#: js/PrefFilterTree.js:64
+msgid "in"
+msgstr "在"
+
+#: classes/pref/filters.php:1014
+#, fuzzy
+msgid "Wiki: Filters"
+msgstr "過濾器"
+
+#: classes/pref/filters.php:1019
+#, fuzzy
+msgid "Save rule"
+msgstr "保存"
+
+#: classes/pref/filters.php:1019
+#: js/functions.js:865
+msgid "Add rule"
+msgstr "新增規則"
+
+#: classes/pref/filters.php:1042
+msgid "Perform Action"
+msgstr "執行動作"
+
+#: classes/pref/filters.php:1093
+#, fuzzy
+msgid "No actions available"
+msgstr "有可用的新版本啦！"
+
+#: classes/pref/filters.php:1112
+#, fuzzy
+msgid "Save action"
+msgstr "版面動作"
+
+#: classes/pref/filters.php:1112
+#: js/functions.js:887
+#, fuzzy
+msgid "Add action"
+msgstr "摘要動作"
+
+#: classes/pref/filters.php:1136
+#, fuzzy
+msgid "[No caption]"
+msgstr "標題"
+
+#: classes/pref/filters.php:1138
+#, php-format
+msgid "%s (%d rule)"
+msgid_plural "%s (%d rules)"
+msgstr[0] ""
+
+#: classes/pref/filters.php:1153
+msgid "matches any rule"
+msgstr ""
+
+#: classes/pref/filters.php:1156
+#, fuzzy, php-format
+msgid "%s (+%d action)"
+msgid_plural "%s (+%d actions)"
+msgstr[0] "摘要動作"
+
 #: classes/pref/users.php:6
 #: classes/pref/system.php:8
-#: plugins/instances/init.php:154
 msgid "Your access level is insufficient to open this tab."
 msgstr "您的帳號等級不夠，無法打開這個頁籤。"
 
@@ -1332,8 +1384,8 @@ msgstr "編輯過濾器"
 
 #: classes/pref/users.php:56
 #: classes/pref/feeds.php:637
-#: classes/pref/feeds.php:878
-#: classes/feeds.php:1075
+#: classes/pref/feeds.php:866
+#: classes/feeds.php:1068
 msgid "Authentication"
 msgstr "登入驗證"
 
@@ -1343,7 +1395,7 @@ msgstr "帳號等級："
 
 #: classes/pref/users.php:77
 #: classes/pref/feeds.php:667
-#: classes/pref/feeds.php:896
+#: classes/pref/feeds.php:884
 msgid "Options"
 msgstr "選項"
 
@@ -1357,7 +1409,7 @@ msgid "User not found"
 msgstr "未找到使用者"
 
 #: classes/pref/users.php:132
-#: classes/pref/users.php:400
+#: classes/pref/users.php:399
 msgid "Registered"
 msgstr "註冊時間"
 
@@ -1375,7 +1427,7 @@ msgid "Stored articles"
 msgstr "加星標文章"
 
 #: classes/pref/users.php:145
-#: classes/pref/users.php:399
+#: classes/pref/users.php:398
 msgid "Subscribed feeds"
 msgstr "訂閱的摘要"
 
@@ -1394,512 +1446,56 @@ msgstr "無法建立使用者 <b>%s</b> "
 msgid "User <b>%s</b> already exists."
 msgstr "使用者 <b>%s</b> 已存在。"
 
-#: classes/pref/users.php:265
+#: classes/pref/users.php:264
 #, fuzzy, php-format
 msgid "Changed password of user <b>%s</b> to <b>%s</b>"
 msgstr "已添加使用者 <b>%s</b> ，密碼為<b>%s</b>"
 
-#: classes/pref/users.php:267
+#: classes/pref/users.php:266
 #, fuzzy, php-format
 msgid "Sending new password of user <b>%s</b> to <b>%s</b>"
 msgstr "已添加使用者 <b>%s</b> ，密碼為<b>%s</b>"
 
-#: classes/pref/users.php:291
+#: classes/pref/users.php:290
 msgid "[tt-rss] Password change notification"
 msgstr "[tt-rss] 密碼更換提醒"
 
-#: classes/pref/users.php:324
-#: classes/pref/feeds.php:1333
-#: classes/pref/filters.php:740
-#: classes/feeds.php:1125
-#: classes/feeds.php:1191
-#: js/tt-rss.js:165
-msgid "Search"
-msgstr "搜尋"
-
-#: classes/pref/users.php:342
+#: classes/pref/users.php:341
 msgid "Create user"
 msgstr "建立使用者"
 
-#: classes/pref/users.php:346
-#: classes/pref/filters.php:759
-#: plugins/instances/init.php:293
-msgid "Edit"
-msgstr "編輯"
-
-#: classes/pref/users.php:397
+#: classes/pref/users.php:396
 #: classes/pref/feeds.php:643
-#: classes/pref/feeds.php:882
-#: classes/pref/feeds.php:1836
-#: classes/feeds.php:1079
+#: classes/pref/feeds.php:870
+#: classes/pref/feeds.php:1810
+#: classes/feeds.php:1072
 msgid "Login"
 msgstr "登入"
 
-#: classes/pref/users.php:398
+#: classes/pref/users.php:397
 msgid "Access Level"
 msgstr "帳號等級"
 
-#: classes/pref/users.php:401
+#: classes/pref/users.php:400
 msgid "Last login"
 msgstr "最後登入"
 
-#: classes/pref/users.php:420
-#: plugins/instances/init.php:334
+#: classes/pref/users.php:419
 msgid "Click to edit"
 msgstr "點擊進行編輯"
 
-#: classes/pref/users.php:441
+#: classes/pref/users.php:440
 msgid "No users defined."
 msgstr "沒有定義使用者。"
 
-#: classes/pref/users.php:443
+#: classes/pref/users.php:442
 msgid "No matching users found."
 msgstr "沒有匹配的使用者。"
 
-#: classes/pref/system.php:29
-msgid "Error Log"
-msgstr "錯誤的Log"
-
-#: classes/pref/system.php:40
-msgid "Refresh"
-msgstr "重新整理"
-
-#: classes/pref/system.php:43
-msgid "Clear log"
-msgstr "清空Log"
-
-#: classes/pref/system.php:48
-msgid "Error"
-msgstr "錯誤"
-
-#: classes/pref/system.php:49
-msgid "Filename"
-msgstr "檔案名稱路徑："
-
-#: classes/pref/system.php:50
-msgid "Message"
-msgstr "訊息"
-
-#: classes/pref/system.php:52
-msgid "Date"
-msgstr "日期"
-
-#: classes/pref/feeds.php:15
-msgid "Check to enable field"
-msgstr "勾選以啟用"
-
-#: classes/pref/feeds.php:65
-#: classes/pref/feeds.php:214
-#: classes/pref/feeds.php:258
-#: classes/pref/feeds.php:264
-#: classes/pref/feeds.php:290
-#, php-format
-msgid "(%d feed)"
-msgid_plural "(%d feeds)"
-msgstr[0] "(%d 個摘要)"
-
-#: classes/pref/feeds.php:537
 #: classes/pref/prefs.php:18
+#: classes/pref/feeds.php:537
 msgid "General"
 msgstr "通用"
-
-#: classes/pref/feeds.php:561
-msgid "Feed Title"
-msgstr "摘要標題"
-
-#: classes/pref/feeds.php:595
-#: classes/pref/feeds.php:830
-#: classes/pref/feeds.php:1822
-#: classes/feeds.php:1055
-msgid "Place in category:"
-msgstr "加入到類別："
-
-#: classes/pref/feeds.php:608
-#: classes/pref/feeds.php:844
-#, fuzzy
-msgid "Language:"
-msgstr "語言："
-
-#: classes/pref/feeds.php:615
-#: classes/pref/feeds.php:853
-msgid "Update"
-msgstr "更新列表"
-
-#: classes/pref/feeds.php:630
-#: classes/pref/feeds.php:869
-msgid "Article purging:"
-msgstr "文章清理："
-
-#: classes/pref/feeds.php:658
-#: classes/pref/feeds.php:890
-#: classes/pref/feeds.php:1839
-#: classes/pref/prefs.php:245
-#: classes/feeds.php:1083
-msgid "Password"
-msgstr "密碼"
-
-#: classes/pref/feeds.php:662
-msgid "<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds."
-msgstr "<b>提示：</b>如果您的摘要需要驗證，那麼您需要填寫登入資料。Twitter 摘要除外。"
-
-#: classes/pref/feeds.php:681
-#: classes/pref/feeds.php:900
-msgid "Hide from Popular feeds"
-msgstr "從最受歡迎的摘要中隱藏"
-
-#: classes/pref/feeds.php:693
-#: classes/pref/feeds.php:906
-msgid "Include in e-mail digest"
-msgstr "包含電子郵件摘要"
-
-#: classes/pref/feeds.php:706
-#: classes/pref/feeds.php:912
-msgid "Always display image attachments"
-msgstr "始終顯示圖片附件"
-
-#: classes/pref/feeds.php:719
-#: classes/pref/feeds.php:920
-msgid "Do not embed images"
-msgstr "不要包含圖片"
-
-#: classes/pref/feeds.php:732
-#: classes/pref/feeds.php:928
-msgid "Cache media"
-msgstr ""
-
-#: classes/pref/feeds.php:744
-#: classes/pref/feeds.php:934
-msgid "Mark updated articles as unread"
-msgstr "將已更新的文章標記為未讀"
-
-#: classes/pref/feeds.php:748
-msgid "Icon"
-msgstr "圖示"
-
-#: classes/pref/feeds.php:765
-msgid "Replace"
-msgstr "替換"
-
-#: classes/pref/feeds.php:772
-#: classes/pref/prefs.php:698
-msgid "Plugins"
-msgstr "擴充套件"
-
-#: classes/pref/feeds.php:792
-msgid "Resubscribe to push updates"
-msgstr "重新訂閱以推送更新"
-
-#: classes/pref/feeds.php:799
-msgid "Resets PubSubHubbub subscription status for push-enabled feeds."
-msgstr "為啟用推送的摘要重置 PubSubHubbub 訂閱。"
-
-#: classes/pref/feeds.php:1200
-#: classes/pref/feeds.php:1253
-msgid "All done."
-msgstr "全部完成。"
-
-#: classes/pref/feeds.php:1308
-msgid "Feeds with errors"
-msgstr "有錯誤的摘要"
-
-#: classes/pref/feeds.php:1315
-msgid "Inactive feeds"
-msgstr "不活躍的摘要"
-
-#: classes/pref/feeds.php:1351
-msgid "Edit selected feeds"
-msgstr "編輯選定的摘要"
-
-#: classes/pref/feeds.php:1353
-#: classes/pref/feeds.php:1367
-#: classes/pref/filters.php:762
-msgid "Reset sort order"
-msgstr "重新排序"
-
-#: classes/pref/feeds.php:1355
-#: js/prefs.js:1622
-msgid "Batch subscribe"
-msgstr ""
-
-#: classes/pref/feeds.php:1362
-msgid "Categories"
-msgstr "類別"
-
-#: classes/pref/feeds.php:1365
-msgid "Add category"
-msgstr "新增類別"
-
-#: classes/pref/feeds.php:1369
-msgid "Remove selected"
-msgstr "移除所選擇的"
-
-#: classes/pref/feeds.php:1380
-msgid "More actions..."
-msgstr "更多動作"
-
-#: classes/pref/feeds.php:1384
-msgid "Manual purge"
-msgstr "手動清除"
-
-#: classes/pref/feeds.php:1388
-msgid "Clear feed data"
-msgstr "清空摘要數據"
-
-#: classes/pref/feeds.php:1389
-#: classes/pref/filters.php:770
-msgid "Rescore articles"
-msgstr "為文章重新評分"
-
-#: classes/pref/feeds.php:1442
-msgid "OPML"
-msgstr "OPML"
-
-#: classes/pref/feeds.php:1444
-msgid "Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings."
-msgstr ""
-
-#: classes/pref/feeds.php:1445
-msgid "Only main settings profile can be migrated using OPML."
-msgstr ""
-
-#: classes/pref/feeds.php:1458
-#, fuzzy
-msgid "Import my OPML"
-msgstr "正在匯入 OPML ……"
-
-#: classes/pref/feeds.php:1464
-msgid "Filename:"
-msgstr "文件名："
-
-#: classes/pref/feeds.php:1466
-msgid "Include settings"
-msgstr "包含設定"
-
-#: classes/pref/feeds.php:1470
-#, fuzzy
-msgid "Export OPML"
-msgstr "正在匯入 OPML ……"
-
-#: classes/pref/feeds.php:1474
-msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
-msgstr "您可以公開發布您的 OPML 。網上的任何人都可以透過如下 URL 訂閱該文件。"
-
-#: classes/pref/feeds.php:1478
-msgid "Public OPML URL"
-msgstr "公開的 OPML URL"
-
-#: classes/pref/feeds.php:1479
-#, fuzzy
-msgid "Display published OPML URL"
-msgstr "公開的 OPML URL"
-
-#: classes/pref/feeds.php:1488
-msgid "Firefox integration"
-msgstr "Firefox 整合"
-
-#: classes/pref/feeds.php:1490
-msgid "This Tiny Tiny RSS site can be used as a Firefox Feed Reader by clicking the link below."
-msgstr "按下以下連結，可以將本 Tiny Tiny RSS 站作為一個 Firefox 閱讀器使用。"
-
-#: classes/pref/feeds.php:1497
-msgid "Click here to register this site as a feed reader."
-msgstr "點擊此處將本站註冊為摘要閱讀器。"
-
-#: classes/pref/feeds.php:1505
-#, fuzzy
-msgid "Published & shared articles / Generated feeds"
-msgstr "已發布的文章和產生的摘要"
-
-#: classes/pref/feeds.php:1507
-msgid "Published articles are exported as a public RSS feed and can be subscribed by anyone who knows the URL specified below."
-msgstr "已發布的文章將會輸出為公開的 RSS 摘要，網上的任何人可以透過如下 URL 進行訂閱。"
-
-#: classes/pref/feeds.php:1514
-#: classes/feeds.php:54
-#: classes/feeds.php:140
-msgid "View as RSS"
-msgstr "以 RSS 形式閱讀"
-
-#: classes/pref/feeds.php:1515
-msgid "Display URL"
-msgstr "顯示 URL"
-
-#: classes/pref/feeds.php:1518
-msgid "Clear all generated URLs"
-msgstr "清空所有產生的 URL"
-
-#: classes/pref/feeds.php:1596
-msgid "These feeds have not been updated with new content for 3 months (oldest first):"
-msgstr "以下摘要已經有三個月沒有內容更新了（最舊的在最上）："
-
-#: classes/pref/feeds.php:1630
-#: classes/pref/feeds.php:1694
-msgid "Click to edit feed"
-msgstr "點擊以編輯摘要"
-
-#: classes/pref/feeds.php:1648
-#: classes/pref/feeds.php:1714
-msgid "Unsubscribe from selected feeds"
-msgstr "取消訂閱選取的摘要"
-
-#: classes/pref/feeds.php:1819
-msgid "Add one valid RSS feed per line (no feed detection is done)"
-msgstr ""
-
-#: classes/pref/feeds.php:1828
-msgid "Feeds to subscribe, One per line"
-msgstr ""
-
-#: classes/pref/feeds.php:1851
-msgid "Feeds require authentication."
-msgstr ""
-
-#: classes/pref/feeds.php:1858
-#: classes/feeds.php:1099
-#: classes/feeds.php:1153
-msgid "Subscribe"
-msgstr "訂閱"
-
-#: classes/pref/filters.php:151
-#, fuzzy
-msgid "Preview article"
-msgstr "最新更新的文章"
-
-#: classes/pref/filters.php:239
-#: classes/pref/filters.php:518
-msgid "(inverse)"
-msgstr "反向選取"
-
-#: classes/pref/filters.php:235
-#: classes/pref/filters.php:517
-#, php-format
-msgid "%s on %s in %s %s"
-msgstr ""
-
-#: classes/pref/filters.php:354
-#: classes/pref/filters.php:827
-#: classes/pref/filters.php:942
-msgid "Match"
-msgstr "匹配"
-
-#: classes/pref/filters.php:368
-#: classes/pref/filters.php:416
-#: classes/pref/filters.php:841
-#: classes/pref/filters.php:868
-msgid "Add"
-msgstr "新增"
-
-#: classes/pref/filters.php:371
-#: classes/pref/filters.php:419
-#: classes/pref/filters.php:844
-#: classes/pref/filters.php:871
-#: classes/feeds.php:122
-msgid "Delete"
-msgstr "刪除"
-
-#: classes/pref/filters.php:402
-#: classes/pref/filters.php:854
-#, fuzzy
-msgid "Apply actions"
-msgstr "摘要動作"
-
-#: classes/pref/filters.php:452
-#: classes/pref/filters.php:883
-msgid "Enabled"
-msgstr "已啟用"
-
-#: classes/pref/filters.php:461
-#: classes/pref/filters.php:886
-msgid "Match any rule"
-msgstr ""
-
-#: classes/pref/filters.php:470
-#: classes/pref/filters.php:889
-#, fuzzy
-msgid "Inverse matching"
-msgstr "反向匹配"
-
-#: classes/pref/filters.php:482
-#: classes/pref/filters.php:896
-msgid "Test"
-msgstr "測試"
-
-#: classes/pref/filters.php:756
-msgid "Combine"
-msgstr ""
-
-#: classes/pref/filters.php:899
-msgid "Create"
-msgstr "建立"
-
-#: classes/pref/filters.php:954
-msgid "Inverse regular expression matching"
-msgstr ""
-
-#: classes/pref/filters.php:956
-msgid "on field"
-msgstr "on field"
-
-#: classes/pref/filters.php:962
-#: js/PrefFilterTree.js:64
-msgid "in"
-msgstr "在"
-
-#: classes/pref/filters.php:975
-#, fuzzy
-msgid "Wiki: Filters"
-msgstr "過濾器"
-
-#: classes/pref/filters.php:980
-#, fuzzy
-msgid "Save rule"
-msgstr "保存"
-
-#: classes/pref/filters.php:980
-#: js/functions.js:865
-msgid "Add rule"
-msgstr "新增規則"
-
-#: classes/pref/filters.php:1003
-msgid "Perform Action"
-msgstr "執行動作"
-
-#: classes/pref/filters.php:1054
-#, fuzzy
-msgid "No actions available"
-msgstr "有可用的新版本啦！"
-
-#: classes/pref/filters.php:1073
-#, fuzzy
-msgid "Save action"
-msgstr "版面動作"
-
-#: classes/pref/filters.php:1073
-#: js/functions.js:887
-#, fuzzy
-msgid "Add action"
-msgstr "摘要動作"
-
-#: classes/pref/filters.php:1097
-#, fuzzy
-msgid "[No caption]"
-msgstr "標題"
-
-#: classes/pref/filters.php:1099
-#, php-format
-msgid "%s (%d rule)"
-msgid_plural "%s (%d rules)"
-msgstr[0] ""
-
-#: classes/pref/filters.php:1114
-msgid "matches any rule"
-msgstr ""
-
-#: classes/pref/filters.php:1117
-#, fuzzy, php-format
-msgid "%s (+%d action)"
-msgid_plural "%s (+%d actions)"
-msgstr[0] "摘要動作"
 
 #: classes/pref/prefs.php:19
 msgid "Interface"
@@ -2075,7 +1671,7 @@ msgid "Strip all but most common HTML tags when reading articles."
 msgstr "僅載入几個最常用的 HTML 標籤"
 
 #: classes/pref/prefs.php:53
-#: js/prefs.js:1584
+#: js/prefs.js:1580
 msgid "Customize stylesheet"
 msgstr "自訂樣式"
 
@@ -2143,6 +1739,14 @@ msgstr "帳號等級"
 #: classes/pref/prefs.php:233
 msgid "Save data"
 msgstr "儲存資料"
+
+#: classes/pref/prefs.php:245
+#: classes/pref/feeds.php:658
+#: classes/pref/feeds.php:878
+#: classes/pref/feeds.php:1813
+#: classes/feeds.php:1076
+msgid "Password"
+msgstr "密碼"
 
 #: classes/pref/prefs.php:254
 msgid "Your password is at default value, please change it."
@@ -2245,17 +1849,22 @@ msgstr "管理偏好文件"
 msgid "Reset to defaults"
 msgstr "恢復到預設"
 
+#: classes/pref/prefs.php:698
+#: classes/pref/feeds.php:772
+msgid "Plugins"
+msgstr "擴充套件"
+
 #: classes/pref/prefs.php:700
 msgid "You will need to reload Tiny Tiny RSS for plugin changes to take effect."
 msgstr "你必須重新啟動 Tiny Tiny RSS 之後，才會生效喔～"
 
-#: classes/pref/prefs.php:702
-msgid "Download more plugins at tt-rss.org <a class=\"visibleLink\" target=\"_blank\" href=\"http://tt-rss.org/forum/viewforum.php?f=22\">forums</a> or <a target=\"_blank\" class=\"visibleLink\" href=\"http://tt-rss.org/wiki/Plugins\">wiki</a>."
-msgstr "從 tt-rss.org下載更多擴充套件，可參閱 <a class=\"visibleLink\" target=\"_blank\" href=\"http://tt-rss.org/forum/viewforum.php?f=22\">討論區</a> 或 <a target=\"_blank\" class=\"visibleLink\" href=\"http://tt-rss.org/wiki/Plugins\">wiki</a>."
-
-#: classes/pref/prefs.php:732
+#: classes/pref/prefs.php:730
 msgid "System plugins"
 msgstr "系統擴充套件"
+
+#: classes/pref/prefs.php:731
+msgid "System plugins are enabled in <strong>config.php</strong> for all users."
+msgstr ""
 
 #: classes/pref/prefs.php:736
 #: classes/pref/prefs.php:792
@@ -2327,6 +1936,345 @@ msgstr "移除選取的偏好文件"
 msgid "Activate profile"
 msgstr "啟用偏好文件"
 
+#: classes/pref/feeds.php:15
+msgid "Check to enable field"
+msgstr "勾選以啟用"
+
+#: classes/pref/feeds.php:65
+#: classes/pref/feeds.php:214
+#: classes/pref/feeds.php:258
+#: classes/pref/feeds.php:264
+#: classes/pref/feeds.php:290
+#, php-format
+msgid "(%d feed)"
+msgid_plural "(%d feeds)"
+msgstr[0] "(%d 個摘要)"
+
+#: classes/pref/feeds.php:561
+msgid "Feed Title"
+msgstr "摘要標題"
+
+#: classes/pref/feeds.php:595
+#: classes/pref/feeds.php:818
+#: classes/pref/feeds.php:1796
+#: classes/feeds.php:1048
+msgid "Place in category:"
+msgstr "加入到類別："
+
+#: classes/pref/feeds.php:608
+#: classes/pref/feeds.php:832
+#, fuzzy
+msgid "Language:"
+msgstr "語言："
+
+#: classes/pref/feeds.php:615
+#: classes/pref/feeds.php:841
+msgid "Update"
+msgstr "更新列表"
+
+#: classes/pref/feeds.php:630
+#: classes/pref/feeds.php:857
+msgid "Article purging:"
+msgstr "文章清理："
+
+#: classes/pref/feeds.php:662
+msgid "<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds."
+msgstr "<b>提示：</b>如果您的摘要需要驗證，那麼您需要填寫登入資料。Twitter 摘要除外。"
+
+#: classes/pref/feeds.php:681
+#: classes/pref/feeds.php:888
+msgid "Hide from Popular feeds"
+msgstr "從最受歡迎的摘要中隱藏"
+
+#: classes/pref/feeds.php:693
+#: classes/pref/feeds.php:894
+msgid "Include in e-mail digest"
+msgstr "包含電子郵件摘要"
+
+#: classes/pref/feeds.php:706
+#: classes/pref/feeds.php:900
+msgid "Always display image attachments"
+msgstr "始終顯示圖片附件"
+
+#: classes/pref/feeds.php:719
+#: classes/pref/feeds.php:908
+msgid "Do not embed images"
+msgstr "不要包含圖片"
+
+#: classes/pref/feeds.php:732
+#: classes/pref/feeds.php:916
+msgid "Cache media"
+msgstr ""
+
+#: classes/pref/feeds.php:744
+#: classes/pref/feeds.php:922
+msgid "Mark updated articles as unread"
+msgstr "將已更新的文章標記為未讀"
+
+#: classes/pref/feeds.php:748
+msgid "Icon"
+msgstr "圖示"
+
+#: classes/pref/feeds.php:765
+msgid "Replace"
+msgstr "替換"
+
+#: classes/pref/feeds.php:1174
+#: classes/pref/feeds.php:1227
+msgid "All done."
+msgstr "全部完成。"
+
+#: classes/pref/feeds.php:1282
+msgid "Feeds with errors"
+msgstr "有錯誤的摘要"
+
+#: classes/pref/feeds.php:1289
+msgid "Inactive feeds"
+msgstr "不活躍的摘要"
+
+#: classes/pref/feeds.php:1325
+msgid "Edit selected feeds"
+msgstr "編輯選定的摘要"
+
+#: classes/pref/feeds.php:1329
+#: js/prefs.js:1618
+msgid "Batch subscribe"
+msgstr ""
+
+#: classes/pref/feeds.php:1336
+msgid "Categories"
+msgstr "類別"
+
+#: classes/pref/feeds.php:1339
+msgid "Add category"
+msgstr "新增類別"
+
+#: classes/pref/feeds.php:1343
+msgid "Remove selected"
+msgstr "移除所選擇的"
+
+#: classes/pref/feeds.php:1354
+msgid "More actions..."
+msgstr "更多動作"
+
+#: classes/pref/feeds.php:1358
+msgid "Manual purge"
+msgstr "手動清除"
+
+#: classes/pref/feeds.php:1362
+msgid "Clear feed data"
+msgstr "清空摘要數據"
+
+#: classes/pref/feeds.php:1416
+msgid "OPML"
+msgstr "OPML"
+
+#: classes/pref/feeds.php:1418
+msgid "Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings."
+msgstr ""
+
+#: classes/pref/feeds.php:1419
+msgid "Only main settings profile can be migrated using OPML."
+msgstr ""
+
+#: classes/pref/feeds.php:1432
+#, fuzzy
+msgid "Import my OPML"
+msgstr "正在匯入 OPML ……"
+
+#: classes/pref/feeds.php:1438
+msgid "Filename:"
+msgstr "文件名："
+
+#: classes/pref/feeds.php:1440
+msgid "Include settings"
+msgstr "包含設定"
+
+#: classes/pref/feeds.php:1444
+#, fuzzy
+msgid "Export OPML"
+msgstr "正在匯入 OPML ……"
+
+#: classes/pref/feeds.php:1448
+msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
+msgstr "您可以公開發布您的 OPML 。網上的任何人都可以透過如下 URL 訂閱該文件。"
+
+#: classes/pref/feeds.php:1452
+msgid "Public OPML URL"
+msgstr "公開的 OPML URL"
+
+#: classes/pref/feeds.php:1453
+#, fuzzy
+msgid "Display published OPML URL"
+msgstr "公開的 OPML URL"
+
+#: classes/pref/feeds.php:1462
+msgid "Firefox integration"
+msgstr "Firefox 整合"
+
+#: classes/pref/feeds.php:1464
+msgid "This Tiny Tiny RSS site can be used as a Firefox Feed Reader by clicking the link below."
+msgstr "按下以下連結，可以將本 Tiny Tiny RSS 站作為一個 Firefox 閱讀器使用。"
+
+#: classes/pref/feeds.php:1471
+msgid "Click here to register this site as a feed reader."
+msgstr "點擊此處將本站註冊為摘要閱讀器。"
+
+#: classes/pref/feeds.php:1479
+#, fuzzy
+msgid "Published & shared articles / Generated feeds"
+msgstr "已發布的文章和產生的摘要"
+
+#: classes/pref/feeds.php:1481
+msgid "Published articles are exported as a public RSS feed and can be subscribed by anyone who knows the URL specified below."
+msgstr "已發布的文章將會輸出為公開的 RSS 摘要，網上的任何人可以透過如下 URL 進行訂閱。"
+
+#: classes/pref/feeds.php:1488
+#: classes/feeds.php:54
+#: classes/feeds.php:140
+msgid "View as RSS"
+msgstr "以 RSS 形式閱讀"
+
+#: classes/pref/feeds.php:1489
+msgid "Display URL"
+msgstr "顯示 URL"
+
+#: classes/pref/feeds.php:1492
+msgid "Clear all generated URLs"
+msgstr "清空所有產生的 URL"
+
+#: classes/pref/feeds.php:1570
+msgid "These feeds have not been updated with new content for 3 months (oldest first):"
+msgstr "以下摘要已經有三個月沒有內容更新了（最舊的在最上）："
+
+#: classes/pref/feeds.php:1604
+#: classes/pref/feeds.php:1668
+msgid "Click to edit feed"
+msgstr "點擊以編輯摘要"
+
+#: classes/pref/feeds.php:1622
+#: classes/pref/feeds.php:1688
+msgid "Unsubscribe from selected feeds"
+msgstr "取消訂閱選取的摘要"
+
+#: classes/pref/feeds.php:1793
+msgid "Add one valid RSS feed per line (no feed detection is done)"
+msgstr ""
+
+#: classes/pref/feeds.php:1802
+msgid "Feeds to subscribe, One per line"
+msgstr ""
+
+#: classes/pref/feeds.php:1825
+msgid "Feeds require authentication."
+msgstr ""
+
+#: classes/pref/feeds.php:1832
+#: classes/feeds.php:1092
+#: classes/feeds.php:1146
+msgid "Subscribe"
+msgstr "訂閱"
+
+#: classes/pref/system.php:29
+msgid "Error Log"
+msgstr "錯誤的Log"
+
+#: classes/pref/system.php:40
+msgid "Refresh"
+msgstr "重新整理"
+
+#: classes/pref/system.php:43
+msgid "Clear log"
+msgstr "清空Log"
+
+#: classes/pref/system.php:48
+msgid "Error"
+msgstr "錯誤"
+
+#: classes/pref/system.php:49
+msgid "Filename"
+msgstr "檔案名稱路徑："
+
+#: classes/pref/system.php:50
+msgid "Message"
+msgstr "訊息"
+
+#: classes/pref/system.php:52
+msgid "Date"
+msgstr "日期"
+
+#: classes/opml.php:28
+#: classes/opml.php:33
+msgid "OPML Utility"
+msgstr "OPML 工具"
+
+#: classes/opml.php:37
+msgid "Importing OPML..."
+msgstr "正在匯入 OPML ……"
+
+#: classes/opml.php:41
+msgid "Return to preferences"
+msgstr "返回偏好設定"
+
+#: classes/opml.php:295
+#, php-format
+msgid "Adding feed: %s"
+msgstr "新增摘要: %s"
+
+#: classes/opml.php:306
+#, fuzzy, php-format
+msgid "Duplicate feed: %s"
+msgstr "更新摘要"
+
+#: classes/opml.php:320
+#, php-format
+msgid "Adding label %s"
+msgstr "新增標籤: %s"
+
+#: classes/opml.php:323
+#, php-format
+msgid "Duplicate label: %s"
+msgstr "重複的標籤: %s"
+
+#: classes/opml.php:335
+#, php-format
+msgid "Setting preference key %s to %s"
+msgstr "將偏好按鍵從 %s 設定為 %s"
+
+#: classes/opml.php:367
+msgid "Adding filter..."
+msgstr "建立過濾器"
+
+#: classes/opml.php:486
+#, fuzzy, php-format
+msgid "Processing category: %s"
+msgstr "加入到類別："
+
+#: classes/opml.php:532
+#, php-format
+msgid "Upload failed with error code %d"
+msgstr "上傳失敗，失敗碼 %d"
+
+#: classes/opml.php:544
+#: plugins/import_export/init.php:448
+#, fuzzy
+msgid "Unable to move uploaded file."
+msgstr "錯誤：無法載入文章。"
+
+#: classes/opml.php:548
+#: plugins/import_export/init.php:452
+msgid "Error: please upload OPML file."
+msgstr "錯誤：請上傳 OPML 文件。"
+
+#: classes/opml.php:559
+#, fuzzy
+msgid "Error: unable to find moved OPML file."
+msgstr "錯誤：無法載入文章。"
+
+#: classes/opml.php:566
+msgid "Error while parsing document."
+msgstr "解析文檔時發生錯誤。"
+
 #: classes/feeds.php:53
 msgid "View as RSS feed"
 msgstr "以RSS摘要方式閱讀"
@@ -2367,8 +2315,8 @@ msgstr "移回原位"
 
 #: classes/feeds.php:127
 #: classes/feeds.php:132
-#: plugins/mail/init.php:75
 #: plugins/mailto/init.php:25
+#: plugins/mail/init.php:75
 #, fuzzy
 msgid "Forward by email"
 msgstr "透過郵件轉發"
@@ -2377,267 +2325,260 @@ msgstr "透過郵件轉發"
 msgid "Feed:"
 msgstr "摘要："
 
-#: classes/feeds.php:229
-#: classes/feeds.php:892
+#: classes/feeds.php:228
+#: classes/feeds.php:885
 msgid "Feed not found."
 msgstr "找不到摘要。"
 
-#: classes/feeds.php:300
+#: classes/feeds.php:291
 msgid "Never"
 msgstr "從未"
 
-#: classes/feeds.php:413
+#: classes/feeds.php:405
 #, fuzzy, php-format
 msgid "Imported at %s"
 msgstr "匯入"
 
-#: classes/feeds.php:472
-#: classes/feeds.php:569
+#: classes/feeds.php:464
+#: classes/feeds.php:561
 msgid "mark feed as read"
 msgstr "標記摘要為已讀"
 
-#: classes/feeds.php:630
+#: classes/feeds.php:622
 #, fuzzy
 msgid "Collapse article"
 msgstr "全部文章"
 
-#: classes/feeds.php:791
+#: classes/feeds.php:784
 msgid "No unread articles found to display."
 msgstr "沒有未讀文章。"
 
-#: classes/feeds.php:794
+#: classes/feeds.php:787
 msgid "No updated articles found to display."
 msgstr "沒有最新更新的文章。"
 
-#: classes/feeds.php:797
+#: classes/feeds.php:790
 msgid "No starred articles found to display."
 msgstr "沒有加星標的文章。"
 
-#: classes/feeds.php:801
+#: classes/feeds.php:794
 #, fuzzy
 msgid "No articles found to display. You can assign articles to labels manually from article header context menu (applies to all selected articles) or use a filter."
 msgstr "本標籤下沒有文章。你可以透過手動或過濾器的方式為文章添加預定義標籤（參考上方動作菜單）。"
 
-#: classes/feeds.php:803
+#: classes/feeds.php:796
 msgid "No articles found to display."
 msgstr "暫時沒有文章。"
 
-#: classes/feeds.php:818
-#: classes/feeds.php:992
+#: classes/feeds.php:811
+#: classes/feeds.php:985
 #, php-format
 msgid "Feeds last updated at %s"
 msgstr "上次摘要更新時間：%s"
 
-#: classes/feeds.php:828
-#: classes/feeds.php:1002
+#: classes/feeds.php:821
+#: classes/feeds.php:995
 msgid "Some feeds have update errors (click for details)"
 msgstr "部分摘要更新錯誤（點擊了解詳情）"
 
-#: classes/feeds.php:982
+#: classes/feeds.php:975
 msgid "No feed selected."
 msgstr "沒有選取的摘要。"
 
-#: classes/feeds.php:1041
-#: classes/feeds.php:1049
+#: classes/feeds.php:1034
+#: classes/feeds.php:1042
 #, fuzzy
 msgid "Feed or site URL"
 msgstr "摘要 URL"
 
-#: classes/feeds.php:1063
+#: classes/feeds.php:1056
 msgid "Available feeds"
 msgstr "可用的摘要"
 
-#: classes/feeds.php:1094
+#: classes/feeds.php:1087
 msgid "This feed requires authentication."
 msgstr "這個摘要需要認證"
 
-#: classes/feeds.php:1102
+#: classes/feeds.php:1095
 msgid "More feeds"
 msgstr "更多摘要"
 
-#: classes/feeds.php:1129
+#: classes/feeds.php:1122
 msgid "Popular feeds"
 msgstr "最受歡迎的摘要"
 
-#: classes/feeds.php:1130
+#: classes/feeds.php:1123
 msgid "Feed archive"
 msgstr "摘要存檔"
 
-#: classes/feeds.php:1133
+#: classes/feeds.php:1126
 msgid "limit:"
 msgstr "限制："
 
-#: classes/feeds.php:1165
+#: classes/feeds.php:1158
 msgid "Look for"
 msgstr "查找"
 
-#: classes/feeds.php:1173
+#: classes/feeds.php:1166
 #, php-format
 msgid "in %s"
 msgstr ""
 
-#: classes/feeds.php:1178
+#: classes/feeds.php:1171
 msgid "Used for word stemming"
 msgstr ""
 
-#: classes/feeds.php:1187
+#: classes/feeds.php:1180
 #, fuzzy
 msgid "Search syntax"
 msgstr "搜尋"
 
-#: plugins/instances/init.php:141
-msgid "Linked"
-msgstr "鏈接"
+#: classes/feeds.php:1596
+msgid "Starred articles"
+msgstr "加星標文章"
 
-#: plugins/instances/init.php:204
-#: plugins/instances/init.php:395
-msgid "Instance"
-msgstr "實例"
+#: classes/feeds.php:1598
+msgid "Published articles"
+msgstr "已發布文章"
 
-#: plugins/instances/init.php:215
-#: plugins/instances/init.php:312
-#: plugins/instances/init.php:404
-msgid "Instance URL"
-msgstr "實例 URL："
+#: classes/feeds.php:1600
+msgid "Fresh articles"
+msgstr "最新更新的文章"
 
-#: plugins/instances/init.php:226
-#: plugins/instances/init.php:414
-msgid "Access key:"
-msgstr "訪問金鑰："
+#: classes/feeds.php:1604
+msgid "Archived articles"
+msgstr "已儲存的文章"
 
-#: plugins/instances/init.php:229
-#: plugins/instances/init.php:313
-#: plugins/instances/init.php:417
-msgid "Access key"
-msgstr "訪問金鑰"
+#: classes/feeds.php:1606
+msgid "Recently read"
+msgstr "閱讀紀錄"
 
-#: plugins/instances/init.php:233
-#: plugins/instances/init.php:421
-msgid "Use one access key for both linked instances."
-msgstr "為兩個相聯的實例使用一個訪問金鑰。"
+#: classes/feeds.php:1716
+msgid "Special"
+msgstr "特殊區域"
 
-#: plugins/instances/init.php:241
-#: plugins/instances/init.php:429
-msgid "Generate new key"
-msgstr "產生新的金鑰"
-
-#: plugins/instances/init.php:292
-msgid "Link instance"
-msgstr "鏈接實例"
-
-#: plugins/instances/init.php:304
-msgid "You can connect other instances of Tiny Tiny RSS to this one to share Popular feeds. Link to this instance of Tiny Tiny RSS by using this URL:"
-msgstr "您可以與其他的 Tiny Tiny RSS 實例相聯，以共享最受歡迎的摘要列表。透過這個 URL 為本實例建立鏈接："
-
-#: plugins/instances/init.php:314
-msgid "Last connected"
-msgstr "上次連接"
-
-#: plugins/instances/init.php:315
-msgid "Status"
-msgstr "狀態"
-
-#: plugins/instances/init.php:316
-msgid "Stored feeds"
-msgstr "儲存的摘要"
-
-#: plugins/instances/init.php:433
-msgid "Create link"
-msgstr "建立鏈接"
-
-#: plugins/nsfw/init.php:30
-#: plugins/nsfw/init.php:42
-msgid "Not work safe (click to toggle)"
-msgstr ""
-
-#: plugins/nsfw/init.php:52
-msgid "NSFW Plugin"
-msgstr ""
-
-#: plugins/nsfw/init.php:79
-msgid "Tags to consider NSFW (comma-separated)"
-msgstr ""
-
-#: plugins/nsfw/init.php:100
-msgid "Configuration saved."
-msgstr "設定已儲存。"
-
-#: plugins/note/init.php:26
-#: plugins/note/note.js:11
-msgid "Edit article note"
-msgstr "編輯文章註記"
+#: classes/feeds.php:1962
+#, php-format
+msgid "Search results: %s"
+msgstr "搜尋結果： %s"
 
 #: plugins/vf_shared/init.php:16
-#: plugins/vf_shared/init.php:69
+#: plugins/vf_shared/init.php:60
 msgid "Shared articles"
 msgstr "已分享的文章"
 
-#: plugins/auth_internal/init.php:65
+#: plugins/import_export/init.php:58
+msgid "Import and export"
+msgstr "匯入和匯出"
+
+#: plugins/import_export/init.php:60
+msgid "You can export and import your Starred and Archived articles for safekeeping or when migrating between tt-rss instances of same version."
+msgstr ""
+
+#: plugins/import_export/init.php:65
+msgid "Export my data"
+msgstr "匯出我的資料"
+
+#: plugins/import_export/init.php:81
+msgid "Import"
+msgstr "匯入"
+
+#: plugins/import_export/init.php:231
+msgid "Could not import: incorrect schema version."
+msgstr ""
+
+#: plugins/import_export/init.php:236
+msgid "Could not import: unrecognized document format."
+msgstr ""
+
+#: plugins/import_export/init.php:397
+msgid "Finished: "
+msgstr "完成： "
+
+#: plugins/import_export/init.php:398
+#, fuzzy, php-format
+msgid "%d article processed, "
+msgid_plural "%d articles processed, "
+msgstr[0] "編輯文章註記"
+
+#: plugins/import_export/init.php:399
+#, php-format
+msgid "%d imported, "
+msgid_plural "%d imported, "
+msgstr[0] "%d 個已匯入"
+
+#: plugins/import_export/init.php:400
+#, php-format
+msgid "%d feed created."
+msgid_plural "%d feeds created."
+msgstr[0] "%d 個摘要已建立"
+
+#: plugins/import_export/init.php:405
+msgid "Could not load XML document."
+msgstr ""
+
+#: plugins/import_export/init.php:417
+msgid "Prepare data"
+msgstr ""
+
+#: plugins/import_export/init.php:434
+#, fuzzy, php-format
+msgid "Upload failed with error code %d (%s)"
+msgstr "上傳失敗，失敗碼 %d"
+
+#: plugins/import_export/init.php:460
+msgid "No file uploaded."
+msgstr "沒有上傳檔案"
+
+#: plugins/mailto/init.php:48
+#: plugins/mailto/init.php:54
+#: plugins/mail/init.php:112
+#: plugins/mail/init.php:118
+msgid "[Forwarded]"
+msgstr "[已轉發]"
+
+#: plugins/mailto/init.php:48
+#: plugins/mail/init.php:112
+msgid "Multiple articles"
+msgstr "多個文章"
+
+#: plugins/mailto/init.php:70
+msgid "Clicking the following link to invoke your mail client:"
+msgstr ""
+
+#: plugins/mailto/init.php:74
 #, fuzzy
-msgid "Please enter your one time password:"
-msgstr "請填寫類別名稱："
+msgid "Forward selected article(s) by email."
+msgstr "用郵件轉發文章"
 
-#: plugins/auth_internal/init.php:188
-msgid "Password has been changed."
-msgstr "密碼更改成功。"
-
-#: plugins/auth_internal/init.php:190
-msgid "Old password is incorrect."
-msgstr "原密碼輸入錯誤。"
-
-#: plugins/af_readability/init.php:21
-msgid "Data saved."
+#: plugins/mailto/init.php:77
+msgid "You should be able to edit the message before sending in your mail client."
 msgstr ""
 
-#: plugins/af_readability/init.php:33
-#, fuzzy
-msgid "Inline content"
-msgstr "滾動文章內容"
+#: plugins/mailto/init.php:82
+msgid "Close this dialog"
+msgstr "關閉本對話框"
 
-#: plugins/af_readability/init.php:39
-msgid "Readability settings (af_readability)"
+#: plugins/bookmarklets/init.php:20
+msgid "Bookmarklets"
+msgstr "書籤"
+
+#: plugins/bookmarklets/init.php:22
+msgid "Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it."
+msgstr "將以下連結按鈕拖曳至您的瀏覽器書籤工具列。之後在瀏覽器中打開您想看的摘要，然後按下此連結按鈕即可訂閱。"
+
+#: plugins/bookmarklets/init.php:26
+#, php-format
+msgid "Subscribe to %s in Tiny Tiny RSS?"
+msgstr "在 Tiny Tiny RSS 中訂閱 %s ？"
+
+#: plugins/bookmarklets/init.php:31
+msgid "Subscribe in Tiny Tiny RSS"
+msgstr "在 Tiny Tiny RSS 中訂閱"
+
+#: plugins/bookmarklets/init.php:34
+msgid "Use this bookmarklet to publish arbitrary pages using Tiny Tiny RSS"
 msgstr ""
-
-#: plugins/af_readability/init.php:66
-msgid "Use Readability for pages shared via bookmarklet."
-msgstr ""
-
-#: plugins/af_readability/init.php:78
-#: plugins/af_psql_trgm/init.php:191
-msgid "Currently enabled for (click to edit):"
-msgstr ""
-
-#: plugins/af_readability/init.php:95
-#, fuzzy
-msgid "Readability"
-msgstr "檢查可用性"
-
-#: plugins/af_readability/init.php:106
-#, fuzzy
-msgid "Inline article content"
-msgstr "滾動文章內容"
-
-#: plugins/af_redditimgur/init.php:25
-msgid "Reddit content settings (af_redditimgur)"
-msgstr ""
-
-#: plugins/af_redditimgur/init.php:50
-msgid "Uses Readability (full-text-rss) implementation by <a target='_blank' href='https://bitbucket.org/fivefilters/'>FiveFilters.org</a>"
-msgstr ""
-
-#: plugins/af_redditimgur/init.php:54
-msgid "Extract missing content using Readability"
-msgstr ""
-
-#: plugins/af_redditimgur/init.php:59
-msgid "Enable additional duplicate checking"
-msgstr ""
-
-#: plugins/af_redditimgur/init.php:73
-#: plugins/af_zz_imgproxy/init.php:225
-#, fuzzy
-msgid "Configuration saved"
-msgstr "設定已儲存。"
 
 #: plugins/af_psql_trgm/init.php:28
 #, php-format
@@ -2677,84 +2618,62 @@ msgstr ""
 msgid "Enable for all feeds:"
 msgstr "啟用摘要分類"
 
+#: plugins/af_psql_trgm/init.php:191
+#: plugins/af_readability/init.php:78
+msgid "Currently enabled for (click to edit):"
+msgstr ""
+
 #: plugins/af_psql_trgm/init.php:209
 msgid "Similarity (pg_trgm)"
 msgstr ""
 
-#: plugins/af_comics/init.php:40
-msgid "Feeds supported by af_comics"
+#: plugins/nsfw/init.php:30
+#: plugins/nsfw/init.php:42
+msgid "Not work safe (click to toggle)"
 msgstr ""
 
-#: plugins/af_comics/init.php:42
-msgid "The following comics are currently supported:"
+#: plugins/nsfw/init.php:52
+msgid "NSFW Plugin"
 msgstr ""
 
-#: plugins/af_comics/init.php:60
-msgid "GoComics requires a specific URL to workaround their lack of feed support: <code>http://feeds.feedburner.com/uclick/<em>comic_name</em></code> (e.g. <code>http://www.gocomics.com/garfield</code> uses <code>http://feeds.feedburner.com/uclick/garfield</code>)."
+#: plugins/nsfw/init.php:79
+msgid "Tags to consider NSFW (comma-separated)"
 msgstr ""
 
-#: plugins/import_export/init.php:58
-msgid "Import and export"
-msgstr "匯入和匯出"
+#: plugins/nsfw/init.php:100
+msgid "Configuration saved."
+msgstr "設定已儲存。"
 
-#: plugins/import_export/init.php:60
-msgid "You can export and import your Starred and Archived articles for safekeeping or when migrating between tt-rss instances of same version."
+#: plugins/toggle_sidebar/init.php:23
+msgid "Collapse feedlist"
+msgstr "收縮側邊欄"
+
+#: plugins/af_readability/init.php:21
+msgid "Data saved."
 msgstr ""
 
-#: plugins/import_export/init.php:65
-msgid "Export my data"
-msgstr "匯出我的資料"
+#: plugins/af_readability/init.php:33
+#, fuzzy
+msgid "Inline content"
+msgstr "滾動文章內容"
 
-#: plugins/import_export/init.php:81
-msgid "Import"
-msgstr "匯入"
-
-#: plugins/import_export/init.php:225
-msgid "Could not import: incorrect schema version."
+#: plugins/af_readability/init.php:39
+msgid "Readability settings (af_readability)"
 msgstr ""
 
-#: plugins/import_export/init.php:230
-msgid "Could not import: unrecognized document format."
+#: plugins/af_readability/init.php:66
+msgid "Use Readability for pages shared via bookmarklet."
 msgstr ""
 
-#: plugins/import_export/init.php:391
-msgid "Finished: "
-msgstr "完成： "
+#: plugins/af_readability/init.php:95
+#, fuzzy
+msgid "Readability"
+msgstr "檢查可用性"
 
-#: plugins/import_export/init.php:392
-#, fuzzy, php-format
-msgid "%d article processed, "
-msgid_plural "%d articles processed, "
-msgstr[0] "編輯文章註記"
-
-#: plugins/import_export/init.php:393
-#, php-format
-msgid "%d imported, "
-msgid_plural "%d imported, "
-msgstr[0] "%d 個已匯入"
-
-#: plugins/import_export/init.php:394
-#, php-format
-msgid "%d feed created."
-msgid_plural "%d feeds created."
-msgstr[0] "%d 個摘要已建立"
-
-#: plugins/import_export/init.php:399
-msgid "Could not load XML document."
-msgstr ""
-
-#: plugins/import_export/init.php:411
-msgid "Prepare data"
-msgstr ""
-
-#: plugins/import_export/init.php:428
-#, fuzzy, php-format
-msgid "Upload failed with error code %d (%s)"
-msgstr "上傳失敗，失敗碼 %d"
-
-#: plugins/import_export/init.php:454
-msgid "No file uploaded."
-msgstr "沒有上傳檔案"
+#: plugins/af_readability/init.php:106
+#, fuzzy
+msgid "Inline article content"
+msgstr "滾動文章內容"
 
 #: plugins/mail/init.php:28
 msgid "Mail addresses saved."
@@ -2769,18 +2688,6 @@ msgstr "使用者擴充套件"
 msgid "You can set predefined email addressed here (comma-separated list):"
 msgstr ""
 
-#: plugins/mail/init.php:112
-#: plugins/mail/init.php:118
-#: plugins/mailto/init.php:49
-#: plugins/mailto/init.php:55
-msgid "[Forwarded]"
-msgstr "[已轉發]"
-
-#: plugins/mail/init.php:112
-#: plugins/mailto/init.php:49
-msgid "Multiple articles"
-msgstr "多個文章"
-
 #: plugins/mail/init.php:140
 msgid "To:"
 msgstr "收信人："
@@ -2792,61 +2699,6 @@ msgstr "主題："
 #: plugins/mail/init.php:172
 msgid "Send e-mail"
 msgstr "發送郵件"
-
-#: plugins/close_button/init.php:22
-msgid "Close article"
-msgstr "關閉文章"
-
-#: plugins/bookmarklets/init.php:20
-msgid "Bookmarklets"
-msgstr "書籤"
-
-#: plugins/bookmarklets/init.php:22
-msgid "Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it."
-msgstr "將以下連結按鈕拖曳至您的瀏覽器書籤工具列。之後在瀏覽器中打開您想看的摘要，然後按下此連結按鈕即可訂閱。"
-
-#: plugins/bookmarklets/init.php:26
-#, php-format
-msgid "Subscribe to %s in Tiny Tiny RSS?"
-msgstr "在 Tiny Tiny RSS 中訂閱 %s ？"
-
-#: plugins/bookmarklets/init.php:31
-msgid "Subscribe in Tiny Tiny RSS"
-msgstr "在 Tiny Tiny RSS 中訂閱"
-
-#: plugins/bookmarklets/init.php:34
-msgid "Use this bookmarklet to publish arbitrary pages using Tiny Tiny RSS"
-msgstr ""
-
-#: plugins/toggle_sidebar/init.php:23
-msgid "Collapse feedlist"
-msgstr "收縮側邊欄"
-
-#: plugins/af_zz_imgproxy/init.php:186
-msgid "Image proxy settings (af_zz_imgproxy)"
-msgstr ""
-
-#: plugins/af_zz_imgproxy/init.php:211
-#, fuzzy
-msgid "Enable proxy for all remote images."
-msgstr "啟用摘要分類"
-
-#: plugins/mailto/init.php:71
-msgid "Clicking the following link to invoke your mail client:"
-msgstr ""
-
-#: plugins/mailto/init.php:75
-#, fuzzy
-msgid "Forward selected article(s) by email."
-msgstr "用郵件轉發文章"
-
-#: plugins/mailto/init.php:78
-msgid "You should be able to edit the message before sending in your mail client."
-msgstr ""
-
-#: plugins/mailto/init.php:83
-msgid "Close this dialog"
-msgstr "關閉本對話框"
 
 #: plugins/share/init.php:39
 msgid "You can disable all articles shared by unique URLs here."
@@ -2860,24 +2712,98 @@ msgstr "取消所有分享"
 msgid "Share by URL"
 msgstr "透過 URL 分享"
 
-#: plugins/share/init.php:97
+#: plugins/share/init.php:96
 msgid "You can share this article by the following unique URL:"
 msgstr "您可以透過此 URL 分享本文章："
 
-#: plugins/share/init.php:115
+#: plugins/share/init.php:114
 msgid "Unshare article"
 msgstr "取些分享文章"
+
+#: plugins/af_comics/init.php:48
+msgid "Feeds supported by af_comics"
+msgstr ""
+
+#: plugins/af_comics/init.php:50
+msgid "The following comics are currently supported:"
+msgstr ""
+
+#: plugins/af_comics/init.php:68
+msgid "GoComics requires a specific URL to workaround their lack of feed support: <code>http://feeds.feedburner.com/uclick/<em>comic_name</em></code> (e.g. <code>http://www.gocomics.com/garfield</code> uses <code>http://feeds.feedburner.com/uclick/garfield</code>)."
+msgstr ""
+
+#: plugins/af_comics/init.php:70
+msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
+msgstr ""
+
+#: plugins/af_redditimgur/init.php:25
+msgid "Reddit content settings (af_redditimgur)"
+msgstr ""
+
+#: plugins/af_redditimgur/init.php:50
+msgid "Uses Readability (full-text-rss) implementation by <a target='_blank' href='https://bitbucket.org/fivefilters/'>FiveFilters.org</a>"
+msgstr ""
+
+#: plugins/af_redditimgur/init.php:54
+msgid "Extract missing content using Readability"
+msgstr ""
+
+#: plugins/af_redditimgur/init.php:59
+msgid "Enable additional duplicate checking"
+msgstr ""
+
+#: plugins/af_redditimgur/init.php:73
+#: plugins/af_zz_imgproxy/init.php:254
+#, fuzzy
+msgid "Configuration saved"
+msgstr "設定已儲存。"
+
+#: plugins/note/init.php:26
+#: plugins/note/note.js:11
+msgid "Edit article note"
+msgstr "編輯文章註記"
+
+#: plugins/close_button/init.php:25
+msgid "Close article"
+msgstr "關閉文章"
+
+#: plugins/af_zz_imgproxy/init.php:210
+msgid "Image proxy settings (af_zz_imgproxy)"
+msgstr ""
+
+#: plugins/af_zz_imgproxy/init.php:234
+#, fuzzy
+msgid "Enable proxy for all remote images."
+msgstr "啟用摘要分類"
+
+#: plugins/af_zz_imgproxy/init.php:238
+#, fuzzy
+msgid "Don't cache files locally."
+msgstr "本地快取圖片"
+
+#: plugins/auth_internal/init.php:65
+#, fuzzy
+msgid "Please enter your one time password:"
+msgstr "請填寫類別名稱："
+
+#: plugins/auth_internal/init.php:188
+msgid "Password has been changed."
+msgstr "密碼更改成功。"
+
+#: plugins/auth_internal/init.php:190
+msgid "Old password is incorrect."
+msgstr "原密碼輸入錯誤。"
 
 #: js/FeedTree.js:172
 #, fuzzy
 msgid "(Un)collapse"
 msgstr "折疊側邊欄"
 
-#: js/PrefFeedTree.js:52
+#: js/PrefFeedTree.js:54
 msgid "Edit category"
 msgstr "編輯類別"
 
-#: js/PrefFeedTree.js:59
+#: js/PrefFeedTree.js:61
 msgid "Remove category"
 msgstr "移除類別"
 
@@ -2914,64 +2840,55 @@ msgid "Create Filter"
 msgstr "建立過濾器"
 
 #: js/functions.js:1128
-msgid "Reset subscription? Tiny Tiny RSS will try to subscribe to the notification hub again on next feed update."
-msgstr "重置訂閱？ Tiny Tiny RSS 將會在下次摘要更新的時候嘗試再次訂閱信息提醒中心。"
-
-#: js/functions.js:1139
-#, fuzzy
-msgid "Subscription reset."
-msgstr "訂閱摘要"
-
-#: js/functions.js:1149
-#: js/tt-rss.js:695
+#: js/tt-rss.js:696
 #, perl-format
 msgid "Unsubscribe from %s?"
 msgstr "從 %s 取消訂閱？"
 
-#: js/functions.js:1152
+#: js/functions.js:1131
 msgid "Removing feed..."
 msgstr "移除摘要"
 
-#: js/functions.js:1225
+#: js/functions.js:1204
 msgid "Please enter category title:"
 msgstr "請填寫類別名稱："
 
-#: js/functions.js:1250
+#: js/functions.js:1229
 msgid "Generate new syndication address for this feed?"
 msgstr "為本摘要產生新的群地址？"
 
-#: js/functions.js:1254
-#: js/prefs.js:1154
+#: js/functions.js:1233
+#: js/prefs.js:1150
 msgid "Trying to change address..."
 msgstr ""
 
-#: js/functions.js:1497
-#: js/functions.js:1606
+#: js/functions.js:1476
+#: js/functions.js:1585
 #: js/prefs.js:398
 #: js/prefs.js:424
 #: js/prefs.js:456
 #: js/prefs.js:599
 #: js/prefs.js:617
-#: js/prefs.js:1136
-#: js/prefs.js:1263
+#: js/prefs.js:1132
+#: js/prefs.js:1259
 msgid "No feeds are selected."
 msgstr "沒有選擇任何摘要。"
 
-#: js/functions.js:1540
+#: js/functions.js:1519
 msgid "Remove selected feeds from the archive? Feeds with stored articles will not be removed."
 msgstr "將選取的摘要從存檔中移除？包含已保存文章的摘要不會被移除。"
 
-#: js/functions.js:1577
+#: js/functions.js:1556
 msgid "Feeds with update errors"
 msgstr "更新錯誤的摘要"
 
-#: js/functions.js:1588
-#: js/prefs.js:1117
+#: js/functions.js:1567
+#: js/prefs.js:1113
 msgid "Remove selected feeds?"
 msgstr "移除選取的摘要？"
 
-#: js/functions.js:1591
-#: js/prefs.js:1120
+#: js/functions.js:1570
+#: js/prefs.js:1116
 msgid "Removing selected feeds..."
 msgstr "移除選取的摘要？"
 
@@ -2994,9 +2911,7 @@ msgstr "編輯使用者信息"
 #: js/prefs.js:100
 #: js/prefs.js:209
 #: js/prefs.js:706
-#: plugins/instances/instances.js:26
-#: plugins/instances/instances.js:89
-#: js/functions.js:1408
+#: js/functions.js:1387
 msgid "Saving data..."
 msgstr " 儲存資料"
 
@@ -3024,7 +2939,7 @@ msgid "Removing selected labels..."
 msgstr "移除選取的預定義標籤？"
 
 #: js/prefs.js:308
-#: js/prefs.js:1304
+#: js/prefs.js:1300
 msgid "No labels are selected."
 msgstr "沒有選擇任何預定義標籤。"
 
@@ -3131,28 +3046,28 @@ msgstr "儲存對摘要的更改？"
 msgid "OPML Import"
 msgstr "OPML 匯入"
 
-#: js/prefs.js:764
+#: js/prefs.js:759
 msgid "Please choose an OPML file first."
 msgstr "請先選擇一個 OPML 文件。"
 
-#: js/prefs.js:767
+#: js/prefs.js:762
 #: plugins/import_export/import_export.js:115
 msgid "Importing, please wait..."
 msgstr "匯入中，請稍候……"
 
-#: js/prefs.js:928
+#: js/prefs.js:924
 msgid "Reset to defaults?"
 msgstr "重置為預設狀態？"
 
-#: js/prefs.js:1628
+#: js/prefs.js:1624
 msgid "Subscribing to feeds..."
 msgstr ""
 
-#: js/prefs.js:1647
+#: js/prefs.js:1643
 msgid "Clear stored data for this plugin?"
 msgstr ""
 
-#: js/prefs.js:1661
+#: js/prefs.js:1657
 msgid "Clear all messages in the error log?"
 msgstr ""
 
@@ -3165,182 +3080,150 @@ msgstr "將所有文章標記為已讀？"
 msgid "Marking all feeds as read..."
 msgstr "標記所有摘要為已讀"
 
-#: js/tt-rss.js:401
+#: js/tt-rss.js:402
 #, fuzzy
 msgid "Please enable mail plugin first."
 msgstr "請先選几個摘要吧。"
 
-#: js/tt-rss.js:449
-#: js/functions.js:1387
-#: js/tt-rss.js:676
+#: js/tt-rss.js:450
+#: js/functions.js:1366
+#: js/tt-rss.js:677
 msgid "You can't edit this kind of feed."
 msgstr "您無法編輯這種類型的摘要。"
 
-#: js/tt-rss.js:530
+#: js/tt-rss.js:531
 #, fuzzy
 msgid "Please enable embed_original plugin first."
 msgstr "請先選几個摘要吧。"
 
-#: js/tt-rss.js:543
-#: js/tt-rss.js:726
+#: js/tt-rss.js:544
+#: js/tt-rss.js:727
 msgid "Widescreen is not available in combined mode."
 msgstr ""
 
-#: js/tt-rss.js:824
+#: js/tt-rss.js:825
 msgid "You can't rescore this kind of feed."
 msgstr "無法重置此分類的摘要的評分。"
 
-#: js/tt-rss.js:829
-#: js/tt-rss.js:689
+#: js/tt-rss.js:830
+#: js/tt-rss.js:690
 msgid "Please select some feed first."
 msgstr "請先選幾個摘要吧。"
 
-#: js/tt-rss.js:834
+#: js/tt-rss.js:835
 #, perl-format
 msgid "Rescore articles in %s?"
 msgstr "重置 %s 中文章的評分？"
 
-#: js/tt-rss.js:837
+#: js/tt-rss.js:838
 #, fuzzy
 msgid "Rescoring articles..."
 msgstr "為文章重新評分"
 
-#: js/viewfeed.js:919
-#: js/viewfeed.js:957
-#: js/viewfeed.js:1005
-#: js/viewfeed.js:1931
-#: plugins/mail/mail.js:7
+#: js/viewfeed.js:921
+#: js/viewfeed.js:959
+#: js/viewfeed.js:1007
+#: js/viewfeed.js:1933
 #: plugins/mailto/init.js:7
-#: js/viewfeed.js:677
-#: js/viewfeed.js:699
-#: js/viewfeed.js:720
-#: js/viewfeed.js:779
-#: js/viewfeed.js:807
+#: plugins/mail/mail.js:7
+#: js/viewfeed.js:679
+#: js/viewfeed.js:701
+#: js/viewfeed.js:722
+#: js/viewfeed.js:781
+#: js/viewfeed.js:809
 msgid "No articles are selected."
 msgstr "沒有選取任何文章。"
 
-#: js/viewfeed.js:927
+#: js/viewfeed.js:929
 #, fuzzy, perl-format
 msgid "Delete %d selected article in %s?"
 msgid_plural "Delete %d selected articles in %s?"
 msgstr[0] "刪除 %s 中選擇的 %d 篇文章？"
 
-#: js/viewfeed.js:929
+#: js/viewfeed.js:931
 #, fuzzy, perl-format
 msgid "Delete %d selected article?"
 msgid_plural "Delete %d selected articles?"
 msgstr[0] "刪除選取的 %d 篇文章？"
 
-#: js/viewfeed.js:966
+#: js/viewfeed.js:968
 #, fuzzy, perl-format
 msgid "Archive %d selected article in %s?"
 msgid_plural "Archive %d selected articles in %s?"
 msgstr[0] "將 %s 中的 %d 篇選取的文章存檔？"
 
-#: js/viewfeed.js:969
+#: js/viewfeed.js:971
 #, fuzzy, perl-format
 msgid "Move %d archived article back?"
 msgid_plural "Move %d archived articles back?"
 msgstr[0] "將存檔的 %d 篇文章移回原處？"
 
-#: js/viewfeed.js:971
+#: js/viewfeed.js:973
 msgid "Please note that unstarred articles might get purged on next feed update."
 msgstr ""
 
-#: js/viewfeed.js:1011
+#: js/viewfeed.js:1013
 #, fuzzy, perl-format
 msgid "Mark %d selected article in %s as read?"
 msgid_plural "Mark %d selected articles in %s as read?"
 msgstr[0] "將 %s 中選取的 %d 篇文章標記為已讀？"
 
-#: js/viewfeed.js:1031
+#: js/viewfeed.js:1033
 msgid "Edit article Tags"
 msgstr "編輯文章的自訂標籤"
 
-#: js/viewfeed.js:1037
+#: js/viewfeed.js:1039
 #, fuzzy
 msgid "Saving article tags..."
 msgstr "編輯文章的自訂標籤"
 
-#: js/viewfeed.js:1670
+#: js/viewfeed.js:1672
 msgid "Open original article"
 msgstr "打開原始文章"
 
-#: js/viewfeed.js:1677
+#: js/viewfeed.js:1679
 msgid "Display article URL"
 msgstr "顯示文章網址"
 
-#: js/viewfeed.js:1787
+#: js/viewfeed.js:1789
 msgid "Assign label"
 msgstr "添加預定義標籤"
 
-#: js/viewfeed.js:1792
+#: js/viewfeed.js:1794
 msgid "Remove label"
 msgstr "移除預定義標籤"
 
-#: js/viewfeed.js:1824
+#: js/viewfeed.js:1826
 #, fuzzy
 msgid "Select articles in group"
 msgstr "選擇鼠標指向的文章"
 
-#: js/viewfeed.js:1834
+#: js/viewfeed.js:1836
 #, fuzzy
 msgid "Mark group as read"
 msgstr "標記為已讀"
 
-#: js/viewfeed.js:1846
+#: js/viewfeed.js:1848
 msgid "Mark feed as read"
 msgstr "標記摘要為已讀"
 
-#: js/viewfeed.js:1899
+#: js/viewfeed.js:1901
 #, fuzzy
 msgid "Please enter new score for selected articles:"
 msgstr "刪除選取的 %d 篇文章？"
 
-#: js/viewfeed.js:1962
+#: js/viewfeed.js:1964
 #, fuzzy
 msgid "Please enter new score for this article:"
 msgstr "請填寫類別名稱："
 
-#: js/viewfeed.js:1993
+#: js/viewfeed.js:1995
 msgid "Article URL:"
 msgstr "文章網址： "
 
-#: plugins/instances/instances.js:10
-msgid "Link Instance"
-msgstr "鏈接實例"
-
-#: plugins/instances/instances.js:73
-msgid "Edit Instance"
-msgstr "編輯實例"
-
-#: plugins/instances/instances.js:122
-msgid "Remove selected instances?"
-msgstr "移除選取的實例？"
-
-#: plugins/instances/instances.js:125
-#, fuzzy
-msgid "Removing selected instances..."
-msgstr "移除選取的實例？"
-
-#: plugins/instances/instances.js:139
-#: plugins/instances/instances.js:151
-msgid "No instances are selected."
-msgstr "未選取任何實例。"
-
-#: plugins/instances/instances.js:156
-msgid "Please select only one instance."
-msgstr "請僅選擇一個實例。"
-
-#: plugins/note/note.js:17
-#, fuzzy
-msgid "Saving article note..."
-msgstr "編輯文章註記"
-
-#: plugins/af_psql_trgm/init.js:11
-#, fuzzy
-msgid "Related articles"
-msgstr "刪除文章"
+#: plugins/embed_original/init.js:6
+msgid "Sorry, your browser does not support sandboxed iframes."
+msgstr ""
 
 #: plugins/import_export/import_export.js:13
 msgid "Export Data"
@@ -3360,10 +3243,15 @@ msgstr "資料匯入"
 msgid "Please choose the file first."
 msgstr "請選擇檔案。"
 
-#: plugins/mail/mail.js:21
 #: plugins/mailto/init.js:21
+#: plugins/mail/mail.js:21
 msgid "Forward article by email"
 msgstr "用郵件轉發文章"
+
+#: plugins/af_psql_trgm/init.js:11
+#, fuzzy
+msgid "Related articles"
+msgstr "刪除文章"
 
 #: plugins/mail/mail.js:36
 msgid "Error sending email:"
@@ -3373,10 +3261,6 @@ msgstr ""
 #, fuzzy
 msgid "Your message has been sent."
 msgstr "您的個人數據已儲存。"
-
-#: plugins/embed_original/init.js:6
-msgid "Sorry, your browser does not support sandboxed iframes."
-msgstr ""
 
 #: plugins/shorten_expanded/init.js:39
 #, fuzzy
@@ -3409,7 +3293,7 @@ msgid "This will invalidate all previously shared article URLs. Continue?"
 msgstr "之前共享文章的 URL 將會回到未認證狀態。是否繼續？"
 
 #: plugins/share/share_prefs.js:6
-#: js/prefs.js:1437
+#: js/prefs.js:1433
 msgid "Clearing URLs..."
 msgstr ""
 
@@ -3417,25 +3301,44 @@ msgstr ""
 msgid "Shared URLs cleared."
 msgstr ""
 
+#: plugins/note/note.js:17
+#, fuzzy
+msgid "Saving article note..."
+msgstr "編輯文章註記"
+
 #: js/feedlist.js:429
-#: js/feedlist.js:496
 msgid "Mark all articles in %s as read?"
 msgstr "將 %s 中的全部文章標記為已讀？"
 
 #: js/feedlist.js:487
 #, fuzzy
-msgid "Mark all articles in %s older than 1 day as read?"
+msgid "Mark %w in %s older than 1 day as read?"
 msgstr "將 %s 中的全部文章標記為已讀？"
 
 #: js/feedlist.js:490
 #, fuzzy
-msgid "Mark all articles in %s older than 1 week as read?"
+msgid "Mark %w in %s older than 1 week as read?"
 msgstr "將 %s 中的全部文章標記為已讀？"
 
 #: js/feedlist.js:493
 #, fuzzy
-msgid "Mark all articles in %s older than 2 weeks as read?"
+msgid "Mark %w in %s older than 2 weeks as read?"
 msgstr "將 %s 中的全部文章標記為已讀？"
+
+#: js/feedlist.js:496
+#, fuzzy
+msgid "Mark %w in %s as read?"
+msgstr "將 %s 中的全部文章標記為已讀？"
+
+#: js/feedlist.js:499
+#, fuzzy
+msgid "search results"
+msgstr "搜尋結果： %s"
+
+#: js/feedlist.js:499
+#, fuzzy
+msgid "all articles"
+msgstr "全部文章"
 
 #: js/functions.js:506
 msgid "Error explained"
@@ -3520,186 +3423,257 @@ msgstr "您已經訂閱過這個摘要啦。"
 msgid "Edit rule"
 msgstr "編輯過濾器"
 
-#: js/functions.js:1402
+#: js/functions.js:1381
 msgid "Edit Feed"
 msgstr "編輯摘要"
 
-#: js/functions.js:1435
+#: js/functions.js:1414
 msgid "More Feeds"
 msgstr "更多摘要"
 
-#: js/functions.js:1631
+#: js/functions.js:1610
 msgid "Help"
 msgstr "說明"
 
-#: js/prefs.js:1032
+#: js/prefs.js:1028
 msgid "Remove category %s? Any nested feeds would be placed into Uncategorized."
 msgstr ""
 
-#: js/prefs.js:1038
+#: js/prefs.js:1034
 #, fuzzy
 msgid "Removing category..."
 msgstr "建立類別"
 
-#: js/prefs.js:1056
+#: js/prefs.js:1052
 msgid "Remove selected categories?"
 msgstr "移除所有選擇的類別？"
 
-#: js/prefs.js:1059
+#: js/prefs.js:1055
 #, fuzzy
 msgid "Removing selected categories..."
 msgstr "移除選定的類別"
 
-#: js/prefs.js:1072
+#: js/prefs.js:1068
 msgid "No categories are selected."
 msgstr "沒有選取任何類別。"
 
-#: js/prefs.js:1079
+#: js/prefs.js:1075
 #, fuzzy
 msgid "Category title:"
 msgstr "類別"
 
-#: js/prefs.js:1083
+#: js/prefs.js:1079
 #, fuzzy
 msgid "Creating category..."
 msgstr "建立過濾器"
 
-#: js/prefs.js:1106
+#: js/prefs.js:1102
 msgid "Feeds without recent updates"
 msgstr "最近沒更新的摘要"
 
-#: js/prefs.js:1150
+#: js/prefs.js:1146
 msgid "Replace current OPML publishing address with a new one?"
 msgstr "將當前的 OPML 發布地址更改替換為新地址？"
 
-#: js/prefs.js:1227
+#: js/prefs.js:1223
 #, fuzzy
 msgid "Clearing feed..."
 msgstr "清空摘要數據"
 
-#: js/prefs.js:1247
+#: js/prefs.js:1243
 msgid "Rescore articles in selected feeds?"
 msgstr "為選取摘要中的文章重置評分？"
 
-#: js/prefs.js:1250
+#: js/prefs.js:1246
 #, fuzzy
 msgid "Rescoring selected feeds..."
 msgstr "為選取摘要中的文章重置評分？"
 
-#: js/prefs.js:1270
+#: js/prefs.js:1266
 msgid "Rescore all articles? This operation may take a lot of time."
 msgstr "重置所有文章的評分？這可能將花費很長時間。"
 
-#: js/prefs.js:1273
+#: js/prefs.js:1269
 #, fuzzy
 msgid "Rescoring feeds..."
 msgstr "為摘要重新評分"
 
-#: js/prefs.js:1289
+#: js/prefs.js:1285
 msgid "Reset selected labels to default colors?"
 msgstr "將選取的可選標籤重置為預設顏色？"
 
-#: js/prefs.js:1321
+#: js/prefs.js:1317
 msgid "Settings Profiles"
 msgstr "偏好設定的設定"
 
-#: js/prefs.js:1330
+#: js/prefs.js:1326
 msgid "Remove selected profiles? Active and default profiles will not be removed."
 msgstr "移除選取的偏好設定？當前偏好與預設偏好不會被移除。"
 
-#: js/prefs.js:1333
+#: js/prefs.js:1329
 msgid "Removing selected profiles..."
 msgstr "移除選取的偏好設定檔"
 
-#: js/prefs.js:1349
+#: js/prefs.js:1345
 msgid "No profiles are selected."
 msgstr "未選擇偏好設定。"
 
-#: js/prefs.js:1357
-#: js/prefs.js:1410
+#: js/prefs.js:1353
+#: js/prefs.js:1406
 msgid "Activate selected profile?"
 msgstr "啟用選取的偏好設定？"
 
-#: js/prefs.js:1374
-#: js/prefs.js:1426
+#: js/prefs.js:1370
+#: js/prefs.js:1422
 msgid "Please choose a profile to activate."
 msgstr "請選擇希望啟用的偏好設定。"
 
-#: js/prefs.js:1379
+#: js/prefs.js:1375
 msgid "Creating profile..."
 msgstr "建立偏好設定檔..."
 
-#: js/prefs.js:1434
+#: js/prefs.js:1430
 msgid "This will invalidate all previously generated feed URLs. Continue?"
 msgstr "之前產生的摘要 URL 將會回到未認證狀態。是否繼續？"
 
-#: js/prefs.js:1444
+#: js/prefs.js:1440
 #, fuzzy
 msgid "Generated URLs cleared."
 msgstr "產生一個新的 URL"
 
-#: js/prefs.js:1516
+#: js/prefs.js:1512
 msgid "Label Editor"
 msgstr "編輯預定義標籤"
 
-#: js/tt-rss.js:684
+#: js/tt-rss.js:685
 msgid "You can't unsubscribe from the category."
 msgstr "您不能取消訂閱一個類別。"
 
-#: js/viewfeed.js:125
-#: js/viewfeed.js:175
-#: js/viewfeed.js:192
+#: js/viewfeed.js:127
+#: js/viewfeed.js:177
+#: js/viewfeed.js:194
 #, fuzzy
 msgid "Click to open next unread feed."
 msgstr "點擊以編輯摘要"
 
-#: js/viewfeed.js:129
+#: js/viewfeed.js:131
 msgid "Cancel search"
 msgstr "取消搜尋"
 
-#: js/viewfeed.js:189
+#: js/viewfeed.js:191
 #, fuzzy
 msgid "New articles found, reload feed to continue."
 msgstr "暫時沒有文章。"
 
-#: js/viewfeed.js:424
+#: js/viewfeed.js:426
 msgid "Unstar article"
 msgstr "取消此文章標示星星"
 
-#: js/viewfeed.js:428
+#: js/viewfeed.js:430
 msgid "Star article"
 msgstr "為此文章標示星星"
 
-#: js/viewfeed.js:478
+#: js/viewfeed.js:480
 msgid "Unpublish article"
 msgstr "取消發布文章"
 
-#: js/viewfeed.js:482
+#: js/viewfeed.js:484
 msgid "Publish article"
 msgstr "發布文章"
 
-#: js/viewfeed.js:622
+#: js/viewfeed.js:624
 #, fuzzy
 msgid "%d article selected"
 msgid_plural "%d articles selected"
 msgstr[0] "未選取任何文章。"
 
-#: js/viewfeed.js:1286
+#: js/viewfeed.js:1288
 msgid "No article is selected."
 msgstr "未選取任何文章。"
 
-#: js/viewfeed.js:1321
+#: js/viewfeed.js:1323
 msgid "No articles found to mark"
 msgstr "未找到需要標記的文章"
 
-#: js/viewfeed.js:1323
+#: js/viewfeed.js:1325
 #, fuzzy
 msgid "Mark %d article as read?"
 msgid_plural "Mark %d articles as read?"
 msgstr[0] "將 %d 篇文章標記為已讀？"
 
-#~ msgid "Cache images locally"
-#~ msgstr "本地快取圖片"
+#~ msgid "Resubscribe to push updates"
+#~ msgstr "重新訂閱以推送更新"
+
+#~ msgid "Resets PubSubHubbub subscription status for push-enabled feeds."
+#~ msgstr "為啟用推送的摘要重置 PubSubHubbub 訂閱。"
+
+#~ msgid "Download more plugins at tt-rss.org <a class=\"visibleLink\" target=\"_blank\" href=\"http://tt-rss.org/forum/viewforum.php?f=22\">forums</a> or <a target=\"_blank\" class=\"visibleLink\" href=\"http://tt-rss.org/wiki/Plugins\">wiki</a>."
+#~ msgstr "從 tt-rss.org下載更多擴充套件，可參閱 <a class=\"visibleLink\" target=\"_blank\" href=\"http://tt-rss.org/forum/viewforum.php?f=22\">討論區</a> 或 <a target=\"_blank\" class=\"visibleLink\" href=\"http://tt-rss.org/wiki/Plugins\">wiki</a>."
+
+#~ msgid "Linked"
+#~ msgstr "鏈接"
+
+#~ msgid "Instance"
+#~ msgstr "實例"
+
+#~ msgid "Instance URL"
+#~ msgstr "實例 URL："
+
+#~ msgid "Access key:"
+#~ msgstr "訪問金鑰："
+
+#~ msgid "Access key"
+#~ msgstr "訪問金鑰"
+
+#~ msgid "Use one access key for both linked instances."
+#~ msgstr "為兩個相聯的實例使用一個訪問金鑰。"
+
+#~ msgid "Generate new key"
+#~ msgstr "產生新的金鑰"
+
+#~ msgid "Link instance"
+#~ msgstr "鏈接實例"
+
+#~ msgid "You can connect other instances of Tiny Tiny RSS to this one to share Popular feeds. Link to this instance of Tiny Tiny RSS by using this URL:"
+#~ msgstr "您可以與其他的 Tiny Tiny RSS 實例相聯，以共享最受歡迎的摘要列表。透過這個 URL 為本實例建立鏈接："
+
+#~ msgid "Last connected"
+#~ msgstr "上次連接"
+
+#~ msgid "Status"
+#~ msgstr "狀態"
+
+#~ msgid "Stored feeds"
+#~ msgstr "儲存的摘要"
+
+#~ msgid "Create link"
+#~ msgstr "建立鏈接"
+
+#~ msgid "Reset subscription? Tiny Tiny RSS will try to subscribe to the notification hub again on next feed update."
+#~ msgstr "重置訂閱？ Tiny Tiny RSS 將會在下次摘要更新的時候嘗試再次訂閱信息提醒中心。"
+
+#, fuzzy
+#~ msgid "Subscription reset."
+#~ msgstr "訂閱摘要"
+
+#~ msgid "Link Instance"
+#~ msgstr "鏈接實例"
+
+#~ msgid "Edit Instance"
+#~ msgstr "編輯實例"
+
+#~ msgid "Remove selected instances?"
+#~ msgstr "移除選取的實例？"
+
+#, fuzzy
+#~ msgid "Removing selected instances..."
+#~ msgstr "移除選取的實例？"
+
+#~ msgid "No instances are selected."
+#~ msgstr "未選取任何實例。"
+
+#~ msgid "Please select only one instance."
+#~ msgstr "請僅選擇一個實例。"
 
 #, fuzzy
 #~ msgid "Are you sure to report this exception to tt-rss.org? The report will include information about your web browser and tt-rss configuration. Your IP will be saved in the database."
