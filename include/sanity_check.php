@@ -98,7 +98,7 @@
 			}
 
 			$ref_self_url_path = make_self_url_path();
-            $ref_self_url_path = preg_replace("/\w+\.php$/", "", $ref_self_url_path);
+			$ref_self_url_path = preg_replace("/\w+\.php$/", "", $ref_self_url_path);
 
 			if (SELF_URL_PATH == "http://example.org/tt-rss/") {
 				array_push($errors,
@@ -106,11 +106,11 @@
 			}
 
 			if (SELF_URL_PATH != $ref_self_url_path && (!defined('_SKIP_SELF_URL_PATH_CHECKS') || !_SKIP_SELF_URL_PATH_CHECKS)) {
-                array_push($errors,
-                    "Please set SELF_URL_PATH to the correct value detected for your server: <b>$ref_self_url_path</b>");
-            }
+				array_push($errors,
+					"Please set SELF_URL_PATH to the correct value detected for your server: <b>$ref_self_url_path</b>");
+			}
 
-            if (!is_writable(ICONS_DIR)) {
+			if (!is_writable(ICONS_DIR)) {
 				array_push($errors, "ICONS_DIR defined in config.php is not writable (chmod -R 777 ".ICONS_DIR.").\n");
 			}
 
