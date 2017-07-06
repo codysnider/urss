@@ -105,7 +105,9 @@
 						"Please set SELF_URL_PATH to the correct value for your server (possible value: <b>$ref_self_url_path</b>)");
 			}
 
-			if (isset($_SERVER["HTTP_HOST"]) && SELF_URL_PATH != $ref_self_url_path && (!defined('_SKIP_SELF_URL_PATH_CHECKS') || !_SKIP_SELF_URL_PATH_CHECKS)) {
+			if (isset($_SERVER["HTTP_HOST"]) &&
+				(!defined('_SKIP_SELF_URL_PATH_CHECKS') || !_SKIP_SELF_URL_PATH_CHECKS) &&
+                SELF_URL_PATH != $ref_self_url_path && SELF_URL_PATH != mb_substr($ref_self_url_path, 0, mb_strlen($ref_self_url_path)-1)) {
 				array_push($errors,
 					"Please set SELF_URL_PATH to the correct value detected for your server: <b>$ref_self_url_path</b>");
 			}
