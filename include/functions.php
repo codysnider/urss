@@ -1529,7 +1529,7 @@
 		$xpath = new DOMXPath($doc);
 
 		$ttrss_uses_https = parse_url(get_self_url_prefix(), PHP_URL_SCHEME) === 'https';
-		$rewrite_base_url = $site_url ? $site_url : SELF_URL_PATH;
+		$rewrite_base_url = $site_url ? $site_url : get_self_url_prefix();
 
 		$entries = $xpath->query('(//a[@href]|//img[@src]|//video/source[@src]|//audio/source[@src])');
 
@@ -1782,6 +1782,7 @@
 		return $tag;
 	}
 
+	// this returns SELF_URL_PATH sans ending slash
 	function get_self_url_prefix() {
 		if (strrpos(SELF_URL_PATH, "/") === strlen(SELF_URL_PATH)-1) {
 			return substr(SELF_URL_PATH, 0, strlen(SELF_URL_PATH)-1);
@@ -1830,7 +1831,7 @@
 					FROM ttrss_filters2_rules AS r,
 					ttrss_filter_types AS t
 					WHERE
-					    (match_on IS NOT NULL OR 
+					    (match_on IS NOT NULL OR
 						  (($null_cat_qpart (cat_id IS NULL AND cat_filter = false) OR cat_id IN ($check_cats_str)) AND
 						  (feed_id IS NULL OR feed_id = '$feed_id'))) AND
 						filter_type = t.id AND filter_id = '$filter_id'");
@@ -2370,7 +2371,7 @@
 	function init_js_translations() {
 
 		print 'var T_messages = new Object();
-	
+
 			function __(msg) {
 				if (T_messages[msg]) {
 					return T_messages[msg];
@@ -2378,7 +2379,7 @@
 					return msg;
 				}
 			}
-	
+
 			function ngettext(msg1, msg2, n) {
 				return __((parseInt(n) > 1) ? msg2 : msg1);
 			}';

@@ -40,7 +40,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 	public function imgproxy() {
 
-		$url = rewrite_relative_url(SELF_URL_PATH, $_REQUEST["url"]);
+		$url = rewrite_relative_url(get_self_url_prefix(), $_REQUEST["url"]);
 
 		// called without user context, let's just redirect to original URL
 		if (!$_SESSION["uid"]) {
@@ -117,7 +117,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 		if ($all_remote) {
 			$host = parse_url($url, PHP_URL_HOST);
-			$self_host = parse_url(SELF_URL_PATH, PHP_URL_HOST);
+			$self_host = parse_url(get_self_url_prefix(), PHP_URL_HOST);
 
 			$is_remote = $host != $self_host;
 		} else {

@@ -541,7 +541,7 @@ class Handler_Public extends Handler {
 			if ($_REQUEST['return']) {
 				header("Location: " . $_REQUEST['return']);
 			} else {
-				header("Location: " . SELF_URL_PATH);
+				header("Location: " . get_self_url_prefix());
 			}
 		}
 	}
