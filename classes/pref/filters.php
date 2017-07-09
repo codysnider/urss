@@ -1003,7 +1003,7 @@ class Pref_Filters extends Handler_Protected {
 		print "<span id='filterDlg_feeds'>";
 		print_feed_multi_select("feed_id",
 			$feed_id,
-			'dojoType="dijit.form.MultiSelect" style="height : 150px"');
+			'dojoType="dijit.form.MultiSelect"');
 		print "</span>";
 
 		print "</div>";

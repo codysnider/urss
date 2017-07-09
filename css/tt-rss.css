@@ -1094,6 +1094,11 @@ body#ttrssMain #feedTree.dijitTree img.tinyFeedIcon {
 	top : -2px;
 }
 
+#filterDlg_feeds select {
+	height : 150px;
+	width : 410px;
+}
+
 ul#filterDlg_Matches li div.dijitCheckBox, ul#filterDlg_Actions li div.dijitCheckBox {
 	margin-right : 5px;
 }
