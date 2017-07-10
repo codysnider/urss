@@ -1528,7 +1528,6 @@
 		$doc->loadHTML($charset_hack . $res);
 		$xpath = new DOMXPath($doc);
 
-		$ttrss_uses_https = parse_url(get_self_url_prefix(), PHP_URL_SCHEME) === 'https';
 		$rewrite_base_url = $site_url ? $site_url : get_self_url_prefix();
 
 		$entries = $xpath->query('(//a[@href]|//img[@src]|//video/source[@src]|//audio/source[@src])');
@@ -1578,7 +1577,7 @@
 				if ($entry->hasAttribute('src')) {
 					$is_https_url = parse_url($entry->getAttribute('src'), PHP_URL_SCHEME) === 'https';
 
-					if ($ttrss_uses_https && !$is_https_url) {
+					if (is_prefix_https() && !$is_https_url) {
 
 						if ($entry->hasAttribute('srcset')) {
 							$entry->removeAttribute('srcset');
@@ -1619,7 +1618,7 @@
 			if (!iframe_whitelisted($entry)) {
 				$entry->setAttribute('sandbox', 'allow-scripts');
 			} else {
-				if ($_SERVER['HTTPS'] == "on") {
+				if (is_prefix_https()) {
 					$entry->setAttribute("src",
 						str_replace("http://", "https://",
 							$entry->getAttribute("src")));
@@ -1780,6 +1779,14 @@
 		}
 
 		return $tag;
+	}
+
+	function is_server_https() {
+		return $_SERVER['HTTPS'] == 'on' || $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https';
+	}
+
+	function is_prefix_https() {
+		return parse_url(SELF_URL_PATH, PHP_URL_SCHEME) == 'https';
 	}
 
 	// this returns SELF_URL_PATH sans ending slash

@@ -22,7 +22,7 @@
 		$password = "";
 		$possible = "0123456789abcdfghjkmnpqrstvwxyzABCDFGHJKMNPQRSTVWXYZ*%+^";
 
-   	$i = 0;
+	$i = 0;
 
 		while ($i < $length) {
 			$char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
@@ -179,8 +179,12 @@
 		}
 	}
 
+	function is_server_https() {
+		return $_SERVER['HTTPS'] == 'on' || $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https';
+	}
+
 	function make_self_url_path() {
-		$url_path = ((!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http://' :  'https://') . $_SERVER["HTTP_HOST"] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+		$url_path = (is_server_https() ? 'https://' :  'http://') . $_SERVER["HTTP_HOST"] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
 		return $url_path;
 	}
