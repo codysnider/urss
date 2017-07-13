@@ -9,7 +9,7 @@
 	require_once "lib/gettext/gettext.inc";
 	require_once "version.php";
 
-	$session_expire = max(SESSION_COOKIE_LIFETIME, 86400);
+	$session_expire = max(SESSION_COOKIE_LIFETIME, 86400) & 0xFFFFFFFF; // clip to 32 bit
 	$session_name = (!defined('TTRSS_SESSION_NAME')) ? "ttrss_sid" : TTRSS_SESSION_NAME;
 
 	if (@$_SERVER['HTTPS'] == "on") {
