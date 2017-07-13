@@ -15,7 +15,8 @@
 	 * to get out. */
 
 	function make_self_url_path() {
-		$url_path = ($_SERVER['HTTPS'] != "on" ? 'http://' :  'https://') . $_SERVER["HTTP_HOST"] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+		$proto = is_server_https() ? 'https' : 'http';
+		$url_path = $proto . '://' . $_SERVER["HTTP_HOST"] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
 		return $url_path;
 	}
@@ -107,7 +108,7 @@
 
 			if (isset($_SERVER["HTTP_HOST"]) &&
 				(!defined('_SKIP_SELF_URL_PATH_CHECKS') || !_SKIP_SELF_URL_PATH_CHECKS) &&
-                SELF_URL_PATH != $ref_self_url_path && SELF_URL_PATH != mb_substr($ref_self_url_path, 0, mb_strlen($ref_self_url_path)-1)) {
+				SELF_URL_PATH != $ref_self_url_path && SELF_URL_PATH != mb_substr($ref_self_url_path, 0, mb_strlen($ref_self_url_path)-1)) {
 				array_push($errors,
 					"Please set SELF_URL_PATH to the correct value detected for your server: <b>$ref_self_url_path</b>");
 			}
@@ -150,12 +151,6 @@
 
 			if (!class_exists("DOMDocument")) {
 				array_push($errors, "PHP support for DOMDocument is required, but was not found.");
-			}
-
-			$self_scheme = parse_url(SELF_URL_PATH, PHP_URL_SCHEME);
-
-			if ($_SERVER['HTTPS'] && $self_scheme == 'http') {
-				array_push($errors, "You are accessing tt-rss over SSL but SELF_URL_PATH in config.php refers to a http:// URL.");
 			}
 		}
 
