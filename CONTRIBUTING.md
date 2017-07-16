@@ -1,12 +1,9 @@
 ## Contributing code the right way 
 
-*or: how I learned to post merge requests without crying myself to sleep*
+TLDR: it works pretty much like Github.
 
-1. Post your idea on the forums. Preferably post diffs if you got them. Mention your Gogs username. 
-If everything looks fine, you'll be granted developer permissions for the project in question.
-2. When you have developer privileges you can make branches, check them out, work on them locally, 
-push them back and post merge requests.
-3. Usual stuff applies: don't post unrelated issues in one merge request, try to not screw up 
-indenting (tt-rss mostly uses tab characters), try to respect surrounding formatting style, etc.
-4. That's it.
+1. Make an account on Gogs
+2. Fork the repository you're interested in
+3. Do the needful
+4. File a pull request with your changes against master branch.
 
