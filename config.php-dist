@@ -185,10 +185,12 @@
 	// reset password link on the login form.
 	
 	define('LOG_DESTINATION', 'sql');
-	// Log destination to use. Possible values: sql (uses internal logging
+	// Error log destination to use. Possible values: sql (uses internal logging
 	// you can read in Preferences -> System), syslog - logs to system log.
 	// Setting this to blank uses PHP logging (usually to http server 
 	// error.log).
+	// Note that feed updating daemons don't use this logging facility
+	// for normal output.
 
 	define('CONFIG_VERSION', 26);
 	// Expected config version. Please update this option in config.php
