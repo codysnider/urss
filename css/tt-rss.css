@@ -1130,6 +1130,7 @@ body#ttrssMain #feedTree .counterNode {
 	position : relative;
 	line-height : 14px;
 	margin-right : 8px;
+	margin-top : 2px;
 	min-width : 23px;
 	height : 14px;
 }
