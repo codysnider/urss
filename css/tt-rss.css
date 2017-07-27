@@ -1083,8 +1083,7 @@ body#ttrssMain #feedTree.dijitTree .dijitTreeRow {
 }
 
 body#ttrssMain #feedTree.dijitTree .dijitTreeNode .dijitTreeRow {
-	padding : 2px 0px 2px;
-	height : 22px;
+	padding : 4px 0px 4px;
 	border-width : 1px;
 	color : #333;
 }
@@ -1131,7 +1130,6 @@ body#ttrssMain #feedTree .counterNode {
 	position : relative;
 	line-height : 14px;
 	margin-right : 8px;
-	margin-top : 3px;
 	min-width : 23px;
 	height : 14px;
 }
