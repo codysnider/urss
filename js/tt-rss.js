@@ -148,7 +148,7 @@ function viewCurrentFeed(method) {
 
 function timeout() {
 	if (getInitParam("bw_limit") != "1") {
-		request_counters();
+		request_counters(true);
 		setTimeout(timeout, 60*1000);
 	}
 }

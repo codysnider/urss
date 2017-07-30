@@ -198,9 +198,7 @@ function feedlist_init() {
 
 	hideOrShowFeeds(getInitParam("hide_read_feeds") == 1);
 
-	request_counters(true);
-	timeout();
-
+	setTimeout(timeout, 250);
 }
 
 

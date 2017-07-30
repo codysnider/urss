@@ -211,7 +211,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 		if (counters)
 			parse_counters(counters);
 		else
-			request_counters(true);
+			request_counters();
 
 	} else {
 		console.error("Invalid object received: " + transport.responseText);
