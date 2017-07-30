@@ -1123,6 +1123,8 @@
 		$params["icon_cross"] = base64_img("images/cross.png");
 		$params["icon_indicator_white"] = base64_img("images/indicator_white.gif");
 
+		$params["labels"] = Labels::get_all_labels($_SESSION["uid"]);
+
 		return $params;
 	}
 
@@ -1320,6 +1322,7 @@
 		$data['dep_ts'] = calculate_dep_timestamp();
 		$data['reload_on_ts_change'] = !defined('_NO_RELOAD_ON_TS_CHANGE');
 
+		$data["labels"] = Labels::get_all_labels($_SESSION["uid"]);
 
 		if (CHECK_FOR_UPDATES && !$disable_update_check && $_SESSION["last_version_check"] + 86400 + rand(-1000, 1000) < time()) {
 			$update_result = @check_for_update();

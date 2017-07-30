@@ -36,7 +36,7 @@ class Labels
 	static function get_all_labels($owner_uid)	{
 		$rv = array();
 
-		$result = db_query("SELECT fg_color, bg_color, caption FROM ttrss_labels2 WHERE owner_uid = " . $owner_uid);
+		$result = db_query("SELECT id, fg_color, bg_color, caption FROM ttrss_labels2 WHERE owner_uid = " . $owner_uid);
 
 		while ($line = db_fetch_assoc($result)) {
 			array_push($rv, $line);

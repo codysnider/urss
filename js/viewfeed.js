@@ -1738,7 +1738,7 @@ function headlinesMenuCommon(menu) {
 	}));
 
 
-	var labels = dijit.byId("feedTree").model.getItemsInCategory(-2);
+	var labels = getInitParam("labels");
 
 	if (labels) {
 
@@ -1748,11 +1748,8 @@ function headlinesMenuCommon(menu) {
 		var labelDelMenu = new dijit.Menu({ownerMenu: menu});
 
 		labels.each(function (label) {
-			var id = label.id[0];
-			var bare_id = id.substr(id.indexOf(":") + 1);
-			var name = label.name[0];
-
-			bare_id = feed_to_label_id(bare_id);
+			var bare_id = label.id;
+			var name = label.caption;
 
 			labelAddMenu.addChild(new dijit.MenuItem({
 				label: name,
