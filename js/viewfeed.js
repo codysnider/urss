@@ -1740,7 +1740,7 @@ function headlinesMenuCommon(menu) {
 
 	var labels = getInitParam("labels");
 
-	if (labels) {
+	if (labels && labels.length) {
 
 		menu.addChild(new dijit.MenuSeparator());
 
