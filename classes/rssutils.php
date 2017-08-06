@@ -635,6 +635,7 @@ class RSSUtils {
 					"force_catchup" => false, // ugly hack for the time being
 					"score_modifier" => 0, // no previous value, plugin should recalculate score modifier based on content if needed
 					"language" => $entry_language,
+					"num_comments" => $num_comments, // read only
 					"feed" => array("id" => $feed,
 						"fetch_url" => $fetch_url,
 						"site_url" => $site_url,
