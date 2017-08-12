@@ -198,7 +198,12 @@ function feedlist_init() {
 
 	hideOrShowFeeds(getInitParam("hide_read_feeds") == 1);
 
-	setTimeout(timeout, 250);
+	// bw_limit disables timeout() so we request initial counters separately
+    if (getInitParam("bw_limit") == "1") {
+		request_counters(true);
+    } else {
+    	setTimeout(timeout, 250);
+    }
 }
 
 
