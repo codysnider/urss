@@ -409,7 +409,7 @@ class Pref_Filters extends Handler_Protected {
                 if (sql_bool_to_bool($line["cat_filter"])) {
                     $feed_id = "CAT:" . (int)$line["cat_id"];
                 } else {
-                    $feed_id = (int)$line["cat_id"];
+                    $feed_id = (int)$line["feed_id"];
                 }
 
                 $line["feed_id"] = ["" . $feed_id]; // set item type to string for in_array()
