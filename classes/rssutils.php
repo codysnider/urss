@@ -292,7 +292,8 @@ class RSSUtils {
 		$result = db_query("SELECT id,update_interval,auth_login,
 			feed_url,auth_pass,cache_images,
 			mark_unread_on_update, owner_uid,
-			auth_pass_encrypted, feed_language
+			auth_pass_encrypted, feed_language, 
+			last_modified			
 			FROM ttrss_feeds WHERE id = '$feed'");
 
 		$owner_uid = db_fetch_result($result, 0, "owner_uid");
@@ -312,6 +313,7 @@ class RSSUtils {
 			$auth_pass = decrypt_string($auth_pass);
 		}
 
+		$stored_last_modified = db_fetch_result($result, 0, "last_modified");
 		$cache_images = sql_bool_to_bool(db_fetch_result($result, 0, "cache_images"));
 		$fetch_url = db_fetch_result($result, 0, "feed_url");
 		$feed_language = db_escape_string(mb_strtolower(db_fetch_result($result, 0, "feed_language")));
@@ -359,18 +361,33 @@ class RSSUtils {
 			_debug("local cache will not be used for this feed", $debug_enabled);
 		}
 
+		global $fetch_last_modified;
+
 		// fetch feed from source
 		if (!$feed_data) {
+			_debug("stored last modified: $stored_last_modified", $debug_enabled);
 			_debug("fetching [$fetch_url]...", $debug_enabled);
 
 			if (ini_get("open_basedir") && function_exists("curl_init")) {
 				_debug("not using CURL due to open_basedir restrictions");
 			}
 
-			$feed_data = fetch_file_contents($fetch_url, false,
+			/*$feed_data = fetch_file_contents($fetch_url, false,
 				$auth_login, $auth_pass, false,
 				$no_cache ? FEED_FETCH_NO_CACHE_TIMEOUT : FEED_FETCH_TIMEOUT,
-				0);
+				0);*/
+
+			// TODO: last_modified should be limited, if the feed has not been updated for a while
+			// we probably should force one update without the header
+			// unfortunately last_updated gets bumped on http 304 so that daemon would work properly
+
+			$feed_data = fetch_file_contents([
+				"url" => $fetch_url,
+				"login" => $auth_login,
+				"pass" => $auth_pass,
+				"timeout" => $no_cache ? FEED_FETCH_NO_CACHE_TIMEOUT : FEED_FETCH_TIMEOUT,
+				"last_modified" => $force_refetch ? "" : $stored_last_modified
+			]);
 
 			global $fetch_curl_used;
 
@@ -383,6 +400,14 @@ class RSSUtils {
 			$feed_data = trim($feed_data);
 
 			_debug("fetch done.", $debug_enabled);
+			_debug("source last modified: " . $fetch_last_modified);
+
+			if ($feed_data && $fetch_last_modified != $stored_last_modified) {
+				$last_modified_escaped = db_escape_string(substr($fetch_last_modified, 0, 245));
+
+				db_query("UPDATE ttrss_feeds SET last_modified = '$last_modified_escaped' WHERE id = '$feed'");
+
+			}
 
 			// cache vanilla feed data for re-use
 			if ($feed_data && !$auth_pass && !$auth_login && is_writable(CACHE_DIR . "/simplepie")) {

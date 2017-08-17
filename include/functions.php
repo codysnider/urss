@@ -1,6 +1,6 @@
 <?php
 	define('EXPECTED_CONFIG_VERSION', 26);
-	define('SCHEMA_VERSION', 131);
+	define('SCHEMA_VERSION', 132);
 
 	define('LABEL_BASE_INDEX', -1024);
 	define('PLUGIN_FEED_BASE_INDEX', -128);
@@ -335,6 +335,7 @@
 		global $fetch_last_error_code;
 		global $fetch_last_error_content;
 		global $fetch_last_content_type;
+		global $fetch_last_modified;
 		global $fetch_curl_used;
 
 		$fetch_last_error = false;
@@ -342,11 +343,12 @@
 		$fetch_last_error_content = "";
 		$fetch_last_content_type = "";
 		$fetch_curl_used = false;
+		$fetch_last_modified = "";
 
 		if (!is_array($options)) {
 
 			// falling back on compatibility shim
-			$option_names = [ "url", "type", "login", "pass", "post_query", "timeout", "timestamp", "useragent" ];
+			$option_names = [ "url", "type", "login", "pass", "post_query", "timeout", "last_modified", "useragent" ];
 			$tmp = [];
 
 			for ($i = 0; $i < func_num_args(); $i++) {
@@ -373,7 +375,7 @@
 		$pass = isset($options["pass"]) ? $options["pass"] : false;
 		$post_query = isset($options["post_query"]) ? $options["post_query"] : false;
 		$timeout = isset($options["timeout"]) ? $options["timeout"] : false;
-		$timestamp = isset($options["timestamp"]) ? $options["timestamp"] : 0;
+		$last_modified = isset($options["last_modified"]) ? $options["last_modified"] : "";
 		$useragent = isset($options["useragent"]) ? $options["useragent"] : false;
 		$followlocation = isset($options["followlocation"]) ? $options["followlocation"] : true;
 
@@ -389,9 +391,9 @@
 
 			$ch = curl_init($url);
 
-			if ($timestamp && !$post_query) {
+			if ($last_modified && !$post_query) {
 				curl_setopt($ch, CURLOPT_HTTPHEADER,
-					array("If-Modified-Since: ".gmdate('D, d M Y H:i:s \G\M\T', $timestamp)));
+					array("If-Modified-Since: $last_modified"));
 			}
 
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout ? $timeout : FILE_FETCH_CONNECT_TIMEOUT);
@@ -400,6 +402,7 @@
 			curl_setopt($ch, CURLOPT_MAXREDIRS, 20);
 			curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_HEADER, true);
 			curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
 			curl_setopt($ch, CURLOPT_USERAGENT, $useragent ? $useragent :
 				SELF_USER_AGENT);
@@ -422,17 +425,23 @@
 			if ($login && $pass)
 				curl_setopt($ch, CURLOPT_USERPWD, "$login:$pass");
 
-			$contents = @curl_exec($ch);
+			$ret = @curl_exec($ch);
+
+			$headers_length = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+			$headers = explode("\r\n", substr($ret, 0, $headers_length));
+			$contents = substr($ret, $headers_length);
+
+			foreach ($headers as $header) {
+				list ($key, $value) = explode(": ", $header);
+
+				if (strtolower($key) == "last-modified") {
+					$fetch_last_modified = $value;
+				}
+			}
 
 			if (curl_errno($ch) === 23 || curl_errno($ch) === 61) {
 				curl_setopt($ch, CURLOPT_ENCODING, 'none');
 				$contents = @curl_exec($ch);
-			}
-
-			if ($contents === false) {
-				$fetch_last_error = curl_errno($ch) . " " . curl_error($ch);
-				curl_close($ch);
-				return false;
 			}
 
 			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -450,6 +459,18 @@
 				curl_close($ch);
 				return false;
 			}
+
+			if (!$contents) {
+				$fetch_last_error = curl_errno($ch) . " " . curl_error($ch);
+				curl_close($ch);
+				return false;
+			}
+
+			/*$fetch_last_modified = curl_getinfo($ch, CURLINFO_FILETIME);
+
+			if ($fetch_last_modified != -1) {
+				echo date("Y-m-d H:i:s", $fetch_last_modified); die;
+			}*/
 
 			curl_close($ch);
 
@@ -472,15 +493,15 @@
 
 			// TODO: should this support POST requests or not? idk
 
-			if (!$post_query && $timestamp) {
+			if (!$post_query && $last_modified) {
 				 $context = stream_context_create(array(
 					  'http' => array(
 							'method' => 'GET',
 						    'ignore_errors' => true,
 						    'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
 							'protocol_version'=> 1.1,
-							'header' => "If-Modified-Since: ".gmdate("D, d M Y H:i:s \\G\\M\\T\r\n", $timestamp)
-					  )));
+							'header' => "If-Modified-Since: $last_modified\r\n")
+					  ));
 			} else {
 				 $context = stream_context_create(array(
 					  'http' => array(
@@ -497,10 +518,16 @@
 
 			if (isset($http_response_header) && is_array($http_response_header)) {
 				foreach ($http_response_header as $h) {
-					if (substr(strtolower($h), 0, 13) == 'content-type:') {
-						$fetch_last_content_type = substr($h, 14);
+					list ($key, $value) = explode(": ", $h);
+
+					$key = strtolower($key);
+
+					if ($key == 'content-type') {
+						$fetch_last_content_type = $value;
 						// don't abort here b/c there might be more than one
 						// e.g. if we were being redirected -- last one is the right one
+					} else if ($key == 'last-modified') {
+						$fetch_last_modified = $value;
 					}
 
 					if (substr(strtolower($h), 0, 7) == 'http/1.') {
