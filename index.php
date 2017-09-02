@@ -55,6 +55,7 @@
 <html>
 <head>
 	<title>Tiny Tiny RSS</title>
+    <meta name="viewport" content="initial-scale=1,width=device-width" />
 
 	<script type="text/javascript">
 		var __ttrss_version = "<?php echo VERSION ?>"
