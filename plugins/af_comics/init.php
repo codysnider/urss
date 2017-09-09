@@ -127,7 +127,7 @@ class Af_Comics extends Plugin {
 						$tpl->setVariable('ARTICLE_LINK', $article_link, true);
 						$tpl->setVariable('ARTICLE_TITLE', date('l, F d, Y'), true);
 						$tpl->setVariable('ARTICLE_EXCERPT', '', true);
-						$tpl->setVariable('ARTICLE_CONTENT', $doc->saveXML($node), true);
+						$tpl->setVariable('ARTICLE_CONTENT', $doc->saveHTML($node), true);
 
 						$tpl->setVariable('ARTICLE_AUTHOR', '', true);
 						$tpl->setVariable('ARTICLE_SOURCE_LINK', $site_url, true);

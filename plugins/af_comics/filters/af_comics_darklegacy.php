@@ -26,7 +26,7 @@ class Af_Comics_DarkLegacy extends Af_ComicFilter {
 
 					if ($basenode) {
 
-						$article["content"] = $doc->saveXML($basenode);
+						$article["content"] = $doc->saveHTML($basenode);
 					}
 				}
 

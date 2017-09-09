@@ -19,7 +19,7 @@ class Af_Comics_Pa extends Af_ComicFilter {
 					$basenode = $xpath->query('(//div[@id="comicFrame"])')->item(0);
 
 					if ($basenode) {
-						$article["content"] = $doc->saveXML($basenode);
+						$article["content"] = $doc->saveHTML($basenode);
 					}
 				}
 
@@ -62,7 +62,7 @@ class Af_Comics_Pa extends Af_ComicFilter {
 					}
 
 					if ($basenode){
-						$article["content"] = $doc->saveXML($basenode);
+						$article["content"] = $doc->saveHTML($basenode);
 					}
 				}
 

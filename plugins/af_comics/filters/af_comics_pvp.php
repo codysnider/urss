@@ -19,7 +19,7 @@ class Af_Comics_Pvp extends Af_ComicFilter {
 					$basenode = $xpath->query('//section[@class="comic-art"]')->item(0);
 
 					if ($basenode) {
-						$article["content"] = $doc->saveXML($basenode);
+						$article["content"] = $doc->saveHTML($basenode);
 					}
 				}
 
