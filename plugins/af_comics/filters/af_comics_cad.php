@@ -25,7 +25,7 @@ class Af_Comics_Cad extends Af_ComicFilter {
 					$basenode = $xpath->query('//div[@class="comicpage"]/a/img')->item(0);
 
 					if ($basenode) {
-						$article["content"] = $doc->saveXML($basenode);
+						$article["content"] = $doc->saveHTML($basenode);
 					}
 				}
 

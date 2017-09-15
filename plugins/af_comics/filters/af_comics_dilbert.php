@@ -49,7 +49,7 @@ class Af_Comics_Dilbert extends Af_ComicFilter {
 					}
 
 					if ($basenode) {
-						$article["content"] = $doc->saveXML($basenode);
+						$article["content"] = $doc->saveHTML($basenode);
 					}
 
 					// Add comic title to article type if not empty (mostly Sunday strips)

@@ -69,7 +69,7 @@ class FeedItem_Atom extends FeedItem_Common {
 						$child = $content->childNodes->item($i);
 
 						if ($child->hasChildNodes()) {
-							return $this->doc->saveXML($child);
+							return $this->doc->saveHTML($child);
 						}
 					}
 				}
@@ -89,7 +89,7 @@ class FeedItem_Atom extends FeedItem_Common {
 						$child = $content->childNodes->item($i);
 
 						if ($child->hasChildNodes()) {
-							return $this->doc->saveXML($child);
+							return $this->doc->saveHTML($child);
 						}
 					}
 				}

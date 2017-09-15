@@ -22,7 +22,7 @@ class Af_Comics_ComicClass extends Af_ComicFilter {
 					$basenode = $xpath->query('//div[@class="comic"]')->item(0);
 
 					if ($basenode) {
-						$article["content"] = $doc->saveXML($basenode);
+						$article["content"] = $doc->saveHTML($basenode);
 					}
 				}
 

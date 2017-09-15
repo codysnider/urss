@@ -199,7 +199,7 @@ class Af_Zz_ImgProxy extends Plugin {
 			}
 		}
 
-		if ($need_saving) $article["content"] = $doc->saveXML();
+		if ($need_saving) $article["content"] = $doc->saveHTML();
 
 		return $article;
 	}

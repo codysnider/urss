@@ -16,7 +16,7 @@ class Af_Comics_Explosm extends Af_ComicFilter {
 					$basenode = $xpath->query('(//img[@id="main-comic"])')->item(0);
 
 					if ($basenode) {
-						$article["content"] = $doc->saveXML($basenode);
+						$article["content"] = $doc->saveHTML($basenode);
 					}
 				}
 
