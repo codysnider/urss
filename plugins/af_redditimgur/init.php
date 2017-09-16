@@ -79,6 +79,7 @@ class Af_RedditImgur extends Plugin {
 	private function inline_stuff($article, &$doc, $xpath, $debug = false) {
 
 		$entries = $xpath->query('(//a[@href]|//img[@src])');
+		$img_entries = $xpath->query("(//img[@src])");
 
 		$found = false;
 
@@ -144,6 +145,24 @@ class Af_RedditImgur extends Plugin {
 							}
 						}
 					}
+				}
+
+				if (!$found && preg_match("/https?:\/\/v\.redd\.it\/(.*)$/i", $entry->getAttribute("href"), $matches)) {
+
+					_debug("Handling as reddit inline video", $debug);
+
+					$img = $img_entries->item(0);
+
+					if ($img) {
+						$poster_url = $img->getAttribute("src");
+					} else {
+						$poster_url = false;
+					}
+
+					$source_stream = "https://v.redd.it/" . $matches[1] . "/DASH_600_K";
+
+					$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
+					$found = 1;
 				}
 
 				if (!$found && preg_match("/https?:\/\/(www\.)?streamable.com\//i", $entry->getAttribute("href"))) {
