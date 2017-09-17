@@ -159,23 +159,26 @@ class Af_RedditImgur extends Plugin {
 						$poster_url = false;
 					}
 
-					// IMPORTANT:  This assumes the article GUID is kept in "owner_uid,entry_guid" format, and
-					// Reddit feed entries will keep the <id> element (so get_id returns it).
-					$feeditem_id = explode(",", $article["guid"])[1];
-					$source_stream = false;
-					$j = json_decode(fetch_file_contents($article["link"].".json"), true);
+					// Get original article URL from v.redd.it redirects
+					$source_article_url = $this->get_location($matches[0]);
+					_debug("Resolved ".$matches[0]." to ".$source_article_url, $debug);
 
-					if ($j) {
-						foreach ($j as $listing) {
-							foreach ($listing["data"]["children"] as $child) {
-								// Found the child object corresponding to the article (e.g. same name+ID like "t3_70j63a").
-								if ($child["data"]["name"] == $feeditem_id) {
-									try {
-										$source_stream = $child["data"]["media"]["reddit_video"]["fallback_url"];
+					$source_stream = false;
+
+					if ($source_article_url) {
+						$j = json_decode(fetch_file_contents($source_article_url.".json"), true);
+
+						if ($j) {
+							foreach ($j as $listing) {
+								foreach ($listing["data"]["children"] as $child) {
+									if ($child["data"]["url"] == $matches[0]) {
+										try {
+											$source_stream = $child["data"]["media"]["reddit_video"]["fallback_url"];
+										}
+										catch (Exception $e) {
+										}
+										break 2;
 									}
-									catch (Exception $e) {
-									}
-									break 2;
 								}
 							}
 						}
@@ -493,6 +496,25 @@ class Af_RedditImgur extends Plugin {
 		}
 
 		return $content_type;
+	}
+
+	private function get_location($url, $useragent = SELF_USER_AGENT) {
+		$location = false;
+
+		if (function_exists("curl_init") && !defined("NO_CURL")) {
+			$ch = curl_init($url);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_HEADER, true);
+			curl_setopt($ch, CURLOPT_NOBODY, true);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
+			curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
+
+			@curl_exec($ch);
+			$location = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+		}
+
+		return $location;
 	}
 
 	/**
