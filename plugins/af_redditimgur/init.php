@@ -479,8 +479,8 @@ class Af_RedditImgur extends Plugin {
 		}
 	}
 
-	private function get_content_type($url, $useragent = SELF_USER_AGENT) {
-		$content_type = false;
+	private function get_header($url, $useragent = SELF_USER_AGENT, $header) {
+		$ret = false;
 
 		if (function_exists("curl_init") && !defined("NO_CURL")) {
 			$ch = curl_init($url);
@@ -492,29 +492,18 @@ class Af_RedditImgur extends Plugin {
 			curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
 
 			@curl_exec($ch);
-			$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+			$ret = curl_getinfo($ch, $header);
 		}
 
-		return $content_type;
+		return $ret;
+	}
+
+	private function get_content_type($url, $useragent = SELF_USER_AGENT) {
+		return $this->get_header($url, $useragent, CURLINFO_CONTENT_TYPE);
 	}
 
 	private function get_location($url, $useragent = SELF_USER_AGENT) {
-		$location = false;
-
-		if (function_exists("curl_init") && !defined("NO_CURL")) {
-			$ch = curl_init($url);
-			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_HEADER, true);
-			curl_setopt($ch, CURLOPT_NOBODY, true);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, !ini_get("open_basedir"));
-			curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
-
-			@curl_exec($ch);
-			$location = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-		}
-
-		return $location;
+		return $this->get_header($url, $useragent, CURLINFO_EFFECTIVE_URL);
 	}
 
 	/**
