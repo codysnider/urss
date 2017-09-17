@@ -159,7 +159,31 @@ class Af_RedditImgur extends Plugin {
 						$poster_url = false;
 					}
 
-					$source_stream = "https://v.redd.it/" . $matches[1] . "/DASH_600_K";
+					// IMPORTANT:  This assumes the article GUID is kept in "owner_uid,entry_guid" format, and
+					// Reddit feed entries will keep the <id> element (so get_id returns it).
+					$feeditem_id = explode(",", $article["guid"])[1];
+					$source_stream = false;
+					$j = json_decode(fetch_file_contents($article["link"].".json"), true);
+
+					if ($j) {
+						foreach ($j as $listing) {
+							foreach ($listing["data"]["children"] as $child) {
+								// Found the child object corresponding to the article (e.g. same name+ID like "t3_70j63a").
+								if ($child["data"]["name"] == $feeditem_id) {
+									try {
+										$source_stream = $child["data"]["media"]["reddit_video"]["fallback_url"];
+									}
+									catch (Exception $e) {
+									}
+									break 2;
+								}
+							}
+						}
+					}
+
+					if (!$source_stream) {
+						$source_stream = "https://v.redd.it/" . $matches[1] . "/DASH_600_K";
+					}
 
 					$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
 					$found = 1;
