@@ -205,8 +205,10 @@ class RSSUtils {
 
 		$feed = db_escape_string($feed);
 
-		$result = db_query("SELECT feed_url,auth_pass,auth_login,auth_pass_encrypted
+		$result = db_query("SELECT owner_uid,feed_url,auth_pass,auth_login,auth_pass_encrypted
 					FROM ttrss_feeds WHERE id = '$feed'");
+
+		$owner_uid = db_fetch_result($result, 0, "owner_uid");
 
 		$auth_pass_encrypted = sql_bool_to_bool(db_fetch_result($result,
 			0, "auth_pass_encrypted"));
@@ -221,17 +223,35 @@ class RSSUtils {
 
 		$fetch_url = db_fetch_result($result, 0, "feed_url");
 
-		$feed_data = fetch_file_contents($fetch_url, false,
-			$auth_login, $auth_pass, false,
-			FEED_FETCH_TIMEOUT,
-			0);
+		$feed_data = '';
+		
+		$pluginhost = new PluginHost();
+		$user_plugins = get_pref("_ENABLED_PLUGINS", $owner_uid);
 
-		global $fetch_curl_used;
+		$pluginhost->load(PLUGINS, PluginHost::KIND_ALL);
+		$pluginhost->load($user_plugins, PluginHost::KIND_USER, $owner_uid);
+		$pluginhost->load_data();
 
-		if (!$fetch_curl_used) {
-			$tmp = @gzdecode($feed_data);
+		foreach ($pluginhost->get_hooks(PluginHost::HOOK_FEED_BASIC_INFO) as $plugin) {
+			$feed_data = $plugin->hook_feed_basic_info($fetch_url, $owner_uid, $feed, $auth_login, $auth_pass);
+			if ($feed_data) {
+				break;
+			}
+        }
 
-			if ($tmp) $feed_data = $tmp;
+		if (!$feed_data) {
+			$feed_data = fetch_file_contents($fetch_url, false,
+				$auth_login, $auth_pass, false,
+				FEED_FETCH_TIMEOUT,
+				0);
+
+			global $fetch_curl_used;
+
+			if (!$fetch_curl_used) {
+				$tmp = @gzdecode($feed_data);
+
+				if ($tmp) $feed_data = $tmp;
+			}
 		}
 
 		$feed_data = trim($feed_data);

@@ -54,6 +54,7 @@ class PluginHost {
 	const HOOK_ENCLOSURE_ENTRY = 33;
 	const HOOK_FORMAT_ARTICLE = 34;
 	const HOOK_FORMAT_ARTICLE_CDM = 35;
+	const HOOK_FEED_BASIC_INFO = 36;
 
 	const KIND_ALL = 1;
 	const KIND_SYSTEM = 2;
