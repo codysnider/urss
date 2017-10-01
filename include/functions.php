@@ -577,7 +577,7 @@
 
 			$base = $xpath->query('/html/head/base');
 			foreach ($base as $b) {
-				$url = $b->getAttribute("href");
+				$url = rewrite_relative_url($url, $b->getAttribute("href"));
 				break;
 			}
 
