@@ -205,8 +205,10 @@ class RSSUtils {
 
 		$feed = db_escape_string($feed);
 
-		$result = db_query("SELECT feed_url,auth_pass,auth_login,auth_pass_encrypted
+		$result = db_query("SELECT owner_uid,feed_url,auth_pass,auth_login,auth_pass_encrypted
 					FROM ttrss_feeds WHERE id = '$feed'");
+
+		$owner_uid = db_fetch_result($result, 0, "owner_uid");
 
 		$auth_pass_encrypted = sql_bool_to_bool(db_fetch_result($result,
 			0, "auth_pass_encrypted"));
@@ -221,42 +223,59 @@ class RSSUtils {
 
 		$fetch_url = db_fetch_result($result, 0, "feed_url");
 
-		$feed_data = fetch_file_contents($fetch_url, false,
-			$auth_login, $auth_pass, false,
-			FEED_FETCH_TIMEOUT,
-			0);
+		$pluginhost = new PluginHost();
+		$user_plugins = get_pref("_ENABLED_PLUGINS", $owner_uid);
 
-		global $fetch_curl_used;
+		$pluginhost->load(PLUGINS, PluginHost::KIND_ALL);
+		$pluginhost->load($user_plugins, PluginHost::KIND_USER, $owner_uid);
+		$pluginhost->load_data();
 
-		if (!$fetch_curl_used) {
-			$tmp = @gzdecode($feed_data);
-
-			if ($tmp) $feed_data = $tmp;
+		$basic_info = array();
+		foreach ($pluginhost->get_hooks(PluginHost::HOOK_FEED_BASIC_INFO) as $plugin) {
+			$basic_info = $plugin->hook_feed_basic_info($basic_info, $fetch_url, $owner_uid, $feed, $auth_login, $auth_pass);
 		}
 
-		$feed_data = trim($feed_data);
+		if (!$basic_info) {
+			$feed_data = fetch_file_contents($fetch_url, false,
+				$auth_login, $auth_pass, false,
+				FEED_FETCH_TIMEOUT,
+				0);
 
-		$rss = new FeedParser($feed_data);
-		$rss->init();
+			global $fetch_curl_used;
 
-		if (!$rss->error()) {
+			if (!$fetch_curl_used) {
+				$tmp = @gzdecode($feed_data);
 
+				if ($tmp) $feed_data = $tmp;
+			}
+
+			$feed_data = trim($feed_data);
+
+			$rss = new FeedParser($feed_data);
+			$rss->init();
+
+			if (!$rss->error()) {
+				$basic_info = array(
+					'title' => db_escape_string(mb_substr($rss->get_title(), 0, 199)),
+					'site_url' => db_escape_string(mb_substr(rewrite_relative_url($fetch_url, $rss->get_link()), 0, 245))
+				);
+			}
+		}
+
+		if ($basic_info && is_array($basic_info)) {
 			$result = db_query("SELECT title, site_url FROM ttrss_feeds WHERE id = '$feed'");
 
 			$registered_title = db_fetch_result($result, 0, "title");
 			$orig_site_url = db_fetch_result($result, 0, "site_url");
 
-			$site_url = db_escape_string(mb_substr(rewrite_relative_url($fetch_url, $rss->get_link()), 0, 245));
-			$feed_title = db_escape_string(mb_substr($rss->get_title(), 0, 199));
-
-			if ($feed_title && (!$registered_title || $registered_title == "[Unknown]")) {
+			if ($basic_info['title'] && (!$registered_title || $registered_title == "[Unknown]")) {
 				db_query("UPDATE ttrss_feeds SET
-					title = '$feed_title' WHERE id = '$feed'");
+					title = '${basic_info['title']}' WHERE id = '$feed'");
 			}
 
-			if ($site_url && $orig_site_url != $site_url) {
+			if ($basic_info['site_url'] && $orig_site_url != $basic_info['site_url']) {
 				db_query("UPDATE ttrss_feeds SET
-							site_url = '$site_url' WHERE id = '$feed'");
+							site_url = '${basic_info['site_url']}' WHERE id = '$feed'");
 			}
 		}
 	}
