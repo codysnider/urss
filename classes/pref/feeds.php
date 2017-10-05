@@ -634,16 +634,8 @@ class Pref_Feeds extends Handler_Protected {
 				((FORCE_ARTICLE_PURGE == 0) ? "" : 'disabled="1"'));
 
 		print "</div>";
-		print "<div class=\"dlgSec\">".__("Authentication")."</div>";
-		print "<div class=\"dlgSecCont\">";
 
 		$auth_login = htmlspecialchars($this->dbh->fetch_result($result, 0, "auth_login"));
-
-		print "<input dojoType=\"dijit.form.TextBox\" id=\"feedEditDlg_login\"
-			placeHolder=\"".__("Login")."\"
-			autocomplete=\"new-password\"
-			name=\"auth_login\" value=\"$auth_login\"><hr/>";
-
 		$auth_pass = $this->dbh->fetch_result($result, 0, "auth_pass");
 
 		if ($auth_pass_encrypted && function_exists("mcrypt_decrypt")) {
@@ -652,6 +644,18 @@ class Pref_Feeds extends Handler_Protected {
 		}
 
 		$auth_pass = htmlspecialchars($auth_pass);
+		$auth_enabled = $auth_login !== '' || $auth_pass !== '';
+
+		$auth_style = $auth_enabled ? '' : 'display: none';
+		print "<div id='feedEditDlg_loginContainer' style='$auth_style'>";
+		print "<div class=\"dlgSec\">".__("Authentication")."</div>";
+		print "<div class=\"dlgSecCont\">";
+
+		print "<input dojoType=\"dijit.form.TextBox\" id=\"feedEditDlg_login\"
+			placeHolder=\"".__("Login")."\"
+			autocomplete=\"new-password\"
+			name=\"auth_login\" value=\"$auth_login\"><hr/>";
+
 
 		print "<input dojoType=\"dijit.form.TextBox\" type=\"password\" name=\"auth_pass\"
 			autocomplete=\"new-password\"
@@ -662,7 +666,14 @@ class Pref_Feeds extends Handler_Protected {
 			".__('<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds.')."
 			</div>";
 
-		print "</div>";
+		print "</div></div>";
+
+		$auth_checked = $auth_enabled ? 'checked' : '';
+		print "<div style=\"clear : both\">
+				<input type=\"checkbox\" $auth_checked name=\"need_auth\" dojoType=\"dijit.form.CheckBox\" id=\"feedEditDlg_loginCheck\"
+						onclick='checkboxToggleElement(this, \"feedEditDlg_loginContainer\")'>
+					<label for=\"feedEditDlg_loginCheck\">".
+					__('This feed requires authentication.')."</div>";
 
 		print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Options').'">';
 
@@ -988,6 +999,10 @@ class Pref_Feeds extends Handler_Protected {
 		}
 
 		if (!$batch) {
+			if ($_POST["need_auth"] !== 'on') {
+				$auth_login = '';
+				$auth_pass = '';
+			}
 
 			$result = db_query("SELECT feed_url FROM ttrss_feeds WHERE id = " . $feed_id);
 			$orig_feed_url = db_fetch_result($result, 0, "feed_url");
