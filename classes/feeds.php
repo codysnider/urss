@@ -1530,7 +1530,6 @@ class Feeds extends Handler_Protected {
 			"SELECT id FROM ttrss_feeds
 			WHERE feed_url = '$url' AND owner_uid = ".$_SESSION["uid"]);
 
-		$auth_pass_encrypted = 'false';
 		$auth_pass = db_escape_string($auth_pass);
 
 		if (db_num_rows($result) == 0) {
@@ -1538,7 +1537,7 @@ class Feeds extends Handler_Protected {
 				"INSERT INTO ttrss_feeds
 					(owner_uid,feed_url,title,cat_id, auth_login,auth_pass,update_method,auth_pass_encrypted)
 				VALUES ('".$_SESSION["uid"]."', '$url',
-				'[Unknown]', $cat_qpart, '$auth_login', '$auth_pass', 0, $auth_pass_encrypted)");
+				'[Unknown]', $cat_qpart, '$auth_login', '$auth_pass', 0, false)");
 
 			$result = db_query(
 				"SELECT id FROM ttrss_feeds WHERE feed_url = '$url'

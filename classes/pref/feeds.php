@@ -971,7 +971,6 @@ class Pref_Feeds extends Handler_Protected {
 
 		$feed_language = $this->dbh->escape_string(trim($_POST["feed_language"]));
 
-		$auth_pass_encrypted = 'false';
 		$auth_pass = $this->dbh->escape_string($auth_pass);
 
 		if (get_pref('ENABLE_FEED_CATS')) {
@@ -1001,7 +1000,7 @@ class Pref_Feeds extends Handler_Protected {
 				purge_interval = '$purge_intl',
 				auth_login = '$auth_login',
 				auth_pass = '$auth_pass',
-				auth_pass_encrypted = $auth_pass_encrypted,
+				auth_pass_encrypted = false,
 				private = $private,
 				cache_images = $cache_images,
 				hide_images = $hide_images,
@@ -1055,8 +1054,7 @@ class Pref_Feeds extends Handler_Protected {
 						break;
 
 					case "auth_pass":
-						$qpart = "auth_pass = '$auth_pass' AND
-							auth_pass_encrypted = $auth_pass_encrypted";
+						$qpart = "auth_pass = '$auth_pass', auth_pass_encrypted = false";
 						break;
 
 					case "private":
@@ -1857,7 +1855,6 @@ class Pref_Feeds extends Handler_Protected {
 					"SELECT id FROM ttrss_feeds
 					WHERE feed_url = '$feed' AND owner_uid = ".$_SESSION["uid"]);
 
-				$auth_pass_encrypted = 'false';
 				$pass = $this->dbh->escape_string($pass);
 
 				if ($this->dbh->num_rows($result) == 0) {
@@ -1865,7 +1862,7 @@ class Pref_Feeds extends Handler_Protected {
 						"INSERT INTO ttrss_feeds
 							(owner_uid,feed_url,title,cat_id,auth_login,auth_pass,update_method,auth_pass_encrypted)
 						VALUES ('".$_SESSION["uid"]."', '$feed',
-							'[Unknown]', $cat_qpart, '$login', '$pass', 0, $auth_pass_encrypted)");
+							'[Unknown]', $cat_qpart, '$login', '$pass', 0, false)");
 				}
 
 				$this->dbh->query("COMMIT");
