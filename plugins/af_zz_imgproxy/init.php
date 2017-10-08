@@ -55,13 +55,9 @@ class Af_Zz_ImgProxy extends Plugin {
 		header("Content-Disposition: inline; filename=\"".basename($local_filename)."\"");
 
 		if (file_exists($local_filename)) {
-			$mimetype = mime_content_type($local_filename);
-			header("Content-type: $mimetype");
 
-			$stamp = gmdate("D, d M Y H:i:s", filemtime($local_filename)). " GMT";
-			header("Last-Modified: $stamp", true);
+			send_local_file($local_filename);
 
-			readfile($local_filename);
 		} else {
 			$data = fetch_file_contents(array("url" => $url));
 
