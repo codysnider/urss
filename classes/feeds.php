@@ -915,7 +915,7 @@ class Feeds extends Handler_Protected {
 
 		switch ($order_by) {
 		case "title":
-			$override_order = "ttrss_entries.title";
+			$override_order = "ttrss_entries.title, date_entered, updated";
 			break;
 		case "date_reverse":
 			$override_order = "score DESC, date_entered, updated";

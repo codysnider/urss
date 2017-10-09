@@ -27,7 +27,7 @@ class Handler_Public extends Handler {
 
 		switch ($order) {
 		case "title":
-			$date_sort_field = "ttrss_entries.title";
+			$date_sort_field = "ttrss_entries.title, date_entered, updated";
 			break;
 		case "date_reverse":
 			$date_sort_field = "date_entered, updated";
