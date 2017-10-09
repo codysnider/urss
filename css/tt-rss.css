@@ -370,6 +370,7 @@ div.prefHelp {
 	white-space : nowrap;
 	display : table-cell;
 	color : #999;
+	overflow : hidden;
 }
 
 #main-toolbar > *,
