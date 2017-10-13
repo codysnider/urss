@@ -1517,6 +1517,10 @@ class RSSUtils {
 						// 0       beshort         0xffd8          JPEG image data
 						//error_log("check_feed_favicon: favicon_url=$favicon_url isa JPG image");
 					}
+					elseif (preg_match('/^BM/', $contents)) {
+						// 0	string		BM	PC bitmap (OS2, Windows BMP files)
+						//error_log("check_feed_favicon, favicon_url=$favicon_url isa BMP image");
+					}
 					else {
 						//error_log("check_feed_favicon: favicon_url=$favicon_url isa UNKNOWN type");
 						$contents = "";
