@@ -466,7 +466,7 @@ class API extends Handler {
 
 		$article_ids = array_filter(explode(",", $this->dbh->escape_string($_REQUEST["article_ids"])), is_numeric);
 		$label_id = (int) $this->dbh->escape_string($_REQUEST['label_id']);
-		$assign = (bool) ($this->dbh->escape_string($_REQUEST['assign']) == "true");
+		$assign = sql_bool_to_bool($_REQUEST['assign']);
 
 		$label = $this->dbh->escape_string(Labels::find_caption(
 			Labels::feed_to_label_id($label_id), $_SESSION["uid"]));
