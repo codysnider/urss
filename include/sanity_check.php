@@ -149,6 +149,10 @@
 				array_push($errors, "PHP safe mode setting is obsolete and not supported by tt-rss.");
 			}
 
+			if (!function_exists("mime_content_type")) {
+				array_push($errors, "PHP function mime_content_type() is missing, try enabling fileinfo module.");
+			}
+
 			if (!class_exists("DOMDocument")) {
 				array_push($errors, "PHP support for DOMDocument is required, but was not found.");
 			}
