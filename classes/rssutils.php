@@ -419,7 +419,7 @@ class RSSUtils {
 			$feed_data = trim($feed_data);
 
 			_debug("fetch done.", $debug_enabled);
-			_debug("source last modified: " . $fetch_last_modified);
+			_debug("source last modified: " . $fetch_last_modified, $debug_enabled);
 
 			if ($feed_data && $fetch_last_modified != $stored_last_modified) {
 				$last_modified_escaped = db_escape_string(substr($fetch_last_modified, 0, 245));

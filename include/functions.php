@@ -432,11 +432,18 @@
 			$contents = substr($ret, $headers_length);
 
 			foreach ($headers as $header) {
-				list ($key, $value) = explode(": ", $header);
+                if (strstr($header, ": ") !== FALSE) {
+                    list ($key, $value) = explode(": ", $header);
 
-				if (strtolower($key) == "last-modified") {
-					$fetch_last_modified = $value;
-				}
+                    if (strtolower($key) == "last-modified") {
+                        $fetch_last_modified = $value;
+                    }
+                }
+
+                if (substr(strtolower($header), 0, 7) == 'http/1.') {
+                    $fetch_last_error_code = (int) substr($header, 9, 3);
+                    $fetch_last_error = $header;
+                }
 			}
 
 			if (curl_errno($ch) === 23 || curl_errno($ch) === 61) {
@@ -450,11 +457,11 @@
 			$fetch_last_error_code = $http_code;
 
 			if ($http_code != 200 || $type && strpos($fetch_last_content_type, "$type") === false) {
+
 				if (curl_errno($ch) != 0) {
-					$fetch_last_error = curl_errno($ch) . " " . curl_error($ch);
-				} else {
-					$fetch_last_error = "HTTP Code: $http_code";
+					$fetch_last_error .=  "; " . curl_errno($ch) . " " . curl_error($ch);
 				}
+
 				$fetch_last_error_content = $contents;
 				curl_close($ch);
 				return false;
@@ -465,12 +472,6 @@
 				curl_close($ch);
 				return false;
 			}
-
-			/*$fetch_last_modified = curl_getinfo($ch, CURLINFO_FILETIME);
-
-			if ($fetch_last_modified != -1) {
-				echo date("Y-m-d H:i:s", $fetch_last_modified); die;
-			}*/
 
 			curl_close($ch);
 
@@ -517,21 +518,24 @@
 			$data = @file_get_contents($url, false, $context);
 
 			if (isset($http_response_header) && is_array($http_response_header)) {
-				foreach ($http_response_header as $h) {
-					list ($key, $value) = explode(": ", $h);
+				foreach ($http_response_header as $header) {
+				    if (strstr($header, ": ") !== FALSE) {
+                        list ($key, $value) = explode(": ", $header);
 
-					$key = strtolower($key);
+                        $key = strtolower($key);
 
-					if ($key == 'content-type') {
-						$fetch_last_content_type = $value;
-						// don't abort here b/c there might be more than one
-						// e.g. if we were being redirected -- last one is the right one
-					} else if ($key == 'last-modified') {
-						$fetch_last_modified = $value;
-					}
+                        if ($key == 'content-type') {
+                            $fetch_last_content_type = $value;
+                            // don't abort here b/c there might be more than one
+                            // e.g. if we were being redirected -- last one is the right one
+                        } else if ($key == 'last-modified') {
+                            $fetch_last_modified = $value;
+                        }
+                    }
 
-					if (substr(strtolower($h), 0, 7) == 'http/1.') {
-						$fetch_last_error_code = (int) substr($h, 9, 3);
+					if (substr(strtolower($header), 0, 7) == 'http/1.') {
+						$fetch_last_error_code = (int) substr($header, 9, 3);
+						$fetch_last_error = $header;
 					}
 				}
 			}
@@ -540,9 +544,7 @@
 				$error = error_get_last();
 
 				if ($error['message'] != $old_error['message']) {
-					$fetch_last_error = $error["message"];
-				} else {
-					$fetch_last_error = "HTTP Code: $fetch_last_error_code";
+					$fetch_last_error .= "; " . $error["message"];
 				}
 
 				$fetch_last_error_content = $data;
