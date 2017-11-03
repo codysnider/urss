@@ -1663,7 +1663,7 @@
 			'caption', 'cite', 'center', 'code', 'col', 'colgroup',
 			'data', 'dd', 'del', 'details', 'description', 'dfn', 'div', 'dl', 'font',
 			'dt', 'em', 'footer', 'figure', 'figcaption',
-			'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'html', 'i',
+			'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hr', 'html', 'i',
 			'img', 'ins', 'kbd', 'li', 'main', 'mark', 'nav', 'noscript',
 			'ol', 'p', 'pre', 'q', 'ruby', 'rp', 'rt', 's', 'samp', 'section',
 			'small', 'source', 'span', 'strike', 'strong', 'sub', 'summary',
