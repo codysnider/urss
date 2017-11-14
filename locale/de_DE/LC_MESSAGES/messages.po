@@ -3371,7 +3371,7 @@ msgstr "Keine Profile ausgewählt."
 
 #: js/prefs.js:1353 js/prefs.js:1406
 msgid "Activate selected profile?"
-msgstr "Ausgewählte Profile entfernen?"
+msgstr "Ausgewählte Profile aktivieren?"
 
 #: js/prefs.js:1370 js/prefs.js:1422
 msgid "Please choose a profile to activate."
