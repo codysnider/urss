@@ -688,7 +688,7 @@ class Handler_Public extends Handler {
 		@$method = $_POST['method'];
 
 		if ($hash) {
-			$login = $_REQUEST["login"];
+			$login = $this->dbh->escape_string($_REQUEST["login"]);
 
 			if ($login) {
 				$result = $this->dbh->query("SELECT id, resetpass_token FROM ttrss_users
