@@ -39,7 +39,7 @@ msgstr "1 ヶ月前"
 
 #: backend.php:78
 msgid "2 months old"
-msgstr "2 日月前"
+msgstr "2 ヶ月前"
 
 #: backend.php:79
 msgid "3 months old"
