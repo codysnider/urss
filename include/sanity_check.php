@@ -156,6 +156,29 @@
 			if (!class_exists("DOMDocument")) {
 				array_push($errors, "PHP support for DOMDocument is required, but was not found.");
 			}
+
+			if (DB_TYPE == "mysql") {
+				$bad_tables = check_mysql_tables();
+
+				if (count($bad_tables) > 0) {
+					$bad_tables_fmt = [];
+
+					foreach ($bad_tables as $bt) {
+						array_push($bad_tables_fmt, sprintf("%s (%s)", $bt['table_name'], $bt['engine']));
+					}
+
+					$msg = "<p>The following tables use an unsupported MySQL engine: <b>" .
+						implode(", ", $bad_tables_fmt) . "</b>.</p>";
+
+					$msg .= "<p>The only supported engine on MySQL is InnoDB. MyISAM lacks functionality to run
+						tt-rss.
+						Please convert aforementioned tables to InnoDB (if possible) or re-import the schema before continuing.</p>
+						<p><b>WARNING: importing the schema would mean LOSS OF ALL YOUR DATA.</b></p>";
+
+
+					array_push($errors, $msg);
+				}
+			}
 		}
 
 		if (count($errors) > 0 && $_SERVER['REQUEST_URI']) { ?>
@@ -165,7 +188,7 @@
 				<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 				<link rel="stylesheet" type="text/css" href="css/utility.css">
 			</head>
-		<body>
+		<body class='sanity_failed'>
 		<div class="floatingLogo"><img src="images/logo_small.png"></div>
 			<div class="content">
 

@@ -1,5 +1,9 @@
 @import "dijit.css";
 
+body.sanity_failed {
+	background : #900;
+}
+
 body {
 	background : #f5f5f5;
 	color : black;
@@ -132,7 +136,7 @@ h2 {
 	font-size : 14pt;
 	border-width : 0px 0px 1px 0px;
 	border-color : #f0f0f0;
-	border-style : solid; 
+	border-style : solid;
 }
 
 div.content > h2 {
@@ -202,11 +206,11 @@ body#sharepopup table {
 	padding : 5px;
 }
 
-body#sharepopup form { 
+body#sharepopup form {
 	height : 100%;
 }
 
-body#sharepopup input { 
+body#sharepopup input {
 	width : 100%;
 }
 
@@ -227,7 +231,7 @@ div.autocomplete ul {
 	font-size : 10px;
 }
 
-div.autocomplete ul li.selected { 
+div.autocomplete ul li.selected {
 	background-color : #fff7d5;
 }
 
@@ -240,7 +244,7 @@ div.autocomplete ul li {
 	cursor : pointer;
 }
 
-fieldset { 
+fieldset {
 	border-width : 0px;
 	padding : 0px 0px 5px 0px;
 	margin : 0px;

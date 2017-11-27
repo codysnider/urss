@@ -2546,3 +2546,18 @@
 		}
 	}
 
+	function check_mysql_tables() {
+		$schema = db_escape_string(DB_NAME);
+
+		$result = db_query("SELECT engine, table_name FROM information_schema.tables WHERE
+			table_schema = '$schema' AND table_name LIKE 'ttrss_%' AND engine != 'InnoDB'");
+
+		$bad_tables = [];
+
+		while ($line = db_fetch_assoc($result)) {
+			array_push($bad_tables, $line);
+		}
+
+		return $bad_tables;
+	}
+
