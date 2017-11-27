@@ -1740,6 +1740,10 @@ class Pref_Feeds extends Handler_Protected {
 
 	static function remove_feed($id, $owner_uid) {
 
+		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_UNSUBSCRIBE_FEED) as $p) {
+			$line = $p->hook_unsubscribe_feed($id, $owner_uid);
+		}
+
 		if ($id > 0) {
 
 			/* save starred articles in Archived feed */
