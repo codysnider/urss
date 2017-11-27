@@ -172,7 +172,7 @@
 
 					$msg .= "<p>The only supported engine on MySQL is InnoDB. MyISAM lacks functionality to run
 						tt-rss.
-						Please convert aforementioned tables to InnoDB (if possible) or re-import the schema before continuing.</p>
+						Please backup your data (via OPML) and re-import the schema before continuing.</p>
 						<p><b>WARNING: importing the schema would mean LOSS OF ALL YOUR DATA.</b></p>";
 
 
