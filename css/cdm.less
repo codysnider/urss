@@ -1,6 +1,3 @@
-@fonts-ui-bold: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
-@fonts-ui:  "Segoe UI Web", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
-
 .cdm {
 	margin-right : 4px;
 
@@ -166,7 +163,7 @@ div.cdm.expandable.Unread div.cdmHeader a.title {
 }
 
 div.cdm.expandable.active div.cdmHeader a.title {
-	color: #0088cc;
+	color: @color-link;
 	font-size: 16px;
 	font-weight: 600;
 	text-rendering: optimizelegibility;
@@ -192,7 +189,7 @@ div.cdm.expanded.active {
 }
 
 div.cdm.expanded.active div.cdmHeader a.title {
-	color : #0088cc;
+	color : @color-link;
 }
 
 div.cdm.expanded.Unread div.cdmHeader a.title {
@@ -225,7 +222,7 @@ div.cdmContent div.postEnclosures {
 }
 
 div.cdmFeedTitle {
-	border: 0px solid #0088cc;
+	border: 0px solid @color-link;
 	border-bottom-width: 1px;
 	padding : 5px 3px 5px 5px;
 }
@@ -240,7 +237,7 @@ div.cdmFeedTitle a {
 }
 
 div.cdmFeedTitle a:hover {
-	color : #0088cc;
+	color : @color-link;
 }
 
 div.cdmHeader span.hlFeed {
@@ -413,7 +410,7 @@ div#floatingTitle.Unread a.title {
 	}
 
 	a.catchup:hover {
-		color : #0088cc;
+		color : @color-link;
 	}
 
 }

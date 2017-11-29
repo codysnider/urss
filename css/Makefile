@@ -1,4 +1,4 @@
 
 default.css: *.less
-	cat $^  | lessc -x - > $@
+	lessc -x default.less > $@
 
