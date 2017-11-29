@@ -1,0 +1,424 @@
+@fonts-ui: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold",	"Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+.cdm {
+	margin-right : 4px;
+
+	.cdmHeader, .cdmFooter {
+		display : table;
+	}
+
+	.cdmHeader img, .cdmHeader input, .cdmFooter img {
+		vertical-align : middle;
+	}
+
+	.cdmHeader > div, .cdmFooter > div {
+		white-space : nowrap;
+	}
+
+	.cdmHeader > span, .cdmFooter > span.left {
+		width : 100%;
+	}
+
+	.cdmHeader img, .cdmFooter img {
+		margin : 0px 4px;
+	}
+
+	.cdmHeader {
+		> * {
+			display : table-cell;
+			padding : 5px;
+		}
+
+		span.updated {
+			color : #555;
+			font-weight : normal;
+			font-size : 11px;
+			white-space : nowrap;
+			vertical-align : middle;
+		}
+
+		input {
+			margin-right : 5px;
+		}
+
+		div.updPic {
+			width : 25px;
+			display : inline-block;
+			text-align : center;
+		}
+
+		div.updPic img {
+			vertical-align : middle;
+		}
+
+		input {
+			margin-left : 4px;
+			margin-right : 4px;
+		}
+	}
+
+	.cdmFooter {
+		height : 30px;
+		padding-left : 5px;
+		font-weight : normal;
+		color : #555;
+		clear : both;
+
+		> * {
+			display : table-cell;
+			vertical-align : middle;
+		}
+	}
+
+	.cdmIntermediate {
+		margin : 10px;
+	}
+
+	.cdmContentInner {
+		margin : 10px;
+		line-height : 1.5;
+		font-size : 16px;
+
+		h1 {
+			font-size : 16px;
+		}
+
+		h2,
+		h3,
+		h4 {
+			font-size : 15px;
+		}
+
+	}
+
+	.cdmIntermediate img,
+	.cdmIntermediate video,
+	.cdmContentInner img,
+	.cdmContentInner video {
+		border-width : 0px;
+		max-width : 98%;
+		height : auto;
+	}
+}
+
+.cdm.expanded {
+	margin-top : 4px;
+	margin-bottom : 4px;
+
+	.cdmFooter {
+		border-style : solid;
+		border-width : 0px 0px 1px 0px;
+		border-color : #ddd;
+	}
+
+	> hr {
+		margin-top : 0px;
+		margin-bottom : 0px;
+	}
+
+}
+
+.cdm.expandable {
+	background-color : #f0f0f0;
+	border-width : 0px 0px 1px 0px;
+	border-color : #ddd;
+	border-style : solid;
+
+	> hr {
+		display : none;
+	}
+
+	div.cdmHeader span.titleWrap {
+		white-space : nowrap;
+		text-overflow : ellipsis;
+		overflow : hidden;
+		max-width : 500px;
+	}
+}
+
+.cdm.expandable.Unread {
+	background : white;
+}
+
+.cdm.expandable.Selected {
+	background : #f9fbff;
+}
+
+.cdm.expandable.active {
+	background : white ! important;
+}
+
+div.cdm.expandable.active div.cdmHeader span.titleWrap {
+	white-space : normal;
+}
+
+div.cdm.expandable div.cdmHeader a.title {
+	font-weight : 600;
+	color : #555;
+	font-size : 14px;
+	-webkit-transition : color 0.2s;
+	transition : color 0.2s;
+	text-rendering: optimizelegibility;
+	font-family : @fonts-ui;
+}
+
+div.cdm.expandable.Unread div.cdmHeader a.title {
+	color : black;
+}
+
+div.cdm.expandable.active div.cdmHeader a.title {
+	color: #0088cc;
+	font-size: 16px;
+	font-weight: 600;
+	text-rendering: optimizelegibility;
+	font-family: @fonts-ui;
+}
+
+div.cdm.expanded div.cdmHeader {
+	background : transparent ! important;
+}
+
+div.cdm.expanded div.cdmHeader a.title {
+	font-size : 16px;
+	color : #999;
+	font-weight : 600;
+	-webkit-transition : color 0.2s;
+	transition : color 0.2s;
+	text-rendering: optimizelegibility;
+	font-family : @fonts-ui;
+}
+
+div.cdm.expanded.active {
+	background : white;
+}
+
+div.cdm.expanded.active div.cdmHeader a.title {
+	color : #0088cc;
+}
+
+div.cdm.expanded.Unread div.cdmHeader a.title {
+	color : black;
+}
+
+div.cdm.expanded div.cdmContent {
+	color : #555;
+}
+
+div.cdm.expanded.Unread div.cdmContent {
+	color : black;
+}
+
+div.cdm.active div.cdmContent {
+	color : black;
+}
+
+span.cdmExcerpt {
+	white-space : nowrap;
+	font-size : 11px;
+	color : #999;
+	font-weight : normal;
+	cursor : pointer;
+}
+
+div.cdmContent div.postEnclosures {
+	margin-top : 1em;
+	color : #555;
+}
+
+div.cdmFeedTitle {
+	border-color : #0088cc;
+	border-width : 0px 0px 1px 0px;
+	border-style : solid;
+	padding : 5px 3px 5px 5px;
+}
+
+div.cdmFeedTitle a.title {
+	color : #555;
+	font-weight : bold;
+}
+
+div.cdmFeedTitle a {
+	color : #555;
+}
+
+div.cdmFeedTitle a:hover {
+	color : #0088cc;
+}
+
+div.cdmHeader span.hlFeed {
+	float : right;
+	font-weight : normal;
+	font-style : italic;
+}
+
+div.cdmHeader div.hlFeed, div.cdmHeader div.hlFeed a {
+	vertical-align : middle;
+	color : #555;
+	font-weight : normal;
+	font-style : italic;
+	font-size : 11px;
+}
+
+div.cdm .hlFeed a {
+	border-radius : 4px;
+	display : inline-block;
+	padding : 1px 4px 1px 4px;
+}
+
+div.cdmContentInner p {
+	/*max-width : 650px;*/
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
+}
+
+div.cdmContentInner iframe {
+	min-width : 50%;
+	max-width : 98%;
+}
+
+div.cdmHeader span.author {
+	white-space : nowrap;
+	color : #555;
+	font-size : 11px;
+	font-weight : normal;
+}
+
+div#floatingTitle {
+	position : absolute;
+	z-index : 5;
+	top : 0px;
+	right : 0px;
+	left : 0px;
+	border-color : #ddd;
+	border-width : 0px 0px 1px 0px;
+	border-style : solid;
+	background : white;
+	color : #555;
+	box-shadow : 0px 1px 1px -1px rgba(0,0,0,0.1);
+
+	> * {
+		display : table-cell;
+		white-space : nowrap;
+		vertical-align : middle;
+		padding : 9px 5px;
+	}
+
+	img {
+		margin-right : 4px;
+		margin-left : 4px;
+	}
+
+	span.author {
+		color : #555;
+		font-size : 11px;
+		font-weight : normal;
+	}
+
+	a.title {
+		font-size : 16px;
+		color : #999;
+		-webkit-transition : color 0.2s;
+		transition : color 0.2s;
+		font-weight : 600;
+		text-rendering: optimizelegibility;
+		font-family : @fonts-ui;
+	}
+
+	img.anchor {
+		margin-left : 0px;
+	}
+
+	div.hlFeed {
+		padding-right : 10px;
+		color : #555;
+		font-weight : normal;
+		font-style : italic;
+		font-size : 11px;
+		white-space : nowrap;
+	}
+
+	div.hlFeed a {
+		border-radius : 4px;
+		display : inline-block;
+		padding : 1px 4px 1px 4px;
+	}
+
+	span.updated {
+		padding-right : 10px;
+		white-space : nowrap;
+		color : #555;
+		font-size : 11px;
+	}
+
+	div.hlFeed a {
+		color : #555;
+	}
+
+	span.titleWrap {
+		width : 100%;
+		white-space : normal;
+	}
+
+	.dijit,
+	img.hlScorePic {
+		display : none;
+	}
+
+}
+
+div#floatingTitle.Unread a.title {
+	color : black;
+}
+
+.cdm.high .cdmHeader {
+	a.title.high,
+	.cdmExcerpt,
+	span.author {
+		color : #00aa00;
+	}
+}
+
+.cdm.Unread.high .cdmHeader {
+	a.title.high,
+	.cdmExcerpt,
+	span.author {
+		color : #00dd00;
+	}
+}
+
+.cdm .cdmHeader a.title.low,
+.cdm.low .cdmHeader .cdmExcerpt,
+.cdm.Unread .cdmHeader a.title.low,
+.cdm.Unread.low .cdmHeader .cdmExcerpt,
+.cdm.low .cdmHeader span.author {
+	color : #909090;
+	text-decoration : line-through;
+}
+
+.cdmFeedTitle {
+
+	> * {
+		display : table-cell;
+		vertical-align : middle;
+	}
+
+	a.title {
+		width : 100%;
+	}
+
+	a.catchup {
+		text-align : right;
+		color : #555;
+		padding-right : 10px;
+		font-size : 11px;
+		white-space : nowrap;
+	}
+
+	a.catchup:hover {
+		color : #0088cc;
+	}
+
+}
+
+
