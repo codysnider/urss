@@ -5,10 +5,6 @@
 		return "@import \"$filename?".filemtime($filename)."\";";
 	}
 
-	$styles = [ "tt-rss.css", "dijit.css", "cdm.css", "prefs.css" ];
-
-	foreach ($styles as $style) {
-		print import_tag("../css/$style") . "\n";
-	}
+	print import_tag("../css/default.css") . "\n";
 ?>
 

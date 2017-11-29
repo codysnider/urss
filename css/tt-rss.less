@@ -1,8 +1,11 @@
-@fonts-ui: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold",	"Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@fonts-ui-bold: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@fonts-ui:  "Segoe UI Web", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 @color-accent: rgb(82, 168, 236);
 @color-accent-light: #ecf4ff;
+@color-link: #0088cc;
 
-body#ttrssMain, body#ttrssPrefs, body#ttrssLogin, body {
+body {
 	background : white;
 	color : black;
 	margin : 0px;
@@ -16,6 +19,10 @@ body#ttrssMain {
 	max-height : 100%;
 }
 
+:focus {
+	outline: none;
+}
+
 div.postReply {
 	padding : 0px;
 
@@ -23,9 +30,24 @@ div.postReply {
 		padding : 5px;
 		margin-right : 4px;
 		color : #909090;
-		border-width : 0px 0px 1px 0px;
-		border-color : #ddd;
-		border-style : solid;
+		border: 0px solid #ddd;
+		border-bottom-width: 1px;
+
+		div.postDate {
+			text-align : right;
+			color : #909090;
+			float : right;
+		}
+
+		div {
+			padding-bottom : 3px;
+		}
+
+		span.author {
+			color : #555;
+			font-size : 11px;
+			font-weight : normal;
+		}
 	}
 
 	div.postTitle {
@@ -34,7 +56,7 @@ div.postReply {
 		white-space : nowrap;
 		font-weight : 600;
 		text-rendering: optimizelegibility;
-		font-family : @fonts-ui;
+		font-family : @fonts-ui-bold;
 	}
 
 	div.postDate {
@@ -44,13 +66,32 @@ div.postReply {
 	div.postContent {
 		padding : 10px;
 		font-size : 16px;
-	}
 
-	div.postContent img,
-	div.postContent video {
-		border-width : 0px;
-		max-width : 98%;
-		height: auto;
+		img,
+		video {
+			border-width : 0px;
+			max-width : 98%;
+			height: auto;
+		}
+
+ 		h1 {
+			font-size : 16px;
+		}
+
+		h2,
+		h3,
+		h4 {
+			font-size : 15px;
+		}
+
+		p {
+			hyphens: auto;
+		}
+
+		iframe {
+			min-width : 50%;
+			max-width : 98%;
+		}
 	}
 
 	div.postEnclosures {
@@ -73,9 +114,7 @@ div.articleNote {
 	background-color : #fff7d5;
 	padding : 5px;
 	margin : 5px;
-	border-style : solid;
-	border-color : #e7d796;
-	border-width : 1px;
+	border: 1px solid #e7d796;
 	color : #9a8c59;
 
 	div.noteEdit {
@@ -122,12 +161,12 @@ hr {
 }
 
 a {
-	color: #0088cc;
+	color: @color-link;
 	text-decoration: none;
 }
 
 a:hover {
-	color: #005580;
+	color: darken(@color-link, 20%);
 	text-decoration: underline;
 }
 
@@ -149,9 +188,6 @@ a:hover {
 	box-shadow : 0px -2px 2px rgba(0,0,0,0.1);
 
 	transition: all 0.5s ease-in-out;
-	-webkit-transition: all 0.5s ease-in-out;
-   -moz-transition: all 0.5s ease-in-out;
-   -o-transition: all 0.5s ease-in-out;
 
 	img {
 		vertical-align : middle;
@@ -198,20 +234,94 @@ a:hover {
 	border-bottom-width: 1px;
 	padding : 1px;
 
+	div.hlTitle {
+		display : table-cell;
+		cursor : pointer;
+		width : 100%;
+		vertical-align : middle;
+		overflow : hidden;
+		white-space : nowrap;
+		max-width : 500px;
+		text-overflow : ellipsis;
+		padding: 4px 6px;
+	}
+
+	div.hlLeft {
+		display : table-cell;
+		vertical-align : middle;
+		white-space: nowrap;
+	}
+
+	div.hlRight {
+		display : table-cell;
+		white-space: nowrap;
+		text-align : right;
+		vertical-align : middle;
+	}
+
+	div.hlRight img {
+		max-width : 16px;
+		max-height : 16px;
+	}
+
+	span.hlFeed {
+		display : table-cell;
+		vertical-align : middle;
+		text-align : right;
+	}
+
+	span.hlFeed a {
+		border-radius : 4px;
+		display : inline-block;
+		padding : 1px 4px 1px 4px;
+		font-size : 11px;
+		font-style : italic;
+		font-weight : normal;
+		color : #555;
+		white-space : nowrap;
+	}
+
+	span.hlFeed a:hover {
+		color : @color-accent;
+	}
+
+	span.hlUpdated {
+		color : #555;
+		display : table-cell;
+		vertical-align : middle;
+		text-align : right;
+		font-size : 11px;
+		white-space : nowrap;
+		padding-left : 10px;
+	}
+
+	span.hlUpdated div {
+		display : inline-block;
+	}
+
+	div.hlLeft {
+		padding-left : 8px;
+	}
+
+	div.hlLeft input {
+		margin-left : 4px;
+		margin-right : 4px;
+	}
+
+	div.hlLeft img, div.hlRight img {
+		margin : 0px 4px;
+	}
+
+	div.hlLeft img {
+		width : 16px;
+		height : 16px;
+	}
+
 	div.hlTitle a {
 		font-weight : 600;
 		text-rendering: optimizelegibility;
 		font-family : @fonts-ui;
 		color : #777;
-	}
-
-	.hlTitle {
-		overflow : hidden;
-		white-space : nowrap;
-		max-width : 500px;
-		text-overflow : ellipsis;
-		padding-left : 6px;
-		padding-right : 6px;
 	}
 
 	a.title.high, span.hlContent.high .contentPreview {
@@ -455,38 +565,10 @@ span.hlLabelRef {
 	border-radius : 4px; 
 }
 
-.postHeader {
-
-	div.postDate {
-		text-align : right;
-		color : #909090;
-		float : right;
-	}
-
-	div {
-		padding-bottom : 3px;
-	}
-
-}
-
-
-#feedUpdateErrors {
-	display : none;
-}
-
-#allEntryTags {
-	border-width : 0px 0px 1px 0px;
-	border-style : solid;
-	border-color : #ddd;
-	padding-bottom : 5px;
-	display : none;
-}
-
 img.markedPic, img.pubPic {
 	cursor : pointer;
 	vertical-align : middle;
 	opacity : 0.5;
-	-webkit-transition : opacity 0.25s;
 	transition : opacity 0.25s;
 }
 
@@ -543,19 +625,8 @@ ul.browseFeedList {
 }
 
 
-span.subscribers {
+.browseFeedList span.subscribers {
 	color : #808080;
-}
-
-div.subscribers {
-	color : #808080;
-	font-size : 12px;
-	float : right;
-}
-
-div.browserDetails {
-	margin : 5px 5px 5px 5px;
-	padding : 5px;
 }
 
 ul.compact {
@@ -604,9 +675,8 @@ div.whiteBox {
 	text-align : center;
 	padding : 1em 1em 0px 1em;
 	font-size : 11px;
-	border-width : 0px 0px 1px 0px;
-	border-style : solid;
-	border-color : #ddd;
+	border: 0px solid #ddd;
+	border-bottom-width: 1px;
 }
 
 div.autocomplete {
@@ -639,7 +709,7 @@ div.autocomplete {
 
 
 div#headlines-frame.wide .hlTitle {
-	max-width : auto;
+	max-width : none;
 	overflow : visible;
 	white-space : normal;
 }
@@ -669,6 +739,11 @@ div.dlgSecCont {
 	float : left;
 	font-size : 12px;
 	font-weight : normal;
+
+	> * {
+		position : relative;
+		top : -2px;
+	}
 }
 
 div.dlgSecCont hr, div.dlgSecSimple hr {
@@ -676,11 +751,6 @@ div.dlgSecCont hr, div.dlgSecSimple hr {
 	line-height : 0px;
 	border : 0px solid transparent;
 	margin : 2px;
-}
-
-div.dlgSecCont > * {
-	position : relative;
-	top : -2px;
 }
 
 div.dlgButtons {
@@ -721,97 +791,17 @@ div#cmdline {
 	width : 18px;
 }
 
-div.hlTitle {
-	display : table-cell;
-	cursor : pointer;
-	width : 100%;
-	vertical-align : middle;
-	padding-top : 4px;
-	padding-bottom : 4px;
-}
-
-div.hlLeft {
-	display : table-cell;
-	vertical-align : middle;
-	white-space: nowrap;
-}
-
-div.hlRight {
-	display : table-cell;
-	white-space: nowrap;
-	text-align : right;
-	vertical-align : middle;
-}
-
-div.hlRight img {
-	max-width : 16px;
-	max-height : 16px;
-}
-
-.hl span.hlFeed {
-	display : table-cell;
-	vertical-align : middle;
-	text-align : right;
-}
-
-.hl span.hlFeed a {
-	border-radius : 4px;
-	display : inline-block;
-	padding : 1px 4px 1px 4px;
-	font-size : 11px;
-	font-style : italic;
-	font-weight : normal;
-	color : #555;
-	white-space : nowrap;
-}
-
-.hl span.hlFeed a:hover {
-	color : @color-accent;
-}
-
-.hl span.hlUpdated {
-	color : #555;
-	display : table-cell;
-	vertical-align : middle;
-	text-align : right;
-	font-size : 11px;
-	white-space : nowrap;
-	padding-left : 10px;
-}
-
-span.hlUpdated div {
-	display : inline-block;
-}
-
-div.hlLeft {
-	padding-left : 8px;
-}
-
-div.hlLeft input {
-	margin-left : 4px;
-	margin-right : 4px;
-}
-
-div.hlLeft img, div.hlRight img {
-	margin : 0px 4px;
-}
-
-div.hlLeft img {
-	width : 16px;
-	height : 16px;
-}
-
 div.fatalError {
 	margin-bottom : 10px;
-}
 
-div.fatalError button {
-	margin-top : 5px;
-}
+	button {
+		margin-top : 5px;
+	}
 
-div.fatalError textarea {
-	width : 565px;
-	height : 200px;
+	textarea {
+		width : 565px;
+		height : 200px;
+	}
 }
 
 #ttrssMain #main {
@@ -834,9 +824,7 @@ div.fatalError textarea {
 
 #feeds-holder {
 	padding : 0px;
-	border-width : 0px 0px 0px 0px;
-	border-style : solid;
-  	border-color : #ddd;
+	border: 0px solid #ddd;
 	overflow : hidden;
 	background : #f5f5f5;
 	box-shadow : inset -1px 0px 2px -1px rgba(0,0,0,0.1);
@@ -851,10 +839,11 @@ div.fatalError textarea {
 
 #headlines-frame {
 	padding : 0px;
-	border-width : 0px;
-	border-color : #ddd;
+	border: 0px #ddd;
 	margin-top : 0px;
 	-webkit-overflow-scrolling : touch;
+	-webkit-transform: translateZ(0);
+	-webkit-backface-visibility: hidden;
 }
 
 #headlines-toolbar_splitter, #toolbar_splitter {
@@ -871,9 +860,8 @@ div.fatalError textarea {
 
 #main-toolbar {
 	background : white;
-	border-width : 0px 0px 1px 0px;
-	border-color : #ddd;
-	border-style : solid;
+	border: 0px solid #ddd;
+	border-bottom-width: 1px;
 	padding-left : 4px;
 	height : 26px;
 
@@ -954,16 +942,16 @@ img.feedIcon, img.tinyFeedIcon {
 	color : #555;
 	font-size : 11px;
 	font-style : italic;
-}
 
-#headlines-spacer a, #headlines-spacer span {
-	color : #555;
-	padding : 10px;
-	display : block;
-}
+	a, span {
+		color : #555;
+		padding : 10px;
+		display : block;
+	}
 
-#headlines-spacer a:hover {
-	color : @color-accent;
+	a:hover {
+		color : @color-accent;
+	}
 }
 
 ul#filterDlg_Matches, ul#filterDlg_Actions {
@@ -990,54 +978,26 @@ ul.helpKbList {
 	border : 1px solid #ddd;
 	margin : 0px 0px 5px 0px;
 	padding : 5px;
-}
 
-ul.helpKbList span.hksequence {
-	width : 6em;
-	margin-left : 20px;
-	color : @color-accent;
-	font-weight : bold;
-	display : inline-block;
-}
+	span.hksequence {
+		width : 6em;
+		margin-left : 20px;
+		color : @color-accent;
+		font-weight : bold;
+		display : inline-block;
+	}
 
-ul.helpKbList h2 {
-	margin-top : 0px;
+	h2 {
+		margin-top : 0px;
+	}
 }
 
 span.collapseBtn {
 	cursor : pointer;
-}
 
-span.collapseBtn img {
-	vertical-align : middle;
-}
-
-div.postContent h1 {
-	font-size : 16px;
-}
-
-div.postContent h2,
-div.postContent h3,
-div.postContent h4 {
-	font-size : 15px;
-}
-
-div.postContent p {
-	/*max-width : 650px;*/
-	-webkit-hyphens: auto;
-	-moz-hyphens: auto;
-	hyphens: auto;
-}
-
-div.postContent iframe {
-	min-width : 50%;
-	max-width : 98%;
-}
-
-div.postHeader span.author {
-	color : #555;
-	font-size : 11px;
-	font-weight : normal;
+	img {
+		vertical-align : middle;
+	}
 }
 
 select.attachments {
@@ -1050,16 +1010,6 @@ select.attachments {
 	margin-right : 25px;
 	vertical-align  : middle;
 }
-
-span.sel_links {
-	margin-right : 4px;
-	vertical-align  : middle;
-}
-
-/*#feedTree img.feedIcon {
-	position : relative;
-	top : -2px;
-}*/
 
 body#ttrssMain.claro #feedTree.dijitTree .dijitTreeNode .dijitTreeRowSelected {
 	box-shadow : -1px 0px 2px -1px rgba(0,0,0,0.1);
@@ -1100,40 +1050,40 @@ body#ttrssMain #feedTree {
 	overflow-x : hidden;
 	text-rendering: optimizelegibility;
 	font-family : @fonts-ui;
-}
 
-body#ttrssMain #feedTree .counterNode.aux {
-	background : #f0f0f0;
-	color : #999;
-	border-color : #f0f0f0;
-}
+	.counterNode.aux {
+		background : #f0f0f0;
+		color : #999;
+		border-color : #f0f0f0;
+	}
 
-body#ttrssMain #feedTree .counterNode {
-	font-weight : bold;
-	display : inline-block;
-	font-size : 9px;
-	text-align : center;
-	border : 1px solid @color-accent;
-	color : white;
-	background : @color-accent;
-	border-radius : 4px;
-	vertical-align : middle;
-	float : right;
-	position : relative;
-	line-height : 14px;
-	margin-right : 8px;
-	margin-top : 2px;
-	min-width : 23px;
-	height : 14px;
-}
+	.counterNode {
+		font-weight : bold;
+		display : inline-block;
+		font-size : 9px;
+		text-align : center;
+		border : 1px solid @color-accent;
+		color : white;
+		background : @color-accent;
+		border-radius : 4px;
+		vertical-align : middle;
+		float : right;
+		position : relative;
+		line-height : 14px;
+		margin-right : 8px;
+		margin-top : 2px;
+		min-width : 23px;
+		height : 14px;
+	}
 
-body#ttrssMain #feedTree .dijitTreeNode .loadingExpando {
-	left : -3px;
-	height : 22px;
-	position : relative;
-	top : -3px;
-}
+	.dijitTreeNode .loadingExpando {
+		left : -3px;
+		height : 22px;
+		position : relative;
+		top : -3px;
+	}
 
+}
 
 span.highlight {
 	background-color : #ffff00;
@@ -1161,15 +1111,6 @@ body#ttrssMain #feedTree .dijitTreeRow img.dijitTreeExpandoLeaf {
 	position : relative;
 } 
 
-#headlines-frame {
-	-webkit-transform: translateZ(0);
-	-webkit-backface-visibility: hidden;
-}
-
-:focus {
-	outline: none; 
-}
-
 .dijitDropDownButton.attachments .dijitButtonText {
 	font-size : 12px;
 }
@@ -1181,3 +1122,111 @@ body#ttrssMain #feedTree .dijitTreeRow img.dijitTreeExpandoLeaf {
 #editTagsDlg{
 	overflow: visible;
 }
+
+body#ttrssZoom {
+	margin-left : auto;
+	margin-right : auto;
+	padding : 20px;
+	max-width : 770px;
+	background : #f5f5f5;
+
+	div.postHeader div.postFeedTitle {
+		float : left;
+		text-align : right;
+		padding-left : 0px;
+		font-size : 11px;
+	}
+
+	div.postHeader a.postComments {
+		text-align : right;
+		padding-left : 0px;
+		font-size : 11px;
+	}
+
+	div.postHeader div.postDate {
+		float : none;
+		text-align : right;
+		padding-left : 0px;
+		color : #777;
+		font-size : 11px;
+	}
+
+	div.postHeader div.postTags {
+		color : #777;
+		font-size : 11px;
+	}
+
+	div.postHeader div.postTitle {
+		white-space : normal;
+		font-size : 16px;
+	}
+
+	div.postContent {
+		font-size : 15px;
+		line-height : 1.5;
+	}
+
+	div.postContent p {
+		-webkit-hyphens: auto;
+		-moz-hyphens: auto;
+		hyphens: auto;
+	}
+
+	div.postHeader {
+		margin : 10px;
+		border-width : 0px 0px 1px 0px;
+		border-style : solid;
+		border-color : #eee;
+		background : white;
+	}
+
+	div.postReply {
+		border : 1px solid #ddd;
+		background : white;
+		box-shadow : 0px 1px 1px -1px rgba(0,0,0,0.1);
+		border-radius : 6px;
+	}
+
+	div.footer {
+		margin-top : 1em;
+		text-align : center;
+	}
+
+	div.postContent img {
+		max-width : 730px;
+		height : auto;
+	}
+
+	div.postContent blockquote {
+		margin : 5px 0px 5px 0px;
+		color : #555;
+		padding-left : 10px;
+		border-width : 0px 0px 0px 4px;
+		border-color : #ccc;
+		border-style : solid;
+	}
+
+	div.postContent code {
+		color : #009900;
+		font-family : monospace;
+		font-size : 12px;
+	}
+
+	div.postContent pre {
+		margin : 5px 0px 5px 0px;
+		padding : 10px;
+		color : #555;
+		font-family : monospace;
+		font-size : 12px;
+		border-width : 0px;
+		border-color : #ccc;
+		border-style : solid;
+		background : #f5f5f5;
+		display : block;
+		max-width : 98%;
+		overflow : auto;
+	}
+
+
+}
+

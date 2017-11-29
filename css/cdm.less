@@ -1,4 +1,5 @@
-@fonts-ui: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold",	"Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@fonts-ui-bold: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@fonts-ui:  "Segoe UI Web", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 .cdm {
 	margin-right : 4px;
@@ -106,9 +107,8 @@
 	margin-bottom : 4px;
 
 	.cdmFooter {
-		border-style : solid;
-		border-width : 0px 0px 1px 0px;
-		border-color : #ddd;
+		border: 0px solid #ddd;
+		border-bottom-width: 1px;
 	}
 
 	> hr {
@@ -120,9 +120,8 @@
 
 .cdm.expandable {
 	background-color : #f0f0f0;
-	border-width : 0px 0px 1px 0px;
-	border-color : #ddd;
-	border-style : solid;
+	border: 0px solid #ddd;
+	border-bottom-width: 1px;
 
 	> hr {
 		display : none;
@@ -159,7 +158,7 @@ div.cdm.expandable div.cdmHeader a.title {
 	-webkit-transition : color 0.2s;
 	transition : color 0.2s;
 	text-rendering: optimizelegibility;
-	font-family : @fonts-ui;
+	font-family : @fonts-ui-bold;
 }
 
 div.cdm.expandable.Unread div.cdmHeader a.title {
@@ -171,7 +170,7 @@ div.cdm.expandable.active div.cdmHeader a.title {
 	font-size: 16px;
 	font-weight: 600;
 	text-rendering: optimizelegibility;
-	font-family: @fonts-ui;
+	font-family: @fonts-ui-bold;
 }
 
 div.cdm.expanded div.cdmHeader {
@@ -185,7 +184,7 @@ div.cdm.expanded div.cdmHeader a.title {
 	-webkit-transition : color 0.2s;
 	transition : color 0.2s;
 	text-rendering: optimizelegibility;
-	font-family : @fonts-ui;
+	font-family : @fonts-ui-bold;
 }
 
 div.cdm.expanded.active {
@@ -226,9 +225,8 @@ div.cdmContent div.postEnclosures {
 }
 
 div.cdmFeedTitle {
-	border-color : #0088cc;
-	border-width : 0px 0px 1px 0px;
-	border-style : solid;
+	border: 0px solid #0088cc;
+	border-bottom-width: 1px;
 	padding : 5px 3px 5px 5px;
 }
 
@@ -290,9 +288,8 @@ div#floatingTitle {
 	top : 0px;
 	right : 0px;
 	left : 0px;
-	border-color : #ddd;
-	border-width : 0px 0px 1px 0px;
-	border-style : solid;
+	border: 0px solid #ddd;
+	border-bottom-width: 1px;
 	background : white;
 	color : #555;
 	box-shadow : 0px 1px 1px -1px rgba(0,0,0,0.1);
@@ -322,7 +319,7 @@ div#floatingTitle {
 		transition : color 0.2s;
 		font-weight : 600;
 		text-rendering: optimizelegibility;
-		font-family : @fonts-ui;
+		font-family : @fonts-ui-bold;
 	}
 
 	img.anchor {
@@ -420,5 +417,3 @@ div#floatingTitle.Unread a.title {
 	}
 
 }
-
-

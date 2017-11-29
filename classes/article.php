@@ -43,7 +43,7 @@ class Article extends Handler_Protected {
 		} else if ($mode == "raw") {
 			if (isset($_REQUEST['html'])) {
 				header("Content-Type: text/html");
-				print '<link rel="stylesheet" type="text/css" href="css/tt-rss.css"/>';
+				print '<link rel="stylesheet" type="text/css" href="css/default.css"/>';
 			}
 
 			$article = $this->format_article($id, false, isset($_REQUEST["zoom"]));
@@ -601,9 +601,7 @@ class Article extends Handler_Protected {
 				$rv['content'] .= "<html><head>
 						<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
 						<title>".$line["title"]."</title>".
-					stylesheet_tag("css/tt-rss.css").
-					stylesheet_tag("css/zoom.css").
-					stylesheet_tag("css/dijit.css")."
+					stylesheet_tag("css/default.css")."
 
 						<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
 						<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">

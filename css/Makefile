@@ -1,5 +1,4 @@
-#cdm.css: cdm.less
-#	lessc $^ > $@ 
 
-#tt-rss.css: tt-rss.less
-#	lessc $^ > $@
+default.css: *.less
+	cat $^  | lessc -x - > $@
+

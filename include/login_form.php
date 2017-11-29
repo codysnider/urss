@@ -3,8 +3,7 @@
 <head>
 	<title>Tiny Tiny RSS : Login</title>
 	<?php echo stylesheet_tag("lib/dijit/themes/claro/claro.css") ?>
-	<?php echo stylesheet_tag("css/tt-rss.css") ?>
-	<?php echo stylesheet_tag("css/dijit.css") ?>
+	<?php echo stylesheet_tag("css/default.css") ?>
 	<link rel="shortcut icon" type="image/png" href="images/favicon.png">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<?php
