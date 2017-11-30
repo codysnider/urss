@@ -312,7 +312,8 @@ class RSSUtils {
 			feed_url,auth_pass,cache_images,
 			mark_unread_on_update, owner_uid,
 			auth_pass_encrypted, feed_language, 
-			last_modified			
+			last_modified, 
+			".SUBSTRING_FOR_DATE."(last_unconditional, 1, 19) AS last_unconditional			
 			FROM ttrss_feeds WHERE id = '$feed'");
 
 		$owner_uid = db_fetch_result($result, 0, "owner_uid");
@@ -333,6 +334,7 @@ class RSSUtils {
 		}
 
 		$stored_last_modified = db_fetch_result($result, 0, "last_modified");
+        $last_unconditional = db_fetch_result($result, 0, "last_unconditional");
 		$cache_images = sql_bool_to_bool(db_fetch_result($result, 0, "cache_images"));
 		$fetch_url = db_fetch_result($result, 0, "feed_url");
 		$feed_language = db_escape_string(mb_strtolower(db_fetch_result($result, 0, "feed_language")));
@@ -384,21 +386,21 @@ class RSSUtils {
 
 		// fetch feed from source
 		if (!$feed_data) {
-			_debug("stored last modified: $stored_last_modified", $debug_enabled);
-			_debug("fetching [$fetch_url]...", $debug_enabled);
+			_debug("last unconditional update request: $last_unconditional");
 
 			if (ini_get("open_basedir") && function_exists("curl_init")) {
 				_debug("not using CURL due to open_basedir restrictions");
 			}
 
-			/*$feed_data = fetch_file_contents($fetch_url, false,
-				$auth_login, $auth_pass, false,
-				$no_cache ? FEED_FETCH_NO_CACHE_TIMEOUT : FEED_FETCH_TIMEOUT,
-				0);*/
+            if (time() - strtotime($last_unconditional) > MAX_CONDITIONAL_INTERVAL) {
+                _debug("maximum allowed interval for conditional requests exceeded, forcing refetch");
 
-			// TODO: last_modified should be limited, if the feed has not been updated for a while
-			// we probably should force one update without the header
-			// unfortunately last_updated gets bumped on http 304 so that daemon would work properly
+                $force_refetch = true;
+            } else {
+                _debug("stored last modified for conditional request: $stored_last_modified", $debug_enabled);
+            }
+
+            _debug("fetching [$fetch_url] (force_refetch: $force_refetch)...", $debug_enabled);
 
 			$feed_data = fetch_file_contents([
 				"url" => $fetch_url,
@@ -553,7 +555,7 @@ class RSSUtils {
 				_debug("no articles found.", $debug_enabled);
 
 				db_query("UPDATE ttrss_feeds
-					SET last_updated = NOW(), last_error = '' WHERE id = '$feed'");
+					SET last_updated = NOW(), last_unconditional = NOW(), last_error = '' WHERE id = '$feed'");
 
 				return; // no articles
 			}
@@ -1140,7 +1142,7 @@ class RSSUtils {
 			purge_feed($feed, 0, $debug_enabled);
 
 			db_query("UPDATE ttrss_feeds
-				SET last_updated = NOW(), last_error = '' WHERE id = '$feed'");
+				SET last_updated = NOW(), last_unconditional = NOW(), last_error = '' WHERE id = '$feed'");
 
 //			db_query("COMMIT");
 
@@ -1158,7 +1160,7 @@ class RSSUtils {
 
 			db_query(
 				"UPDATE ttrss_feeds SET last_error = '$error_msg',
-				last_updated = NOW() WHERE id = '$feed'");
+				last_updated = NOW(), last_unconditional = NOW()   WHERE id = '$feed'");
 
 			unset($rss);
 			return;
