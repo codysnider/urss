@@ -3,15 +3,13 @@ class Db implements IDb {
 	private static $instance;
 	private $adapter;
 	private $link;
+	private $pdo;
 
 	private function __construct() {
 
 		$er = error_reporting(E_ALL);
 
-		if (defined('_ENABLE_PDO') && _ENABLE_PDO && class_exists("PDO")) {
-			$this->adapter = new Db_PDO();
-		} else {
-			switch (DB_TYPE) {
+		switch (DB_TYPE) {
 			case "mysql":
 				$this->adapter = new Db_Mysqli();
 				break;
@@ -20,12 +18,22 @@ class Db implements IDb {
 				break;
 			default:
 				die("Unknown DB_TYPE: " . DB_TYPE);
-			}
 		}
 
 		if (!$this->adapter) {
 			print("Error initializing database adapter for " . DB_TYPE);
 			exit(100);
+		}
+
+		$db_port = defined(DB_PORT) ? ';port='.DB_PORT : '';
+
+		$this->pdo = new PDO(DB_TYPE . ':dbname='.DB_NAME.';host='.DB_HOST.$db_port,
+			DB_USER,
+			DB_PASS);
+
+		if (!$this->pdo) {
+			print("Error connecting via PDO.");
+			exit(101);
 		}
 
 		$this->link = $this->adapter->connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, defined('DB_PORT') ? DB_PORT : "");
