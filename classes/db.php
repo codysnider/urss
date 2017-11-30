@@ -57,6 +57,13 @@ class Db implements IDb {
 		return self::$instance;
 	}
 
+    public static function pdo() {
+        if (self::$instance == null)
+            self::$instance = new self();
+
+        return self::$instance->pdo;
+    }
+
 	static function quote($str){
 		return("'$str'");
 	}
