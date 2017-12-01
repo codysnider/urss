@@ -266,8 +266,8 @@
 				marked = false AND
 				feed_id = ? AND
 				$query_limit
-				ttrss_entries.date_updated < NOW() - INTERVAL ?");
-			$sth->execute([$feed_id, "$purge_interval days"]);
+				ttrss_entries.date_updated < NOW() - INTERVAL ? days");
+			$sth->execute([$feed_id, $purge_interval]);
 
 		} else {
             $sth  = $pdo->prepare("DELETE FROM ttrss_user_entries
