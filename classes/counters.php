@@ -22,15 +22,18 @@ class Counters {
 
 		array_push($ret_arr, $cv);
 
-		$result = db_query("SELECT id AS cat_id, value AS unread,
+		$pdo = DB::pdo();
+
+		$sth = $pdo->prepare("SELECT id AS cat_id, value AS unread,
 			(SELECT COUNT(id) FROM ttrss_feed_categories AS c2
 				WHERE c2.parent_cat = ttrss_feed_categories.id) AS num_children
 			FROM ttrss_feed_categories, ttrss_cat_counters_cache
 			WHERE ttrss_cat_counters_cache.feed_id = id AND
 			ttrss_cat_counters_cache.owner_uid = ttrss_feed_categories.owner_uid AND
-			ttrss_feed_categories.owner_uid = " . $_SESSION["uid"]);
+			ttrss_feed_categories.owner_uid = ?");
+		$sth->execute([$_SESSION['uid']]);
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 			$line["cat_id"] = (int) $line["cat_id"];
 
 			if ($line["num_children"] > 0) {
@@ -67,10 +70,14 @@ class Counters {
 
 		array_push($ret_arr, $cv);
 
-		$result = db_query("SELECT COUNT(id) AS fn FROM
-			ttrss_feeds WHERE owner_uid = " . $_SESSION["uid"]);
+		$pdo = Db::pdo();
 
-		$subscribed_feeds = db_fetch_result($result, 0, "fn");
+		$sth = $pdo->prepare("SELECT COUNT(id) AS fn FROM
+			ttrss_feeds WHERE owner_uid = ?");
+		$sth->execute([$_SESSION['uid']]);
+		$row = $sth->fetch();
+
+		$subscribed_feeds = $row["fn"];
 
 		$cv = array("id" => "subscribed-feeds",
 			"counter" => (int) $subscribed_feeds);
@@ -124,17 +131,18 @@ class Counters {
 
 		$ret_arr = array();
 
-		$owner_uid = $_SESSION["uid"];
+		$pdo = Db::pdo();
 
-		$result = db_query("SELECT id,caption,SUM(CASE WHEN u1.unread = true THEN 1 ELSE 0 END) AS unread, COUNT(u1.unread) AS total
+		$sth = $pdo->prepare("SELECT id,caption,SUM(CASE WHEN u1.unread = true THEN 1 ELSE 0 END) AS unread, COUNT(u1.unread) AS total
 			FROM ttrss_labels2 LEFT JOIN ttrss_user_labels2 ON
 				(ttrss_labels2.id = label_id)
 				LEFT JOIN ttrss_user_entries AS u1 ON u1.ref_id = article_id
-				WHERE ttrss_labels2.owner_uid = $owner_uid AND u1.owner_uid = $owner_uid
+				WHERE ttrss_labels2.owner_uid = :uid AND u1.owner_uid = :uid
 				GROUP BY ttrss_labels2.id,
 					ttrss_labels2.caption");
+		$sth->execute([":uid" => $_SESSION['uid']]);
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 
 			$id = Labels::label_to_feed_id($line["id"]);
 
@@ -155,18 +163,19 @@ class Counters {
 
 		$ret_arr = array();
 
-		$query = "SELECT ttrss_feeds.id,
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("SELECT ttrss_feeds.id,
 				ttrss_feeds.title,
 				".SUBSTRING_FOR_DATE."(ttrss_feeds.last_updated,1,19) AS last_updated,
 				last_error, value AS count
 			FROM ttrss_feeds, ttrss_counters_cache
-			WHERE ttrss_feeds.owner_uid = ".$_SESSION["uid"]."
+			WHERE ttrss_feeds.owner_uid = ?
 				AND ttrss_counters_cache.owner_uid = ttrss_feeds.owner_uid
-				AND ttrss_counters_cache.feed_id = id";
+				AND ttrss_counters_cache.feed_id = id");
+		$sth->execute([$_SESSION['uid']]);
 
-		$result = db_query($query);
-
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 
 			$id = $line["id"];
 			$count = $line["count"];
