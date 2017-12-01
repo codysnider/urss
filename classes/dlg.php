@@ -7,7 +7,7 @@ class Dlg extends Handler_Protected {
 		if (parent::before($method)) {
 			header("Content-Type: text/html"); # required for iframe
 
-			$this->param = $this->dbh->escape_string($_REQUEST["param"]);
+			$this->param = $_REQUEST["param"];
 			return true;
 		}
 		return false;
@@ -18,7 +18,7 @@ class Dlg extends Handler_Protected {
 
 		print "<div class=\"prefFeedOPMLHolder\">";
 
-		$this->dbh->query("BEGIN");
+		$this->pdo->beginTransaction();
 
 		print "<ul class='nomarks'>";
 
@@ -26,7 +26,7 @@ class Dlg extends Handler_Protected {
 
 		$opml->opml_import($_SESSION["uid"]);
 
-		$this->dbh->query("COMMIT");
+		$this->pdo->commit();
 
 		print "</ul>";
 		print "</div>";
@@ -102,15 +102,14 @@ class Dlg extends Handler_Protected {
 
 		// from here: http://www.roscripts.com/Create_tag_cloud-71.html
 
-		$query = "SELECT tag_name, COUNT(post_int_id) AS count
-			FROM ttrss_tags WHERE owner_uid = ".$_SESSION["uid"]."
-			GROUP BY tag_name ORDER BY count DESC LIMIT 50";
-
-		$result = $this->dbh->query($query);
+		$sth = $this->pdo->prepare("SELECT tag_name, COUNT(post_int_id) AS count
+			FROM ttrss_tags WHERE owner_uid = ?
+			GROUP BY tag_name ORDER BY count DESC LIMIT 50");
+		$sth->execute([$_SESSION['uid']]);
 
 		$tags = array();
 
-		while ($line = $this->dbh->fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 			$tags[$line["tag_name"]] = $line["count"];
 		}
 
@@ -164,7 +163,7 @@ class Dlg extends Handler_Protected {
 	function generatedFeed() {
 
 		$this->params = explode(":", $this->param, 3);
-		$feed_id = $this->dbh->escape_string($this->params[0]);
+		$feed_id = $this->params[0];
 		$is_cat = (bool) $this->params[1];
 
 		$key = get_feed_access_key($feed_id, $is_cat);
