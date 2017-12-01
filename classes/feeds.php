@@ -193,24 +193,28 @@ class Feeds extends Handler_Protected {
 
 			if (!$any_needs_curl) {
 
-				$result = db_query(
-						"SELECT cache_images," . SUBSTRING_FOR_DATE . "(last_updated,1,19) AS last_updated
-						FROM ttrss_feeds WHERE id = '$feed'");
+				$sth = $this->pdo->prepare("SELECT cache_images," . SUBSTRING_FOR_DATE . "(last_updated,1,19) AS last_updated
+						FROM ttrss_feeds WHERE id = ?");
+				$sth->execute([$feed]);
 
-				if (db_num_rows($result) != 0) {
-					$last_updated = strtotime(db_fetch_result($result, 0, "last_updated"));
-					$cache_images = sql_bool_to_bool(db_fetch_result($result, 0, "cache_images"));
+				if ($row = $sth->fetch()) {
+					$last_updated = strtotime($row["last_updated"]);
+					$cache_images = sql_bool_to_bool($row["cache_images"]);
 
 					if (!$cache_images && time() - $last_updated > 120) {
 						RSSUtils::update_rss_feed($feed, true);
 					} else {
-						db_query("UPDATE ttrss_feeds SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
-								WHERE id = '$feed'");
+						$sth = $this->pdo->prepare("UPDATE ttrss_feeds 
+                                SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
+								WHERE id = ?");
+						$sth->execute([$feed]);
 					}
 				}
 			} else {
-				db_query("UPDATE ttrss_feeds SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
-								WHERE id = '$feed'");
+				$sth = $this->pdo->prepare("UPDATE ttrss_feeds 
+                                SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
+								WHERE id = ?");
+				$sth->execute([$feed]);
 			}
 		}
 
@@ -221,10 +225,10 @@ class Feeds extends Handler_Protected {
 		// FIXME: might break tag display?
 
 		if (is_numeric($feed) && $feed > 0 && !$cat_view) {
-			$result = db_query(
-				"SELECT id FROM ttrss_feeds WHERE id = '$feed' LIMIT 1");
+			$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE id = ? LIMIT 1");
+			$sth->execute([$feed]);
 
-			if (db_num_rows($result) == 0) {
+			if (!$sth->fetch()) {
 				$reply['content'] = "<div align='center'>".__('Feed not found.')."</div>";
 			}
 		}
@@ -237,7 +241,6 @@ class Feeds extends Handler_Protected {
 		}
 
 		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("H0", $timing_info);
-
 
 		if (!$cat_view && is_numeric($feed) && $feed < PLUGIN_FEED_BASE_INDEX && $feed > LABEL_BASE_INDEX) {
 			$handler = PluginHost::getInstance()->get_feed_handler(
@@ -315,7 +318,6 @@ class Feeds extends Handler_Protected {
 			$lnum = $offset;
 
 			$num_unread = 0;
-			$cur_feed_title = '';
 
 			if ($_REQUEST["debug"]) $timing_info = print_checkpoint("PS", $timing_info);
 
@@ -672,17 +674,16 @@ class Feeds extends Handler_Protected {
 
 					if ($line["orig_feed_id"]) {
 
-						$tmp_result = db_query("SELECT * FROM ttrss_archived_feeds
-							WHERE id = ".$line["orig_feed_id"] . " AND owner_uid = " . $_SESSION["uid"]);
+						$ofgh = $this->pdo->prepare("SELECT * FROM ttrss_archived_feeds
+							WHERE id = ? AND owner_uid = ?");
+						$ofgh->execute([$line["orig_feed_id"], $_SESSION['uid']]);
 
-						if (db_num_rows($tmp_result) != 0) {
+						if ($tmp_line = $ofgh->fetch()) {
 
 							$tmp_content .= "<div clear='both'>";
 							$tmp_content .= __("Originally from:");
 
 							$tmp_content .= "&nbsp;";
-
-							$tmp_line = db_fetch_assoc($tmp_result);
 
 							$tmp_content .= "<a target='_blank' rel='noopener noreferrer'
 								href=' " . htmlspecialchars($tmp_line['site_url']) . "'>" .
@@ -802,18 +803,21 @@ class Feeds extends Handler_Protected {
 
 				$reply['content'] .= "<p><span class=\"insensitive\">";
 
-				$result = db_query("SELECT ".SUBSTRING_FOR_DATE."(MAX(last_updated), 1, 19) AS last_updated FROM ttrss_feeds
-					WHERE owner_uid = " . $_SESSION['uid']);
+				$sth = $this->pdo->prepare("SELECT ".SUBSTRING_FOR_DATE."(MAX(last_updated), 1, 19) AS last_updated FROM ttrss_feeds
+					WHERE owner_uid = ?");
+				$sth->execute([$_SESSION['uid']]);
+				$row = $sth->fetch();
 
-				$last_updated = db_fetch_result($result, 0, "last_updated");
-				$last_updated = make_local_datetime($last_updated, false);
+				$last_updated = make_local_datetime($row["last_updated"], false);
 
 				$reply['content'] .= sprintf(__("Feeds last updated at %s"), $last_updated);
 
-				$result = db_query("SELECT COUNT(id) AS num_errors
-					FROM ttrss_feeds WHERE last_error != '' AND owner_uid = ".$_SESSION["uid"]);
+				$sth = $this->pdo->prepare("SELECT COUNT(id) AS num_errors
+					FROM ttrss_feeds WHERE last_error != '' AND owner_uid = ?");
+				$sth->execute([$_SESSION['uid']]);
+				$row = $sth->fetch();
 
-				$num_errors = db_fetch_result($result, 0, "num_errors");
+				$num_errors = $row["num_errors"];
 
 				if ($num_errors > 0) {
 					$reply['content'] .= "<br/>";
@@ -1409,6 +1413,8 @@ class Feeds extends Handler_Protected {
 		$n_feed = (int) $feed;
 		$need_entries = false;
 
+		$pdo = Db::pdo();
+
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
 		if ($unread_only) {
@@ -1417,19 +1423,23 @@ class Feeds extends Handler_Protected {
 			$unread_qpart = "true";
 		}
 
+		$match_part = "";
+
 		if ($is_cat) {
 			return Feeds::getCategoryUnread($n_feed, $owner_uid);
 		} else if ($n_feed == -6) {
 			return 0;
 		} else if ($feed != "0" && $n_feed == 0) {
 
-			$feed = db_escape_string($feed);
-
-			$result = db_query("SELECT SUM((SELECT COUNT(int_id)
+			$sth = $pdo->prepare("SELECT SUM((SELECT COUNT(int_id)
 				FROM ttrss_user_entries,ttrss_entries WHERE int_id = post_int_id
 					AND ref_id = id AND $unread_qpart)) AS count FROM ttrss_tags
-				WHERE owner_uid = $owner_uid AND tag_name = '$feed'");
-			return db_fetch_result($result, 0, "count");
+				WHERE owner_uid = ? AND tag_name = ?");
+
+			$sth->execute([$owner_uid, $feed]);
+			$row = $sth->fetch();
+
+			return $row["count"];
 
 		} else if ($n_feed == -1) {
 			$match_part = "marked = true";
@@ -1438,7 +1448,7 @@ class Feeds extends Handler_Protected {
 		} else if ($n_feed == -3) {
 			$match_part = "unread = true AND score >= 0";
 
-			$intl = get_pref("FRESH_ARTICLE_MAX_AGE", $owner_uid);
+			$intl = (int) get_pref("FRESH_ARTICLE_MAX_AGE", $owner_uid);
 
 			if (DB_TYPE == "pgsql") {
 				$match_part .= " AND date_entered > NOW() - INTERVAL '$intl hour' ";
@@ -1463,7 +1473,6 @@ class Feeds extends Handler_Protected {
 			$label_id = Labels::feed_to_label_id($feed);
 
 			return Feeds::getLabelUnread($label_id, $owner_uid);
-
 		}
 
 		if ($match_part) {
@@ -1476,25 +1485,26 @@ class Feeds extends Handler_Protected {
 				$from_where = "";
 			}
 
-			$query = "SELECT count(int_id) AS unread
+			$sth = $pdo->prepare("SELECT count(int_id) AS unread
 				FROM $from_qpart WHERE
-				$unread_qpart AND $from_where ($match_part) AND ttrss_user_entries.owner_uid = $owner_uid";
+				$unread_qpart AND $from_where ($match_part) AND ttrss_user_entries.owner_uid = ?");
+			$sth->execute([$owner_uid]);
+			$row = $sth->fetch();
 
-			//echo "[$feed/$query]\n";
-
-			$result = db_query($query);
+			return $row["unread"];
 
 		} else {
 
-			$result = db_query("SELECT COUNT(post_int_id) AS unread
+			$sth = $pdo->prepare("SELECT COUNT(post_int_id) AS unread
 				FROM ttrss_tags,ttrss_user_entries,ttrss_entries
-				WHERE tag_name = '$feed' AND post_int_id = int_id AND ref_id = ttrss_entries.id
-				AND $unread_qpart AND ttrss_tags.owner_uid = " . $owner_uid);
+				WHERE tag_name = ? AND post_int_id = int_id AND ref_id = ttrss_entries.id
+				AND $unread_qpart AND ttrss_tags.owner_uid = ,");
+
+			$sth->execute([$feed, $owner_uid]);
+			$row = $sth->fetch();
+
+			return $row["unread"];
 		}
-
-		$unread = db_fetch_result($result, 0, "unread");
-
-		return $unread;
 	}
 
 	/**
@@ -1515,6 +1525,8 @@ class Feeds extends Handler_Protected {
 
 		global $fetch_last_error;
 		global $fetch_last_error_content;
+
+		$pdo = Db::pdo();
 
 		$url = fix_url($url);
 
@@ -1552,32 +1564,35 @@ class Feeds extends Handler_Protected {
 			$cat_qpart = "'$cat_id'";
 		}
 
-		$result = db_query(
-			"SELECT id FROM ttrss_feeds
-			WHERE feed_url = '$url' AND owner_uid = ".$_SESSION["uid"]);
+		if (!(int)$cat_id) $cat_id = null;
 
-		$auth_pass = db_escape_string($auth_pass);
+		$sth = $pdo->prepare("SELECT id FROM ttrss_feeds
+			WHERE feed_url = ? AND owner_uid = ?");
+		$sth->execute([$url, $_SESSION['uid']]);
 
-		if (db_num_rows($result) == 0) {
-			$result = db_query(
+		if ($row = $sth->fetch()) {
+			return array("code" => 0, "feed_id" => (int) $row["id"]);
+		} else {
+			$sth = $pdo->prepare(
 				"INSERT INTO ttrss_feeds
 					(owner_uid,feed_url,title,cat_id, auth_login,auth_pass,update_method,auth_pass_encrypted)
-				VALUES ('".$_SESSION["uid"]."', '$url',
-				'[Unknown]', $cat_qpart, '$auth_login', '$auth_pass', 0, false)");
+				VALUES (?, ?, ?, ?, ?, ?, 0, false)");
 
-			$result = db_query(
-				"SELECT id FROM ttrss_feeds WHERE feed_url = '$url'
-					AND owner_uid = " . $_SESSION["uid"]);
+			$sth->execute([$_SESSION['uid'], $url, "[Unknown]", $cat_id, $auth_login, $auth_pass]);
 
-			$feed_id = db_fetch_result($result, 0, "id");
+			$sth = $pdo->prepare("SELECT id FROM ttrss_feeds WHERE feed_url = ?
+					AND owner_uid = ?");
+			$sth->execute([$url, $_SESSION['uid']]);
+			$row = $sth->fetch();
+
+			$feed_id = $row["id"];
 
 			if ($feed_id) {
 				RSSUtils::set_basic_feed_info($feed_id);
 			}
 
 			return array("code" => 1, "feed_id" => (int) $feed_id);
-		} else {
-			return array("code" => 0, "feed_id" => (int) db_fetch_result($result, 0, "id"));
+
 		}
 	}
 
@@ -1664,19 +1679,20 @@ class Feeds extends Handler_Protected {
 
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
+		$pdo = Db::pdo();
+
 		if ($cat >= 0) {
 
-			if ($cat != 0) {
-				$cat_query = "cat_id = '$cat'";
-			} else {
-				$cat_query = "cat_id IS NULL";
-			}
+		    if (!$cat) $cat = null;
 
-			$result = db_query("SELECT id FROM ttrss_feeds WHERE $cat_query
-					AND owner_uid = " . $owner_uid);
+			$sth = $pdo->prepare("SELECT id FROM ttrss_feeds
+                    WHERE (cat_id = :cat OR (:cat IS NULL AND cat_id IS NULL))
+					AND owner_uid = ?");
+
+			$sth->execute([":cat" => $cat, ":uid" => $owner_uid]);
 
 			$cat_feeds = array();
-			while ($line = db_fetch_assoc($result)) {
+			while ($line = $sth->fetch()) {
 				array_push($cat_feeds, "feed_id = " . $line["id"]);
 			}
 
@@ -1684,15 +1700,16 @@ class Feeds extends Handler_Protected {
 
 			$match_part = implode(" OR ", $cat_feeds);
 
-			$result = db_query("SELECT COUNT(int_id) AS unread
+			$sth = $pdo->prepare("SELECT COUNT(int_id) AS unread
 				FROM ttrss_user_entries
 				WHERE	unread = true AND ($match_part)
-				AND owner_uid = " . $owner_uid);
+				AND owner_uid = ?");
+			$sth->execute([$owner_uid]);
 
 			$unread = 0;
 
 			# this needs to be rewritten
-			while ($line = db_fetch_assoc($result)) {
+			while ($line = $sth->fetch()) {
 				$unread += $line["unread"];
 			}
 
@@ -1701,16 +1718,14 @@ class Feeds extends Handler_Protected {
 			return getFeedUnread(-1) + getFeedUnread(-2) + getFeedUnread(-3) + getFeedUnread(0);
 		} else if ($cat == -2) {
 
-			$result = db_query("
-				SELECT COUNT(unread) AS unread FROM
+			$sth = $pdo->prepare("SELECT COUNT(unread) AS unread FROM
 					ttrss_user_entries, ttrss_user_labels2
 				WHERE article_id = ref_id AND unread = true
-					AND ttrss_user_entries.owner_uid = '$owner_uid'");
+					AND ttrss_user_entries.owner_uid = ?");
+			$sth->execute([$owner_uid]);
+            $row = $sth->fetch();
 
-			$unread = db_fetch_result($result, 0, "unread");
-
-			return $unread;
-
+			return $row["unread"];
 		}
 	}
 
@@ -1718,12 +1733,15 @@ class Feeds extends Handler_Protected {
 	static function getCategoryChildrenUnread($cat, $owner_uid = false) {
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
-		$result = db_query("SELECT id FROM ttrss_feed_categories WHERE parent_cat = '$cat'
-				AND owner_uid = $owner_uid");
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("SELECT id FROM ttrss_feed_categories WHERE parent_cat = ?
+				AND owner_uid = ?");
+		$sth->execute([$cat, $owner_uid]);
 
 		$unread = 0;
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 			$unread += Feeds::getCategoryUnread($line["id"], $owner_uid);
 			$unread += Feeds::getCategoryChildrenUnread($line["id"], $owner_uid);
 		}
@@ -1733,16 +1751,16 @@ class Feeds extends Handler_Protected {
 
 	static function getGlobalUnread($user_id = false) {
 
-		if (!$user_id) {
-			$user_id = $_SESSION["uid"];
-		}
+		if (!$user_id) $user_id = $_SESSION["uid"];
 
-		$result = db_query("SELECT SUM(value) AS c_id FROM ttrss_counters_cache
-			WHERE owner_uid = '$user_id' AND feed_id > 0");
+		$pdo = Db::pdo();
 
-		$c_id = db_fetch_result($result, 0, "c_id");
+		$sth = $pdo->prepare("SELECT SUM(value) AS c_id FROM ttrss_counters_cache
+			WHERE owner_uid = ? AND feed_id > 0");
+		$sth->execute([$user_id]);
+		$row = $sth->fetch();
 
-		return $c_id;
+		return $row["c_id"];
 	}
 
 	static function getCategoryTitle($cat_id) {
@@ -1753,11 +1771,14 @@ class Feeds extends Handler_Protected {
 			return __("Labels");
 		} else {
 
-			$result = db_query("SELECT title FROM ttrss_feed_categories WHERE
-				id = '$cat_id'");
+		    $pdo = Db::pdo();
 
-			if (db_num_rows($result) == 1) {
-				return db_fetch_result($result, 0, "title");
+			$sth = $pdo->prepare("SELECT title FROM ttrss_feed_categories WHERE
+				id = ?");
+			$sth->execute([$cat_id]);
+
+			if ($row = $sth->fetch()) {
+				return $row["title"];
 			} else {
 				return __("Uncategorized");
 			}
@@ -1767,17 +1788,26 @@ class Feeds extends Handler_Protected {
 	static function getLabelUnread($label_id, $owner_uid = false) {
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
-		$result = db_query("SELECT COUNT(ref_id) AS unread FROM ttrss_user_entries, ttrss_user_labels2
-			WHERE owner_uid = '$owner_uid' AND unread = true AND label_id = '$label_id' AND article_id = ref_id");
+		$pdo = Db::pdo();
 
-		if (db_num_rows($result) != 0) {
-			return db_fetch_result($result, 0, "unread");
+		$sth = $pdo->prepare("SELECT COUNT(ref_id) AS unread FROM ttrss_user_entries, ttrss_user_labels2
+			WHERE owner_uid = ? AND unread = true AND label_id = ? AND article_id = ref_id");
+
+		$sth->execute([$owner_uid, $label_id]);
+
+		if ($row = $sth->fetch()) {
+			return $row["unread"];
 		} else {
 			return 0;
 		}
 	}
 
 	static function queryFeedHeadlines($params) {
+
+		$pdo = Db::pdo();
+
+		// WARNING: due to highly dynamic nature of this query its going to quote parameters
+        // right before adding them to SQL part
 
 		$feed = $params["feed"];
 		$limit = isset($params["limit"]) ? $params["limit"] : 30;
@@ -1798,7 +1828,7 @@ class Feeds extends Handler_Protected {
 		$skip_first_id_check = isset($params["skip_first_id_check"]) ? $params["skip_first_id_check"] : false;
 
 		$ext_tables_part = "";
-		$query_strategy_part = "";
+		$limit_query_part = "";
 
 		$search_words = array();
 
@@ -1991,8 +2021,6 @@ class Feeds extends Handler_Protected {
 			$vfeed_query_part = $override_vfeed;
 		}
 
-		$feed_title = "";
-
 		if ($search) {
 			$feed_title = T_sprintf("Search results: %s", $search);
 		} else {
@@ -2000,19 +2028,20 @@ class Feeds extends Handler_Protected {
 				$feed_title = Feeds::getCategoryTitle($feed);
 			} else {
 				if (is_numeric($feed) && $feed > 0) {
-					$result = db_query("SELECT title,site_url,last_error,last_updated
-							FROM ttrss_feeds WHERE id = '$feed' AND owner_uid = $owner_uid");
+					$ssth = $pdo->prepare("SELECT title,site_url,last_error,last_updated
+							FROM ttrss_feeds WHERE id = ? AND owner_uid = ?");
+					$ssth->execute([$feed, $owner_uid]);
+                    $row = $ssth->fetch();
 
-					$feed_title = db_fetch_result($result, 0, "title");
-					$feed_site_url = db_fetch_result($result, 0, "site_url");
-					$last_error = db_fetch_result($result, 0, "last_error");
-					$last_updated = db_fetch_result($result, 0, "last_updated");
+					$feed_title = $row["title"];
+					$feed_site_url = $row["site_url"];
+					$last_error = $row["last_error"];
+					$last_updated = $row["last_updated"];
 				} else {
 					$feed_title = Feeds::getFeedTitle($feed);
 				}
 			}
 		}
-
 
 		$content_query_part = "content, ";
 
@@ -2093,6 +2122,7 @@ class Feeds extends Handler_Protected {
 				}
 
 				$result = db_query($query);
+
 				if ($result && db_num_rows($result) > 0) {
 					$first_id = (int)db_fetch_result($result, 0, "id");
 
