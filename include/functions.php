@@ -591,9 +591,9 @@
 
 		if (get_schema_version() < 63) $profile_qpart = "";
 
-		////db_query("BEGIN");
-
         $pdo = DB::pdo();
+
+        $pdo->beginTransaction();
 
 		$sth = $pdo->query("SELECT pref_name,def_value FROM ttrss_prefs");
 
@@ -633,7 +633,7 @@
 			}
 		}
 
-		////db_query("COMMIT");
+		$pdo->commit();
 
 	}
 
@@ -1952,11 +1952,10 @@
 
 		if (!$feed_cat) return false;
 
-		////db_query("BEGIN");
-
 		$feed_cat = mb_substr($feed_cat, 0, 250);
 
 		$pdo = Db::pdo();
+		$pdo->beginTransaction();
 
 		$sth = $pdo->prepare("SELECT id FROM ttrss_feed_categories
 				WHERE (:parent IS NULL AND parent_cat IS NULL OR parent_cat = :parent) 
@@ -1969,10 +1968,12 @@
 					VALUES (?, ?, ?)");
 			$sth->execute([$_SESSION['uid'], $feed_cat, $parent_cat_id]);
 
-			//db_query("COMMIT");
+			$pdo->commit();
 
 			return true;
 		}
+
+        $pdo->commit();
 
 		return false;
 	}
