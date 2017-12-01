@@ -226,15 +226,15 @@
 
 		if (!$purge_interval) $purge_interval = feed_purge_interval($feed_id);
 
-		$rows = -1;
+		$pdo = Db::pdo();
 
-		$result = db_query(
-			"SELECT owner_uid FROM ttrss_feeds WHERE id = '$feed_id'");
+		$sth = $pdo->prepare("SELECT owner_uid FROM ttrss_feeds WHERE id = ?");
+		$sth->execute($feed_id);
 
 		$owner_uid = false;
 
-		if (db_num_rows($result) == 1) {
-			$owner_uid = db_fetch_result($result, 0, "owner_uid");
+		if ($row = $sth->fetch()) {
+			$owner_uid = $row["owner_uid"];
 		}
 
 		if ($purge_interval == -1 || !$purge_interval) {
@@ -254,34 +254,34 @@
 			$purge_interval = FORCE_ARTICLE_PURGE;
 		}
 
-		if (!$purge_unread) $query_limit = " unread = false AND ";
+		if (!$purge_unread)
+		    $query_limit = " unread = false AND ";
+		else
+		    $query_limit = "";
 
 		if (DB_TYPE == "pgsql") {
-			$result = db_query("DELETE FROM ttrss_user_entries
+			$sth = $pdo->prepare("DELETE FROM ttrss_user_entries
 				USING ttrss_entries
 				WHERE ttrss_entries.id = ref_id AND
 				marked = false AND
-				feed_id = '$feed_id' AND
+				feed_id = ? AND
 				$query_limit
-				ttrss_entries.date_updated < NOW() - INTERVAL '$purge_interval days'");
+				ttrss_entries.date_updated < NOW() - INTERVAL ?");
+			$sth->execute([$feed_id, "$purge_interval days"]);
 
 		} else {
-
-/*			$result = db_query("DELETE FROM ttrss_user_entries WHERE
-				marked = false AND feed_id = '$feed_id' AND
-				(SELECT date_updated FROM ttrss_entries WHERE
-					id = ref_id) < DATE_SUB(NOW(), INTERVAL $purge_interval DAY)"); */
-
-			$result = db_query("DELETE FROM ttrss_user_entries
+            $sth  = $pdo->prepare("DELETE FROM ttrss_user_entries
 				USING ttrss_user_entries, ttrss_entries
 				WHERE ttrss_entries.id = ref_id AND
 				marked = false AND
-				feed_id = '$feed_id' AND
+				feed_id = ? AND
 				$query_limit
-				ttrss_entries.date_updated < DATE_SUB(NOW(), INTERVAL $purge_interval DAY)");
+				ttrss_entries.date_updated < DATE_SUB(NOW(), INTERVAL ? DAY)");
+            $sth->execute([$feed_id, $purge_interval]);
+
 		}
 
-		$rows = db_affected_rows($result);
+		$rows = $sth->rowCount();
 
 		CCache::update($feed_id, $owner_uid);
 
@@ -294,12 +294,15 @@
 
 	function feed_purge_interval($feed_id) {
 
-		$result = db_query("SELECT purge_interval, owner_uid FROM ttrss_feeds
-			WHERE id = '$feed_id'");
+	    $pdo = DB::pdo();
 
-		if (db_num_rows($result) == 1) {
-			$purge_interval = db_fetch_result($result, 0, "purge_interval");
-			$owner_uid = db_fetch_result($result, 0, "owner_uid");
+		$sth = $pdo->prepare("SELECT purge_interval, owner_uid FROM ttrss_feeds
+			WHERE id = ?");
+		$sth->execute([$feed_id]);
+
+		if ($row = $sth->fetch()) {
+			$purge_interval = $row["purge_interval"];
+			$owner_uid = $row["owner_uid"];
 
 			if ($purge_interval == 0) $purge_interval = get_pref(
 				'PURGE_OLD_DAYS', $owner_uid);
@@ -310,25 +313,6 @@
 			return -1;
 		}
 	}
-
-	/*function get_feed_update_interval($feed_id) {
-		$result = db_query("SELECT owner_uid, update_interval FROM
-			ttrss_feeds WHERE id = '$feed_id'");
-
-		if (db_num_rows($result) == 1) {
-			$update_interval = db_fetch_result($result, 0, "update_interval");
-			$owner_uid = db_fetch_result($result, 0, "owner_uid");
-
-			if ($update_interval != 0) {
-				return $update_interval;
-			} else {
-				return get_pref('DEFAULT_UPDATE_INTERVAL', $owner_uid, false);
-			}
-
-		} else {
-			return -1;
-		}
-	}*/
 
 	// TODO: multiple-argument way is deprecated, first parameter is a hash now
 	function fetch_file_contents($options /* previously: 0: $url , 1: $type = false, 2: $login = false, 3: $pass = false,
@@ -605,29 +589,27 @@
 
 		$uid = db_escape_string($uid);
 
-		if (!$profile) {
-			$profile = "NULL";
-			$profile_qpart = "AND profile IS NULL";
-		} else {
-			$profile_qpart = "AND profile = '$profile'";
-		}
-
 		if (get_schema_version() < 63) $profile_qpart = "";
 
-		db_query("BEGIN");
+		////db_query("BEGIN");
 
-		$result = db_query("SELECT pref_name,def_value FROM ttrss_prefs");
+        $pdo = DB::pdo();
 
-		$u_result = db_query("SELECT pref_name
-			FROM ttrss_user_prefs WHERE owner_uid = '$uid' $profile_qpart");
+		$sth = $pdo->query("SELECT pref_name,def_value FROM ttrss_prefs");
+
+        $profile = $profile ? $profile : null;
+
+		$u_sth = $pdo->prepare("SELECT pref_name
+			FROM ttrss_user_prefs WHERE owner_uid = ? AND profile = ?");
+		$u_sth->execute([$uid, $profile]);
 
 		$active_prefs = array();
 
-		while ($line = db_fetch_assoc($u_result)) {
+		while ($line = $u_sth->fetch()) {
 			array_push($active_prefs, $line["pref_name"]);
 		}
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 			if (array_search($line["pref_name"], $active_prefs) === FALSE) {
 //				print "adding " . $line["pref_name"] . "<br>";
 
@@ -635,20 +617,22 @@
 				$line["pref_name"] = db_escape_string($line["pref_name"]);
 
 				if (get_schema_version() < 63) {
-					db_query("INSERT INTO ttrss_user_prefs
+					$i_sth = $pdo->prepare("INSERT INTO ttrss_user_prefs
 						(owner_uid,pref_name,value) VALUES
-						('$uid', '".$line["pref_name"]."','".$line["def_value"]."')");
+						(?, ?, ?)");
+					$i_sth->execute([$uid, $line["pref_name"], $line["def_value"]]);
 
 				} else {
-					db_query("INSERT INTO ttrss_user_prefs
+					$i_sth = $pdo->prepare("INSERT INTO ttrss_user_prefs
 						(owner_uid,pref_name,value, profile) VALUES
-						('$uid', '".$line["pref_name"]."','".$line["def_value"]."', $profile)");
+						(?, ?, ?, ?)");
+                    $i_sth->execute([$uid, $line["pref_name"], $line["def_value"], $profile]);
 				}
 
 			}
 		}
 
-		db_query("COMMIT");
+		////db_query("COMMIT");
 
 	}
 
@@ -689,19 +673,22 @@
 				$_SESSION["uid"] = $user_id;
 				$_SESSION["version"] = VERSION_STATIC;
 
-				$result = db_query("SELECT login,access_level,pwd_hash FROM ttrss_users
-					WHERE id = '$user_id'");
+				$pdo = DB::pdo();
+				$sth = $pdo->prepare("SELECT login,access_level,pwd_hash FROM ttrss_users
+					WHERE id = ?");
+				$sth->execute([$user_id]);
+				$row = $sth->fetch();
 
-				$_SESSION["name"] = db_fetch_result($result, 0, "login");
-				$_SESSION["access_level"] = db_fetch_result($result, 0, "access_level");
+				$_SESSION["name"] = $row["login"];
+				$_SESSION["access_level"] = $row["access_level"];
 				$_SESSION["csrf_token"] = uniqid_short();
 
-				db_query("UPDATE ttrss_users SET last_login = NOW() WHERE id = " .
-					$_SESSION["uid"]);
+				$usth = $pdo->prepare("UPDATE ttrss_users SET last_login = NOW() WHERE id = ?");
+				$usth->execute([$user_id]);
 
 				$_SESSION["ip_address"] = $_SERVER["REMOTE_ADDR"];
 				$_SESSION["user_agent"] = sha1($_SERVER['HTTP_USER_AGENT']);
-				$_SESSION["pwd_hash"] = db_fetch_result($result, 0, "pwd_hash");
+				$_SESSION["pwd_hash"] = $row["pwd_hash"];
 
 				$_SESSION["last_version_check"] = time();
 
@@ -760,9 +747,12 @@
 
 	function initialize_user($uid) {
 
-		db_query("insert into ttrss_feeds (owner_uid,title,feed_url)
-			values ('$uid', 'Tiny Tiny RSS: Forum',
+	    $pdo = DB::pdo();
+
+		$sth = $pdo->prepare("insert into ttrss_feeds (owner_uid,title,feed_url)
+			values (?, 'Tiny Tiny RSS: Forum',
 				'http://tt-rss.org/forum/rss.php')");
+		$sth->execute([$uid]);
 	}
 
 	function logout_user() {
@@ -792,6 +782,8 @@
 	}
 
 	function login_sequence() {
+        $pdo = Db::pdo();
+
 		if (SINGLE_USER_MODE) {
 			@session_start();
 			authenticate_user("admin", null);
@@ -818,8 +810,9 @@
 
 			} else {
 				/* bump login timestamp */
-				db_query("UPDATE ttrss_users SET last_login = NOW() WHERE id = " .
-					$_SESSION["uid"]);
+				$sth = $pdo->prepare("UPDATE ttrss_users SET last_login = NOW() WHERE id = ?");
+				$sth->execute([$_SESSION['uid']]);
+
 				$_SESSION["last_login_update"] = time();
 			}
 
@@ -829,16 +822,19 @@
 
 				/* cleanup ccache */
 
-				db_query("DELETE FROM ttrss_counters_cache WHERE owner_uid = ".
-					$_SESSION["uid"] . " AND
+				$sth = $pdo->prepare("DELETE FROM ttrss_counters_cache WHERE owner_uid = ? 
+                    AND
 						(SELECT COUNT(id) FROM ttrss_feeds WHERE
 							ttrss_feeds.id = feed_id) = 0");
 
-				db_query("DELETE FROM ttrss_cat_counters_cache WHERE owner_uid = ".
-					$_SESSION["uid"] . " AND
+				$sth->execute($_SESSION['uid']);
+
+				$sth = $pdo->prepare("DELETE FROM ttrss_cat_counters_cache WHERE owner_uid = ? 
+                    AND
 						(SELECT COUNT(id) FROM ttrss_feed_categories WHERE
 							ttrss_feed_categories.id = feed_id) = 0");
 
+                $sth->execute($_SESSION['uid']);
 			}
 
 		}
@@ -963,9 +959,11 @@
 	function get_schema_version($nocache = false) {
 		global $schema_version;
 
+		$pdo = DB::pdo();
+
 		if (!$schema_version && !$nocache) {
-			$result = db_query("SELECT schema_version FROM ttrss_version");
-			$version = db_fetch_result($result, 0, "schema_version");
+			$row = $pdo->query("SELECT schema_version FROM ttrss_version")->fetch();
+			$version = $row["schema_version"];
 			$schema_version = $version;
 			return $version;
 		} else {
@@ -982,13 +980,6 @@
 
 		if ($schema_version != SCHEMA_VERSION) {
 			$error_code = 5;
-		}
-
-		if (DB_TYPE == "mysql") {
-			$result = db_query("SELECT true", false);
-			if (db_num_rows($result) != 1) {
-				$error_code = 10;
-			}
 		}
 
 		if (db_escape_string("testTEST") != "testTEST") {
@@ -1070,36 +1061,9 @@
 		return Feeds::getFeedArticles($feed, $is_cat, true, $_SESSION["uid"]);
 	}
 
-
-	/*function get_pgsql_version() {
-		$result = db_query("SELECT version() AS version");
-		$version = explode(" ", db_fetch_result($result, 0, "version"));
-		return $version[1];
-	}*/
-
 	function checkbox_to_sql_bool($val) {
 		return ($val == "on") ? "true" : "false";
 	}
-
-	/*function getFeedCatTitle($id) {
-		if ($id == -1) {
-			return __("Special");
-		} else if ($id < LABEL_BASE_INDEX) {
-			return __("Labels");
-		} else if ($id > 0) {
-			$result = db_query("SELECT ttrss_feed_categories.title
-				FROM ttrss_feeds, ttrss_feed_categories WHERE ttrss_feeds.id = '$id' AND
-					cat_id = ttrss_feed_categories.id");
-			if (db_num_rows($result) == 1) {
-				return db_fetch_result($result, 0, "title");
-			} else {
-				return __("Uncategorized");
-			}
-		} else {
-			return "getFeedCatTitle($id) failed";
-		}
-
-	}*/
 
 	function uniqid_short() {
 		return uniqid(base_convert(rand(), 10, 36));
@@ -1134,11 +1098,15 @@
 
 		$params["sanity_checksum"] = sha1(file_get_contents("include/sanity_check.php"));
 
-		$result = db_query("SELECT MAX(id) AS mid, COUNT(*) AS nf FROM
-				ttrss_feeds WHERE owner_uid = " . $_SESSION["uid"]);
+		$pdo = Db::pdo();
 
-		$max_feed_id = db_fetch_result($result, 0, "mid");
-		$num_feeds = db_fetch_result($result, 0, "nf");
+		$sth = $pdo->prepare("SELECT MAX(id) AS mid, COUNT(*) AS nf FROM
+				ttrss_feeds WHERE owner_uid = ?");
+		$sth->execute([$_SESSION['uid']]);
+		$row = $sth->fetch();
+
+		$max_feed_id = $row["mid"];
+		$num_feeds = $row["nf"];
 
 		$params["max_feed_id"] = (int) $max_feed_id;
 		$params["num_feeds"] = (int) $num_feeds;
@@ -1339,11 +1307,15 @@
 	function make_runtime_info($disable_update_check = false) {
 		$data = array();
 
-		$result = db_query("SELECT MAX(id) AS mid, COUNT(*) AS nf FROM
-				ttrss_feeds WHERE owner_uid = " . $_SESSION["uid"]);
+		$pdo = Db::pdo();
 
-		$max_feed_id = db_fetch_result($result, 0, "mid");
-		$num_feeds = db_fetch_result($result, 0, "nf");
+		$sth = $pdo->prepare("SELECT MAX(id) AS mid, COUNT(*) AS nf FROM
+				ttrss_feeds WHERE owner_uid = ?");
+		$sth->execute([$_SESSION['uid']]);
+		$row = $sth->fetch();
+
+		$max_feed_id = $row['mid'];
+		$num_feeds = $row['nf'];
 
 		$data["max_feed_id"] = (int) $max_feed_id;
 		$data["num_feeds"] = (int) $num_feeds;
@@ -1853,8 +1825,11 @@
 		else
 			$null_cat_qpart = "";
 
-		$result = db_query("SELECT * FROM ttrss_filters2 WHERE
-				owner_uid = $owner_uid AND enabled = true ORDER BY order_id, title");
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("SELECT * FROM ttrss_filters2 WHERE
+				owner_uid = ? AND enabled = true ORDER BY order_id, title");
+		$sth->execute([$owner_uid]);
 
 		$check_cats = array_merge(
 			Feeds::getParentCategories($cat_id, $owner_uid),
@@ -1863,25 +1838,26 @@
 		$check_cats_str = join(",", $check_cats);
 		$check_cats_fullids = array_map(function($a) { return "CAT:$a"; }, $check_cats);
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 			$filter_id = $line["id"];
 
             $match_any_rule = sql_bool_to_bool($line["match_any_rule"]);
 
-			$result2 = db_query("SELECT
+			$sth2 = $pdo->prepare("SELECT
 					r.reg_exp, r.inverse, r.feed_id, r.cat_id, r.cat_filter, r.match_on, t.name AS type_name
 					FROM ttrss_filters2_rules AS r,
 					ttrss_filter_types AS t
 					WHERE
 					    (match_on IS NOT NULL OR
 						  (($null_cat_qpart (cat_id IS NULL AND cat_filter = false) OR cat_id IN ($check_cats_str)) AND
-						  (feed_id IS NULL OR feed_id = '$feed_id'))) AND
-						filter_type = t.id AND filter_id = '$filter_id'");
+						  (feed_id IS NULL OR feed_id = ?))) AND
+						filter_type = t.id AND filter_id = ?");
+			$sth2->execute([$feed_id, $filter_id]);
 
 			$rules = array();
 			$actions = array();
 
-			while ($rule_line = db_fetch_assoc($result2)) {
+			while ($rule_line = $sth2->fetch()) {
 	#				print_r($rule_line);
 
                 if ($rule_line["match_on"]) {
@@ -1915,13 +1891,14 @@
 			}
 
 			if (count($rules) > 0) {
-                $result2 = db_query("SELECT a.action_param,t.name AS type_name
+                $sth2 = $pdo->prepare("SELECT a.action_param,t.name AS type_name
                         FROM ttrss_filters2_actions AS a,
                         ttrss_filter_actions AS t
                         WHERE
-                            action_id = t.id AND filter_id = '$filter_id'");
+                            action_id = t.id AND filter_id = ?");
+                $sth2->execute([$filter_id]);
 
-                while ($action_line = db_fetch_assoc($result2)) {
+                while ($action_line = $sth2->fetch()) {
                     #				print_r($action_line);
 
                     $action = array();
@@ -1974,7 +1951,7 @@
 
 		if (!$feed_cat) return false;
 
-		db_query("BEGIN");
+		////db_query("BEGIN");
 
 		if ($parent_cat_id) {
 			$parent_qpart = "parent_cat = '$parent_cat_id'";
@@ -1986,9 +1963,10 @@
 
 		$feed_cat = mb_substr($feed_cat, 0, 250);
 
-		$result = db_query(
-			"SELECT id FROM ttrss_feed_categories
-				WHERE $parent_qpart AND title = '$feed_cat' AND owner_uid = ".$_SESSION["uid"]);
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("SELECT id FROM ttrss_feed_categories
+				WHERE $parent_qpart AND title = '$feed_cat' AND owner_uid = ?");
 
 		if (db_num_rows($result) == 0) {
 
