@@ -1829,7 +1829,7 @@ class Feeds extends Handler_Protected {
 		}
 
 		if ($since_id) {
-			$since_id_part = "ttrss_entries.id > $since_id AND ";
+			$since_id_part = "ttrss_entries.id > ".$pdo->quote($since_id)." AND ";
 		} else {
 			$since_id_part = "";
 		}
@@ -1869,7 +1869,7 @@ class Feeds extends Handler_Protected {
 		}
 
 		if ($limit > 0) {
-			$limit_query_part = "LIMIT " . $limit;
+			$limit_query_part = "LIMIT " . $pdo->quote($limit);
 		}
 
 		$allow_archived = false;
@@ -1895,7 +1895,7 @@ class Feeds extends Handler_Protected {
 							implode(",", $subcats).")";
 
 					} else {
-						$query_strategy_part = "cat_id = '$feed'";
+						$query_strategy_part = "cat_id = " . $pdo->quote($feed);
 					}
 
 				} else {
@@ -1905,7 +1905,7 @@ class Feeds extends Handler_Protected {
 				$vfeed_query_part = "ttrss_feeds.title AS feed_title,";
 
 			} else {
-				$query_strategy_part = "feed_id = '$feed'";
+				$query_strategy_part = "feed_id = " . $pdo->quote($feed);
 			}
 		} else if ($feed == 0 && !$cat_view) { // archive virtual feed
 			$query_strategy_part = "feed_id IS NULL";
@@ -1960,7 +1960,7 @@ class Feeds extends Handler_Protected {
 		} else if ($feed == -3) { // fresh virtual feed
 			$query_strategy_part = "unread = true AND score >= 0";
 
-			$intl = get_pref("FRESH_ARTICLE_MAX_AGE", $owner_uid);
+			$intl = (int) get_pref("FRESH_ARTICLE_MAX_AGE", $owner_uid);
 
 			if (DB_TYPE == "pgsql") {
 				$query_strategy_part .= " AND date_entered > NOW() - INTERVAL '$intl hour' ";
@@ -1976,7 +1976,7 @@ class Feeds extends Handler_Protected {
 		} else if ($feed <= LABEL_BASE_INDEX) { // labels
 			$label_id = Labels::feed_to_label_id($feed);
 
-			$query_strategy_part = "label_id = '$label_id' AND
+			$query_strategy_part = "label_id = ".$pdo->quote($label_id)." AND
 					ttrss_labels2.id = ttrss_user_labels2.label_id AND
 					ttrss_user_labels2.article_id = ref_id";
 
@@ -2027,7 +2027,7 @@ class Feeds extends Handler_Protected {
 		$content_query_part = "content, ";
 
 		if ($limit_query_part) {
-			$offset_query_part = "OFFSET $offset";
+			$offset_query_part = "OFFSET " . $pdo->quote($offset);
 		} else {
 			$offset_query_part = "";
 		}
@@ -2036,9 +2036,9 @@ class Feeds extends Handler_Protected {
 			// proper override_order applied above
 			if ($vfeed_query_part && !$ignore_vfeed_group && get_pref('VFEED_GROUP_BY_FEED', $owner_uid)) {
 				if (!$override_order) {
-					$order_by = "ttrss_feeds.title, $order_by";
+					$order_by = "ttrss_feeds.title, ".$pdo->quote($order_by);
 				} else {
-					$order_by = "ttrss_feeds.title, $override_order";
+					$order_by = "ttrss_feeds.title, ".$pdo->quote($override_order);
 				}
 			}
 
@@ -2091,7 +2091,7 @@ class Feeds extends Handler_Protected {
 							$from_qpart
 						WHERE
 						$feed_check_qpart
-						ttrss_user_entries.owner_uid = '$owner_uid' AND
+						ttrss_user_entries.owner_uid = ".$pdo->quote($owner_uid)." AND
 						$search_query_part
 						$start_ts_query_part
 						$since_id_part
@@ -2138,7 +2138,7 @@ class Feeds extends Handler_Protected {
 						$from_qpart
 					WHERE
 					$feed_check_qpart
-					ttrss_user_entries.owner_uid = '$owner_uid' AND
+					ttrss_user_entries.owner_uid = ".$pdo->quote($owner_uid)." AND
 					$search_query_part
 					$start_ts_query_part
 					$view_query_part
@@ -2182,9 +2182,9 @@ class Feeds extends Handler_Protected {
 						FROM ttrss_entries, ttrss_user_entries, ttrss_tags
 						WHERE
 							ref_id = ttrss_entries.id AND
-							ttrss_user_entries.owner_uid = $owner_uid AND
+							ttrss_user_entries.owner_uid = ".$pdo->quote($owner_uid)." AND
 							post_int_id = int_id AND
-							tag_name = '$feed' AND
+							tag_name = ".$pdo->quote($feed)." AND
 							$view_query_part
 							$search_query_part
 							$query_strategy_part ORDER BY $order_by
