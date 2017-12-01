@@ -26,9 +26,9 @@ class Article extends Handler_Protected {
 	}
 
 	function view() {
-		$id = db_escape_string($_REQUEST["id"]);
-		$cids = explode(",", db_escape_string($_REQUEST["cids"]));
-		$mode = db_escape_string($_REQUEST["mode"]);
+		$id = $_REQUEST["id"];
+		$cids = explode(",", $_REQUEST["cids"]);
+		$mode = $_REQUEST["mode"];
 
 		// in prefetch mode we only output requested cids, main article
 		// just gets marked as read (it already exists in client cache)
@@ -103,7 +103,7 @@ class Article extends Handler_Protected {
 				if ($enable_share_anything) {
 					$extracted_content = $af_readability->extract_content($url);
 
-					if ($extracted_content) $content = db_escape_string($extracted_content);
+					if ($extracted_content) $content = $extracted_content;
 				}
 			}
 		}
@@ -208,9 +208,9 @@ class Article extends Handler_Protected {
 
 		print __("Tags for this article (separated by commas):")."<br>";
 
-		$param = db_escape_string($_REQUEST['param']);
+		$param = $_REQUEST['param'];
 
-		$tags = Article::get_article_tags(db_escape_string($param));
+		$tags = Article::get_article_tags($param);
 
 		$tags_str = join(", ", $tags);
 
@@ -271,9 +271,9 @@ class Article extends Handler_Protected {
 
 	function setArticleTags() {
 
-		$id = db_escape_string($_REQUEST["id"]);
+		$id = $_REQUEST["id"];
 
-		$tags_str = db_escape_string($_REQUEST["tags_str"]);
+		$tags_str = $_REQUEST["tags_str"];
 		$tags = array_unique(trim_array(explode(",", $tags_str)));
 
 		$this->pdo->beginTransaction();
@@ -367,8 +367,8 @@ class Article extends Handler_Protected {
 	private function labelops($assign) {
 		$reply = array();
 
-		$ids = explode(",", db_escape_string($_REQUEST["ids"]));
-		$label_id = db_escape_string($_REQUEST["lid"]);
+		$ids = explode(",", $_REQUEST["ids"]);
+		$label_id = $_REQUEST["lid"];
 
 		$label = db_escape_string(Labels::find_caption($label_id,
 		$_SESSION["uid"]));
@@ -783,7 +783,7 @@ class Article extends Handler_Protected {
 
 	static function get_article_tags($id, $owner_uid = 0, $tag_cache = false) {
 
-		$a_id = db_escape_string($id);
+		$a_id = $id;
 
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
@@ -820,7 +820,7 @@ class Article extends Handler_Protected {
 
 			/* update the cache */
 
-			$tags_str = db_escape_string(join(",", $tags));
+			$tags_str = join(",", $tags);
 
 			$sth = $pdo->prepare("UPDATE ttrss_user_entries
 				SET tag_cache = ? WHERE ref_id = ?
