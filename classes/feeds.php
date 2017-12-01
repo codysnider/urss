@@ -1668,7 +1668,7 @@ class Feeds extends Handler_Protected {
 
 			$sth = $pdo->prepare("SELECT id FROM ttrss_feeds
                     WHERE (cat_id = :cat OR (:cat IS NULL AND cat_id IS NULL))
-					AND owner_uid = ?");
+					AND owner_uid = :uid");
 
 			$sth->execute([":cat" => $cat, ":uid" => $owner_uid]);
 
