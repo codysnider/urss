@@ -8,14 +8,13 @@ class Article extends Handler_Protected {
 	}
 
 	function redirect() {
-		$id = $this->dbh->escape_string($_REQUEST['id']);
-
-		$result = $this->dbh->query("SELECT link FROM ttrss_entries, ttrss_user_entries
-						WHERE id = '$id' AND id = ref_id AND owner_uid = '".$_SESSION['uid']."'
+		$sth = $this->pdo->prepare("SELECT link FROM ttrss_entries, ttrss_user_entries
+						WHERE id = ? AND id = ref_id AND owner_uid = ?
 						LIMIT 1");
+        $sth->execute([$id, $_SESSION['uid']]);
 
-		if ($this->dbh->num_rows($result) == 1) {
-			$article_url = $this->dbh->fetch_result($result, 0, 'link');
+		if ($row = $sth->fetch()) {
+			$article_url = $row['link'];
 			$article_url = str_replace("\n", "", $article_url);
 
 			header("Location: $article_url");
@@ -27,9 +26,9 @@ class Article extends Handler_Protected {
 	}
 
 	function view() {
-		$id = $this->dbh->escape_string($_REQUEST["id"]);
-		$cids = explode(",", $this->dbh->escape_string($_REQUEST["cids"]));
-		$mode = $this->dbh->escape_string($_REQUEST["mode"]);
+		$id = db_escape_string($_REQUEST["id"]);
+		$cids = explode(",", db_escape_string($_REQUEST["cids"]));
+		$mode = db_escape_string($_REQUEST["mode"]);
 
 		// in prefetch mode we only output requested cids, main article
 		// just gets marked as read (it already exists in client cache)
@@ -67,18 +66,20 @@ class Article extends Handler_Protected {
 	private function catchupArticleById($id, $cmode) {
 
 		if ($cmode == 0) {
-			$this->dbh->query("UPDATE ttrss_user_entries SET
+			$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET
 			unread = false,last_read = NOW()
-			WHERE ref_id = '$id' AND owner_uid = " . $_SESSION["uid"]);
+			WHERE ref_id = ? AND owner_uid = ?");
 		} else if ($cmode == 1) {
-			$this->dbh->query("UPDATE ttrss_user_entries SET
+            $sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET
 			unread = true
-			WHERE ref_id = '$id' AND owner_uid = " . $_SESSION["uid"]);
+			WHERE ref_id = ? AND owner_uid = ?");
 		} else {
-			$this->dbh->query("UPDATE ttrss_user_entries SET
+            $sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET
 			unread = NOT unread,last_read = NOW()
-			WHERE ref_id = '$id' AND owner_uid = " . $_SESSION["uid"]);
+			WHERE ref_id = ? AND owner_uid = ?");
 		}
+
+		$sth->execute([$id, $_SESSION['uid']]);
 
 		$feed_id = $this->getArticleFeed($id);
 		CCache::update($feed_id, $_SESSION["uid"]);
@@ -122,34 +123,40 @@ class Article extends Handler_Protected {
 
 		if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) return false;
 
-		db_query("BEGIN");
+		$this->pdo->beginTransaction();
 
 		// only check for our user data here, others might have shared this with different content etc
-		$result = db_query("SELECT id FROM ttrss_entries, ttrss_user_entries WHERE
-			guid = '$guid' AND ref_id = id AND owner_uid = '$owner_uid' LIMIT 1");
+		$sth = $this->pdo->prepare("SELECT id FROM ttrss_entries, ttrss_user_entries WHERE
+			guid = ? AND ref_id = id AND owner_uid = ? LIMIT 1");
+		$sth->execute([$guid, $owner_uid]);
 
-		if (db_num_rows($result) != 0) {
-			$ref_id = db_fetch_result($result, 0, "id");
+		if ($row = $sth->fetch()) {
+			$ref_id = $row['id'];
 
-			$result = db_query("SELECT int_id FROM ttrss_user_entries WHERE
-				ref_id = '$ref_id' AND owner_uid = '$owner_uid' LIMIT 1");
+			$sth = $this->pdo->prepare("SELECT int_id FROM ttrss_user_entries WHERE
+				ref_id = ? AND owner_uid = ? LIMIT 1");
+            $sth->execute([$ref_id, $owner_uid]);
 
-			if (db_num_rows($result) != 0) {
-				$int_id = db_fetch_result($result, 0, "int_id");
+			if ($row = $sth->fetch()) {
+				$int_id = $row['int_id'];
 
-				db_query("UPDATE ttrss_entries SET
-					content = '$content', content_hash = '$content_hash' WHERE id = '$ref_id'");
+				$sth = $this->pdo->prepare("UPDATE ttrss_entries SET
+					content = ?, content_hash = ? WHERE id = ?");
+				$sth->execute([$content, $content_hash, $ref_id]);
 
-				db_query("UPDATE ttrss_user_entries SET published = true,
+				$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET published = true,
 						last_published = NOW() WHERE
-						int_id = '$int_id' AND owner_uid = '$owner_uid'");
+						int_id = ? AND owner_uid = ?");
+				$sth->execute([$int_id, $owner_uid]);
+
 			} else {
 
-				db_query("INSERT INTO ttrss_user_entries
+				$sth = $this->pdo->prepare("INSERT INTO ttrss_user_entries
 					(ref_id, uuid, feed_id, orig_feed_id, owner_uid, published, tag_cache, label_cache,
 						last_read, note, unread, last_published)
 					VALUES
-					('$ref_id', '', NULL, NULL, $owner_uid, true, '', '', NOW(), '', false, NOW())");
+					(?, '', NULL, NULL, ?, true, '', '', NOW(), '', false, NOW())");
+				$sth->execute([$ref_id, $owner_uid]);
 			}
 
 			if (count($labels) != 0) {
@@ -161,21 +168,24 @@ class Article extends Handler_Protected {
 			$rc = true;
 
 		} else {
-			$result = db_query("INSERT INTO ttrss_entries
+			$sth = $this->pdo->prepare("INSERT INTO ttrss_entries
 				(title, guid, link, updated, content, content_hash, date_entered, date_updated)
 				VALUES
-				('$title', '$guid', '$url', NOW(), '$content', '$content_hash', NOW(), NOW())");
+				(?, ?, ?, NOW(), ?, ?, NOW(), NOW())");
+			$sth->execute([$title, $guid, $url, $content, $content_hash]);
 
-			$result = db_query("SELECT id FROM ttrss_entries WHERE guid = '$guid'");
+			$sth = $this->pdo->prepare("SELECT id FROM ttrss_entries WHERE guid = ?");
+			$sth->execute([$guid]);
 
-			if (db_num_rows($result) != 0) {
-				$ref_id = db_fetch_result($result, 0, "id");
+			if ($row = $sth->fetch()) {
+				$ref_id = $row["id"];
 
-				db_query("INSERT INTO ttrss_user_entries
+				$sth = $this->pdo->prepare("INSERT INTO ttrss_user_entries
 					(ref_id, uuid, feed_id, orig_feed_id, owner_uid, published, tag_cache, label_cache,
 						last_read, note, unread, last_published)
 					VALUES
-					('$ref_id', '', NULL, NULL, $owner_uid, true, '', '', NOW(), '', false, NOW())");
+					(?, '', NULL, NULL, ?, true, '', '', NOW(), '', false, NOW())");
+				$sth->execute([$ref_id, $owner_uid]);
 
 				if (count($labels) != 0) {
 					foreach ($labels as $label) {
@@ -187,7 +197,7 @@ class Article extends Handler_Protected {
 			}
 		}
 
-		db_query("COMMIT");
+		$this->pdo->commit();
 
 		return $rc;
 	}
@@ -196,9 +206,9 @@ class Article extends Handler_Protected {
 
 		print __("Tags for this article (separated by commas):")."<br>";
 
-		$param = $this->dbh->escape_string($_REQUEST['param']);
+		$param = db_escape_string($_REQUEST['param']);
 
-		$tags = Article::get_article_tags($this->dbh->escape_string($param));
+		$tags = Article::get_article_tags(db_escape_string($param));
 
 		$tags_str = join(", ", $tags);
 
@@ -227,11 +237,15 @@ class Article extends Handler_Protected {
 	}
 
 	function setScore() {
-		$ids = $this->dbh->escape_string($_REQUEST['id']);
-		$score = (int)$this->dbh->escape_string($_REQUEST['score']);
+		$ids = explode(",", $_REQUEST['id']);
+		$score = (int)$_REQUEST['score'];
 
-		$this->dbh->query("UPDATE ttrss_user_entries SET
-			score = '$score' WHERE ref_id IN ($ids) AND owner_uid = " . $_SESSION["uid"]);
+		$ids_qmarks = arr_qmarks($ids);
+
+		$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET
+			score = ? WHERE ref_id IN ($ids_qmarks) AND owner_uid = ?");
+
+		$sth->execute(array_merge([$score], $ids, [$_SESSION['uid']]));
 
 		print json_encode(array("id" => $ids,
 			"score" => (int)$score,
@@ -239,10 +253,13 @@ class Article extends Handler_Protected {
 	}
 
 	function getScore() {
-		$id = $this->dbh->escape_string($_REQUEST['id']);
+		$id = $_REQUEST['id'];
 
-		$result = $this->dbh->query("SELECT score FROM ttrss_user_entries WHERE ref_id = $id AND owner_uid = " . $_SESSION["uid"]);
-		$score = $this->dbh->fetch_result($result, 0, "score");
+		$sth = $this->pdo->prepare("SELECT score FROM ttrss_user_entries WHERE ref_id = ? AND owner_uid = ?");
+		$sth->execute([$id, $_SESSION['uid']]);
+		$row = $sth->fetch();
+
+		$score = $row['score'];
 
 		print json_encode(array("id" => $id,
 			"score" => (int)$score,
@@ -252,23 +269,23 @@ class Article extends Handler_Protected {
 
 	function setArticleTags() {
 
-		$id = $this->dbh->escape_string($_REQUEST["id"]);
+		$id = db_escape_string($_REQUEST["id"]);
 
-		$tags_str = $this->dbh->escape_string($_REQUEST["tags_str"]);
+		$tags_str = db_escape_string($_REQUEST["tags_str"]);
 		$tags = array_unique(trim_array(explode(",", $tags_str)));
 
-		$this->dbh->query("BEGIN");
+		db_query("BEGIN");
 
-		$result = $this->dbh->query("SELECT int_id FROM ttrss_user_entries WHERE
+		$result = db_query("SELECT int_id FROM ttrss_user_entries WHERE
 				ref_id = '$id' AND owner_uid = '".$_SESSION["uid"]."' LIMIT 1");
 
-		if ($this->dbh->num_rows($result) == 1) {
+		if (db_num_rows($result) == 1) {
 
 			$tags_to_cache = array();
 
-			$int_id = $this->dbh->fetch_result($result, 0, "int_id");
+			$int_id = db_fetch_result($result, 0, "int_id");
 
-			$this->dbh->query("DELETE FROM ttrss_tags WHERE
+			db_query("DELETE FROM ttrss_tags WHERE
 				post_int_id = $int_id AND owner_uid = '".$_SESSION["uid"]."'");
 
 			foreach ($tags as $tag) {
@@ -285,7 +302,7 @@ class Article extends Handler_Protected {
 				//					print "<!-- $id : $int_id : $tag -->";
 
 				if ($tag != '') {
-					$this->dbh->query("INSERT INTO ttrss_tags
+					db_query("INSERT INTO ttrss_tags
 								(post_int_id, owner_uid, tag_name) VALUES ('$int_id', '".$_SESSION["uid"]."', '$tag')");
 				}
 
@@ -297,12 +314,12 @@ class Article extends Handler_Protected {
 			sort($tags_to_cache);
 			$tags_str = join(",", $tags_to_cache);
 
-			$this->dbh->query("UPDATE ttrss_user_entries
+			db_query("UPDATE ttrss_user_entries
 				SET tag_cache = '$tags_str' WHERE ref_id = '$id'
 						AND owner_uid = " . $_SESSION["uid"]);
 		}
 
-		$this->dbh->query("COMMIT");
+		db_query("COMMIT");
 
 		$tags = Article::get_article_tags($id);
 		$tags_str = $this->format_tags_string($tags, $id);
@@ -316,15 +333,15 @@ class Article extends Handler_Protected {
 
 
 	function completeTags() {
-		$search = $this->dbh->escape_string($_REQUEST["search"]);
+		$search = db_escape_string($_REQUEST["search"]);
 
-		$result = $this->dbh->query("SELECT DISTINCT tag_name FROM ttrss_tags
+		$result = db_query("SELECT DISTINCT tag_name FROM ttrss_tags
 				WHERE owner_uid = '".$_SESSION["uid"]."' AND
 				tag_name LIKE '$search%' ORDER BY tag_name
 				LIMIT 10");
 
 		print "<ul>";
-		while ($line = $this->dbh->fetch_assoc($result)) {
+		while ($line = db_fetch_assoc($result)) {
 			print "<li>" . $line["tag_name"] . "</li>";
 		}
 		print "</ul>";
@@ -341,10 +358,10 @@ class Article extends Handler_Protected {
 	private function labelops($assign) {
 		$reply = array();
 
-		$ids = explode(",", $this->dbh->escape_string($_REQUEST["ids"]));
-		$label_id = $this->dbh->escape_string($_REQUEST["lid"]);
+		$ids = explode(",", db_escape_string($_REQUEST["ids"]));
+		$label_id = db_escape_string($_REQUEST["lid"]);
 
-		$label = $this->dbh->escape_string(Labels::find_caption($label_id,
+		$label = db_escape_string(Labels::find_caption($label_id,
 		$_SESSION["uid"]));
 
 		$reply["info-for-headlines"] = array();
