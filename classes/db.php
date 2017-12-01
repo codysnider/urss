@@ -31,6 +31,8 @@ class Db implements IDb {
 			DB_USER,
 			DB_PASS);
 
+		$this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+
 		if (!$this->pdo) {
 			print("Error connecting via PDO.");
 			exit(101);

@@ -274,7 +274,7 @@ class Article extends Handler_Protected {
 		$tags_str = db_escape_string($_REQUEST["tags_str"]);
 		$tags = array_unique(trim_array(explode(",", $tags_str)));
 
-		db_query("BEGIN");
+		$this->pdo->beginTransaction();
 
 		$result = db_query("SELECT int_id FROM ttrss_user_entries WHERE
 				ref_id = '$id' AND owner_uid = '".$_SESSION["uid"]."' LIMIT 1");
@@ -319,7 +319,7 @@ class Article extends Handler_Protected {
 						AND owner_uid = " . $_SESSION["uid"]);
 		}
 
-		db_query("COMMIT");
+		$this->pdo->commit();
 
 		$tags = Article::get_article_tags($id);
 		$tags_str = $this->format_tags_string($tags, $id);
