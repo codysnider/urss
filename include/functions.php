@@ -57,7 +57,7 @@
 	// do not cache files smaller than that (bytes)
 	define_default('CACHE_MAX_DAYS', 7);
 	// max age in days for various automatically cached (temporary) files
-    define_default('MAX_CONDITIONAL_INTERVAL', 3600*6);
+    define_default('MAX_CONDITIONAL_INTERVAL', 3600*12);
     // max interval between forced unconditional updates for servers
     // not complying with http if-modified-since (seconds)
 
