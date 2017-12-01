@@ -592,8 +592,13 @@
 		if (get_schema_version() < 63) $profile_qpart = "";
 
         $pdo = DB::pdo();
+        $in_nested_tr = false;
 
-        $pdo->beginTransaction();
+        try {
+			$pdo->beginTransaction();
+		} catch (Exception $e) {
+        	$in_nested_tr = true;
+		}
 
 		$sth = $pdo->query("SELECT pref_name,def_value FROM ttrss_prefs");
 
@@ -630,7 +635,7 @@
 			}
 		}
 
-		$pdo->commit();
+		if (!$in_nested_tr) $pdo->commit();
 
 	}
 

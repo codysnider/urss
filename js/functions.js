@@ -1200,31 +1200,6 @@ function backend_sanity_check_callback(transport) {
 
 }
 
-function quickAddCat(elem) {
-	var cat = prompt(__("Please enter category title:"));
-
-	if (cat) {
-
-		var query = "?op=rpc&method=quickAddCat&cat=" + param_escape(cat);
-
-		notify_progress("Loading, please wait...", true);
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function (transport) {
-				var response = transport.responseXML;
-				var select = response.getElementsByTagName("select")[0];
-				var options = select.getElementsByTagName("option");
-
-				dropbox_replace_options(elem, options);
-
-				notify('');
-
-		} });
-
-	}
-}
-
 function genUrlChangeKey(feed, is_cat) {
 	var ok = confirm(__("Generate new syndication address for this feed?"));
 
@@ -1261,34 +1236,6 @@ function genUrlChangeKey(feed, is_cat) {
 			} });
 	}
 	return false;
-}
-
-function dropbox_replace_options(elem, options) {
-	while (elem.hasChildNodes())
-		elem.removeChild(elem.firstChild);
-
-	var sel_idx = -1;
-
-	for (var i = 0; i < options.length; i++) {
-		var text = options[i].firstChild.nodeValue;
-		var value = options[i].getAttribute("value");
-
-		if (value == undefined) value = text;
-
-		var issel = options[i].getAttribute("selected") == "1";
-
-		var option = new Option(text, value, issel);
-
-		if (options[i].getAttribute("disabled"))
-			option.setAttribute("disabled", true);
-
-		elem.insert(option);
-
-		if (issel) sel_idx = i;
-	}
-
-	// Chrome doesn't seem to just select stuff when you pass new Option(x, y, true)
-	if (sel_idx >= 0) elem.selectedIndex = sel_idx;
 }
 
 // mode = all, none, invert
