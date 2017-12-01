@@ -259,6 +259,8 @@
 		else
 		    $query_limit = "";
 
+		$purge_interval = (int) $purge_interval;
+
 		if (DB_TYPE == "pgsql") {
 			$sth = $pdo->prepare("DELETE FROM ttrss_user_entries
 				USING ttrss_entries
@@ -266,8 +268,8 @@
 				marked = false AND
 				feed_id = ? AND
 				$query_limit
-				ttrss_entries.date_updated < NOW() - INTERVAL ? days");
-			$sth->execute([$feed_id, $purge_interval]);
+				ttrss_entries.date_updated < NOW() - INTERVAL '$purge_interval days'");
+			$sth->execute([$feed_id]);
 
 		} else {
             $sth  = $pdo->prepare("DELETE FROM ttrss_user_entries
@@ -276,8 +278,8 @@
 				marked = false AND
 				feed_id = ? AND
 				$query_limit
-				ttrss_entries.date_updated < DATE_SUB(NOW(), INTERVAL ? DAY)");
-            $sth->execute([$feed_id, $purge_interval]);
+				ttrss_entries.date_updated < DATE_SUB(NOW(), INTERVAL $purge_interval DAY)");
+            $sth->execute([$feed_id]);
 
 		}
 
@@ -587,8 +589,6 @@
 
 	function initialize_user_prefs($uid, $profile = false) {
 
-		$uid = db_escape_string($uid);
-
 		if (get_schema_version() < 63) $profile_qpart = "";
 
         $pdo = DB::pdo();
@@ -613,9 +613,6 @@
 		while ($line = $sth->fetch()) {
 			if (array_search($line["pref_name"], $active_prefs) === FALSE) {
 //				print "adding " . $line["pref_name"] . "<br>";
-
-				$line["def_value"] = db_escape_string($line["def_value"]);
-				$line["pref_name"] = db_escape_string($line["pref_name"]);
 
 				if (get_schema_version() < 63) {
 					$i_sth = $pdo->prepare("INSERT INTO ttrss_user_prefs
@@ -1374,8 +1371,10 @@
 		$search_words = array();
 		$search_query_leftover = array();
 
+		$pdo = Db::pdo();
+		
 		if ($search_language)
-			$search_language = db_escape_string(mb_strtolower($search_language));
+			$search_language = $pdo->quote(mb_strtolower($search_language));
 		else
 			$search_language = "english";
 
@@ -1393,7 +1392,7 @@
 				case "title":
 					if ($commandpair[1]) {
 						array_push($query_keywords, "($not (LOWER(ttrss_entries.title) LIKE '%".
-							db_escape_string(mb_strtolower($commandpair[1]))."%'))");
+							$pdo->quote(mb_strtolower($commandpair[1]))."%'))");
 					} else {
 						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
 								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
@@ -1403,7 +1402,7 @@
 				case "author":
 					if ($commandpair[1]) {
 						array_push($query_keywords, "($not (LOWER(author) LIKE '%".
-							db_escape_string(mb_strtolower($commandpair[1]))."%'))");
+							$pdo->quote(mb_strtolower($commandpair[1]))."%'))");
 					} else {
 						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
 								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
@@ -1418,7 +1417,7 @@
 							array_push($query_keywords, "($not (note IS NULL OR note = ''))");
 						else
 							array_push($query_keywords, "($not (LOWER(note) LIKE '%".
-								db_escape_string(mb_strtolower($commandpair[1]))."%'))");
+								$pdo->quote(mb_strtolower($commandpair[1]))."%'))");
 					} else {
 						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
 								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
@@ -1490,7 +1489,7 @@
 		}
 
 		if (count($search_query_leftover) > 0) {
-			$search_query_leftover = db_escape_string(implode(" & ", $search_query_leftover));
+			$search_query_leftover = $pdo->quote(implode(" & ", $search_query_leftover));
 
 			if (DB_TYPE == "pgsql") {
 				array_push($query_keywords,
