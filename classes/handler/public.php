@@ -55,9 +55,9 @@ class Handler_Public extends Handler {
 
 		$result = $qfh_ret[0];
 
-		if ($this->dbh->num_rows($result) != 0) {
+		if (db_num_rows($result) != 0) {
 
-			$ts = strtotime($this->dbh->fetch_result($result, 0, $date_check_field));
+			$ts = strtotime(db_fetch_result($result, 0, $date_check_field));
 
 			if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) &&
 					strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $ts) {
@@ -106,7 +106,7 @@ class Handler_Public extends Handler {
 			$tpl->setVariable('FEED_URL', htmlspecialchars($feed_self_url), true);
 
 			$tpl->setVariable('SELF_URL', htmlspecialchars(get_self_url_prefix()), true);
-			while ($line = $this->dbh->fetch_assoc($result)) {
+			while ($line = db_fetch_assoc($result)) {
 
 				$line["content_preview"] = sanitize(truncate_string(strip_tags($line["content"]), 100, '...'));
 
@@ -194,7 +194,7 @@ class Handler_Public extends Handler {
 
 			$feed['articles'] = array();
 
-			while ($line = $this->dbh->fetch_assoc($result)) {
+			while ($line = db_fetch_assoc($result)) {
 
 				$line["content_preview"] = sanitize(truncate_string(strip_tags($line["content_preview"]), 100, '...'));
 
@@ -255,13 +255,14 @@ class Handler_Public extends Handler {
 	}
 
 	function getUnread() {
-		$login = $this->dbh->escape_string($_REQUEST["login"]);
+		$login = $_REQUEST["login"];
 		$fresh = $_REQUEST["fresh"] == "1";
 
-		$result = $this->dbh->query("SELECT id FROM ttrss_users WHERE login = '$login'");
+		$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE login = ?");
+		$sth->execute([$login]);
 
-		if ($this->dbh->num_rows($result) == 1) {
-			$uid = $this->dbh->fetch_result($result, 0, "id");
+		if ($row = $sth->fetch()) {
+			$uid = $row["id"];
 
 			print Feeds::getGlobalUnread($uid);
 
@@ -273,20 +274,20 @@ class Handler_Public extends Handler {
 		} else {
 			print "-1;User not found";
 		}
-
 	}
 
 	function getProfiles() {
-		$login = $this->dbh->escape_string($_REQUEST["login"]);
+		$login = $_REQUEST["login"];
 
-		$result = $this->dbh->query("SELECT ttrss_settings_profiles.* FROM ttrss_settings_profiles,ttrss_users
-			WHERE ttrss_users.id = ttrss_settings_profiles.owner_uid AND login = '$login' ORDER BY title");
+		$sth = $this->pdo->prepare("SELECT ttrss_settings_profiles.* FROM ttrss_settings_profiles,ttrss_users
+			WHERE ttrss_users.id = ttrss_settings_profiles.owner_uid AND login = ? ORDER BY title");
+		$sth->execute([$login]);
 
 		print "<select dojoType='dijit.form.Select' style='width : 220px; margin : 0px' name='profile'>";
 
 		print "<option value='0'>" . __("Default profile") . "</option>";
 
-		while ($line = $this->dbh->fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 			$id = $line["id"];
 			$title = $line["title"];
 
@@ -302,16 +303,17 @@ class Handler_Public extends Handler {
 	}
 
 	function share() {
-		$uuid = $this->dbh->escape_string($_REQUEST["key"]);
+		$uuid = $_REQUEST["key"];
 
-		$result = $this->dbh->query("SELECT ref_id, owner_uid FROM ttrss_user_entries WHERE
-			uuid = '$uuid'");
+		$sth = $this->pdo->prepare("SELECT ref_id, owner_uid FROM ttrss_user_entries WHERE
+			uuid = ?");
+		$sth->execute([$uuid]);
 
-		if ($this->dbh->num_rows($result) != 0) {
+		if ($row = $sth->fetch()) {
 			header("Content-Type: text/html");
 
-			$id = $this->dbh->fetch_result($result, 0, "ref_id");
-			$owner_uid = $this->dbh->fetch_result($result, 0, "owner_uid");
+			$id = $row["ref_id"];
+			$owner_uid = $row["owner_uid"];
 
 			$article = Article::format_article($id, false, true, $owner_uid);
 
@@ -324,18 +326,18 @@ class Handler_Public extends Handler {
 	}
 
 	function rss() {
-		$feed = $this->dbh->escape_string($_REQUEST["id"]);
-		$key = $this->dbh->escape_string($_REQUEST["key"]);
+		$feed = $_REQUEST["id"];
+		$key = $_REQUEST["key"];
 		$is_cat = sql_bool_to_bool($_REQUEST["is_cat"]);
-		$limit = (int)$this->dbh->escape_string($_REQUEST["limit"]);
-		$offset = (int)$this->dbh->escape_string($_REQUEST["offset"]);
+		$limit = (int)$_REQUEST["limit"];
+		$offset = (int)$_REQUEST["offset"];
 
-		$search = $this->dbh->escape_string($_REQUEST["q"]);
-		$view_mode = $this->dbh->escape_string($_REQUEST["view-mode"]);
-		$order = $this->dbh->escape_string($_REQUEST["order"]);
-		$start_ts = $this->dbh->escape_string($_REQUEST["ts"]);
+		$search = $_REQUEST["q"];
+		$view_mode = $_REQUEST["view-mode"];
+		$order = $_REQUEST["order"];
+		$start_ts = $_REQUEST["ts"];
 
-		$format = $this->dbh->escape_string($_REQUEST['format']);
+		$format = $_REQUEST['format'];
 		$orig_guid = sql_bool_to_bool($_REQUEST["orig_guid"]);
 
 		if (!$format) $format = 'atom';
@@ -347,11 +349,12 @@ class Handler_Public extends Handler {
 		$owner_id = false;
 
 		if ($key) {
-			$result = $this->dbh->query("SELECT owner_uid FROM
-				ttrss_access_keys WHERE access_key = '$key' AND feed_id = '$feed'");
+			$sth = $this->pdo->prepare("SELECT owner_uid FROM
+				ttrss_access_keys WHERE access_key = ? AND feed_id = ?");
+			$sth->execute([$key, $feed]);
 
-			if ($this->dbh->num_rows($result) == 1)
-				$owner_id = $this->dbh->fetch_result($result, 0, "owner_uid");
+			if ($row = $sth->fetch())
+				$owner_id = $row["owner_uid"];
 		}
 
 		if ($owner_id) {
@@ -399,10 +402,10 @@ class Handler_Public extends Handler {
 
 			if ($action == 'share') {
 
-				$title = $this->dbh->escape_string(strip_tags($_REQUEST["title"]));
-				$url = $this->dbh->escape_string(strip_tags($_REQUEST["url"]));
-				$content = $this->dbh->escape_string(strip_tags($_REQUEST["content"]));
-				$labels = $this->dbh->escape_string(strip_tags($_REQUEST["labels"]));
+				$title = strip_tags($_REQUEST["title"]);
+				$url = strip_tags($_REQUEST["url"]);
+				$content = strip_tags($_REQUEST["content"]);
+				$labels = strip_tags($_REQUEST["labels"]);
 
 				Article::create_published_article($title, $url, $content, $labels,
 					$_SESSION["uid"]);
@@ -500,7 +503,7 @@ class Handler_Public extends Handler {
 	function login() {
 		if (!SINGLE_USER_MODE) {
 
-			$login = $this->dbh->escape_string($_POST["login"]);
+			$login = $_POST["login"];
 			$password = $_POST["password"];
 			$remember_me = $_POST["remember_me"];
 
@@ -524,12 +527,13 @@ class Handler_Public extends Handler {
 
 				if ($_POST["profile"]) {
 
-					$profile = $this->dbh->escape_string($_POST["profile"]);
+					$profile = $_POST["profile"];
 
-					$result = $this->dbh->query("SELECT id FROM ttrss_settings_profiles
-						WHERE id = '$profile' AND owner_uid = " . $_SESSION["uid"]);
+					$sth = $this->pdo->prepare("SELECT id FROM ttrss_settings_profiles
+						WHERE id = ? AND owner_uid = ?");
+					$sth->execute([$profile, $_SESSION['uid']]);
 
-					if ($this->dbh->num_rows($result) != 0) {
+					if ($sth->fetch()) {
 						$_SESSION["profile"] = $profile;
 					}
 				}
@@ -565,7 +569,7 @@ class Handler_Public extends Handler {
 
 		if ($_SESSION["uid"]) {
 
-			$feed_url = $this->dbh->escape_string(trim($_REQUEST["feed_url"]));
+			$feed_url = trim($_REQUEST["feed_url"]);
 
 			header('Content-Type: text/html; charset=utf-8');
 			print "<html>
@@ -630,10 +634,12 @@ class Handler_Public extends Handler {
 			$tt_uri = get_self_url_prefix();
 
 			if ($rc['code'] <= 2){
-				$result = $this->dbh->query("SELECT id FROM ttrss_feeds WHERE
-					feed_url = '$feed_url' AND owner_uid = " . $_SESSION["uid"]);
+			    $sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE
+					feed_url = ? AND owner_uid = ?");
+			    $sth->execute([$feed_url, $_SESSION['uid']]);
+			    $row = $sth->fetch();
 
-				$feed_id = $this->dbh->fetch_result($result, 0, "id");
+				$feed_id = $row["id"];
 			} else {
 				$feed_id = 0;
 			}
@@ -688,23 +694,25 @@ class Handler_Public extends Handler {
 		@$method = $_POST['method'];
 
 		if ($hash) {
-			$login = $this->dbh->escape_string($_REQUEST["login"]);
+			$login = $_REQUEST["login"];
 
 			if ($login) {
-				$result = $this->dbh->query("SELECT id, resetpass_token FROM ttrss_users
-					WHERE login = '$login'");
+				$sth = $this->pdo->prepare("SELECT id, resetpass_token FROM ttrss_users
+					WHERE login = ?");
+				$sth->execute([$login]);
 
-				if ($this->dbh->num_rows($result) != 0) {
-					$id = $this->dbh->fetch_result($result, 0, "id");
-					$resetpass_token_full = $this->dbh->fetch_result($result, 0, "resetpass_token");
+				if ($row = $sth->fetch()) {
+					$id = $row["id"];
+					$resetpass_token_full = $row["resetpass_token"];
 					list($timestamp, $resetpass_token) = explode(":", $resetpass_token_full);
 
 					if ($timestamp && $resetpass_token &&
 						$timestamp >= time() - 15*60*60 &&
 						$resetpass_token == $hash) {
 
-							$result = $this->dbh->query("UPDATE ttrss_users SET resetpass_token = NULL
-								WHERE id = $id");
+							$sth = $this->pdo->prepare("UPDATE ttrss_users SET resetpass_token = NULL
+								WHERE id = ?");
+							$sth->execute([$id]);
 
 							Pref_Users::resetUserPassword($id, true);
 
@@ -752,9 +760,9 @@ class Handler_Public extends Handler {
 			print "</form>";
 		} else if ($method == 'do') {
 
-			$login = $this->dbh->escape_string($_POST["login"]);
-			$email = $this->dbh->escape_string($_POST["email"]);
-			$test = $this->dbh->escape_string($_POST["test"]);
+			$login = $_POST["login"];
+			$email = $_POST["email"];
+			$test = $_POST["test"];
 
 			if (($test != 4 && $test != 'four') || !$email || !$login) {
 				print_error(__('Some of the required form parameters are missing or incorrect.'));
@@ -768,11 +776,12 @@ class Handler_Public extends Handler {
 
 				print_notice("Password reset instructions are being sent to your email address.");
 
-				$result = $this->dbh->query("SELECT id FROM ttrss_users
-					WHERE login = '$login' AND email = '$email'");
+				$sth = $this->pdo->prepare("SELECT id FROM ttrss_users
+					WHERE login = ? AND email = ?");
+				$sth->execute([$login, $email]);
 
-				if ($this->dbh->num_rows($result) != 0) {
-					$id = $this->dbh->fetch_result($result, 0, "id");
+				if ($row = $sth->fetch()) {
+					$id = $row["id"];
 
 					if ($id) {
 						$resetpass_token = sha1(get_random_bytes(128));
@@ -803,11 +812,13 @@ class Handler_Public extends Handler {
 
 						if (!$rc) print_error($mail->ErrorInfo);
 
-						$resetpass_token_full = $this->dbh->escape_string(time() . ":" . $resetpass_token);
+						$resetpass_token_full = time() . ":" . $resetpass_token;
 
-						$result = $this->dbh->query("UPDATE ttrss_users
-							SET resetpass_token = '$resetpass_token_full'
-							WHERE login = '$login' AND email = '$email'");
+						$sth = $this->pdo->prepare("UPDATE ttrss_users
+							SET resetpass_token = ?
+							WHERE login = ? AND email = ?");
+
+						$sth->execute([$resetpass_token_full, $login, $email]);
 
 						//Pref_Users::resetUserPassword($id, false);
 

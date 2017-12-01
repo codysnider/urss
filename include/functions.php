@@ -2043,10 +2043,12 @@
 
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
+		$is_cat = bool_to_sql_bool($is_cat);
+
 		$pdo = Db::pdo();
 
-		$sth = $dbh->prepare("SELECT access_key FROM ttrss_access_keys
-				WHERE feed_id = ?	AND is_cat = ?
+		$sth = $pdo->prepare("SELECT access_key FROM ttrss_access_keys
+				WHERE feed_id = ? AND is_cat = ?
 				AND owner_uid = ?");
 		$sth->execute([$feed_id, $is_cat, $owner_uid]);
 
