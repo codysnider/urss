@@ -10,24 +10,28 @@ class Labels
 	}
 
 	static function find_id($label, $owner_uid) {
-		$result = db_query(
-			"SELECT id FROM ttrss_labels2 WHERE caption = '$label'
-				AND owner_uid = '$owner_uid' LIMIT 1");
+		$pdo = Db::pdo();
 
-		if (db_num_rows($result) == 1) {
-			return db_fetch_result($result, 0, "id");
+		$sth = $pdo->prepare("SELECT id FROM ttrss_labels2 WHERE caption = ?
+				AND owner_uid = ? LIMIT 1");
+		$sth->execute([$label, $owner_uid]);
+
+		if ($row = $sth->fetch()) {
+			return $row['id'];
 		} else {
 			return 0;
 		}
 	}
 
 	static function find_caption($label, $owner_uid) {
-		$result = db_query(
-			"SELECT caption FROM ttrss_labels2 WHERE id = '$label'
-				AND owner_uid = '$owner_uid' LIMIT 1");
+		$pdo = Db::pdo();
 
-		if (db_num_rows($result) == 1) {
-			return db_fetch_result($result, 0, "caption");
+		$sth = $pdo->prepare("SELECT caption FROM ttrss_labels2 WHERE id = ?
+				AND owner_uid = ? LIMIT 1");
+		$sth->execute([$label, $owner_uid]);
+
+		if ($row = $sth->fetch()) {
+			return $row['caption'];
 		} else {
 			return "";
 		}
@@ -36,9 +40,13 @@ class Labels
 	static function get_all_labels($owner_uid)	{
 		$rv = array();
 
-		$result = db_query("SELECT id, fg_color, bg_color, caption FROM ttrss_labels2 WHERE owner_uid = '$owner_uid' ORDER BY caption");
+		$pdo = Db::pdo();
 
-		while ($line = db_fetch_assoc($result)) {
+		$sth = $pdo->prepare("SELECT id, fg_color, bg_color, caption FROM ttrss_labels2 
+			WHERE owner_uid = ? ORDER BY caption");
+		$sth->execute([$owner_uid]);
+
+		while ($line = $sth->fetch()) {
 			array_push($rv, $line);
 		}
 
@@ -46,6 +54,7 @@ class Labels
 	}
 
 	static function update_cache($owner_uid, $id, $labels = false, $force = false) {
+		$pdo = Db::pdo();
 
 		if ($force)
 			Labels::clear_cache($id);
@@ -55,15 +64,19 @@ class Labels
 
 		$labels = db_escape_string(json_encode($labels));
 
-		db_query("UPDATE ttrss_user_entries SET
-			label_cache = '$labels' WHERE ref_id = '$id' AND  owner_uid = '$owner_uid'");
+		$sth = $pdo->prepare("UPDATE ttrss_user_entries SET
+			label_cache = ? WHERE ref_id = ? AND owner_uid = ?");
+		$sth->execute([$labels, $id, $owner_uid]);
 
 	}
 
 	static function clear_cache($id)	{
 
-		db_query("UPDATE ttrss_user_entries SET
-			label_cache = '' WHERE ref_id = '$id'");
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("UPDATE ttrss_user_entries SET
+			label_cache = '' WHERE ref_id = ?");
+		$sth->execute([$id]);
 
 	}
 
@@ -73,11 +86,14 @@ class Labels
 
 		if (!$label_id) return;
 
-		db_query(
-			"DELETE FROM ttrss_user_labels2
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("DELETE FROM ttrss_user_labels2
 			WHERE
-				label_id = '$label_id' AND
-				article_id = '$id'");
+				label_id = ? AND
+				article_id = ?");
+
+		$sth->execute([$label_id, $id]);
 
 		Labels::clear_cache($id);
 	}
@@ -88,18 +104,23 @@ class Labels
 
 		if (!$label_id) return;
 
-		$result = db_query(
-			"SELECT
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("SELECT
 				article_id FROM ttrss_labels2, ttrss_user_labels2
 			WHERE
 				label_id = id AND
-				label_id = '$label_id' AND
-				article_id = '$id' AND owner_uid = '$owner_uid'
+				label_id = ? AND
+				article_id = ? AND owner_uid = ?
 			LIMIT 1");
 
-		if (db_num_rows($result) == 0) {
-			db_query("INSERT INTO ttrss_user_labels2
-				(label_id, article_id) VALUES ('$label_id', '$id')");
+		$sth->execute([$label_id, $id, $owner_uid]);
+
+		if (!$sth->fetch()) {
+			$sth = $pdo->prepare("INSERT INTO ttrss_user_labels2
+				(label_id, article_id) VALUES (?, ?)");
+
+			$sth->execute([$label_id, $id]);
 		}
 
 		Labels::clear_cache($id);
@@ -109,53 +130,64 @@ class Labels
 	static function remove($id, $owner_uid) {
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
-		db_query("BEGIN");
+		$pdo = Db::pdo();
 
-		$result = db_query("SELECT caption FROM ttrss_labels2
-			WHERE id = '$id'");
+		$pdo->beginTransaction();
 
-		$caption = db_fetch_result($result, 0, "caption");
+		$sth = $pdo->prepare("SELECT caption FROM ttrss_labels2
+			WHERE id = ?");
+		$sth->execute([$id]);
 
-		$result = db_query("DELETE FROM ttrss_labels2 WHERE id = '$id'
-			AND owner_uid = " . $owner_uid);
+		$row = $sth->fetch();
+		$caption = $row['caption'];
 
-		if (db_affected_rows($result) != 0 && $caption) {
+		$sth = $pdo->prepare("DELETE FROM ttrss_labels2 WHERE id = ?
+			AND owner_uid = ?");
+		$sth->execute([$id, $owner_uid]);
+
+		if ($sth->rowCount() != 0 && $caption) {
 
 			/* Remove access key for the label */
 
 			$ext_id = LABEL_BASE_INDEX - 1 - $id;
 
-			db_query("DELETE FROM ttrss_access_keys WHERE
-				feed_id = '$ext_id' AND owner_uid = $owner_uid");
+			$sth = $pdo->prepare("DELETE FROM ttrss_access_keys WHERE
+				feed_id = ? AND owner_uid = ?");
+			$sth->execute([$ext_id, $owner_uid]);
 
 			/* Remove cached data */
 
-			db_query("UPDATE ttrss_user_entries SET label_cache = ''
-				WHERE label_cache LIKE '%$caption%' AND owner_uid = " . $owner_uid);
+			$sth = $pdo->prepare("UPDATE ttrss_user_entries SET label_cache = ''
+				WHERE label_cache LIKE ? AND owner_uid = ?");
+			$sth->execute(["%$caption%", $owner_uid]);
 
 		}
 
-		db_query("COMMIT");
+		$pdo->commit();
 	}
 
 	static function create($caption, $fg_color = '', $bg_color = '', $owner_uid = false)	{
 
 		if (!$owner_uid) $owner_uid = $_SESSION['uid'];
 
-		db_query("BEGIN");
+		$pdo = Db::pdo();
 
-		$result = db_query("SELECT id FROM ttrss_labels2
-			WHERE caption = '$caption' AND owner_uid = $owner_uid");
+		$pdo->beginTransaction();
 
-		if (db_num_rows($result) == 0) {
-			$result = db_query(
-				"INSERT INTO ttrss_labels2 (caption,owner_uid,fg_color,bg_color)
-					VALUES ('$caption', '$owner_uid', '$fg_color', '$bg_color')");
+		$sth = $pdo->prepare("SELECT id FROM ttrss_labels2
+			WHERE caption = ? AND owner_uid = ?");
+		$sth->execute([$caption, $owner_uid]);
 
-			$result = db_affected_rows($result) != 0;
+		if (!$sth->fetch()) {
+			$sth = $pdo->prepare("INSERT INTO ttrss_labels2 
+				(caption,owner_uid,fg_color,bg_color) VALUES (?, ?, ?, ?)");
+
+			$sth->execute([$caption, $owner_uid, $fg_color, $bg_color]);
+
+			$result = $sth->rowCount();
 		}
 
-		db_query("COMMIT");
+		$pdo->commit();
 
 		return $result;
 	}
