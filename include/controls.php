@@ -72,7 +72,9 @@ function print_radio($id, $default, $true_is, $values, $attributes = "") {
 
 function print_feed_multi_select($id, $default_ids = [],
                            $attributes = "", $include_all_feeds = true,
-                           $root_id = false, $nest_level = 0) {
+                           $root_id = null, $nest_level = 0) {
+
+    $pdo = DB::pdo();
 
     print_r(in_array("CAT:6",$default_ids));
 
@@ -86,18 +88,18 @@ function print_feed_multi_select($id, $default_ids = [],
 
     if (get_pref('ENABLE_FEED_CATS')) {
 
-        if ($root_id)
-            $parent_qpart = "parent_cat = '$root_id'";
-        else
-            $parent_qpart = "parent_cat IS NULL";
+        if (!$root_id) $root_id = null;
 
-        $result = db_query("SELECT id,title,
+        $sth = $pdo->prepare("SELECT id,title,
 				(SELECT COUNT(id) FROM ttrss_feed_categories AS c2 WHERE
 					c2.parent_cat = ttrss_feed_categories.id) AS num_children
 				FROM ttrss_feed_categories
-				WHERE owner_uid = ".$_SESSION["uid"]." AND $parent_qpart ORDER BY title");
+				WHERE owner_uid = :uid AND 
+				(parent_cat = :root_id OR :root_id IS NULL AND parent_cat IS NULL) ORDER BY title");
 
-        while ($line = db_fetch_assoc($result)) {
+        $sth->execute([":uid" => $_SESSION['uid'], ":root_id" => $root_id]);
+
+        while ($line = $sth->fetch()) {
 
             for ($i = 0; $i < $nest_level; $i++)
                 $line["title"] = " - " . $line["title"];
@@ -111,10 +113,12 @@ function print_feed_multi_select($id, $default_ids = [],
                 print_feed_multi_select($id, $default_ids, $attributes,
                     $include_all_feeds, $line["id"], $nest_level+1);
 
-            $feed_result = db_query("SELECT id,title FROM ttrss_feeds
-					WHERE cat_id = '".$line["id"]."' AND owner_uid = ".$_SESSION["uid"] . " ORDER BY title");
+            $f_sth = $pdo->prepare("SELECT id,title FROM ttrss_feeds
+					WHERE cat_id = ? AND owner_uid = ? ORDER BY title");
 
-            while ($fline = db_fetch_assoc($feed_result)) {
+            $f_sth->execute([$line['id'], $_SESSION['uid']]);
+
+            while ($fline = $f_sth->fetch()) {
                 $is_selected = (in_array($fline["id"], $default_ids)) ? "selected=\"1\"" : "";
 
                 $fline["title"] = " + " . $fline["title"];
@@ -133,10 +137,11 @@ function print_feed_multi_select($id, $default_ids = [],
             printf("<option $is_selected value='CAT:0'>%s</option>",
                 __("Uncategorized"));
 
-            $feed_result = db_query("SELECT id,title FROM ttrss_feeds
-					WHERE cat_id IS NULL AND owner_uid = ".$_SESSION["uid"] . " ORDER BY title");
+            $f_sth = $pdo->prepare("SELECT id,title FROM ttrss_feeds
+					WHERE cat_id IS NULL AND owner_uid = ? ORDER BY title");
+            $f_sth->execute([$_SESSION['uid']]);
 
-            while ($fline = db_fetch_assoc($feed_result)) {
+            while ($fline = $f_sth->fetch()) {
                 $is_selected = in_array($fline["id"], $default_ids) ? "selected=\"1\"" : "";
 
                 $fline["title"] = " + " . $fline["title"];
@@ -150,10 +155,11 @@ function print_feed_multi_select($id, $default_ids = [],
         }
 
     } else {
-        $result = db_query("SELECT id,title FROM ttrss_feeds
-				WHERE owner_uid = ".$_SESSION["uid"]." ORDER BY title");
+        $sth = $pdo->prepare("SELECT id,title FROM ttrss_feeds
+				WHERE owner_uid = ? ORDER BY title");
+        $sth->execute([$_SESSION['uid']]);
 
-        while ($line = db_fetch_assoc($result)) {
+        while ($line = $sth->fetch()) {
 
             $is_selected = (in_array($line["id"], $default_ids)) ? "selected=\"1\"" : "";
 
@@ -309,13 +315,16 @@ function format_inline_player($url, $ctype) {
 
 function print_label_select($name, $value, $attributes = "") {
 
-	$result = db_query("SELECT caption FROM ttrss_labels2
-			WHERE owner_uid = '".$_SESSION["uid"]."' ORDER BY caption");
+    $pdo = Db::pdo();
+
+	$sth = $pdo->prepare("SELECT caption FROM ttrss_labels2
+			WHERE owner_uid = ? ORDER BY caption");
+	$sth->execute([$_SESSION['uid']]);
 
 	print "<select default=\"$value\" name=\"" . htmlspecialchars($name) .
 		"\" $attributes>";
 
-	while ($line = db_fetch_assoc($result)) {
+	while ($line = $sth->fetch()) {
 
 		$issel = ($line["caption"] == $value) ? "selected=\"1\"" : "";
 
