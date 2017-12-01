@@ -298,7 +298,8 @@ class API extends Handler {
 
 			if ($num_updated > 0 && $field == "unread") {
 				$sth = $this->pdo->query("SELECT DISTINCT feed_id FROM ttrss_user_entries
-					WHERE ref_id IN ($article_ids)");
+					WHERE ref_id IN ($article_qmarks)");
+				$sth->execute($article_ids);
 
 				while ($line = $sth->fetch()) {
 					CCache::update($line["feed_id"], $_SESSION["uid"]);
