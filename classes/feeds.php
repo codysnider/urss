@@ -39,7 +39,7 @@ class Feeds extends Handler_Protected {
 			$search_q = "";
 		}
 
-		$reply .= "<span class=\"holder\">";
+		$reply = "<span class=\"holder\">";
 
 		$rss_link = htmlspecialchars(get_self_url_prefix() .
 			"/public.php?op=rss&id=$feed_id$cat_q$search_q");
@@ -233,8 +233,8 @@ class Feeds extends Handler_Protected {
 			}
 		}
 
-		@$search = db_escape_string($_REQUEST["query"]);
-		@$search_language = db_escape_string($_REQUEST["search_language"]); // PGSQL only
+		@$search = $_REQUEST["query"];
+		@$search_language = $_REQUEST["search_language"]; // PGSQL only
 
 		if ($search) {
 			$disable_cache = true;
@@ -833,16 +833,16 @@ class Feeds extends Handler_Protected {
 
 		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("0", $timing_info);
 
-		$feed = db_escape_string($_REQUEST["feed"]);
-		$method = db_escape_string($_REQUEST["m"]);
-		$view_mode = db_escape_string($_REQUEST["view_mode"]);
+		$feed = $_REQUEST["feed"];
+		$method = $_REQUEST["m"];
+		$view_mode = $_REQUEST["view_mode"];
 		$limit = 30;
 		@$cat_view = $_REQUEST["cat"] == "true";
-		@$next_unread_feed = db_escape_string($_REQUEST["nuf"]);
-		@$offset = db_escape_string($_REQUEST["skip"]);
-		@$vgroup_last_feed = db_escape_string($_REQUEST["vgrlf"]);
-		$order_by = db_escape_string($_REQUEST["order_by"]);
-		$check_first_id = db_escape_string($_REQUEST["fid"]);
+		@$next_unread_feed = $_REQUEST["nuf"];
+		@$offset = $_REQUEST["skip"];
+		@$vgroup_last_feed = $_REQUEST["vgrlf"];
+		$order_by = $_REQUEST["order_by"];
+		$check_first_id = $_REQUEST["fid"];
 
 		if (is_numeric($feed)) $feed = (int) $feed;
 
@@ -1105,7 +1105,7 @@ class Feeds extends Handler_Protected {
 	function feedBrowser() {
 		if (defined('_DISABLE_FEED_BROWSER') && _DISABLE_FEED_BROWSER) return;
 
-		$browser_search = db_escape_string($_REQUEST["search"]);
+		$browser_search = $_REQUEST["search"];
 
 		print_hidden("op", "rpc");
 		print_hidden("method", "updateFeedBrowser");
@@ -1151,7 +1151,7 @@ class Feeds extends Handler_Protected {
 	}
 
 	function search() {
-		$this->params = explode(":", db_escape_string($_REQUEST["param"]), 2);
+		$this->params = explode(":", $_REQUEST["param"], 2);
 
 		$active_feed_id = sprintf("%d", $this->params[0]);
 		$is_cat = $this->params[1] != "false";
