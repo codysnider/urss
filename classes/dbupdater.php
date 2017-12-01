@@ -1,19 +1,19 @@
 <?php
 class DbUpdater {
 
-	private $dbh;
+	private $pdo;
 	private $db_type;
 	private $need_version;
 
-	function __construct($dbh, $db_type, $need_version) {
-		$this->dbh = $dbh;
+	function __construct($pdo, $db_type, $need_version) {
+		$this->pdo = Db::pdo(); //$pdo;
 		$this->db_type = $db_type;
 		$this->need_version = (int) $need_version;
 	}
 
 	function getSchemaVersion() {
-		$result = db_query("SELECT schema_version FROM ttrss_version");
-		return (int) db_fetch_result($result, 0, "schema_version");
+		$row = $this->pdo->query("SELECT schema_version FROM ttrss_version")->fetch();
+		return (int) $row['schema_version'];
 	}
 
 	function isUpdateRequired() {
@@ -26,6 +26,7 @@ class DbUpdater {
 		if (file_exists($filename)) {
 			return explode(";", preg_replace("/[\r\n]/", "", file_get_contents($filename)));
 		} else {
+			user_error("DB Updater: schema file for version $version is not found.");
 			return false;
 		}
 	}
@@ -37,17 +38,17 @@ class DbUpdater {
 
 			if (is_array($lines)) {
 
-				db_query("BEGIN");
+				$this->pdo->beginTransaction();
 
 				foreach ($lines as $line) {
 					if (strpos($line, "--") !== 0 && $line) {
-						if (!db_query($line, false)) {
+						if (!$this->pdo->query($line)) {
 							if ($html_output) {
 								print_notice("Query: $line");
-								print_error("Error: " . db_last_query_error());
+								print_error("Error: " . implode(", ", $this->pdo->errorInfo()));
 							} else {
 								_debug("Query: $line");
-								_debug("Error: " . db_last_query_error());
+								_debug("Error: " . implode(", ", $this->pdo->errorInfo()));
 							}
 
 							return false;
@@ -58,10 +59,10 @@ class DbUpdater {
 				$db_version = $this->getSchemaVersion();
 
 				if ($db_version == $version) {
-					db_query("COMMIT");
+					$this->pdo->commit();
 					return true;
 				} else {
-					db_query("ROLLBACK");
+					$this->pdo->rollBack();
 					return false;
 				}
 			} else {
