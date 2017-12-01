@@ -1,6 +1,6 @@
 <?php
 	define('EXPECTED_CONFIG_VERSION', 26);
-	define('SCHEMA_VERSION', 132);
+	define('SCHEMA_VERSION', 133);
 
 	define('LABEL_BASE_INDEX', -1024);
 	define('PLUGIN_FEED_BASE_INDEX', -128);
@@ -57,6 +57,9 @@
 	// do not cache files smaller than that (bytes)
 	define_default('CACHE_MAX_DAYS', 7);
 	// max age in days for various automatically cached (temporary) files
+    define_default('MAX_CONDITIONAL_INTERVAL', 3600*6);
+    // max interval between forced unconditional updates for servers
+    // not complying with http if-modified-since (seconds)
 
 	/* tunables end here */
 
