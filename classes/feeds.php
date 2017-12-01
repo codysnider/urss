@@ -1869,7 +1869,7 @@ class Feeds extends Handler_Protected {
 		}
 
 		if ($limit > 0) {
-			$limit_query_part = "LIMIT " . $pdo->quote($limit);
+			$limit_query_part = "LIMIT " . (int)$limit;
 		}
 
 		$allow_archived = false;
@@ -2027,7 +2027,7 @@ class Feeds extends Handler_Protected {
 		$content_query_part = "content, ";
 
 		if ($limit_query_part) {
-			$offset_query_part = "OFFSET " . $pdo->quote($offset);
+			$offset_query_part = "OFFSET " . (int)$offset;
 		} else {
 			$offset_query_part = "";
 		}
