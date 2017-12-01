@@ -167,122 +167,30 @@ function print_feed_multi_select($id, $default_ids = [],
     }
 }
 
-
-/*function print_feed_select($id, $default_id = "",
-						   $attributes = "", $include_all_feeds = true,
-						   $root_id = false, $nest_level = 0) {
-
-	if (!$root_id) {
-		print "<select id=\"$id\" name=\"$id\" $attributes>";
-		if ($include_all_feeds) {
-			$is_selected = ("0" == $default_id) ? "selected=\"1\"" : "";
-			print "<option $is_selected value=\"0\">".__('All feeds')."</option>";
-		}
-	}
-
-	if (get_pref('ENABLE_FEED_CATS')) {
-
-		if ($root_id)
-			$parent_qpart = "parent_cat = '$root_id'";
-		else
-			$parent_qpart = "parent_cat IS NULL";
-
-		$result = db_query("SELECT id,title,
-				(SELECT COUNT(id) FROM ttrss_feed_categories AS c2 WHERE
-					c2.parent_cat = ttrss_feed_categories.id) AS num_children
-				FROM ttrss_feed_categories
-				WHERE owner_uid = ".$_SESSION["uid"]." AND $parent_qpart ORDER BY title");
-
-		while ($line = db_fetch_assoc($result)) {
-
-			for ($i = 0; $i < $nest_level; $i++)
-				$line["title"] = " - " . $line["title"];
-
-			$is_selected = ("CAT:".$line["id"] == $default_id) ? "selected=\"1\"" : "";
-
-			printf("<option $is_selected value='CAT:%d'>%s</option>",
-				$line["id"], htmlspecialchars($line["title"]));
-
-			if ($line["num_children"] > 0)
-				print_feed_select($id, $default_id, $attributes,
-					$include_all_feeds, $line["id"], $nest_level+1);
-
-			$feed_result = db_query("SELECT id,title FROM ttrss_feeds
-					WHERE cat_id = '".$line["id"]."' AND owner_uid = ".$_SESSION["uid"] . " ORDER BY title");
-
-			while ($fline = db_fetch_assoc($feed_result)) {
-				$is_selected = ($fline["id"] == $default_id) ? "selected=\"1\"" : "";
-
-				$fline["title"] = " + " . $fline["title"];
-
-				for ($i = 0; $i < $nest_level; $i++)
-					$fline["title"] = " - " . $fline["title"];
-
-				printf("<option $is_selected value='%d'>%s</option>",
-					$fline["id"], htmlspecialchars($fline["title"]));
-			}
-		}
-
-		if (!$root_id) {
-			$default_is_cat = ($default_id == "CAT:0");
-			$is_selected = $default_is_cat ? "selected=\"1\"" : "";
-
-			printf("<option $is_selected value='CAT:0'>%s</option>",
-				__("Uncategorized"));
-
-			$feed_result = db_query("SELECT id,title FROM ttrss_feeds
-					WHERE cat_id IS NULL AND owner_uid = ".$_SESSION["uid"] . " ORDER BY title");
-
-			while ($fline = db_fetch_assoc($feed_result)) {
-				$is_selected = ($fline["id"] == $default_id && !$default_is_cat) ? "selected=\"1\"" : "";
-
-				$fline["title"] = " + " . $fline["title"];
-
-				for ($i = 0; $i < $nest_level; $i++)
-					$fline["title"] = " - " . $fline["title"];
-
-				printf("<option $is_selected value='%d'>%s</option>",
-					$fline["id"], htmlspecialchars($fline["title"]));
-			}
-		}
-
-	} else {
-		$result = db_query("SELECT id,title FROM ttrss_feeds
-				WHERE owner_uid = ".$_SESSION["uid"]." ORDER BY title");
-
-		while ($line = db_fetch_assoc($result)) {
-
-			$is_selected = ($line["id"] == $default_id) ? "selected=\"1\"" : "";
-
-			printf("<option $is_selected value='%d'>%s</option>",
-				$line["id"], htmlspecialchars($line["title"]));
-		}
-	}
-
-	if (!$root_id) {
-		print "</select>";
-	}
-}*/
-
 function print_feed_cat_select($id, $default_id,
-							   $attributes, $include_all_cats = true, $root_id = false, $nest_level = 0) {
+							   $attributes, $include_all_cats = true, $root_id = null, $nest_level = 0) {
 
 	if (!$root_id) {
 		print "<select id=\"$id\" name=\"$id\" default=\"$default_id\" $attributes>";
 	}
 
-	if ($root_id)
-		$parent_qpart = "parent_cat = '$root_id'";
-	else
-		$parent_qpart = "parent_cat IS NULL";
+	$pdo = DB::pdo();
 
-	$result = db_query("SELECT id,title,
+	if (!$root_id) $root_id = null;
+
+	$sth = $pdo->prepare("SELECT id,title,
 				(SELECT COUNT(id) FROM ttrss_feed_categories AS c2 WHERE
 					c2.parent_cat = ttrss_feed_categories.id) AS num_children
 				FROM ttrss_feed_categories
-				WHERE owner_uid = ".$_SESSION["uid"]." AND $parent_qpart ORDER BY title");
+				WHERE owner_uid = :uid AND 
+				  (parent_cat = :root_id OR :root_id IS NULL AND parent_cat IS NULL) ORDER BY title");
+	$sth->execute([":uid" => $_SESSION['uid'], ":root_id" => $root_id]);
 
-	while ($line = db_fetch_assoc($result)) {
+	$found = 0;
+
+	while ($line = $sth->fetch()) {
+        ++$found;
+
 		if ($line["id"] == $default_id) {
 			$is_selected = "selected=\"1\"";
 		} else {
@@ -303,7 +211,7 @@ function print_feed_cat_select($id, $default_id,
 
 	if (!$root_id) {
 		if ($include_all_cats) {
-			if (db_num_rows($result) > 0) {
+			if ($found > 0) {
 				print "<option disabled=\"1\">--------</option>";
 			}
 
