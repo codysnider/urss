@@ -36,25 +36,6 @@ class Handler_Public extends Handler {
 			$date_sort_field = "updated DESC";
 			break;
 		}
-
-		$params = array(
-			"owner_uid" => $owner_uid,
-			"feed" => $feed,
-			"limit" => 1,
-			"view_mode" => $view_mode,
-			"cat_view" => $is_cat,
-			"search" => $search,
-			"override_order" => $date_sort_field,
-			"include_children" => true,
-			"ignore_vfeed_group" => true,
-			"offset" => $offset,
-			"start_ts" => $start_ts
-		);
-
-		$qfh_ret = Feeds::queryFeedHeadlines($params);
-
-		$result = $qfh_ret[0];
-
 		$params = array(
 			"owner_uid" => $owner_uid,
 			"feed" => $feed,
