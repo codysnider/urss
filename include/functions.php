@@ -2537,3 +2537,6 @@
 		return $bad_tables;
 	}
 
+    function arr_qmarks($arr) {
+        return str_repeat('?,', count($arr) - 1) . '?';
+    }
