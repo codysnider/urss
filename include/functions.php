@@ -1952,16 +1952,17 @@
 		if (!$feed_cat) return false;
 
 		$feed_cat = mb_substr($feed_cat, 0, 250);
+		if (!$parent_cat_id) $parent_cat_id = null;
 
 		$pdo = Db::pdo();
 		$pdo->beginTransaction();
 
 		$sth = $pdo->prepare("SELECT id FROM ttrss_feed_categories
 				WHERE (parent_cat = :parent OR (:parent IS NULL AND parent_cat IS NULL)) 
-				AND title = :cat AND owner_uid = :uid");
+				AND title = :title AND owner_uid = :uid");
 		$sth->execute([':parent' => $parent_cat_id, ':title' => $feed_cat, ':uid' => $_SESSION['uid']]);
 
-		if ($sth->fetch()) {
+		if (!$sth->fetch()) {
 
 			$sth = $pdo->prepare("INSERT INTO ttrss_feed_categories (owner_uid,title,parent_cat)
 					VALUES (?, ?, ?)");
