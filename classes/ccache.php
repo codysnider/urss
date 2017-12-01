@@ -1,17 +1,15 @@
 <?php
 class CCache {
-	/* function ccache_zero($feed_id, $owner_uid) {
-		db_query("UPDATE ttrss_counters_cache SET
-			value = 0, updated = NOW() WHERE
-			feed_id = '$feed_id' AND owner_uid = '$owner_uid'");
-	} */
-
 	static function zero_all($owner_uid) {
-		db_query("UPDATE ttrss_counters_cache SET
-			value = 0 WHERE owner_uid = '$owner_uid'");
+		$pdo = Db::pdo();
 
-		db_query("UPDATE ttrss_cat_counters_cache SET
-			value = 0 WHERE owner_uid = '$owner_uid'");
+		$sth = $pdo->prepare("UPDATE ttrss_counters_cache SET
+			value = 0 WHERE owner_uid = ?");
+		$sth->execute([$owner_uid]);
+
+		$sth = $pdo->prepare("UPDATE ttrss_cat_counters_cache SET
+			value = 0 WHERE owner_uid = ?");
+		$sth->execute([$owner_uid]);
 	}
 
 	static function remove($feed_id, $owner_uid, $is_cat = false) {
@@ -22,19 +20,25 @@ class CCache {
 			$table = "ttrss_cat_counters_cache";
 		}
 
-		db_query("DELETE FROM $table WHERE
-			feed_id = '$feed_id' AND owner_uid = '$owner_uid'");
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("DELETE FROM $table WHERE
+			feed_id = ? AND owner_uid = ?");
+		$sth->execute([$feed_id, $owner_uid]);
 
 	}
 
 	static function update_all($owner_uid) {
 
+		$pdo = Db::pdo();
+
 		if (get_pref('ENABLE_FEED_CATS', $owner_uid)) {
 
-			$result = db_query("SELECT feed_id FROM ttrss_cat_counters_cache
-				WHERE feed_id > 0 AND owner_uid = '$owner_uid'");
+			$sth = $pdo->prepare("SELECT feed_id FROM ttrss_cat_counters_cache
+				WHERE feed_id > 0 AND owner_uid = ?");
+			$sth->execute([$owner_uid]);
 
-			while ($line = db_fetch_assoc($result)) {
+			while ($line = $sth->fetch()) {
 				CCache::update($line["feed_id"], $owner_uid, true);
 			}
 
@@ -43,10 +47,11 @@ class CCache {
 			CCache::update(0, $owner_uid, true);
 
 		} else {
-			$result = db_query("SELECT feed_id FROM ttrss_counters_cache
-				WHERE feed_id > 0 AND owner_uid = '$owner_uid'");
+			$sth = $pdo->prepare("SELECT feed_id FROM ttrss_counters_cache
+				WHERE feed_id > 0 AND owner_uid = ?");
+			$sth->execute([$owner_uid]);
 
-			while ($line = db_fetch_assoc($result)) {
+			while ($line = $sth->fetch()) {
 				print CCache::update($line["feed_id"], $owner_uid);
 
 			}
@@ -61,27 +66,20 @@ class CCache {
 
 		if (!$is_cat) {
 			$table = "ttrss_counters_cache";
-			/* if ($feed_id > 0) {
-				$tmp_result = db_query("SELECT owner_uid FROM ttrss_feeds
-					WHERE id = '$feed_id'");
-				$owner_uid = db_fetch_result($tmp_result, 0, "owner_uid");
-			} */
 		} else {
 			$table = "ttrss_cat_counters_cache";
 		}
 
-		if (DB_TYPE == "pgsql") {
-			$date_qpart = "updated > NOW() - INTERVAL '15 minutes'";
-		} else if (DB_TYPE == "mysql") {
-			$date_qpart = "updated > DATE_SUB(NOW(), INTERVAL 15 MINUTE)";
-		}
+		$pdo = Db::pdo();
 
-		$result = db_query("SELECT value FROM $table
-			WHERE owner_uid = '$owner_uid' AND feed_id = '$feed_id'
+		$sth = $pdo->prepare("SELECT value FROM $table
+			WHERE owner_uid = ? AND feed_id = ?
 			LIMIT 1");
 
-		if (db_num_rows($result) == 1) {
-			return db_fetch_result($result, 0, "value");
+		$sth->execute([$owner_uid, $feed_id]);
+
+		if ($row = $sth->fetch()) {
+			return $row["value"];
 		} else {
 			if ($no_update) {
 				return -1;
@@ -96,12 +94,6 @@ class CCache {
 						   $update_pcat = true, $pcat_fast = false) {
 
 		if (!is_numeric($feed_id)) return;
-
-		/* if (!$is_cat && $feed_id > 0) {
-			$tmp_result = db_query("SELECT owner_uid FROM ttrss_feeds
-				WHERE id = '$feed_id'");
-			$owner_uid = db_fetch_result($tmp_result, 0, "owner_uid");
-		} */
 
 		$prev_unread = CCache::find($feed_id, $owner_uid, $is_cat, true);
 
@@ -119,54 +111,59 @@ class CCache {
 			$table = "ttrss_cat_counters_cache";
 		}
 
-		if ($is_cat && $feed_id >= 0) {
-			if ($feed_id != 0) {
-				$cat_qpart = "cat_id = '$feed_id'";
-			} else {
-				$cat_qpart = "cat_id IS NULL";
-			}
+		$pdo = Db::pdo();
 
+		if ($is_cat && $feed_id >= 0) {
 			/* Recalculate counters for child feeds */
 
 			if (!$pcat_fast) {
-				$result = db_query("SELECT id FROM ttrss_feeds
-						WHERE owner_uid = '$owner_uid' AND $cat_qpart");
+				$sth = $pdo->prepare("SELECT id FROM ttrss_feeds
+						WHERE owner_uid = :uid AND cat_id = :cat OR (:cat = 0 AND cat_id IS NULL)");
+				$sth->execute([":uid" => $owner_uid, ":cat" => $feed_id]);
 
-				while ($line = db_fetch_assoc($result)) {
+				while ($line = $sth->fetch()) {
 					CCache::update($line["id"], $owner_uid, false, false);
 				}
 			}
 
-			$result = db_query("SELECT SUM(value) AS sv
+			$sth = $pdo->prepare("SELECT SUM(value) AS sv
 				FROM ttrss_counters_cache, ttrss_feeds
-				WHERE id = feed_id AND $cat_qpart AND
-				ttrss_counters_cache.owner_uid = $owner_uid AND
-				ttrss_feeds.owner_uid = '$owner_uid'");
+				WHERE id = feed_id AND 
+				cat_id = :cat OR (:cat IS NULL AND cat_id IS NULL) AND
+				ttrss_counters_cache.owner_uid = :uid AND
+				ttrss_feeds.owner_uid = :uid");
+			$sth->execute([":uid" => $owner_uid, ":cat" => $feed_id]);
+			$row = $sth->fetch();
 
-			$unread = (int) db_fetch_result($result, 0, "sv");
+			$unread = (int) $row["sv"];
 
 		} else {
 			$unread = (int) Feeds::getFeedArticles($feed_id, $is_cat, true, $owner_uid);
 		}
 
-		db_query("BEGIN");
+		$pdo->beginTransaction();
 
-		$result = db_query("SELECT feed_id FROM $table
-			WHERE owner_uid = '$owner_uid' AND feed_id = '$feed_id' LIMIT 1");
+		$sth = $pdo->prepare("SELECT feed_id FROM $table
+			WHERE owner_uid = ? AND feed_id = ? LIMIT 1");
+		$sth->execute([$owner_uid, $feed_id]);
 
-		if (db_num_rows($result) == 1) {
-			db_query("UPDATE $table SET
-				value = '$unread', updated = NOW() WHERE
-				feed_id = '$feed_id' AND owner_uid = '$owner_uid'");
+		if ($sth->fetch()) {
+
+			$sth = $pdo->prepare("UPDATE $table SET
+				value = ?, updated = NOW() WHERE
+				feed_id = ? AND owner_uid = ?");
+
+			$sth->execute([$unread, $feed_id, $owner_uid]);
 
 		} else {
-			db_query("INSERT INTO $table
+			$sth = $pdo->prepare("INSERT INTO $table
 				(feed_id, value, owner_uid, updated)
 				VALUES
-				($feed_id, $unread, $owner_uid, NOW())");
+				(?, ?, ?, NOW())");
+			$sth->execute([$feed_id, $unread, $owner_uid]);
 		}
 
-		db_query("COMMIT");
+		$pdo->commit();
 
 		if ($feed_id > 0 && $prev_unread != $unread) {
 
@@ -176,13 +173,13 @@ class CCache {
 
 				if ($update_pcat) {
 
-					$result = db_query("SELECT cat_id FROM ttrss_feeds
-						WHERE owner_uid = '$owner_uid' AND id = '$feed_id'");
+					$sth = $pdo->prepare("SELECT cat_id FROM ttrss_feeds
+						WHERE owner_uid = ? AND id = ?");
+					$sth->execute([$owner_uid, $feed_id]);
 
-					$cat_id = (int) db_fetch_result($result, 0, "cat_id");
-
-					CCache::update($cat_id, $owner_uid, true, true, true);
-
+					if ($row = $sth->fetch()) {
+						CCache::update($row["cat_id"], $owner_uid, true, true, true);
+					}
 				}
 			}
 		} else if ($feed_id < 0) {
@@ -191,38 +188,5 @@ class CCache {
 
 		return $unread;
 	}
-
-	/* function ccache_cleanup($owner_uid) {
-
-		if (DB_TYPE == "pgsql") {
-			db_query("DELETE FROM ttrss_counters_cache AS c1 WHERE
-				(SELECT count(*) FROM ttrss_counters_cache AS c2
-					WHERE c1.feed_id = c2.feed_id AND c2.owner_uid = c1.owner_uid) > 1
-					AND owner_uid = '$owner_uid'");
-
-			db_query("DELETE FROM ttrss_cat_counters_cache AS c1 WHERE
-				(SELECT count(*) FROM ttrss_cat_counters_cache AS c2
-					WHERE c1.feed_id = c2.feed_id AND c2.owner_uid = c1.owner_uid) > 1
-					AND owner_uid = '$owner_uid'");
-		} else {
-			db_query("DELETE c1 FROM
-					ttrss_counters_cache AS c1,
-					ttrss_counters_cache AS c2
-				WHERE
-					c1.owner_uid = '$owner_uid' AND
-					c1.owner_uid = c2.owner_uid AND
-					c1.feed_id = c2.feed_id");
-
-			db_query("DELETE c1 FROM
-					ttrss_cat_counters_cache AS c1,
-					ttrss_cat_counters_cache AS c2
-				WHERE
-					c1.owner_uid = '$owner_uid' AND
-					c1.owner_uid = c2.owner_uid AND
-					c1.feed_id = c2.feed_id");
-
-		}
-	} */
-
 
 }
