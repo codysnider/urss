@@ -229,7 +229,7 @@
 		$pdo = Db::pdo();
 
 		$sth = $pdo->prepare("SELECT owner_uid FROM ttrss_feeds WHERE id = ?");
-		$sth->execute($feed_id);
+		$sth->execute([$feed_id]);
 
 		$owner_uid = false;
 

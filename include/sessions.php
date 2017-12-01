@@ -27,8 +27,10 @@
 		global $schema_version;
 
 		if (!$schema_version) {
-			$result = Db::get()->query("SELECT schema_version FROM ttrss_version");
-			$version = Db::get()->fetch_result($result, 0, "schema_version");
+			$row = Db::pdo()->query("SELECT schema_version FROM ttrss_version")->fetch();
+
+			$version = $row["schema_version"];
+
 			$schema_version = $version;
 			return $version;
 		} else {
@@ -44,28 +46,30 @@
 				__("Session failed to validate (schema version changed)");
 			return false;
 		}
+        $pdo = Db::pdo();
 
 		if ($_SESSION["uid"]) {
-			$result = Db::get()->query(
-				"SELECT pwd_hash FROM ttrss_users WHERE id = '".$_SESSION["uid"]."'");
+			$sth = $pdo->prepare("SELECT pwd_hash FROM ttrss_users WHERE id = ?");
+			$sth->execute([$_SESSION['uid']]);
 
 			// user not found
-			if (Db::get()->num_rows($result) == 0) {
+			if ($row = $sth->fetch()) {
+                $pwd_hash = $row["pwd_hash"];
 
-				$_SESSION["login_error_msg"] =
-					__("Session failed to validate (user not found)");
+                if ($pwd_hash != $_SESSION["pwd_hash"]) {
 
-				return false;
+                    $_SESSION["login_error_msg"] =
+                        __("Session failed to validate (password changed)");
+
+                    return false;
+                }
 			} else {
-				$pwd_hash = Db::get()->fetch_result($result, 0, "pwd_hash");
 
-				if ($pwd_hash != $_SESSION["pwd_hash"]) {
+                $_SESSION["login_error_msg"] =
+                    __("Session failed to validate (user not found)");
 
-					$_SESSION["login_error_msg"] =
-						__("Session failed to validate (password changed)");
+                return false;
 
-					return false;
-				}
 			}
 		}
 
@@ -82,18 +86,21 @@
 	function ttrss_read ($id){
 		global $session_expire;
 
-		$res = Db::get()->query("SELECT data FROM ttrss_sessions WHERE id='$id'");
+		$sth = Db::pdo()->prepare("SELECT data FROM ttrss_sessions WHERE id=?");
+		$sth->execute([$id]);
 
-		if (Db::get()->num_rows($res) != 1) {
+		if ($row = $sth->fetch()) {
+            return base64_decode($row["data"]);
 
-			$expire = time() + $session_expire;
-
-			Db::get()->query("INSERT INTO ttrss_sessions (id, data, expire)
-					VALUES ('$id', '', '$expire')");
-
-		 	return "";
 		} else {
-			return base64_decode(Db::get()->fetch_result($res, 0, "data"));
+            $expire = time() + $session_expire;
+
+            $sth = Db::pdo()->prepare("INSERT INTO ttrss_sessions (id, data, expire)
+					VALUES (?, '', ?)");
+            $sth->execute([$id, $expire]);
+
+            return "";
+
 		}
 
 	}
@@ -104,7 +111,8 @@
 		$data = base64_encode($data);
 		$expire = time() + $session_expire;
 
-		Db::get()->query("UPDATE ttrss_sessions SET data='$data', expire='$expire' WHERE id='$id'");
+        $sth = Db::pdo()->prepare("UPDATE ttrss_sessions SET data=?, expire=? WHERE id=?");
+        $sth->execute([$data, $expire, $id]);
 
 		return true;
 	}
@@ -114,7 +122,8 @@
 	}
 
 	function ttrss_destroy($id) {
-		Db::get()->query("DELETE FROM ttrss_sessions WHERE id = '$id'");
+		$sth = Db::pdo()->prepare("DELETE FROM ttrss_sessions WHERE id = ?");
+		$sth->execute([$id]);
 
 		return true;
 	}
@@ -123,7 +132,7 @@
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	function ttrss_gc ($expire) {
-		Db::get()->query("DELETE FROM ttrss_sessions WHERE expire < " . time());
+		Db::pdo()->query("DELETE FROM ttrss_sessions WHERE expire < " . time());
 
 		return true;
 	}
