@@ -19,15 +19,17 @@ class Digest
 		if ($debug) _debug("Sending digests, batch of max $user_limit users, headline limit = $limit");
 
 		if (DB_TYPE == "pgsql") {
-			$interval_query = "last_digest_sent < NOW() - INTERVAL '1 days'";
+			$interval_qpart = "last_digest_sent < NOW() - INTERVAL '1 days'";
 		} else if (DB_TYPE == "mysql") {
-			$interval_query = "last_digest_sent < DATE_SUB(NOW(), INTERVAL 1 DAY)";
+			$interval_qpart = "last_digest_sent < DATE_SUB(NOW(), INTERVAL 1 DAY)";
 		}
 
-		$result = db_query("SELECT id,email FROM ttrss_users
-				WHERE email != '' AND (last_digest_sent IS NULL OR $interval_query)");
+		$pdo = Db::pdo();
 
-		while ($line = db_fetch_assoc($result)) {
+		$res = $pdo->query("SELECT id,email FROM ttrss_users
+				WHERE email != '' AND (last_digest_sent IS NULL OR $interval_qpart)");
+
+		while ($line = $res->fetch()) {
 
 			if (@get_pref('DIGEST_ENABLE', $line['id'], false)) {
 				$preferred_ts = strtotime(get_pref('DIGEST_PREFERRED_TIME', $line['id'], '00:00'));
@@ -70,8 +72,9 @@ class Digest
 						if ($debug) _debug("No headlines");
 					}
 
-					db_query("UPDATE ttrss_users SET last_digest_sent = NOW()
-						WHERE id = " . $line["id"]);
+					$sth = $pdo->prepare("UPDATE ttrss_users SET last_digest_sent = NOW()
+						WHERE id = ?");
+					$sth->execute([$line["id"]]);
 
 				}
 			}
@@ -102,13 +105,17 @@ class Digest
 
 		$affected_ids = array();
 
+		$days = (int) $days;
+
 		if (DB_TYPE == "pgsql") {
-			$interval_query = "ttrss_entries.date_updated > NOW() - INTERVAL '$days days'";
+			$interval_qpart = "ttrss_entries.date_updated > NOW() - INTERVAL '$days days'";
 		} else if (DB_TYPE == "mysql") {
-			$interval_query = "ttrss_entries.date_updated > DATE_SUB(NOW(), INTERVAL $days DAY)";
+			$interval_qpart = "ttrss_entries.date_updated > DATE_SUB(NOW(), INTERVAL $days DAY)";
 		}
 
-		$result = db_query("SELECT ttrss_entries.title,
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("SELECT ttrss_entries.title,
 				ttrss_feeds.title AS feed_title,
 				COALESCE(ttrss_feed_categories.title, '" . __('Uncategorized') . "') AS cat_title,
 				date_updated,
@@ -124,19 +131,20 @@ class Digest
 			WHERE
 				ref_id = ttrss_entries.id AND feed_id = ttrss_feeds.id
 				AND include_in_digest = true
-				AND $interval_query
-				AND ttrss_user_entries.owner_uid = $user_id
+				AND $interval_qpart
+				AND ttrss_user_entries.owner_uid = ?
 				AND unread = true
 				AND score >= 0
 			ORDER BY ttrss_feed_categories.title, ttrss_feeds.title, score DESC, date_updated DESC
-			LIMIT $limit");
+			LIMIT ?");
+		$sth->execute([$user_id, $limit]);
 
-		$headlines_count = db_num_rows($result);
-
+		$headlines_count = 0;
 		$headlines = array();
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 			array_push($headlines, $line);
+			$headlines_count++;
 		}
 
 		for ($i = 0; $i < sizeof($headlines); $i++) {
@@ -147,12 +155,6 @@ class Digest
 
 			$updated = make_local_datetime($line['last_updated'], false,
 				$user_id);
-
-			/*			if ($line["score"] != 0) {
-							if ($line["score"] > 0) $line["score"] = '+' . $line["score"];
-
-							$line["title"] .= " (".$line['score'].")";
-						} */
 
 			if (get_pref('ENABLE_FEED_CATS', $user_id)) {
 				$line['feed_title'] = $line['cat_title'] . " / " . $line['feed_title'];
