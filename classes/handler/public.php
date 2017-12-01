@@ -55,20 +55,6 @@ class Handler_Public extends Handler {
 
 		$result = $qfh_ret[0];
 
-		if (db_num_rows($result) != 0) {
-
-			$ts = strtotime(db_fetch_result($result, 0, $date_check_field));
-
-			if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) &&
-					strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $ts) {
-		      header('HTTP/1.0 304 Not Modified');
-		      return;
-			}
-
-			$last_modified = gmdate("D, d M Y H:i:s", $ts) . " GMT";
-			header("Last-Modified: $last_modified", true);
-		}
-
 		$params = array(
 			"owner_uid" => $owner_uid,
 			"feed" => $feed,
@@ -106,7 +92,7 @@ class Handler_Public extends Handler {
 			$tpl->setVariable('FEED_URL', htmlspecialchars($feed_self_url), true);
 
 			$tpl->setVariable('SELF_URL', htmlspecialchars(get_self_url_prefix()), true);
-			while ($line = db_fetch_assoc($result)) {
+			while ($line = $result->fetch()) {
 
 				$line["content_preview"] = sanitize(truncate_string(strip_tags($line["content"]), 100, '...'));
 
@@ -194,7 +180,7 @@ class Handler_Public extends Handler {
 
 			$feed['articles'] = array();
 
-			while ($line = db_fetch_assoc($result)) {
+			while ($line = $result->fetch()) {
 
 				$line["content_preview"] = sanitize(truncate_string(strip_tags($line["content_preview"]), 100, '...'));
 
