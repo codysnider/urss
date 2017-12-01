@@ -18,15 +18,11 @@ class Dlg extends Handler_Protected {
 
 		print "<div class=\"prefFeedOPMLHolder\">";
 
-		$this->pdo->beginTransaction();
-
 		print "<ul class='nomarks'>";
 
 		$opml = new Opml($_REQUEST);
 
 		$opml->opml_import($_SESSION["uid"]);
-
-		$this->pdo->commit();
 
 		print "</ul>";
 		print "</div>";

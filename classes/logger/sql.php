@@ -7,6 +7,12 @@ class Logger_SQL {
 		
 		if ($pdo && get_schema_version() > 117) {
 
+			try {
+				$pdo->rollBack();
+			} catch (Exception $e) {
+				//
+			}
+
 			$owner_uid = $_SESSION["uid"] ? $_SESSION["uid"] : null;
 
 			$sth = $pdo->prepare("INSERT INTO ttrss_error_log

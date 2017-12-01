@@ -1823,6 +1823,7 @@
 	function load_filters($feed_id, $owner_uid) {
 		$filters = array();
 
+		$feed_id = (int) $feed_id;
 		$cat_id = (int)Feeds::getFeedCategory($feed_id);
 
 		if ($cat_id == 0)
@@ -1960,7 +1961,13 @@
 		if (!$parent_cat_id) $parent_cat_id = null;
 
 		$pdo = Db::pdo();
-		$pdo->beginTransaction();
+		$tr_in_progress = false;
+
+		try {
+			$pdo->beginTransaction();
+		} catch (Exception $e) {
+			$tr_in_progress = true;
+		}
 
 		$sth = $pdo->prepare("SELECT id FROM ttrss_feed_categories
 				WHERE (parent_cat = :parent OR (:parent IS NULL AND parent_cat IS NULL)) 
@@ -1973,7 +1980,7 @@
 					VALUES (?, ?, ?)");
 			$sth->execute([$_SESSION['uid'], $feed_cat, $parent_cat_id]);
 
-			$pdo->commit();
+			if (!$tr_in_progress) $pdo->commit();
 
 			return true;
 		}

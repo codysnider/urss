@@ -131,8 +131,13 @@ class Labels
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
 		$pdo = Db::pdo();
+		$tr_in_progress = false;
 
-		$pdo->beginTransaction();
+		try {
+			$pdo->beginTransaction();
+		} catch (Exception $e) {
+			$tr_in_progress = true;
+		}
 
 		$sth = $pdo->prepare("SELECT caption FROM ttrss_labels2
 			WHERE id = ?");
@@ -163,7 +168,7 @@ class Labels
 
 		}
 
-		$pdo->commit();
+		if (!$tr_in_progress) $pdo->commit();
 	}
 
 	static function create($caption, $fg_color = '', $bg_color = '', $owner_uid = false)	{
@@ -172,7 +177,13 @@ class Labels
 
 		$pdo = Db::pdo();
 
-		$pdo->beginTransaction();
+		$tr_in_progress = false;
+
+		try {
+			$pdo->beginTransaction();
+		} catch (Exception $e) {
+			$tr_in_progress = true;
+		}
 
 		$sth = $pdo->prepare("SELECT id FROM ttrss_labels2
 			WHERE caption = ? AND owner_uid = ?");
@@ -187,7 +198,7 @@ class Labels
 			$result = $sth->rowCount();
 		}
 
-		$pdo->commit();
+		if (!$tr_in_progress) $pdo->commit();
 
 		return $result;
 	}
