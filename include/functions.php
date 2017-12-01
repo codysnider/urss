@@ -601,8 +601,8 @@
 
 		$u_sth = $pdo->prepare("SELECT pref_name
 			FROM ttrss_user_prefs WHERE owner_uid = :uid AND 
-				(:profile IS NULL AND profile is NULL OR profile = :profile)");
-		$u_sth->execute(['uid' => $uid, 'profile' => $profile]);
+				profile = :profile OR (:profile IS NULL AND profile IS NULL)");
+		$u_sth->execute([':uid' => $uid, ':profile' => $profile]);
 
 		$active_prefs = array();
 
@@ -1954,28 +1954,22 @@
 
 		////db_query("BEGIN");
 
-		if ($parent_cat_id) {
-			$parent_qpart = "parent_cat = '$parent_cat_id'";
-			$parent_insert = "'$parent_cat_id'";
-		} else {
-			$parent_qpart = "parent_cat IS NULL";
-			$parent_insert = "NULL";
-		}
-
 		$feed_cat = mb_substr($feed_cat, 0, 250);
 
 		$pdo = Db::pdo();
 
 		$sth = $pdo->prepare("SELECT id FROM ttrss_feed_categories
-				WHERE parent_cat = ? AND title = '$feed_cat' AND owner_uid = ?");
+				WHERE (:parent IS NULL AND parent_cat IS NULL OR parent_cat = :parent) 
+				AND title = :cat AND owner_uid = :uid");
+		$sth->execute([':parent' => $parent_cat_id, ':title' => $feed_cat, ':uid' => $_SESSION['uid']]);
 
-		if (db_num_rows($result) == 0) {
+		if ($sth->fetch()) {
 
-			$result = db_query(
-				"INSERT INTO ttrss_feed_categories (owner_uid,title,parent_cat)
-					VALUES ('".$_SESSION["uid"]."', '$feed_cat', $parent_insert)");
+			$sth = $pdo->prepare("INSERT INTO ttrss_feed_categories (owner_uid,title,parent_cat)
+					VALUES (?, ?, ?)");
+			$sth->execute([$_SESSION['uid'], $feed_cat, $parent_cat_id]);
 
-			db_query("COMMIT");
+			//db_query("COMMIT");
 
 			return true;
 		}
