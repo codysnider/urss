@@ -601,7 +601,7 @@
 
 		$u_sth = $pdo->prepare("SELECT pref_name
 			FROM ttrss_user_prefs WHERE owner_uid = :uid AND 
-				profile = :profile OR (:profile IS NULL AND profile IS NULL)");
+				(profile = :profile OR (:profile IS NULL AND profile IS NULL))");
 		$u_sth->execute([':uid' => $uid, ':profile' => $profile]);
 
 		$active_prefs = array();
@@ -1957,7 +1957,7 @@
 		$pdo->beginTransaction();
 
 		$sth = $pdo->prepare("SELECT id FROM ttrss_feed_categories
-				WHERE (:parent IS NULL AND parent_cat IS NULL OR parent_cat = :parent) 
+				WHERE (parent_cat = :parent OR (:parent IS NULL AND parent_cat IS NULL)) 
 				AND title = :cat AND owner_uid = :uid");
 		$sth->execute([':parent' => $parent_cat_id, ':title' => $feed_cat, ':uid' => $_SESSION['uid']]);
 

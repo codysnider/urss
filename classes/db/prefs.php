@@ -33,7 +33,7 @@ class Db_Prefs {
 			FROM
 				ttrss_user_prefs,ttrss_prefs,ttrss_prefs_types
 			WHERE
-				profile = :profile OR (:profile IS NULL AND profile IS NULL) AND
+				(profile = :profile OR (:profile IS NULL AND profile IS NULL)) AND
 				ttrss_prefs.pref_name NOT LIKE '_MOBILE%' AND
 				ttrss_prefs_types.id = type_id AND
 				owner_uid = :uid AND
@@ -74,7 +74,7 @@ class Db_Prefs {
 			FROM
 				ttrss_user_prefs,ttrss_prefs,ttrss_prefs_types
 			WHERE
-				profile = :profile OR (:profile IS NULL AND profile IS NULL) AND
+				(profile = :profile OR (:profile IS NULL AND profile IS NULL)) AND
 				ttrss_user_prefs.pref_name = :pref_name AND
 				ttrss_prefs_types.id = type_id AND
 				owner_uid = :uid AND

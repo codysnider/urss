@@ -95,7 +95,7 @@ function print_feed_multi_select($id, $default_ids = [],
 					c2.parent_cat = ttrss_feed_categories.id) AS num_children
 				FROM ttrss_feed_categories
 				WHERE owner_uid = :uid AND 
-				(parent_cat = :root_id OR :root_id IS NULL AND parent_cat IS NULL) ORDER BY title");
+				(parent_cat = :root_id OR (:root_id IS NULL AND parent_cat IS NULL)) ORDER BY title");
 
         $sth->execute([":uid" => $_SESSION['uid'], ":root_id" => $root_id]);
 
@@ -189,7 +189,7 @@ function print_feed_cat_select($id, $default_id,
 					c2.parent_cat = ttrss_feed_categories.id) AS num_children
 				FROM ttrss_feed_categories
 				WHERE owner_uid = :uid AND 
-				  (parent_cat = :root_id OR :root_id IS NULL AND parent_cat IS NULL) ORDER BY title");
+				  (parent_cat = :root_id OR (:root_id IS NULL AND parent_cat IS NULL)) ORDER BY title");
 	$sth->execute([":uid" => $_SESSION['uid'], ":root_id" => $root_id]);
 
 	$found = 0;
@@ -339,4 +339,3 @@ function print_label_select($name, $value, $attributes = "") {
 
 
 }
-
