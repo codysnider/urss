@@ -600,8 +600,9 @@
         $profile = $profile ? $profile : null;
 
 		$u_sth = $pdo->prepare("SELECT pref_name
-			FROM ttrss_user_prefs WHERE owner_uid = ? AND profile = ?");
-		$u_sth->execute([$uid, $profile]);
+			FROM ttrss_user_prefs WHERE owner_uid = :uid AND 
+				(:profile IS NULL AND profile is NULL OR profile = :profile)");
+		$u_sth->execute(['uid' => $uid, 'profile' => $profile]);
 
 		$active_prefs = array();
 
@@ -1966,7 +1967,7 @@
 		$pdo = Db::pdo();
 
 		$sth = $pdo->prepare("SELECT id FROM ttrss_feed_categories
-				WHERE $parent_qpart AND title = '$feed_cat' AND owner_uid = ?");
+				WHERE parent_cat = ? AND title = '$feed_cat' AND owner_uid = ?");
 
 		if (db_num_rows($result) == 0) {
 
