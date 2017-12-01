@@ -828,14 +828,14 @@
 						(SELECT COUNT(id) FROM ttrss_feeds WHERE
 							ttrss_feeds.id = feed_id) = 0");
 
-				$sth->execute($_SESSION['uid']);
+				$sth->execute([$_SESSION['uid']]);
 
 				$sth = $pdo->prepare("DELETE FROM ttrss_cat_counters_cache WHERE owner_uid = ? 
                     AND
 						(SELECT COUNT(id) FROM ttrss_feed_categories WHERE
 							ttrss_feed_categories.id = feed_id) = 0");
 
-                $sth->execute($_SESSION['uid']);
+                $sth->execute([$_SESSION['uid']]);
 			}
 
 		}
@@ -2043,24 +2043,26 @@
 
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
-		$sql_is_cat = bool_to_sql_bool($is_cat);
+		$pdo = Db::pdo();
 
-		$result = db_query("SELECT access_key FROM ttrss_access_keys
-				WHERE feed_id = '$feed_id'	AND is_cat = $sql_is_cat
-				AND owner_uid = " . $owner_uid);
+		$sth = $dbh->prepare("SELECT access_key FROM ttrss_access_keys
+				WHERE feed_id = ?	AND is_cat = ?
+				AND owner_uid = ?");
+		$sth->execute([$feed_id, $is_cat, $owner_uid]);
 
-		if (db_num_rows($result) == 1) {
-			return db_fetch_result($result, 0, "access_key");
+		if ($row = $sth->fetch()) {
+			return $row["access_key"];
 		} else {
-			$key = db_escape_string(uniqid_short());
+			$key = uniqid_short();
 
-			$result = db_query("INSERT INTO ttrss_access_keys
+			$sth = $pdo->prepare("INSERT INTO ttrss_access_keys
 					(access_key, feed_id, is_cat, owner_uid)
-					VALUES ('$key', '$feed_id', $sql_is_cat, '$owner_uid')");
+					VALUES (?, ?, ?, ?)");
+
+			$sth->execute([$key, $feed_id, $is_cat, $owner_uid]);
 
 			return $key;
 		}
-		return false;
 	}
 
 	function get_feeds_from_html($url, $content)
@@ -2153,6 +2155,8 @@
 
 	function cleanup_tags($days = 14, $limit = 1000) {
 
+	    $days = (int) $days;
+
 		if (DB_TYPE == "pgsql") {
 			$interval_query = "date_updated < NOW() - INTERVAL '$days days'";
 		} else if (DB_TYPE == "mysql") {
@@ -2161,27 +2165,28 @@
 
 		$tags_deleted = 0;
 
-		while ($limit > 0) {
+        $pdo = Db::pdo();
+
+        while ($limit > 0) {
 			$limit_part = 500;
 
-			$query = "SELECT ttrss_tags.id AS id
+			$sth = $pdo->prepare("SELECT ttrss_tags.id AS id
 					FROM ttrss_tags, ttrss_user_entries, ttrss_entries
 					WHERE post_int_id = int_id AND $interval_query AND
-					ref_id = ttrss_entries.id AND tag_cache != '' LIMIT $limit_part";
-
-			$result = db_query($query);
+					ref_id = ttrss_entries.id AND tag_cache != '' LIMIT ?");
+			$sth->execute([$limit]);
 
 			$ids = array();
 
-			while ($line = db_fetch_assoc($result)) {
+			while ($line = $sth->fetch()) {
 				array_push($ids, $line['id']);
 			}
 
 			if (count($ids) > 0) {
 				$ids = join(",", $ids);
 
-				$tmp_result = db_query("DELETE FROM ttrss_tags WHERE id IN ($ids)");
-				$tags_deleted += db_affected_rows($tmp_result);
+				$usth = $pdo->query("DELETE FROM ttrss_tags WHERE id IN ($ids)");
+				$tags_deleted = $usth->rowCount();
 			} else {
 				break;
 			}
@@ -2523,14 +2528,15 @@
 	}
 
 	function check_mysql_tables() {
-		$schema = db_escape_string(DB_NAME);
+		$pdo = Db::pdo();
 
-		$result = db_query("SELECT engine, table_name FROM information_schema.tables WHERE
-			table_schema = '$schema' AND table_name LIKE 'ttrss_%' AND engine != 'InnoDB'");
+		$sth = $pdo->prepare("SELECT engine, table_name FROM information_schema.tables WHERE
+			table_schema = ? AND table_name LIKE 'ttrss_%' AND engine != 'InnoDB'");
+		$sth->execute([DB_NAME]);
 
 		$bad_tables = [];
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 			array_push($bad_tables, $line);
 		}
 
