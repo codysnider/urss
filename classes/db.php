@@ -38,6 +38,21 @@ class Db implements IDb {
 			exit(101);
 		}
 
+		if (DB_TYPE == "pgsql") {
+
+			$this->pdo->query("set client_encoding = 'UTF-8'");
+			$this->pdo->query("set datestyle = 'ISO, european'");
+			$this->pdo->query("set TIME ZONE 0");
+			$this->pdo->query("set cpu_tuple_cost = 0.5");
+
+		} else if (DB_TYPE == "mysql") {
+			$this->pdo->query("SET time_zone = '+0:0'");
+
+			if (defined('MYSQL_CHARSET') && MYSQL_CHARSET) {
+				$this->pdo->query("SET NAMES " . MYSQL_CHARSET);
+			}
+		}
+
 		$this->link = $this->adapter->connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, defined('DB_PORT') ? DB_PORT : "");
 
 		if (!$this->link) {
