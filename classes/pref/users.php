@@ -25,66 +25,71 @@ class Pref_Users extends Handler_Protected {
 
 			print "<form id=\"user_edit_form\" onsubmit='return false' dojoType=\"dijit.form.Form\">";
 
-			$id = (int) $this->dbh->escape_string($_REQUEST["id"]);
+			$id = (int) $_REQUEST["id"];
 
 			print_hidden("id", "$id");
 			print_hidden("op", "pref-users");
 			print_hidden("method", "editSave");
 
-			$result = $this->dbh->query("SELECT * FROM ttrss_users WHERE id = '$id'");
+			$sth = $this->pdo->prepare("SELECT * FROM ttrss_users WHERE id = ?");
+			$sth->execute([$id]);
 
-			$login = $this->dbh->fetch_result($result, 0, "login");
-			$access_level = $this->dbh->fetch_result($result, 0, "access_level");
-			$email = $this->dbh->fetch_result($result, 0, "email");
+			if ($row = $sth->fetch()) {
 
-			$sel_disabled = ($id == $_SESSION["uid"] || $login == "admin") ? "disabled" : "";
+				$login = $row["login"];
+				$access_level = $row["access_level"];
+				$email = $row["email"];
 
-			print "<div class=\"dlgSec\">".__("User")."</div>";
-			print "<div class=\"dlgSecCont\">";
+				$sel_disabled = ($id == $_SESSION["uid"] || $login == "admin") ? "disabled" : "";
 
-			if ($sel_disabled) {
-				print_hidden("login", "$login");
-			}
+				print "<div class=\"dlgSec\">".__("User")."</div>";
+				print "<div class=\"dlgSecCont\">";
 
-			print "<input size=\"30\" style=\"font-size : 16px\"
-				dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
-				$sel_disabled
-				name=\"login\" value=\"$login\">";
+				if ($sel_disabled) {
+					print_hidden("login", "$login");
+				}
 
-			print "</div>";
+				print "<input size=\"30\" style=\"font-size : 16px\"
+					dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
+					$sel_disabled
+					name=\"login\" value=\"$login\">";
 
-			print "<div class=\"dlgSec\">".__("Authentication")."</div>";
-			print "<div class=\"dlgSecCont\">";
+				print "</div>";
 
-			print __('Access level: ') . " ";
+				print "<div class=\"dlgSec\">".__("Authentication")."</div>";
+				print "<div class=\"dlgSecCont\">";
 
-			if (!$sel_disabled) {
-				print_select_hash("access_level", $access_level, $access_level_names,
-					"dojoType=\"dijit.form.Select\" $sel_disabled");
-			} else {
-				print_select_hash("", $access_level, $access_level_names,
-					"dojoType=\"dijit.form.Select\" $sel_disabled");
-				print_hidden("access_level", "$access_level");
-			}
+				print __('Access level: ') . " ";
 
-			print "<hr/>";
+				if (!$sel_disabled) {
+					print_select_hash("access_level", $access_level, $access_level_names,
+						"dojoType=\"dijit.form.Select\" $sel_disabled");
+				} else {
+					print_select_hash("", $access_level, $access_level_names,
+						"dojoType=\"dijit.form.Select\" $sel_disabled");
+					print_hidden("access_level", "$access_level");
+				}
 
-			print "<input dojoType=\"dijit.form.TextBox\" type=\"password\" size=\"20\" placeholder=\"Change password\"
+				print "<hr/>";
+
+				print "<input dojoType=\"dijit.form.TextBox\" type=\"password\" size=\"20\" placeholder=\"Change password\"
 				name=\"password\">";
 
-			print "</div>";
+				print "</div>";
 
-			print "<div class=\"dlgSec\">".__("Options")."</div>";
-			print "<div class=\"dlgSecCont\">";
+				print "<div class=\"dlgSec\">".__("Options")."</div>";
+				print "<div class=\"dlgSecCont\">";
 
-			print "<input dojoType=\"dijit.form.TextBox\" size=\"30\" name=\"email\" placeholder=\"E-mail\"
+				print "<input dojoType=\"dijit.form.TextBox\" size=\"30\" name=\"email\" placeholder=\"E-mail\"
 				value=\"$email\">";
 
-			print "</div>";
+				print "</div>";
 
-			print "</table>";
+				print "</table>";
 
-			print "</form>";
+				print "</form>";
+				
+			}
 
 			print '</div>'; #tab
 			print "<div href=\"backend.php?op=pref-users&method=userdetails&id=$id\"
@@ -103,131 +108,138 @@ class Pref_Users extends Handler_Protected {
 		}
 
 		function userdetails() {
-			$id = (int) $this->dbh->escape_string($_REQUEST["id"]);
+			$id = (int) $_REQUEST["id"];
 
-			$result = $this->dbh->query("SELECT login,
+			$sth = $this->pdo->prepare("SELECT login,
 				".SUBSTRING_FOR_DATE."(last_login,1,16) AS last_login,
 				access_level,
 				(SELECT COUNT(int_id) FROM ttrss_user_entries
 					WHERE owner_uid = id) AS stored_articles,
 				".SUBSTRING_FOR_DATE."(created,1,16) AS created
 				FROM ttrss_users
-				WHERE id = '$id'");
+				WHERE id = ?");
+			$sth->execute([$id]);
 
-			if ($this->dbh->num_rows($result) == 0) {
-				print "<h1>".__('User not found')."</h1>";
-				return;
-			}
+			if ($row = $sth->fetch()) {
+				print "<table width='100%'>";
 
-			print "<table width='100%'>";
+				$last_login = make_local_datetime(
+					$row["last_login"], true);
 
-			$last_login = make_local_datetime(
-				$this->dbh->fetch_result($result, 0, "last_login"), true);
+				$created = make_local_datetime(
+					$row["created"], true);
 
-			$created = make_local_datetime(
-				$this->dbh->fetch_result($result, 0, "created"), true);
+				$stored_articles = $row["stored_articles"];
 
-			$stored_articles = $this->dbh->fetch_result($result, 0, "stored_articles");
+				print "<tr><td>".__('Registered')."</td><td>$created</td></tr>";
+				print "<tr><td>".__('Last logged in')."</td><td>$last_login</td></tr>";
 
-			print "<tr><td>".__('Registered')."</td><td>$created</td></tr>";
-			print "<tr><td>".__('Last logged in')."</td><td>$last_login</td></tr>";
+				$sth = $this->pdo->prepare("SELECT COUNT(id) as num_feeds FROM ttrss_feeds
+					WHERE owner_uid = ?");
+				$sth->execute([$id]);
+				$row = $sth->fetch();
+				$num_feeds = $row["num_feeds"];
 
-			$result = $this->dbh->query("SELECT COUNT(id) as num_feeds FROM ttrss_feeds
-				WHERE owner_uid = '$id'");
+				print "<tr><td>".__('Subscribed feeds count')."</td><td>$num_feeds</td></tr>";
+				print "<tr><td>".__('Stored articles')."</td><td>$stored_articles</td></tr>";
 
-			$num_feeds = $this->dbh->fetch_result($result, 0, "num_feeds");
+				print "</table>";
 
-			print "<tr><td>".__('Subscribed feeds count')."</td><td>$num_feeds</td></tr>";
-			print "<tr><td>".__('Stored articles')."</td><td>$stored_articles</td></tr>";
+				print "<h1>".__('Subscribed feeds')."</h1>";
 
-			print "</table>";
+				$sth = $this->pdo->prepare("SELECT id,title,site_url FROM ttrss_feeds
+					WHERE owner_uid = ? ORDER BY title");
+				$sth->execute([$id]);
 
-			print "<h1>".__('Subscribed feeds')."</h1>";
+				print "<ul class=\"userFeedList\">";
 
-			$result = $this->dbh->query("SELECT id,title,site_url FROM ttrss_feeds
-				WHERE owner_uid = '$id' ORDER BY title");
+				while ($line = $sth->fetch()) {
 
-			print "<ul class=\"userFeedList\">";
+					$icon_file = ICONS_URL."/".$line["id"].".ico";
 
-			while ($line = $this->dbh->fetch_assoc($result)) {
+					if (file_exists($icon_file) && filesize($icon_file) > 0) {
+						$feed_icon = "<img class=\"tinyFeedIcon\" src=\"$icon_file\">";
+					} else {
+						$feed_icon = "<img class=\"tinyFeedIcon\" src=\"images/blank_icon.gif\">";
+					}
 
-				$icon_file = ICONS_URL."/".$line["id"].".ico";
+					print "<li>$feed_icon&nbsp;<a href=\"".$line["site_url"]."\">".$line["title"]."</a></li>";
 
-				if (file_exists($icon_file) && filesize($icon_file) > 0) {
-					$feed_icon = "<img class=\"tinyFeedIcon\" src=\"$icon_file\">";
-				} else {
-					$feed_icon = "<img class=\"tinyFeedIcon\" src=\"images/blank_icon.gif\">";
 				}
 
-				print "<li>$feed_icon&nbsp;<a href=\"".$line["site_url"]."\">".$line["title"]."</a></li>";
-
+				print "</ul>";
+				
+				
+			} else {
+				print "<h1>".__('User not found')."</h1>";
 			}
-
-			if ($this->dbh->num_rows($result) < $num_feeds) {
-				// FIXME - add link to show ALL subscribed feeds here somewhere
-				print "<li><img
-					class=\"tinyFeedIcon\" src=\"images/blank_icon.gif\">&nbsp;...</li>";
-			}
-
-			print "</ul>";
+		
 		}
 
 		function editSave() {
-			$login = $this->dbh->escape_string(trim($_REQUEST["login"]));
-			$uid = $this->dbh->escape_string($_REQUEST["id"]);
+			$login = trim($_REQUEST["login"]);
+			$uid = $_REQUEST["id"];
 			$access_level = (int) $_REQUEST["access_level"];
-			$email = $this->dbh->escape_string(trim($_REQUEST["email"]));
+			$email = trim($_REQUEST["email"]);
 			$password = $_REQUEST["password"];
 
 			if ($password) {
 				$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
 				$pwd_hash = encrypt_password($password, $salt, true);
-				$pass_query_part = "pwd_hash = '$pwd_hash', salt = '$salt',";
+				$pass_query_part = "pwd_hash = ".$this->pdo->quote($pwd_hash).", 
+					salt = ".$this->pdo->quote($salt).",";
 			} else {
 				$pass_query_part = "";
 			}
 
-			$this->dbh->query("UPDATE ttrss_users SET $pass_query_part login = '$login',
-				access_level = '$access_level', email = '$email', otp_enabled = false
-				WHERE id = '$uid'");
+			$sth = $this->pdo->prepare("UPDATE ttrss_users SET $pass_query_part login = ?,
+				access_level = ?, email = ?, otp_enabled = false WHERE id = ?");
+			$sth->execute([$login, $access_level, $email, $uid]);
 
 		}
 
 		function remove() {
-			$ids = explode(",", $this->dbh->escape_string($_REQUEST["ids"]));
+			$ids = explode(",", $_REQUEST["ids"]);
 
 			foreach ($ids as $id) {
 				if ($id != $_SESSION["uid"] && $id != 1) {
-					$this->dbh->query("DELETE FROM ttrss_tags WHERE owner_uid = '$id'");
-					$this->dbh->query("DELETE FROM ttrss_feeds WHERE owner_uid = '$id'");
-					$this->dbh->query("DELETE FROM ttrss_users WHERE id = '$id'");
+					$sth = $this->pdo->prepare("DELETE FROM ttrss_tags WHERE owner_uid = ?");
+					$sth->execute([$id]);
+
+					$sth = $this->pdo->prepare("DELETE FROM ttrss_feeds WHERE owner_uid = ?");
+					$sth->execute([$id]);
+
+					$sth = $this->pdo->prepare("DELETE FROM ttrss_users WHERE id = ?");
+					$sth->execute([$id]);
 				}
 			}
 		}
 
 		function add() {
 
-			$login = $this->dbh->escape_string(trim($_REQUEST["login"]));
+			$login = trim($_REQUEST["login"]);
 			$tmp_user_pwd = make_password(8);
 			$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
 			$pwd_hash = encrypt_password($tmp_user_pwd, $salt, true);
 
-			$result = $this->dbh->query("SELECT id FROM ttrss_users WHERE
-				login = '$login'");
+			$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE
+				login = ?");
+			$sth->execute([$login]);
 
-			if ($this->dbh->num_rows($result) == 0) {
+			if (!$sth->fetch()) {
 
-				$this->dbh->query("INSERT INTO ttrss_users
+				$sth = $this->pdo->prepare("INSERT INTO ttrss_users
 					(login,pwd_hash,access_level,last_login,created, salt)
-					VALUES ('$login', '$pwd_hash', 0, null, NOW(), '$salt')");
+					VALUES (?, ?, 0, null, NOW(), ?)");
+				$sth->execute([$login, $pwd_hash, $salt]);
 
+				$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE
+					login = ? AND pwd_hash = ?");
+				$sth->execute([$login, $pwd_hash]);
 
-				$result = $this->dbh->query("SELECT id FROM ttrss_users WHERE
-					login = '$login' AND pwd_hash = '$pwd_hash'");
+				if ($row = $sth->fetch()) {
 
-				if ($this->dbh->num_rows($result) == 1) {
-
-					$new_uid = $this->dbh->fetch_result($result, 0, "id");
+					$new_uid = $row['id'];
 
 					print format_notice(T_sprintf("Added user <b>%s</b> with password <b>%s</b>",
 						$login, $tmp_user_pwd));
@@ -246,56 +258,65 @@ class Pref_Users extends Handler_Protected {
 
 		static function resetUserPassword($uid, $show_password) {
 
-			$result = db_query("SELECT login,email
-				FROM ttrss_users WHERE id = '$uid'");
+			$pdo = Db::pdo();
 
-			$login = db_fetch_result($result, 0, "login");
-			$email = db_fetch_result($result, 0, "email");
+			$sth = $pdo->prepare("SELECT login, email
+				FROM ttrss_users WHERE id = ?");
+			$sth->execute([$uid]);
+			
+			if ($row = $sth->fetch()) {
 
-			$new_salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
-			$tmp_user_pwd = make_password(8);
+				$login = $row["login"];
+				$email = $row["email"];
 
-			$pwd_hash = encrypt_password($tmp_user_pwd, $new_salt, true);
+				$new_salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
+				$tmp_user_pwd = make_password(8);
 
-			db_query("UPDATE ttrss_users SET pwd_hash = '$pwd_hash', salt = '$new_salt', otp_enabled = false
-				WHERE id = '$uid'");
+				$pwd_hash = encrypt_password($tmp_user_pwd, $new_salt, true);
 
-			if ($show_password) {
-				print T_sprintf("Changed password of user <b>%s</b> to <b>%s</b>", $login, $tmp_user_pwd);
-			} else {
-				print_notice(T_sprintf("Sending new password of user <b>%s</b> to <b>%s</b>", $login, $email));
-			}
+				$sth = $pdo->prepare("UPDATE ttrss_users 
+					  SET pwd_hash = ?, salt = ?, otp_enabled = false
+					WHERE id = ?");
+				$sth->execute([$pwd_hash, $new_salt, $uid]);
 
-			require_once 'classes/ttrssmailer.php';
+				if ($show_password) {
+					print T_sprintf("Changed password of user <b>%s</b> to <b>%s</b>", $login, $tmp_user_pwd);
+				} else {
+					print_notice(T_sprintf("Sending new password of user <b>%s</b> to <b>%s</b>", $login, $email));
+				}
 
-			if ($email) {
-				require_once "lib/MiniTemplator.class.php";
+				require_once 'classes/ttrssmailer.php';
 
-				$tpl = new MiniTemplator;
+				if ($email) {
+					require_once "lib/MiniTemplator.class.php";
 
-				$tpl->readTemplateFromFile("templates/resetpass_template.txt");
+					$tpl = new MiniTemplator;
 
-				$tpl->setVariable('LOGIN', $login);
-				$tpl->setVariable('NEWPASS', $tmp_user_pwd);
+					$tpl->readTemplateFromFile("templates/resetpass_template.txt");
 
-				$tpl->addBlock('message');
+					$tpl->setVariable('LOGIN', $login);
+					$tpl->setVariable('NEWPASS', $tmp_user_pwd);
 
-				$message = "";
+					$tpl->addBlock('message');
 
-				$tpl->generateOutputToString($message);
+					$message = "";
 
-				$mail = new ttrssMailer();
+					$tpl->generateOutputToString($message);
 
-				$rc = $mail->quickMail($email, $login,
-					__("[tt-rss] Password change notification"),
-					$message, false);
+					$mail = new ttrssMailer();
 
-				if (!$rc) print_error($mail->ErrorInfo);
+					$rc = $mail->quickMail($email, $login,
+						__("[tt-rss] Password change notification"),
+						$message, false);
+
+					if (!$rc) print_error($mail->ErrorInfo);
+				}
+				
 			}
 		}
 
 		function resetPass() {
-			$uid = $this->dbh->escape_string($_REQUEST["id"]);
+			$uid = $_REQUEST["id"];
 			Pref_Users::resetUserPassword($uid, true);
 		}
 
@@ -308,7 +329,7 @@ class Pref_Users extends Handler_Protected {
 
 			print "<div id=\"pref-user-toolbar\" dojoType=\"dijit.Toolbar\">";
 
-			$user_search = $this->dbh->escape_string($_REQUEST["search"]);
+			$user_search = trim($_REQUEST["search"]);
 
 			if (array_key_exists("search", $_REQUEST)) {
 				$_SESSION["prefs_user_search"] = $user_search;
@@ -323,7 +344,7 @@ class Pref_Users extends Handler_Protected {
 					__('Search')."</button>
 				</div>";
 
-			$sort = $this->dbh->escape_string($_REQUEST["sort"]);
+			$sort = $_REQUEST["sort"];
 
 			if (!$sort || $sort == "undefined") {
 				$sort = "login";
@@ -357,23 +378,7 @@ class Pref_Users extends Handler_Protected {
 
 			print "<div id=\"sticky-status-msg\"></div>";
 
-			if ($user_search) {
-
-				$user_search = explode(" ", $user_search);
-				$tokens = array();
-
-				foreach ($user_search as $token) {
-					$token = trim($token);
-					array_push($tokens, "(UPPER(login) LIKE UPPER('%$token%'))");
-				}
-
-				$user_search_query = "(" . join($tokens, " AND ") . ") AND ";
-
-			} else {
-				$user_search_query = "";
-			}
-
-			$result = $this->dbh->query("SELECT
+			$sth = $this->pdo->prepare("SELECT
 					tu.id,
 					login,access_level,email,
 					".SUBSTRING_FOR_DATE."(last_login,1,16) as last_login,
@@ -382,11 +387,9 @@ class Pref_Users extends Handler_Protected {
 				FROM
 					ttrss_users tu
 				WHERE
-					$user_search_query
-					tu.id > 0
-				ORDER BY $sort");
-
-			if ($this->dbh->num_rows($result) > 0) {
+					(:search = '' OR login LIKE :search) AND tu.id > 0
+				ORDER BY :sort");
+			$sth->execute([":search" => $user_search ? "%$user_search%" : "", ":sort" => $sort]);
 
 			print "<p><table width=\"100%\" cellspacing=\"0\"
 				class=\"prefUserList\" id=\"prefUserList\">";
@@ -401,7 +404,7 @@ class Pref_Users extends Handler_Protected {
 
 			$lnum = 0;
 
-			while ($line = $this->dbh->fetch_assoc($result)) {
+			while ($line = $sth->fetch()) {
 
 				$uid = $line["id"];
 
@@ -434,15 +437,12 @@ class Pref_Users extends Handler_Protected {
 
 			print "</table>";
 
-			} else {
-				print "<p>";
+			if ($lnum == 0) {
 				if (!$user_search) {
 					print_warning(__('No users defined.'));
 				} else {
 					print_warning(__('No matching users found.'));
 				}
-				print "</p>";
-
 			}
 
 			print "</div>"; #pane
