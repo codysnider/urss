@@ -1111,30 +1111,6 @@ class Pref_Feeds extends Handler_Protected {
 		return;
 	}
 
-	function categorize() {
-		$ids = explode(",", $_REQUEST["ids"]);
-
-		$cat_id = $_REQUEST["cat_id"];
-
-		if ($cat_id == 0) {
-			$cat_id_qpart = 'NULL';
-		} else {
-			$cat_id_qpart = "'$cat_id'";
-		}
-
-		db_query("BEGIN");
-
-		foreach ($ids as $id) {
-
-			db_query("UPDATE ttrss_feeds SET cat_id = $cat_id_qpart
-				WHERE id = '$id'
-			  	AND owner_uid = " . $_SESSION["uid"]);
-
-		}
-
-		db_query("COMMIT");
-	}
-
 	function removeCat() {
 		$ids = explode(",", $_REQUEST["ids"]);
 		foreach ($ids as $id) {
@@ -1438,17 +1414,18 @@ class Pref_Feeds extends Handler_Protected {
 			$interval_qpart = "DATE_SUB(NOW(), INTERVAL 3 MONTH)";
 		}
 
-		$result = db_query("SELECT ttrss_feeds.title, ttrss_feeds.site_url,
+		$sth = $this->pdo->prepare("SELECT ttrss_feeds.title, ttrss_feeds.site_url,
 		  		ttrss_feeds.feed_url, ttrss_feeds.id, MAX(updated) AS last_article
 			FROM ttrss_feeds, ttrss_entries, ttrss_user_entries WHERE
 				(SELECT MAX(updated) FROM ttrss_entries, ttrss_user_entries WHERE
 					ttrss_entries.id = ref_id AND
 						ttrss_user_entries.feed_id = ttrss_feeds.id) < $interval_qpart
-			AND ttrss_feeds.owner_uid = ".$_SESSION["uid"]." AND
+			AND ttrss_feeds.owner_uid = ? AND
 				ttrss_user_entries.feed_id = ttrss_feeds.id AND
 				ttrss_entries.id = ref_id
 			GROUP BY ttrss_feeds.title, ttrss_feeds.id, ttrss_feeds.site_url, ttrss_feeds.feed_url
 			ORDER BY last_article");
+		$sth->execute([$_SESSION['uid']]);
 
 		print "<p" .__("These feeds have not been updated with new content for 3 months (oldest first):") . "</p>";
 
@@ -1469,7 +1446,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		$lnum = 1;
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 
 			$feed_id = $line["id"];
 			$this_row_id = "id=\"FUPDD-$feed_id\"";
@@ -1513,8 +1490,9 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	function feedsWithErrors() {
-		$result = db_query("SELECT id,title,feed_url,last_error,site_url
-		FROM ttrss_feeds WHERE last_error != '' AND owner_uid = ".$_SESSION["uid"]);
+		$sth = $this->pdo->prepare("SELECT id,title,feed_url,last_error,site_url
+			FROM ttrss_feeds WHERE last_error != '' AND owner_uid = ?");
+		$sth->execute([$_SESSION['uid']]);
 
 		print "<div dojoType=\"dijit.Toolbar\">";
 		print "<div dojoType=\"dijit.form.DropDownButton\">".
@@ -1533,7 +1511,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		$lnum = 1;
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 
 			$feed_id = $line["id"];
 			$this_row_id = "id=\"FERDD-$feed_id\"";
@@ -1579,59 +1557,72 @@ class Pref_Feeds extends Handler_Protected {
 
 	private function remove_feed_category($id, $owner_uid) {
 
-		db_query("DELETE FROM ttrss_feed_categories
-			WHERE id = '$id' AND owner_uid = $owner_uid");
+		$sth = $this->pdo->prepare("DELETE FROM ttrss_feed_categories
+			WHERE id = ? AND owner_uid = ?");
+		$sth->execute([$id, $owner_uid]);
 
 		CCache::remove($id, $owner_uid, true);
 	}
 
 	static function remove_feed($id, $owner_uid) {
 
+		$pdo = Db::pdo();
+
 		if ($id > 0) {
+			$pdo->beginTransaction();
 
 			/* save starred articles in Archived feed */
 
-			db_query("BEGIN");
-
 			/* prepare feed if necessary */
 
-			$result = db_query("SELECT feed_url FROM ttrss_feeds WHERE id = $id
-				AND owner_uid = $owner_uid");
+			$sth = $pdo->prepare("SELECT feed_url FROM ttrss_feeds WHERE id = ?
+				AND owner_uid = ?");
+			$sth->execute([$id, $owner_uid]);
 
-			$feed_url = db_fetch_result($result, 0, "feed_url");
+			if ($row = $sth->fetch()) {
+				$feed_url = $row["feed_url"];
 
-			$result = db_query("SELECT id FROM ttrss_archived_feeds
-				WHERE feed_url = '$feed_url' AND owner_uid = $owner_uid");
+				$sth = $pdo->prepare("SELECT id FROM ttrss_archived_feeds
+					WHERE feed_url = ? AND owner_uid = ?");
+				$sth->execute([$feed_url, $owner_uid]);
 
-			if (db_num_rows($result) == 0) {
-				$result = db_query("SELECT MAX(id) AS id FROM ttrss_archived_feeds");
-				$new_feed_id = (int)db_fetch_result($result, 0, "id") + 1;
+				if ($row = $sth->fetch()) {
+					$archive_id = $row["id"];
+				} else {
+					$res = $pdo->query("SELECT MAX(id) AS id FROM ttrss_archived_feeds");
+					$row = $res->fetch();
 
-				db_query("INSERT INTO ttrss_archived_feeds
-					(id, owner_uid, title, feed_url, site_url)
-				SELECT $new_feed_id, owner_uid, title, feed_url, site_url from ttrss_feeds
-				WHERE id = '$id'");
+					$new_feed_id = (int)$row['id'] + 1;
 
-				$archive_id = $new_feed_id;
-			} else {
-				$archive_id = db_fetch_result($result, 0, "id");
+					$sth = $pdo->prepare("INSERT INTO ttrss_archived_feeds
+						(id, owner_uid, title, feed_url, site_url)
+							SELECT ?, owner_uid, title, feed_url, site_url from ttrss_feeds
+							WHERE id = ?");
+					$sth->execute([$new_feed_id, $id]);
+
+					$archive_id = $new_feed_id;
+				}
+
+				$sth = $pdo->prepare("UPDATE ttrss_user_entries SET feed_id = NULL,
+					orig_feed_id = ? WHERE feed_id = ? AND
+						marked = true AND owner_uid = ?");
+
+				$sth->execute([$archive_id, $id, $owner_uid]);
+
+				/* Remove access key for the feed */
+
+				$sth = $pdo->prepare("DELETE FROM ttrss_access_keys WHERE
+					feed_id = ? AND owner_uid = ?");
+				$sth->execute([$id, $owner_uid]);
+
+				/* remove the feed */
+
+				$sth = $pdo->prepare("DELETE FROM ttrss_feeds
+					WHERE id = ? AND owner_uid = ?");
+				$sth->execute([$id, $owner_uid]);
 			}
 
-			db_query("UPDATE ttrss_user_entries SET feed_id = NULL,
-				orig_feed_id = '$archive_id' WHERE feed_id = '$id' AND
-					marked = true AND owner_uid = $owner_uid");
-
-			/* Remove access key for the feed */
-
-			db_query("DELETE FROM ttrss_access_keys WHERE
-				feed_id = '$id' AND owner_uid = $owner_uid");
-
-			/* remove the feed */
-
-			db_query("DELETE FROM ttrss_feeds
-					WHERE id = '$id' AND owner_uid = $owner_uid");
-
-			db_query("COMMIT");
+			$pdo->commit();
 
 			if (file_exists(ICONS_DIR . "/$id.ico")) {
 				unlink(ICONS_DIR . "/$id.ico");
