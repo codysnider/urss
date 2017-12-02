@@ -1696,29 +1696,21 @@ class Pref_Feeds extends Handler_Protected {
 
 			if (validate_feed_url($feed)) {
 
-				db_query("BEGIN");
+				$this->pdo->beginTransaction();
 
-				if ($cat_id == "0" || !$cat_id) {
-					$cat_qpart = "NULL";
-				} else {
-					$cat_qpart = "'$cat_id'";
-				}
+				$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
+						WHERE feed_url = ? AND owner_uid = ?");
+				$sth->execute([$feed, $_SESSION['uid']]);
 
-				$result = db_query(
-					"SELECT id FROM ttrss_feeds
-					WHERE feed_url = '$feed' AND owner_uid = ".$_SESSION["uid"]);
-
-				$pass = $pass;
-
-				if (db_num_rows($result) == 0) {
-					$result = db_query(
-						"INSERT INTO ttrss_feeds
+				if (!$sth->fetch()) {
+					$sth = $this->pdo->prepare("INSERT INTO ttrss_feeds
 							(owner_uid,feed_url,title,cat_id,auth_login,auth_pass,update_method,auth_pass_encrypted)
-						VALUES ('".$_SESSION["uid"]."', '$feed',
-							'[Unknown]', $cat_qpart, '$login', '$pass', 0, false)");
+						VALUES (?, ?, '[Unknown]', ?, ?, ?, 0, false)");
+
+					$sth->execute([$_SESSION['uid'], $feed, $cat_id ? $cat_id : null, $login, $pass]);
 				}
 
-				db_query("COMMIT");
+				$this->pdo->commit();
 			}
 		}
 	}
@@ -1767,8 +1759,9 @@ class Pref_Feeds extends Handler_Protected {
 
 	// Silent
 	function clearKeys() {
-		db_query("DELETE FROM ttrss_access_keys WHERE
-			owner_uid = " . $_SESSION["uid"]);
+		$sth = $this->pdo->prepare("DELETE FROM ttrss_access_keys WHERE
+			owner_uid = ?");
+		$sth->execute([$_SESSION['uid']]);
 	}
 
 	private function calculate_children_count($cat) {
@@ -1792,13 +1785,16 @@ class Pref_Feeds extends Handler_Protected {
 			$interval_qpart = "DATE_SUB(NOW(), INTERVAL 3 MONTH)";
 		}
 
-		$result = db_query("SELECT COUNT(*) AS num_inactive FROM ttrss_feeds WHERE
+		$sth = $this->pdo->prepare("SELECT COUNT(id) AS num_inactive FROM ttrss_feeds WHERE
 				(SELECT MAX(updated) FROM ttrss_entries, ttrss_user_entries WHERE
 					ttrss_entries.id = ref_id AND
 						ttrss_user_entries.feed_id = ttrss_feeds.id) < $interval_qpart AND
-			  ttrss_feeds.owner_uid = ".$_SESSION["uid"]);
+			  ttrss_feeds.owner_uid = ?");
+		$sth->execute([$_SESSION['uid']]);
 
-		print (int) db_fetch_result($result, 0, "num_inactive");
+		if ($row = $sth->fetch()) {
+			print (int)$row["num_inactive"];
+		}
 	}
 
 	static function subscribe_to_feed_url() {
