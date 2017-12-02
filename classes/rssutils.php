@@ -18,31 +18,38 @@ class RSSUtils {
 
 	static function update_feedbrowser_cache() {
 
-		$result = db_query("SELECT feed_url, site_url, title, COUNT(id) AS subscribers
+		$pdo = Db::pdo();
+
+		$sth = $pdo->query("SELECT feed_url, site_url, title, COUNT(id) AS subscribers
 			FROM ttrss_feeds WHERE feed_url NOT IN (SELECT feed_url FROM ttrss_feeds
 				WHERE private IS true OR auth_login != '' OR auth_pass != '' OR feed_url LIKE '%:%@%/%')
 				GROUP BY feed_url, site_url, title ORDER BY subscribers DESC LIMIT 1000");
 
-		db_query("BEGIN");
+		$pdo->beginTransaction();
 
-		db_query("DELETE FROM ttrss_feedbrowser_cache");
+		$pdo->query("DELETE FROM ttrss_feedbrowser_cache");
 
 		$count = 0;
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
+
 			$subscribers = db_escape_string($line["subscribers"]);
 			$feed_url = db_escape_string($line["feed_url"]);
 			$title = db_escape_string($line["title"]);
 			$site_url = db_escape_string($line["site_url"]);
 
-			$tmp_result = db_query("SELECT subscribers FROM
-				ttrss_feedbrowser_cache WHERE feed_url = '$feed_url'");
+			$tmph = $pdo->prepare("SELECT subscribers FROM
+				ttrss_feedbrowser_cache WHERE feed_url = ?");
+			$tmph->execute([$feed_url]);
 
-			if (db_num_rows($tmp_result) == 0) {
+			if (!$tmph->fetch()) {
 
-				db_query("INSERT INTO ttrss_feedbrowser_cache
-					(feed_url, site_url, title, subscribers) VALUES ('$feed_url',
-						'$site_url', '$title', '$subscribers')");
+				$tmph = $pdo->prepare("INSERT INTO ttrss_feedbrowser_cache
+					(feed_url, site_url, title, subscribers) 
+					VALUES 
+					(?, ?, ?, ?)");
+
+				$tmph->execute([$feed_url, $site_url, $title, $subscribers]);
 
 				++$count;
 
@@ -50,7 +57,7 @@ class RSSUtils {
 
 		}
 
-		db_query("COMMIT");
+		$pdo->commit();
 
 		return $count;
 
@@ -62,6 +69,8 @@ class RSSUtils {
 		if ($schema_version != SCHEMA_VERSION) {
 			die("Schema version is wrong, please upgrade the database.\n");
 		}
+
+		$pdo = Db::pdo();
 
 		if (!SINGLE_USER_MODE && DAEMON_UPDATE_LOGIN_LIMIT > 0) {
 			if (DB_TYPE == "pgsql") {
@@ -124,22 +133,23 @@ class RSSUtils {
 				$updstart_thresh_qpart
 				$query_order $query_limit";
 
-		$result = db_query($query);
-
-		if ($debug) _debug(sprintf("Scheduled %d feeds to update...", db_num_rows($result)));
+		$res = $pdo->query($query);
 
 		$feeds_to_update = array();
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $res->fetch()) {
 			array_push($feeds_to_update, $line['feed_url']);
 		}
+
+		if ($debug) _debug(sprintf("Scheduled %d feeds to update...", count($feeds_to_update)));
 
 		// Update last_update_started before actually starting the batch
 		// in order to minimize collision risk for parallel daemon tasks
 		if (count($feeds_to_update) > 0) {
-			$feeds_quoted = array_map(function ($s) { return "'" . db_escape_string($s) . "'"; }, $feeds_to_update);
+			$feeds_qmarks = arr_qmarks($feeds_to_update);
 
-			db_query(sprintf("UPDATE ttrss_feeds SET last_update_started = NOW()
-				WHERE feed_url IN (%s)", implode(',', $feeds_quoted)));
+			$tmph = $pdo->prepare("UPDATE ttrss_feeds SET last_update_started = NOW()
+				WHERE feed_url IN ($feeds_qmarks)");
+			$tmph->execute($feeds_to_update);
 		}
 
 		$nf = 0;
@@ -147,38 +157,37 @@ class RSSUtils {
 
 		$batch_owners = array();
 
-		foreach ($feeds_to_update as $feed) {
-			if($debug) _debug("Base feed: $feed");
-
-			//update_rss_feed($line["id"], true);
-
-			// since we have the data cached, we can deal with other feeds with the same url
-			$tmp_result = db_query("SELECT DISTINCT ttrss_feeds.id,last_updated,ttrss_feeds.owner_uid
+		// since we have the data cached, we can deal with other feeds with the same url
+		$usth = $pdo->prepare("SELECT DISTINCT ttrss_feeds.id,last_updated,ttrss_feeds.owner_uid
 			FROM ttrss_feeds, ttrss_users, ttrss_user_prefs WHERE
 				ttrss_user_prefs.owner_uid = ttrss_feeds.owner_uid AND
 				ttrss_users.id = ttrss_user_prefs.owner_uid AND
 				ttrss_user_prefs.pref_name = 'DEFAULT_UPDATE_INTERVAL' AND
 				ttrss_user_prefs.profile IS NULL AND
-				feed_url = '".db_escape_string($feed)."'
+				feed_url = ?
 				$update_limit_qpart
 				$login_thresh_qpart
 			ORDER BY ttrss_feeds.id $query_limit");
 
-			if (db_num_rows($tmp_result) > 0) {
-				while ($tline = db_fetch_assoc($tmp_result)) {
-					if ($debug) _debug(" => " . $tline["last_updated"] . ", " . $tline["id"] . " " . $tline["owner_uid"]);
+		foreach ($feeds_to_update as $feed) {
+			if($debug) _debug("Base feed: $feed");
 
-					if (array_search($tline["owner_uid"], $batch_owners) === FALSE)
-						array_push($batch_owners, $tline["owner_uid"]);
+			$usth->execute([$feed]);
+			//update_rss_feed($line["id"], true);
 
-					$fstarted = microtime(true);
-					RSSUtils::update_rss_feed($tline["id"], true, false);
-					_debug_suppress(false);
+			if ($tline = $usth->fetch()) {
+				if ($debug) _debug(" => " . $tline["last_updated"] . ", " . $tline["id"] . " " . $tline["owner_uid"]);
 
-					_debug(sprintf("    %.4f (sec)", microtime(true) - $fstarted));
+				if (array_search($tline["owner_uid"], $batch_owners) === FALSE)
+					array_push($batch_owners, $tline["owner_uid"]);
 
-					++$nf;
-				}
+				$fstarted = microtime(true);
+				RSSUtils::update_rss_feed($tline["id"], true, false);
+				_debug_suppress(false);
+
+				_debug(sprintf("    %.4f (sec)", microtime(true) - $fstarted));
+
+				++$nf;
 			}
 		}
 
@@ -197,7 +206,6 @@ class RSSUtils {
 		Digest::send_headlines_digests($debug);
 
 		return $nf;
-
 	}
 
 	// this is used when subscribing
