@@ -977,10 +977,6 @@
 			$error_code = 5;
 		}
 
-		if (db_escape_string("testTEST") != "testTEST") {
-			$error_code = 12;
-		}
-
 		return array("code" => $error_code, "message" => $ERRORS[$error_code]);
 	}
 
@@ -2218,6 +2214,8 @@
 	function filter_to_sql($filter, $owner_uid) {
 		$query = array();
 
+		$pdo = Db::pdo();
+
 		if (DB_TYPE == "pgsql")
 			$reg_qpart = "~";
 		else
@@ -2230,7 +2228,7 @@
 
 			if ($regexp_valid) {
 
-				$rule['reg_exp'] = db_escape_string($rule['reg_exp']);
+				$rule['reg_exp'] = $pdo->quote($rule['reg_exp']);
 
 				switch ($rule["type"]) {
 					case "title":
@@ -2263,7 +2261,7 @@
 				if (isset($rule['inverse'])) $qpart = "NOT ($qpart)";
 
 				if (isset($rule["feed_id"]) && $rule["feed_id"] > 0) {
-					$qpart .= " AND feed_id = " . db_escape_string($rule["feed_id"]);
+					$qpart .= " AND feed_id = " . $pdo->quote($rule["feed_id"]);
 				}
 
 				if (isset($rule["cat_id"])) {

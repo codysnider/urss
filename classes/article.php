@@ -976,12 +976,12 @@ class Article extends Handler_Protected {
 			$label_cache = $row["label_cache"];
 
 			if ($label_cache) {
-				$label_cache = json_decode($label_cache, true);
+				$tmp = json_decode($label_cache, true);
 
-				if ($label_cache["no-labels"] == 1)
+				if (!$tmp || $tmp["no-labels"] == 1)
 					return $rv;
 				else
-					return $label_cache;
+					return $tmp;
 			}
 		}
 

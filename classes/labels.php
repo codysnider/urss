@@ -62,7 +62,7 @@ class Labels
 		if (!$labels)
 			$labels = Article::get_article_labels($id);
 
-		$labels = db_escape_string(json_encode($labels));
+		$labels = json_encode($labels);
 
 		$sth = $pdo->prepare("UPDATE ttrss_user_entries SET
 			label_cache = ? WHERE ref_id = ? AND owner_uid = ?");
