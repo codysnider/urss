@@ -15,14 +15,16 @@
 	$op = $_REQUEST['op'];
 
 	if ($op == "publish"){
-		$key = db_escape_string( $_REQUEST["key"]);
+		$key = $_REQUEST["key"];
+		$pdo = Db::pdo();
 
-		$result = db_query( "SELECT owner_uid
+		$sth = $pdo->prepare( "SELECT owner_uid
 				FROM ttrss_access_keys WHERE
-				access_key = '$key' AND feed_id = 'OPML:Publish'");
+				access_key = ? AND feed_id = 'OPML:Publish'");
+		$sth->execute([$key]);
 
-		if (db_num_rows($result) == 1) {
-			$owner_uid = db_fetch_result($result, 0, "owner_uid");
+		if ($row = $sth->fetch()) {
+			$owner_uid = $row['owner_uid'];
 
 			$opml = new Opml($_REQUEST);
 			$opml->opml_export("", $owner_uid, true, false);
