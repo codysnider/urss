@@ -591,19 +591,26 @@ class RSSUtils {
 			$tstart = time();
 
 			foreach ($items as $item) {
+				$pdo->beginTransaction();
+
 				if ($_REQUEST['xdebug'] == 3) {
 					print_r($item);
 				}
 
 				if (ini_get("max_execution_time") > 0 && time() - $tstart >= ini_get("max_execution_time") * 0.7) {
 					_debug("looks like there's too many articles to process at once, breaking out", $debug_enabled);
+					$pdo->commit();
 					break;
 				}
 
 				$entry_guid = strip_tags($item->get_id());
 				if (!$entry_guid) $entry_guid = strip_tags($item->get_link());
 				if (!$entry_guid) $entry_guid = RSSUtils::make_guid_from_title($item->get_title());
-				if (!$entry_guid) continue;
+
+				if (!$entry_guid) {
+					$pdo->commit();
+					continue;
+				}
 
 				$entry_guid = "$owner_uid,$entry_guid";
 
@@ -727,6 +734,7 @@ class RSSUtils {
 						WHERE id = ?");
 					$sth->execute([$base_entry_id]);
 
+					$pdo->commit();
 					continue;
 				}
 
@@ -895,6 +903,7 @@ class RSSUtils {
 					$entry_ref_id = $ref_id;
 
 					if (RSSUtils::find_article_filter($article_filters, "filter")) {
+						$pdo->commit();
 						continue;
 					}
 
@@ -1048,7 +1057,7 @@ class RSSUtils {
 				foreach ($enclosures as $enc) {
 					$enc_url = $enc[0];
 					$enc_type = $enc[1];
-					$enc_dur = $enc[2];
+					$enc_dur = (int)$enc[2];
 					$enc_title = $enc[3];
 					$enc_width = intval($enc[4]);
 					$enc_height = intval($enc[5]);
@@ -1138,6 +1147,8 @@ class RSSUtils {
 				}
 
 				_debug("article processed", $debug_enabled);
+
+				$pdo->commit();
 			}
 
 			_debug("purging feed...", $debug_enabled);
