@@ -1384,8 +1384,8 @@
 			switch ($commandpair[0]) {
 				case "title":
 					if ($commandpair[1]) {
-						array_push($query_keywords, "($not (LOWER(ttrss_entries.title) LIKE '%".
-							$pdo->quote(mb_strtolower($commandpair[1]))."%'))");
+						array_push($query_keywords, "($not (LOWER(ttrss_entries.title) LIKE ".
+							$pdo->quote('%' . mb_strtolower($commandpair[1]) . '%') ."))");
 					} else {
 						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
 								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
@@ -1394,8 +1394,8 @@
 					break;
 				case "author":
 					if ($commandpair[1]) {
-						array_push($query_keywords, "($not (LOWER(author) LIKE '%".
-							$pdo->quote(mb_strtolower($commandpair[1]))."%'))");
+						array_push($query_keywords, "($not (LOWER(author) LIKE ".
+							$pdo->quote('%' . mb_strtolower($commandpair[1]) . '%')."))");
 					} else {
 						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
 								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
@@ -1409,8 +1409,8 @@
 						else if ($commandpair[1] == "false")
 							array_push($query_keywords, "($not (note IS NULL OR note = ''))");
 						else
-							array_push($query_keywords, "($not (LOWER(note) LIKE '%".
-								$pdo->quote(mb_strtolower($commandpair[1]))."%'))");
+							array_push($query_keywords, "($not (LOWER(note) LIKE ".
+								$pdo->quote('%' . mb_strtolower($commandpair[1]) . '%')."))");
 					} else {
 						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
 								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
