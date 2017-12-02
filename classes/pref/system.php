@@ -20,7 +20,7 @@ class Pref_System extends Handler_Protected {
 	}
 
 	function clearLog() {
-		$this->dbh->query("DELETE FROM ttrss_error_log");
+		$this->pdo->query("DELETE FROM ttrss_error_log");
 	}
 
 	function index() {
@@ -30,7 +30,7 @@ class Pref_System extends Handler_Protected {
 
 		if (LOG_DESTINATION == "sql") {
 
-			$result = $this->dbh->query("SELECT errno, errstr, filename, lineno,
+			$res = $this->pdo->query("SELECT errno, errstr, filename, lineno,
 				created_at, login, context FROM ttrss_error_log
 				LEFT JOIN ttrss_users ON (owner_uid = ttrss_users.id)
 				ORDER BY ttrss_error_log.id DESC
@@ -52,7 +52,7 @@ class Pref_System extends Handler_Protected {
 				<td width='5%'>".__("Date")."</td>
 				</tr>";
 
-			while ($line = $this->dbh->fetch_assoc($result)) {
+			while ($line = $res->fetch()) {
 				print "<tr class=\"errrow\">";
 
 				foreach ($line as $k => $v) {
