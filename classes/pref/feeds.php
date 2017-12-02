@@ -499,239 +499,237 @@ class Pref_Feeds extends Handler_Protected {
 		global $purge_intervals;
 		global $update_intervals;
 
-		print '<div dojoType="dijit.layout.TabContainer" style="height : 450px">
-        		<div dojoType="dijit.layout.ContentPane" title="'.__('General').'">';
 
 		$feed_id = $_REQUEST["id"];
 
-		$result = db_query(
-			"SELECT * FROM ttrss_feeds WHERE id = '$feed_id' AND
-				owner_uid = " . $_SESSION["uid"]);
+		$sth = $this->pdo->prepare("SELECT * FROM ttrss_feeds WHERE id = ? AND
+				owner_uid = ?");
+		$sth->execute([$feed_id, $_SESSION['uid']]);
 
-		$auth_pass_encrypted = sql_bool_to_bool(db_fetch_result($result, 0,
-			"auth_pass_encrypted"));
+		if ($row = $sth->fetch()) {
+			print '<div dojoType="dijit.layout.TabContainer" style="height : 450px">
+        		<div dojoType="dijit.layout.ContentPane" title="'.__('General').'">';
 
-		$title = htmlspecialchars(db_fetch_result($result,
-			0, "title"));
+			$auth_pass_encrypted = sql_bool_to_bool($row["auth_pass_encrypted"]);
 
-		print_hidden("id", "$feed_id");
-		print_hidden("op", "pref-feeds");
-		print_hidden("method", "editSave");
+			$title = htmlspecialchars($row["title"]);
 
-		print "<div class=\"dlgSec\">".__("Feed")."</div>";
-		print "<div class=\"dlgSecCont\">";
+			print_hidden("id", "$feed_id");
+			print_hidden("op", "pref-feeds");
+			print_hidden("method", "editSave");
 
-		/* Title */
+			print "<div class=\"dlgSec\">".__("Feed")."</div>";
+			print "<div class=\"dlgSecCont\">";
 
-		print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
+			/* Title */
+
+			print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
 			placeHolder=\"".__("Feed Title")."\"
 			style=\"font-size : 16px; width: 20em\" name=\"title\" value=\"$title\">";
 
-		/* Feed URL */
+			/* Feed URL */
 
-		$feed_url = db_fetch_result($result, 0, "feed_url");
-		$feed_url = htmlspecialchars(db_fetch_result($result,
-			0, "feed_url"));
+			$feed_url = htmlspecialchars($row["feed_url"]);
 
-		print "<hr/>";
+			print "<hr/>";
 
-		print __('URL:') . " ";
-		print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
+			print __('URL:') . " ";
+			print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
 			placeHolder=\"".__("Feed URL")."\"
 			regExp='^(http|https)://.*' style=\"width : 20em\"
 			name=\"feed_url\" value=\"$feed_url\">";
 
-		$last_error = db_fetch_result($result, 0, "last_error");
+			$last_error = $row["last_error"];
 
-		if ($last_error) {
-			print "&nbsp;<img src=\"images/error.png\" alt=\"(error)\"
+			if ($last_error) {
+				print "&nbsp;<img src=\"images/error.png\" alt=\"(error)\"
 				style=\"vertical-align : middle\"
 				title=\"".htmlspecialchars($last_error)."\">";
 
-		}
+			}
 
-		/* Category */
+			/* Category */
 
-		if (get_pref('ENABLE_FEED_CATS')) {
+			if (get_pref('ENABLE_FEED_CATS')) {
 
-			$cat_id = db_fetch_result($result, 0, "cat_id");
+				$cat_id = $row["cat_id"];
+
+				print "<hr/>";
+
+				print __('Place in category:') . " ";
+
+				print_feed_cat_select("cat_id", $cat_id,
+					'dojoType="dijit.form.Select"');
+			}
+
+			/* FTS Stemming Language */
+
+			if (DB_TYPE == "pgsql") {
+				$feed_language = $row["feed_language"];
+
+				print "<hr/>";
+
+				print __('Language:') . " ";
+				print_select("feed_language", $feed_language, $this::$feed_languages,
+					'dojoType="dijit.form.Select"');
+			}
+
+			print "</div>";
+
+			print "<div class=\"dlgSec\">".__("Update")."</div>";
+			print "<div class=\"dlgSecCont\">";
+
+			/* Update Interval */
+
+			$update_interval = $row["update_interval"];
+
+			print_select_hash("update_interval", $update_interval, $update_intervals,
+				'dojoType="dijit.form.Select"');
+
+			/* Purge intl */
+
+			$purge_interval = $row["purge_interval"];
 
 			print "<hr/>";
+			print __('Article purging:') . " ";
 
-			print __('Place in category:') . " ";
-
-			print_feed_cat_select("cat_id", $cat_id,
-				'dojoType="dijit.form.Select"');
-		}
-
-		/* FTS Stemming Language */
-
-		if (DB_TYPE == "pgsql") {
-			$feed_language = db_fetch_result($result, 0, "feed_language");
-
-			print "<hr/>";
-
-			print __('Language:') . " ";
-			print_select("feed_language", $feed_language, $this::$feed_languages,
-				'dojoType="dijit.form.Select"');
-		}
-
-		print "</div>";
-
-		print "<div class=\"dlgSec\">".__("Update")."</div>";
-		print "<div class=\"dlgSecCont\">";
-
-		/* Update Interval */
-
-		$update_interval = db_fetch_result($result, 0, "update_interval");
-
-		print_select_hash("update_interval", $update_interval, $update_intervals,
-			'dojoType="dijit.form.Select"');
-
-		/* Purge intl */
-
-		$purge_interval = db_fetch_result($result, 0, "purge_interval");
-
-		print "<hr/>";
-		print __('Article purging:') . " ";
-
-		print_select_hash("purge_interval", $purge_interval, $purge_intervals,
-			'dojoType="dijit.form.Select" ' .
+			print_select_hash("purge_interval", $purge_interval, $purge_intervals,
+				'dojoType="dijit.form.Select" ' .
 				((FORCE_ARTICLE_PURGE == 0) ? "" : 'disabled="1"'));
 
-		print "</div>";
+			print "</div>";
 
-		$auth_login = htmlspecialchars(db_fetch_result($result, 0, "auth_login"));
-		$auth_pass = db_fetch_result($result, 0, "auth_pass");
+			$auth_login = htmlspecialchars($row["auth_login"]);
+			$auth_pass = $row["auth_pass"];
 
-		if ($auth_pass_encrypted && function_exists("mcrypt_decrypt")) {
-			require_once "crypt.php";
-			$auth_pass = decrypt_string($auth_pass);
-		}
+			if ($auth_pass_encrypted && function_exists("mcrypt_decrypt")) {
+				require_once "crypt.php";
+				$auth_pass = decrypt_string($auth_pass);
+			}
 
-		$auth_pass = htmlspecialchars($auth_pass);
-		$auth_enabled = $auth_login !== '' || $auth_pass !== '';
+			$auth_pass = htmlspecialchars($auth_pass);
+			$auth_enabled = $auth_login !== '' || $auth_pass !== '';
 
-		$auth_style = $auth_enabled ? '' : 'display: none';
-		print "<div id='feedEditDlg_loginContainer' style='$auth_style'>";
-		print "<div class=\"dlgSec\">".__("Authentication")."</div>";
-		print "<div class=\"dlgSecCont\">";
+			$auth_style = $auth_enabled ? '' : 'display: none';
+			print "<div id='feedEditDlg_loginContainer' style='$auth_style'>";
+			print "<div class=\"dlgSec\">".__("Authentication")."</div>";
+			print "<div class=\"dlgSecCont\">";
 
-		print "<input dojoType=\"dijit.form.TextBox\" id=\"feedEditDlg_login\"
+			print "<input dojoType=\"dijit.form.TextBox\" id=\"feedEditDlg_login\"
 			placeHolder=\"".__("Login")."\"
 			autocomplete=\"new-password\"
 			name=\"auth_login\" value=\"$auth_login\"><hr/>";
 
 
-		print "<input dojoType=\"dijit.form.TextBox\" type=\"password\" name=\"auth_pass\"
+			print "<input dojoType=\"dijit.form.TextBox\" type=\"password\" name=\"auth_pass\"
 			autocomplete=\"new-password\"
 			placeHolder=\"".__("Password")."\"
 			value=\"$auth_pass\">";
 
-		print "<div dojoType=\"dijit.Tooltip\" connectId=\"feedEditDlg_login\" position=\"below\">
+			print "<div dojoType=\"dijit.Tooltip\" connectId=\"feedEditDlg_login\" position=\"below\">
 			".__('<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds.')."
 			</div>";
 
-		print "</div></div>";
+			print "</div></div>";
 
-		$auth_checked = $auth_enabled ? 'checked' : '';
-		print "<div style=\"clear : both\">
+			$auth_checked = $auth_enabled ? 'checked' : '';
+			print "<div style=\"clear : both\">
 				<input type=\"checkbox\" $auth_checked name=\"need_auth\" dojoType=\"dijit.form.CheckBox\" id=\"feedEditDlg_loginCheck\"
 						onclick='checkboxToggleElement(this, \"feedEditDlg_loginContainer\")'>
 					<label for=\"feedEditDlg_loginCheck\">".
-					__('This feed requires authentication.')."</div>";
+				__('This feed requires authentication.')."</div>";
 
-		print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Options').'">';
+			print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Options').'">';
 
-		//print "<div class=\"dlgSec\">".__("Options")."</div>";
-		print "<div class=\"dlgSecSimple\">";
+			//print "<div class=\"dlgSec\">".__("Options")."</div>";
+			print "<div class=\"dlgSecSimple\">";
 
-		$private = sql_bool_to_bool(db_fetch_result($result, 0, "private"));
+			$private = sql_bool_to_bool($row["private"]);
 
-		if ($private) {
-			$checked = "checked=\"1\"";
-		} else {
-			$checked = "";
-		}
+			if ($private) {
+				$checked = "checked=\"1\"";
+			} else {
+				$checked = "";
+			}
 
-		print "<input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" name=\"private\" id=\"private\"
+			print "<input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" name=\"private\" id=\"private\"
 			$checked>&nbsp;<label for=\"private\">".__('Hide from Popular feeds')."</label>";
 
-		$include_in_digest = sql_bool_to_bool(db_fetch_result($result, 0, "include_in_digest"));
+			$include_in_digest = sql_bool_to_bool($row["include_in_digest"]);
 
-		if ($include_in_digest) {
-			$checked = "checked=\"1\"";
-		} else {
-			$checked = "";
-		}
+			if ($include_in_digest) {
+				$checked = "checked=\"1\"";
+			} else {
+				$checked = "";
+			}
 
-		print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"include_in_digest\"
+			print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"include_in_digest\"
 			name=\"include_in_digest\"
 			$checked>&nbsp;<label for=\"include_in_digest\">".__('Include in e-mail digest')."</label>";
 
 
-		$always_display_enclosures = sql_bool_to_bool(db_fetch_result($result, 0, "always_display_enclosures"));
+			$always_display_enclosures = sql_bool_to_bool($row["always_display_enclosures"]);
 
-		if ($always_display_enclosures) {
-			$checked = "checked";
-		} else {
-			$checked = "";
-		}
+			if ($always_display_enclosures) {
+				$checked = "checked";
+			} else {
+				$checked = "";
+			}
 
-		print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"always_display_enclosures\"
+			print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"always_display_enclosures\"
 			name=\"always_display_enclosures\"
 			$checked>&nbsp;<label for=\"always_display_enclosures\">".__('Always display image attachments')."</label>";
 
-		$hide_images = sql_bool_to_bool(db_fetch_result($result, 0, "hide_images"));
+			$hide_images = sql_bool_to_bool($row["hide_images"]);
 
-		if ($hide_images) {
-			$checked = "checked=\"1\"";
-		} else {
-			$checked = "";
-		}
+			if ($hide_images) {
+				$checked = "checked=\"1\"";
+			} else {
+				$checked = "";
+			}
 
-		print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"hide_images\"
+			print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"hide_images\"
 		name=\"hide_images\"
 			$checked>&nbsp;<label for=\"hide_images\">".
-		__('Do not embed images')."</label>";
+				__('Do not embed images')."</label>";
 
-		$cache_images = sql_bool_to_bool(db_fetch_result($result, 0, "cache_images"));
+			$cache_images = sql_bool_to_bool($row["cache_images"]);
 
-		if ($cache_images) {
-			$checked = "checked=\"1\"";
-		} else {
-			$checked = "";
-		}
+			if ($cache_images) {
+				$checked = "checked=\"1\"";
+			} else {
+				$checked = "";
+			}
 
-		print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"cache_images\"
+			print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"cache_images\"
 		name=\"cache_images\"
 			$checked>&nbsp;<label for=\"cache_images\">".
-		__('Cache media')."</label>";
+				__('Cache media')."</label>";
 
-		$mark_unread_on_update = sql_bool_to_bool(db_fetch_result($result, 0, "mark_unread_on_update"));
+			$mark_unread_on_update = sql_bool_to_bool($row["mark_unread_on_update"]);
 
-		if ($mark_unread_on_update) {
-			$checked = "checked";
-		} else {
-			$checked = "";
-		}
+			if ($mark_unread_on_update) {
+				$checked = "checked";
+			} else {
+				$checked = "";
+			}
 
-		print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"mark_unread_on_update\"
+			print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"mark_unread_on_update\"
 			name=\"mark_unread_on_update\"
 			$checked>&nbsp;<label for=\"mark_unread_on_update\">".__('Mark updated articles as unread')."</label>";
 
-		print "</div>";
+			print "</div>";
 
-		print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Icon').'">';
+			print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Icon').'">';
 
-		/* Icon */
+			/* Icon */
 
-		print "<div class=\"dlgSecSimple\">";
+			print "<div class=\"dlgSecSimple\">";
 
-		print "<iframe name=\"icon_upload_iframe\"
+			print "<iframe name=\"icon_upload_iframe\"
 			style=\"width: 400px; height: 100px; display: none;\"></iframe>";
 
-		print "<form style='display : block' target=\"icon_upload_iframe\"
+			print "<form style='display : block' target=\"icon_upload_iframe\"
 			enctype=\"multipart/form-data\" method=\"POST\"
 			action=\"backend.php\">
 			<input id=\"icon_file\" size=\"10\" name=\"icon_file\" type=\"file\">
@@ -744,31 +742,29 @@ class Pref_Feeds extends Handler_Protected {
 				type=\"submit\">".__('Remove')."</button>
 			</form>";
 
-		print "</div>";
+			print "</div>";
 
-		print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Plugins').'">';
+			print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Plugins').'">';
 
-		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_EDIT_FEED,
-			"hook_prefs_edit_feed", $feed_id);
+			PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_EDIT_FEED,
+				"hook_prefs_edit_feed", $feed_id);
 
 
-		print "</div></div>";
+			print "</div></div>";
 
-		$title = htmlspecialchars($title, ENT_QUOTES);
+			$title = htmlspecialchars($title, ENT_QUOTES);
 
-		print "<div class='dlgButtons'>
+			print "<div class='dlgButtons'>
 			<div style=\"float : left\">
 			<button class=\"danger\" dojoType=\"dijit.form.Button\" onclick='return unsubscribeFeed($feed_id, \"$title\")'>".
 				__('Unsubscribe')."</button>";
 
-		print "</div>";
+			print "</div>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('feedEditDlg').execute()\">".__('Save')."</button>
-			<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('feedEditDlg').hide()\">".__('Cancel')."</button>
-		</div>";
-
-
-		return;
+			print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('feedEditDlg').execute()\">".__('Save')."</button>
+				<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('feedEditDlg').hide()\">".__('Cancel')."</button>
+				</div>";
+		}
 	}
 
 	function editfeeds() {
@@ -1129,10 +1125,15 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div dojoType=\"dijit.layout.AccordionContainer\" region=\"center\">";
 		print "<div id=\"pref-feeds-feeds\" dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Feeds')."\">";
 
-		$result = db_query("SELECT COUNT(id) AS num_errors
-			FROM ttrss_feeds WHERE last_error != '' AND owner_uid = ".$_SESSION["uid"]);
+		$sth = $this->pdo->prepare("SELECT COUNT(id) AS num_errors
+			FROM ttrss_feeds WHERE last_error != '' AND owner_uid = ?");
+		$sth->execute([$_SESSION['uid']]);
 
-		$num_errors = db_fetch_result($result, 0, "num_errors");
+		if ($row = $sth->fetch()) {
+			$num_errors = $row["num_errors"];
+		} else {
+			$num_errors = 0;
+		}
 
 		if ($num_errors > 0) {
 
@@ -1737,24 +1738,12 @@ class Pref_Feeds extends Handler_Protected {
 	private function update_feed_access_key($feed_id, $is_cat, $owner_uid = false) {
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
-		$sql_is_cat = bool_to_sql_bool($is_cat);
+		// clear old value and generate new one
+		$sth = $this->pdo->prepare("DELETE FROM ttrss_access_keys
+			WHERE feed_id = ? AND is_cat = ? AND owner_uid = ?");
+		$sth->execute([$feed_id, $is_cat, $owner_uid]);
 
-		$result = db_query("SELECT access_key FROM ttrss_access_keys
-			WHERE feed_id = '$feed_id'	AND is_cat = $sql_is_cat
-			AND owner_uid = " . $owner_uid);
-
-		if (db_num_rows($result) == 1) {
-			$key = uniqid_short();
-
-			db_query("UPDATE ttrss_access_keys SET access_key = '$key'
-				WHERE feed_id = '$feed_id' AND is_cat = $sql_is_cat
-				AND owner_uid = " . $owner_uid);
-
-			return $key;
-
-		} else {
-			return get_feed_access_key($feed_id, $is_cat, $owner_uid);
-		}
+		return get_feed_access_key($feed_id, $is_cat, $owner_uid);
 	}
 
 	// Silent
