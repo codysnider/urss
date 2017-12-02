@@ -321,19 +321,18 @@ class PluginHost {
 			if (!isset($this->storage[$plugin]))
 				$this->storage[$plugin] = array();
 
-			$content = serialize($this->storage[$plugin],
-				false);
+			$content = serialize($this->storage[$plugin]);
 
 			if ($sth->fetch()) {
 				$sth = $this->pdo->prepare("UPDATE ttrss_plugin_storage SET content = ?
 					WHERE owner_uid= ? AND name = ?");
-				$sth->execute([$content, $this->owner_uid, $plugin]);
+				$sth->execute([(string)$content, $this->owner_uid, $plugin]);
 
 			} else {
 				$sth = $this->pdo->prepare("INSERT INTO ttrss_plugin_storage
 					(name,owner_uid,content) VALUES
 					(?, ?, ?)");
-				$sth->execute([$plugin, $this->owner_uid, $content]);
+				$sth->execute([$plugin, $this->owner_uid, (string)$content]);
 			}
 
 			$this->pdo->commit();
