@@ -822,11 +822,6 @@ class Pref_Filters extends Handler_Protected {
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return removeSelectedFilters()\">".
 			__('Remove')."</button> ";
 
-		if (defined('_ENABLE_FEED_DEBUGGING')) {
-			print "<button dojoType=\"dijit.form.Button\" onclick=\"rescore_all_feeds()\">".
-				__('Rescore articles')."</button> ";
-		}
-
 		print "</div>"; # toolbar
 		print "</div>"; # toolbar-frame
 		print "<div id=\"pref-filter-content\" dojoType=\"dijit.layout.ContentPane\" region=\"center\">";

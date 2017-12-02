@@ -348,22 +348,6 @@ class RPC extends Handler_Protected {
 		print "</ul>";
 	}
 
-	function purge() {
-		$ids = explode(",", $_REQUEST["ids"]);
-		$days = (int) $_REQUEST["days"];
-
-		$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE
-				id = ? AND owner_uid = ?");
-
-		foreach ($ids as $id) {
-			$sth->execute([$id, $_SESSION['uid']]);
-
-			if ($sth->fetch()) {
-				purge_feed($id, $days);
-			}
-		}
-	}
-
 	function updateFeedBrowser() {
 		if (defined('_DISABLE_FEED_BROWSER') && _DISABLE_FEED_BROWSER) return;
 
