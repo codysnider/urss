@@ -941,7 +941,7 @@
 	}
 
 	function sql_bool_to_bool($s) {
-		return $s; //no-op for PDO
+		return $s && ($s != "f" && $s != "false"); //no-op for PDO, backwards compat for legacy layer
 	}
 
 	function bool_to_sql_bool($s) {
