@@ -2051,7 +2051,7 @@
 		$sth = $pdo->prepare("SELECT access_key FROM ttrss_access_keys
 				WHERE feed_id = ? AND is_cat = ?
 				AND owner_uid = ?");
-		$sth->execute([$feed_id, $is_cat, $owner_uid]);
+		$sth->execute([$feed_id, (int)$is_cat, $owner_uid]);
 
 		if ($row = $sth->fetch()) {
 			return $row["access_key"];
