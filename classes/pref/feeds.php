@@ -25,7 +25,6 @@ class Pref_Feeds extends Handler_Protected {
 				title = ? WHERE id = ? AND owner_uid = ?");
 			$sth->execute([$title, $id, $_SESSION['uid']]);
 		}
-		return;
 	}
 
 	private function get_category_items($cat_id) {
@@ -109,8 +108,6 @@ class Pref_Feeds extends Handler_Protected {
 		else
 			$search = "";
 
-		if ($search) $search_qpart = " AND LOWER(title) LIKE LOWER('%$search%')";
-
 		$root = array();
 		$root['id'] = 'root';
 		$root['name'] = __('Feeds');
@@ -162,29 +159,31 @@ class Pref_Feeds extends Handler_Protected {
 				$root['items'] = array_merge($root['items'], $cat['items']);
 			}
 
-			$result = db_query("SELECT * FROM
-				ttrss_labels2 WHERE owner_uid = ".$_SESSION['uid']." ORDER by caption");
+			$sth = $this->pdo->prepare("SELECT * FROM
+				ttrss_labels2 WHERE owner_uid = ? ORDER by caption");
+			$sth->execute([$_SESSION['uid']]);
 
-			if (db_num_rows($result) > 0) {
+			if (get_pref('ENABLE_FEED_CATS')) {
+				$cat = $this->feedlist_init_cat(-2);
+			} else {
+				$cat['items'] = array();
+			}
 
-				if (get_pref('ENABLE_FEED_CATS')) {
-					$cat = $this->feedlist_init_cat(-2);
-				} else {
-					$cat['items'] = array();
-				}
+			$num_labels = 0;
+			while ($line = $sth->fetch()) {
+				++$num_labels;
 
-				while ($line = db_fetch_assoc($result)) {
+				$label_id = Labels::label_to_feed_id($line['id']);
 
-					$label_id = Labels::label_to_feed_id($line['id']);
+				$feed = $this->feedlist_init_feed($label_id, false, 0);
 
-					$feed = $this->feedlist_init_feed($label_id, false, 0);
+				$feed['fg_color'] = $line['fg_color'];
+				$feed['bg_color'] = $line['bg_color'];
 
-					$feed['fg_color'] = $line['fg_color'];
-					$feed['bg_color'] = $line['bg_color'];
+				array_push($cat['items'], $feed);
+			}
 
-					array_push($cat['items'], $feed);
-				}
-
+			if ($num_labels) {
 				if ($enable_cats) {
 					array_push($root['items'], $cat);
 				} else {
@@ -197,10 +196,11 @@ class Pref_Feeds extends Handler_Protected {
 			$show_empty_cats = $_REQUEST['force_show_empty'] ||
 				($_REQUEST['mode'] != 2 && !$search);
 
-			$result = db_query("SELECT id, title FROM ttrss_feed_categories
-				WHERE owner_uid = " . $_SESSION["uid"] . " AND parent_cat IS NULL ORDER BY order_id, title");
+			$sth = $this->pdo->prepare("SELECT id, title FROM ttrss_feed_categories
+				WHERE owner_uid = ? AND parent_cat IS NULL ORDER BY order_id, title");
+			$sth->execute([$_SESSION['uid']]);
 
-			while ($line = db_fetch_assoc($result)) {
+			while ($line = $sth->fetch()) {
 				$cat = array();
 				$cat['id'] = 'CAT:' . $line['id'];
 				$cat['bare_id'] = (int)$line['id'];
@@ -236,13 +236,16 @@ class Pref_Feeds extends Handler_Protected {
 			$cat['unread'] = 0;
 			$cat['child_unread'] = 0;
 
-			$feed_result = db_query("SELECT id, title,last_error,
+			$fsth = $this->pdo->prepare("SELECT id, title,last_error,
 				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated
 				FROM ttrss_feeds
-				WHERE cat_id IS NULL AND owner_uid = ".$_SESSION["uid"].
-				"$search_qpart ORDER BY order_id, title");
+				WHERE cat_id IS NULL AND 
+				owner_uid = :uid AND
+				(:search = '' OR (LOWER(title) LIKE :search OR LOWER(feed_url) LIKE :search))
+				ORDER BY order_id, title");
+			$fsth->execute([":uid" => $_SESSION['uid'], ":search" => $search ? "%$search%" : ""]);
 
-			while ($feed_line = db_fetch_assoc($feed_result)) {
+			while ($feed_line = $fsth->fetch()) {
 				$feed = array();
 				$feed['id'] = 'FEED:' . $feed_line['id'];
 				$feed['bare_id'] = (int)$feed_line['id'];
@@ -268,13 +271,15 @@ class Pref_Feeds extends Handler_Protected {
 			$root['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
 
 		} else {
-			$feed_result = db_query("SELECT id, title, last_error,
+			$fsth = $this->pdo->prepare("SELECT id, title, last_error,
 				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated
 				FROM ttrss_feeds
-				WHERE owner_uid = ".$_SESSION["uid"].
-				"$search_qpart ORDER BY order_id, title");
+				WHERE owner_uid = :uid AND
+				(:search = '' OR (LOWER(title) LIKE :search OR LOWER(feed_url) LIKE :search))
+				ORDER BY order_id, title");
+			$fsth->execute([":uid" => $_SESSION['uid'], ":search" => $search ? "%$search%" : ""]);
 
-			while ($feed_line = db_fetch_assoc($feed_result)) {
+			while ($feed_line = $fsth->fetch()) {
 				$feed = array();
 				$feed['id'] = 'FEED:' . $feed_line['id'];
 				$feed['bare_id'] = (int)$feed_line['id'];
@@ -308,15 +313,15 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	function catsortreset() {
-		db_query("UPDATE ttrss_feed_categories
-				SET order_id = 0 WHERE owner_uid = " . $_SESSION["uid"]);
-		return;
+		$sth = $this->pdo->prepare("UPDATE ttrss_feed_categories
+				SET order_id = 0 WHERE owner_uid = ?");
+		$sth->execute([$_SESSION['uid']]);
 	}
 
 	function feedsortreset() {
-		db_query("UPDATE ttrss_feeds
-				SET order_id = 0 WHERE owner_uid = " . $_SESSION["uid"]);
-		return;
+		$sth = $this->pdo->prepare("UPDATE ttrss_feeds
+				SET order_id = 0 WHERE owner_uid = ?");
+		$sth->execute([$_SESSION['uid']]);
 	}
 
 	private function process_category_order(&$data_map, $item_id, $parent_id = false, $nest_level = 0) {
@@ -335,12 +340,13 @@ class Pref_Feeds extends Handler_Protected {
 				$parent_bare_id = substr($parent_id, strpos($parent_id, ':')+1);
 				$parent_qpart = $parent_bare_id;
 			} else {
-				$parent_qpart = 'NULL';
+				$parent_qpart = null;
 			}
 
-			db_query("UPDATE ttrss_feed_categories
-				SET parent_cat = $parent_qpart WHERE id = '$bare_item_id' AND
-				owner_uid = " . $_SESSION["uid"]);
+			$sth = $this->pdo->prepare("UPDATE ttrss_feed_categories
+				SET parent_cat = ? WHERE id = ? AND
+				owner_uid = ?");
+			$sth->execute([$parent_qpart, $bare_item_id, $_SESSION['uid']]);
 		}
 
 		$order_id = 1;
@@ -358,30 +364,22 @@ class Pref_Feeds extends Handler_Protected {
 
 					if (strpos($id, "FEED") === 0) {
 
-						$cat_id = ($item_id != "root") ?
-							$bare_item_id : "NULL";
+						$cat_id = ($item_id != "root") ? $bare_item_id : null;
 
-						$cat_qpart = ($cat_id != 0) ? "cat_id = '$cat_id'" :
-							"cat_id = NULL";
+						$sth = $this->pdo->prepare("UPDATE ttrss_feeds
+							SET order_id = ?, cat_id = ?
+							WHERE id = ? AND owner_uid = ?");
 
-						db_query("UPDATE ttrss_feeds
-							SET order_id = $order_id, $cat_qpart
-							WHERE id = '$bare_id' AND
-								owner_uid = " . $_SESSION["uid"]);
+						$sth->execute([$order_id, $cat_id ? $cat_id : null, $bare_id, $_SESSION['uid']]);
 
 					} else if (strpos($id, "CAT:") === 0) {
 						$this->process_category_order($data_map, $item['_reference'], $item_id,
 							$nest_level+1);
 
-						if ($item_id != 'root') {
-							$parent_qpart = $bare_id;
-						} else {
-							$parent_qpart = 'NULL';
-						}
-
-						db_query("UPDATE ttrss_feed_categories
-								SET order_id = '$order_id' WHERE id = '$bare_id' AND
-								owner_uid = " . $_SESSION["uid"]);
+						$sth = $this->pdo->prepare("UPDATE ttrss_feed_categories
+								SET order_id = ? WHERE id = ? AND
+								owner_uid = ?");
+						$sth->execute([$order_id, $bare_id, $_SESSION['uid']]);
 					}
 				}
 
@@ -423,66 +421,27 @@ class Pref_Feeds extends Handler_Protected {
 			}
 
 			$this->process_category_order($data_map, $root_item);
-
-			/* foreach ($data['items'][0]['items'] as $item) {
-				$id = $item['_reference'];
-				$bare_id = substr($id, strpos($id, ':')+1);
-
-				++$cat_order_id;
-
-				if ($bare_id > 0) {
-					db_query("UPDATE ttrss_feed_categories
-						SET order_id = '$cat_order_id' WHERE id = '$bare_id' AND
-						owner_uid = " . $_SESSION["uid"]);
-				}
-
-				$feed_order_id = 0;
-
-				if (is_array($data_map[$id])) {
-					foreach ($data_map[$id] as $feed) {
-						$id = $feed['_reference'];
-						$feed_id = substr($id, strpos($id, ':')+1);
-
-						if ($bare_id != 0)
-							$cat_query = "cat_id = '$bare_id'";
-						else
-							$cat_query = "cat_id = NULL";
-
-						db_query("UPDATE ttrss_feeds
-							SET order_id = '$feed_order_id',
-							$cat_query
-							WHERE id = '$feed_id' AND
-								owner_uid = " . $_SESSION["uid"]);
-
-						++$feed_order_id;
-					}
-				}
-			} */
 		}
-
-		return;
 	}
 
 	function removeicon() {
 		$feed_id = $_REQUEST["feed_id"];
 
-		$result = db_query("SELECT id FROM ttrss_feeds
-			WHERE id = '$feed_id' AND owner_uid = ". $_SESSION["uid"]);
+		$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
+			WHERE id = ? AND owner_uid = ?");
+		$sth->execute([$feed_id, $_SESSION['uid']]);
 
-		if (db_num_rows($result) != 0) {
+		if ($row = $sth->fetch()) {
 			@unlink(ICONS_DIR . "/$feed_id.ico");
 
-			db_query("UPDATE ttrss_feeds SET favicon_avg_color = NULL
-				where id = '$feed_id'");
+			$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET favicon_avg_color = NULL
+				where id = ?");
+			$sth->execute([$feed_id]);
 		}
-
-		return;
 	}
 
 	function uploadicon() {
 		header("Content-type: text/html");
-
-		$tmp_file = false;
 
 		if (is_uploaded_file($_FILES['icon_file']['tmp_name'])) {
 			$tmp_file = tempnam(CACHE_DIR . '/upload', 'icon');
@@ -503,15 +462,18 @@ class Pref_Feeds extends Handler_Protected {
 		if (is_file($icon_file) && $feed_id) {
 			if (filesize($icon_file) < 65535) {
 
-				$result = db_query("SELECT id FROM ttrss_feeds
-					WHERE id = '$feed_id' AND owner_uid = ". $_SESSION["uid"]);
+				$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
+					WHERE id = ? AND owner_uid = ?");
+				$sth->execute([$feed_id, $_SESSION['uid']]);
 
-				if (db_num_rows($result) != 0) {
+				if ($row = $sth->fetch()) {
 					@unlink(ICONS_DIR . "/$feed_id.ico");
 					if (rename($icon_file, ICONS_DIR . "/$feed_id.ico")) {
-						db_query("UPDATE ttrss_feeds SET
+
+						$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET
 							favicon_avg_color = ''
-							WHERE id = '$feed_id'");
+							WHERE id = ?");
+						$sth->execute([$feed_id]);
 
 						$rc = 0;
 					}
@@ -963,11 +925,11 @@ class Pref_Feeds extends Handler_Protected {
 	function editsaveops($batch) {
 
 		$feed_title = trim($_POST["title"]);
-		$feed_link = trim($_POST["feed_url"]);
+		$feed_url = trim($_POST["feed_url"]);
 		$upd_intl = (int) $_POST["update_interval"];
 		$purge_intl = (int) $_POST["purge_interval"];
 		$feed_id = (int) $_POST["id"]; /* editSave */
-		$feed_ids = $_POST["ids"]; /* batchEditSave */
+		$feed_ids = explode(",", $_POST["ids"]); /* batchEditSave */
 		$cat_id = (int) $_POST["cat_id"];
 		$auth_login = trim($_POST["auth_login"]);
 		$auth_pass = trim($_POST["auth_pass"]);
@@ -986,48 +948,53 @@ class Pref_Feeds extends Handler_Protected {
 
 		$feed_language = trim($_POST["feed_language"]);
 
-		$auth_pass = $auth_pass;
-
-		if (get_pref('ENABLE_FEED_CATS')) {
-			if ($cat_id && $cat_id != 0) {
-				$category_qpart = "cat_id = '$cat_id',";
-				$category_qpart_nocomma = "cat_id = '$cat_id'";
-			} else {
-				$category_qpart = 'cat_id = NULL,';
-				$category_qpart_nocomma = 'cat_id = NULL';
-			}
-		} else {
-			$category_qpart = "";
-			$category_qpart_nocomma = "";
-		}
-
 		if (!$batch) {
 			if ($_POST["need_auth"] !== 'on') {
 				$auth_login = '';
 				$auth_pass = '';
 			}
 
-			$result = db_query("SELECT feed_url FROM ttrss_feeds WHERE id = " . $feed_id);
-			$orig_feed_url = db_fetch_result($result, 0, "feed_url");
+			$sth = $this->pdo->prepare("SELECT feed_url FROM ttrss_feeds WHERE id = ?");
+			$sth->execute([$feed_id]);
+			$row = $sth->fetch();
+			$orig_feed_url = $row["feed_url"];
 
-			$reset_basic_info = $orig_feed_url != $feed_link;
+			$reset_basic_info = $orig_feed_url != $feed_url;
 
-			db_query("UPDATE ttrss_feeds SET
-				$category_qpart
-				title = '$feed_title', feed_url = '$feed_link',
-				update_interval = '$upd_intl',
-				purge_interval = '$purge_intl',
-				auth_login = '$auth_login',
-				auth_pass = '$auth_pass',
+			$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET
+				cat_id = :cat_id,
+				title = :title, 
+				feed_url = :feed_url,
+				update_interval = :upd_intl,
+				purge_interval = :purge_intl,
+				auth_login = :auth_login,
+				auth_pass = :auth_pass,
 				auth_pass_encrypted = false,
-				private = $private,
-				cache_images = $cache_images,
-				hide_images = $hide_images,
-				include_in_digest = $include_in_digest,
-				always_display_enclosures = $always_display_enclosures,
-				mark_unread_on_update = $mark_unread_on_update,
-				feed_language = '$feed_language'
-			WHERE id = '$feed_id' AND owner_uid = " . $_SESSION["uid"]);
+				private = :private,
+				cache_images = :cache_images,
+				hide_images = :hide_images,
+				include_in_digest = :include_in_digest,
+				always_display_enclosures = :always_display_enclosures,
+				mark_unread_on_update = :mark_unread_on_update,
+				feed_language = :feed_language
+			WHERE id = :id AND owner_uid = :uid");
+
+			$sth->execute([":title" => $feed_title,
+					":cat_id" => $cat_id ? $cat_id : null,
+					":feed_url" => $feed_url,
+					":upd_intl" => $upd_intl,
+					":purge_intl" => $purge_intl,
+					":auth_login" => $auth_login,
+					":auth_pass" => $auth_pass,
+					":private" => (int)$private,
+					":cache_images" => (int)$cache_images,
+					":hide_images" => (int)$hide_images,
+					":include_in_digest" => (int)$include_in_digest,
+					":always_display_enclosures" => (int)$always_display_enclosures,
+					":mark_unread_on_update" => (int)$mark_unread_on_update,
+					":feed_language" => $feed_language,
+					":id" => $feed_id,
+					":uid" => $_SESSION['uid']]);
 
 			if ($reset_basic_info) {
 				RSSUtils::set_basic_feed_info($feed_id);
@@ -1045,7 +1012,9 @@ class Pref_Feeds extends Handler_Protected {
 				}
 			}
 
-			db_query("BEGIN");
+			$this->pdo->beginTransaction();
+
+			$feed_ids_qmarks = arr_qmarks($feed_ids);
 
 			foreach (array_keys($feed_data) as $k) {
 
@@ -1053,72 +1022,80 @@ class Pref_Feeds extends Handler_Protected {
 
 				switch ($k) {
 					case "title":
-						$qpart = "title = '$feed_title'";
+						$qpart = "title = " . $this->pdo->quote($feed_title);
 						break;
 
 					case "feed_url":
-						$qpart = "feed_url = '$feed_link'";
+						$qpart = "feed_url = " . $this->pdo->quote($feed_url);
 						break;
 
 					case "update_interval":
-						$qpart = "update_interval = '$upd_intl'";
+						$qpart = "update_interval = " . $this->pdo->quote($upd_intl);
 						break;
 
 					case "purge_interval":
-						$qpart = "purge_interval = '$purge_intl'";
+						$qpart = "purge_interval =" . $this->pdo->quote($purge_intl);
 						break;
 
 					case "auth_login":
-						$qpart = "auth_login = '$auth_login'";
+						$qpart = "auth_login = " . $this->pdo->quote($auth_login);
 						break;
 
 					case "auth_pass":
-						$qpart = "auth_pass = '$auth_pass', auth_pass_encrypted = false";
+						$qpart = "auth_pass =" . $this->pdo->quote($auth_pass). ", auth_pass_encrypted = false";
 						break;
 
 					case "private":
-						$qpart = "private = $private";
+						$qpart = "private = " . $this->pdo->quote($private);
 						break;
 
 					case "include_in_digest":
-						$qpart = "include_in_digest = $include_in_digest";
+						$qpart = "include_in_digest = " . $this->pdo->quote($include_in_digest);
 						break;
 
 					case "always_display_enclosures":
-						$qpart = "always_display_enclosures = $always_display_enclosures";
+						$qpart = "always_display_enclosures = " . $this->pdo->quote($always_display_enclosures);
 						break;
 
 					case "mark_unread_on_update":
-						$qpart = "mark_unread_on_update = $mark_unread_on_update";
+						$qpart = "mark_unread_on_update = " . $this->pdo->quote($mark_unread_on_update);
 						break;
 
 					case "cache_images":
-						$qpart = "cache_images = $cache_images";
+						$qpart = "cache_images = " . $this->pdo->quote($cache_images);
 						break;
 
 					case "hide_images":
-						$qpart = "hide_images = $hide_images";
+						$qpart = "hide_images = " . $this->pdo->quote($hide_images);
 						break;
 
 					case "cat_id":
-						$qpart = $category_qpart_nocomma;
+						if (get_pref('ENABLE_FEED_CATS')) {
+							if ($cat_id) {
+								$qpart = "cat_id = " . $this->pdo->quote($cat_id);
+							} else {
+								$qpart = 'cat_id = NULL';
+							}
+						} else {
+							$qpart = "";
+						}
+
 						break;
 
 					case "feed_language":
-						$qpart = "feed_language = '$feed_language'";
+						$qpart = "feed_language = " . $this->pdo->quote($feed_language);
 						break;
 
 				}
 
 				if ($qpart) {
-					db_query(
-						"UPDATE ttrss_feeds SET $qpart WHERE id IN ($feed_ids)
-						AND owner_uid = " . $_SESSION["uid"]);
-					print "<br/>";
+					$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET $qpart WHERE id IN ($feed_ids_qmarks)
+						AND owner_uid = ?");
+					$sth->execute(array_merge($feed_ids, [$_SESSION['uid']]));
 				}
 			}
 
-			db_query("COMMIT");
+			$this->pdo->commit();
 		}
 		return;
 	}
