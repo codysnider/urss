@@ -2,6 +2,9 @@
 abstract class Plugin {
 	const API_VERSION_COMPAT = 1;
 
+	/** @var PDO */
+	protected $pdo;
+
 	abstract function init($host);
 
 	abstract function about();

@@ -2062,7 +2062,7 @@
 					(access_key, feed_id, is_cat, owner_uid)
 					VALUES (?, ?, ?, ?)");
 
-			$sth->execute([$key, $feed_id, $is_cat, $owner_uid]);
+			$sth->execute([$key, $feed_id, (int)$is_cat, $owner_uid]);
 
 			return $key;
 		}

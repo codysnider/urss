@@ -1,5 +1,6 @@
 <?php
 class Auth_Internal extends Plugin implements IAuthModule {
+
 	private $host;
 
 	function about() {
@@ -9,8 +10,9 @@ class Auth_Internal extends Plugin implements IAuthModule {
 			true);
 	}
 
-	function init($host) {
+    function init($host) {
 		$this->host = $host;
+		$this->pdo = Db::pdo();
 
 		$host->add_hook($host::HOOK_AUTH_USER, $this);
 	}
@@ -19,16 +21,16 @@ class Auth_Internal extends Plugin implements IAuthModule {
 
 		$pwd_hash1 = encrypt_password($password);
 		$pwd_hash2 = encrypt_password($password, $login);
-		$login = db_escape_string($login);
-		$otp = db_escape_string($_REQUEST["otp"]);
+		$otp = $_REQUEST["otp"];
 
 		if (get_schema_version() > 96) {
 			if (!defined('AUTH_DISABLE_OTP') || !AUTH_DISABLE_OTP) {
 
-				$result = db_query("SELECT otp_enabled,salt FROM ttrss_users WHERE
-					login = '$login'");
+				$sth = $this->pdo->prepare("SELECT otp_enabled,salt FROM ttrss_users WHERE
+					login = ?");
+				$sth->execute([$login]);
 
-				if (db_num_rows($result) > 0) {
+				if ($row = $sth->fetch()) {
 
 					require_once "lib/otphp/vendor/base32.php";
 					require_once "lib/otphp/lib/otp.php";
@@ -36,8 +38,8 @@ class Auth_Internal extends Plugin implements IAuthModule {
 
 					$base32 = new Base32();
 
-					$otp_enabled = sql_bool_to_bool(db_fetch_result($result, 0, "otp_enabled"));
-					$secret = $base32->encode(sha1(db_fetch_result($result, 0, "salt")));
+					$otp_enabled = $row['otp_enabled'];
+					$secret = $base32->encode(sha1($row['salt']));
 
 					$topt = new \OTPHP\TOTP($secret);
 					$otp_check = $topt->now();
@@ -79,109 +81,127 @@ class Auth_Internal extends Plugin implements IAuthModule {
 
 		if (get_schema_version() > 87) {
 
-			$result = db_query("SELECT salt FROM ttrss_users WHERE
-				login = '$login'");
+			$sth = $this->pdo->prepare("SELECT salt FROM ttrss_users WHERE login = ?");
+			$sth->execute([$login]);
 
-			if (db_num_rows($result) != 1) {
-				return false;
-			}
+			if ($row = $sth->fetch()) {
+				$salt = $row['salt'];
 
-			$salt = db_fetch_result($result, 0, "salt");
+				if ($salt == "") {
 
-			if ($salt == "") {
+					$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE
+                        login = ? AND (pwd_hash = ? OR pwd_hash = ?)");
 
-				$query = "SELECT id
-	            FROM ttrss_users WHERE
-					login = '$login' AND (pwd_hash = '$pwd_hash1' OR
-					pwd_hash = '$pwd_hash2')";
+					$sth->execute([$login, $pwd_hash1, $pwd_hash2]);
 
-				// verify and upgrade password to new salt base
+					// verify and upgrade password to new salt base
 
-				$result = db_query($query);
+					if ($row = $sth->fetch()) {
+						// upgrade password to MODE2
 
-				if (db_num_rows($result) == 1) {
-					// upgrade password to MODE2
+						$user_id = $row['id'];
 
-					$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
-					$pwd_hash = encrypt_password($password, $salt, true);
+						$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
+						$pwd_hash = encrypt_password($password, $salt, true);
 
-					db_query("UPDATE ttrss_users SET
-						pwd_hash = '$pwd_hash', salt = '$salt' WHERE login = '$login'");
+						$sth = $this->pdo->prepare("UPDATE ttrss_users SET
+					        pwd_hash = ?, salt = ? WHERE login = ?");
 
-					$query = "SELECT id
-		            FROM ttrss_users WHERE
-						login = '$login' AND pwd_hash = '$pwd_hash'";
+						$sth->execute([$pwd_hash, $salt, $login]);
+
+						return $user_id;
+
+					} else {
+						return false;
+					}
 
 				} else {
-					return false;
+					$pwd_hash = encrypt_password($password, $salt, true);
+
+					$sth = $this->pdo->prepare("SELECT id
+  		                  FROM ttrss_users WHERE
+					      login = ? AND pwd_hash = ?");
+					$sth->execute([$login, $pwd_hash]);
+
+					if ($row = $sth->fetch()) {
+						return $row['id'];
+					}
 				}
 
 			} else {
+				$sth = $this->pdo->prepare("SELECT id
+                    FROM ttrss_users WHERE
+                      login = ? AND (pwd_hash = ? OR pwd_hash = ?)");
 
-				$pwd_hash = encrypt_password($password, $salt, true);
+				$sth->execute([$login, $pwd_hash1, $pwd_hash2]);
 
-				$query = "SELECT id
-		         FROM ttrss_users WHERE
-					login = '$login' AND pwd_hash = '$pwd_hash'";
-
+				if ($row = $sth->fetch()) {
+					return $row['id'];
+				}
 			}
-
 		} else {
-			$query = "SELECT id
-	         FROM ttrss_users WHERE
-				login = '$login' AND (pwd_hash = '$pwd_hash1' OR
-					pwd_hash = '$pwd_hash2')";
-		}
+			$sth = $this->pdo->prepare("SELECT id
+                    FROM ttrss_users WHERE
+                      login = ? AND (pwd_hash = ? OR pwd_hash = ?)");
 
-		$result = db_query($query);
+			$sth->execute([$login, $pwd_hash1, $pwd_hash2]);
 
-		if (db_num_rows($result) == 1) {
-			return db_fetch_result($result, 0, "id");
-		}
+			if ($row = $sth->fetch()) {
+				return $row['id'];
+			}
+        }
 
 		return false;
 	}
 
 	function check_password($owner_uid, $password) {
-		$owner_uid = db_escape_string($owner_uid);
 
-		$result = db_query("SELECT salt,login FROM ttrss_users WHERE
-			id = '$owner_uid'");
+		$sth = $this->pdo->prepare("SELECT salt,login FROM ttrss_users WHERE
+			id = ?");
+		$sth->execute([$owner_uid]);
 
-		$salt = db_fetch_result($result, 0, "salt");
-		$login = db_fetch_result($result, 0, "login");
+		if ($row = $sth->fetch()) {
 
-		if (!$salt) {
-			$password_hash1 = encrypt_password($password);
-			$password_hash2 = encrypt_password($password, $login);
+			$salt = $row['salt'];
+			$login = $row['login'];
 
-			$query = "SELECT id FROM ttrss_users WHERE
-				id = '$owner_uid' AND (pwd_hash = '$password_hash1' OR
-				pwd_hash = '$password_hash2')";
+			if (!$salt) {
+				$password_hash1 = encrypt_password($password);
+				$password_hash2 = encrypt_password($password, $login);
 
-		} else {
-			$password_hash = encrypt_password($password, $salt, true);
+				$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE
+                    id = ? AND (pwd_hash = ? OR pwd_hash = ?)");
 
-			$query = "SELECT id FROM ttrss_users WHERE
-				id = '$owner_uid' AND pwd_hash = '$password_hash'";
+				$sth->execute([$owner_uid, $password_hash1, $password_hash2]);
+
+				return $sth->fetch();
+
+			} else {
+				$password_hash = encrypt_password($password, $salt, true);
+
+				$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE
+                    id = ? AND pwd_hash = ?");
+
+				$sth->execute([$owner_uid, $password_hash]);
+
+				return $sth->fetch();
+			}
 		}
 
-		$result = db_query($query);
-
-		return db_num_rows($result) != 0;
+        return false;
 	}
 
 	function change_password($owner_uid, $old_password, $new_password) {
-		$owner_uid = db_escape_string($owner_uid);
 
 		if ($this->check_password($owner_uid, $old_password)) {
 
 			$new_salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
 			$new_password_hash = encrypt_password($new_password, $new_salt, true);
 
-			db_query("UPDATE ttrss_users SET
-				pwd_hash = '$new_password_hash', salt = '$new_salt', otp_enabled = false
-					WHERE id = '$owner_uid'");
+			$sth = $this->pdo->prepare("UPDATE ttrss_users SET
+				pwd_hash = ?, salt = ?, otp_enabled = false
+					WHERE id = ?");
+			$sth->execute([$new_password_hash, $new_salt, $owner_uid]);
 
 			$_SESSION["pwd_hash"] = $new_password_hash;
 
