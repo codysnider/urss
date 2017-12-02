@@ -99,14 +99,15 @@ class Pref_Prefs extends Handler_Protected {
 
 		foreach (array_keys($_POST) as $pref_name) {
 
-			$pref_name = $this->dbh->escape_string($pref_name);
-			$value = $this->dbh->escape_string($_POST[$pref_name]);
+			$pref_name = $pref_name;
+			$value = $_POST[$pref_name];
 
 			if ($pref_name == 'DIGEST_PREFERRED_TIME') {
 				if (get_pref('DIGEST_PREFERRED_TIME') != $value) {
 
-					$this->dbh->query("UPDATE ttrss_users SET
-						last_digest_sent = NULL WHERE id = " . $_SESSION['uid']);
+					$sth = $this->pdo->prepare("UPDATE ttrss_users SET
+						last_digest_sent = NULL WHERE id = ?");
+					$sth->execute([$_SESSION['uid']]);
 
 				}
 			}
@@ -129,13 +130,13 @@ class Pref_Prefs extends Handler_Protected {
 
 	function changeemail() {
 
-		$email = $this->dbh->escape_string($_POST["email"]);
-		$full_name = $this->dbh->escape_string($_POST["full_name"]);
-
+		$email = $_POST["email"];
+		$full_name = $_POST["full_name"];
 		$active_uid = $_SESSION["uid"];
 
-		$this->dbh->query("UPDATE ttrss_users SET email = '$email',
-			full_name = '$full_name' WHERE id = '$active_uid'");
+		$sth = $this->pdo->prepare("UPDATE ttrss_users SET email = ?,
+			full_name = ? WHERE id = ?");
+		$sth->execute([$email, $full_name, $active_uid]);
 
 		print __("Your personal data has been saved.");
 
@@ -146,14 +147,10 @@ class Pref_Prefs extends Handler_Protected {
 
 		$_SESSION["prefs_op_result"] = "reset-to-defaults";
 
-		if ($_SESSION["profile"]) {
-			$profile_qpart = "profile = '" . $_SESSION["profile"] . "'";
-		} else {
-			$profile_qpart = "profile IS NULL";
-		}
-
-		$this->dbh->query("DELETE FROM ttrss_user_prefs
-			WHERE $profile_qpart AND owner_uid = ".$_SESSION["uid"]);
+		$sth = $this->pdo->query("DELETE FROM ttrss_user_prefs
+			WHERE (profile = :profile OR (:profile IS NULL AND profile IS NULL)) 
+				AND owner_uid = :uid");
+		$sth->execute([":profile" => $_SESSION['profile'], ":uid" => $_SESSION['uid']]);
 
 		initialize_user_prefs($_SESSION["uid"], $_SESSION["profile"]);
 
@@ -202,13 +199,15 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "<h2>" . __("Personal data") . "</h2>";
 
-		$result = $this->dbh->query("SELECT email,full_name,otp_enabled,
+		$sth = $this->pdo->prepare("SELECT email,full_name,otp_enabled,
 			access_level FROM ttrss_users
-			WHERE id = ".$_SESSION["uid"]);
+			WHERE id = ?");
+		$sth->execute([$_SESSION["uid"]]);
+		$row = $sth->fetch();
 
-		$email = htmlspecialchars($this->dbh->fetch_result($result, 0, "email"));
-		$full_name = htmlspecialchars($this->dbh->fetch_result($result, 0, "full_name"));
-		$otp_enabled = sql_bool_to_bool($this->dbh->fetch_result($result, 0, "otp_enabled"));
+		$email = htmlspecialchars($row["email"]);
+		$full_name = htmlspecialchars($row["full_name"]);
+		$otp_enabled = sql_bool_to_bool($row["otp_enabled"]);
 
 		print "<tr><td width=\"40%\">".__('Full name')."</td>";
 		print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" name=\"full_name\" required=\"1\"
@@ -219,7 +218,7 @@ class Pref_Prefs extends Handler_Protected {
 
 		if (!SINGLE_USER_MODE && !$_SESSION["hide_hello"]) {
 
-			$access_level = $this->dbh->fetch_result($result, 0, "access_level");
+			$access_level = $row["access_level"];
 			print "<tr><td width=\"40%\">".__('Access level')."</td>";
 			print "<td>" . $access_level_names[$access_level] . "</td></tr>";
 		}
@@ -245,14 +244,6 @@ class Pref_Prefs extends Handler_Protected {
 			print "<h2>" . __("Password") . "</h2>";
 
 			print "<div style='display : none' id='pwd_change_infobox'></div>";
-
-			$result = $this->dbh->query("SELECT id FROM ttrss_users
-				WHERE id = ".$_SESSION["uid"]." AND pwd_hash
-				= 'SHA1:5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'");
-
-			if ($this->dbh->num_rows($result) != 0) {
-				print format_warning(__("Your password is at default value, please change it."), "default_pass_warning");
-			}
 
 			print "<form dojoType=\"dijit.form.Form\">";
 
@@ -468,31 +459,22 @@ class Pref_Prefs extends Handler_Protected {
 
 		if ($_SESSION["profile"]) {
 			initialize_user_prefs($_SESSION["uid"], $_SESSION["profile"]);
-			$profile_qpart = "profile = '" . $_SESSION["profile"] . "'";
 		} else {
 			initialize_user_prefs($_SESSION["uid"]);
-			$profile_qpart = "profile IS NULL";
 		}
 
-		/* if ($_SESSION["prefs_show_advanced"])
-			$access_query = "true";
-		else
-			$access_query = "(access_level = 0 AND section_id != 3)"; */
-
-		$access_query = 'true';
-
-		$result = $this->dbh->query("SELECT DISTINCT
+		$sth = $this->pdo->prepare("SELECT DISTINCT
 			ttrss_user_prefs.pref_name,value,type_name,
 			ttrss_prefs_sections.order_id,
 			def_value,section_id
 			FROM ttrss_prefs,ttrss_prefs_types,ttrss_prefs_sections,ttrss_user_prefs
 			WHERE type_id = ttrss_prefs_types.id AND
-				$profile_qpart AND
+				(profile = :profile OR (:profile IS NULL AND profile IS NULL)) AND
 				section_id = ttrss_prefs_sections.id AND
 				ttrss_user_prefs.pref_name = ttrss_prefs.pref_name AND
-				$access_query AND
-				owner_uid = ".$_SESSION["uid"]."
+				owner_uid = :uid
 			ORDER BY ttrss_prefs_sections.order_id,pref_name");
+		$sth->execute([":uid" => $_SESSION['uid'], ":profile" => $_SESSION['profile']]);
 
 		$lnum = 0;
 
@@ -500,7 +482,7 @@ class Pref_Prefs extends Handler_Protected {
 
 		$listed_boolean_prefs = array();
 
-		while ($line = $this->dbh->fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 
 			if (in_array($line["pref_name"], $prefs_blacklist)) {
 				continue;
@@ -872,20 +854,25 @@ class Pref_Prefs extends Handler_Protected {
 		require_once "lib/otphp/lib/totp.php";
 		require_once "lib/phpqrcode/phpqrcode.php";
 
-		$result = $this->dbh->query("SELECT login,salt,otp_enabled
+		$sth = $this->pdo->prepare("SELECT login,salt,otp_enabled
 			FROM ttrss_users
-			WHERE id = ".$_SESSION["uid"]);
+			WHERE id = ?");
+		$sth->execute([$_SESSION['uid']]);
 
-		$base32 = new Base32();
+		if ($row = $sth->fetch()) {
 
-		$login = $this->dbh->fetch_result($result, 0, "login");
-		$otp_enabled = sql_bool_to_bool($this->dbh->fetch_result($result, 0, "otp_enabled"));
+			$base32 = new Base32();
 
-		if (!$otp_enabled) {
-			$secret = $base32->encode(sha1($this->dbh->fetch_result($result, 0, "salt")));
-	      print QRcode::png("otpauth://totp/".urlencode($login).
-				"?secret=$secret&issuer=".urlencode("Tiny Tiny RSS"));
+			$login = $row["login"];
+			$otp_enabled = sql_bool_to_bool($row["otp_enabled"]);
 
+			if (!$otp_enabled) {
+				$secret = $base32->encode(sha1($row["salt"]));
+
+				QRcode::png("otpauth://totp/".urlencode($login).
+					"?secret=$secret&issuer=".urlencode("Tiny Tiny RSS"));
+
+			}
 		}
 	}
 
@@ -901,25 +888,32 @@ class Pref_Prefs extends Handler_Protected {
 
 		if ($authenticator->check_password($_SESSION["uid"], $password)) {
 
-			$result = $this->dbh->query("SELECT salt
+			$sth = $this->pdo->query("SELECT salt
 				FROM ttrss_users
-				WHERE id = ".$_SESSION["uid"]);
+				WHERE id = ?");
+			$sth->execute([$_SESSION['uid']]);
 
-			$base32 = new Base32();
+			if ($row = $sth->fetch()) {
 
-			$secret = $base32->encode(sha1($this->dbh->fetch_result($result, 0, "salt")));
-			$topt = new \OTPHP\TOTP($secret);
+				$base32 = new Base32();
 
-			$otp_check = $topt->now();
+				$secret = $base32->encode(sha1($row["salt"]));
+				$topt = new \OTPHP\TOTP($secret);
 
-			if ($otp == $otp_check) {
-				$this->dbh->query("UPDATE ttrss_users SET otp_enabled = true WHERE
-					id = " . $_SESSION["uid"]);
+				$otp_check = $topt->now();
 
-				print "OK";
-			} else {
-				print "ERROR:".__("Incorrect one time password");
+				if ($otp == $otp_check) {
+					$sth = $this->pdo->prepare("UPDATE ttrss_users 
+					SET otp_enabled = true WHERE id = ?");
+
+					$sth->execute([$_SESSION['uid']]);
+
+					print "OK";
+				} else {
+					print "ERROR:".__("Incorrect one time password");
+				}
 			}
+
 		} else {
 			print "ERROR:".__("Incorrect password");
 		}
@@ -927,14 +921,15 @@ class Pref_Prefs extends Handler_Protected {
 	}
 
 	function otpdisable() {
-		$password = $this->dbh->escape_string($_REQUEST["password"]);
+		$password = $_REQUEST["password"];
 
 		$authenticator = PluginHost::getInstance()->get_plugin($_SESSION["auth_module"]);
 
 		if ($authenticator->check_password($_SESSION["uid"], $password)) {
 
-			$this->dbh->query("UPDATE ttrss_users SET otp_enabled = false WHERE
-				id = " . $_SESSION["uid"]);
+			$sth = $this->pdo->prepare("UPDATE ttrss_users SET otp_enabled = false WHERE
+				id = ?");
+			$sth->execute([$_SESSION['uid']]);
 
 			print "OK";
 		} else {
@@ -953,7 +948,7 @@ class Pref_Prefs extends Handler_Protected {
 	}
 
 	function clearplugindata() {
-		$name = $this->dbh->escape_string($_REQUEST["name"]);
+		$name = $_REQUEST["name"];
 
 		PluginHost::getInstance()->clear_data(PluginHost::getInstance()->get_plugin($name));
 	}
@@ -1007,8 +1002,9 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "</div>";
 
-		$result = $this->dbh->query("SELECT title,id FROM ttrss_settings_profiles
-			WHERE owner_uid = ".$_SESSION["uid"]." ORDER BY title");
+		$sth = $this->pdo->prepare("SELECT title,id FROM ttrss_settings_profiles
+			WHERE owner_uid = ? ORDER BY title");
+		$sth->execute([$_SESSION['uid']]);
 
 		print "<div class=\"prefProfileHolder\">";
 
@@ -1038,7 +1034,7 @@ class Pref_Prefs extends Handler_Protected {
 
 		$lnum = 1;
 
-		while ($line = $this->dbh->fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 
 			$profile_id = $line["id"];
 			$this_row_id = "id=\"FCATR-$profile_id\"";

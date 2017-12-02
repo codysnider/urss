@@ -9,6 +9,9 @@ class RPC extends Handler_Protected {
 
 	function setprofile() {
 		$_SESSION["profile"] = $_REQUEST["id"];
+
+		// default value
+		if (!$_SESSION["profile"]) $_SESSION["profile"] = null;
 	}
 
 	function remprofiles() {
