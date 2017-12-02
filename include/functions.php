@@ -1388,7 +1388,7 @@
 							$pdo->quote('%' . mb_strtolower($commandpair[1]) . '%') ."))");
 					} else {
 						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
 						array_push($search_words, $k);
 					}
 					break;
@@ -1398,7 +1398,7 @@
 							$pdo->quote('%' . mb_strtolower($commandpair[1]) . '%')."))");
 					} else {
 						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
 						array_push($search_words, $k);
 					}
 					break;
@@ -1412,8 +1412,8 @@
 							array_push($query_keywords, "($not (LOWER(note) LIKE ".
 								$pdo->quote('%' . mb_strtolower($commandpair[1]) . '%')."))");
 					} else {
-						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
+						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
 						if (!$not) array_push($search_words, $k);
 					}
 					break;
@@ -1425,8 +1425,8 @@
 						else
 							array_push($query_keywords, "($not (marked = false))");
 					} else {
-						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
+						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
 						if (!$not) array_push($search_words, $k);
 					}
 					break;
@@ -1439,7 +1439,7 @@
 
 					} else {
 						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
 						if (!$not) array_push($search_words, $k);
 					}
 					break;
@@ -1451,8 +1451,8 @@
 							array_push($query_keywords, "($not (unread = false))");
 
 					} else {
-						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
+						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
 						if (!$not) array_push($search_words, $k);
 					}
 					break;
@@ -1472,8 +1472,8 @@
 							$k = mb_strtolower($k);
 							array_push($search_query_leftover, $not ? "!$k" : $k);
 						} else {
-							array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER('%$k%'))");
+							array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
 						}
 
 						if (!$not) array_push($search_words, $k);
@@ -1486,7 +1486,7 @@
 
 			if (DB_TYPE == "pgsql") {
 				array_push($query_keywords,
-					"(tsvector_combined @@ to_tsquery('$search_language', '$search_query_leftover'))");
+					"(tsvector_combined @@ to_tsquery($search_language, $search_query_leftover))");
 			}
 
 		}
