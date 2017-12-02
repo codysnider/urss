@@ -364,6 +364,8 @@ class Opml extends Handler_Protected {
 				$inverse = bool_to_sql_bool($filter["inverse"]);
 				$title = $filter["title"];
 
+				print "F: $title, $inverse, $enabled, $match_any_rule";
+
 				$sth = $this->pdo->prepare("INSERT INTO ttrss_filters2 (match_any_rule,enabled,inverse,title,owner_uid)
 					VALUES (?, ?, ?, ?, ?)");
 

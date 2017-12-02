@@ -941,19 +941,11 @@
 	}
 
 	function sql_bool_to_bool($s) {
-		if ($s == "t" || $s == "1" || strtolower($s) == "true") {
-			return true;
-		} else {
-			return false;
-		}
+		return $s; //no-op for PDO
 	}
 
 	function bool_to_sql_bool($s) {
-		if ($s) {
-			return "true";
-		} else {
-			return "false";
-		}
+		return (bool)$s; //no-op for PDO
 	}
 
 	// Session caching removed due to causing wrong redirects to upgrade
