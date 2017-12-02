@@ -142,7 +142,13 @@ class CCache {
 			$unread = (int) Feeds::getFeedArticles($feed_id, $is_cat, true, $owner_uid);
 		}
 
-		$pdo->beginTransaction();
+		$tr_in_progress = false;
+
+		try {
+			$pdo->beginTransaction();
+		} catch (Exception $e) {
+			$tr_in_progress = true;
+		}
 
 		$sth = $pdo->prepare("SELECT feed_id FROM $table
 			WHERE owner_uid = ? AND feed_id = ? LIMIT 1");
@@ -164,7 +170,7 @@ class CCache {
 			$sth->execute([$feed_id, $unread, $owner_uid]);
 		}
 
-		$pdo->commit();
+		if (!$tr_in_progress) $pdo->commit();
 
 		if ($feed_id > 0 && $prev_unread != $unread) {
 
