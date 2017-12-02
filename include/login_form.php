@@ -143,7 +143,7 @@ function fetchProfiles() {
 				onComplete: function(transport) {
 					if (transport.responseText.match("select")) {
 						$('profile_box').innerHTML = transport.responseText;
-						dojo.parser.parse('profile_box');
+						//dojo.parser.parse('profile_box');
 					}
 			} });
 		}
