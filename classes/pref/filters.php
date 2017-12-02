@@ -111,76 +111,76 @@ class Pref_Filters extends Handler_Protected {
 
 		//while ($found < $limit && $offset < $limit * 1000 && time() - $started < ini_get("max_execution_time") * 0.7) {
 
-			$sth = $this->pdo->prepare("SELECT ttrss_entries.id,
-					ttrss_entries.title,
-					ttrss_feeds.id AS feed_id,
-					ttrss_feeds.title AS feed_title,
-					ttrss_feed_categories.id AS cat_id,
-					content,
-					date_entered,
-					link,
-					author,
-					tag_cache
-				FROM
-					ttrss_entries, ttrss_user_entries
-						LEFT JOIN ttrss_feeds ON (feed_id = ttrss_feeds.id)
-						LEFT JOIN ttrss_feed_categories ON (ttrss_feeds.cat_id = ttrss_feed_categories.id)
-				WHERE
-					ref_id = ttrss_entries.id AND
-					($scope_qpart) AND
-					ttrss_user_entries.owner_uid = ?
-				ORDER BY date_entered DESC LIMIT ?OFFSET ?");
+		$sth = $this->pdo->prepare("SELECT ttrss_entries.id,
+				ttrss_entries.title,
+				ttrss_feeds.id AS feed_id,
+				ttrss_feeds.title AS feed_title,
+				ttrss_feed_categories.id AS cat_id,
+				content,
+				date_entered,
+				link,
+				author,
+				tag_cache
+			FROM
+				ttrss_entries, ttrss_user_entries
+					LEFT JOIN ttrss_feeds ON (feed_id = ttrss_feeds.id)
+					LEFT JOIN ttrss_feed_categories ON (ttrss_feeds.cat_id = ttrss_feed_categories.id)
+			WHERE
+				ref_id = ttrss_entries.id AND
+				($scope_qpart) AND
+				ttrss_user_entries.owner_uid = ?
+			ORDER BY date_entered DESC LIMIT $limit OFFSET $offset");
 
-			$sth->execute([$_SESSION['uid'], $limit, $offset]);;
+		$sth->execute([$_SESSION['uid']]);
 
-			while ($line = $sth->fetch()) {
+		while ($line = $sth->fetch()) {
 
-				$rc = RSSUtils::get_article_filters(array($filter), $line['title'], $line['content'], $line['link'],
-					$line['author'], explode(",", $line['tag_cache']));
+			$rc = RSSUtils::get_article_filters(array($filter), $line['title'], $line['content'], $line['link'],
+				$line['author'], explode(",", $line['tag_cache']));
 
-				if (count($rc) > 0) {
+			if (count($rc) > 0) {
 
-					$line["content_preview"] = truncate_string(strip_tags($line["content"]), 200, '&hellip;');
+				$line["content_preview"] = truncate_string(strip_tags($line["content"]), 200, '&hellip;');
 
-					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_QUERY_HEADLINES) as $p) {
-						$line = $p->hook_query_headlines($line, 100);
-					}
-
-					$content_preview = $line["content_preview"];
-
-					$tmp = "<tr style='margin-top : 5px'>";
-
-					#$tmp .= "<td width='5%' align='center'><input dojoType=\"dijit.form.CheckBox\"
-					#	checked=\"1\" disabled=\"1\" type=\"checkbox\"></td>";
-
-					$id = $line['id'];
-					$tmp .= "<td width='5%' align='center'><img style='cursor : pointer' title='".__("Preview article")."'
-						src='images/information.png' onclick='openArticlePopup($id)'></td><td>";
-
-					/*foreach ($filter['rules'] as $rule) {
-						$reg_exp = str_replace('/', '\/', $rule["reg_exp"]);
-
-						$line["title"] = preg_replace("/($reg_exp)/i",
-							"<span class=\"highlight\">$1</span>", $line["title"]);
-
-						$content_preview = preg_replace("/($reg_exp)/i",
-							"<span class=\"highlight\">$1</span>", $content_preview);
-					}*/
-
-					$tmp .= "<strong>" . $line["title"] . "</strong><br/>";
-					$tmp .= $line['feed_title'] . ", " . mb_substr($line["date_entered"], 0, 16);
-					$tmp .= "<div class='insensitive'>" . $content_preview . "</div>";
-					$tmp .= "</td></tr>";
-
-					array_push($rv, $tmp);
-
-					/*array_push($rv, array("title" => $line["title"],
-						"content" => $content_preview,
-						"date" => $line["date_entered"],
-						"feed" => $line["feed_title"])); */
-
+				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_QUERY_HEADLINES) as $p) {
+					$line = $p->hook_query_headlines($line, 100);
 				}
+
+				$content_preview = $line["content_preview"];
+
+				$tmp = "<tr style='margin-top : 5px'>";
+
+				#$tmp .= "<td width='5%' align='center'><input dojoType=\"dijit.form.CheckBox\"
+				#	checked=\"1\" disabled=\"1\" type=\"checkbox\"></td>";
+
+				$id = $line['id'];
+				$tmp .= "<td width='5%' align='center'><img style='cursor : pointer' title='".__("Preview article")."'
+					src='images/information.png' onclick='openArticlePopup($id)'></td><td>";
+
+				/*foreach ($filter['rules'] as $rule) {
+					$reg_exp = str_replace('/', '\/', $rule["reg_exp"]);
+
+					$line["title"] = preg_replace("/($reg_exp)/i",
+						"<span class=\"highlight\">$1</span>", $line["title"]);
+
+					$content_preview = preg_replace("/($reg_exp)/i",
+						"<span class=\"highlight\">$1</span>", $content_preview);
+				}*/
+
+				$tmp .= "<strong>" . $line["title"] . "</strong><br/>";
+				$tmp .= $line['feed_title'] . ", " . mb_substr($line["date_entered"], 0, 16);
+				$tmp .= "<div class='insensitive'>" . $content_preview . "</div>";
+				$tmp .= "</td></tr>";
+
+				array_push($rv, $tmp);
+
+				/*array_push($rv, array("title" => $line["title"],
+					"content" => $content_preview,
+					"date" => $line["date_entered"],
+					"feed" => $line["feed_title"])); */
+
 			}
+		}
 
 			//$offset += $limit;
 		//}
