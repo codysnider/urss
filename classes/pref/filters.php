@@ -696,7 +696,7 @@ class Pref_Filters extends Handler_Protected {
 				if ($rule) {
 
 					$reg_exp = trim($rule["reg_exp"]);
-					$inverse = isset($rule["inverse"]) ? true : false;
+					$inverse = isset($rule["inverse"]) ? 1 : 0;
 
 					$filter_type = (int)trim($rule["filter_type"]);
 					$match_on = json_encode($rule["feed_id"]);
