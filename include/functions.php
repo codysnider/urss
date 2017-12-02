@@ -1057,7 +1057,7 @@
 	}
 
 	function checkbox_to_sql_bool($val) {
-		return ($val == "on") ? "true" : "false";
+		return ($val == "on") ? true : false;
 	}
 
 	function uniqid_short() {

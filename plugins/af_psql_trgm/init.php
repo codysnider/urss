@@ -12,7 +12,7 @@ class Af_Psql_Trgm extends Plugin {
 	function save() {
 		$similarity = (float) db_escape_string($_POST["similarity"]);
 		$min_title_length = (int) db_escape_string($_POST["min_title_length"]);
-		$enable_globally = checkbox_to_sql_bool($_POST["enable_globally"]) == "true";
+		$enable_globally = checkbox_to_sql_bool($_POST["enable_globally"]);
 
 		if ($similarity < 0) $similarity = 0;
 		if ($similarity > 1) $similarity = 1;
@@ -226,7 +226,7 @@ class Af_Psql_Trgm extends Plugin {
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
 		if (!is_array($enabled_feeds)) $enabled_feeds = array();
 
-		$enable = checkbox_to_sql_bool($_POST["trgm_similarity_enabled"]) == 'true';
+		$enable = checkbox_to_sql_bool($_POST["trgm_similarity_enabled"]);
 		$key = array_search($feed_id, $enabled_feeds);
 
 		if ($enable) {

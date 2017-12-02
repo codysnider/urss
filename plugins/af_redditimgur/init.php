@@ -64,8 +64,8 @@ class Af_RedditImgur extends Plugin {
 	}
 
 	function save() {
-		$enable_readability = checkbox_to_sql_bool($_POST["enable_readability"]) == "true";
-		$enable_content_dupcheck = checkbox_to_sql_bool($_POST["enable_content_dupcheck"]) == "true";
+		$enable_readability = checkbox_to_sql_bool($_POST["enable_readability"]);
+		$enable_content_dupcheck = checkbox_to_sql_bool($_POST["enable_content_dupcheck"]);
 
 		$this->host->set($this, "enable_readability", $enable_readability, false);
 		$this->host->set($this, "enable_content_dupcheck", $enable_content_dupcheck);

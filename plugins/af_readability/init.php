@@ -14,7 +14,7 @@ class Af_Readability extends Plugin {
 	}
 
 	function save() {
-		$enable_share_anything = checkbox_to_sql_bool($_POST["enable_share_anything"]) == "true";
+		$enable_share_anything = checkbox_to_sql_bool($_POST["enable_share_anything"]);
 
 		$this->host->set($this, "enable_share_anything", $enable_share_anything);
 
@@ -112,7 +112,7 @@ class Af_Readability extends Plugin {
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
 		if (!is_array($enabled_feeds)) $enabled_feeds = array();
 
-		$enable = checkbox_to_sql_bool($_POST["af_readability_enabled"]) == 'true';
+		$enable = checkbox_to_sql_bool($_POST["af_readability_enabled"]);
 		$key = array_search($feed_id, $enabled_feeds);
 
 		if ($enable) {
