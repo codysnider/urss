@@ -1996,7 +1996,7 @@ msgstr ""
 #: classes/pref/feeds.php:744
 #: classes/pref/feeds.php:922
 msgid "Mark updated articles as unread"
-msgstr "Пометить все статьи как прочитанные?"
+msgstr "Отметить обновлённые статьи как непрочитанные"
 
 #: classes/pref/feeds.php:748
 msgid "Icon"
