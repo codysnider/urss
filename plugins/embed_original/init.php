@@ -1,5 +1,7 @@
 <?php
 class Embed_Original extends Plugin {
+
+	/* @var PluginHost $host */
 	private $host;
 
 	function init($host) {
@@ -34,17 +36,17 @@ class Embed_Original extends Plugin {
 	}
 
 	function getUrl() {
-		$id = db_escape_string($_REQUEST['id']);
+		$id = $_REQUEST['id'];
 
-		$result = db_query("SELECT link
+		$sth = $this->pdo->prepare("SELECT link
 				FROM ttrss_entries, ttrss_user_entries
-				WHERE id = '$id' AND ref_id = id AND owner_uid = " .$_SESSION['uid']);
+				WHERE id = ? AND ref_id = id AND owner_uid = ?");
+		$sth->execute([$id, $_SESSION['uid']]);
 
-		$url = "";
-
-		if (db_num_rows($result) != 0) {
-			$url = db_fetch_result($result, 0, "link");
-
+		if ($row = $sth->fetch()) {
+			$url = $row['link'];
+		} else {
+			$url = "";
 		}
 
 		print json_encode(array("url" => $url, "id" => $id));
