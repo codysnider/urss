@@ -691,7 +691,8 @@ class Feeds extends Handler_Protected {
                 $tmp_content .= "<div class=\"cdmIntermediate\">";
 
                 $always_display_enclosures = $line["always_display_enclosures"];
-                $tmp_content .= Article::format_article_enclosures($id, $always_display_enclosures, $line["content"], sql_bool_to_bool($line["hide_images"]));
+                $tmp_content .= Article::format_article_enclosures($id, $always_display_enclosures,
+                    $line["content"], $line["hide_images"]);
 
                 $tmp_content .= "</div>"; // cdmIntermediate
 
