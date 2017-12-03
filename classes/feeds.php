@@ -1195,6 +1195,14 @@ class Feeds extends Handler_Protected {
 		@$do_update = $_REQUEST["action"] == "do_update";
 		$csrf_token = $_REQUEST["csrf_token"];
 
+		$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE id = ? AND owner_uid = ?");
+		$sth->execute([$feed_id, $_SESSION['uid']]);
+
+		if (!$sth->fetch()) {
+		    print "Access denied.";
+		    return;
+        }
+
 		$refetch_checked = isset($_REQUEST["force_refetch"]) ? "checked" : "";
 		$rehash_checked = isset($_REQUEST["force_rehash"]) ? "checked" : "";
 
