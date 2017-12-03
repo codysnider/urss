@@ -538,7 +538,6 @@ class Handler_Public extends Handler {
 			print "<html>
 				<head>
 					<title>Tiny Tiny RSS</title>";
-            print stylesheet_tag("css/utility.css");
 			print stylesheet_tag("css/default.css");
 
             print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
@@ -546,7 +545,7 @@ class Handler_Public extends Handler {
                 <link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">
 
 				</head>
-				<body class='claro'>
+				<body class='claro ttrss_utility'>
 				<img class=\"floatingLogo\" src=\"images/logo_small.png\"
 			  		alt=\"Tiny Tiny RSS\"/>
 					<h1>".__("Subscribe to feed...")."</h1><div class='content'>";
