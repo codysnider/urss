@@ -10,6 +10,10 @@ abstract class Plugin {
 	abstract function about();
 	// return array(1.0, "plugin", "No description", "No author", false);
 
+	function __construct() {
+		$this->pdo = Db::pdo();
+	}
+
 	function flags() {
 		/* associative array, possible keys:
 			needs_curl = boolean
