@@ -633,7 +633,7 @@ class API extends Handler {
 
 				$unread = getFeedUnread($line["id"]);
 
-				$has_icon = feed_has_icon($line['id']);
+				$has_icon = Feeds::feedHasIcon($line['id']);
 
 				if ($unread || !$unread_only) {
 

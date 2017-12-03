@@ -183,7 +183,11 @@ class Counters {
 
 			$last_updated = make_local_datetime($line['last_updated'], false);
 
-			$has_img = feed_has_icon($id);
+			if (Feeds::feedHasIcon($id)) {
+				$has_img = filemtime(Feeds::getIconFile($id));
+			} else {
+				$has_img = false;
+			}
 
 			if (date('Y') - date('Y', strtotime($line['last_updated'])) > 2)
 				$last_updated = '';

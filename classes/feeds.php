@@ -414,7 +414,7 @@ class Feeds extends Handler_Protected {
                 $entry_author = " &mdash; $entry_author";
             }
 
-            $has_feed_icon = feed_has_icon($feed_id);
+            $has_feed_icon = feeds::feedHasIcon($feed_id);
 
             if ($has_feed_icon) {
                 $feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
@@ -537,20 +537,12 @@ class Feeds extends Handler_Protected {
                 if ($vfeed_group_enabled && $line["feed_title"]) {
                     if ($feed_id != $vgroup_last_feed) {
 
-                        $cur_feed_title = $line["feed_title"];
                         $vgroup_last_feed = $feed_id;
-
-                        $cur_feed_title = htmlspecialchars($cur_feed_title);
 
                         $vf_catchup_link = "<a class='catchup' onclick='catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
 
-                        $has_feed_icon = feed_has_icon($feed_id);
-
-                        if ($has_feed_icon) {
-                            $feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
-                        } else {
-                            //$feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"images/blank_icon.gif\" alt=\"\">";
-                        }
+                        $feed_icon_src = Feeds::getFeedIcon($feed_id);
+                        $feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"$feed_icon_src\">";
 
                         $reply['content'] .= "<div data-feed-id='$feed_id' id='FTITLE-$feed_id' class='cdmFeedTitle'>".
                             "<div style=\"float : right\">$feed_icon_img</div>".
@@ -1590,6 +1582,10 @@ class Feeds extends Handler_Protected {
 		return ICONS_DIR . "/$feed_id.ico";
 	}
 
+	static function feedHasIcon($id) {
+		return is_file(ICONS_DIR . "/$id.ico") && filesize(ICONS_DIR . "/$id.ico") > 0;
+	}
+
 	static function getFeedIcon($id) {
 		switch ($id) {
 			case 0:
@@ -2052,9 +2048,9 @@ class Feeds extends Handler_Protected {
 			// proper override_order applied above
 			if ($vfeed_query_part && !$ignore_vfeed_group && get_pref('VFEED_GROUP_BY_FEED', $owner_uid)) {
 				if (!$override_order) {
-					$order_by = "ttrss_feeds.title, ".$pdo->quote($order_by);
+					$order_by = "ttrss_feeds.title, ".$order_by;
 				} else {
-					$order_by = "ttrss_feeds.title, ".$pdo->quote($override_order);
+					$order_by = "ttrss_feeds.title, ".$override_order;
 				}
 			}
 

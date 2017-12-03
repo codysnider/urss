@@ -326,7 +326,7 @@ function parse_counters(elems) {
 			if (id > 0) {
 				if (has_img) {
 					setFeedIcon(id, false,
-						getInitParam("icons_url") + "/" + id + ".ico");
+						getInitParam("icons_url") + "/" + id + ".ico?" + has_img);
 				} else {
 					setFeedIcon(id, false, 'images/blank_icon.gif');
 				}

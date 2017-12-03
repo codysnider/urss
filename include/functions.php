@@ -1932,10 +1932,6 @@
 		}
 	}
 
-	function feed_has_icon($id) {
-		return is_file(ICONS_DIR . "/$id.ico") && filesize(ICONS_DIR . "/$id.ico") > 0;
-	}
-
 	function init_plugins() {
 		PluginHost::getInstance()->load(PLUGINS, PluginHost::KIND_ALL);
 
