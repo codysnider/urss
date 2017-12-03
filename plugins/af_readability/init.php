@@ -1,6 +1,7 @@
 <?php
 class Af_Readability extends Plugin {
 
+	/* @var PluginHost $host */
 	private $host;
 
 	function about() {
@@ -235,9 +236,10 @@ class Af_Readability extends Plugin {
 
 		foreach ($enabled_feeds as $feed) {
 
-			$result = db_query("SELECT id FROM ttrss_feeds WHERE id = '$feed' AND owner_uid = " . $_SESSION["uid"]);
+			$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE id = ? AND owner_uid = ?");
+			$sth->execute([$feed, $_SESSION['uid']]);
 
-			if (db_num_rows($result) != 0) {
+			if ($row = $sth->fetch()) {
 				array_push($tmp, $feed);
 			}
 		}
