@@ -338,7 +338,7 @@ class Handler_Public extends Handler {
 	}
 
 	function globalUpdateFeeds() {
-		RPC::updaterandomfeed_real($this->dbh);
+		RPC::updaterandomfeed_real();
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_UPDATE_TASK, "hook_update_task", false);
 	}

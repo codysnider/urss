@@ -1,6 +1,5 @@
 <?php
 class PluginHost {
-	private $dbh;
 	private $pdo;
 	private $hooks = array();
 	private $plugins = array();
@@ -63,7 +62,6 @@ class PluginHost {
 	const KIND_USER = 3;
 
 	function __construct() {
-		$this->dbh = Db::get();
 		$this->pdo = Db::pdo();
 
 		$this->storage = array();
@@ -91,7 +89,7 @@ class PluginHost {
 	}
 
 	function get_dbh() {
-		return $this->dbh;
+		return Db::get();
 	}
 
 	function get_pdo() {

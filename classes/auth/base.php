@@ -1,10 +1,8 @@
 <?php
 class Auth_Base {
-	private $dbh;
 	private $pdo;
 
 	function __construct() {
-		$this->dbh = Db::get();
 		$this->pdo = Db::pdo();
 	}
 

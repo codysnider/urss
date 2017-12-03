@@ -1,11 +1,28 @@
 <?php
 class Db implements IDb {
+
+	/* @var Db $instance */
 	private static $instance;
+
+	/* @var IDb $adapter */
 	private $adapter;
+
 	private $link;
+
+	/* @var PDO $pdo */
 	private $pdo;
 
 	private function __construct() {
+
+	}
+
+	private function __clone() {
+		//
+	}
+
+	private function legacy_connect() {
+
+		user_error("Legacy connect requested to " . DB_TYPE, E_USER_NOTICE);
 
 		$er = error_reporting(E_ALL);
 
@@ -25,18 +42,30 @@ class Db implements IDb {
 			exit(100);
 		}
 
+		$this->link = $this->adapter->connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, defined('DB_PORT') ? DB_PORT : "");
+
+		if (!$this->link) {
+			print("Error connecting through adapter: " . $this->adapter->last_error());
+			exit(101);
+		}
+
+		error_reporting($er);
+	}
+
+	private function pdo_connect() {
+
 		$db_port = defined('DB_PORT') && DB_PORT ? ';port='.DB_PORT : '';
 
 		$this->pdo = new PDO(DB_TYPE . ':dbname='.DB_NAME.';host='.DB_HOST.$db_port,
 			DB_USER,
 			DB_PASS);
 
-		$this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
-
 		if (!$this->pdo) {
 			print("Error connecting via PDO.");
 			exit(101);
 		}
+
+		$this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
 
 		if (DB_TYPE == "pgsql") {
 
@@ -52,31 +81,26 @@ class Db implements IDb {
 				$this->pdo->query("SET NAMES " . MYSQL_CHARSET);
 			}
 		}
-
-		$this->link = $this->adapter->connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, defined('DB_PORT') ? DB_PORT : "");
-
-		if (!$this->link) {
-			print("Error connecting through adapter: " . $this->adapter->last_error());
-			exit(101);
-		}
-
-		error_reporting($er);
-	}
-
-	private function __clone() {
-		//
 	}
 
 	public static function get() {
 		if (self::$instance == null)
 			self::$instance = new self();
 
+		if (!self::$instance->link) {
+			self::$instance->legacy_connect();
+		}
+
 		return self::$instance;
 	}
 
-    public static function pdo() {
+	public static function pdo() {
         if (self::$instance == null)
             self::$instance = new self();
+
+        if (!self::$instance->pdo) {
+			self::$instance->pdo_connect();
+		}
 
         return self::$instance->pdo;
     }
