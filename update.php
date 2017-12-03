@@ -367,7 +367,8 @@
 		while (true) {
 
 			while ($line = $sth->fetch()) {
-			   $tsvector_combined = mb_substr($line['title'] . ' ' . strip_tags(str_replace('<', ' <', $line['content'])),
+			   $tsvector_combined = mb_substr($line['title'] . ' ' .
+                   preg_replace('/[<\?\:]/', ' ', strip_tags($line['content'])),
 					0, 1000000);
 
                 $usth->execute([$tsvector_combined, $line['id']]);
