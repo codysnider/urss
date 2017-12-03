@@ -1586,6 +1586,10 @@ class Feeds extends Handler_Protected {
 		}
 	}
 
+	static function getIconFile($feed_id) {
+		return ICONS_DIR . "/$feed_id.ico";
+	}
+
 	static function getFeedIcon($id) {
 		switch ($id) {
 			case 0:
@@ -1610,8 +1614,11 @@ class Feeds extends Handler_Protected {
 				if ($id < LABEL_BASE_INDEX) {
 					return "images/label.png";
 				} else {
-					if (file_exists(ICONS_DIR . "/$id.ico"))
-						return ICONS_URL . "/$id.ico";
+					$icon = self::getIconFile($id);
+
+                    if ($icon && file_exists($icon)) {
+						return ICONS_URL . "/" . basename($icon) . "?" . filemtime($icon);
+					}
 				}
 				break;
 		}

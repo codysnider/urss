@@ -726,19 +726,23 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<div class=\"dlgSecSimple\">";
 
+			print "<img class=\"feedIcon\" src=\"".Feeds::getFeedIcon($feed_id)."\">";
+
 			print "<iframe name=\"icon_upload_iframe\"
-			style=\"width: 400px; height: 100px; display: none;\"></iframe>";
+				style=\"width: 400px; height: 100px; display: none;\"></iframe>";
 
 			print "<form style='display : block' target=\"icon_upload_iframe\"
 			enctype=\"multipart/form-data\" method=\"POST\"
 			action=\"backend.php\">
-			<input id=\"icon_file\" size=\"10\" name=\"icon_file\" type=\"file\">
+			<label class=\"dijitButton\">".__("Choose file...")."
+				<input style=\"display: none\" id=\"icon_file\" size=\"10\" name=\"icon_file\" type=\"file\">
+			</label>
 			<input type=\"hidden\" name=\"op\" value=\"pref-feeds\">
 			<input type=\"hidden\" name=\"feed_id\" value=\"$feed_id\">
-			<input type=\"hidden\" name=\"method\" value=\"uploadicon\"><p>
+			<input type=\"hidden\" name=\"method\" value=\"uploadicon\">			
 			<button class=\"\" dojoType=\"dijit.form.Button\" onclick=\"return uploadFeedIcon();\"
 				type=\"submit\">".__('Replace')."</button>
-			<button class=\"\" dojoType=\"dijit.form.Button\" onclick=\"return removeFeedIcon($feed_id);\"
+			<button class=\"danger\" dojoType=\"dijit.form.Button\" onclick=\"return removeFeedIcon($feed_id);\"
 				type=\"submit\">".__('Remove')."</button>
 			</form>";
 
@@ -1285,7 +1289,9 @@ class Pref_Feeds extends Handler_Protected {
 		print "<form  name=\"opml_form\" style='display : block' target=\"upload_iframe\"
 			enctype=\"multipart/form-data\" method=\"POST\"
 			action=\"backend.php\">
-			<input id=\"opml_file\" name=\"opml_file\" type=\"file\">&nbsp;
+			<label class=\"dijitButton\">".__("Choose file...")."
+				<input style=\"display : none\" id=\"opml_file\" name=\"opml_file\" type=\"file\">&nbsp;
+			</label>
 			<input type=\"hidden\" name=\"op\" value=\"dlg\">
 			<input type=\"hidden\" name=\"method\" value=\"importOpml\">
 			<button dojoType=\"dijit.form.Button\" onclick=\"return opmlImport();\" type=\"submit\">" .
@@ -1296,7 +1302,7 @@ class Pref_Feeds extends Handler_Protected {
 		$opml_export_filename = "TinyTinyRSS_".date("Y-m-d").".opml";
 
 		print "<p>" . __('Filename:') .
-            " <input type=\"text\" id=\"filename\" value=\"$opml_export_filename\" />&nbsp;" .
+            " <input class=\"input input-text\" type=\"text\" id=\"filename\" value=\"$opml_export_filename\" />&nbsp;" .
 				__('Include settings') . "<input type=\"checkbox\" id=\"settings\" checked=\"1\"/>";
 
 		print "</p><button dojoType=\"dijit.form.Button\"
