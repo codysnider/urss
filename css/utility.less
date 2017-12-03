@@ -177,35 +177,6 @@ body.ttrss_utility {
 		border-color : #e0e0e0;
 	}
 
-	body#sharepopup {
-		background-color : white;
-		background-image : url("../images/toolbar.png");
-		background-repeat : repeat-x;
-		background-position : bottom;
-		margin : 10px;
-		padding : 0px;
-	}
-
-	body#sharepopup h1 {
-		font-size : 14px;
-		margin : 0px;
-		color : rgb(82, 168, 236);
-	}
-
-	body#sharepopup table {
-		background : white;
-		border : 1px solid rgb(82, 168, 236);
-		padding : 5px;
-	}
-
-	body#sharepopup form {
-		height : 100%;
-	}
-
-	body#sharepopup input {
-		width : 100%;
-	}
-
 	div.autocomplete {
 		position : absolute;
 		width : 250px;
@@ -287,4 +258,31 @@ body.ttrss_utility {
 body.small_margins {
 	margin : 1em;
 	max-width : none;
+}
+
+body#sharepopup {
+	background: white url("../images/toolbar.png") repeat-x bottom;
+	margin : 10px;
+	padding : 0px;
+
+	h1 {
+		font-size : 14px;
+		margin : 0px;
+		color : rgb(82, 168, 236);
+	}
+
+	table {
+		background : white;
+		border : 1px solid rgb(82, 168, 236);
+		padding : 5px;
+	}
+
+	form {
+		height : 100%;
+	}
+
+	input {
+		width : 100%;
+	}
+
 }

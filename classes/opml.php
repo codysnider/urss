@@ -27,11 +27,11 @@ class Opml extends Handler_Protected {
 
 		print "<html>
 			<head>
-				<link rel=\"stylesheet\" href=\"css/utility.css\" type=\"text/css\">
+				".stylesheet_tag("css/default.css")."
 				<title>".__("OPML Utility")."</title>
 				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
 			</head>
-			<body>
+			<body class='claro ttrss_utility'>
 			<div class=\"floatingLogo\"><img src=\"images/logo_small.png\"></div>
 			<h1>".__('OPML Utility')."</h1><div class='content'>";
 

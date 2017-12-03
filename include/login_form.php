@@ -24,7 +24,7 @@
 		});
 	</script>
 	<style type="text/css">
-	body#ttrssLogin {
+	body.ttrss_login {
 		padding : 2em;
 		font-size : 14px;
 	}
@@ -37,14 +37,6 @@
 		border-width : 0px;
 	}
 
-	/*input.input {
-		font-family : sans-serif;
-		font-size : medium;
-		border-spacing : 2px;
-		border : 1px solid #b5bcc7;
-		padding : 2px;
-	}*/
-
 	label {
 		width : 120px;
 		margin-right : 20px;
@@ -54,20 +46,18 @@
 	}
 
 	div.header {
-		border-width : 0px 0px 1px 0px;
-		border-style : solid;
-		border-color : #0088cc;
-		margin-bottom : 1em;
+        border: 0px solid #0088cc;
+        border-bottom-width: 1px;
+        margin-bottom : 1em;
 		padding-bottom : 5px;
 	}
 
 	div.footer {
 		margin-top : 1em;
 		padding-top : 5px;
-		border-width : 1px 0px 0px 0px;
-		border-style : solid;
-		border-color : #0088cc;
-		text-align : center;
+        border: 0px solid #0088cc;
+        border-top-width: 1px;
+        text-align : center;
 		color : gray;
 		font-size : 12px;
 	}
@@ -76,10 +66,6 @@
 		text-align : right;
 		font-size : 11px;
 		display : inline-block;
-	}
-
-	a {
-		color : #0088cc;
 	}
 
 	a {
@@ -114,7 +100,7 @@
 	</style>
 </head>
 
-<body id="ttrssLogin" class="claro">
+<body class="claro ttrss_main ttrss_login">
 
 <script type="text/javascript">
 function init() {

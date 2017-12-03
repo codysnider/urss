@@ -188,9 +188,9 @@
 			<head>
 			<title>Startup failed</title>
 				<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-				<link rel="stylesheet" type="text/css" href="css/utility.css">
+				<link rel="stylesheet" type="text/css" href="css/default.css">
 			</head>
-		<body class='sanity_failed'>
+		<body class='sanity_failed claro ttrss_utility'>
 		<div class="floatingLogo"><img src="images/logo_small.png"></div>
 			<div class="content">
 

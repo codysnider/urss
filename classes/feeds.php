@@ -1201,10 +1201,10 @@ class Feeds extends Handler_Protected {
 		?>
 		<html>
 		<head>
-			<link rel="stylesheet" type="text/css" href="css/utility.css">
+			<?php echo stylesheet_tag("css/default.css") ?>
 			<title>Feed Debugger</title>
 		</head>
-		<body class="small_margins">
+		<body class="small_margins ttrss_utility claro">
 		<h1>Feed Debugger: <?php echo "$feed_id: " . $this->getFeedTitle($feed_id) ?></h1>
 		<form method="GET" action="">
 			<input type="hidden" name="op" value="feeds">

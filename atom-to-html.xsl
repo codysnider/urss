@@ -9,11 +9,11 @@
 <html>
 	<head>
 		<title><xsl:value-of select="atom:title"/></title>
-		<link rel="stylesheet" type="text/css" href="css/utility.css"/>
+		<link rel="stylesheet" type="text/css" href="css/default.css"/>
 		<script language="javascript" src="lib/xsl_mop-up.js"></script>
 	</head>
 
-	<body onload="go_decoding()">
+	<body onload="go_decoding()" class="ttrss_utility">
 
 		<div id="cometestme" style="display:none;">
 			<xsl:text disable-output-escaping="yes">&amp;amp;</xsl:text>

@@ -60,7 +60,6 @@
 		<head>
 		<title>Tiny Tiny RSS data update script.</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<link rel="stylesheet" type="text/css" href="css/utility.css">
 		</head>
 
 		<body>

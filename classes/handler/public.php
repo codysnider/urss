@@ -353,12 +353,11 @@ class Handler_Public extends Handler {
 		<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
 		<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">";
 
-		echo stylesheet_tag("css/utility.css");
 		echo stylesheet_tag("css/default.css");
 		echo javascript_tag("lib/prototype.js");
 		echo javascript_tag("lib/scriptaculous/scriptaculous.js?load=effects,controls");
 		print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
-			</head><body id='sharepopup'>";
+			</head><body id='sharepopup' class='ttrss_utility'>";
 
 		$action = $_REQUEST["action"];
 
@@ -647,11 +646,12 @@ class Handler_Public extends Handler {
 		<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
 		<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">";
 
-		echo stylesheet_tag("css/utility.css");
+		echo stylesheet_tag("lib/dijit/themes/claro/claro.css");
+		echo stylesheet_tag("css/default.css");
 		echo javascript_tag("lib/prototype.js");
 
 		print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
-			</head><body id='forgotpass'>";
+			</head><body class='claro ttrss_utility'>";
 
 		print '<div class="floatingLogo"><img src="images/logo_small.png"></div>';
 		print "<h1>".__("Password recovery")."</h1>";
@@ -707,17 +707,17 @@ class Handler_Public extends Handler {
 
 			print "<fieldset>";
 			print "<label>".__("Login:")."</label>";
-			print "<input type='text' name='login' value='' required>";
+			print "<input class='input input-text' type='text' name='login' value='' required>";
 			print "</fieldset>";
 
 			print "<fieldset>";
 			print "<label>".__("Email:")."</label>";
-			print "<input type='email' name='email' value='' required>";
+			print "<input class='input input-text' type='email' name='email' value='' required>";
 			print "</fieldset>";
 
 			print "<fieldset>";
 			print "<label>".__("How much is two plus two:")."</label>";
-			print "<input type='text' name='test' value='' required>";
+			print "<input class='input input-text' type='text' name='test' value='' required>";
 			print "</fieldset>";
 
 			print "<p/>";
@@ -831,7 +831,7 @@ class Handler_Public extends Handler {
 			<head>
 			<title>Database Updater</title>
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-			<link rel="stylesheet" type="text/css" href="css/utility.css"/>
+			<link rel="stylesheet" type="text/css" href="css/default.css"/>
 			<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
 			<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">
 			</head>
@@ -839,7 +839,7 @@ class Handler_Public extends Handler {
 				span.ok { color : #009000; font-weight : bold; }
 				span.err { color : #ff0000; font-weight : bold; }
 			</style>
-		<body>
+		<body class="claro ttrss_utility">
 			<script type='text/javascript'>
 			function confirmOP() {
 				return confirm("Update the database?");
