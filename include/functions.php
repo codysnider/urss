@@ -1053,7 +1053,7 @@
 	}
 
 	function checkbox_to_sql_bool($val) {
-		return ($val == "on") ? true : false;
+		return ($val == "on") ? 1 : 0;
 	}
 
 	function uniqid_short() {

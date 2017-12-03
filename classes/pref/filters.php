@@ -52,10 +52,8 @@ class Pref_Filters extends Handler_Protected {
 		$filter = array();
 
 		$filter["enabled"] = true;
-		$filter["match_any_rule"] = sql_bool_to_bool(
-			checkbox_to_sql_bool($_REQUEST["match_any_rule"]));
-		$filter["inverse"] = sql_bool_to_bool(
-			checkbox_to_sql_bool($_REQUEST["inverse"]));
+		$filter["match_any_rule"] = checkbox_to_sql_bool($_REQUEST["match_any_rule"]);
+		$filter["inverse"] = checkbox_to_sql_bool($_REQUEST["inverse"]);
 
 		$filter["rules"] = array();
 		$filter["actions"] = array("dummy-action");
@@ -252,7 +250,7 @@ class Pref_Filters extends Handler_Protected {
 
             } else {
 
-                $where = sql_bool_to_bool($line["cat_filter"]) ?
+                $where = $line["cat_filter"] ?
                     Feeds::getCategoryTitle($line["cat_id"]) :
                     ($line["feed_id"] ?
                         Feeds::getFeedTitle($line["feed_id"]) : __("All feeds"));
@@ -260,13 +258,13 @@ class Pref_Filters extends Handler_Protected {
 
 #			$where = $line["cat_id"] . "/" . $line["feed_id"];
 
-			$inverse = sql_bool_to_bool($line["inverse"]) ? "inverse" : "";
+			$inverse = $line["inverse"] ? "inverse" : "";
 
 			$rv .= "<span class='$inverse'>" . T_sprintf("%s on %s in %s %s",
 				htmlspecialchars($line["reg_exp"]),
 				$line["field"],
 				$where,
-				sql_bool_to_bool($line["inverse"]) ? __("(inverse)") : "") . "</span>";
+				$line["inverse"] ? __("(inverse)") : "") . "</span>";
 		}
 
 		return $rv;
@@ -335,7 +333,7 @@ class Pref_Filters extends Handler_Protected {
 			$filter['name'] = $name[0];
 			$filter['param'] = $name[1];
 			$filter['checkbox'] = false;
-			$filter['enabled'] = sql_bool_to_bool($line["enabled"]);
+			$filter['enabled'] = $line["enabled"];
 			$filter['rules'] = $this->getfilterrules_concise($line['id']);
 
 			if (!$filter_search || $match_ok) {
@@ -364,9 +362,9 @@ class Pref_Filters extends Handler_Protected {
 
 		if ($row = $sth->fetch()) {
 
-			$enabled = sql_bool_to_bool($row["enabled"]);
-			$match_any_rule = sql_bool_to_bool($row["match_any_rule"]);
-			$inverse = sql_bool_to_bool($row["inverse"]);
+			$enabled = $row["enabled"];
+			$match_any_rule = $row["match_any_rule"];
+			$inverse = $row["inverse"];
 			$title = htmlspecialchars($row["title"]);
 
 			print "<form id=\"filter_edit_form\" onsubmit='return false'>";
@@ -413,7 +411,7 @@ class Pref_Filters extends Handler_Protected {
 				if ($line["match_on"]) {
 					$line["feed_id"] = json_decode($line["match_on"], true);
 				} else {
-					if (sql_bool_to_bool($line["cat_filter"])) {
+					if ($line["cat_filter"]) {
 						$feed_id = "CAT:" . (int)$line["cat_id"];
 					} else {
 						$feed_id = (int)$line["feed_id"];
@@ -426,7 +424,7 @@ class Pref_Filters extends Handler_Protected {
 				unset($line["cat_id"]);
 				unset($line["filter_id"]);
 				unset($line["id"]);
-				if (!sql_bool_to_bool($line["inverse"])) unset($line["inverse"]);
+				if (!$line["inverse"]) unset($line["inverse"]);
 				unset($line["match_on"]);
 
 				$data = htmlspecialchars(json_encode($line));
@@ -1139,7 +1137,7 @@ class Pref_Filters extends Handler_Protected {
 			$title = $row["title"];
 			$num_rules = $row["num_rules"];
 			$num_actions = $row["num_actions"];
-			$match_any_rule = sql_bool_to_bool($row["match_any_rule"]);
+			$match_any_rule = $row["match_any_rule"];
 
 			if (!$title) $title = __("[No caption]");
 
