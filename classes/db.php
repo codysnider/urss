@@ -25,7 +25,7 @@ class Db implements IDb {
 			exit(100);
 		}
 
-		$db_port = defined(DB_PORT) ? ';port='.DB_PORT : '';
+		$db_port = defined('DB_PORT') && DB_PORT ? ';port='.DB_PORT : '';
 
 		$this->pdo = new PDO(DB_TYPE . ':dbname='.DB_NAME.';host='.DB_HOST.$db_port,
 			DB_USER,
