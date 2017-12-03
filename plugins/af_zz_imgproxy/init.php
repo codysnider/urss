@@ -1,5 +1,7 @@
 <?php
 class Af_Zz_ImgProxy extends Plugin {
+
+	/* @var PluginHost $host */
 	private $host;
 
 	function about() {
