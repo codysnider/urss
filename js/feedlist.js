@@ -198,6 +198,28 @@ function feedlist_init() {
 
 	hideOrShowFeeds(getInitParam("hide_read_feeds") == 1);
 
+	if (getInitParam("is_default_pw")) {
+		console.warn("user password is at default value");
+
+		var dialog = new dijit.Dialog({
+			title: __("Your password is at default value"),
+			href: "backend.php?op=dlg&method=defaultpasswordwarning",
+			id: 'infoBox',
+			style: "width: 600px",
+			onCancel: function() {
+				return true;
+			},
+			onExecute: function() {
+				return true;
+			},
+			onClose: function() {
+				return true;
+			}
+		});
+
+		dialog.show();
+	}
+
 	// bw_limit disables timeout() so we request initial counters separately
     if (getInitParam("bw_limit") == "1") {
 		request_counters(true);

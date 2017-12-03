@@ -185,4 +185,16 @@ class Dlg extends Handler_Protected {
 		//return;
 	}
 
+	function defaultPasswordWarning() {
+
+    	print_warning(__("You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."));
+
+		print "<div align='center'>";
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"gotoPreferences()\">".
+			__('Open Preferences')."</button> ";
+		print "<button dojoType=\"dijit.form.Button\"
+			onclick=\"return closeInfoBox()\">".
+			__('Close this window')."</button>";
+		print "</div>";
+	}
 }
