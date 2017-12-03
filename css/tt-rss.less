@@ -1,16 +1,9 @@
 body.ttrss_main {
-
 	background : white;
 	color : black;
-	margin : 0px;
-	padding : 0px;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
-
-	body#ttrssMain {
-		overflow : hidden;
-		max-height : 100%;
-	}
+	overflow : hidden;
 
 	:focus {
 		outline: none;
@@ -797,12 +790,6 @@ body.ttrss_main {
 		}
 	}
 
-	#ttrssMain #main {
-		border-width : 0px;
-		margin : 0px;
-		padding : 0px;
-	}
-
 	#header-wrap {
 		border-width : 0px;
 		margin : 0px;
@@ -1004,27 +991,27 @@ body.ttrss_main {
 		vertical-align  : middle;
 	}
 
-	body#ttrssMain.claro #feedTree.dijitTree .dijitTreeNode .dijitTreeRowSelected {
+	#feedTree.dijitTree .dijitTreeNode .dijitTreeRowSelected {
 		box-shadow : -1px 0px 2px -1px rgba(0,0,0,0.1);
 		border-right-color : white;
 	}
 
-	body#ttrssMain #feedTree.dijitTree .dijitTreeContainer {
+	#feedTree.dijitTree .dijitTreeContainer {
 		max-width : 100%;
 	}
 
-	body#ttrssMain #feedTree.dijitTree .dijitTreeRow {
+	#feedTree.dijitTree .dijitTreeRow {
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
 
-	body#ttrssMain #feedTree.dijitTree .dijitTreeNode .dijitTreeRow {
+	#feedTree.dijitTree .dijitTreeNode .dijitTreeRow {
 		padding : 4px 0px 4px;
 		border-width : 1px;
 		color : #333;
 	}
 
-	body#ttrssMain #feedTree.dijitTree img.tinyFeedIcon {
+	#feedTree.dijitTree img.tinyFeedIcon {
 		position : relative;
 		top : -2px;
 	}
@@ -1038,7 +1025,7 @@ body.ttrss_main {
 		margin-right : 5px;
 	}
 
-	body#ttrssMain #feedTree {
+	#feedTree {
 		height : 100%;
 		overflow-x : hidden;
 		text-rendering: optimizelegibility;
@@ -1087,17 +1074,17 @@ body.ttrss_main {
 
 	}
 
-	body#ttrssMain #headlines-frame .dijitCheckBox {
+	#headlines-frame .dijitCheckBox {
 		border-width : 0px;
 		opacity : 0.5;
 	}
 
-	body#ttrssMain #headlines-frame .dijitCheckBoxHover,
-	body#ttrssMain #headlines-frame .dijitCheckBoxChecked {
+	#headlines-frame .dijitCheckBoxHover,
+	#headlines-frame .dijitCheckBoxChecked {
 		opacity : 1;
 	}
 
-	body#ttrssMain #feedTree .dijitTreeRow img.dijitTreeExpandoLeaf {
+	#feedTree .dijitTreeRow img.dijitTreeExpandoLeaf {
 		width : 16px;
 		height : 16px;
 		vertical-align : middle;
@@ -1115,115 +1102,6 @@ body.ttrss_main {
 	#editTagsDlg{
 		overflow: visible;
 	}
-
-	body#ttrssZoom {
-		margin-left : auto;
-		margin-right : auto;
-		padding : 20px;
-		max-width : 770px;
-		background : #f5f5f5;
-
-		div.postHeader div.postFeedTitle {
-			float : left;
-			text-align : right;
-			padding-left : 0px;
-			font-size : 11px;
-		}
-
-		div.postHeader a.postComments {
-			text-align : right;
-			padding-left : 0px;
-			font-size : 11px;
-		}
-
-		div.postHeader div.postDate {
-			float : none;
-			text-align : right;
-			padding-left : 0px;
-			color : #777;
-			font-size : 11px;
-		}
-
-		div.postHeader div.postTags {
-			color : #777;
-			font-size : 11px;
-		}
-
-		div.postHeader div.postTitle {
-			white-space : normal;
-			font-size : 16px;
-		}
-
-		div.postContent {
-			font-size : 15px;
-			line-height : 1.5;
-		}
-
-		div.postContent p {
-			-webkit-hyphens: auto;
-			-moz-hyphens: auto;
-			hyphens: auto;
-		}
-
-		div.postHeader {
-			margin : 10px;
-			border-width : 0px 0px 1px 0px;
-			border-style : solid;
-			border-color : #eee;
-			background : white;
-		}
-
-		div.postReply {
-			border : 1px solid #ddd;
-			background : white;
-			box-shadow : 0px 1px 1px -1px rgba(0,0,0,0.1);
-			border-radius : 6px;
-		}
-
-		div.footer {
-			margin-top : 1em;
-			text-align : center;
-		}
-
-		div.postContent img {
-			max-width : 730px;
-			height : auto;
-		}
-
-		div.postContent blockquote {
-			margin : 5px 0px 5px 0px;
-			color : #555;
-			padding-left : 10px;
-			border-width : 0px 0px 0px 4px;
-			border-color : #ccc;
-			border-style : solid;
-		}
-
-		div.postContent code {
-			color : #009900;
-			font-family : monospace;
-			font-size : 12px;
-		}
-
-		div.postContent pre {
-			margin : 5px 0px 5px 0px;
-			padding : 10px;
-			color : #555;
-			font-family : monospace;
-			font-size : 12px;
-			border-width : 0px;
-			border-color : #ccc;
-			border-style : solid;
-			background : #f5f5f5;
-			display : block;
-			max-width : 98%;
-			overflow : auto;
-		}
-
-
-	}
-
-
 }
 
 
