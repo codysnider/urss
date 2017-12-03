@@ -8,6 +8,10 @@ class API extends Handler {
 
 	private $seq;
 
+	static function param_to_bool($p) {
+		return $p && ($p !== "f" && $p !== "false");
+	}
+	
 	function before($method) {
 		if (parent::before($method)) {
 			header("Content-Type: text/json");
@@ -113,10 +117,10 @@ class API extends Handler {
 
 	function getFeeds() {
 		$cat_id = $_REQUEST["cat_id"];
-		$unread_only = sql_bool_to_bool($_REQUEST["unread_only"]);
+		$unread_only = API::param_to_bool($_REQUEST["unread_only"]);
 		$limit = (int) $_REQUEST["limit"];
 		$offset = (int) $_REQUEST["offset"];
-		$include_nested = sql_bool_to_bool($_REQUEST["include_nested"]);
+		$include_nested = API::param_to_bool($_REQUEST["include_nested"]);
 
 		$feeds = $this->api_get_feeds($cat_id, $unread_only, $limit, $offset, $include_nested);
 
@@ -124,9 +128,9 @@ class API extends Handler {
 	}
 
 	function getCategories() {
-		$unread_only = sql_bool_to_bool($_REQUEST["unread_only"]);
-		$enable_nested = sql_bool_to_bool($_REQUEST["enable_nested"]);
-		$include_empty = sql_bool_to_bool($_REQUEST['include_empty']);
+		$unread_only = API::param_to_bool($_REQUEST["unread_only"]);
+		$enable_nested = API::param_to_bool($_REQUEST["enable_nested"]);
+		$include_empty = API::param_to_bool($_REQUEST['include_empty']);
 
 		// TODO do not return empty categories, return Uncategorized and standard virtual cats
 
@@ -192,21 +196,21 @@ class API extends Handler {
 
 			$offset = (int)$_REQUEST["skip"];
 			$filter = $_REQUEST["filter"];
-			$is_cat = sql_bool_to_bool($_REQUEST["is_cat"]);
-			$show_excerpt = sql_bool_to_bool($_REQUEST["show_excerpt"]);
-			$show_content = sql_bool_to_bool($_REQUEST["show_content"]);
+			$is_cat = API::param_to_bool($_REQUEST["is_cat"]);
+			$show_excerpt = API::param_to_bool($_REQUEST["show_excerpt"]);
+			$show_content = API::param_to_bool($_REQUEST["show_content"]);
 			/* all_articles, unread, adaptive, marked, updated */
 			$view_mode = $_REQUEST["view_mode"];
-			$include_attachments = sql_bool_to_bool($_REQUEST["include_attachments"]);
+			$include_attachments = API::param_to_bool($_REQUEST["include_attachments"]);
 			$since_id = (int)$_REQUEST["since_id"];
-			$include_nested = sql_bool_to_bool($_REQUEST["include_nested"]);
+			$include_nested = API::param_to_bool($_REQUEST["include_nested"]);
 			$sanitize_content = !isset($_REQUEST["sanitize"]) ||
-				sql_bool_to_bool($_REQUEST["sanitize"]);
-			$force_update = sql_bool_to_bool($_REQUEST["force_update"]);
-			$has_sandbox = sql_bool_to_bool($_REQUEST["has_sandbox"]);
+				API::param_to_bool($_REQUEST["sanitize"]);
+			$force_update = API::param_to_bool($_REQUEST["force_update"]);
+			$has_sandbox = API::param_to_bool($_REQUEST["has_sandbox"]);
 			$excerpt_length = (int)$_REQUEST["excerpt_length"];
 			$check_first_id = (int)$_REQUEST["check_first_id"];
-			$include_header = sql_bool_to_bool($_REQUEST["include_header"]);
+			$include_header = API::param_to_bool($_REQUEST["include_header"]);
 
 			$_SESSION['hasSandbox'] = $has_sandbox;
 
@@ -319,7 +323,7 @@ class API extends Handler {
 
 		$article_ids = explode(",", $_REQUEST["article_id"]);
 		$sanitize_content = !isset($_REQUEST["sanitize"]) ||
-			sql_bool_to_bool($_REQUEST["sanitize"]);
+			API::param_to_bool($_REQUEST["sanitize"]);
 
 		if ($article_ids) {
 
@@ -348,9 +352,9 @@ class API extends Handler {
 					"title" => $line["title"],
 					"link" => $line["link"],
 					"labels" => Article::get_article_labels($line['id']),
-					"unread" => sql_bool_to_bool($line["unread"]),
-					"marked" => sql_bool_to_bool($line["marked"]),
-					"published" => sql_bool_to_bool($line["published"]),
+					"unread" => API::param_to_bool($line["unread"]),
+					"marked" => API::param_to_bool($line["marked"]),
+					"published" => API::param_to_bool($line["published"]),
 					"comments" => $line["comments"],
 					"author" => $line["author"],
 					"updated" => (int) strtotime($line["updated"]),
@@ -365,7 +369,7 @@ class API extends Handler {
 				if ($sanitize_content) {
 					$article["content"] = sanitize(
 						$line["content"],
-						sql_bool_to_bool($line['hide_images']),
+						API::param_to_bool($line['hide_images']),
 						false, $line["site_url"], false, $line["id"]);
 				} else {
 					$article["content"] = $line["content"];
@@ -467,7 +471,7 @@ class API extends Handler {
 
 		$article_ids = explode(",", $_REQUEST["article_ids"]);
 		$label_id = (int) $_REQUEST['label_id'];
-		$assign = sql_bool_to_bool($_REQUEST['assign']);
+		$assign = API::param_to_bool($_REQUEST['assign']);
 
 		$label = Labels::find_caption(Labels::feed_to_label_id($label_id), $_SESSION["uid"]);
 
@@ -672,7 +676,7 @@ class API extends Handler {
 
 				if ($row = $sth->fetch()) {
 					$last_updated = strtotime($row["last_updated"]);
-					$cache_images = sql_bool_to_bool($row["cache_images"]);
+					$cache_images = API::param_to_bool($row["cache_images"]);
 
 					if (!$cache_images && time() - $last_updated > 120) {
 						RSSUtils::update_rss_feed($feed_id, true);
@@ -742,9 +746,9 @@ class API extends Handler {
 					$headline_row = array(
 						"id" => (int)$line["id"],
 						"guid" => $line["guid"],
-						"unread" => sql_bool_to_bool($line["unread"]),
-						"marked" => sql_bool_to_bool($line["marked"]),
-						"published" => sql_bool_to_bool($line["published"]),
+						"unread" => API::param_to_bool($line["unread"]),
+						"marked" => API::param_to_bool($line["marked"]),
+						"published" => API::param_to_bool($line["published"]),
 						"updated" => (int)strtotime($line["updated"]),
 						"is_updated" => $is_updated,
 						"title" => $line["title"],
@@ -765,7 +769,7 @@ class API extends Handler {
 						if ($sanitize_content) {
 							$headline_row["content"] = sanitize(
 								$line["content"],
-								sql_bool_to_bool($line['hide_images']),
+								API::param_to_bool($line['hide_images']),
 								false, $line["site_url"], false, $line["id"]);
 						} else {
 							$headline_row["content"] = $line["content"];
@@ -783,7 +787,7 @@ class API extends Handler {
 					$headline_row["comments_count"] = (int)$line["num_comments"];
 					$headline_row["comments_link"] = $line["comments"];
 
-					$headline_row["always_display_attachments"] = sql_bool_to_bool($line["always_display_enclosures"]);
+					$headline_row["always_display_attachments"] = API::param_to_bool($line["always_display_enclosures"]);
 
 					$headline_row["author"] = $line["author"];
 
@@ -835,7 +839,7 @@ class API extends Handler {
 	}
 
 	function getFeedTree() {
-		$include_empty = sql_bool_to_bool($_REQUEST['include_empty']);
+		$include_empty = API::param_to_bool($_REQUEST['include_empty']);
 
 		$pf = new Pref_Feeds($_REQUEST);
 
