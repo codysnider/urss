@@ -139,6 +139,10 @@
 				array_push($errors, "PHP support for PostgreSQL is required for configured DB_TYPE in config.php");
 			}
 
+			if (!class_exists("PDO")) {
+				array_push($errors, "PHP support for PDO (Portable Data Objects) is required but was not found.");
+			}
+
 			if (!function_exists("mb_strlen")) {
 				array_push($errors, "PHP support for mbstring functions is required but was not found.");
 			}
