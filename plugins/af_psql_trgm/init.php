@@ -1,6 +1,7 @@
 <?php
 class Af_Psql_Trgm extends Plugin {
 
+	/* @var PluginHost $host */
 	private $host;
 
 	function about() {
@@ -10,8 +11,8 @@ class Af_Psql_Trgm extends Plugin {
 	}
 
 	function save() {
-		$similarity = (float) db_escape_string($_POST["similarity"]);
-		$min_title_length = (int) db_escape_string($_POST["min_title_length"]);
+		$similarity = (float) $_POST["similarity"];
+		$min_title_length = (int) $_POST["min_title_length"];
 		$enable_globally = checkbox_to_sql_bool($_POST["enable_globally"]);
 
 		if ($similarity < 0) $similarity = 0;
@@ -44,18 +45,20 @@ class Af_Psql_Trgm extends Plugin {
 	}
 
 	function showrelated() {
-		$id = (int) db_escape_string($_REQUEST['param']);
+		$id = (int) $_REQUEST['param'];
 		$owner_uid = $_SESSION["uid"];
 
-		$result = db_query("SELECT title FROM ttrss_entries, ttrss_user_entries
-			WHERE ref_id = id AND id = $id AND owner_uid = $owner_uid");
+		$sth = $this->pdo->prepare("SELECT title FROM ttrss_entries, ttrss_user_entries
+			WHERE ref_id = id AND id = ? AND owner_uid = ?");
+		$sth->execute([$id, $owner_uid]);
 
-		$title = db_fetch_result($result, 0, "title");
+		if ($row = $sth->fetch()) {
 
-		print "<h2>$title</h2>";
+			$title = $row['title'];
 
-		$title = db_escape_string($title);
-		$result = db_query("SELECT ttrss_entries.id AS id,
+			print "<h2>$title</h2>";
+
+			$sth = $this->pdo->prepare("SELECT ttrss_entries.id AS id,
 				feed_id,
 				ttrss_entries.title AS title,
 				updated, link,
@@ -65,38 +68,42 @@ class Af_Psql_Trgm extends Plugin {
 				ttrss_entries, ttrss_user_entries LEFT JOIN ttrss_feeds ON (ttrss_feeds.id = feed_id)
 			WHERE
 				ttrss_entries.id = ref_id AND
-				ttrss_user_entries.owner_uid = $owner_uid AND
-				ttrss_entries.id != $id AND
+				ttrss_user_entries.owner_uid = ? AND
+				ttrss_entries.id != ? AND
 				date_entered >= NOW() - INTERVAL '2 weeks'
 			ORDER BY
 				sm DESC, date_entered DESC
 			LIMIT 10");
 
-		print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
+			$sth->execute([$owner_uid, $id]);
 
-		while ($line = db_fetch_assoc($result)) {
-			print "<li>";
-			print "<div class='insensitive small' style='margin-left : 20px; float : right'>" .
-				smart_date_time(strtotime($line["updated"]))
-				. "</div>";
+			print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
 
-			$sm = sprintf("%.2f", $line['sm']);
-			print "<img src='images/score_high.png' title='$sm'
+			while ($line = $sth->fetch()) {
+				print "<li>";
+				print "<div class='insensitive small' style='margin-left : 20px; float : right'>" .
+					smart_date_time(strtotime($line["updated"]))
+					. "</div>";
+
+				$sm = sprintf("%.2f", $line['sm']);
+				print "<img src='images/score_high.png' title='$sm'
 				style='vertical-align : middle'>";
 
-			$article_link = htmlspecialchars($line["link"]);
-			print " <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"$article_link\">".
-				$line["title"]."</a>";
+				$article_link = htmlspecialchars($line["link"]);
+				print " <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"$article_link\">".
+					$line["title"]."</a>";
 
-			print " (<a href=\"#\" onclick=\"viewfeed({feed:".$line["feed_id"]."})\">".
-				htmlspecialchars($line["feed_title"])."</a>)";
+				print " (<a href=\"#\" onclick=\"viewfeed({feed:".$line["feed_id"]."})\">".
+					htmlspecialchars($line["feed_title"])."</a>)";
 
-			print " <span class='insensitive'>($sm)</span>";
+				print " <span class='insensitive'>($sm)</span>";
 
-			print "</li>";
+				print "</li>";
+			}
+
+			print "</ul>";
+
 		}
-
-		print "</ul>";
 
 		print "<div style='text-align : center'>";
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('trgmRelatedDlg').hide()\">".__('Close this window')."</button>";
@@ -121,9 +128,9 @@ class Af_Psql_Trgm extends Plugin {
 			print_error("Database type not supported.");
 		} else {
 
-			$result = db_query("select 'similarity'::regproc");
+			$res = $this->pdo->query("select 'similarity'::regproc");
 
-			if (db_num_rows($result) == 0) {
+			if (!$res->fetch()) {
 				print_error("pg_trgm extension not found.");
 			}
 
@@ -246,8 +253,8 @@ class Af_Psql_Trgm extends Plugin {
 
 		if (DB_TYPE != "pgsql") return $article;
 
-		$result = db_query("select 'similarity'::regproc");
-		if (db_num_rows($result) == 0) return $article;
+		$res = $this->pdo->query("select 'similarity'::regproc");
+		if (!$res->fetch()) return $article;
 
 		$enable_globally = $this->host->get($this, "enable_globally");
 
@@ -265,18 +272,21 @@ class Af_Psql_Trgm extends Plugin {
 
 		$owner_uid = $article["owner_uid"];
 		$entry_guid = $article["guid_hashed"];
-		$title_escaped = db_escape_string($article["title"]);
+		$title_escaped = $article["title"];
 
 		// trgm does not return similarity=1 for completely equal strings
 
-		$result = db_query("SELECT COUNT(id) AS nequal
+		$sth = $this->pdo->prepare("SELECT COUNT(id) AS nequal
 		  FROM ttrss_entries, ttrss_user_entries WHERE ref_id = id AND
 		  date_entered >= NOW() - interval '3 days' AND
-		  title = '$title_escaped' AND
-		  guid != '$entry_guid' AND
-		  owner_uid = $owner_uid");
+		  title = ? AND
+		  guid != ? AND
+		  owner_uid = ?");
+		$sth->execute([$title_escaped, $entry_guid, $owner_uid]);
 
-		$nequal = db_fetch_result($result, 0, "nequal");
+		$row = $sth->fetch();
+		$nequal = $row['nequal'];
+
 		_debug("af_psql_trgm: num equals: $nequal");
 
 		if ($nequal != 0) {
@@ -284,13 +294,15 @@ class Af_Psql_Trgm extends Plugin {
 			return $article;
 		}
 
-		$result = db_query("SELECT MAX(SIMILARITY(title, '$title_escaped')) AS ms
+		$sth = $this->pdo->prepare("SELECT MAX(SIMILARITY(title, ?)) AS ms
 		  FROM ttrss_entries, ttrss_user_entries WHERE ref_id = id AND
 		  date_entered >= NOW() - interval '1 day' AND
-		  guid != '$entry_guid' AND
-		  owner_uid = $owner_uid");
+		  guid != ? AND
+		  owner_uid = ?");
+		$sth->execute([$title_escaped, $entry_guid, $owner_uid]);
 
-		$similarity_result = db_fetch_result($result, 0, "ms");
+		$row = $sth->fetch();
+		$similarity_result = $row['ms'];
 
 		_debug("af_psql_trgm: similarity result: $similarity_result");
 
@@ -311,9 +323,10 @@ class Af_Psql_Trgm extends Plugin {
 
 		foreach ($enabled_feeds as $feed) {
 
-			$result = db_query("SELECT id FROM ttrss_feeds WHERE id = '$feed' AND owner_uid = " . $_SESSION["uid"]);
+			$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE id = ? AND owner_uid = ?");
+			$sth->execute([$feed, $_SESSION['uid']]);
 
-			if (db_num_rows($result) != 0) {
+			if ($row = $sth->fetch()) {
 				array_push($tmp, $feed);
 			}
 		}
