@@ -90,7 +90,7 @@
 				}
 			}
 
-			if (SINGLE_USER_MODE) {
+			if (SINGLE_USER_MODE && class_exists("PDO")) {
 			    $pdo = DB::pdo();
 
 				$res = $pdo->query("SELECT id FROM ttrss_users WHERE id = 1");
