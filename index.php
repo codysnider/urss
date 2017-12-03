@@ -62,7 +62,6 @@
 	</script>
 
 	<?php echo stylesheet_tag("lib/dijit/themes/claro/claro.css"); ?>
-	<?php echo stylesheet_tag("css/layout.css"); ?>
 
 	<?php if ($_SESSION["uid"]) {
 		$theme = get_pref( "USER_CSS_THEME", $_SESSION["uid"], false);
