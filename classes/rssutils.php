@@ -879,14 +879,14 @@ class RSSUtils {
 							$entry_guid_hashed,
 							$entry_link,
 							$entry_timestamp_fmt,
-							$entry_content,
+							"$entry_content",
 							$entry_current_hash,
 							$date_feed_processed,
 							$entry_comments,
 							(int)$num_comments,
 							$entry_plugin_data,
-							$entry_language,
-							$entry_author]);
+							"$entry_language",
+							"$entry_author"]);
 
 				}
 
@@ -998,12 +998,12 @@ class RSSUtils {
 						WHERE id = :id");
 
 					$sth->execute([":title" => $entry_title,
-						":content" => $entry_content,
+						":content" => "$entry_content",
 						":content_hash" => $entry_current_hash,
 						":updated" => $entry_timestamp_fmt,
 						":num_comments" => (int)$num_comments,
 						":plugin_data" => $entry_plugin_data,
-						":author" => $entry_author,
+						":author" => "$entry_author",
 						":lang" => $entry_language,
 						":id" => $ref_id]);
 
