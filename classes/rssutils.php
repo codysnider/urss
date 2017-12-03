@@ -369,7 +369,7 @@ class RSSUtils {
 
 		$date_feed_processed = date('Y-m-d H:i');
 
-		$cache_filename = CACHE_DIR . "/simplepie/" . sha1($fetch_url) . ".xml";
+		$cache_filename = CACHE_DIR . "/feeds/" . sha1($fetch_url) . ".xml";
 
 		$pluginhost = new PluginHost();
 		$pluginhost->set_debug($debug_enabled);
@@ -454,7 +454,7 @@ class RSSUtils {
 			}
 
 			// cache vanilla feed data for re-use
-			if ($feed_data && !$auth_pass && !$auth_login && is_writable(CACHE_DIR . "/simplepie")) {
+			if ($feed_data && !$auth_pass && !$auth_login && is_writable(CACHE_DIR . "/feeds")) {
 				$new_rss_hash = sha1($feed_data);
 
 				if ($new_rss_hash != $rss_hash) {
@@ -1288,7 +1288,7 @@ class RSSUtils {
 	}
 
 	static function expire_cached_files($debug) {
-		foreach (array("simplepie", "images", "export", "upload") as $dir) {
+		foreach (array("simplepie", "feeds", "images", "export", "upload") as $dir) {
 			$cache_dir = CACHE_DIR . "/$dir";
 
 //			if ($debug) _debug("Expiring $cache_dir");
