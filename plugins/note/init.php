@@ -1,5 +1,7 @@
 <?php
 class Note extends Plugin {
+
+	/* @var PluginHost $host */
 	private $host;
 
 	function about() {
@@ -27,24 +29,29 @@ class Note extends Plugin {
 	}
 
 	function edit() {
-		$param = db_escape_string($_REQUEST['param']);
+		$param = $_REQUEST['param'];
 
-		$result = db_query("SELECT note FROM ttrss_user_entries WHERE
-			ref_id = '$param' AND owner_uid = " . $_SESSION['uid']);
+		$sth = $this->pdo->prepare("SELECT note FROM ttrss_user_entries WHERE
+			ref_id = ? AND owner_uid = ?");
+		$sth->execute([$param, $_SESSION['uid']]);
 
-		$note = db_fetch_result($result, 0, "note");
+		if ($row = $sth->fetch()) {
 
-		print_hidden("id", "$param");
-		print_hidden("op", "pluginhandler");
-		print_hidden("method", "setNote");
-		print_hidden("plugin", "note");
+			$note = $row['note'];
 
-		print "<table width='100%'><tr><td>";
-		print "<textarea dojoType=\"dijit.form.SimpleTextarea\"
-			style='font-size : 12px; width : 98%; height: 100px;'
-			placeHolder='body#ttrssMain { font-size : 14px; };'
-			name='note'>$note</textarea>";
-		print "</td></tr></table>";
+			print_hidden("id", "$param");
+			print_hidden("op", "pluginhandler");
+			print_hidden("method", "setNote");
+			print_hidden("plugin", "note");
+
+			print "<table width='100%'><tr><td>";
+			print "<textarea dojoType=\"dijit.form.SimpleTextarea\"
+				style='font-size : 12px; width : 98%; height: 100px;'
+				placeHolder='body#ttrssMain { font-size : 14px; };'
+				name='note'>$note</textarea>";
+			print "</td></tr></table>";
+
+		}
 
 		print "<div class='dlgButtons'>";
 		print "<button dojoType=\"dijit.form.Button\"
@@ -56,11 +63,12 @@ class Note extends Plugin {
 	}
 
 	function setNote() {
-		$id = db_escape_string($_REQUEST["id"]);
-		$note = trim(strip_tags(db_escape_string($_REQUEST["note"])));
+		$id = $_REQUEST["id"];
+		$note = trim(strip_tags($_REQUEST["note"]));
 
-		db_query("UPDATE ttrss_user_entries SET note = '$note'
-			WHERE ref_id = '$id' AND owner_uid = " . $_SESSION["uid"]);
+		$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET note = ?
+			WHERE ref_id = ? AND owner_uid = ?");
+		$sth->execute([$note, $id, $_SESSION['uid']]);
 
 		$formatted_note = Article::format_article_note($id, $note);
 
