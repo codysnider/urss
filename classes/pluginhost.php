@@ -279,8 +279,6 @@ class PluginHost {
 		} else {
 			return false;
 		}
-
-		return false;
 	}
 
 	function get_commands() {

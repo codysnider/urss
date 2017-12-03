@@ -118,12 +118,6 @@ class Db_Prefs {
 			$user_id = sprintf("%d", $user_id);
 		}
 
-		if ($profile) {
-			$profile_qpart = "AND profile = '$profile'";
-		} else {
-			$profile_qpart = "AND profile IS NULL";
-		}
-
 		if (!$profile || get_schema_version() < 63) $profile = null;
 
 		$type_name = "";

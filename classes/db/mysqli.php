@@ -65,7 +65,7 @@ class Db_Mysqli implements IDb {
 	}
 
 	function last_error() {
-		return mysqli_error();
+		return mysqli_error($this->link);
 	}
 
 	function last_query_error() {

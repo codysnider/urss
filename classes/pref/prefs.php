@@ -99,7 +99,6 @@ class Pref_Prefs extends Handler_Protected {
 
 		foreach (array_keys($_POST) as $pref_name) {
 
-			$pref_name = $pref_name;
 			$value = $_POST[$pref_name];
 
 			if ($pref_name == 'DIGEST_PREFERRED_TIME') {

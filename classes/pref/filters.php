@@ -762,12 +762,6 @@ class Pref_Filters extends Handler_Protected {
 
 	function index() {
 
-		$sort = $_REQUEST["sort"];
-
-		if (!$sort || $sort == "undefined") {
-			$sort = "reg_exp";
-		}
-
 		$filter_search = $_REQUEST["search"];
 
 		if (array_key_exists("search", $_REQUEST)) {
@@ -779,8 +773,6 @@ class Pref_Filters extends Handler_Protected {
 		print "<div id=\"pref-filter-wrap\" dojoType=\"dijit.layout.BorderContainer\" gutters=\"false\">";
 		print "<div id=\"pref-filter-header\" dojoType=\"dijit.layout.ContentPane\" region=\"top\">";
 		print "<div id=\"pref-filter-toolbar\" dojoType=\"dijit.Toolbar\">";
-
-		$filter_search = $_REQUEST["search"];
 
 		if (array_key_exists("search", $_REQUEST)) {
 			$_SESSION["prefs_filter_search"] = $filter_search;

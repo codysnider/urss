@@ -1212,24 +1212,6 @@ class Pref_Feeds extends Handler_Protected {
 		print $error_button;
 		print $inactive_button;
 
-		if (defined('_ENABLE_FEED_DEBUGGING')) {
-
-			print "<select id=\"feedActionChooser\" onchange=\"feedActionChange()\">
-				<option value=\"facDefault\" selected>".__('More actions...')."</option>";
-
-			if (FORCE_ARTICLE_PURGE == 0) {
-				print
-					"<option value=\"facPurge\">".__('Manual purge')."</option>";
-			}
-
-			print "
-				<option value=\"facClear\">".__('Clear feed data')."</option>
-				<option value=\"facRescore\">".__('Rescore articles')."</option>";
-
-			print "</select>";
-
-		}
-
 		print "</div>"; # toolbar
 
 		//print '</div>';

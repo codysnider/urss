@@ -64,7 +64,7 @@ class Feeds extends Handler_Protected {
 
 			$target = "target=\"_blank\"";
 			$reply .= "<a title=\"$last_updated\" $target href=\"$feed_site_url\">".
-				truncate_string($feed_title, 30)."</a>";
+				truncate_string(strip_tags($feed_title), 30)."</a>";
 
 			if ($error) {
 				$error = htmlspecialchars($error);
@@ -72,7 +72,7 @@ class Feeds extends Handler_Protected {
 			}
 
 		} else {
-			$reply .= $feed_title;
+			$reply .= strip_tags($feed_title);
 		}
 
 		$reply .= "</span>";
@@ -440,10 +440,7 @@ class Feeds extends Handler_Protected {
                 if ($vfeed_group_enabled) {
                     if ($feed_id != $vgroup_last_feed && $line["feed_title"]) {
 
-                        $cur_feed_title = $line["feed_title"];
                         $vgroup_last_feed = $feed_id;
-
-                        $cur_feed_title = htmlspecialchars($cur_feed_title);
 
                         $vf_catchup_link = "<a class='catchup' onclick='catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
 
@@ -572,7 +569,7 @@ class Feeds extends Handler_Protected {
 
                 $tmp_content .= "</div>";
 
-                if ($highlight_words && count($highlight_words > 0)) {
+                if ($highlight_words && count($highlight_words) > 0) {
                     foreach ($highlight_words as $word) {
                         $line["title"] = preg_replace("/(\Q$word\E)/i",
                             "<span class=\"highlight\">$1</span>", $line["title"]);
@@ -1540,13 +1537,7 @@ class Feeds extends Handler_Protected {
 			$url = key($feedUrls);
 		}
 
-		if ($cat_id == "0" || !$cat_id) {
-			$cat_qpart = "NULL";
-		} else {
-			$cat_qpart = "'$cat_id'";
-		}
-
-		if (!(int)$cat_id) $cat_id = null;
+		if (!$cat_id) $cat_id = null;
 
 		$sth = $pdo->prepare("SELECT id FROM ttrss_feeds
 			WHERE feed_url = ? AND owner_uid = ?");

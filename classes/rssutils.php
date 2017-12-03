@@ -492,8 +492,6 @@ class RSSUtils {
 		$rss = new FeedParser($feed_data);
 		$rss->init();
 
-		$feed = $feed;
-
 		if (!$rss->error()) {
 
 			// We use local pluginhost here because we need to load different per-user feed plugins
