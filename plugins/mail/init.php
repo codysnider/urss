@@ -1,6 +1,7 @@
 <?php
 class Mail extends Plugin {
 
+	/* @var PluginHost $host */
 	private $host;
 
 	function about() {
@@ -21,7 +22,7 @@ class Mail extends Plugin {
 	}
 
 	function save() {
-		$addresslist = db_escape_string($_POST["addresslist"]);
+		$addresslist = $_POST["addresslist"];
 
 		$this->host->set($this, "addresslist", $addresslist);
 
@@ -77,17 +78,21 @@ class Mail extends Plugin {
 
 	function emailArticle() {
 
-		$param = db_escape_string($_REQUEST['param']);
+		$ids = explode(",", $_REQUEST['param']);
+		$ids_qmarks = arr_qmarks($ids);
 
 		print_hidden("op", "pluginhandler");
 		print_hidden("plugin", "mail");
 		print_hidden("method", "sendEmail");
 
-		$result = db_query("SELECT email, full_name FROM ttrss_users WHERE
+		$sth = $this->pdo->prepare("SELECT email, full_name FROM ttrss_users WHERE
 			id = " . $_SESSION["uid"]);
+		$sth->execute([$_SESSION['uid']]);
 
-		$user_email = htmlspecialchars(db_fetch_result($result, 0, "email"));
-		$user_name = htmlspecialchars(db_fetch_result($result, 0, "full_name"));
+		if ($row = $sth->fetch()) {
+			$user_email = htmlspecialchars($row['email']);
+			$user_name = htmlspecialchars($row['full_name']);
+		}
 
 		if (!$user_name) $user_name = $_SESSION['name'];
 
@@ -104,15 +109,16 @@ class Mail extends Plugin {
 		$tpl->setVariable('USER_EMAIL', $user_email, true);
 		$tpl->setVariable('TTRSS_HOST', $_SERVER["HTTP_HOST"], true);
 
-		$result = db_query("SELECT DISTINCT link, content, title, note
+		$sth = $this->pdo->prepare("SELECT DISTINCT link, content, title, note
 			FROM ttrss_user_entries, ttrss_entries WHERE id = ref_id AND
-			id IN ($param) AND owner_uid = " . $_SESSION["uid"]);
+			id IN ($ids_qmarks) AND owner_uid = ?");
+		$sth->execute(array_merge($ids, [$_SESSION['uid']]));
 
-		if (db_num_rows($result) > 1) {
+		if (count($ids) > 1) {
 			$subject = __("[Forwarded]") . " " . __("Multiple articles");
 		}
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 
 			if (!$subject)
 				$subject = __("[Forwarded]") . " " . htmlspecialchars($line["title"]);
@@ -199,7 +205,7 @@ class Mail extends Plugin {
 		if (!$rc) {
 			$reply['error'] =  $mail->ErrorInfo;
 		} else {
-			//save_email_address(db_escape_string($destination));
+			//save_email_address($destination);
 			$reply['message'] = "UPDATE_COUNTERS";
 		}
 
@@ -207,7 +213,7 @@ class Mail extends Plugin {
 	}
 
 	/* function completeEmails() {
-		$search = db_escape_string($_REQUEST["search"]);
+		$search = $_REQUEST["search"];
 
 		print "<ul>";
 
