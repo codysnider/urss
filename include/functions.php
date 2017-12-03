@@ -2548,6 +2548,13 @@
 		return $bad_tables;
 	}
 
+	function validate_field($string, $allowed, $default = "") {
+		if (in_array($string, $allowed))
+			return $string;
+		else
+			return $default;
+	}
+
     function arr_qmarks($arr) {
         return str_repeat('?,', count($arr) - 1) . '?';
     }

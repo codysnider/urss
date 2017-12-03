@@ -376,7 +376,10 @@ class Pref_Users extends Handler_Protected {
 			print "</div>"; #pane
 			print "<div id=\"pref-user-content\" dojoType=\"dijit.layout.ContentPane\" region=\"center\">";
 
-			print "<div id=\"sticky-status-msg\"></div>";
+			$sort = validate_field($sort,
+				["login", "access_level", "created", "num_feeds", "created", "last_login"], "login");
+
+			if ($sort != "login") $sort = "$sort DESC";
 
 			$sth = $this->pdo->prepare("SELECT
 					tu.id,
@@ -388,8 +391,8 @@ class Pref_Users extends Handler_Protected {
 					ttrss_users tu
 				WHERE
 					(:search = '' OR login LIKE :search) AND tu.id > 0
-				ORDER BY :sort");
-			$sth->execute([":search" => $user_search ? "%$user_search%" : "", ":sort" => $sort]);
+				ORDER BY $sort");
+			$sth->execute([":search" => $user_search ? "%$user_search%" : ""]);
 
 			print "<p><table width=\"100%\" cellspacing=\"0\"
 				class=\"prefUserList\" id=\"prefUserList\">";
