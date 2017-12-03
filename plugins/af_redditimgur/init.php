@@ -1,5 +1,7 @@
 <?php
 class Af_RedditImgur extends Plugin {
+
+	/* @var PluginHost $host */
 	private $host;
 
 	function about() {
@@ -379,8 +381,8 @@ class Af_RedditImgur extends Plugin {
 			if ($this->host->get($this, "enable_content_dupcheck")) {
 
 				if ($content_link) {
-					$content_href = db_escape_string($content_link->getAttribute("href"));
-					$entry_guid = db_escape_string($article["guid_hashed"]);
+					$content_href = $content_link->getAttribute("href");
+					$entry_guid = $article["guid_hashed"];
 					$owner_uid = $article["owner_uid"];
 
 					if (DB_TYPE == "pgsql") {
@@ -389,16 +391,18 @@ class Af_RedditImgur extends Plugin {
 						$interval_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 1 DAY)";
 					}
 
-					$result = db_query("SELECT COUNT(id) AS cid
+					$sth = $this->pdo->prepare("SELECT COUNT(id) AS cid
 						FROM ttrss_entries, ttrss_user_entries WHERE
 							ref_id = id AND
 							$interval_qpart AND
-							guid != '$entry_guid' AND
-							owner_uid = '$owner_uid' AND
-							content LIKE '%href=\"$content_href\">[link]%'");
+							guid != ? AND
+							owner_uid = ? AND
+							content LIKE ?");
 
-					if ($result) {
-						$num_found = db_fetch_result($result, 0, "cid");
+					$sth->execute([$entry_guid, $owner_uid, "%href=\"$content_href\">[link]%"]);
+
+					if ($row = $sth->fetch()) {
+						$num_found = $row['cid'];
 
 						if ($num_found > 0) $article["force_catchup"] = true;
 					}
