@@ -2,6 +2,7 @@
 class Auth_Remote extends Plugin implements IAuthModule {
 
 	private $host;
+	/* @var Auth_Base $base */
 	private $base;
 
 	function about() {
@@ -11,7 +12,8 @@ class Auth_Remote extends Plugin implements IAuthModule {
 			true);
 	}
 
-	function init($host) {
+	/* @var PluginHost $host */
+	function init($host ) {
 		$this->host = $host;
 		$this->base = new Auth_Base();
 
@@ -19,15 +21,16 @@ class Auth_Remote extends Plugin implements IAuthModule {
 	}
 
 	function get_login_by_ssl_certificate() {
-		$cert_serial = db_escape_string(get_ssl_certificate_id());
+		$cert_serial = get_ssl_certificate_id();
 
 		if ($cert_serial) {
-			$result = db_query("SELECT login FROM ttrss_user_prefs, ttrss_users
-				WHERE pref_name = 'SSL_CERT_SERIAL' AND value = '$cert_serial' AND
+			$sth = $this->pdo->prepare("SELECT login FROM ttrss_user_prefs, ttrss_users
+				WHERE pref_name = 'SSL_CERT_SERIAL' AND value = ? AND
 				owner_uid = ttrss_users.id");
+			$sth->execute([$cert_serial]);
 
-			if (db_num_rows($result) != 0) {
-				return db_escape_string(db_fetch_result($result, 0, "login"));
+			if ($row = $sth->fetch()) {
+				return $row['login'];
 			}
 		}
 
@@ -38,11 +41,11 @@ class Auth_Remote extends Plugin implements IAuthModule {
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	function authenticate($login, $password) {
-		$try_login = db_escape_string($_SERVER["REMOTE_USER"]);
+		$try_login = $_SERVER["REMOTE_USER"];
 
 		// php-cgi
-		if (!$try_login) $try_login = db_escape_string($_SERVER["REDIRECT_REMOTE_USER"]);
-		if (!$try_login) $try_login = db_escape_string($_SERVER["PHP_AUTH_USER"]);
+		if (!$try_login) $try_login = $_SERVER["REDIRECT_REMOTE_USER"];
+		if (!$try_login) $try_login = $_SERVER["PHP_AUTH_USER"];
 
 		if (!$try_login) $try_login = $this->get_login_by_ssl_certificate();
 
@@ -60,16 +63,14 @@ class Auth_Remote extends Plugin implements IAuthModule {
 					// update user name
 					$fullname = $_SERVER['HTTP_USER_NAME'] ? $_SERVER['HTTP_USER_NAME'] : $_SERVER['AUTHENTICATE_CN'];
 					if ($fullname){
-						$fullname = db_escape_string($fullname);
-						db_query("UPDATE ttrss_users SET full_name = '$fullname' WHERE id = " .
-							$user_id);
+						$sth = $this->pdo->prepare("UPDATE ttrss_users SET full_name = ? WHERE id = ?");
+						$sth->execute([$fullname, $user_id]);
 					}
 					// update user mail
 					$email = $_SERVER['HTTP_USER_MAIL'] ? $_SERVER['HTTP_USER_MAIL'] : $_SERVER['AUTHENTICATE_MAIL'];
 					if ($email){
-						$email = db_escape_string($email);
-						db_query("UPDATE ttrss_users SET email = '$email' WHERE id = " .
-							$user_id);
+						$sth = $this->pdo->prepare("UPDATE ttrss_users SET email = ? WHERE id = ?");
+						$sth->execute([$email, $user_id]);
 					}
 				}
 

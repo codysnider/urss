@@ -10,6 +10,7 @@ class Auth_Internal extends Plugin implements IAuthModule {
 			true);
 	}
 
+    /* @var PluginHost $host */
     function init($host) {
 		$this->host = $host;
 		$this->pdo = Db::pdo();
