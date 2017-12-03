@@ -888,7 +888,7 @@ class Pref_Prefs extends Handler_Protected {
 
 		if ($authenticator->check_password($_SESSION["uid"], $password)) {
 
-			$sth = $this->pdo->query("SELECT salt
+			$sth = $this->pdo->prepare("SELECT salt
 				FROM ttrss_users
 				WHERE id = ?");
 			$sth->execute([$_SESSION['uid']]);
