@@ -634,12 +634,11 @@ class Article extends Handler_Protected {
 				$rv['content'] .= "<html><head>
 						<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
 						<title>".$line["title"]."</title>".
-					stylesheet_tag("css/default.css")."
-
+						stylesheet_tag("css/default.css")."
 						<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
 						<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">
 
-					</head><body id=\"ttrssZoom\">";
+					</head><body class=\"claro ttrss_zoom\">";
 			}
 
 			$rv['content'] .= "<div class=\"postReply\" id=\"POST-$id\">";

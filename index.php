@@ -143,7 +143,7 @@
 	</script>
 </head>
 
-<body id="ttrssMain" class="claro">
+<body class="claro ttrss_main">
 
 <div id="overlay" style="display : block">
 	<div id="overlay_inner">

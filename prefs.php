@@ -109,7 +109,7 @@
 
 </head>
 
-<body id="ttrssPrefs" class="claro">
+<body class="claro ttrss_main ttrss_prefs">
 
 <div id="notify" class="notify"></div>
 <div id="cmdline" style="display : none"></div>

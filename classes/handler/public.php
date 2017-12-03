@@ -538,14 +538,16 @@ class Handler_Public extends Handler {
 			header('Content-Type: text/html; charset=utf-8');
 			print "<html>
 				<head>
-					<title>Tiny Tiny RSS</title>
-					<link rel=\"stylesheet\" type=\"text/css\" href=\"css/utility.css\">
-					<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
-					<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
-					<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">
+					<title>Tiny Tiny RSS</title>";
+            print stylesheet_tag("css/utility.css");
+			print stylesheet_tag("css/default.css");
+
+            print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
+                <link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
+                <link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">
 
 				</head>
-				<body>
+				<body class='claro'>
 				<img class=\"floatingLogo\" src=\"images/logo_small.png\"
 			  		alt=\"Tiny Tiny RSS\"/>
 					<h1>".__("Subscribe to feed...")."</h1><div class='content'>";
