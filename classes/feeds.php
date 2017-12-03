@@ -199,7 +199,7 @@ class Feeds extends Handler_Protected {
 
 				if ($row = $sth->fetch()) {
 					$last_updated = strtotime($row["last_updated"]);
-					$cache_images = sql_bool_to_bool($row["cache_images"]);
+					$cache_images = $row["cache_images"];
 
 					if (!$cache_images && time() - $last_updated > 120) {
 						RSSUtils::update_rss_feed($feed, true);
@@ -360,12 +360,12 @@ class Feeds extends Handler_Protected {
 
             $class = "";
 
-            if (sql_bool_to_bool($line["unread"])) {
+            if ($line["unread"]) {
                 $class .= " Unread";
                 ++$num_unread;
             }
 
-            if (sql_bool_to_bool($line["marked"])) {
+            if ($line["marked"]) {
                 $marked_pic = "<img
                     src=\"images/mark_set.png\"
                     class=\"markedPic\" alt=\"Unstar article\"
@@ -378,7 +378,7 @@ class Feeds extends Handler_Protected {
                     onclick='toggleMark($id)'>";
             }
 
-            if (sql_bool_to_bool($line["published"])) {
+            if ($line["published"]) {
                 $published_pic = "<img src=\"images/pub_set.png\"
                     class=\"pubPic\"
                         alt=\"Unpublish article\" onclick='togglePub($id)'>";
@@ -528,7 +528,7 @@ class Feeds extends Handler_Protected {
                     $tags = false;
 
                 $line["content"] = sanitize($line["content"],
-                        sql_bool_to_bool($line['hide_images']), false, $entry_site_url, $highlight_words, $line["id"]);
+                        $line['hide_images'], false, $entry_site_url, $highlight_words, $line["id"]);
 
                 foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_RENDER_ARTICLE_CDM) as $p) {
                     $line = $p->hook_render_article_cdm($line);
@@ -690,7 +690,7 @@ class Feeds extends Handler_Protected {
 
                 $tmp_content .= "<div class=\"cdmIntermediate\">";
 
-                $always_display_enclosures = sql_bool_to_bool($line["always_display_enclosures"]);
+                $always_display_enclosures = $line["always_display_enclosures"];
                 $tmp_content .= Article::format_article_enclosures($id, $always_display_enclosures, $line["content"], sql_bool_to_bool($line["hide_images"]));
 
                 $tmp_content .= "</div>"; // cdmIntermediate

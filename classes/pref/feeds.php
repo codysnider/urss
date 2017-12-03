@@ -510,7 +510,7 @@ class Pref_Feeds extends Handler_Protected {
 			print '<div dojoType="dijit.layout.TabContainer" style="height : 450px">
         		<div dojoType="dijit.layout.ContentPane" title="'.__('General').'">';
 
-			$auth_pass_encrypted = sql_bool_to_bool($row["auth_pass_encrypted"]);
+			$auth_pass_encrypted = $row["auth_pass_encrypted"];
 
 			$title = htmlspecialchars($row["title"]);
 
@@ -644,7 +644,7 @@ class Pref_Feeds extends Handler_Protected {
 			//print "<div class=\"dlgSec\">".__("Options")."</div>";
 			print "<div class=\"dlgSecSimple\">";
 
-			$private = sql_bool_to_bool($row["private"]);
+			$private = $row["private"];
 
 			if ($private) {
 				$checked = "checked=\"1\"";
@@ -655,7 +655,7 @@ class Pref_Feeds extends Handler_Protected {
 			print "<input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" name=\"private\" id=\"private\"
 			$checked>&nbsp;<label for=\"private\">".__('Hide from Popular feeds')."</label>";
 
-			$include_in_digest = sql_bool_to_bool($row["include_in_digest"]);
+			$include_in_digest = $row["include_in_digest"];
 
 			if ($include_in_digest) {
 				$checked = "checked=\"1\"";
@@ -668,7 +668,7 @@ class Pref_Feeds extends Handler_Protected {
 			$checked>&nbsp;<label for=\"include_in_digest\">".__('Include in e-mail digest')."</label>";
 
 
-			$always_display_enclosures = sql_bool_to_bool($row["always_display_enclosures"]);
+			$always_display_enclosures = $row["always_display_enclosures"];
 
 			if ($always_display_enclosures) {
 				$checked = "checked";
@@ -680,7 +680,7 @@ class Pref_Feeds extends Handler_Protected {
 			name=\"always_display_enclosures\"
 			$checked>&nbsp;<label for=\"always_display_enclosures\">".__('Always display image attachments')."</label>";
 
-			$hide_images = sql_bool_to_bool($row["hide_images"]);
+			$hide_images = $row["hide_images"];
 
 			if ($hide_images) {
 				$checked = "checked=\"1\"";
@@ -693,7 +693,7 @@ class Pref_Feeds extends Handler_Protected {
 			$checked>&nbsp;<label for=\"hide_images\">".
 				__('Do not embed images')."</label>";
 
-			$cache_images = sql_bool_to_bool($row["cache_images"]);
+			$cache_images = $row["cache_images"];
 
 			if ($cache_images) {
 				$checked = "checked=\"1\"";
@@ -706,7 +706,7 @@ class Pref_Feeds extends Handler_Protected {
 			$checked>&nbsp;<label for=\"cache_images\">".
 				__('Cache media')."</label>";
 
-			$mark_unread_on_update = sql_bool_to_bool($row["mark_unread_on_update"]);
+			$mark_unread_on_update = $row["mark_unread_on_update"];
 
 			if ($mark_unread_on_update) {
 				$checked = "checked";

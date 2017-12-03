@@ -173,10 +173,6 @@ class Opml extends Handler_Protected {
 			$sth->execute([$owner_uid]);
 
 			while ($line = $sth->fetch()) {
-				foreach (array('enabled', 'match_any_rule', 'inverse') as $b) {
-					$line[$b] = sql_bool_to_bool($line[$b]);
-				}
-
 				$line["rules"] = array();
 				$line["actions"] = array();
 
@@ -188,7 +184,7 @@ class Opml extends Handler_Protected {
 					unset($tmp_line["id"]);
 					unset($tmp_line["filter_id"]);
 
-					$cat_filter = sql_bool_to_bool($tmp_line["cat_filter"]);
+					$cat_filter = $tmp_line["cat_filter"];
 
 					if (!$tmp_line["match_on"]) {
                         if ($cat_filter && $tmp_line["cat_id"] || $tmp_line["feed_id"]) {
@@ -221,9 +217,6 @@ class Opml extends Handler_Protected {
                         $tmp_line["match"] = $match;
 					    unset($tmp_line["match_on"]);
                     }
-
-					$tmp_line["cat_filter"] = sql_bool_to_bool($tmp_line["cat_filter"]);
-					$tmp_line["inverse"] = sql_bool_to_bool($tmp_line["inverse"]);
 
 					unset($tmp_line["feed_id"]);
 					unset($tmp_line["cat_id"]);

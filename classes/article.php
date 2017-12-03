@@ -8,6 +8,8 @@ class Article extends Handler_Protected {
 	}
 
 	function redirect() {
+		$id = $_REQUEST['id'];
+
 		$sth = $this->pdo->prepare("SELECT link FROM ttrss_entries, ttrss_user_entries
 						WHERE id = ? AND id = ref_id AND owner_uid = ?
 						LIMIT 1");
@@ -601,7 +603,7 @@ class Article extends Handler_Protected {
 			unset($line["tag_cache"]);
 
 			$line["content"] = sanitize($line["content"],
-				sql_bool_to_bool($line['hide_images']),
+				$line['hide_images'],
 				$owner_uid, $line["site_url"], false, $line["id"]);
 
 			foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_RENDER_ARTICLE) as $p) {
@@ -754,9 +756,9 @@ class Article extends Handler_Protected {
 
 			if (!$zoom_mode) {
 				$rv['content'] .= Article::format_article_enclosures($id,
-					sql_bool_to_bool($line["always_display_enclosures"]),
+					$line["always_display_enclosures"],
 					$line["content"],
-					sql_bool_to_bool($line["hide_images"]));
+					$line["hide_images"]);
 			}
 
 			$rv['content'] .= "</div>";

@@ -221,7 +221,7 @@ class RSSUtils {
 
 			$owner_uid = $row["owner_uid"];
 
-			$auth_pass_encrypted = sql_bool_to_bool($row["auth_pass_encrypted"]);
+			$auth_pass_encrypted = $row["auth_pass_encrypted"];
 
 			$auth_login = $row["auth_login"];
 			$auth_pass = $row["auth_pass"];
@@ -341,8 +341,8 @@ class RSSUtils {
 		if ($row = $sth->fetch()) {
 
 			$owner_uid = $row["owner_uid"];
-			$mark_unread_on_update = sql_bool_to_bool($row["mark_unread_on_update"]);
-			$auth_pass_encrypted = sql_bool_to_bool($row["auth_pass_encrypted"]);
+			$mark_unread_on_update = $row["mark_unread_on_update"];
+			$auth_pass_encrypted = $row["auth_pass_encrypted"];
 
 			$sth = $pdo->prepare("UPDATE ttrss_feeds SET last_update_started = NOW()
 				WHERE id = ?");
@@ -358,7 +358,7 @@ class RSSUtils {
 
 			$stored_last_modified = $row["last_modified"];
 			$last_unconditional = $row["last_unconditional"];
-			$cache_images = sql_bool_to_bool($row["cache_images"]);
+			$cache_images = $row["cache_images"];
 			$fetch_url = $row["feed_url"];
 			$feed_language = mb_strtolower($row["feed_language"]);
 			if (!$feed_language) $feed_language = 'english';
@@ -515,7 +515,7 @@ class RSSUtils {
 			$sth->execute([$feed]);
 
 			if ($row = $sth->fetch()) {
-				$favicon_needs_check = sql_bool_to_bool($row["favicon_needs_check"]);
+				$favicon_needs_check = $row["favicon_needs_check"];
 				$favicon_avg_color = $row["favicon_avg_color"];
 				$owner_uid = $row["owner_uid"];
 			} else {
@@ -883,7 +883,7 @@ class RSSUtils {
 							$entry_current_hash,
 							$date_feed_processed,
 							$entry_comments,
-							$num_comments,
+							(int)$num_comments,
 							$entry_plugin_data,
 							$entry_language,
 							$entry_author]);
@@ -995,7 +995,7 @@ class RSSUtils {
 						WHERE id = ?");
 
 					$sth->execute([$entry_title, $entry_content, $entry_current_hash, $entry_timestamp_fmt,
-						$num_comments, $entry_plugin_data, $entry_author, $entry_language, $ref_id]);
+						(int)$num_comments, $entry_plugin_data, $entry_author, $entry_language, $ref_id]);
 
 					// update aux data
 					$sth = $pdo->prepare("UPDATE ttrss_user_entries

@@ -15,14 +15,11 @@ class Handler_Public extends Handler {
 		if (!$limit) $limit = 60;
 
 		$date_sort_field = "date_entered DESC, updated DESC";
-		$date_check_field = "date_entered";
 
 		if ($feed == -2 && !$is_cat) {
 			$date_sort_field = "last_published DESC";
-			$date_check_field = "last_published";
 		} else if ($feed == -1 && !$is_cat) {
 			$date_sort_field = "last_marked DESC";
-			$date_check_field = "last_marked";
 		}
 
 		switch ($order) {
@@ -295,7 +292,7 @@ class Handler_Public extends Handler {
 	function rss() {
 		$feed = $_REQUEST["id"];
 		$key = $_REQUEST["key"];
-		$is_cat = sql_bool_to_bool($_REQUEST["is_cat"]);
+		$is_cat = $_REQUEST["is_cat"];
 		$limit = (int)$_REQUEST["limit"];
 		$offset = (int)$_REQUEST["offset"];
 
@@ -305,7 +302,7 @@ class Handler_Public extends Handler {
 		$start_ts = $_REQUEST["ts"];
 
 		$format = $_REQUEST['format'];
-		$orig_guid = sql_bool_to_bool($_REQUEST["orig_guid"]);
+		$orig_guid = $_REQUEST["orig_guid"];
 
 		if (!$format) $format = 'atom';
 

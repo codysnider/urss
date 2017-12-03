@@ -207,7 +207,7 @@ class Pref_Prefs extends Handler_Protected {
 
 		$email = htmlspecialchars($row["email"]);
 		$full_name = htmlspecialchars($row["full_name"]);
-		$otp_enabled = sql_bool_to_bool($row["otp_enabled"]);
+		$otp_enabled = $row["otp_enabled"];
 
 		print "<tr><td width=\"40%\">".__('Full name')."</td>";
 		print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" name=\"full_name\" required=\"1\"
@@ -864,7 +864,7 @@ class Pref_Prefs extends Handler_Protected {
 			$base32 = new Base32();
 
 			$login = $row["login"];
-			$otp_enabled = sql_bool_to_bool($row["otp_enabled"]);
+			$otp_enabled = $row["otp_enabled"];
 
 			if (!$otp_enabled) {
 				$secret = $base32->encode(sha1($row["salt"]));
