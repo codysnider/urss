@@ -27,7 +27,8 @@ class MailTo extends Plugin {
 
 	function emailArticle() {
 
-		$param = db_escape_string($_REQUEST['param']);
+		$ids = explode(",", $_REQUEST['param']);
+		$ids_qmarks = arr_qmarks($ids);
 
 		require_once "lib/MiniTemplator.class.php";
 
@@ -40,15 +41,18 @@ class MailTo extends Plugin {
 		$tpl->setVariable('TTRSS_HOST', $_SERVER["HTTP_HOST"], true);
 
 
-		$result = db_query("SELECT DISTINCT link, content, title
+		$sth = $this->pdo->prepare("SELECT DISTINCT link, content, title
 			FROM ttrss_user_entries, ttrss_entries WHERE id = ref_id AND
-			id IN ($param) AND owner_uid = " . $_SESSION["uid"]);
+			id IN ($ids_qmarks) AND owner_uid = ?");
+		$sth->execute(array_merge($ids, [$_SESSION['uid']]));
 
-		if (db_num_rows($result) > 1) {
+		if (count($ids) > 1) {
 			$subject = __("[Forwarded]") . " " . __("Multiple articles");
+		} else {
+			$subject = "";
 		}
 
-		while ($line = db_fetch_assoc($result)) {
+		while ($line = $sth->fetch()) {
 
 			if (!$subject)
 				$subject = __("[Forwarded]") . " " . htmlspecialchars($line["title"]);
