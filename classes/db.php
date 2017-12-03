@@ -1,5 +1,6 @@
 <?php
-class Db implements IDb {
+class Db
+{
 
 	/* @var Db $instance */
 	private static $instance;
@@ -11,10 +12,6 @@ class Db implements IDb {
 
 	/* @var PDO $pdo */
 	private $pdo;
-
-	private function __construct() {
-
-	}
 
 	private function __clone() {
 		//
@@ -54,9 +51,9 @@ class Db implements IDb {
 
 	private function pdo_connect() {
 
-		$db_port = defined('DB_PORT') && DB_PORT ? ';port='.DB_PORT : '';
+		$db_port = defined('DB_PORT') && DB_PORT ? ';port=' . DB_PORT : '';
 
-		$this->pdo = new PDO(DB_TYPE . ':dbname='.DB_NAME.';host='.DB_HOST.$db_port,
+		$this->pdo = new PDO(DB_TYPE . ':dbname=' . DB_NAME . ';host=' . DB_HOST . $db_port,
 			DB_USER,
 			DB_PASS);
 
@@ -65,7 +62,7 @@ class Db implements IDb {
 			exit(101);
 		}
 
-		$this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
 		if (DB_TYPE == "pgsql") {
 
@@ -87,70 +84,21 @@ class Db implements IDb {
 		if (self::$instance == null)
 			self::$instance = new self();
 
-		if (!self::$instance->link) {
+		if (!self::$instance->adapter) {
 			self::$instance->legacy_connect();
 		}
 
-		return self::$instance;
+		return self::$instance->adapter;
 	}
 
 	public static function pdo() {
-        if (self::$instance == null)
-            self::$instance = new self();
+		if (self::$instance == null)
+			self::$instance = new self();
 
-        if (!self::$instance->pdo) {
+		if (!self::$instance->pdo) {
 			self::$instance->pdo_connect();
 		}
 
-        return self::$instance->pdo;
-    }
-
-	static function quote($str){
-		return("'$str'");
-	}
-
-	function reconnect() {
-		$this->link = $this->adapter->connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, defined('DB_PORT') ? DB_PORT : "");
-	}
-
-	function connect($host, $user, $pass, $db, $port) {
-		//return $this->adapter->connect($host, $user, $pass, $db, $port);
-		return ;
-	}
-
-	function escape_string($s, $strip_tags = true) {
-		return $this->adapter->escape_string($s, $strip_tags);
-	}
-
-	function query($query, $die_on_error = true) {
-		return $this->adapter->query($query, $die_on_error);
-	}
-
-	function fetch_assoc($result) {
-		return $this->adapter->fetch_assoc($result);
-	}
-
-	function num_rows($result) {
-		return $this->adapter->num_rows($result);
-	}
-
-	function fetch_result($result, $row, $param) {
-		return $this->adapter->fetch_result($result, $row, $param);
-	}
-
-	function close() {
-		return $this->adapter->close();
-	}
-
-	function affected_rows($result) {
-		return $this->adapter->affected_rows($result);
-	}
-
-	function last_error() {
-		return $this->adapter->last_error();
-	}
-
-	function last_query_error() {
-		return $this->adapter->last_query_error();
+		return self::$instance->pdo;
 	}
 }
