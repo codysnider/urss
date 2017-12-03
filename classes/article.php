@@ -638,7 +638,7 @@ class Article extends Handler_Protected {
 						<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
 						<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">
 
-					</head><body class=\"claro ttrss_zoom\">";
+					</head><body class=\"claro ttrss_utility ttrss_zoom\">";
 			}
 
 			$rv['content'] .= "<div class=\"postReply\" id=\"POST-$id\">";
