@@ -1,6 +1,7 @@
 <?php
 class Cache_Starred_Images extends Plugin implements IHandler {
 
+	/* @var PluginHost $host */
 	private $host;
 	private $cache_dir;
 
@@ -92,11 +93,11 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 
 			if ($article_id != $last_article_id) {
 				$last_article_id = $article_id;
-				$article_id = db_escape_string($article_id);
 
-				$result = db_query("SELECT id FROM ttrss_entries WHERE id = " . $article_id);
+				$sth = $this->pdo->prepare("SELECT id FROM ttrss_entries WHERE id = ?");
+				$sth->execute([$article_id]);
 
-				$article_exists = db_num_rows($result) > 0;
+				$article_exists = $sth->fetch();
 			}
 
 			if (!$article_exists) {
@@ -135,7 +136,7 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 	}
 
 	function hook_update_task() {
-		$result = db_query("SELECT content, ttrss_user_entries.owner_uid, link, site_url, ttrss_entries.id, plugin_data
+		$res = $this->pdo->query("SELECT content, ttrss_user_entries.owner_uid, link, site_url, ttrss_entries.id, plugin_data
 			FROM ttrss_entries, ttrss_user_entries LEFT JOIN ttrss_feeds ON
 				(ttrss_user_entries.feed_id = ttrss_feeds.id)
 			WHERE ref_id = ttrss_entries.id AND
@@ -145,14 +146,16 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 				plugin_data NOT LIKE '%starred_cache_images%'
 			ORDER BY ".sql_random_function()." LIMIT 100");
 
-		while ($line = db_fetch_assoc($result)) {
+		$usth = $this->pdo->prepare("UPDATE ttrss_entries SET plugin_data = ? WHERE id = ?");
+
+		while ($line = $res->fetch()) {
 			if ($line["site_url"]) {
 				$success = $this->cache_article_images($line["content"], $line["site_url"], $line["owner_uid"], $line["id"]);
 
 				if ($success) {
-					$plugin_data = db_escape_string("starred_cache_images,${line['owner_uid']}:" . $line["plugin_data"]);
+					$plugin_data = "starred_cache_images,${line['owner_uid']}:" . $line["plugin_data"];
 
-					db_query("UPDATE ttrss_entries SET plugin_data = '$plugin_data' WHERE id = " . $line["id"]);
+					$usth->execute([$plugin_data, $line['id']]);
 				}
 			}
 		}
