@@ -1,6 +1,7 @@
 <?php
 class VF_Shared extends Plugin {
 
+	/* @var PluginHost $host */
 	private $host;
 
 	function about() {
@@ -24,18 +25,30 @@ class VF_Shared extends Plugin {
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	function get_unread($feed_id) {
-		$result = db_query("select count(int_id) AS count from ttrss_user_entries where owner_uid = ".$_SESSION["uid"]." and unread = true and uuid != ''");
+		$sth = $this->pdo->prepare("select count(int_id) AS count 
+			from ttrss_user_entries where owner_uid = ? and unread = true and uuid != ''");
+		$sth->execute([$_SESSION['uid']]);
 
-		return db_fetch_result($result, 0, "count");
+		if ($row = $sth->fetch()) {
+			return $row['count'];
+		}
+
+		return 0;
 	}
 
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	function get_total($feed_id) {
-		$result = db_query("select count(int_id) AS count from ttrss_user_entries where owner_uid = ".$_SESSION["uid"]." and uuid != ''");
+		$sth = $this->pdo->prepare("select count(int_id) AS count 
+			from ttrss_user_entries where owner_uid = ? and uuid != ''");
+		$sth->execute([$_SESSION['uid']]);
 
-		return db_fetch_result($result, 0, "count");
+		if ($row = $sth->fetch()) {
+			return $row['count'];
+		}
+
+		return 0;
 	}
 
 	/**
