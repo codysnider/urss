@@ -5,6 +5,7 @@ abstract class Plugin {
 	/** @var PDO */
 	protected $pdo;
 
+	/* @var PluginHost $host */
 	abstract function init($host);
 
 	abstract function about();
