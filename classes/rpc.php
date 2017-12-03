@@ -334,7 +334,7 @@ class RPC extends Handler_Protected {
 	function completeLabels() {
 		$search = $_REQUEST["search"];
 
-		$sth = $this->pdo->query("SELECT DISTINCT caption FROM
+		$sth = $this->pdo->prepare("SELECT DISTINCT caption FROM
 				ttrss_labels2
 				WHERE owner_uid = ? AND
 				LOWER(caption) LIKE LOWER(?) ORDER BY caption
