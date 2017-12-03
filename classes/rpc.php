@@ -8,14 +8,14 @@ class RPC extends Handler_Protected {
 	}
 
 	function setprofile() {
-		$_SESSION["profile"] = $_REQUEST["id"];
+		$_SESSION["profile"] = clean($_REQUEST["id"]);
 
 		// default value
 		if (!$_SESSION["profile"]) $_SESSION["profile"] = null;
 	}
 
 	function remprofiles() {
-		$ids = explode(",", trim($_REQUEST["ids"]));
+		$ids = explode(",", trim(clean($_REQUEST["ids"])));
 
 		foreach ($ids as $id) {
 			if ($_SESSION["profile"] != $id) {
@@ -28,7 +28,7 @@ class RPC extends Handler_Protected {
 
 	// Silent
 	function addprofile() {
-		$title = trim($_REQUEST["title"]);
+		$title = trim(clean($_REQUEST["title"]));
 
 		if ($title) {
 			$this->pdo->beginTransaction();
@@ -62,8 +62,8 @@ class RPC extends Handler_Protected {
 	}
 
 	function saveprofile() {
-		$id = $_REQUEST["id"];
-		$title = trim($_REQUEST["value"]);
+		$id = clean($_REQUEST["id"]);
+		$title = trim(clean($_REQUEST["value"]));
 
 		if ($id == 0) {
 			print __("Default profile");
@@ -82,7 +82,7 @@ class RPC extends Handler_Protected {
 
 	// Silent
 	function remarchive() {
-		$ids = explode(",", $_REQUEST["ids"]);
+		$ids = explode(",", clean($_REQUEST["ids"]));
 
 		$sth = $this->pdo->prepare("DELETE FROM ttrss_archived_feeds WHERE
 		  		(SELECT COUNT(*) FROM ttrss_user_entries
@@ -95,10 +95,10 @@ class RPC extends Handler_Protected {
 	}
 
 	function addfeed() {
-		$feed = $_REQUEST['feed'];
-		$cat = $_REQUEST['cat'];
-		$login = $_REQUEST['login'];
-		$pass = trim($_REQUEST['pass']);
+		$feed = clean($_REQUEST['feed']);
+		$cat = clean($_REQUEST['cat']);
+		$login = clean($_REQUEST['login']);
+		$pass = trim(clean($_REQUEST['pass']));
 
 		$rc = Feeds::subscribe_to_feed($feed, $cat, $login, $pass);
 
@@ -106,7 +106,7 @@ class RPC extends Handler_Protected {
 	}
 
 	function togglepref() {
-		$key = $_REQUEST["key"];
+		$key = clean($_REQUEST["key"]);
 		set_pref($key, !get_pref($key));
 		$value = get_pref($key);
 
@@ -115,8 +115,8 @@ class RPC extends Handler_Protected {
 
 	function setpref() {
 		// set_pref escapes input, so no need to double escape it here
-		$key = $_REQUEST['key'];
-		$value = str_replace("\n", "<br/>", $_REQUEST['value']);
+		$key = clean($_REQUEST['key']);
+		$value = nl2br($_REQUEST['value']);
 
 		set_pref($key, $value, false, $key != 'USER_STYLESHEET');
 
@@ -124,8 +124,8 @@ class RPC extends Handler_Protected {
 	}
 
 	function mark() {
-		$mark = $_REQUEST["mark"];
-		$id = $_REQUEST["id"];
+		$mark = clean($_REQUEST["mark"]);
+		$id = clean($_REQUEST["id"]);
 
 		$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET marked = ?,
 					last_marked = NOW()
@@ -137,7 +137,7 @@ class RPC extends Handler_Protected {
 	}
 
 	function delete() {
-		$ids = explode(",", $_REQUEST["ids"]);
+		$ids = explode(",", clean($_REQUEST["ids"]));
 		$ids_qmarks = arr_qmarks($ids);
 
 		$sth = $this->pdo->prepare("DELETE FROM ttrss_user_entries
@@ -150,7 +150,7 @@ class RPC extends Handler_Protected {
 	}
 
 	function unarchive() {
-		$ids = explode(",", $_REQUEST["ids"]);
+		$ids = explode(",", clean($_REQUEST["ids"]));
 
 		foreach ($ids as $id) {
 			$this->pdo->beginTransaction();
@@ -203,7 +203,7 @@ class RPC extends Handler_Protected {
 	}
 
 	function archive() {
-		$ids = explode(",", $_REQUEST["ids"]);
+		$ids = explode(",", clean($_REQUEST["ids"]));
 
 		foreach ($ids as $id) {
 			$this->archive_article($id, $_SESSION["uid"]);
@@ -257,8 +257,8 @@ class RPC extends Handler_Protected {
 	}
 
 	function publ() {
-		$pub = $_REQUEST["pub"];
-		$id = $_REQUEST["id"];
+		$pub = clean($_REQUEST["pub"]);
+		$id = clean($_REQUEST["id"]);
 
 		$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET
 			published = ?, last_published = NOW()
@@ -270,7 +270,7 @@ class RPC extends Handler_Protected {
 	}
 
 	function getAllCounters() {
-		$last_article_id = (int) $_REQUEST["last_article_id"];
+		$last_article_id = (int) clean($_REQUEST["last_article_id"]);
 
 		$reply = array();
 
@@ -287,8 +287,8 @@ class RPC extends Handler_Protected {
 
 	/* GET["cmode"] = 0 - mark as read, 1 - as unread, 2 - toggle */
 	function catchupSelected() {
-		$ids = explode(",", $_REQUEST["ids"]);
-		$cmode = sprintf("%d", $_REQUEST["cmode"]);
+		$ids = explode(",", clean($_REQUEST["ids"]));
+		$cmode = sprintf("%d", clean($_REQUEST["cmode"]));
 
 		Article::catchupArticlesById($ids, $cmode);
 
@@ -296,8 +296,8 @@ class RPC extends Handler_Protected {
 	}
 
 	function markSelected() {
-		$ids = explode(",", $_REQUEST["ids"]);
-		$cmode = (int)$_REQUEST["cmode"];
+		$ids = explode(",", clean($_REQUEST["ids"]));
+		$cmode = (int)clean($_REQUEST["cmode"]);
 
 		$this->markArticlesById($ids, $cmode);
 
@@ -305,8 +305,8 @@ class RPC extends Handler_Protected {
 	}
 
 	function publishSelected() {
-		$ids = explode(",", $_REQUEST["ids"]);
-		$cmode = (int)$_REQUEST["cmode"];
+		$ids = explode(",", clean($_REQUEST["ids"]));
+		$cmode = (int)clean($_REQUEST["cmode"]);
 
 		$this->publishArticlesById($ids, $cmode);
 
@@ -314,10 +314,10 @@ class RPC extends Handler_Protected {
 	}
 
 	function sanityCheck() {
-		$_SESSION["hasAudio"] = $_REQUEST["hasAudio"] === "true";
-		$_SESSION["hasSandbox"] = $_REQUEST["hasSandbox"] === "true";
-		$_SESSION["hasMp3"] = $_REQUEST["hasMp3"] === "true";
-		$_SESSION["clientTzOffset"] = $_REQUEST["clientTzOffset"];
+		$_SESSION["hasAudio"] = clean($_REQUEST["hasAudio"]) === "true";
+		$_SESSION["hasSandbox"] = clean($_REQUEST["hasSandbox"]) === "true";
+		$_SESSION["hasMp3"] = clean($_REQUEST["hasMp3"]) === "true";
+		$_SESSION["clientTzOffset"] = clean($_REQUEST["clientTzOffset"]);
 
 		$reply = array();
 
@@ -332,7 +332,7 @@ class RPC extends Handler_Protected {
 	}
 
 	function completeLabels() {
-		$search = $_REQUEST["search"];
+		$search = clean($_REQUEST["search"]);
 
 		$sth = $this->pdo->prepare("SELECT DISTINCT caption FROM
 				ttrss_labels2
@@ -351,9 +351,9 @@ class RPC extends Handler_Protected {
 	function updateFeedBrowser() {
 		if (defined('_DISABLE_FEED_BROWSER') && _DISABLE_FEED_BROWSER) return;
 
-		$search = $_REQUEST["search"];
-		$limit = $_REQUEST["limit"];
-		$mode = (int) $_REQUEST["mode"];
+		$search = clean($_REQUEST["search"]);
+		$limit = clean($_REQUEST["limit"]);
+		$mode = (int) clean($_REQUEST["mode"]);
 
 		require_once "feedbrowser.php";
 
@@ -365,8 +365,8 @@ class RPC extends Handler_Protected {
 	// Silent
 	function massSubscribe() {
 
-		$payload = json_decode($_REQUEST["payload"], false);
-		$mode = $_REQUEST["mode"];
+		$payload = json_decode(clean($_REQUEST["payload"]), false);
+		$mode = clean($_REQUEST["mode"]);
 
 		if (!$payload || !is_array($payload)) return;
 
@@ -417,11 +417,11 @@ class RPC extends Handler_Protected {
 	}
 
 	function catchupFeed() {
-		$feed_id = $_REQUEST['feed_id'];
-		$is_cat = $_REQUEST['is_cat'] == "true";
-		$mode = $_REQUEST['mode'];
-		$search_query = $_REQUEST['search_query'];
-		$search_lang = $_REQUEST['search_lang'];
+		$feed_id = clean($_REQUEST['feed_id']);
+		$is_cat = clean($_REQUEST['is_cat']) == "true";
+		$mode = clean($_REQUEST['mode']);
+		$search_query = clean($_REQUEST['search_query']);
+		$search_lang = clean($_REQUEST['search_lang']);
 
 		Feeds::catchup_feed($feed_id, $is_cat, false, $mode, [$search_query, $search_lang]);
 
@@ -429,7 +429,7 @@ class RPC extends Handler_Protected {
 	}
 
 	function setpanelmode() {
-		$wide = (int) $_REQUEST["wide"];
+		$wide = (int) clean($_REQUEST["wide"]);
 
 		setcookie("ttrss_widescreen", $wide,
 			time() + COOKIE_LIFETIME_LONG);
@@ -566,7 +566,7 @@ class RPC extends Handler_Protected {
 	}
 
 	function getlinktitlebyid() {
-		$id = $_REQUEST['id'];
+		$id = clean($_REQUEST['id']);
 
 		$sth = $this->pdo->prepare("SELECT link, title FROM ttrss_entries, ttrss_user_entries
 			WHERE ref_id = ? AND ref_id = id AND owner_uid = ?");
@@ -583,10 +583,10 @@ class RPC extends Handler_Protected {
 	}
 
 	function log() {
-		$msg = $_REQUEST['msg'];
-		$file = basename($_REQUEST['file']);
-		$line = (int) $_REQUEST['line'];
-		$context = $_REQUEST['context'];
+		$msg = clean($_REQUEST['msg']);
+		$file = basename(clean($_REQUEST['file']));
+		$line = (int) clean($_REQUEST['line']);
+		$context = clean($_REQUEST['context']);
 
 		if ($msg) {
 			Logger::get()->log_error(E_USER_WARNING,

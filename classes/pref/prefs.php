@@ -60,9 +60,9 @@ class Pref_Prefs extends Handler_Protected {
 
 	function changepassword() {
 
-		$old_pw = $_POST["old_password"];
-		$new_pw = $_POST["new_password"];
-		$con_pw = $_POST["confirm_password"];
+		$old_pw = clean($_POST["old_password"]);
+		$new_pw = clean($_POST["new_password"]);
+		$con_pw = clean($_POST["confirm_password"]);
 
 		if ($old_pw == "") {
 			print "ERROR: ".format_error("Old password cannot be blank.");
@@ -89,7 +89,7 @@ class Pref_Prefs extends Handler_Protected {
 	}
 
 	function saveconfig() {
-		$boolean_prefs = explode(",", $_POST["boolean_prefs"]);
+		$boolean_prefs = explode(",", clean($_POST["boolean_prefs"]));
 
 		foreach ($boolean_prefs as $pref) {
 			if (!isset($_POST[$pref])) $_POST[$pref] = 'false';
@@ -129,8 +129,8 @@ class Pref_Prefs extends Handler_Protected {
 
 	function changeemail() {
 
-		$email = $_POST["email"];
-		$full_name = $_POST["full_name"];
+		$email = clean($_POST["email"]);
+		$full_name = clean($_POST["full_name"]);
 		$active_uid = $_SESSION["uid"];
 
 		$sth = $this->pdo->prepare("UPDATE ttrss_users SET email = ?,
@@ -880,8 +880,8 @@ class Pref_Prefs extends Handler_Protected {
 		require_once "lib/otphp/lib/otp.php";
 		require_once "lib/otphp/lib/totp.php";
 
-		$password = $_REQUEST["password"];
-		$otp = $_REQUEST["otp"];
+		$password = clean($_REQUEST["password"]);
+		$otp = clean($_REQUEST["otp"]);
 
 		$authenticator = PluginHost::getInstance()->get_plugin($_SESSION["auth_module"]);
 
@@ -930,7 +930,7 @@ class Pref_Prefs extends Handler_Protected {
 	}
 
 	function otpdisable() {
-		$password = $_REQUEST["password"];
+		$password = clean($_REQUEST["password"]);
 
 		$authenticator = PluginHost::getInstance()->get_plugin($_SESSION["auth_module"]);
 
@@ -948,8 +948,8 @@ class Pref_Prefs extends Handler_Protected {
 	}
 
 	function setplugins() {
-		if (is_array($_REQUEST["plugins"]))
-			$plugins = join(",", $_REQUEST["plugins"]);
+		if (is_array(clean($_REQUEST["plugins"])))
+			$plugins = join(",", clean($_REQUEST["plugins"]));
 		else
 			$plugins = "";
 
@@ -957,7 +957,7 @@ class Pref_Prefs extends Handler_Protected {
 	}
 
 	function clearplugindata() {
-		$name = $_REQUEST["name"];
+		$name = clean($_REQUEST["name"]);
 
 		PluginHost::getInstance()->clear_data(PluginHost::getInstance()->get_plugin($name));
 	}

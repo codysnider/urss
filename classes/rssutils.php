@@ -304,7 +304,7 @@ class RSSUtils {
 	 */
 	static function update_rss_feed($feed, $no_cache = false) {
 
-		$debug_enabled = defined('DAEMON_EXTENDED_DEBUG') || $_REQUEST['xdebug'];
+		$debug_enabled = defined('DAEMON_EXTENDED_DEBUG') || clean($_REQUEST['xdebug']);
 
 		_debug_suppress(!$debug_enabled);
 		_debug("start", $debug_enabled);
@@ -591,7 +591,7 @@ class RSSUtils {
 			foreach ($items as $item) {
 				$pdo->beginTransaction();
 
-				if ($_REQUEST['xdebug'] == 3) {
+				if (clean($_REQUEST['xdebug']) == 3) {
 					print_r($item);
 				}
 
@@ -640,7 +640,7 @@ class RSSUtils {
 				$entry_content = $item->get_content();
 				if (!$entry_content) $entry_content = $item->get_description();
 
-				if ($_REQUEST["xdebug"] == 2) {
+				if (clean($_REQUEST["xdebug"]) == 2) {
 					print "content: ";
 					print htmlspecialchars($entry_content);
 					print "\n";
@@ -749,7 +749,7 @@ class RSSUtils {
 					$entry_plugin_data .= mb_strtolower(get_class($plugin)) . ",";
 				}
 
-				if ($_REQUEST["xdebug"] == 2) {
+				if (clean($_REQUEST["xdebug"]) == 2) {
 					print "processed content: ";
 					print htmlspecialchars($article["content"]);
 					print "\n";

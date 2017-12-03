@@ -17,8 +17,8 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	function renamecat() {
-		$title = $_REQUEST['title'];
-		$id = $_REQUEST['id'];
+		$title = clean($_REQUEST['title']);
+		$id = clean($_REQUEST['id']);
 
 		if ($title) {
 			$sth = $this->pdo->prepare("UPDATE ttrss_feed_categories SET
@@ -29,14 +29,14 @@ class Pref_Feeds extends Handler_Protected {
 
 	private function get_category_items($cat_id) {
 
-		if ($_REQUEST['mode'] != 2)
+		if (clean($_REQUEST['mode']) != 2)
 			$search = $_SESSION["prefs_feed_search"];
 		else
 			$search = "";
 
 		// first one is set by API
-		$show_empty_cats = $_REQUEST['force_show_empty'] ||
-			($_REQUEST['mode'] != 2 && !$search);
+		$show_empty_cats = clean($_REQUEST['force_show_empty']) ||
+			(clean($_REQUEST['mode']) != 2 && !$search);
 
 		$items = array();
 
@@ -103,7 +103,7 @@ class Pref_Feeds extends Handler_Protected {
 
 	function makefeedtree() {
 
-		if ($_REQUEST['mode'] != 2)
+		if (clean($_REQUEST['mode']) != 2)
 			$search = $_SESSION["prefs_feed_search"];
 		else
 			$search = "";
@@ -116,7 +116,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		$enable_cats = get_pref('ENABLE_FEED_CATS');
 
-		if ($_REQUEST['mode'] == 2) {
+		if (clean($_REQUEST['mode']) == 2) {
 
 			if ($enable_cats) {
 				$cat = $this->feedlist_init_cat(-1);
@@ -193,8 +193,8 @@ class Pref_Feeds extends Handler_Protected {
 		}
 
 		if ($enable_cats) {
-			$show_empty_cats = $_REQUEST['force_show_empty'] ||
-				($_REQUEST['mode'] != 2 && !$search);
+			$show_empty_cats = clean($_REQUEST['force_show_empty']) ||
+				(clean($_REQUEST['mode']) != 2 && !$search);
 
 			$sth = $this->pdo->prepare("SELECT id, title FROM ttrss_feed_categories
 				WHERE owner_uid = ? AND parent_cat IS NULL ORDER BY order_id, title");
@@ -303,7 +303,7 @@ class Pref_Feeds extends Handler_Protected {
 		$fl['identifier'] = 'id';
 		$fl['label'] = 'name';
 
-		if ($_REQUEST['mode'] != 2) {
+		if (clean($_REQUEST['mode']) != 2) {
 			$fl['items'] = array($root);
 		} else {
 			$fl['items'] = $root['items'];
@@ -389,9 +389,9 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	function savefeedorder() {
-		$data = json_decode($_POST['payload'], true);
+		$data = json_decode(clean($_POST['payload']), true);
 
-		#file_put_contents("/tmp/saveorder.json", $_POST['payload']);
+		#file_put_contents("/tmp/saveorder.json", clean($_POST['payload']));
 		#$data = json_decode(file_get_contents("/tmp/saveorder.json"), true);
 
 		if (!is_array($data['items']))
@@ -425,7 +425,7 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	function removeicon() {
-		$feed_id = $_REQUEST["feed_id"];
+		$feed_id = clean($_REQUEST["feed_id"]);
 
 		$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
 			WHERE id = ? AND owner_uid = ?");
@@ -457,7 +457,7 @@ class Pref_Feeds extends Handler_Protected {
 		}
 
 		$icon_file = $tmp_file;
-		$feed_id = $_REQUEST["feed_id"];
+		$feed_id = clean($_REQUEST["feed_id"]);
 
 		if (is_file($icon_file) && $feed_id) {
 			if (filesize($icon_file) < 65535) {
@@ -500,7 +500,7 @@ class Pref_Feeds extends Handler_Protected {
 		global $update_intervals;
 
 
-		$feed_id = $_REQUEST["id"];
+		$feed_id = clean($_REQUEST["id"]);
 
 		$sth = $this->pdo->prepare("SELECT * FROM ttrss_feeds WHERE id = ? AND
 				owner_uid = ?");
@@ -775,7 +775,7 @@ class Pref_Feeds extends Handler_Protected {
 		global $purge_intervals;
 		global $update_intervals;
 
-		$feed_ids = $_REQUEST["ids"];
+		$feed_ids = clean($_REQUEST["ids"]);
 
 		print_notice("Enable the options you wish to apply using checkboxes on the right:");
 
@@ -924,32 +924,32 @@ class Pref_Feeds extends Handler_Protected {
 
 	function editsaveops($batch) {
 
-		$feed_title = trim($_POST["title"]);
-		$feed_url = trim($_POST["feed_url"]);
-		$upd_intl = (int) $_POST["update_interval"];
-		$purge_intl = (int) $_POST["purge_interval"];
-		$feed_id = (int) $_POST["id"]; /* editSave */
-		$feed_ids = explode(",", $_POST["ids"]); /* batchEditSave */
-		$cat_id = (int) $_POST["cat_id"];
-		$auth_login = trim($_POST["auth_login"]);
-		$auth_pass = trim($_POST["auth_pass"]);
-		$private = checkbox_to_sql_bool($_POST["private"]);
+		$feed_title = trim(clean($_POST["title"]));
+		$feed_url = trim(clean($_POST["feed_url"]));
+		$upd_intl = (int) clean($_POST["update_interval"]);
+		$purge_intl = (int) clean($_POST["purge_interval"]);
+		$feed_id = (int) clean($_POST["id"]); /* editSave */
+		$feed_ids = explode(",", clean($_POST["ids"])); /* batchEditSave */
+		$cat_id = (int) clean($_POST["cat_id"]);
+		$auth_login = trim(clean($_POST["auth_login"]));
+		$auth_pass = trim(clean($_POST["auth_pass"]));
+		$private = checkbox_to_sql_bool(clean($_POST["private"]));
 		$include_in_digest = checkbox_to_sql_bool(
-			$_POST["include_in_digest"]);
+			clean($_POST["include_in_digest"]));
 		$cache_images = checkbox_to_sql_bool(
-			$_POST["cache_images"]);
+			clean($_POST["cache_images"]));
 		$hide_images = checkbox_to_sql_bool(
-			$_POST["hide_images"]);
+			clean($_POST["hide_images"]));
 		$always_display_enclosures = checkbox_to_sql_bool(
-			$_POST["always_display_enclosures"]);
+			clean($_POST["always_display_enclosures"]));
 
 		$mark_unread_on_update = checkbox_to_sql_bool(
-			$_POST["mark_unread_on_update"]);
+			clean($_POST["mark_unread_on_update"]));
 
-		$feed_language = trim($_POST["feed_language"]);
+		$feed_language = trim(clean($_POST["feed_language"]));
 
 		if (!$batch) {
-			if ($_POST["need_auth"] !== 'on') {
+			if (clean($_POST["need_auth"]) !== 'on') {
 				$auth_login = '';
 				$auth_pass = '';
 			}
@@ -1008,7 +1008,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			foreach (array_keys($_POST) as $k) {
 				if ($k != "op" && $k != "method" && $k != "ids") {
-					$feed_data[$k] = $_POST[$k];
+					$feed_data[$k] = clean($_POST[$k]);
 				}
 			}
 
@@ -1102,7 +1102,7 @@ class Pref_Feeds extends Handler_Protected {
 
 	function remove() {
 
-		$ids = explode(",", $_REQUEST["ids"]);
+		$ids = explode(",", clean($_REQUEST["ids"]));
 
 		foreach ($ids as $id) {
 			Pref_Feeds::remove_feed($id, $_SESSION["uid"]);
@@ -1112,14 +1112,14 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	function removeCat() {
-		$ids = explode(",", $_REQUEST["ids"]);
+		$ids = explode(",", clean($_REQUEST["ids"]));
 		foreach ($ids as $id) {
 			$this->remove_feed_category($id, $_SESSION["uid"]);
 		}
 	}
 
 	function addCat() {
-		$feed_cat = trim($_REQUEST["cat"]);
+		$feed_cat = trim(clean($_REQUEST["cat"]));
 
 		add_feed_category($feed_cat);
 	}
@@ -1152,7 +1152,7 @@ class Pref_Feeds extends Handler_Protected {
 				onclick=\"showInactiveFeeds()\">" .
 				__("Inactive feeds") . "</button>";
 
-		$feed_search = $_REQUEST["search"];
+		$feed_search = clean($_REQUEST["search"]);
 
 		if (array_key_exists("search", $_REQUEST)) {
 			$_SESSION["prefs_feed_search"] = $feed_search;
@@ -1675,10 +1675,10 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	function batchAddFeeds() {
-		$cat_id = $_REQUEST['cat'];
-		$feeds = explode("\n", $_REQUEST['feeds']);
-		$login = $_REQUEST['login'];
-		$pass = trim($_REQUEST['pass']);
+		$cat_id = clean($_REQUEST['cat']);
+		$feeds = explode("\n", clean($_REQUEST['feeds']));
+		$login = clean($_REQUEST['login']);
+		$pass = trim(clean($_REQUEST['pass']));
 
 		foreach ($feeds as $feed) {
 			$feed = trim($feed);
@@ -1714,8 +1714,8 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	function regenFeedKey() {
-		$feed_id = $_REQUEST['id'];
-		$is_cat = $_REQUEST['is_cat'] == "true";
+		$feed_id = clean($_REQUEST['id']);
+		$is_cat = clean($_REQUEST['is_cat']) == "true";
 
 		$new_key = $this->update_feed_access_key($feed_id, $is_cat);
 

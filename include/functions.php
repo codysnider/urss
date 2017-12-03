@@ -725,6 +725,17 @@
 		}
 	}
 
+	// this is used for user http parameters unless HTML code is actually needed
+	function clean($param) {
+		if (is_array($param)) {
+			return array_map(strip_tags, $param);
+		} else if (is_string($param)) {
+			return strip_tags($param);
+		} else {
+			return $param;
+		}
+	}
+
 	function make_password($length = 8) {
 
 		$password = "";

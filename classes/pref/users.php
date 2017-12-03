@@ -25,7 +25,7 @@ class Pref_Users extends Handler_Protected {
 
 			print "<form id=\"user_edit_form\" onsubmit='return false' dojoType=\"dijit.form.Form\">";
 
-			$id = (int) $_REQUEST["id"];
+			$id = (int) clean($_REQUEST["id"]);
 
 			print_hidden("id", "$id");
 			print_hidden("op", "pref-users");
@@ -108,7 +108,7 @@ class Pref_Users extends Handler_Protected {
 		}
 
 		function userdetails() {
-			$id = (int) $_REQUEST["id"];
+			$id = (int) clean($_REQUEST["id"]);
 
 			$sth = $this->pdo->prepare("SELECT login,
 				".SUBSTRING_FOR_DATE."(last_login,1,16) AS last_login,
@@ -177,11 +177,11 @@ class Pref_Users extends Handler_Protected {
 		}
 
 		function editSave() {
-			$login = trim($_REQUEST["login"]);
-			$uid = $_REQUEST["id"];
-			$access_level = (int) $_REQUEST["access_level"];
-			$email = trim($_REQUEST["email"]);
-			$password = $_REQUEST["password"];
+			$login = trim(clean($_REQUEST["login"]));
+			$uid = clean($_REQUEST["id"]);
+			$access_level = (int) clean($_REQUEST["access_level"]);
+			$email = trim(clean($_REQUEST["email"]));
+			$password = clean($_REQUEST["password"]);
 
 			if ($password) {
 				$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
@@ -199,7 +199,7 @@ class Pref_Users extends Handler_Protected {
 		}
 
 		function remove() {
-			$ids = explode(",", $_REQUEST["ids"]);
+			$ids = explode(",", clean($_REQUEST["ids"]));
 
 			foreach ($ids as $id) {
 				if ($id != $_SESSION["uid"] && $id != 1) {
@@ -217,7 +217,7 @@ class Pref_Users extends Handler_Protected {
 
 		function add() {
 
-			$login = trim($_REQUEST["login"]);
+			$login = trim(clean($_REQUEST["login"]));
 			$tmp_user_pwd = make_password(8);
 			$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
 			$pwd_hash = encrypt_password($tmp_user_pwd, $salt, true);
@@ -316,7 +316,7 @@ class Pref_Users extends Handler_Protected {
 		}
 
 		function resetPass() {
-			$uid = $_REQUEST["id"];
+			$uid = clean($_REQUEST["id"]);
 			Pref_Users::resetUserPassword($uid, true);
 		}
 
@@ -329,7 +329,7 @@ class Pref_Users extends Handler_Protected {
 
 			print "<div id=\"pref-user-toolbar\" dojoType=\"dijit.Toolbar\">";
 
-			$user_search = trim($_REQUEST["search"]);
+			$user_search = trim(clean($_REQUEST["search"]));
 
 			if (array_key_exists("search", $_REQUEST)) {
 				$_SESSION["prefs_user_search"] = $user_search;
@@ -344,7 +344,7 @@ class Pref_Users extends Handler_Protected {
 					__('Search')."</button>
 				</div>";
 
-			$sort = $_REQUEST["sort"];
+			$sort = clean($_REQUEST["sort"]);
 
 			if (!$sort || $sort == "undefined") {
 				$sort = "login";

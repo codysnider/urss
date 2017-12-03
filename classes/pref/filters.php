@@ -16,9 +16,9 @@ class Pref_Filters extends Handler_Protected {
 	}
 
 	function savefilterorder() {
-		$data = json_decode($_POST['payload'], true);
+		$data = json_decode(clean($_POST['payload']), true);
 
-		#file_put_contents("/tmp/saveorder.json", $_POST['payload']);
+		#file_put_contents("/tmp/saveorder.json", clean($_POST['payload']));
 		#$data = json_decode(file_get_contents("/tmp/saveorder.json"), true);
 
 		if (!is_array($data['items']))
@@ -46,14 +46,14 @@ class Pref_Filters extends Handler_Protected {
 	}
 
 	function testFilterDo() {
-		$offset = (int) $_REQUEST["offset"];
-		$limit = (int) $_REQUEST["limit"];
+		$offset = (int) clean($_REQUEST["offset"]);
+		$limit = (int) clean($_REQUEST["limit"]);
 
 		$filter = array();
 
 		$filter["enabled"] = true;
-		$filter["match_any_rule"] = checkbox_to_sql_bool($_REQUEST["match_any_rule"]);
-		$filter["inverse"] = checkbox_to_sql_bool($_REQUEST["inverse"]);
+		$filter["match_any_rule"] = checkbox_to_sql_bool(clean($_REQUEST["match_any_rule"]));
+		$filter["inverse"] = checkbox_to_sql_bool(clean($_REQUEST["inverse"]));
 
 		$filter["rules"] = array();
 		$filter["actions"] = array("dummy-action");
@@ -68,7 +68,7 @@ class Pref_Filters extends Handler_Protected {
 		$scope_qparts = array();
 
 		$rctr = 0;
-		foreach ($_REQUEST["rule"] AS $r) {
+		foreach (clean($_REQUEST["rule"]) AS $r) {
 			$rule = json_decode($r, true);
 
 			if ($rule && $rctr < 5) {
@@ -354,7 +354,7 @@ class Pref_Filters extends Handler_Protected {
 
 	function edit() {
 
-		$filter_id = $_REQUEST["id"];
+		$filter_id = clean($_REQUEST["id"]);
 
 		$sth = $this->pdo->prepare("SELECT * FROM ttrss_filters2 
 			WHERE id = ? AND owner_uid = ?");
@@ -533,7 +533,7 @@ class Pref_Filters extends Handler_Protected {
 	}
 
 	private function getRuleName($rule) {
-		if (!$rule) $rule = json_decode($_REQUEST["rule"], true);
+		if (!$rule) $rule = json_decode(clean($_REQUEST["rule"]), true);
 
 		$feeds = $rule["feed_id"];
 		$feeds_fmt = [];
@@ -573,7 +573,7 @@ class Pref_Filters extends Handler_Protected {
 	}
 
 	function printRuleName() {
-		print $this->getRuleName(json_decode($_REQUEST["rule"], true));
+		print $this->getRuleName(json_decode(clean($_REQUEST["rule"]), true));
 	}
 
 	private function getActionName($action) {
@@ -611,19 +611,19 @@ class Pref_Filters extends Handler_Protected {
 	}
 
 	function printActionName() {
-		print $this->getActionName(json_decode($_REQUEST["action"], true));
+		print $this->getActionName(json_decode(clean($_REQUEST["action"]), true));
 	}
 
 	function editSave() {
-		if ($_REQUEST["savemode"] && $_REQUEST["savemode"] == "test") {
+		if (clean($_REQUEST["savemode"] && $_REQUEST["savemode"]) == "test") {
 			return $this->testFilter();
 		}
 
-		$filter_id = $_REQUEST["id"];
-		$enabled = checkbox_to_sql_bool($_REQUEST["enabled"]);
-		$match_any_rule = checkbox_to_sql_bool($_REQUEST["match_any_rule"]);
-		$inverse = checkbox_to_sql_bool($_REQUEST["inverse"]);
-		$title = $_REQUEST["title"];
+		$filter_id = clean($_REQUEST["id"]);
+		$enabled = checkbox_to_sql_bool(clean($_REQUEST["enabled"]));
+		$match_any_rule = checkbox_to_sql_bool(clean($_REQUEST["match_any_rule"]));
+		$inverse = checkbox_to_sql_bool(clean($_REQUEST["inverse"]));
+		$title = clean($_REQUEST["title"]);
 
 		$this->pdo->beginTransaction();
 
@@ -642,7 +642,7 @@ class Pref_Filters extends Handler_Protected {
 
 	function remove() {
 
-		$ids = explode(",", $_REQUEST["ids"]);
+		$ids = explode(",", clean($_REQUEST["ids"]));
 		$ids_qmarks = arr_qmarks($ids);
 
 		$sth = $this->pdo->prepare("DELETE FROM ttrss_filters2 WHERE id IN ($ids_qmarks) 
@@ -659,8 +659,8 @@ class Pref_Filters extends Handler_Protected {
 		$sth = $this->pdo->prepare("DELETE FROM ttrss_filters2_actions WHERE filter_id = ?");
 		$sth->execute([$filter_id]);
 
-		if (!is_array($_REQUEST["rule"])) $_REQUEST["rule"] = [];
-		if (!is_array($_REQUEST["action"])) $_REQUEST["action"] = [];
+		if (!is_array(clean($_REQUEST["rule"]))) $_REQUEST["rule"] = [];
+		if (!is_array(clean($_REQUEST["action"]))) $_REQUEST["action"] = [];
 		
 		if ($filter_id) {
 			/* create rules */
@@ -668,7 +668,7 @@ class Pref_Filters extends Handler_Protected {
 			$rules = array();
 			$actions = array();
 
-			foreach ($_REQUEST["rule"] as $rule) {
+			foreach (clean($_REQUEST["rule"]) as $rule) {
 				$rule = json_decode($rule, true);
 				unset($rule["id"]);
 
@@ -677,7 +677,7 @@ class Pref_Filters extends Handler_Protected {
 				}
 			}
 
-			foreach ($_REQUEST["action"] as $action) {
+			foreach (clean($_REQUEST["action"]) as $action) {
 				$action = json_decode($action, true);
 				unset($action["id"]);
 
@@ -729,14 +729,14 @@ class Pref_Filters extends Handler_Protected {
 	}
 
 	function add() {
-		if ($_REQUEST["savemode"] && $_REQUEST["savemode"] == "test") {
+		if (clean($_REQUEST["savemode"] && $_REQUEST["savemode"]) == "test") {
 			return $this->testFilter();
 		}
 
-		$enabled = checkbox_to_sql_bool($_REQUEST["enabled"]);
-		$match_any_rule = checkbox_to_sql_bool($_REQUEST["match_any_rule"]);
-		$title = $_REQUEST["title"];
-		$inverse = checkbox_to_sql_bool($_REQUEST["inverse"]);
+		$enabled = checkbox_to_sql_bool(clean($_REQUEST["enabled"]));
+		$match_any_rule = checkbox_to_sql_bool(clean($_REQUEST["match_any_rule"]));
+		$title = clean($_REQUEST["title"]);
+		$inverse = checkbox_to_sql_bool(clean($_REQUEST["inverse"]));
 
 		$this->pdo->beginTransaction();
 
@@ -762,7 +762,7 @@ class Pref_Filters extends Handler_Protected {
 
 	function index() {
 
-		$filter_search = $_REQUEST["search"];
+		$filter_search = clean($_REQUEST["search"]);
 
 		if (array_key_exists("search", $_REQUEST)) {
 			$_SESSION["prefs_filter_search"] = $filter_search;
@@ -948,7 +948,7 @@ class Pref_Filters extends Handler_Protected {
 	}
 
 	function newrule() {
-		$rule = json_decode($_REQUEST["rule"], true);
+		$rule = json_decode(clean($_REQUEST["rule"]), true);
 
 		if ($rule) {
 			$reg_exp = htmlspecialchars($rule["reg_exp"]);
@@ -1022,7 +1022,7 @@ class Pref_Filters extends Handler_Protected {
 	}
 
 	function newaction() {
-		$action = json_decode($_REQUEST["action"], true);
+		$action = json_decode(clean($_REQUEST["action"]), true);
 
 		if ($action) {
 			$action_param = $action["action_param"];
@@ -1159,7 +1159,7 @@ class Pref_Filters extends Handler_Protected {
 	}
 
 	function join() {
-		$ids = explode(",", $_REQUEST["ids"]);
+		$ids = explode(",", clean($_REQUEST["ids"]));
 
 		if (count($ids) > 1) {
 			$base_id = array_shift($ids);

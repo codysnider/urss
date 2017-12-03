@@ -26,7 +26,7 @@ class API extends Handler {
 				return false;
 			}
 
-			$this->seq = (int) $_REQUEST['seq'];
+			$this->seq = (int) clean($_REQUEST['seq']);
 
 			return true;
 		}
@@ -53,9 +53,9 @@ class API extends Handler {
 		@session_destroy();
 		@session_start();
 
-		$login = $_REQUEST["user"];
-		$password = $_REQUEST["password"];
-		$password_base64 = base64_decode($_REQUEST["password"]);
+		$login = clean($_REQUEST["user"]);
+		$password = clean($_REQUEST["password"]);
+		$password_base64 = base64_decode(clean($_REQUEST["password"]));
 
 		if (SINGLE_USER_MODE) $login = "admin";
 
@@ -100,8 +100,8 @@ class API extends Handler {
 	}
 
 	function getUnread() {
-		$feed_id = $_REQUEST["feed_id"];
-		$is_cat = $_REQUEST["is_cat"];
+		$feed_id = clean($_REQUEST["feed_id"]);
+		$is_cat = clean($_REQUEST["is_cat"]);
 
 		if ($feed_id) {
 			$this->wrap(self::STATUS_OK, array("unread" => getFeedUnread($feed_id, $is_cat)));
@@ -116,11 +116,11 @@ class API extends Handler {
 	}
 
 	function getFeeds() {
-		$cat_id = $_REQUEST["cat_id"];
-		$unread_only = API::param_to_bool($_REQUEST["unread_only"]);
-		$limit = (int) $_REQUEST["limit"];
-		$offset = (int) $_REQUEST["offset"];
-		$include_nested = API::param_to_bool($_REQUEST["include_nested"]);
+		$cat_id = clean($_REQUEST["cat_id"]);
+		$unread_only = API::param_to_bool(clean($_REQUEST["unread_only"]));
+		$limit = (int) clean($_REQUEST["limit"]);
+		$offset = (int) clean($_REQUEST["offset"]);
+		$include_nested = API::param_to_bool(clean($_REQUEST["include_nested"]));
 
 		$feeds = $this->api_get_feeds($cat_id, $unread_only, $limit, $offset, $include_nested);
 
@@ -128,9 +128,9 @@ class API extends Handler {
 	}
 
 	function getCategories() {
-		$unread_only = API::param_to_bool($_REQUEST["unread_only"]);
-		$enable_nested = API::param_to_bool($_REQUEST["enable_nested"]);
-		$include_empty = API::param_to_bool($_REQUEST['include_empty']);
+		$unread_only = API::param_to_bool(clean($_REQUEST["unread_only"]));
+		$enable_nested = API::param_to_bool(clean($_REQUEST["enable_nested"]));
+		$include_empty = API::param_to_bool(clean($_REQUEST['include_empty']));
 
 		// TODO do not return empty categories, return Uncategorized and standard virtual cats
 
@@ -185,39 +185,39 @@ class API extends Handler {
 	}
 
 	function getHeadlines() {
-		$feed_id = $_REQUEST["feed_id"];
+		$feed_id = clean($_REQUEST["feed_id"]);
 		if ($feed_id != "") {
 
 			if (is_numeric($feed_id)) $feed_id = (int) $feed_id;
 
-			$limit = (int)$_REQUEST["limit"];
+			$limit = (int)clean($_REQUEST["limit"]);
 
 			if (!$limit || $limit >= 200) $limit = 200;
 
-			$offset = (int)$_REQUEST["skip"];
-			$filter = $_REQUEST["filter"];
-			$is_cat = API::param_to_bool($_REQUEST["is_cat"]);
-			$show_excerpt = API::param_to_bool($_REQUEST["show_excerpt"]);
-			$show_content = API::param_to_bool($_REQUEST["show_content"]);
+			$offset = (int)clean($_REQUEST["skip"]);
+			$filter = clean($_REQUEST["filter"]);
+			$is_cat = API::param_to_bool(clean($_REQUEST["is_cat"]));
+			$show_excerpt = API::param_to_bool(clean($_REQUEST["show_excerpt"]));
+			$show_content = API::param_to_bool(clean($_REQUEST["show_content"]));
 			/* all_articles, unread, adaptive, marked, updated */
-			$view_mode = $_REQUEST["view_mode"];
-			$include_attachments = API::param_to_bool($_REQUEST["include_attachments"]);
-			$since_id = (int)$_REQUEST["since_id"];
-			$include_nested = API::param_to_bool($_REQUEST["include_nested"]);
+			$view_mode = clean($_REQUEST["view_mode"]);
+			$include_attachments = API::param_to_bool(clean($_REQUEST["include_attachments"]));
+			$since_id = (int)clean($_REQUEST["since_id"]);
+			$include_nested = API::param_to_bool(clean($_REQUEST["include_nested"]));
 			$sanitize_content = !isset($_REQUEST["sanitize"]) ||
 				API::param_to_bool($_REQUEST["sanitize"]);
-			$force_update = API::param_to_bool($_REQUEST["force_update"]);
-			$has_sandbox = API::param_to_bool($_REQUEST["has_sandbox"]);
-			$excerpt_length = (int)$_REQUEST["excerpt_length"];
-			$check_first_id = (int)$_REQUEST["check_first_id"];
-			$include_header = API::param_to_bool($_REQUEST["include_header"]);
+			$force_update = API::param_to_bool(clean($_REQUEST["force_update"]));
+			$has_sandbox = API::param_to_bool(clean($_REQUEST["has_sandbox"]));
+			$excerpt_length = (int)clean($_REQUEST["excerpt_length"]);
+			$check_first_id = (int)clean($_REQUEST["check_first_id"]);
+			$include_header = API::param_to_bool(clean($_REQUEST["include_header"]));
 
 			$_SESSION['hasSandbox'] = $has_sandbox;
 
 			$skip_first_id_check = false;
 
 			$override_order = false;
-			switch ($_REQUEST["order_by"]) {
+			switch (clean($_REQUEST["order_by"])) {
 				case "title":
 					$override_order = "ttrss_entries.title, date_entered, updated";
 					break;
@@ -232,7 +232,7 @@ class API extends Handler {
 
 			/* do not rely on params below */
 
-			$search = $_REQUEST["search"];
+			$search = clean($_REQUEST["search"]);
 
 			list($headlines, $headlines_header) = $this->api_get_headlines($feed_id, $limit, $offset,
 				$filter, $is_cat, $show_excerpt, $show_content, $view_mode, $override_order,
@@ -250,10 +250,10 @@ class API extends Handler {
 	}
 
 	function updateArticle() {
-		$article_ids = explode(",", $_REQUEST["article_ids"]);
-		$mode = (int) $_REQUEST["mode"];
-		$data = $_REQUEST["data"];
-		$field_raw = (int)$_REQUEST["field"];
+		$article_ids = explode(",", clean($_REQUEST["article_ids"]));
+		$mode = (int) clean($_REQUEST["mode"]);
+		$data = clean($_REQUEST["data"]);
+		$field_raw = (int)clean($_REQUEST["field"]);
 
 		$field = "";
 		$set_to = "";
@@ -321,7 +321,7 @@ class API extends Handler {
 
 	function getArticle() {
 
-		$article_ids = explode(",", $_REQUEST["article_id"]);
+		$article_ids = explode(",", clean($_REQUEST["article_id"]));
 		$sanitize_content = !isset($_REQUEST["sanitize"]) ||
 			API::param_to_bool($_REQUEST["sanitize"]);
 
@@ -407,7 +407,7 @@ class API extends Handler {
 	}
 
 	function updateFeed() {
-		$feed_id = (int) $_REQUEST["feed_id"];
+		$feed_id = (int) clean($_REQUEST["feed_id"]);
 
 		if (!ini_get("open_basedir")) {
 			RSSUtils::update_rss_feed($feed_id);
@@ -417,8 +417,8 @@ class API extends Handler {
 	}
 
 	function catchupFeed() {
-		$feed_id = $_REQUEST["feed_id"];
-		$is_cat = $_REQUEST["is_cat"];
+		$feed_id = clean($_REQUEST["feed_id"]);
+		$is_cat = clean($_REQUEST["is_cat"]);
 
 		Feeds::catchup_feed($feed_id, $is_cat);
 
@@ -426,13 +426,13 @@ class API extends Handler {
 	}
 
 	function getPref() {
-		$pref_name = $_REQUEST["pref_name"];
+		$pref_name = clean($_REQUEST["pref_name"]);
 
 		$this->wrap(self::STATUS_OK, array("value" => get_pref($pref_name)));
 	}
 
 	function getLabels() {
-		$article_id = (int)$_REQUEST['article_id'];
+		$article_id = (int)clean($_REQUEST['article_id']);
 
 		$rv = array();
 
@@ -469,9 +469,9 @@ class API extends Handler {
 
 	function setArticleLabel() {
 
-		$article_ids = explode(",", $_REQUEST["article_ids"]);
-		$label_id = (int) $_REQUEST['label_id'];
-		$assign = API::param_to_bool($_REQUEST['assign']);
+		$article_ids = explode(",", clean($_REQUEST["article_ids"]));
+		$label_id = (int) clean($_REQUEST['label_id']);
+		$assign = API::param_to_bool(clean($_REQUEST['assign']));
 
 		$label = Labels::find_caption(Labels::feed_to_label_id($label_id), $_SESSION["uid"]);
 
@@ -510,9 +510,9 @@ class API extends Handler {
 	}
 
 	function shareToPublished() {
-		$title = strip_tags($_REQUEST["title"]);
-		$url = strip_tags($_REQUEST["url"]);
-		$content = strip_tags($_REQUEST["content"]);
+		$title = strip_tags(clean($_REQUEST["title"]));
+		$url = strip_tags(clean($_REQUEST["url"]));
+		$content = strip_tags(clean($_REQUEST["content"]));
 
 		if (Article::create_published_article($title, $url, $content, "", $_SESSION["uid"])) {
 			$this->wrap(self::STATUS_OK, array("status" => 'OK'));
@@ -809,7 +809,7 @@ class API extends Handler {
 	}
 
 	function unsubscribeFeed() {
-		$feed_id = (int) $_REQUEST["feed_id"];
+		$feed_id = (int) clean($_REQUEST["feed_id"]);
 
 		$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE
 			id = ? AND owner_uid = ?");
@@ -824,10 +824,10 @@ class API extends Handler {
 	}
 
 	function subscribeToFeed() {
-		$feed_url = $_REQUEST["feed_url"];
-		$category_id = (int) $_REQUEST["category_id"];
-		$login = $_REQUEST["login"];
-		$password = $_REQUEST["password"];
+		$feed_url = clean($_REQUEST["feed_url"]);
+		$category_id = (int) clean($_REQUEST["category_id"]);
+		$login = clean($_REQUEST["login"]);
+		$password = clean($_REQUEST["password"]);
 
 		if ($feed_url) {
 			$rc = Feeds::subscribe_to_feed($feed_url, $category_id, $login, $password);
@@ -839,7 +839,7 @@ class API extends Handler {
 	}
 
 	function getFeedTree() {
-		$include_empty = API::param_to_bool($_REQUEST['include_empty']);
+		$include_empty = API::param_to_bool(clean($_REQUEST['include_empty']));
 
 		$pf = new Pref_Feeds($_REQUEST);
 

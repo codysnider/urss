@@ -8,7 +8,7 @@ class Pref_Labels extends Handler_Protected {
 	}
 
 	function edit() {
-		$label_id = $_REQUEST['id'];
+		$label_id = clean($_REQUEST['id']);
 
 		$sth = $this->pdo->prepare("SELECT * FROM ttrss_labels2 WHERE
 			id = ? AND owner_uid = ?");
@@ -119,11 +119,11 @@ class Pref_Labels extends Handler_Protected {
 	}
 
 	function colorset() {
-		$kind = $_REQUEST["kind"];
-		$ids = explode(',', $_REQUEST["ids"]);
-		$color = $_REQUEST["color"];
-		$fg = $_REQUEST["fg"];
-		$bg = $_REQUEST["bg"];
+		$kind = clean($_REQUEST["kind"]);
+		$ids = explode(',', clean($_REQUEST["ids"]));
+		$color = clean($_REQUEST["color"]);
+		$fg = clean($_REQUEST["fg"]);
+		$bg = clean($_REQUEST["bg"]);
 
 		foreach ($ids as $id) {
 
@@ -154,7 +154,7 @@ class Pref_Labels extends Handler_Protected {
 	}
 
 	function colorreset() {
-		$ids = explode(',', $_REQUEST["ids"]);
+		$ids = explode(',', clean($_REQUEST["ids"]));
 
 		foreach ($ids as $id) {
 			$sth = $this->pdo->prepare("UPDATE ttrss_labels2 SET
@@ -174,8 +174,8 @@ class Pref_Labels extends Handler_Protected {
 
 	function save() {
 
-		$id = $_REQUEST["id"];
-		$caption = trim($_REQUEST["caption"]);
+		$id = clean($_REQUEST["id"]);
+		$caption = trim(clean($_REQUEST["caption"]));
 
 		$this->pdo->beginTransaction();
 
@@ -206,7 +206,7 @@ class Pref_Labels extends Handler_Protected {
 
 					$sth->execute([$caption, $old_caption, $_SESSION['uid']]);
 
-					print $_REQUEST["value"];
+					print clean($_REQUEST["value"]);
 				} else {
 					print $old_caption;
 				}
@@ -221,7 +221,7 @@ class Pref_Labels extends Handler_Protected {
 
 	function remove() {
 
-		$ids = explode(",", $_REQUEST["ids"]);
+		$ids = explode(",", clean($_REQUEST["ids"]));
 
 		foreach ($ids as $id) {
 			Labels::remove($id, $_SESSION["uid"]);
@@ -230,8 +230,8 @@ class Pref_Labels extends Handler_Protected {
 	}
 
 	function add() {
-		$caption = $_REQUEST["caption"];
-		$output = $_REQUEST["output"];
+		$caption = clean($_REQUEST["caption"]);
+		$output = clean($_REQUEST["output"]);
 
 		if ($caption) {
 

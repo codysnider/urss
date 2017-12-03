@@ -139,7 +139,7 @@ class Handler_Public extends Handler {
 			$tpl->addBlock('feed');
 			$tpl->generateOutputToString($tmp);
 
-			if (@!$_REQUEST["noxml"]) {
+			if (@!clean($_REQUEST["noxml"])) {
 				header("Content-Type: text/xml; charset=utf-8");
 			} else {
 				header("Content-Type: text/plain; charset=utf-8");
@@ -219,8 +219,8 @@ class Handler_Public extends Handler {
 	}
 
 	function getUnread() {
-		$login = $_REQUEST["login"];
-		$fresh = $_REQUEST["fresh"] == "1";
+		$login = clean($_REQUEST["login"]);
+		$fresh = clean($_REQUEST["fresh"]) == "1";
 
 		$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE login = ?");
 		$sth->execute([$login]);
@@ -241,7 +241,7 @@ class Handler_Public extends Handler {
 	}
 
 	function getProfiles() {
-		$login = $_REQUEST["login"];
+		$login = clean($_REQUEST["login"]);
 
 		$sth = $this->pdo->prepare("SELECT ttrss_settings_profiles.* FROM ttrss_settings_profiles,ttrss_users
 			WHERE ttrss_users.id = ttrss_settings_profiles.owner_uid AND login = ? ORDER BY title");
@@ -267,7 +267,7 @@ class Handler_Public extends Handler {
 	}
 
 	function share() {
-		$uuid = $_REQUEST["key"];
+		$uuid = clean($_REQUEST["key"]);
 
 		$sth = $this->pdo->prepare("SELECT ref_id, owner_uid FROM ttrss_user_entries WHERE
 			uuid = ?");
@@ -290,19 +290,19 @@ class Handler_Public extends Handler {
 	}
 
 	function rss() {
-		$feed = $_REQUEST["id"];
-		$key = $_REQUEST["key"];
-		$is_cat = $_REQUEST["is_cat"];
-		$limit = (int)$_REQUEST["limit"];
-		$offset = (int)$_REQUEST["offset"];
+		$feed = clean($_REQUEST["id"]);
+		$key = clean($_REQUEST["key"]);
+		$is_cat = clean($_REQUEST["is_cat"]);
+		$limit = (int)clean($_REQUEST["limit"]);
+		$offset = (int)clean($_REQUEST["offset"]);
 
-		$search = $_REQUEST["q"];
-		$view_mode = $_REQUEST["view-mode"];
-		$order = $_REQUEST["order"];
-		$start_ts = $_REQUEST["ts"];
+		$search = clean($_REQUEST["q"]);
+		$view_mode = clean($_REQUEST["view-mode"]);
+		$order = clean($_REQUEST["order"]);
+		$start_ts = clean($_REQUEST["ts"]);
 
-		$format = $_REQUEST['format'];
-		$orig_guid = $_REQUEST["orig_guid"];
+		$format = clean($_REQUEST['format']);
+		$orig_guid = clean($_REQUEST["orig_guid"]);
 
 		if (!$format) $format = 'atom';
 
@@ -359,16 +359,16 @@ class Handler_Public extends Handler {
 		print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
 			</head><body id='sharepopup' class='ttrss_utility'>";
 
-		$action = $_REQUEST["action"];
+		$action = clean($_REQUEST["action"]);
 
 		if ($_SESSION["uid"]) {
 
 			if ($action == 'share') {
 
-				$title = strip_tags($_REQUEST["title"]);
-				$url = strip_tags($_REQUEST["url"]);
-				$content = strip_tags($_REQUEST["content"]);
-				$labels = strip_tags($_REQUEST["labels"]);
+				$title = strip_tags(clean($_REQUEST["title"]));
+				$url = strip_tags(clean($_REQUEST["url"]));
+				$content = strip_tags(clean($_REQUEST["content"]));
+				$labels = strip_tags(clean($_REQUEST["labels"]));
 
 				Article::create_published_article($title, $url, $content, $labels,
 					$_SESSION["uid"]);
@@ -378,8 +378,8 @@ class Handler_Public extends Handler {
 				print "</script>";
 
 			} else {
-				$title = htmlspecialchars($_REQUEST["title"]);
-				$url = htmlspecialchars($_REQUEST["url"]);
+				$title = htmlspecialchars(clean($_REQUEST["title"]));
+				$url = htmlspecialchars(clean($_REQUEST["url"]));
 
 				?>
 
@@ -466,9 +466,9 @@ class Handler_Public extends Handler {
 	function login() {
 		if (!SINGLE_USER_MODE) {
 
-			$login = $_POST["login"];
-			$password = $_POST["password"];
-			$remember_me = $_POST["remember_me"];
+			$login = clean($_POST["login"]);
+			$password = clean($_POST["password"]);
+			$remember_me = clean($_POST["remember_me"]);
 
 			if ($remember_me) {
 				session_set_cookie_params(SESSION_COOKIE_LIFETIME);
@@ -486,11 +486,11 @@ class Handler_Public extends Handler {
 				}
 
 				$_SESSION["ref_schema_version"] = get_schema_version(true);
-				$_SESSION["bw_limit"] = !!$_POST["bw_limit"];
+				$_SESSION["bw_limit"] = !!clean($_POST["bw_limit"]);
 
-				if ($_POST["profile"]) {
+				if (clean($_POST["profile"])) {
 
-					$profile = $_POST["profile"];
+					$profile = clean($_POST["profile"]);
 
 					$sth = $this->pdo->prepare("SELECT id FROM ttrss_settings_profiles
 						WHERE id = ? AND owner_uid = ?");
@@ -505,8 +505,8 @@ class Handler_Public extends Handler {
 				user_error("Failed login attempt for $login from {$_SERVER['REMOTE_ADDR']}", E_USER_WARNING);
 			}
 
-			if ($_REQUEST['return']) {
-				header("Location: " . $_REQUEST['return']);
+			if (clean($_REQUEST['return'])) {
+				header("Location: " . clean($_REQUEST['return']));
 			} else {
 				header("Location: " . get_self_url_prefix());
 			}
@@ -516,7 +516,7 @@ class Handler_Public extends Handler {
 	/* function subtest() {
 		header("Content-type: text/plain; charset=utf-8");
 
-		$url = $_REQUEST["url"];
+		$url = clean($_REQUEST["url"]);
 
 		print "$url\n\n";
 
@@ -532,7 +532,7 @@ class Handler_Public extends Handler {
 
 		if ($_SESSION["uid"]) {
 
-			$feed_url = trim($_REQUEST["feed_url"]);
+			$feed_url = trim(clean($_REQUEST["feed_url"]));
 
 			header('Content-Type: text/html; charset=utf-8');
 			print "<html>
@@ -638,7 +638,7 @@ class Handler_Public extends Handler {
 	function forgotpass() {
 		startup_gettext();
 
-		@$hash = $_REQUEST["hash"];
+		@$hash = clean($_REQUEST["hash"]);
 
 		header('Content-Type: text/html; charset=utf-8');
 		print "<html><head><title>Tiny Tiny RSS</title>
@@ -656,10 +656,10 @@ class Handler_Public extends Handler {
 		print "<h1>".__("Password recovery")."</h1>";
 		print "<div class='content'>";
 
-		@$method = $_POST['method'];
+		@$method = clean($_POST['method']);
 
 		if ($hash) {
-			$login = $_REQUEST["login"];
+			$login = clean($_REQUEST["login"]);
 
 			if ($login) {
 				$sth = $this->pdo->prepare("SELECT id, resetpass_token FROM ttrss_users
@@ -725,9 +725,9 @@ class Handler_Public extends Handler {
 			print "</form>";
 		} else if ($method == 'do') {
 
-			$login = $_POST["login"];
-			$email = $_POST["email"];
-			$test = $_POST["test"];
+			$login = clean($_POST["login"]);
+			$email = clean($_POST["email"]);
+			$test = clean($_POST["test"]);
 
 			if (($test != 4 && $test != 'four') || !$email || !$login) {
 				print_error(__('Some of the required form parameters are missing or incorrect.'));
@@ -852,7 +852,7 @@ class Handler_Public extends Handler {
 			<div class="content">
 
 			<?php
-				@$op = $_REQUEST["subop"];
+				@$op = clean($_REQUEST["subop"]);
 				$updater = new DbUpdater(Db::pdo(), DB_TYPE, SCHEMA_VERSION);
 
 				if ($op == "performupdate") {
@@ -968,8 +968,8 @@ class Handler_Public extends Handler {
 	public function pluginhandler() {
 		$host = new PluginHost();
 
-		$plugin = basename($_REQUEST["plugin"]);
-		$method = $_REQUEST["pmethod"];
+		$plugin = basename(clean($_REQUEST["plugin"]));
+		$method = clean($_REQUEST["pmethod"]);
 
 		$host->load($plugin, PluginHost::KIND_USER, 0);
 		$host->load_data();

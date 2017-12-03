@@ -84,7 +84,7 @@ class Backend extends Handler {
 	}
 
 	function help() {
-		$topic = basename($_REQUEST["topic"]);
+		$topic = basename(clean($_REQUEST["topic"]));
 
 		switch ($topic) {
 		case "main":

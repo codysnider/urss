@@ -8,7 +8,7 @@ class Article extends Handler_Protected {
 	}
 
 	function redirect() {
-		$id = $_REQUEST['id'];
+		$id = clean($_REQUEST['id']);
 
 		$sth = $this->pdo->prepare("SELECT link FROM ttrss_entries, ttrss_user_entries
 						WHERE id = ? AND id = ref_id AND owner_uid = ?
@@ -28,9 +28,9 @@ class Article extends Handler_Protected {
 	}
 
 	function view() {
-		$id = $_REQUEST["id"];
-		$cids = explode(",", $_REQUEST["cids"]);
-		$mode = $_REQUEST["mode"];
+		$id = clean($_REQUEST["id"]);
+		$cids = explode(",", clean($_REQUEST["cids"]));
+		$mode = clean($_REQUEST["mode"]);
 
 		// in prefetch mode we only output requested cids, main article
 		// just gets marked as read (it already exists in client cache)
@@ -210,7 +210,7 @@ class Article extends Handler_Protected {
 
 		print __("Tags for this article (separated by commas):")."<br>";
 
-		$param = $_REQUEST['param'];
+		$param = clean($_REQUEST['param']);
 
 		$tags = Article::get_article_tags($param);
 
@@ -241,8 +241,8 @@ class Article extends Handler_Protected {
 	}
 
 	function setScore() {
-		$ids = explode(",", $_REQUEST['id']);
-		$score = (int)$_REQUEST['score'];
+		$ids = explode(",", clean($_REQUEST['id']));
+		$score = (int)clean($_REQUEST['score']);
 
 		$ids_qmarks = arr_qmarks($ids);
 
@@ -257,7 +257,7 @@ class Article extends Handler_Protected {
 	}
 
 	function getScore() {
-		$id = $_REQUEST['id'];
+		$id = clean($_REQUEST['id']);
 
 		$sth = $this->pdo->prepare("SELECT score FROM ttrss_user_entries WHERE ref_id = ? AND owner_uid = ?");
 		$sth->execute([$id, $_SESSION['uid']]);
@@ -273,9 +273,9 @@ class Article extends Handler_Protected {
 
 	function setArticleTags() {
 
-		$id = $_REQUEST["id"];
+		$id = clean($_REQUEST["id"]);
 
-		$tags_str = $_REQUEST["tags_str"];
+		$tags_str = clean($_REQUEST["tags_str"]);
 		$tags = array_unique(trim_array(explode(",", $tags_str)));
 
 		$this->pdo->beginTransaction();
@@ -342,7 +342,7 @@ class Article extends Handler_Protected {
 
 
 	function completeTags() {
-		$search = $_REQUEST["search"];
+		$search = clean($_REQUEST["search"]);
 
 		$sth = $this->pdo->prepare("SELECT DISTINCT tag_name FROM ttrss_tags
 				WHERE owner_uid = ? AND
@@ -369,8 +369,8 @@ class Article extends Handler_Protected {
 	private function labelops($assign) {
 		$reply = array();
 
-		$ids = explode(",", $_REQUEST["ids"]);
-		$label_id = $_REQUEST["lid"];
+		$ids = explode(",", clean($_REQUEST["ids"]));
+		$label_id = clean($_REQUEST["lid"]);
 
 		$label = db_escape_string(Labels::find_caption($label_id,
 		$_SESSION["uid"]));
