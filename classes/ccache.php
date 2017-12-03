@@ -14,6 +14,8 @@ class CCache {
 
 	static function remove($feed_id, $owner_uid, $is_cat = false) {
 
+		$feed_id = (int) $feed_id;
+
 		if (!$is_cat) {
 			$table = "ttrss_counters_cache";
 		} else {
@@ -62,7 +64,12 @@ class CCache {
 	static function find($feed_id, $owner_uid, $is_cat = false,
 						 $no_update = false) {
 
-		if (!is_numeric($feed_id)) return;
+		// "" (null) is valid and should be cast to 0 (uncategorized)
+		// everything else i.e. tags are not
+		if (!is_numeric($feed_id) && $feed_id)
+			return;
+
+		$feed_id = (int) $feed_id;
 
 		if (!$is_cat) {
 			$table = "ttrss_counters_cache";
@@ -93,7 +100,12 @@ class CCache {
 	static function update($feed_id, $owner_uid, $is_cat = false,
 						   $update_pcat = true, $pcat_fast = false) {
 
-		if (!is_numeric($feed_id)) return;
+		// "" (null) is valid and should be cast to 0 (uncategorized)
+		// everything else i.e. tags are not
+		if (!is_numeric($feed_id) && $feed_id)
+			return;
+
+		$feed_id = (int) $feed_id;
 
 		$prev_unread = CCache::find($feed_id, $owner_uid, $is_cat, true);
 
@@ -123,7 +135,7 @@ class CCache {
 				$sth->execute([":uid" => $owner_uid, ":cat" => $feed_id]);
 
 				while ($line = $sth->fetch()) {
-					CCache::update($line["id"], $owner_uid, false, false);
+					CCache::update((int)$line["id"], $owner_uid, false, false);
 				}
 			}
 
@@ -185,7 +197,7 @@ class CCache {
 					$sth->execute([$owner_uid, $feed_id]);
 
 					if ($row = $sth->fetch()) {
-						CCache::update($row["cat_id"], $owner_uid, true, true, true);
+						CCache::update((int)$row["cat_id"], $owner_uid, true, true, true);
 					}
 				}
 			}
