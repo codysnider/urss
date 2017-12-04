@@ -423,11 +423,9 @@ function toggleMark(id, client_only) {
 
 		if (!row.hasClassName("marked")) {
 			img.src = img.src.replace("mark_unset", "mark_set");
-			img.alt = __("Unstar article");
 			query = query + "&mark=1";
 		} else {
 			img.src = img.src.replace("mark_set", "mark_unset");
-			img.alt = __("Star article");
 			query = query + "&mark=0";
 		}
 	}
@@ -477,11 +475,9 @@ function togglePub(id, client_only, no_effects, note) {
 
 		if (!row.hasClassName("published") || note != undefined) {
 			img.src = img.src.replace("pub_unset", "pub_set");
-			img.alt = __("Unpublish article");
 			query = query + "&pub=1";
 		} else {
 			img.src = img.src.replace("pub_set", "pub_unset");
-			img.alt = __("Publish article");
 			query = query + "&pub=0";
 		}
 	}
