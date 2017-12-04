@@ -116,7 +116,7 @@ class RPC extends Handler_Protected {
 	function setpref() {
 		// set_pref escapes input, so no need to double escape it here
 		$key = clean($_REQUEST['key']);
-		$value = nl2br($_REQUEST['value']);
+		$value = $_REQUEST['value'];
 
 		set_pref($key, $value, false, $key != 'USER_STYLESHEET');
 
