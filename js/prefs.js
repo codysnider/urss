@@ -9,7 +9,7 @@ function notify_callback2(transport, sticky) {
 	notify_info(transport.responseText, sticky);
 }
 
-function updateFeedList(sort_key) {
+function updateFeedList() {
 
 	var user_search = $("feed_search");
 	var search = "";
@@ -83,7 +83,7 @@ function addUser() {
 
 }
 
-function editUser(id, event) {
+function editUser(id) {
 
 	var query = "backend.php?op=pref-users&method=edit&id=" +
 		param_escape(id);
@@ -749,7 +749,7 @@ function updateSystemList() {
 		} });
 }
 
-function selectTab(id, noupdate, method) {
+function selectTab(id, noupdate) {
 	if (!noupdate) {
 		notify_progress("Loading, please wait...");
 
@@ -1319,7 +1319,7 @@ function resetCatOrder() {
 	});
 }
 
-function editCat(id, item, event) {
+function editCat(id, item) {
 	var new_name = prompt(__('Rename category to:'), item.name);
 
 	if (new_name && new_name != item.name) {
@@ -1340,7 +1340,7 @@ function editCat(id, item, event) {
 	}
 }
 
-function editLabel(id, event) {
+function editLabel(id) {
 	var query = "backend.php?op=pref-labels&method=edit&id=" +
 		param_escape(id);
 

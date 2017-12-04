@@ -96,17 +96,7 @@ function exception_error(e, e_compat, filename, lineno, colno) {
 }
 
 function param_escape(arg) {
-	if (typeof encodeURIComponent != 'undefined')
-		return encodeURIComponent(arg);
-	else
-		return escape(arg);
-}
-
-function param_unescape(arg) {
-	if (typeof decodeURIComponent != 'undefined')
-		return decodeURIComponent(arg);
-	else
-		return unescape(arg);
+	return encodeURIComponent(arg);
 }
 
 function notify_real(msg, no_hide, n_type) {
@@ -255,47 +245,8 @@ function gotoMain() {
 	document.location.href = "index.php";
 }
 
-/** * @(#)isNumeric.js * * Copyright (c) 2000 by Sundar Dorai-Raj
-  * * @author Sundar Dorai-Raj
-  * * Email: sdoraira@vt.edu
-  * * This program is free software; you can redistribute it and/or
-  * * modify it under the terms of the GNU General Public License
-  * * as published by the Free Software Foundation; either version 2
-  * * of the License, or (at your option) any later version,
-  * * provided that any use properly credits the author.
-  * * This program is distributed in the hope that it will be useful,
-  * * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  * * GNU General Public License for more details at http://www.gnu.org * * */
-
-  var numbers=".0123456789";
-  function isNumeric(x) {
-    // is x a String or a character?
-    if(x.length>1) {
-      // remove negative sign
-      x=Math.abs(x)+"";
-      for(var j=0;j<x.length;j++) {
-        // call isNumeric recursively for each character
-        number=isNumeric(x.substring(j,j+1));
-        if(!number) return number;
-      }
-      return number;
-    }
-    else {
-      // if x is number return true
-      if(numbers.indexOf(x)>=0) return true;
-      return false;
-    }
-  }
-
-
 function toggleSelectRowById(sender, id) {
 	var row = $(id);
-	return toggleSelectRow(sender, row);
-}
-
-function toggleSelectListRow(sender) {
-	var row = sender.parentNode;
 	return toggleSelectRow(sender, row);
 }
 
@@ -345,20 +296,11 @@ function checkboxToggleElement(elem, id) {
 	}
 }
 
-function dropboxSelect(e, v) {
-	for (var i = 0; i < e.length; i++) {
-		if (e[i].value == v) {
-			e.selectedIndex = i;
-			break;
-		}
-	}
-}
-
 function getURLParam(param){
 	return String(window.location.href).parseQuery()[param];
 }
 
-function closeInfoBox(cleanup) {
+function closeInfoBox() {
 	dialog = dijit.byId("infoBox");
 
 	if (dialog)	dialog.hide();
@@ -528,13 +470,6 @@ function remove_splash() {
 
 function strip_tags(s) {
 	return s.replace(/<\/?[^>]+(>|$)/g, "");
-}
-
-function truncate_string(s, length) {
-	if (!length) length = 30;
-	var tmp = s.substring(0, length);
-	if (s.length > length) tmp += "&hellip;";
-	return tmp;
 }
 
 function hotkey_prefix_timeout() {
@@ -738,7 +673,6 @@ function quickAddFeed() {
 							case 6:
 								dialog.show_error(__("XML validation failed: %s").
 										replace("%s", rc['message']));
-								break;
 								break;
 							case 0:
 								dialog.show_error(__("You are already subscribed to this feed."));
@@ -1308,7 +1242,7 @@ function getSelectedTableRowIds(id) {
 	return rows;
 }
 
-function editFeed(feed, event) {
+function editFeed(feed) {
 	if (feed <= 0)
 		return alert(__("You can't edit this kind of feed."));
 
