@@ -956,7 +956,7 @@
 	}
 
 	function bool_to_sql_bool($s) {
-		return (bool)$s; //no-op for PDO
+		return $s ? 1 : 0;
 	}
 
 	// Session caching removed due to causing wrong redirects to upgrade
