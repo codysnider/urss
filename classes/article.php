@@ -905,7 +905,7 @@ class Article extends Handler_Protected {
 
 		$pdo = Db::pdo();
 		$res = $pdo->query("DELETE FROM ttrss_entries WHERE
-			NOT EXISTS (SELECT ref_id FROM ttrss_user_entries WHERE ref_id = id)");
+			NOT EXISTS (SELECT ref_id FROM ttrss_user_entries WHERE ref_id = id) LIMIT 5000");
 
 		if ($do_output) {
 			$rows = $res->rowCount();
