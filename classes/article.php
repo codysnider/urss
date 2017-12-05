@@ -903,9 +903,14 @@ class Article extends Handler_Protected {
 
 		// purge orphaned posts in main content table
 
+		if (DB_TYPE == "mysql")
+			$limit_qpart = "LIMIT 5000";
+		else
+			$limit_qpart = "";
+
 		$pdo = Db::pdo();
 		$res = $pdo->query("DELETE FROM ttrss_entries WHERE
-			NOT EXISTS (SELECT ref_id FROM ttrss_user_entries WHERE ref_id = id) LIMIT 5000");
+			NOT EXISTS (SELECT ref_id FROM ttrss_user_entries WHERE ref_id = id) $limit_qpart");
 
 		if ($do_output) {
 			$rows = $res->rowCount();
