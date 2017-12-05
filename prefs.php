@@ -92,7 +92,7 @@
 			}
 		}
 
-		print get_minified_js(array("functions", "deprecated", "prefs"));
+		print get_minified_js(["functions.js", "prefs.js"]);
 
 		init_js_translations();
 	?>

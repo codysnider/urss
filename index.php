@@ -114,8 +114,8 @@
 	<?php
 		require_once 'lib/jshrink/Minifier.php';
 
-		print get_minified_js(array("tt-rss",
-			"functions", "feedlist", "viewfeed", "PluginHost"));
+		print get_minified_js(["tt-rss.js",
+			"functions.js", "feedlist.js", "viewfeed.js", "PluginHost.js"]);
 
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
 			if (method_exists($p, "get_js")) {

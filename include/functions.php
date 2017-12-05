@@ -2349,9 +2349,9 @@
 
 		foreach ($files as $js) {
 			if (!isset($_GET['debug'])) {
-				$cached_file = CACHE_DIR . "/js/".basename($js).".js";
+				$cached_file = CACHE_DIR . "/js/".basename($js);
 
-				if (file_exists($cached_file) && is_readable($cached_file) && filemtime($cached_file) >= filemtime("js/$js.js")) {
+				if (file_exists($cached_file) && is_readable($cached_file) && filemtime($cached_file) >= filemtime("js/$js")) {
 
 					list($header, $contents) = explode("\n", file_get_contents($cached_file), 2);
 
@@ -2365,12 +2365,12 @@
 					}
 				}
 
-				$minified = JShrink\Minifier::minify(file_get_contents("js/$js.js"));
+				$minified = JShrink\Minifier::minify(file_get_contents("js/$js"));
 				file_put_contents($cached_file, "tt-rss:" . VERSION . "\n" . $minified);
 				$rv .= $minified;
 
 			} else {
-				$rv .= file_get_contents("js/$js.js"); // no cache in debug mode
+				$rv .= file_get_contents("js/$js"); // no cache in debug mode
 			}
 		}
 
