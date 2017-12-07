@@ -53,7 +53,10 @@ class Auth_Internal extends Plugin implements IAuthModule {
 						} else {
 							$return = urlencode($_REQUEST["return"]);
 							?><html>
-								<head><title>Tiny Tiny RSS</title></head>
+								<head>
+									<title>Tiny Tiny RSS</title>
+									<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+								</head>
 								<?php echo stylesheet_tag("css/default.css") ?>
 							<body class="ttrss_utility otp"><div class="content">
 							<form action="public.php?return=<?php echo $return ?>"
