@@ -30,7 +30,7 @@ body.ttrss_main {
 			}
 
 			span.author {
-				color : #555;
+				color : @default-text;
 				font-size : 11px;
 				font-weight : normal;
 			}
@@ -81,7 +81,7 @@ body.ttrss_main {
 		}
 
 		div.postEnclosures {
-			color : #555;
+			color : @default-text;
 		}
 
 		img.tagsPic {
@@ -263,7 +263,7 @@ body.ttrss_main {
 			font-size : 11px;
 			font-style : italic;
 			font-weight : normal;
-			color : #555;
+			color : @default-text;
 			white-space : nowrap;
 		}
 
@@ -272,7 +272,7 @@ body.ttrss_main {
 		}
 
 		span.hlUpdated {
-			color : #555;
+			color : @default-text;
 			display : table-cell;
 			vertical-align : middle;
 			text-align : right;
@@ -359,7 +359,7 @@ body.ttrss_main {
 	#headlines-frame blockquote,
 	.dijitContentPane blockquote {
 		margin : 5px 0px 5px 0px;
-		color : #555;
+		color : @default-text;
 		padding-left : 10px;
 		border: 0px solid #ccc;
 		border-left-width: 4px;
@@ -378,7 +378,7 @@ body.ttrss_main {
 	.dijitContentPane pre {
 		margin: 5px 0px 5px 0px;
 		padding: 10px;
-		color: #555;
+		color: @default-text;
 		font-family: monospace;
 		font-size: 12px;
 		border: 0px solid #ccc;
@@ -453,12 +453,12 @@ body.ttrss_main {
 	}
 
 	div.prefHelp {
-		color : #555;
+		color : @default-text;
 		padding : 5px;
 	}
 
 	.insensitive {
-		color : #555;
+		color : @default-text;
 	}
 
 	.small {
@@ -588,7 +588,7 @@ body.ttrss_main {
 		padding : 5px;
 
 		em {
-			color : #555;
+			color : @default-text;
 		}
 	}
 
@@ -712,7 +712,7 @@ body.ttrss_main {
 
 	div.dlgSec {
 		font-size : 12px;
-		color : #555;
+		color : @default-text;
 		font-weight : bold;
 		clear : both;
 		height : 20px;
@@ -763,7 +763,7 @@ body.ttrss_main {
 		left : 5px;
 		bottom : 5px;
 		font-size : 11px;
-		color : #555;
+		color : @default-text;
 		font-weight : bold;
 		background-color : white;
 		border : 1px solid @color-accent;
@@ -860,9 +860,9 @@ body.ttrss_main {
 				display : inline-block;
 				font-size : 9px;
 				text-align : center;
-				border : 1px solid @color-accent;
+				border : 1px solid lighten(@color-accent, 5%);;
 				color : white;
-				background : @color-accent;
+				background : lighten(@color-accent, 5%);
 				border-radius : 4px;
 				vertical-align : middle;
 				float : right;
@@ -923,7 +923,7 @@ body.ttrss_main {
 	#header {
 		border-width : 0px;
 		text-align : right;
-		color : #555;
+		color : @default-text;
 		padding : 5px 5px 0px 0px;
 		margin : 0px;
 		position : absolute;
@@ -934,7 +934,7 @@ body.ttrss_main {
 
 	#footer {
 		text-align : center;
-		color : #555;
+		color : @default-text;
 		padding : 4px 4px 8px 4px;
 		border-width : 0px;
 	}
@@ -959,10 +959,10 @@ body.ttrss_main {
 
 	.player {
 		display : inline-block;
-		color : #555;
+		color : @default-text;
 		font-size : 11px;
 		font-family : sans-serif;
-		border : 1px solid #555;
+		border : 1px solid @default-text;
 		padding : 0px 4px 0px 4px;
 		margin : 0px 2px 0px 2px;
 		width : 50px;
@@ -984,12 +984,12 @@ body.ttrss_main {
 		height : 100%;
 		margin-left : 1px;
 		text-align : center;
-		color : #555;
+		color : @default-text;
 		font-size : 11px;
 		font-style : italic;
 
 		a, span {
-			color : #555;
+			color : @default-text;
 			padding : 10px;
 			display : block;
 		}
@@ -1114,4 +1114,76 @@ body.ttrss_main {
 	}
 }
 
+body.ttrss_login {
+	padding : 2em;
+	font-size : 14px;
+
+	fieldset {
+		margin-left : auto;
+		margin-right : auto;
+		display : block;
+		width : 400px;
+		border-width : 0px;
+	}
+
+	label {
+		width : 120px;
+		margin-right : 20px;
+		display : inline-block;
+		text-align : right;
+		color : gray;
+	}
+
+	div.header {
+		border: 0px solid @color-accent;
+		border-bottom-width: 1px;
+		margin-bottom : 1em;
+		padding-bottom : 5px;
+	}
+
+	div.footer {
+		margin-top : 1em;
+		padding-top : 5px;
+		border: 0px solid @color-accent;
+		border-top-width: 1px;
+		text-align : center;
+		color : gray;
+		font-size : 12px;
+	}
+
+	a.forgotpass {
+		text-align : right;
+		font-size : 11px;
+		display : inline-block;
+	}
+
+	a {
+		color: @color-accent;
+		text-decoration: none;
+	}
+
+	a:hover,
+	a:focus {
+		color: @color-accent;
+		text-decoration: underline;
+	}
+
+	div.footer a {
+		color : gray;
+	}
+
+	div.footer a:hover {
+		color : @color-accent;
+	}
+
+	div.row {
+		padding : 0px 0px 5px 0px;
+	}
+
+	div.row-error {
+		color : red;
+		text-align : center;
+		padding : 0px 0px 5px 0px;
+	}
+}
 

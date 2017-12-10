@@ -1,9 +1,10 @@
 @fonts-ui-bold: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 @fonts-ui:  "Segoe UI Web", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-@color-accent: rgb(82, 168, 236);
-@color-accent-light: #ecf4ff;
-@color-link: #0088cc;
+@color-accent: #257aa7;
+@color-accent-light: lighten(@color-accent, 50%);
+@color-link: @color-accent;
+@default-text: #555;
 
 body.ttrss_main,
 body.ttrss_prefs,

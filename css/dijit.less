@@ -12,7 +12,7 @@
 	}
 
 	.dijitTree .feedParam {
-		color: #555;
+		color: @default-text;
 		float: right;
 		margin-right: 1em;
 	}
@@ -45,7 +45,7 @@
 
 	.dijitTree .dijitTreeLabel.filterDisabled,
 	.dijitTree .labelParam.filterDisabled {
-		color: #555;
+		color: @default-text;
 		text-decoration: line-through;
 	}
 
@@ -413,14 +413,14 @@
 	}
 
 	.dijitMenu {
-		border-color: rgba(82, 168, 236, 0.8);
+		border-color: @color-accent;
 	}
 
 	.dijitMenu .dijitMenuItemSelected,
 	.dijitMenu .dijitMenuItemSelected td {
-		background: rgb(82, 168, 236);
+		background: @color-accent;
 		color: white;
-		border-color: rgba(82, 168, 236, 0.8);
+		border-color: @color-accent;
 	}
 
 	.dijitButton .dijitButtonNode,
@@ -453,7 +453,7 @@
 
 	.dijitAccordionInnerContainer.dijitAccordionInnerContainerSelected,
 	.dijitAccordionTitle.dijitAccordionTitleSelected {
-		background: #0088cc;
+		background: @color-accent;
 		transition: background 0.25s;
 	}
 
@@ -462,7 +462,7 @@
 	}
 
 	.dijitAccordionInnerContainer.dijitAccordionInnerContainerSelected {
-		border-color: #0088cc;
+		border-color: @color-accent;
 	}
 
 	.dijitAccordionContainer .dijitAccordionChildWrapper {
@@ -520,7 +520,7 @@
 		padding: 4px 6px;
 		font-size: 14px;
 		line-height: 20px;
-		color: #555555;
+		color: @default-text;
 		vertical-align: middle;
 		border-width: 0px;
 	}
@@ -534,7 +534,7 @@
 		padding: 4px 6px;
 		font-size: 14px;
 		line-height: 20px;
-		color: #555555;
+		color: @default-text;
 		vertical-align: middle;
 		-webkit-border-radius: 4px;
 		-moz-border-radius: 4px;
@@ -575,9 +575,9 @@
 		outline: thin dotted \9;
 		/* IE6-9 */
 
-		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-		-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(red(@color-accent), green(@color-accent), blue(@color-accent), 0.6);
+		-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(red(@color-accent), green(@color-accent), blue(@color-accent), 0.6);
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(red(@color-accent), green(@color-accent), blue(@color-accent), 0.6);
 	}
 
 	.dijitError .dijitValidationContainer {
@@ -636,7 +636,7 @@
 		background: white;
 		padding: 8px;
 		font-weight: 600;
-		color: #555;
+		color: @default-text;
 		font-size: 16px;
 		text-rendering: optimizelegibility;
 		font-family: @fonts-ui-bold;
@@ -649,11 +649,11 @@
 
 	.dijitProgressBar.dijitProgressBarEmpty {
 		background: #ddd;
-		border-color: #0088cc;
+		border-color: @color-accent;
 	}
 
 	.dijitProgressBar.dijitProgressBarEmpty .dijitProgressBarFull .dijitProgressBarTile {
-		background: rgb(82, 168, 236);
+		background: @color-accent;
 
 	}
 
