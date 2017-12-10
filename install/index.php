@@ -50,12 +50,8 @@
 			array_push($errors, "PHP support for JSON is required, but was not found.");
 		}
 
-		if ($db_type == "mysql" && !function_exists("mysqli_connect")) {
-			array_push($errors, "PHP support for MySQL is required for configured $db_type in config.php.");
-		}
-
-		if ($db_type == "pgsql" && !function_exists("pg_connect")) {
-			array_push($errors, "PHP support for PostgreSQL is required for configured $db_type in config.php");
+		if (!class_exists("PDO")) {
+			array_push($errors, "PHP support for PDO is required but was not found.");
 		}
 
 		if (!function_exists("mb_strlen")) {
@@ -89,33 +85,21 @@
 		print "<div class=\"alert alert-info\">$msg</div>";
 	}
 
-	function db_connect($host, $user, $pass, $db, $type, $port = false) {
-		if ($type == "pgsql") {
+	function pdo_connect($host, $user, $pass, $db, $type, $port = false) {
 
-			$string = "dbname=$db user=$user";
+		$db_port = $port ? ';port=' . $port : '';
+		$db_host = $host ? ';host=' . $host : '';
 
-			if ($pass) {
-				$string .= " password=$pass";
-			}
+		try {
+			$pdo = new PDO($type . ':dbname=' . $db . $db_host . $db_port,
+				$user,
+				$pass);
 
-			if ($host) {
-				$string .= " host=$host";
-			}
-
-			if ($port) {
-				$string = "$string port=" . $port;
-			}
-
-			$link = pg_connect($string);
-
-			return $link;
-
-		} else if ($type == "mysql") {
-			if ($port)
-				return mysqli_connect($host, $user, $pass, $db, $port);
-			else
-				return mysqli_connect($host, $user, $pass, $db);
-		}
+			return $pdo;
+		} catch (Exception $e) {
+		    print "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
+		    return null;
+        }
 	}
 
 	function make_config($DB_TYPE, $DB_HOST, $DB_USER, $DB_NAME, $DB_PASS,
@@ -152,30 +136,6 @@
 		}
 
 		return $rv;
-	}
-
-	function db_query($link, $query, $type, $die_on_error = true) {
-		if ($type == "pgsql") {
-			$result = pg_query($link, $query);
-			if (!$result) {
-				$query = htmlspecialchars($query); // just in case
-				if ($die_on_error) {
-					die("Query <i>$query</i> failed [$result]: " . ($link ? pg_last_error($link) : "No connection"));
-				}
-			}
-			return $result;
-		} else if ($type == "mysql") {
-
-			$result = mysqli_query($link, $query);
-
-			if (!$result) {
-				$query = htmlspecialchars($query);
-				if ($die_on_error) {
-					die("Query <i>$query</i> failed: " . ($link ? mysqli_error($link) : "No connection"));
-				}
-			}
-			return $result;
-		}
 	}
 
 	function is_server_https() {
@@ -316,6 +276,14 @@
 			array_push($notices, "PHP support for Internationalization Functions is required to handle Internationalized Domain Names.");
 		}
 
+        if ($DB_TYPE == "mysql" && !function_exists("mysqli_connect")) {
+            array_push($notices, "PHP extension for MySQL (mysqli) is missing. This may prevent legacy plugins from working.");
+        }
+
+        if ($DB_TYPE == "pgsql" && !function_exists("pg_connect")) {
+			array_push($notices, "PHP extension for PostgreSQL is missing. This may prevent legacy plugins from working.");
+        }
+
 		if (count($notices) > 0) {
 			print_notice("Configuration check succeeded with minor problems:");
 
@@ -335,9 +303,9 @@
 	<h2>Checking database</h2>
 
 	<?php
-		$link = db_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_TYPE, $DB_PORT);
+		$pdo = pdo_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_TYPE, $DB_PORT);
 
-		if (!$link) {
+		if (!$pdo) {
 			print_error("Unable to connect to database using specified parameters.");
 			exit;
 		}
@@ -349,10 +317,10 @@
 			<p>Before you can start using tt-rss, database needs to be initialized. Click on the button below to do that now.</p>
 
 			<?php
-				$result = @db_query($link, "SELECT true FROM ttrss_feeds", $DB_TYPE, false);
+				$res = $pdo->query("SELECT true FROM ttrss_feeds");
 
-				if ($result) {
-					print_error("Existing tt-rss tables will be removed from the database. If you would like to keep your data, skip database initialization.");
+				if ($res && $res->fetch()) {
+					print_error("Some tt-rss data already exists in this database. If you continue with database initialization your current data will be lost.");
 					$need_confirm = true;
 				} else {
 					$need_confirm = false;
@@ -398,9 +366,9 @@
 
 		} else if ($op == 'installschema' || $op == 'skipschema') {
 
-			$link = db_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_TYPE, $DB_PORT);
+			$pdo = pdo_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_TYPE, $DB_PORT);
 
-			if (!$link) {
+			if (!$pdo) {
 				print_error("Unable to connect to database using specified parameters.");
 				exit;
 			}
@@ -409,11 +377,17 @@
 
 				print "<h2>Initializing database...</h2>";
 
-				$lines = explode(";", preg_replace("/[\r\n]/", "", file_get_contents("../schema/ttrss_schema_".basename($DB_TYPE).".sql")));
+				$lines = explode(";", preg_replace("/[\r\n]/", "",
+                    file_get_contents("../schema/ttrss_schema_".basename($DB_TYPE).".sql")));
 
 				foreach ($lines as $line) {
 					if (strpos($line, "--") !== 0 && $line) {
-						db_query($link, $line, $DB_TYPE);
+						$res = $pdo->query($line);
+
+						if (!$res) {
+							print_notice("Query: $line");
+							print_error("Error: " . implode(", ", $this->pdo->errorInfo()));
+                        }
 					}
 				}
 

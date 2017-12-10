@@ -140,7 +140,7 @@
 			}
 
 			if (!class_exists("PDO")) {
-				array_push($errors, "PHP support for PDO (Portable Data Objects) is required but was not found.");
+				array_push($errors, "PHP support for PDO is required but was not found.");
 			}
 
 			if (!function_exists("mb_strlen")) {

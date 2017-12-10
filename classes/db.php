@@ -52,8 +52,9 @@ class Db
 	private function pdo_connect() {
 
 		$db_port = defined('DB_PORT') && DB_PORT ? ';port=' . DB_PORT : '';
+		$db_host = defined('DB_HOST') && DB_HOST ? ';host=' . DB_HOST : '';
 
-		$this->pdo = new PDO(DB_TYPE . ':dbname=' . DB_NAME . ';host=' . DB_HOST . $db_port,
+		$this->pdo = new PDO(DB_TYPE . ':dbname=' . DB_NAME . $db_host . $db_port,
 			DB_USER,
 			DB_PASS);
 
