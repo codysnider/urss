@@ -54,12 +54,12 @@ class Db
 		$db_port = defined('DB_PORT') && DB_PORT ? ';port=' . DB_PORT : '';
 		$db_host = defined('DB_HOST') && DB_HOST ? ';host=' . DB_HOST : '';
 
-		$this->pdo = new PDO(DB_TYPE . ':dbname=' . DB_NAME . $db_host . $db_port,
-			DB_USER,
-			DB_PASS);
-
-		if (!$this->pdo) {
-			print("Error connecting via PDO.");
+		try {
+			$this->pdo = new PDO(DB_TYPE . ':dbname=' . DB_NAME . $db_host . $db_port,
+				DB_USER,
+				DB_PASS);
+		} catch (Exception $e) {
+			print "<pre>Exception while creating PDO object:" . $e->getMessage() . "</pre>";
 			exit(101);
 		}
 
