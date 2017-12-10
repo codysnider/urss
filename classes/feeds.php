@@ -202,7 +202,11 @@ class Feeds extends Handler_Protected {
 					$cache_images = $row["cache_images"];
 
 					if (!$cache_images && time() - $last_updated > 120) {
-						RSSUtils::update_rss_feed($feed, true);
+					    try {
+							RSSUtils::update_rss_feed($feed, true);
+						} catch (PDOException $e) {
+					        user_error("PDO Exception while doing on-demand feed update for $feed: " . $e->getMessage(), E_USER_NOTICE);
+                        }
 					} else {
 						$sth = $this->pdo->prepare("UPDATE ttrss_feeds 
                                 SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
