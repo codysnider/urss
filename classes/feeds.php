@@ -1000,6 +1000,8 @@ class Feeds extends Handler_Protected {
 	}
 
 	function quickAddFeed() {
+		print "<form onsubmit='return false'>";
+
 		print_hidden("op", "rpc");
 		print_hidden("method", "addfeed");
 
@@ -1064,10 +1066,8 @@ class Feeds extends Handler_Protected {
 				<label for=\"feedDlg_loginCheck\">".
 				__('This feed requires authentication.')."</div>";
 
-		print "</form>";
-
 		print "<div class=\"dlgButtons\">
-			<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('feedAddDlg').execute()\">".__('Subscribe')."</button>";
+			<button dojoType=\"dijit.form.Button\" class=\"btn-primary\" type=\"submit\" onclick=\"return dijit.byId('feedAddDlg').execute()\">".__('Subscribe')."</button>";
 
 		if (!(defined('_DISABLE_FEED_BROWSER') && _DISABLE_FEED_BROWSER)) {
 			print "<button dojoType=\"dijit.form.Button\" onclick=\"return feedBrowser()\">".__('More feeds')."</button>";
@@ -1075,6 +1075,8 @@ class Feeds extends Handler_Protected {
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('feedAddDlg').hide()\">".__('Cancel')."</button>
 			</div>";
+
+		print "</form>";
 
 		//return;
 	}
