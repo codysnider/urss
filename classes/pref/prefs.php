@@ -227,7 +227,7 @@ class Pref_Prefs extends Handler_Protected {
 		print_hidden("op", "pref-prefs");
 		print_hidden("method", "changeemail");
 
-		print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".
+		print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"btn-primary\">".
 			__("Save data")."</button>";
 
 		print "</form>";
@@ -298,7 +298,7 @@ class Pref_Prefs extends Handler_Protected {
 			print_hidden("op", "pref-prefs");
 			print_hidden("method", "changepassword");
 
-			print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".
+			print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"btn-primary\">".
 				__("Change password")."</button>";
 
 			print "</form>";
@@ -403,7 +403,7 @@ class Pref_Prefs extends Handler_Protected {
 					print "</td></tr>";
 					print "</table>";
 
-					print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".
+					print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"btn-primary\">".
 						__("Enable OTP")."</button>";
 
 					print "</form>";
@@ -650,7 +650,7 @@ class Pref_Prefs extends Handler_Protected {
 		print_hidden("op", "pref-prefs");
 		print_hidden("method", "saveconfig");
 
-		print "<div dojoType=\"dijit.form.ComboButton\" type=\"submit\">
+		print "<div dojoType=\"dijit.form.ComboButton\" type=\"submit\" class=\"btn-primary\">
 			<span>".__('Save configuration')."</span>
 			<div dojoType=\"dijit.DropDownMenu\">
 				<div dojoType=\"dijit.MenuItem\"
@@ -662,7 +662,7 @@ class Pref_Prefs extends Handler_Protected {
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return editProfiles()\">".
 			__('Manage profiles')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return validatePrefsReset()\">".
+		print "<button dojoType=\"dijit.form.Button\" class=\"btn-danger\" onclick=\"return validatePrefsReset()\">".
 			__('Reset to defaults')."</button>";
 
 		print "&nbsp;";
