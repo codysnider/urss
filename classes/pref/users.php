@@ -20,10 +20,12 @@ class Pref_Users extends Handler_Protected {
 		function edit() {
 			global $access_level_names;
 
+			print "<form id=\"user_edit_form\" onsubmit='return false' dojoType=\"dijit.form.Form\">";
+
 			print '<div dojoType="dijit.layout.TabContainer" style="height : 400px">
         		<div dojoType="dijit.layout.ContentPane" title="'.__('Edit user').'">';
 
-			print "<form id=\"user_edit_form\" onsubmit='return false' dojoType=\"dijit.form.Form\">";
+			//print "<form id=\"user_edit_form\" onsubmit='return false' dojoType=\"dijit.form.Form\">";
 
 			$id = (int) clean($_REQUEST["id"]);
 
@@ -87,8 +89,6 @@ class Pref_Users extends Handler_Protected {
 
 				print "</table>";
 
-				print "</form>";
-				
 			}
 
 			print '</div>'; #tab
@@ -99,10 +99,12 @@ class Pref_Users extends Handler_Protected {
 			print '</div>';
 
 			print "<div class=\"dlgButtons\">
-				<button dojoType=\"dijit.form.Button\" type=\"submit\">".
+				<button dojoType=\"dijit.form.Button\" class=\"btn-primary\" type=\"submit\" onclick=\"dijit.byId('userEditDlg').execute()\">".
 				__('Save')."</button>
 				<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('userEditDlg').hide()\">".
 				__('Cancel')."</button></div>";
+
+			print "</form>";
 
 			return;
 		}
