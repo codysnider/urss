@@ -963,7 +963,7 @@ class Pref_Filters extends Handler_Protected {
 			$inverse_checked = "";
 		}
 
-		print "<form name='filter_new_rule_form' id='filter_new_rule_form'>";
+		print "<form name='filter_new_rule_form' id='filter_new_rule_form' onsubmit='return false;'>";
 
 		$res = $this->pdo->query("SELECT id,description
 			FROM ttrss_filter_types WHERE id != 5 ORDER BY description");
@@ -1011,7 +1011,7 @@ class Pref_Filters extends Handler_Protected {
 		</div>";
 
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterNewRuleDlg').execute()\">".
+		print "<button dojoType=\"dijit.form.Button\" class=\"btn-primary \" type=\"submit\" onclick=\"return dijit.byId('filterNewRuleDlg').execute()\">".
 			($rule ? __("Save rule") : __('Add rule'))."</button> ";
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterNewRuleDlg').hide()\">".
@@ -1033,7 +1033,7 @@ class Pref_Filters extends Handler_Protected {
 			$action_id = 0;
 		}
 
-		print "<form name='filter_new_action_form' id='filter_new_action_form'>";
+		print "<form name='filter_new_action_form' id='filter_new_action_form' onsubmit='return false;'>";
 
 		print "<div class=\"dlgSec\">".__("Perform Action")."</div>";
 
@@ -1104,7 +1104,7 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<div class=\"dlgButtons\">";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterNewActionDlg').execute()\">".
+		print "<button dojoType=\"dijit.form.Button\" class=\"btn-primary\" type=\"submit\" onclick=\"return dijit.byId('filterNewActionDlg').execute()\">".
 			($action ? __("Save action") : __('Add action'))."</button> ";
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterNewActionDlg').hide()\">".
