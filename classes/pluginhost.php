@@ -56,6 +56,7 @@ class PluginHost {
 	const HOOK_FORMAT_ARTICLE_CDM = 35;
 	const HOOK_FEED_BASIC_INFO = 36;
 	const HOOK_SEND_LOCAL_FILE = 37;
+	const HOOK_UNSUBSCRIBE_FEED = 38;
 
 	const KIND_ALL = 1;
 	const KIND_SYSTEM = 2;
