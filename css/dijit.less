@@ -184,11 +184,13 @@
 
 	/* Various buttons */
 
-	.dijitButton.danger .dijitButtonText {
+	/* danger */
+	
+	.dijitButton.btn-danger .dijitButtonText {
 		color: #ffffff;
 	}
 
-	.dijitButton.danger {
+	.dijitButton.btn-danger {
 		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 		background-color: #da4f49;
 		*background-color: #bd362f;
@@ -204,18 +206,61 @@
 		filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 	}
 
-	.dijitButton.dijitButtonDisabled.danger,
-	.dijitButton.dijitButtonActive.danger,
-	.dijitButton.dijitButtonHover.danger,
-	.dijitButton.dijitFocused.danger {
+	.dijitButton.dijitButtonDisabled.btn-danger,
+	.dijitButton.dijitButtonActive.btn-danger,
+	.dijitButton.dijitButtonHover.btn-danger,
+	.dijitButton.dijitFocused.btn-danger {
 		color: #ffffff;
 		background-color: #bd362f;
 		*background-color: #a9302a;
 	}
 
-	.dijitButton.dijitButtonActive.danger {
+	.dijitButton.dijitButtonActive.btn-danger {
 		background-color: #942a25 \9;
 	}
+
+	.dijitButton.dijitButtonActive.btn-danger {
+		color: rgba(255, 255, 255, 0.75);
+	}
+	
+	/* primary */
+
+	.dijitButton.btn-primary .dijitButtonText {
+		color: #ffffff;
+	}
+
+	.dijitButton.btn-primary {
+		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+		background-color: #2883b3;
+		*background-color: #257aa7;
+		background-image: -moz-linear-gradient(top, #4ba6d8, #257aa7);
+		background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#4ba6d8), to(#257aa7));
+		background-image: -webkit-linear-gradient(top, #4ba6d8, #257aa7);
+		background-image: -o-linear-gradient(top, #4ba6d8, #257aa7);
+		background-image: linear-gradient(to bottom, #4ba6d8, #257aa7);
+		background-repeat: repeat-x;
+		border-color: #257aa7 #257aa7 #1d5f82;
+		border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	}
+
+	.dijitButton.dijitButtonDisabled.btn-primary,
+	.dijitButton.dijitButtonActive.btn-primary,
+	.dijitButton.dijitButtonHover.btn-primary,
+	.dijitButton.dijitFocused.btn-primary {
+		color: #ffffff;
+		background-color: #257aa7;
+		*background-color: #1d6185;
+	}
+
+	.dijitButton.dijitButtonActive.btn-primary {
+		background-color: #1f678d \9;
+	}
+
+	.dijitButton.dijitButtonActive.btn-primary {
+		color: rgba(255, 255, 255, 0.75);
+	}
+	
+	/* others */
 
 	.dijitDropDownButton {
 		margin: 0px;
@@ -223,10 +268,6 @@
 
 	.dijitDropDownButton .dijitButtonNode {
 		padding: 0px;
-	}
-
-	.dijitButton.dijitButtonActive.danger {
-		color: rgba(255, 255, 255, 0.75);
 	}
 
 	.dijitButton .dijitButtonNode,

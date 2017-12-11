@@ -742,7 +742,7 @@ class Pref_Feeds extends Handler_Protected {
 			<input type=\"hidden\" name=\"method\" value=\"uploadicon\">			
 			<button class=\"\" dojoType=\"dijit.form.Button\" onclick=\"return uploadFeedIcon();\"
 				type=\"submit\">".__('Replace')."</button>
-			<button class=\"danger\" dojoType=\"dijit.form.Button\" onclick=\"return removeFeedIcon($feed_id);\"
+			<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"return removeFeedIcon($feed_id);\"
 				type=\"submit\">".__('Remove')."</button>
 			</form>";
 
@@ -760,7 +760,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<div class='dlgButtons'>
 			<div style=\"float : left\">
-			<button class=\"danger\" dojoType=\"dijit.form.Button\" onclick='return unsubscribeFeed($feed_id, \"$title\")'>".
+			<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick='return unsubscribeFeed($feed_id, \"$title\")'>".
 				__('Unsubscribe')."</button>";
 
 			print "</div>";
@@ -1467,7 +1467,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div class='dlgButtons'>";
 		print "<div style='float : left'>";
-		print "<button class=\"danger\" dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('inactiveFeedsDlg').removeSelected()\">"
+		print "<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('inactiveFeedsDlg').removeSelected()\">"
 			.__('Unsubscribe from selected feeds')."</button> ";
 		print "</div>";
 
@@ -1534,7 +1534,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div class='dlgButtons'>";
 		print "<div style='float : left'>";
-		print "<button class=\"danger\" dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('errorFeedsDlg').removeSelected()\">"
+		print "<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('errorFeedsDlg').removeSelected()\">"
 			.__('Unsubscribe from selected feeds')."</button> ";
 		print "</div>";
 
