@@ -521,13 +521,14 @@ class Pref_Filters extends Handler_Protected {
 			print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterEditDlg').test()\">".
 				__('Test')."</button> ";
 
-			print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterEditDlg').execute()\">".
+			print "<button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"primary\" onclick=\"return dijit.byId('filterEditDlg').execute()\">".
 				__('Save')."</button> ";
 
 			print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterEditDlg').hide()\">".
 				__('Cancel')."</button>";
 
 			print "</div>";
+			print "</form>";
 			
 		}
 	}

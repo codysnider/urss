@@ -1161,7 +1161,7 @@ class Feeds extends Handler_Protected {
 				</div>";
 		}
 
-		print "<button dojoType=\"dijit.form.Button\" type=\"submit\" onclick=\"dijit.byId('searchDlg').execute()\">".__('Search')."</button>
+		print "<button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"primary\" onclick=\"dijit.byId('searchDlg').execute()\">".__('Search')."</button>
 		<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('searchDlg').hide()\">".__('Cancel')."</button>
 		</div>";
 

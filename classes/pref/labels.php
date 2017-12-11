@@ -20,6 +20,8 @@ class Pref_Labels extends Handler_Protected {
 			print_hidden("op", "pref-labels");
 			print_hidden("method", "save");
 
+			print "<form onsubmit='return false;'>";
+
 			print "<div class=\"dlgSec\">".__("Caption")."</div>";
 
 			print "<div class=\"dlgSecCont\">";
@@ -76,11 +78,13 @@ class Pref_Labels extends Handler_Protected {
 #			print "</form>";
 
 			print "<div class=\"dlgButtons\">";
-			print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('labelEditDlg').execute()\">".
+			print "<button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"primary\" onclick=\"dijit.byId('labelEditDlg').execute()\">".
 				__('Save')."</button>";
 			print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('labelEditDlg').hide()\">".
 				__('Cancel')."</button>";
 			print "</div>";
+
+			print "</form>";
 		}
 	}
 
