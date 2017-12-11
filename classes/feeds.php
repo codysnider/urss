@@ -1133,6 +1133,8 @@ class Feeds extends Handler_Protected {
 		$active_feed_id = sprintf("%d", $this->params[0]);
 		$is_cat = $this->params[1] != "false";
 
+		print "<form onsubmit='return false;'>";
+
 		print "<div class=\"dlgSec\">".__('Look for')."</div>";
 
 		print "<div class=\"dlgSecCont\">";
@@ -1159,9 +1161,11 @@ class Feeds extends Handler_Protected {
 				</div>";
 		}
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('searchDlg').execute()\">".__('Search')."</button>
+		print "<button dojoType=\"dijit.form.Button\" type=\"submit\" onclick=\"dijit.byId('searchDlg').execute()\">".__('Search')."</button>
 		<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('searchDlg').hide()\">".__('Cancel')."</button>
 		</div>";
+
+		print "</form>";
 	}
 
 	function update_debugger() {
