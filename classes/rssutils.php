@@ -953,10 +953,10 @@ class RSSUtils {
 								(ref_id, owner_uid, feed_id, unread, last_read, marked,
 								published, score, tag_cache, label_cache, uuid,
 								last_marked, last_published)
-							VALUES (?, ?, ?, ?, ?, ?, ?, ?, '', '', '', ?, ?)");
+							VALUES (?, ?, ?, ?, ?, ?, ?, ?, '', '', '', ".$last_marked.", ".$last_published.")");
 
 						$sth->execute([$ref_id, $owner_uid, $feed, $unread, $last_read_qpart, $marked,
-							$published, $score, $last_marked, $last_published]);
+							$published, $score]);
 
 						$sth = $pdo->prepare("SELECT int_id FROM ttrss_user_entries WHERE
 								ref_id = ? AND owner_uid = ? AND
