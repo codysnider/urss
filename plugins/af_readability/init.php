@@ -155,6 +155,8 @@ class Af_Readability extends Plugin {
 
 			if (strpos($content_type, "text/html") === FALSE)
 				return false;
+
+			$effective_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 		}
 
 		$tmp = fetch_file_contents($url);
@@ -164,6 +166,9 @@ class Af_Readability extends Plugin {
 
 			if (!$tmpdoc->loadHTML('<?xml encoding="utf-8" ?>\n' . $tmp))
 				return false;
+
+			if (!isset($effective_url))
+				$effective_url = $url;
 
 			if (strtolower($tmpdoc->encoding) != 'utf-8') {
 				$tmpxpath = new DOMXPath($tmpdoc);
@@ -185,13 +190,13 @@ class Af_Readability extends Plugin {
 				foreach ($entries as $entry) {
 					if ($entry->hasAttribute("href")) {
 						$entry->setAttribute("href",
-								rewrite_relative_url($url, $entry->getAttribute("href")));
+								rewrite_relative_url($effective_url, $entry->getAttribute("href")));
 
 					}
 
 					if ($entry->hasAttribute("src")) {
 						$entry->setAttribute("src",
-								rewrite_relative_url($url, $entry->getAttribute("src")));
+								rewrite_relative_url($effective_url, $entry->getAttribute("src")));
 
 					}
 
