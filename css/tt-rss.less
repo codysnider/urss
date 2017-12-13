@@ -329,17 +329,21 @@ body.ttrss_main {
 		color : black;
 	}
 
-	.hl.active {
-		background : @color-accent-light ! important;
-	}
-
 	.hl.active div.hlTitle a {
 		color : @color-accent;
 		/* text-shadow : 1px 1px 2px #fff; */
 	}
-
+	.hl.active,
 	.hl.Selected {
-		background : @color-accent-light;
+		color : white;
+		background : @color-accent ! important;
+
+		a,
+		.hlFeed a,
+		.hlContent a.title,
+		span {
+			color : white;
+		}
 	}
 
 	.hl.Grayed {
