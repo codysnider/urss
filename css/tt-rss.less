@@ -14,14 +14,13 @@ body.ttrss_main {
 
 		div.postHeader {
 			padding : 5px;
-			margin-right : 4px;
 			color : #909090;
 			border: 0px solid #ddd;
 			border-bottom-width: 1px;
+			background: #f0f0f0;
 
 			div.postDate {
 				text-align : right;
-				color : #909090;
 				float : right;
 			}
 
@@ -38,6 +37,7 @@ body.ttrss_main {
 
 		div.postTitle {
 			overflow : hidden;
+			font-size : 15px;
 			text-overflow: ellipsis;
 			white-space : nowrap;
 			font-weight : 600;
@@ -333,10 +333,15 @@ body.ttrss_main {
 		color : @color-accent;
 		/* text-shadow : 1px 1px 2px #fff; */
 	}
+
+	.hl.active {
+		background : @color-accent ! important;
+	}
+
 	.hl.active,
 	.hl.Selected {
 		color : white;
-		background : @color-accent ! important;
+		background : desaturate(@color-accent, 50%);
 
 		a,
 		.hlFeed a,
@@ -907,6 +912,13 @@ body.ttrss_main {
 		display : none;
 	}
 
+	#content-insert_splitter {
+		background : #f0f0f0;
+		border-color: #ddd;
+		border-top-width : 1px;
+		border-style : solid;
+	}
+
 	#toolbar {
 		padding : 0px;
 		margin : 0px;
@@ -948,7 +960,6 @@ body.ttrss_main {
 		border-color : #ddd;
 		border-width : 0px;
 		line-height: 1.5;
-		font-size : 15px;
 		overflow : auto;
 		-webkit-overflow-scrolling : touch;
 	}
