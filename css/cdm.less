@@ -136,8 +136,14 @@
 	background : white;
 }
 
-.cdm.expandable.Selected {
-	background : #f9fbff;
+.cdm.expandable.Selected:not(.active) {
+	background : desaturate(@color-accent, 25%);
+
+	a,
+	.cdmHeader a.title,
+	span {
+		color : white;
+	}
 }
 
 .cdm.expandable.active {
@@ -152,8 +158,7 @@ div.cdm.expandable div.cdmHeader a.title {
 	font-weight : 600;
 	color : @default-text;
 	font-size : 14px;
-	-webkit-transition : color 0.2s;
-	transition : color 0.2s;
+	transition : color 0.2s, background 0.2s;
 	text-rendering: optimizelegibility;
 	font-family : @fonts-ui-bold;
 }
@@ -178,8 +183,7 @@ div.cdm.expanded div.cdmHeader a.title {
 	font-size : 16px;
 	color : #999;
 	font-weight : 600;
-	-webkit-transition : color 0.2s;
-	transition : color 0.2s;
+	transition : color 0.2s, background 0.2s;
 	text-rendering: optimizelegibility;
 	font-family : @fonts-ui-bold;
 }
@@ -312,8 +316,7 @@ div#floatingTitle {
 	a.title {
 		font-size : 16px;
 		color : #999;
-		-webkit-transition : color 0.2s;
-		transition : color 0.2s;
+		transition : color 0.2s, background 0.2s;
 		font-weight : 600;
 		text-rendering: optimizelegibility;
 		font-family : @fonts-ui-bold;
