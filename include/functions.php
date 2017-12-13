@@ -1585,6 +1585,7 @@
 			}
 
 			if ($entry->nodeName == 'img') {
+				$entry->setAttribute('referrerpolicy', 'no-referrer');
 
 				if ($entry->hasAttribute('src')) {
 					$is_https_url = parse_url($entry->getAttribute('src'), PHP_URL_SCHEME) === 'https';
