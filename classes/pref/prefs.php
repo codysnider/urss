@@ -922,7 +922,7 @@ class Pref_Prefs extends Handler_Protected {
 	static function isdefaultpassword() {
 		$authenticator = PluginHost::getInstance()->get_plugin($_SESSION["auth_module"]);
 
-		if ($authenticator && function_exists($authenticator->check_password) $authenticator->check_password($_SESSION["uid"], "password")) {
+		if ($authenticator && function_exists($authenticator->check_password) && $authenticator->check_password($_SESSION["uid"], "password")) {
 			return true;
 		}
 
