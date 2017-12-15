@@ -557,7 +557,9 @@ class Feeds extends Handler_Protected {
 
 					if ($highlight_words && count($highlight_words) > 0) {
 						foreach ($highlight_words as $word) {
-							$line["title"] = preg_replace("/(\Q$word\E)/i",
+						    $word = preg_quote($word, "/");
+
+							$line["title"] = preg_replace("/($word)/i",
 								"<span class=\"highlight\">$1</span>", $line["title"]);
 						}
 					}
