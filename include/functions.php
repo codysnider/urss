@@ -2278,6 +2278,7 @@
 					if ($rule["cat_id"] > 0) {
 						$children = Feeds::getChildCategories($rule["cat_id"], $owner_uid);
 						array_push($children, $rule["cat_id"]);
+						$children = array_map("intval", $children);
 
 						$children = join(",", $children);
 

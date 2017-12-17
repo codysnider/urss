@@ -1271,6 +1271,7 @@ class Feeds extends Handler_Protected {
 					if ($feed > 0) {
 						$children = Feeds::getChildCategories($feed, $owner_uid);
 						array_push($children, $feed);
+						$children = array_map("intval", $children);
 
 						$children = join(",", $children);
 
@@ -1437,7 +1438,7 @@ class Feeds extends Handler_Protected {
 		} else if ($n_feed >= 0) {
 
 			if ($n_feed != 0) {
-				$match_part = "feed_id = '$n_feed'";
+				$match_part = "feed_id = " . (int)$n_feed;
 			} else {
 				$match_part = "feed_id IS NULL";
 			}
@@ -1672,7 +1673,7 @@ class Feeds extends Handler_Protected {
 
 			$cat_feeds = array();
 			while ($line = $sth->fetch()) {
-				array_push($cat_feeds, "feed_id = " . $line["id"]);
+				array_push($cat_feeds, "feed_id = " . (int)$line["id"]);
 			}
 
 			if (count($cat_feeds) == 0) return 0;
@@ -1887,8 +1888,9 @@ class Feeds extends Handler_Protected {
 					if ($include_children) {
 						# sub-cats
 						$subcats = Feeds::getChildCategories($feed, $owner_uid);
-
 						array_push($subcats, $feed);
+						$subcats = array_map("intval", $subcats);
+
 						$query_strategy_part = "cat_id IN (".
 							implode(",", $subcats).")";
 
@@ -2096,9 +2098,9 @@ class Feeds extends Handler_Protected {
 						$sanity_interval_qpart
 						$first_id_query_strategy_part ORDER BY $order_by LIMIT 1";
 
-				if ($_REQUEST["debug"]) {
+				/*if ($_REQUEST["debug"]) {
 					print $query;
-				}
+				}*/
 
 				$res = $pdo->query($query);
 
@@ -2144,7 +2146,7 @@ class Feeds extends Handler_Protected {
 					$query_strategy_part ORDER BY $order_by
 					$limit_query_part $offset_query_part";
 
-			if ($_REQUEST["debug"]) print $query;
+			//if ($_REQUEST["debug"]) print $query;
 
 			$res = $pdo->query($query);
 
