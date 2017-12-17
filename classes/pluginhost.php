@@ -360,7 +360,9 @@ class PluginHost {
 	function get_all($sender) {
 		$idx = get_class($sender);
 
-		return $this->storage[$idx];
+		$data = $this->storage[$idx];
+
+		return $data ? $data : [];
 	}
 
 	function clear_data($sender) {
