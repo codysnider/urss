@@ -289,14 +289,16 @@ class Opml extends Handler_Protected {
 
 		$site_url = mb_substr($attrs->getNamedItem('htmlUrl')->nodeValue, 0, 250);
 
-		if ($feed_url && $feed_title) {
+		if ($feed_url) {
 			$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE
 				feed_url = ? AND owner_uid = ?");
 			$sth->execute([$feed_url, $owner_uid]);
 
+			if (!$feed_title) $feed_title = '[Unknown]';
+
 			if (!$sth->fetch()) {
 				#$this->opml_notice("[FEED] [$feed_title/$feed_url] dst_CAT=$cat_id");
-				$this->opml_notice(T_sprintf("Adding feed: %s", $feed_title));
+				$this->opml_notice(T_sprintf("Adding feed: %s", $feed_title == '[Unknown]' ? $feed_url : $feed_title));
 
 				if (!$cat_id) $cat_id = null;
 
@@ -307,7 +309,7 @@ class Opml extends Handler_Protected {
 				$sth->execute([$feed_title, $feed_url, $owner_uid, $cat_id, $site_url]);
 
 			} else {
-				$this->opml_notice(T_sprintf("Duplicate feed: %s", $feed_title));
+				$this->opml_notice(T_sprintf("Duplicate feed: %s", $feed_title == '[Unknown]' ? $feed_url : $feed_title));
 			}
 		}
 	}
