@@ -1381,7 +1381,7 @@
 		if ($search_language)
 			$search_language = $pdo->quote(mb_strtolower($search_language));
 		else
-			$search_language = "english";
+			$search_language = $pdo->quote("english");
 
 		foreach ($keywords as $k) {
 			if (strpos($k, "-") === 0) {
