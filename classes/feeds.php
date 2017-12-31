@@ -173,53 +173,10 @@ class Feeds extends Handler_Protected {
 		$method_split = explode(":", $method);
 
 		if ($method == "ForceUpdate" && $feed > 0 && is_numeric($feed)) {
-			// Update the feed if required with some basic flood control
-
-			$any_needs_curl = false;
-
-			if (ini_get("open_basedir")) {
-				$pluginhost = PluginHost::getInstance();
-				foreach ($pluginhost->get_plugins() as $plugin) {
-					$flags = $plugin->flags();
-
-					if (isset($flags["needs_curl"]) && $flags["needs_curl"]) {
-						$any_needs_curl = true;
-						break;
-					}
-				}
-			}
-
-			//if ($_REQUEST["debug"]) print "<!-- any_needs_curl: $any_needs_curl -->";
-
-			if (!$any_needs_curl) {
-
-				$sth = $this->pdo->prepare("SELECT cache_images," . SUBSTRING_FOR_DATE . "(last_updated,1,19) AS last_updated
-						FROM ttrss_feeds WHERE id = ?");
-				$sth->execute([$feed]);
-
-				if ($row = $sth->fetch()) {
-					$last_updated = strtotime($row["last_updated"]);
-					$cache_images = $row["cache_images"];
-
-					if (!$cache_images && time() - $last_updated > 120) {
-					    try {
-							RSSUtils::update_rss_feed($feed, true);
-						} catch (PDOException $e) {
-					        user_error("PDO Exception while doing on-demand feed update for $feed: " . $e->getMessage(), E_USER_NOTICE);
-                        }
-					} else {
-						$sth = $this->pdo->prepare("UPDATE ttrss_feeds 
-                                SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
-								WHERE id = ?");
-						$sth->execute([$feed]);
-					}
-				}
-			} else {
-				$sth = $this->pdo->prepare("UPDATE ttrss_feeds 
-                                SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
-								WHERE id = ?");
-				$sth->execute([$feed]);
-			}
+            $sth = $this->pdo->prepare("UPDATE ttrss_feeds 
+                            SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
+                            WHERE id = ?");
+            $sth->execute([$feed]);
 		}
 
 		if ($method_split[0] == "MarkAllReadGR")  {
