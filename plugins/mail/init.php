@@ -86,7 +86,7 @@ class Mail extends Plugin {
 		print_hidden("method", "sendEmail");
 
 		$sth = $this->pdo->prepare("SELECT email, full_name FROM ttrss_users WHERE
-			id = ?";
+			id = ?");
 		$sth->execute([$_SESSION['uid']]);
 
 		if ($row = $sth->fetch()) {
