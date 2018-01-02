@@ -132,12 +132,14 @@ class Digest
 				ref_id = ttrss_entries.id AND feed_id = ttrss_feeds.id
 				AND include_in_digest = true
 				AND $interval_qpart
-				AND ttrss_user_entries.owner_uid = ?
+				AND ttrss_user_entries.owner_uid = :user_id
 				AND unread = true
 				AND score >= 0
 			ORDER BY ttrss_feed_categories.title, ttrss_feeds.title, score DESC, date_updated DESC
-			LIMIT ?");
-		$sth->execute([$user_id, $limit]);
+			LIMIT :limit");
+		$sth->bindParam(':user_id', intval($user_id, 10), \PDO::PARAM_INT);
+		$sth->bindParam(':limit', intval($limit, 10), \PDO::PARAM_INT);
+		$sth->execute();
 
 		$headlines_count = 0;
 		$headlines = array();
