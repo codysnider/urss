@@ -1504,7 +1504,7 @@ class Feeds extends Handler_Protected {
 					(owner_uid,feed_url,title,cat_id, auth_login,auth_pass,update_method,auth_pass_encrypted)
 				VALUES (?, ?, ?, ?, ?, ?, 0, false)");
 
-			$sth->execute([$_SESSION['uid'], $url, "[Unknown]", $cat_id, $auth_login, $auth_pass]);
+			$sth->execute([$_SESSION['uid'], $url, "[Unknown]", $cat_id, (string)$auth_login, (string)$auth_pass]);
 
 			$sth = $pdo->prepare("SELECT id FROM ttrss_feeds WHERE feed_url = ?
 					AND owner_uid = ?");
