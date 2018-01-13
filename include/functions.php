@@ -402,8 +402,8 @@
 				curl_setopt($ch, CURLOPT_COOKIEJAR, "/dev/null");
 			}
 
-			if (defined('_CURL_HTTP_PROXY')) {
-				curl_setopt($ch, CURLOPT_PROXY, _CURL_HTTP_PROXY);
+			if (defined('PROXY')) {
+				curl_setopt($ch, CURLOPT_PROXY, PROXY);
 			}
 
 			if ($post_query) {
@@ -483,24 +483,23 @@
 
 			// TODO: should this support POST requests or not? idk
 
+			 $context_options = array(
+				  'http' => array(
+						'method' => 'GET',
+					    'ignore_errors' => true,
+					    'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
+						'protocol_version'=> 1.1)
+				  );
+
 			if (!$post_query && $last_modified) {
-				 $context = stream_context_create(array(
-					  'http' => array(
-							'method' => 'GET',
-						    'ignore_errors' => true,
-						    'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
-							'protocol_version'=> 1.1,
-							'header' => "If-Modified-Since: $last_modified\r\n")
-					  ));
-			} else {
-				 $context = stream_context_create(array(
-					  'http' => array(
-							'method' => 'GET',
-						    'ignore_errors' => true,
-						    'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
-							'protocol_version'=> 1.1
-					  )));
+                $context_options['http']['header'] = "If-Modified-Since: $last_modified\r\n";
 			}
+
+			if (defined('PROXY')) {
+				$context_options['http']['proxy'] = PROXY;
+			}
+
+            $context = stream_context_create($context_options);
 
 			$old_error = error_get_last();
 

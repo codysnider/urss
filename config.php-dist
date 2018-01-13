@@ -196,4 +196,9 @@
 	// Expected config version. Please update this option in config.php
 	// if necessary (after migrating all new options from this file).
 
+	define('PROXY', '');
+	// Connect to RSS feeds through a PROXY, this way tt-rss won't connect to
+	// webservers directly.
+	// Example format: '127.0.0.1:8123' (polipo proxy running on localhost)
+
 	// vim:ft=php
