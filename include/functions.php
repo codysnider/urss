@@ -496,6 +496,7 @@
 			}
 
 			if (defined('PROXY')) {
+				$context_options['http']['request_fulluri'] = true;
 				$context_options['http']['proxy'] = PROXY;
 			}
 
