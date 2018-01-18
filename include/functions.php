@@ -402,8 +402,8 @@
 				curl_setopt($ch, CURLOPT_COOKIEJAR, "/dev/null");
 			}
 
-			if (defined('PROXY')) {
-				curl_setopt($ch, CURLOPT_PROXY, PROXY);
+			if (defined('_HTTP_PROXY')) {
+				curl_setopt($ch, CURLOPT_PROXY, _HTTP_PROXY);
 			}
 
 			if ($post_query) {
@@ -495,9 +495,9 @@
                 $context_options['http']['header'] = "If-Modified-Since: $last_modified\r\n";
 			}
 
-			if (defined('PROXY')) {
+			if (defined('_HTTP_PROXY')) {
 				$context_options['http']['request_fulluri'] = true;
-				$context_options['http']['proxy'] = PROXY;
+				$context_options['http']['proxy'] = _HTTP_PROXY;
 			}
 
             $context = stream_context_create($context_options);
