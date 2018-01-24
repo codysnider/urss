@@ -945,8 +945,8 @@ class RSSUtils {
 							$published = 0;
 						}
 
-						$last_marked = ($marked == 'true') ? 'NOW()' : null;
-						$last_published = ($published == 'true') ? 'NOW()' : null;
+						$last_marked = ($marked == 1) ? 'NOW()' : 'NULL';
+						$last_published = ($published == 1) ? 'NOW()' : 'NULL';
 
 						$sth = $pdo->prepare(
 							"INSERT INTO ttrss_user_entries
