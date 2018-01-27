@@ -123,6 +123,8 @@ class Af_Comics extends Plugin {
 					$node = $xpath->query('//picture[contains(@class, "item-comic-image")]/img')->item(0);
 
 					if ($node) {
+					    $node->removeAttribute("width");
+
 						$tpl->setVariable('ARTICLE_ID', $article_link, true);
 						$tpl->setVariable('ARTICLE_LINK', $article_link, true);
 						$tpl->setVariable('ARTICLE_TITLE', date('l, F d, Y'), true);
