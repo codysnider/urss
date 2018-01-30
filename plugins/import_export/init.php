@@ -15,6 +15,10 @@ class Import_Export extends Plugin implements IHandler {
 			"fox");
 	}
 
+	private function bool_to_sql_bool($s) {
+		return $s ? 'true' : 'false';
+	}
+
 	function xml_import($args) {
 
 		$filename = $args['xml_import'];
@@ -354,8 +358,8 @@ class Import_Export extends Plugin implements IHandler {
 
 							if (db_num_rows($result) == 0) {
 
-								$marked = bool_to_sql_bool(sql_bool_to_bool($article['marked']));
-								$published = bool_to_sql_bool(sql_bool_to_bool($article['published']));
+								$marked = $this->bool_to_sql_bool(sql_bool_to_bool($article['marked']));
+								$published = $this->bool_to_sql_bool(sql_bool_to_bool($article['published']));
 								$score = (int) $article['score'];
 
 								$tag_cache = $article['tag_cache'];
