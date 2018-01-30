@@ -57,9 +57,9 @@
 	// do not cache files smaller than that (bytes)
 	define_default('CACHE_MAX_DAYS', 7);
 	// max age in days for various automatically cached (temporary) files
-    define_default('MAX_CONDITIONAL_INTERVAL', 3600*12);
-    // max interval between forced unconditional updates for servers
-    // not complying with http if-modified-since (seconds)
+	define_default('MAX_CONDITIONAL_INTERVAL', 3600*12);
+	// max interval between forced unconditional updates for servers
+	// not complying with http if-modified-since (seconds)
 
 	/* tunables end here */
 
@@ -255,9 +255,9 @@
 		}
 
 		if (!$purge_unread)
-		    $query_limit = " unread = false AND ";
+			$query_limit = " unread = false AND ";
 		else
-		    $query_limit = "";
+			$query_limit = "";
 
 		$purge_interval = (int) $purge_interval;
 
@@ -272,14 +272,14 @@
 			$sth->execute([$feed_id]);
 
 		} else {
-            $sth  = $pdo->prepare("DELETE FROM ttrss_user_entries
+			$sth  = $pdo->prepare("DELETE FROM ttrss_user_entries
 				USING ttrss_user_entries, ttrss_entries
 				WHERE ttrss_entries.id = ref_id AND
 				marked = false AND
 				feed_id = ? AND
 				$query_limit
 				ttrss_entries.date_updated < DATE_SUB(NOW(), INTERVAL $purge_interval DAY)");
-            $sth->execute([$feed_id]);
+			$sth->execute([$feed_id]);
 
 		}
 
@@ -296,7 +296,7 @@
 
 	function feed_purge_interval($feed_id) {
 
-	    $pdo = DB::pdo();
+		$pdo = DB::pdo();
 
 		$sth = $pdo->prepare("SELECT purge_interval, owner_uid FROM ttrss_feeds
 			WHERE id = ?");
@@ -318,7 +318,7 @@
 
 	// TODO: multiple-argument way is deprecated, first parameter is a hash now
 	function fetch_file_contents($options /* previously: 0: $url , 1: $type = false, 2: $login = false, 3: $pass = false,
- 				4: $post_query = false, 5: $timeout = false, 6: $timestamp = 0, 7: $useragent = false*/) {
+				4: $post_query = false, 5: $timeout = false, 6: $timestamp = 0, 7: $useragent = false*/) {
 
 		global $fetch_last_error;
 		global $fetch_last_error_code;
@@ -421,18 +421,18 @@
 			$contents = substr($ret, $headers_length);
 
 			foreach ($headers as $header) {
-                if (strstr($header, ": ") !== FALSE) {
-                    list ($key, $value) = explode(": ", $header);
+				if (strstr($header, ": ") !== FALSE) {
+					list ($key, $value) = explode(": ", $header);
 
-                    if (strtolower($key) == "last-modified") {
-                        $fetch_last_modified = $value;
-                    }
-                }
+					if (strtolower($key) == "last-modified") {
+						$fetch_last_modified = $value;
+					}
+				}
 
-                if (substr(strtolower($header), 0, 7) == 'http/1.') {
-                    $fetch_last_error_code = (int) substr($header, 9, 3);
-                    $fetch_last_error = $header;
-                }
+				if (substr(strtolower($header), 0, 7) == 'http/1.') {
+					$fetch_last_error_code = (int) substr($header, 9, 3);
+					$fetch_last_error = $header;
+				}
 			}
 
 			if (curl_errno($ch) === 23 || curl_errno($ch) === 61) {
@@ -486,13 +486,13 @@
 			 $context_options = array(
 				  'http' => array(
 						'method' => 'GET',
-					    'ignore_errors' => true,
-					    'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
+						'ignore_errors' => true,
+						'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
 						'protocol_version'=> 1.1)
 				  );
 
 			if (!$post_query && $last_modified) {
-                $context_options['http']['header'] = "If-Modified-Since: $last_modified\r\n";
+				$context_options['http']['header'] = "If-Modified-Since: $last_modified\r\n";
 			}
 
 			if (defined('_HTTP_PROXY')) {
@@ -500,7 +500,7 @@
 				$context_options['http']['proxy'] = _HTTP_PROXY;
 			}
 
-            $context = stream_context_create($context_options);
+			$context = stream_context_create($context_options);
 
 			$old_error = error_get_last();
 
@@ -508,19 +508,19 @@
 
 			if (isset($http_response_header) && is_array($http_response_header)) {
 				foreach ($http_response_header as $header) {
-				    if (strstr($header, ": ") !== FALSE) {
-                        list ($key, $value) = explode(": ", $header);
+					if (strstr($header, ": ") !== FALSE) {
+						list ($key, $value) = explode(": ", $header);
 
-                        $key = strtolower($key);
+						$key = strtolower($key);
 
-                        if ($key == 'content-type') {
-                            $fetch_last_content_type = $value;
-                            // don't abort here b/c there might be more than one
-                            // e.g. if we were being redirected -- last one is the right one
-                        } else if ($key == 'last-modified') {
-                            $fetch_last_modified = $value;
-                        }
-                    }
+						if ($key == 'content-type') {
+							$fetch_last_content_type = $value;
+							// don't abort here b/c there might be more than one
+							// e.g. if we were being redirected -- last one is the right one
+						} else if ($key == 'last-modified') {
+							$fetch_last_modified = $value;
+						}
+					}
 
 					if (substr(strtolower($header), 0, 7) == 'http/1.') {
 						$fetch_last_error_code = (int) substr($header, 9, 3);
@@ -591,18 +591,18 @@
 
 		if (get_schema_version() < 63) $profile_qpart = "";
 
-        $pdo = DB::pdo();
-        $in_nested_tr = false;
+		$pdo = DB::pdo();
+		$in_nested_tr = false;
 
-        try {
+		try {
 			$pdo->beginTransaction();
 		} catch (Exception $e) {
-        	$in_nested_tr = true;
+			$in_nested_tr = true;
 		}
 
 		$sth = $pdo->query("SELECT pref_name,def_value FROM ttrss_prefs");
 
-        $profile = $profile ? $profile : null;
+		$profile = $profile ? $profile : null;
 
 		$u_sth = $pdo->prepare("SELECT pref_name
 			FROM ttrss_user_prefs WHERE owner_uid = :uid AND 
@@ -629,7 +629,7 @@
 					$i_sth = $pdo->prepare("INSERT INTO ttrss_user_prefs
 						(owner_uid,pref_name,value, profile) VALUES
 						(?, ?, ?, ?)");
-                    $i_sth->execute([$uid, $line["pref_name"], $line["def_value"], $profile]);
+					$i_sth->execute([$uid, $line["pref_name"], $line["def_value"], $profile]);
 				}
 
 			}
@@ -741,7 +741,7 @@
 		$password = "";
 		$possible = "0123456789abcdfghjkmnpqrstvwxyzABCDFGHJKMNPQRSTVWXYZ";
 
-   	$i = 0;
+	$i = 0;
 
 		while ($i < $length) {
 			$char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
@@ -761,7 +761,7 @@
 
 	function initialize_user($uid) {
 
-	    $pdo = DB::pdo();
+		$pdo = DB::pdo();
 
 		$sth = $pdo->prepare("insert into ttrss_feeds (owner_uid,title,feed_url)
 			values (?, 'Tiny Tiny RSS: Forum',
@@ -796,7 +796,7 @@
 	}
 
 	function login_sequence() {
-        $pdo = Db::pdo();
+		$pdo = Db::pdo();
 
 		if (SINGLE_USER_MODE) {
 			@session_start();
@@ -809,7 +809,7 @@
 			if (!$_SESSION["uid"]) {
 
 				if (AUTH_AUTO_LOGIN && authenticate_user(null, null)) {
-				    $_SESSION["ref_schema_version"] = get_schema_version(true);
+					$_SESSION["ref_schema_version"] = get_schema_version(true);
 				} else {
 					 authenticate_user(null, null, true);
 				}
@@ -837,18 +837,18 @@
 				/* cleanup ccache */
 
 				$sth = $pdo->prepare("DELETE FROM ttrss_counters_cache WHERE owner_uid = ? 
-                    AND
+					AND
 						(SELECT COUNT(id) FROM ttrss_feeds WHERE
 							ttrss_feeds.id = feed_id) = 0");
 
 				$sth->execute([$_SESSION['uid']]);
 
 				$sth = $pdo->prepare("DELETE FROM ttrss_cat_counters_cache WHERE owner_uid = ? 
-                    AND
+					AND
 						(SELECT COUNT(id) FROM ttrss_feed_categories WHERE
 							ttrss_feed_categories.id = feed_id) = 0");
 
-                $sth->execute([$_SESSION['uid']]);
+				$sth->execute([$_SESSION['uid']]);
 			}
 
 		}
@@ -1848,14 +1848,14 @@
 		while ($line = $sth->fetch()) {
 			$filter_id = $line["id"];
 
-            $match_any_rule = sql_bool_to_bool($line["match_any_rule"]);
+			$match_any_rule = sql_bool_to_bool($line["match_any_rule"]);
 
 			$sth2 = $pdo->prepare("SELECT
 					r.reg_exp, r.inverse, r.feed_id, r.cat_id, r.cat_filter, r.match_on, t.name AS type_name
 					FROM ttrss_filters2_rules AS r,
 					ttrss_filter_types AS t
 					WHERE
-					    (match_on IS NOT NULL OR
+						(match_on IS NOT NULL OR
 						  (($null_cat_qpart (cat_id IS NULL AND cat_filter = false) OR cat_id IN ($check_cats_str)) AND
 						  (feed_id IS NULL OR feed_id = ?))) AND
 						filter_type = t.id AND filter_id = ?");
@@ -1867,54 +1867,54 @@
 			while ($rule_line = $sth2->fetch()) {
 	#				print_r($rule_line);
 
-                if ($rule_line["match_on"]) {
-                    $match_on = json_decode($rule_line["match_on"], true);
+				if ($rule_line["match_on"]) {
+					$match_on = json_decode($rule_line["match_on"], true);
 
-                    if (in_array("0", $match_on) || in_array($feed_id, $match_on) || count(array_intersect($check_cats_fullids, $match_on)) > 0) {
+					if (in_array("0", $match_on) || in_array($feed_id, $match_on) || count(array_intersect($check_cats_fullids, $match_on)) > 0) {
 
-                        $rule = array();
-                        $rule["reg_exp"] = $rule_line["reg_exp"];
-                        $rule["type"] = $rule_line["type_name"];
-                        $rule["inverse"] = sql_bool_to_bool($rule_line["inverse"]);
+						$rule = array();
+						$rule["reg_exp"] = $rule_line["reg_exp"];
+						$rule["type"] = $rule_line["type_name"];
+						$rule["inverse"] = sql_bool_to_bool($rule_line["inverse"]);
 
-                        array_push($rules, $rule);
-                    } else if (!$match_any_rule) {
-                        // this filter contains a rule that doesn't match to this feed/category combination
-                        // thus filter has to be rejected
+						array_push($rules, $rule);
+					} else if (!$match_any_rule) {
+						// this filter contains a rule that doesn't match to this feed/category combination
+						// thus filter has to be rejected
 
-                        $rules = [];
-                        break;
-                    }
+						$rules = [];
+						break;
+					}
 
-                } else {
+				} else {
 
-                    $rule = array();
-                    $rule["reg_exp"] = $rule_line["reg_exp"];
-                    $rule["type"] = $rule_line["type_name"];
-                    $rule["inverse"] = sql_bool_to_bool($rule_line["inverse"]);
+					$rule = array();
+					$rule["reg_exp"] = $rule_line["reg_exp"];
+					$rule["type"] = $rule_line["type_name"];
+					$rule["inverse"] = sql_bool_to_bool($rule_line["inverse"]);
 
-                    array_push($rules, $rule);
-                }
+					array_push($rules, $rule);
+				}
 			}
 
 			if (count($rules) > 0) {
-                $sth2 = $pdo->prepare("SELECT a.action_param,t.name AS type_name
-                        FROM ttrss_filters2_actions AS a,
-                        ttrss_filter_actions AS t
-                        WHERE
-                            action_id = t.id AND filter_id = ?");
-                $sth2->execute([$filter_id]);
+				$sth2 = $pdo->prepare("SELECT a.action_param,t.name AS type_name
+						FROM ttrss_filters2_actions AS a,
+						ttrss_filter_actions AS t
+						WHERE
+							action_id = t.id AND filter_id = ?");
+				$sth2->execute([$filter_id]);
 
-                while ($action_line = $sth2->fetch()) {
-                    #				print_r($action_line);
+				while ($action_line = $sth2->fetch()) {
+					#				print_r($action_line);
 
-                    $action = array();
-                    $action["type"] = $action_line["type_name"];
-                    $action["param"] = $action_line["action_param"];
+					$action = array();
+					$action["type"] = $action_line["type_name"];
+					$action["param"] = $action_line["action_param"];
 
-                    array_push($actions, $action);
-                }
-            }
+					array_push($actions, $action);
+				}
+			}
 
 			$filter = array();
 			$filter["match_any_rule"] = sql_bool_to_bool($line["match_any_rule"]);
@@ -1982,7 +1982,7 @@
 			return true;
 		}
 
-        $pdo->commit();
+		$pdo->commit();
 
 		return false;
 	}
@@ -2167,7 +2167,7 @@
 
 	function cleanup_tags($days = 14, $limit = 1000) {
 
-	    $days = (int) $days;
+		$days = (int) $days;
 
 		if (DB_TYPE == "pgsql") {
 			$interval_query = "date_updated < NOW() - INTERVAL '$days days'";
@@ -2177,9 +2177,9 @@
 
 		$tags_deleted = 0;
 
-        $pdo = Db::pdo();
+		$pdo = Db::pdo();
 
-        while ($limit > 0) {
+		while ($limit > 0) {
 			$limit_part = 500;
 
 			$sth = $pdo->prepare("SELECT ttrss_tags.id AS id
@@ -2568,6 +2568,6 @@
 			return $default;
 	}
 
-    function arr_qmarks($arr) {
-        return str_repeat('?,', count($arr) - 1) . '?';
-    }
+	function arr_qmarks($arr) {
+		return str_repeat('?,', count($arr) - 1) . '?';
+	}

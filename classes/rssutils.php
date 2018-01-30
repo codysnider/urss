@@ -18,8 +18,8 @@ class RSSUtils {
 
 	// Strips utf8mb4 characters (i.e. emoji) for mysql
 	static function strip_utf8mb4($str) {
-        return preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $str);
-    }
+		return preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $str);
+	}
 
 	static function update_feedbrowser_cache() {
 
@@ -422,15 +422,15 @@ class RSSUtils {
 				_debug("not using CURL due to open_basedir restrictions");
 			}
 
-            if (time() - strtotime($last_unconditional) > MAX_CONDITIONAL_INTERVAL) {
-                _debug("maximum allowed interval for conditional requests exceeded, forcing refetch");
+			if (time() - strtotime($last_unconditional) > MAX_CONDITIONAL_INTERVAL) {
+				_debug("maximum allowed interval for conditional requests exceeded, forcing refetch");
 
-                $force_refetch = true;
-            } else {
-                _debug("stored last modified for conditional request: $stored_last_modified", $debug_enabled);
-            }
+				$force_refetch = true;
+			} else {
+				_debug("stored last modified for conditional request: $stored_last_modified", $debug_enabled);
+			}
 
-            _debug("fetching [$fetch_url] (force_refetch: $force_refetch)...", $debug_enabled);
+			_debug("fetching [$fetch_url] (force_refetch: $force_refetch)...", $debug_enabled);
 
 			$feed_data = fetch_file_contents([
 				"url" => $fetch_url,
@@ -572,8 +572,8 @@ class RSSUtils {
 			$filters = load_filters($feed, $owner_uid);
 
 			if ($debug_enabled) {
-			    print_r($filters);
-            }
+				print_r($filters);
+			}
 
 			_debug("" . count($filters) . " filters loaded.", $debug_enabled);
 
@@ -1050,14 +1050,14 @@ class RSSUtils {
 
 						// Yet another episode of "mysql utf8_general_ci is gimped"
 						if (DB_TYPE == "mysql") {
-                            for ($i = 0; $i < count($e_item); $i++) {
-                                if (is_string($e_item[$i])) {
-                                    $e_item[$i] = RSSUtils::strip_utf8mb4($e_item[$i]);
-                                }
-                            }
+							for ($i = 0; $i < count($e_item); $i++) {
+								if (is_string($e_item[$i])) {
+									$e_item[$i] = RSSUtils::strip_utf8mb4($e_item[$i]);
+								}
+							}
 						}
 
-                        array_push($enclosures, $e_item);
+						array_push($enclosures, $e_item);
 					}
 				}
 
