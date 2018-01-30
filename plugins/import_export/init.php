@@ -217,7 +217,7 @@ class Import_Export extends Plugin implements IHandler {
 			}
 
 			if ($data)
-				$doc = DOMDocument::loadXML($data);
+				$doc = (new DOMDocument)->loadXML($data);
 		}
 
 		libxml_disable_entity_loader(true);
