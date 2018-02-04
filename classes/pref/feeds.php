@@ -389,7 +389,7 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	function savefeedorder() {
-		$data = json_decode(clean($_POST['payload']), true);
+		$data = json_decode($_POST['payload'], true);
 
 		#file_put_contents("/tmp/saveorder.json", clean($_POST['payload']));
 		#$data = json_decode(file_get_contents("/tmp/saveorder.json"), true);
