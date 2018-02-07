@@ -126,6 +126,15 @@ class Af_Comics extends Plugin {
 					if ($node) {
 					    $node->removeAttribute("width");
 
+						if ($node->hasAttribute("srcset") && preg_match("|/transparent\.png$|", $node->getAttribute("srcset"))) {
+							if ($node->hasAttribute("data-srcset")) {
+								$node->setAttribute("srcset", $node->getAttribute("data-srcset"));
+								$node->removeAttribute("data-srcset");
+							} elseif ($node->hasAttribute("src")) {
+								$node->remoteAttribute("srcset");
+							}
+						}
+
 						$tpl->setVariable('ARTICLE_ID', $article_link, true);
 						$tpl->setVariable('ARTICLE_LINK', $article_link, true);
 						$tpl->setVariable('ARTICLE_TITLE', date('l, F d, Y'), true);
