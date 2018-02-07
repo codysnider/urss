@@ -14,6 +14,7 @@ class Af_Comics extends Plugin {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_FETCH_FEED, $this);
+		$host->add_hook($host::HOOK_SUBSCRIBE_FEED, $this);
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 
@@ -125,6 +126,15 @@ class Af_Comics extends Plugin {
 					if ($node) {
 					    $node->removeAttribute("width");
 
+						if ($node->hasAttribute("srcset") && preg_match("|/transparent\.png$|", $node->getAttribute("srcset"))) {
+							if ($node->hasAttribute("data-srcset")) {
+								$node->setAttribute("srcset", $node->getAttribute("data-srcset"));
+								$node->removeAttribute("data-srcset");
+							} elseif ($node->hasAttribute("src")) {
+								$node->remoteAttribute("srcset");
+							}
+						}
+
 						$tpl->setVariable('ARTICLE_ID', $article_link, true);
 						$tpl->setVariable('ARTICLE_LINK', $article_link, true);
 						$tpl->setVariable('ARTICLE_TITLE', date('l, F d, Y'), true);
@@ -149,6 +159,16 @@ class Af_Comics extends Plugin {
 		}
 
 		return $feed_data;
+	}
+
+	function hook_subscribe_feed($contents, $url, $auth_login, $auth_pass) {
+		if ($auth_login || $auth_pass)
+			return $contents;
+
+		if (preg_match('#^https?://www\.gocomics\.com/([-a-z0-9]+)$#i', $url))
+			return '<?xml version="1.0" encoding="utf-8"?>'; // Get is_html() to return false.
+
+		return $contents;
 	}
 
 	function api_version() {
