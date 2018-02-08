@@ -267,6 +267,7 @@ require(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"]
 				"dijitTreeRow Error";
 
 			if (item.unread > 0) rc += " Unread";
+			if (item.updates_disabled > 0) rc += " UpdatesDisabled";
 
 			return rc;
 		},

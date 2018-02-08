@@ -69,7 +69,7 @@ class Pref_Feeds extends Handler_Protected {
 		}
 
 		$fsth = $this->pdo->prepare("SELECT id, title, last_error,
-			".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated
+			".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated, update_interval
 			FROM ttrss_feeds
 			WHERE cat_id = :cat AND 
 			owner_uid = :uid AND
@@ -90,6 +90,7 @@ class Pref_Feeds extends Handler_Protected {
 			$feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
 			$feed['param'] = make_local_datetime(
 				$feed_line['last_updated'], true);
+			$feed['updates_disabled'] = (int)($feed_line['update_interval'] < 0);
 
 			array_push($items, $feed);
 		}
@@ -237,7 +238,7 @@ class Pref_Feeds extends Handler_Protected {
 			$cat['child_unread'] = 0;
 
 			$fsth = $this->pdo->prepare("SELECT id, title,last_error,
-				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated
+				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated, update_interval				
 				FROM ttrss_feeds
 				WHERE cat_id IS NULL AND 
 				owner_uid = :uid AND
@@ -258,6 +259,7 @@ class Pref_Feeds extends Handler_Protected {
 					$feed_line['last_updated'], true);
 				$feed['unread'] = 0;
 				$feed['type'] = 'feed';
+				$feed['updates_disabled'] = (int)($feed_line['update_interval'] < 0);
 
 				array_push($cat['items'], $feed);
 			}
@@ -272,7 +274,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		} else {
 			$fsth = $this->pdo->prepare("SELECT id, title, last_error,
-				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated
+				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated, update_interval
 				FROM ttrss_feeds
 				WHERE owner_uid = :uid AND
 				(:search = '' OR (LOWER(title) LIKE :search OR LOWER(feed_url) LIKE :search))
@@ -292,6 +294,7 @@ class Pref_Feeds extends Handler_Protected {
 					$feed_line['last_updated'], true);
 				$feed['unread'] = 0;
 				$feed['type'] = 'feed';
+				$feed['updates_disabled'] = (int)($feed_line['update_interval'] < 0);
 
 				array_push($root['items'], $feed);
 			}
