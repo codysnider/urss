@@ -48,12 +48,14 @@ body.ttrss_utility {
 	}
 
 	a {
-		color : rgb(82, 168, 236);
+		color : @color-link;
 		text-decoration : none;
 	}
 
-	a:hover {
-		color : black;
+	a:hover,
+	a:focus {
+		color: darken(@color-link, 20%);
+		text-decoration: underline;
 	}
 
 	.alert {
@@ -117,14 +119,14 @@ body.ttrss_utility {
 	}
 
 	h1 {
-		color : rgb(82, 168, 236);
+		color : @color-accent;
 		font-size : 32px;
 		margin : 20px 0px 5px 0px;
 		text-shadow : 0 0 6px #fff;
 	}
 
 	h2 {
-		color : rgb(82, 168, 236);
+		color : @color-accent;
 		font-size : 14pt;
 		border-width : 0px 0px 1px 0px;
 		border-color : #f0f0f0;
@@ -268,12 +270,12 @@ body#sharepopup {
 	h1 {
 		font-size : 14px;
 		margin : 0px;
-		color : rgb(82, 168, 236);
+		color : @color-accent;
 	}
 
 	table {
 		background : white;
-		border : 1px solid rgb(82, 168, 236);
+		border : 1px solid @color-accent;
 		padding : 5px;
 	}
 
