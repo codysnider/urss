@@ -675,8 +675,12 @@ class RSSUtils {
 
 				$entry_tags = array_unique($additional_tags);
 
-				for ($i = 0; $i < count($entry_tags); $i++)
+				for ($i = 0; $i < count($entry_tags); $i++) {
 					$entry_tags[$i] = mb_strtolower($entry_tags[$i], 'utf-8');
+
+					// we don't support numeric tags, let's prefix them
+					if (is_numeric($entry_tags[$i])) $entry_tags[$i] = 't:' . $entry_tags[$i];
+				}
 
 				_debug("tags found: " . join(",", $entry_tags), $debug_enabled);
 
