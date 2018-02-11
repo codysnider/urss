@@ -131,7 +131,7 @@ class Af_Comics extends Plugin {
 								$node->setAttribute("srcset", $node->getAttribute("data-srcset"));
 								$node->removeAttribute("data-srcset");
 							} elseif ($node->hasAttribute("src")) {
-								$node->remoteAttribute("srcset");
+								$node->removeAttribute("srcset");
 							}
 						}
 
