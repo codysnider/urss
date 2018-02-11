@@ -137,38 +137,17 @@ class Af_Readability extends Plugin {
 	}
 
 	public function extract_content($url) {
+		global $fetch_effective_url;
+
 		if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
 
-		if (!defined('NO_CURL') && function_exists('curl_init') && !ini_get("open_basedir")) {
-
-			$ch = curl_init($url);
-
-			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_HEADER, true);
-			curl_setopt($ch, CURLOPT_NOBODY, true);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-			curl_setopt($ch, CURLOPT_USERAGENT, SELF_USER_AGENT);
-
-			@curl_exec($ch);
-			$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-
-			if (strpos($content_type, "text/html") === FALSE)
-				return false;
-
-			$effective_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-		}
-
-		$tmp = fetch_file_contents($url);
+		$tmp = fetch_file_contents(array("url" => $url, "type" => "text/html"));
 
 		if ($tmp && mb_strlen($tmp) < 1024 * 500) {
 			$tmpdoc = new DOMDocument("1.0", "UTF-8");
 
 			if (!$tmpdoc->loadHTML('<?xml encoding="utf-8" ?>\n' . $tmp))
 				return false;
-
-			if (!isset($effective_url))
-				$effective_url = $url;
 
 			if (strtolower($tmpdoc->encoding) != 'utf-8') {
 				$tmpxpath = new DOMXPath($tmpdoc);
@@ -180,7 +159,7 @@ class Af_Readability extends Plugin {
 				$tmp = $tmpdoc->saveHTML();
 			}
 
-			$r = new Readability($tmp, $url);
+			$r = new Readability($tmp, $fetch_effective_url);
 
 			if ($r->init()) {
 				$tmpxpath = new DOMXPath($r->dom);
@@ -190,13 +169,13 @@ class Af_Readability extends Plugin {
 				foreach ($entries as $entry) {
 					if ($entry->hasAttribute("href")) {
 						$entry->setAttribute("href",
-								rewrite_relative_url($effective_url, $entry->getAttribute("href")));
+								rewrite_relative_url($fetch_effective_url, $entry->getAttribute("href")));
 
 					}
 
 					if ($entry->hasAttribute("src")) {
 						$entry->setAttribute("src",
-								rewrite_relative_url($effective_url, $entry->getAttribute("src")));
+								rewrite_relative_url($fetch_effective_url, $entry->getAttribute("src")));
 
 					}
 
