@@ -38,7 +38,7 @@ class Auto_Assign_Labels extends Plugin {
 		$tags_str = join(",", $article["tags"]);
 
 		foreach ($labels as $label) {
-			$caption = preg_quote($label[1]);
+			$caption = preg_quote($label[1], "/");
 
 			if ($caption && preg_match("/\b$caption\b/i", "$tags_str " . strip_tags($article["content"]) . " " . $article["title"])) {
 
