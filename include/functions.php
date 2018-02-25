@@ -500,7 +500,7 @@
 				  );
 
 			if (!$post_query && $last_modified) {
-				$context_options['http']['header'] = "If-Modified-Since: $last_modified\r\n";
+				array_push($context_options['http']['header'], "If-Modified-Since: $last_modified");
 			}
 
 			if (defined('_HTTP_PROXY')) {
