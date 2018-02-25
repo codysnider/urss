@@ -490,6 +490,9 @@
 
 			 $context_options = array(
 				  'http' => array(
+						'header' => array(
+							'Connection: close'
+						),
 						'method' => 'GET',
 						'ignore_errors' => true,
 						'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
