@@ -470,7 +470,7 @@ function togglePub(id, client_only, no_effects, note) {
 			imgs.push(fte[i]);
 	}
 
-	for (i = 0; i < imgs.length; i++) {
+	for (var i = 0; i < imgs.length; i++) {
 		var img = imgs[i];
 
 		if (!row.hasClassName("published") || note != undefined) {

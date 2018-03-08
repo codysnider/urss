@@ -110,6 +110,7 @@
 	} ?>
 
 	<script type="text/javascript">
+		'use strict';
 		require({cache:{}});
 	<?php
 		require_once 'lib/jshrink/Minifier.php';

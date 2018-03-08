@@ -628,7 +628,7 @@ function init_second_stage() {
 	var hotkeys = getInitParam("hotkeys");
 	var tmp = [];
 
-	for (sequence in hotkeys[1]) {
+	for (var sequence in hotkeys[1]) {
 		filtered = sequence.replace(/\|.*$/, "");
 		tmp[filtered] = hotkeys[1][sequence];
 	}
@@ -752,7 +752,7 @@ function parse_runtime_info(data) {
 
 	//console.log("parsing runtime info...");
 
-	for (k in data) {
+	for (var k in data) {
 		var v = data[k];
 
 //		console.log("RI: " + k + " => " + v);
@@ -899,7 +899,7 @@ function hotkey_handler(e) {
 	var hotkey_action = false;
 	var hotkeys = getInitParam("hotkeys");
 
-	for (sequence in hotkeys[1]) {
+	for (var sequence in hotkeys[1]) {
 		if (sequence == hotkey) {
 			hotkey_action = hotkeys[1][sequence];
 			break;
@@ -1076,11 +1076,11 @@ function update_random_feed() {
 }
 
 function hash_get(key) {
-	kv = window.location.hash.substring(1).toQueryParams();
+	var kv = window.location.hash.substring(1).toQueryParams();
 	return kv[key];
 }
 function hash_set(key, value) {
-	kv = window.location.hash.substring(1).toQueryParams();
+	var kv = window.location.hash.substring(1).toQueryParams();
 	kv[key] = value;
 	window.location.hash = $H(kv).toQueryString();
 }

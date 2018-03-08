@@ -939,7 +939,7 @@ function pref_hotkey_handler(e) {
 	var hotkey_action = false;
 	var hotkeys = getInitParam("hotkeys");
 
-	for (sequence in hotkeys[1]) {
+	for (var sequence in hotkeys[1]) {
 		if (sequence == hotkey) {
 			hotkey_action = hotkeys[1][sequence];
 			break;
