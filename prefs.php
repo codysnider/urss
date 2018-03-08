@@ -77,10 +77,16 @@
 	} ?>
 
 	<script type="text/javascript">
+		'use strict';
 		require({cache:{}});
 	<?php
 		require_once 'lib/jshrink/Minifier.php';
 
+		print get_minified_js(["functions.js", "prefs.js"]);
+	?>
+	</script>
+	<script type="text/javascript">
+	<?php
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
 			if (method_exists($p, "get_prefs_js")) {
 				echo "try {";
@@ -91,8 +97,6 @@
 				}";
 			}
 		}
-
-		print get_minified_js(["functions.js", "prefs.js"]);
 
 		init_js_translations();
 	?>
