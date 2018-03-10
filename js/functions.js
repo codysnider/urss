@@ -1486,7 +1486,7 @@ function helpDialog(topic) {
 	if (dijit.byId("helpDlg"))
 		dijit.byId("helpDlg").destroyRecursive();
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "helpDlg",
 		title: __("Help"),
 		style: "width: 600px",
