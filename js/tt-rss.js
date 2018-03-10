@@ -160,7 +160,7 @@ function search() {
 	if (dijit.byId("searchDlg"))
 		dijit.byId("searchDlg").destroyRecursive();
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "searchDlg",
 		title: __("Search"),
 		style: "width: 600px",
