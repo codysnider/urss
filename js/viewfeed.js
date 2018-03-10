@@ -1259,7 +1259,7 @@ function catchupBatchedArticles() {
 
 				_catchup_request_sent = false;
 
-				reply = JSON.parse(transport.responseText);
+				var reply = JSON.parse(transport.responseText);
 				var batch = reply.ids;
 
 				batch.each(function (id) {
