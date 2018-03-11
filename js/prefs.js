@@ -91,7 +91,7 @@ function editUser(id) {
 	if (dijit.byId("userEditDlg"))
 		dijit.byId("userEditDlg").destroyRecursive();
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "userEditDlg",
 		title: __("User Editor"),
 		style: "width: 600px",
@@ -126,7 +126,7 @@ function editFilter(id) {
 	if (dijit.byId("filterEditDlg"))
 		dijit.byId("filterEditDlg").destroyRecursive();
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "filterEditDlg",
 		title: __("Edit Filter"),
 		style: "width: 600px",
@@ -474,7 +474,7 @@ function selectedUserDetails() {
 	if (dijit.byId("userDetailsDlg"))
 		dijit.byId("userDetailsDlg").destroyRecursive();
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "userDetailsDlg",
 		title: __("User details"),
 		style: "width: 600px",
@@ -676,7 +676,7 @@ function opmlImportComplete(iframe) {
 
 	var content = iframe.contentDocument.body.innerHTML;
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "opmlImportDlg",
 		title: __("OPML Import"),
 		style: "width: 600px",
@@ -1038,7 +1038,7 @@ function showInactiveFeeds() {
 	if (dijit.byId("inactiveFeedsDlg"))
 		dijit.byId("inactiveFeedsDlg").destroyRecursive();
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "inactiveFeedsDlg",
 		title: __("Feeds without recent updates"),
 		style: "width: 600px",
@@ -1152,7 +1152,7 @@ function editProfiles() {
 
 	var query = "backend.php?op=pref-prefs&method=editPrefProfiles";
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "profileEditDlg",
 		title: __("Settings Profiles"),
 		style: "width: 600px",
@@ -1347,7 +1347,7 @@ function editLabel(id) {
 	if (dijit.byId("labelEditDlg"))
 		dijit.byId("labelEditDlg").destroyRecursive();
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "labelEditDlg",
 		title: __("Label Editor"),
 		style: "width: 600px",
@@ -1415,7 +1415,7 @@ function customizeCSS() {
 	if (dijit.byId("cssEditDlg"))
 		dijit.byId("cssEditDlg").destroyRecursive();
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "cssEditDlg",
 		title: __("Customize stylesheet"),
 		style: "width: 600px",

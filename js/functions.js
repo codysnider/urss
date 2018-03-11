@@ -301,7 +301,7 @@ function getURLParam(param){
 }
 
 function closeInfoBox() {
-	dialog = dijit.byId("infoBox");
+	var dialog = dijit.byId("infoBox");
 
 	if (dialog)	dialog.hide();
 
@@ -939,7 +939,7 @@ function quickAddFilter() {
 	if (dijit.byId("filterEditDlg"))
 		dijit.byId("filterEditDlg").destroyRecursive();
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "filterEditDlg",
 		title: __("Create Filter"),
 		style: "width: 600px",
@@ -1257,7 +1257,7 @@ function editFeed(feed) {
 	if (dijit.byId("feedEditDlg"))
 		dijit.byId("feedEditDlg").destroyRecursive();
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "feedEditDlg",
 		title: __("Edit Feed"),
 		style: "width: 600px",
@@ -1432,7 +1432,7 @@ function showFeedsWithErrors() {
 	if (dijit.byId("errorFeedsDlg"))
 		dijit.byId("errorFeedsDlg").destroyRecursive();
 
-	dialog = new dijit.Dialog({
+	var dialog = new dijit.Dialog({
 		id: "errorFeedsDlg",
 		title: __("Feeds with update errors"),
 		style: "width: 600px",
