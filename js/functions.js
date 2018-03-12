@@ -646,7 +646,7 @@ function quickAddFeed() {
 								dialog.show_error(__("Specified URL doesn't seem to contain any feeds."));
 								break;
 							case 4:
-								feeds = rc['feeds'];
+								var feeds = rc['feeds'];
 
 								Element.show("fadd_multiple_notify");
 
@@ -1032,7 +1032,7 @@ function quickAddFilter() {
 
 					var title = false;
 
-					if (reply && reply) title = reply.title;
+					if (reply && reply.title) title = reply.title;
 
 					if (title || getActiveFeedId() || activeFeedIsCat()) {
 
