@@ -1323,25 +1323,6 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "</div>"; # pane
 
-		if (strpos($_SERVER['HTTP_USER_AGENT'], "Firefox") !== false) {
-
-			print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Firefox integration')."\">";
-
-			print_notice(__('This Tiny Tiny RSS site can be used as a Firefox Feed Reader by clicking the link below.'));
-
-			print "<p>";
-
-			print "<button onclick='window.navigator.registerContentHandler(" .
-                      "\"application/vnd.mozilla.maybe.feed\", " .
-                      "\"" . $this->subscribe_to_feed_url() . "\", " . " \"Tiny Tiny RSS\")'>" .
-							 __('Click here to register this site as a feed reader.') .
-				"</button>";
-
-			print "</p>";
-
-			print "</div>"; # pane
-		}
-
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Published & shared articles / Generated feeds')."\">";
 
 		print "<p>" . __('Published articles are exported as a public RSS feed and can be subscribed by anyone who knows the URL specified below.') . "</p>";
