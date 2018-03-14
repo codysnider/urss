@@ -1017,7 +1017,7 @@ function handle_rpc_json(transport, scheduled_call) {
 function switchPanelMode(wide) {
 	if (isCdmMode()) return;
 
-	article_id = getActiveArticleId();
+	var article_id = getActiveArticleId();
 
 	if (wide) {
 		dijit.byId("headlines-wrap-inner").attr("design", 'sidebar');
