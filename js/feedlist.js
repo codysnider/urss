@@ -124,7 +124,6 @@ function viewfeed(params) {
 
 	if (!background) {
 		if (_search_query) {
-			force_nocache = true;
 			query = query + "&" + _search_query;
 			//_search_query = false;
 		}
