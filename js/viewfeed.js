@@ -934,7 +934,7 @@ function deleteSelection() {
 		return;
 	}
 
-	query = "?op=rpc&method=delete&ids=" + param_escape(rows);
+	var query = "?op=rpc&method=delete&ids=" + param_escape(rows);
 
 	console.log(query);
 
@@ -978,7 +978,7 @@ function archiveSelection() {
 		return;
 	}
 
-	query = "?op=rpc&method="+op+"&ids=" + param_escape(rows);
+	var query = "?op=rpc&method="+op+"&ids=" + param_escape(rows);
 
 	console.log(query);
 
