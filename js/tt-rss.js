@@ -610,7 +610,7 @@ function init_second_stage() {
 	dijit.getEnclosingWidget(toolbar.order_by).attr('value',
 		getInitParam("default_view_order_by"));
 
-	feeds_sort_by_unread = getInitParam("feeds_sort_by_unread") == 1;
+	var feeds_sort_by_unread = getInitParam("feeds_sort_by_unread") == 1;
 
 	var hash_feed_id = hash_get('f');
 	var hash_feed_is_cat = hash_get('c') == "1";
@@ -629,7 +629,7 @@ function init_second_stage() {
 	var tmp = [];
 
 	for (var sequence in hotkeys[1]) {
-		filtered = sequence.replace(/\|.*$/, "");
+		var filtered = sequence.replace(/\|.*$/, "");
 		tmp[filtered] = hotkeys[1][sequence];
 	}
 
