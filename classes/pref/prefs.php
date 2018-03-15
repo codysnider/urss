@@ -146,7 +146,7 @@ class Pref_Prefs extends Handler_Protected {
 
 		$_SESSION["prefs_op_result"] = "reset-to-defaults";
 
-		$sth = $this->pdo->query("DELETE FROM ttrss_user_prefs
+		$sth = $this->pdo->prepare("DELETE FROM ttrss_user_prefs
 			WHERE (profile = :profile OR (:profile IS NULL AND profile IS NULL)) 
 				AND owner_uid = :uid");
 		$sth->execute([":profile" => $_SESSION['profile'], ":uid" => $_SESSION['uid']]);
