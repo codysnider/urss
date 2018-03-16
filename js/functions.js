@@ -564,8 +564,6 @@ function addLabel(select, callback) {
 
 		notify_progress("Loading, please wait...", true);
 
-		if (inPreferences() && !select) active_tab = "labelConfig";
-
 		new Ajax.Request("backend.php", {
 			parameters: query,
 			onComplete: function(transport) {
