@@ -1548,8 +1548,6 @@ function hlClicked(event, id) {
 		view(id);
 		return true;
 	} else if (event.ctrlKey || event.metaKey) {
-		toggleSelected(id, true);
-		toggleUnread(id, 0, false);
 		openArticleInNewWindow(id);
 		return false;
 	} else {
