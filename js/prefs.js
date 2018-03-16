@@ -1441,7 +1441,7 @@ function insertSSLserial(value) {
 }
 
 function gotoExportOpml(filename, settings) {
-	tmp = settings ? 1 : 0;
+	var tmp = settings ? 1 : 0;
 	document.location.href = "backend.php?op=opml&method=export&filename=" + filename + "&settings=" + tmp;
 }
 
