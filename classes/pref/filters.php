@@ -980,7 +980,6 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<input dojoType=\"dijit.form.ValidationTextBox\"
 			 required=\"true\" id=\"filterDlg_regExp\"
-			 placeholder=\"match|keywords\"
 			 style=\"font-size : 16px; width : 20em;\"
 			 name=\"reg_exp\" value=\"$reg_exp\"/>";
 
