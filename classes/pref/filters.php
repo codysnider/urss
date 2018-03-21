@@ -301,7 +301,7 @@ class Pref_Filters extends Handler_Protected {
 
 			$match_ok = false;
 			if ($filter_search) {
-				$rules_sth = $this->pdo->prepare("SELECT reg_exp 
+				$rules_sth = $this->pdo->prepare("SELECT reg_exp
 					FROM ttrss_filters2_rules WHERE filter_id = ?");
 				$rules_sth->execute([$line['id']]);
 
@@ -356,7 +356,7 @@ class Pref_Filters extends Handler_Protected {
 
 		$filter_id = clean($_REQUEST["id"]);
 
-		$sth = $this->pdo->prepare("SELECT * FROM ttrss_filters2 
+		$sth = $this->pdo->prepare("SELECT * FROM ttrss_filters2
 			WHERE id = ? AND owner_uid = ?");
 		$sth->execute([$filter_id, $_SESSION['uid']]);
 
@@ -529,7 +529,7 @@ class Pref_Filters extends Handler_Protected {
 
 			print "</div>";
 			print "</form>";
-			
+
 		}
 	}
 
@@ -646,7 +646,7 @@ class Pref_Filters extends Handler_Protected {
 		$ids = explode(",", clean($_REQUEST["ids"]));
 		$ids_qmarks = arr_qmarks($ids);
 
-		$sth = $this->pdo->prepare("DELETE FROM ttrss_filters2 WHERE id IN ($ids_qmarks) 
+		$sth = $this->pdo->prepare("DELETE FROM ttrss_filters2 WHERE id IN ($ids_qmarks)
 			AND owner_uid = ?");
 		$sth->execute(array_merge($ids, [$_SESSION['uid']]));
 	}
@@ -662,7 +662,7 @@ class Pref_Filters extends Handler_Protected {
 
 		if (!is_array(clean($_REQUEST["rule"]))) $_REQUEST["rule"] = [];
 		if (!is_array(clean($_REQUEST["action"]))) $_REQUEST["action"] = [];
-		
+
 		if ($filter_id) {
 			/* create rules */
 
@@ -980,8 +980,13 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<input dojoType=\"dijit.form.ValidationTextBox\"
 			 required=\"true\" id=\"filterDlg_regExp\"
+			 placeholder=\"match|keywords\"
 			 style=\"font-size : 16px; width : 20em;\"
 			 name=\"reg_exp\" value=\"$reg_exp\"/>";
+
+		print "<div dojoType=\"dijit.Tooltip\" connectId=\"filterDlg_regExp\" position=\"below\">
+			".__("Regular expression, without outer delimiters (i.e. slashes)")."
+		</div>";
 
 		print "<hr/>";
 		print "<input id=\"filterDlg_inverse\" dojoType=\"dijit.form.CheckBox\"
@@ -1136,7 +1141,7 @@ class Pref_Filters extends Handler_Protected {
 
 			$title = sprintf(_ngettext("%s (%d rule)", "%s (%d rules)", (int) $num_rules), $title, $num_rules);
 
-			$sth = $this->pdo->prepare("SELECT * FROM ttrss_filters2_actions 
+			$sth = $this->pdo->prepare("SELECT * FROM ttrss_filters2_actions
 				WHERE filter_id = ? ORDER BY id LIMIT 1");
 			$sth->execute([$id]);
 
