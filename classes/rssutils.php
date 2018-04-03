@@ -978,18 +978,10 @@ class RSSUtils {
 
 					_debug("resulting RID: $entry_ref_id, IID: $entry_int_id", $debug_enabled);
 
-					if (DB_TYPE == "pgsql") {
-						$tsvector_combined = mb_substr($entry_title . ' ' .
-							preg_replace('/[<\?\:]/', ' ', strip_tags($entry_content)),
-							0, 1000000);
-
-						$tsvector_qpart = "tsvector_combined = to_tsvector(".$pdo->quote($feed_language).", ".$pdo->quote($tsvector_combined)."),";
-
-					} else {
+					if (DB_TYPE == "pgsql")
+						$tsvector_qpart = "tsvector_combined = to_tsvector(:ts_lang, :ts_content),";
+					else
 						$tsvector_qpart = "";
-					}
-
-					//_debug($tsvector_qpart);
 
 					$sth = $pdo->prepare("UPDATE ttrss_entries
 						SET title = :title,
@@ -1003,7 +995,7 @@ class RSSUtils {
 							lang = :lang														
 						WHERE id = :id");
 
-					$sth->execute([":title" => $entry_title,
+					$params = [":title" => $entry_title,
 						":content" => "$entry_content",
 						":content_hash" => $entry_current_hash,
 						":updated" => $entry_timestamp_fmt,
@@ -1011,7 +1003,14 @@ class RSSUtils {
 						":plugin_data" => $entry_plugin_data,
 						":author" => "$entry_author",
 						":lang" => $entry_language,
-						":id" => $ref_id]);
+						":id" => $ref_id];
+
+					if (DB_TYPE == "pgsql") {
+						$params[":ts_lang"] = $feed_language;
+						$params[":ts_content"] = mb_substr(strip_tags($entry_title . " " . $entry_content), 0, 1000000);
+					}
+
+					$sth->execute($params);
 
 					// update aux data
 					$sth = $pdo->prepare("UPDATE ttrss_user_entries

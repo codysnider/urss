@@ -366,13 +366,11 @@
 		while (true) {
 
 			while ($line = $sth->fetch()) {
-			   $tsvector_combined = mb_substr($line['title'] . ' ' .
-                   preg_replace('/[<\?\:]/', ' ', strip_tags($line['content'])),
-					0, 1000000);
+				$tsvector_combined = mb_substr(strip_tags($line["title"] . " " . $line["content"]), 0, 1000000);
 
-                $usth->execute([$tsvector_combined, $line['id']]);
+				$usth->execute([$tsvector_combined, $line['id']]);
 
-                $processed++;
+				$processed++;
 			}
 
 			print "Processed $processed articles...\n";
