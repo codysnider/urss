@@ -4,6 +4,7 @@ class Import_Export extends Plugin implements IHandler {
 
 	function init($host) {
 		$this->host = $host;
+		$this->pdo = Db::pdo();
 
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 		$host->add_command("xml-import", "import articles from XML", $this, ":", "FILE");
@@ -34,14 +35,15 @@ class Import_Export extends Plugin implements IHandler {
 
 		_debug("importing $filename for user $username...\n");
 
-		$result = db_query("SELECT id FROM ttrss_users WHERE login = '$username'");
+		$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE login = ?");
+		$sth->execute([$username]);
 
-		if (db_num_rows($result) == 0) {
+		if ($sth->rowCount() == 0) {
 			print "error: could not find user $username.\n";
 			return;
 		}
 
-		$owner_uid = db_fetch_result($result, 0, "id");
+		$owner_uid = $sth->fetchColumn(0);
 
 		$this->perform_data_import($filename, $owner_uid);
 	}
@@ -131,12 +133,12 @@ class Import_Export extends Plugin implements IHandler {
 	}
 
 	function exportrun() {
-		$offset = (int) db_escape_string($_REQUEST['offset']);
+		$offset = (int) $_REQUEST['offset'];
 		$exported = 0;
 		$limit = 250;
 
 		if ($offset < 10000 && is_writable(CACHE_DIR . "/export")) {
-			$result = db_query("SELECT
+			$sth = $this->pdo->prepare("SELECT
 					ttrss_entries.guid,
 					ttrss_entries.title,
 					content,
@@ -156,8 +158,9 @@ class Import_Export extends Plugin implements IHandler {
 				WHERE
 					(marked = true OR feed_id IS NULL) AND
 					ref_id = ttrss_entries.id AND
-					ttrss_user_entries.owner_uid = " . $_SESSION['uid'] . "
-				ORDER BY ttrss_entries.id LIMIT $limit OFFSET $offset");
+					ttrss_user_entries.owner_uid = ?
+				ORDER BY ttrss_entries.id LIMIT ? OFFSET ?");
+			$sth->execute([$_SESSION['uid'], $limit, $offset]);
 
 			$exportname = sha1($_SESSION['uid'] . $_SESSION['login']);
 
@@ -170,7 +173,7 @@ class Import_Export extends Plugin implements IHandler {
 
 			if ($fp) {
 
-				while ($line = db_fetch_assoc($result)) {
+				while ($line = $sth->fetch(PDO::FETCH_ASSOC)) {
 					fputs($fp, "<article>");
 
 					foreach ($line as $k => $v) {
@@ -181,7 +184,7 @@ class Import_Export extends Plugin implements IHandler {
 					fputs($fp, "</article>");
 				}
 
-				$exported = db_num_rows($result);
+				$exported = $sth->rowCount();
 
 				if ($exported < $limit && $exported > 0) {
 					fputs($fp, "</articles>");
@@ -270,12 +273,13 @@ class Import_Export extends Plugin implements IHandler {
 
 						//print 'GUID:' . $article['guid'] . "\n";
 
-						$result = db_query("SELECT id FROM ttrss_entries
-							WHERE guid = '".$article['guid']."'");
+						$sth = $this->pdo->prepare("SELECT id FROM ttrss_entries
+							WHERE guid = ?");
+						$sth->execute([$article['guid']]);
 
-						if (db_num_rows($result) == 0) {
+						if ($sth->rowCount() == 0) {
 
-							$result = db_query(
+							$sth = $this->pdo->prepare(
 								"INSERT INTO ttrss_entries
 									(title,
 									guid,
@@ -290,28 +294,37 @@ class Import_Export extends Plugin implements IHandler {
 									num_comments,
 									author)
 								VALUES
-									('".$article['title']."',
-									'".$article['guid']."',
-									'".$article['link']."',
-									'".$article['updated']."',
-									'".$article['content']."',
-									'".sha1($article['content'])."',
+									(?,
+									?,
+									?,
+									?,
+									?,
+									?,
 									false,
 									NOW(),
 									NOW(),
 									'',
 									'0',
 									'')");
+							$sth->execute([
+								$article['title'],
+								$article['guid'],
+								$article['link'],
+								$article['updated'],
+								$article['content'],
+								sha1($article['content'])
+							]);
 
-							$result = db_query("SELECT id FROM ttrss_entries
-								WHERE guid = '".$article['guid']."'");
+							$sth = $this->pdo->prepare("SELECT id FROM ttrss_entries
+								WHERE guid = ?");
+							$sth->execute([$article['guid']]);
 
-							if (db_num_rows($result) != 0) {
-								$ref_id = db_fetch_result($result, 0, "id");
+							if ($sth->rowCount() != 0) {
+								$ref_id = $sth->fetchColumn(0);
 							}
 
 						} else {
-							$ref_id = db_fetch_result($result, 0, "id");
+							$ref_id = $sth->fetchColumn(0);
 						}
 
 						//print "Got ref ID: $ref_id\n";
@@ -324,24 +337,27 @@ class Import_Export extends Plugin implements IHandler {
 							$feed = 'NULL';
 
 							if ($feed_url && $feed_title) {
-								$result = db_query("SELECT id FROM ttrss_feeds
-									WHERE feed_url = '$feed_url' AND owner_uid = '$owner_uid'");
+								$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
+									WHERE feed_url = ? AND owner_uid = ?");
+								$sth->execute([$feed_url, $owner_uid]);
 
-								if (db_num_rows($result) != 0) {
-									$feed = db_fetch_result($result, 0, "id");
+								if ($sth->rowCount() != 0) {
+									$feed = $sth->fetchColumn(0);
 								} else {
 									// try autocreating feed in Uncategorized...
 
-									$result = db_query("INSERT INTO ttrss_feeds (owner_uid,
-										feed_url, title) VALUES ($owner_uid, '$feed_url', '$feed_title')");
+									$sth = $this->pdo->prepare("INSERT INTO ttrss_feeds (owner_uid,
+										feed_url, title) VALUES (?, ?, ?)");
+									$sth->execute([$owner_uid, $feed_url, $feed_title]);
 
-									$result = db_query("SELECT id FROM ttrss_feeds
-										WHERE feed_url = '$feed_url' AND owner_uid = '$owner_uid'");
+									$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
+										WHERE feed_url = ? AND owner_uid = ?");
+									$sth->execute([$feed_url, $owner_uid]);
 
-									if (db_num_rows($result) != 0) {
+									if ($sth->rowCount() != 0) {
 										++$num_feeds_created;
 
-										$feed = db_fetch_result($result, 0, "id");
+										$feed = $sth->fetchColumn(0);
 									}
 								}
 							}
@@ -353,10 +369,11 @@ class Import_Export extends Plugin implements IHandler {
 
 							//print "$ref_id / $feed / " . $article['title'] . "\n";
 
-							$result = db_query("SELECT int_id FROM ttrss_user_entries
-								WHERE ref_id = '$ref_id' AND owner_uid = '$owner_uid' AND $feed_qpart");
+							$sth = $this->pdo->prepare("SELECT int_id FROM ttrss_user_entries
+								WHERE ref_id = ? AND owner_uid = ? AND ?");
+							$sth->execute([$ref_id, $owner_uid, $feed_qpart]);
 
-							if (db_num_rows($result) == 0) {
+							if ($sth->rowCount() == 0) {
 
 								$marked = $this->bool_to_sql_bool(sql_bool_to_bool($article['marked']));
 								$published = $this->bool_to_sql_bool(sql_bool_to_bool($article['published']));
@@ -369,13 +386,14 @@ class Import_Export extends Plugin implements IHandler {
 
 								++$num_imported;
 
-								$result = db_query(
+								$sth = $this->pdo->prepare(
 									"INSERT INTO ttrss_user_entries
 									(ref_id, owner_uid, feed_id, unread, last_read, marked,
 										published, score, tag_cache, label_cache, uuid, note)
-									VALUES ($ref_id, $owner_uid, $feed, false,
-										NULL, $marked, $published, $score, '$tag_cache',
-											'', '', '$note')");
+									VALUES (?, ?, ?, false,
+										NULL, ?, ?, ?, ?,
+											'', '', ?)");
+								$sth->execute([$ref_id, $owner_uid, $feed, $marked, $published, $score, $tag_cache, $note]);
 
 								$label_cache = json_decode($article['label_cache'], true);
 

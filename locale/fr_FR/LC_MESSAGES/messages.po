@@ -351,7 +351,7 @@ msgstr "Déconnexion"
 
 #: index.php:274
 msgid "Updates are available from Git."
-msgstr "Des mises à jour sont disponible via Git"
+msgstr "Des mises à jour sont disponibles via Git"
 
 #: prefs.php:33
 #: prefs.php:140
@@ -533,11 +533,11 @@ msgstr "Ouvrir l'article précédent (ne pas faire défiler les articles longs)"
 
 #: include/functions.php:1155
 msgid "Move to next article (don't expand or mark read)"
-msgstr "Aller à l'article suivant (ne pas développer ou marqué lu)"
+msgstr "Aller à l'article suivant (ne pas développer ou marquer comme lu)"
 
 #: include/functions.php:1156
 msgid "Move to previous article (don't expand or mark read)"
-msgstr "Aller à l'article précédent (ne pas développer ou marqué lu)"
+msgstr "Aller à l'article précédent (ne pas développer ou marquer comme lu)"
 
 #: include/functions.php:1157
 msgid "Show search dialog"
