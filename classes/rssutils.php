@@ -989,6 +989,7 @@ class RSSUtils {
 							content = :content,
 							content_hash = :content_hash,
 							updated = :updated,
+							date_updated = NOW(),
 							num_comments = :num_comments,
 							plugin_data = :plugin_data,
 							author = :author,
