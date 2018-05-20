@@ -61,7 +61,7 @@ class Af_Zz_ImgProxy extends Plugin {
 			send_local_file($local_filename);
 
 		} else {
-			$data = fetch_file_contents(array("url" => $url));
+			$data = fetch_file_contents(["url" => $url, "max_size" => MAX_CACHE_FILE_SIZE]);
 
 			if ($data) {
 

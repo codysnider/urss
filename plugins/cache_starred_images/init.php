@@ -194,7 +194,7 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 				//_debug("cache_images: downloading: $src to $local_filename");
 
 				if (!file_exists($local_filename)) {
-					$file_content = fetch_file_contents($src);
+					$file_content = fetch_file_contents(["url" => $src, "max_size" => MAX_CACHE_FILE_SIZE]);
 
 					if ($file_content && strlen($file_content) > MIN_CACHE_FILE_SIZE) {
 						file_put_contents($local_filename, $file_content);

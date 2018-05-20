@@ -56,6 +56,10 @@
 	// default sleep interval between feed updates (sec)
 	define_default('MIN_CACHE_FILE_SIZE', 1024);
 	// do not cache files smaller than that (bytes)
+	define_default('MAX_CACHE_FILE_SIZE', 64*1024*1024);
+	// do not cache files larger than that (bytes)
+	define_default('MAX_DOWNLOAD_FILE_SIZE', 16*1024*1024);
+	// do not download general files larger than that (bytes)
 	define_default('CACHE_MAX_DAYS', 7);
 	// max age in days for various automatically cached (temporary) files
 	define_default('MAX_CONDITIONAL_INTERVAL', 3600*12);
@@ -317,6 +321,7 @@
 		}
 	}
 
+	// TODO: max_size currently only works for CURL transfers
 	// TODO: multiple-argument way is deprecated, first parameter is a hash now
 	function fetch_file_contents($options /* previously: 0: $url , 1: $type = false, 2: $login = false, 3: $pass = false,
 				4: $post_query = false, 5: $timeout = false, 6: $timestamp = 0, 7: $useragent = false*/) {
@@ -370,6 +375,7 @@
 		$last_modified = isset($options["last_modified"]) ? $options["last_modified"] : "";
 		$useragent = isset($options["useragent"]) ? $options["useragent"] : false;
 		$followlocation = isset($options["followlocation"]) ? $options["followlocation"] : true;
+		$max_size = isset($options["max_size"]) ? $options["max_size"] : MAX_DOWNLOAD_FILE_SIZE; // in bytes
 
 		$url = ltrim($url, ' ');
 		$url = str_replace(' ', '%20', $url);
@@ -400,6 +406,20 @@
 				SELF_USER_AGENT);
 			curl_setopt($ch, CURLOPT_ENCODING, "");
 			//curl_setopt($ch, CURLOPT_REFERER, $url);
+
+			if ($max_size) {
+				curl_setopt($ch, CURLOPT_NOPROGRESS, false);
+				curl_setopt($ch, CURLOPT_BUFFERSIZE, 128); // needed to get 5 arguments in progress function?
+
+				// holy shit closures in php
+				// download & upload are *expected* sizes respectively, could be zero
+				curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, function($curl_handle, $download_size, $downloaded, $upload_size, $uploaded) use( &$max_size) {
+					//_debug("[curl progressfunction] $downloaded $max_size");
+
+					return ($downloaded > $max_size) ? 1 : 0; // if max size is set, abort when exceeding it
+				});
+
+			}
 
 			if (!ini_get("open_basedir")) {
 				curl_setopt($ch, CURLOPT_COOKIEJAR, "/dev/null");
