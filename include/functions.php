@@ -409,7 +409,7 @@
 
 			if ($max_size) {
 				curl_setopt($ch, CURLOPT_NOPROGRESS, false);
-				curl_setopt($ch, CURLOPT_BUFFERSIZE, 128); // needed to get 5 arguments in progress function?
+				curl_setopt($ch, CURLOPT_BUFFERSIZE, 256); // needed to get 5 arguments in progress function?
 
 				// holy shit closures in php
 				// download & upload are *expected* sizes respectively, could be zero
