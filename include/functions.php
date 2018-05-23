@@ -409,7 +409,7 @@
 
 			if ($max_size) {
 				curl_setopt($ch, CURLOPT_NOPROGRESS, false);
-				curl_setopt($ch, CURLOPT_BUFFERSIZE, 256); // needed to get 5 arguments in progress function?
+				curl_setopt($ch, CURLOPT_BUFFERSIZE, 16384); // needed to get 5 arguments in progress function?
 
 				// holy shit closures in php
 				// download & upload are *expected* sizes respectively, could be zero
@@ -637,7 +637,7 @@
 		$profile = $profile ? $profile : null;
 
 		$u_sth = $pdo->prepare("SELECT pref_name
-			FROM ttrss_user_prefs WHERE owner_uid = :uid AND 
+			FROM ttrss_user_prefs WHERE owner_uid = :uid AND
 				(profile = :profile OR (:profile IS NULL AND profile IS NULL))");
 		$u_sth->execute([':uid' => $uid, ':profile' => $profile]);
 
@@ -868,14 +868,14 @@
 
 				/* cleanup ccache */
 
-				$sth = $pdo->prepare("DELETE FROM ttrss_counters_cache WHERE owner_uid = ? 
+				$sth = $pdo->prepare("DELETE FROM ttrss_counters_cache WHERE owner_uid = ?
 					AND
 						(SELECT COUNT(id) FROM ttrss_feeds WHERE
 							ttrss_feeds.id = feed_id) = 0");
 
 				$sth->execute([$_SESSION['uid']]);
 
-				$sth = $pdo->prepare("DELETE FROM ttrss_cat_counters_cache WHERE owner_uid = ? 
+				$sth = $pdo->prepare("DELETE FROM ttrss_cat_counters_cache WHERE owner_uid = ?
 					AND
 						(SELECT COUNT(id) FROM ttrss_feed_categories WHERE
 							ttrss_feed_categories.id = feed_id) = 0");
@@ -1409,7 +1409,7 @@
 		$search_query_leftover = array();
 
 		$pdo = Db::pdo();
-		
+
 		if ($search_language)
 			$search_language = $pdo->quote(mb_strtolower($search_language));
 		else
@@ -1999,7 +1999,7 @@
 		}
 
 		$sth = $pdo->prepare("SELECT id FROM ttrss_feed_categories
-				WHERE (parent_cat = :parent OR (:parent IS NULL AND parent_cat IS NULL)) 
+				WHERE (parent_cat = :parent OR (:parent IS NULL AND parent_cat IS NULL))
 				AND title = :title AND owner_uid = :uid");
 		$sth->execute([':parent' => $parent_cat_id, ':title' => $feed_cat, ':uid' => $_SESSION['uid']]);
 
