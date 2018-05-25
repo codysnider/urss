@@ -376,6 +376,7 @@
 		$useragent = isset($options["useragent"]) ? $options["useragent"] : false;
 		$followlocation = isset($options["followlocation"]) ? $options["followlocation"] : true;
 		$max_size = isset($options["max_size"]) ? $options["max_size"] : MAX_DOWNLOAD_FILE_SIZE; // in bytes
+		$http_accept = isset($options["http_accept"]) ? $options["http_accept"] : false;
 
 		$url = ltrim($url, ' ');
 		$url = str_replace(' ', '%20', $url);
@@ -389,10 +390,16 @@
 
 			$ch = curl_init($url);
 
-			if ($last_modified && !$post_query) {
-				curl_setopt($ch, CURLOPT_HTTPHEADER,
-					array("If-Modified-Since: $last_modified"));
-			}
+			$curl_http_headers = [];
+
+			if ($last_modified && !$post_query)
+				array_push($curl_http_headers, "If-Modified-Since: $last_modified");
+
+			if ($http_accept)
+				array_push($curl_http_headers, "Accept: " . $http_accept);
+
+			if (count($curl_http_headers) > 0)
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $curl_http_headers);
 
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout ? $timeout : FILE_FETCH_CONNECT_TIMEOUT);
 			curl_setopt($ch, CURLOPT_TIMEOUT, $timeout ? $timeout : FILE_FETCH_TIMEOUT);
@@ -519,9 +526,11 @@
 						'protocol_version'=> 1.1)
 				  );
 
-			if (!$post_query && $last_modified) {
+			if (!$post_query && $last_modified)
 				array_push($context_options['http']['header'], "If-Modified-Since: $last_modified");
-			}
+
+			if ($http_accept)
+				array_push($context_options['http']['header'], "Accept: $http_accept");
 
 			if (defined('_HTTP_PROXY')) {
 				$context_options['http']['request_fulluri'] = true;
