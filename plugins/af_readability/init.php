@@ -141,7 +141,10 @@ class Af_Readability extends Plugin {
 
 		if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
 
-		$tmp = fetch_file_contents(array("url" => $url, "type" => "text/html"));
+		$tmp = fetch_file_contents([
+			"url" => $url,
+			"http_accept" => "text/*",
+			"type" => "text/html"]);
 
 		if ($tmp && mb_strlen($tmp) < 1024 * 500) {
 			$tmpdoc = new DOMDocument("1.0", "UTF-8");
