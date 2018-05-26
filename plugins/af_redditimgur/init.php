@@ -84,15 +84,16 @@ class Af_RedditImgur extends Plugin {
 		$img_entries = $xpath->query("(//img[@src])");
 
 		$found = false;
+		//$debug = 1;
 
 		foreach ($entries as $entry) {
-			if ($entry->hasAttribute("href")) {
+			if ($entry->hasAttribute("href") && strpos($entry->getAttribute("href"), "reddit.com") === FALSE) {
 
 				_debug("processing href: " . $entry->getAttribute("href"), $debug);
 
 				$matches = array();
 
-				if (preg_match("/^https?:\/\/twitter.com\/(.*?)\/status\/(.*)/", $entry->getAttribute("href"), $matches)) {
+				if (!$found && preg_match("/^https?:\/\/twitter.com\/(.*?)\/status\/(.*)/", $entry->getAttribute("href"), $matches)) {
 					_debug("handling as twitter: " . $matches[1] . " " . $matches[2], $debug);
 
 					$oembed_result = fetch_file_contents("https://publish.twitter.com/oembed?url=" . urlencode($entry->getAttribute("href")));
@@ -285,7 +286,7 @@ class Af_RedditImgur extends Plugin {
 
 				// linked albums & pages
 
-				if (!$found && preg_match("/^https?:\/\/(m\.)?imgur.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches) ||
+				/*if (!$found && preg_match("/^https?:\/\/(m\.)?imgur.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches) ||
 					preg_match("/^https?:\/\/(m\.)?imgur.com\/(a|album|gallery)\/[^\.]+$/", $entry->getAttribute("href"), $matches)) {
 
 					_debug("Handling as an imgur page/album/gallery", $debug);
@@ -339,7 +340,7 @@ class Af_RedditImgur extends Plugin {
 							if ($debug) print_r($urls);
 						}
 					}
-				}
+				} */
 
 				// wtf is this even
 				if (!$found && preg_match("/^https?:\/\/gyazo\.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches)) {
@@ -356,6 +357,41 @@ class Af_RedditImgur extends Plugin {
 
 					$found = true;
 				}
+
+				// let's try meta properties
+				if (!$found) {
+					_debug("looking for meta og:image", $debug);
+
+					$content = fetch_file_contents(["url" => $entry->getAttribute("href"),
+						"http_accept" => "text/*"]);
+
+					if ($content) {
+						$cdoc = new DOMDocument();
+
+						if (@$cdoc->loadHTML($content)) {
+							$cxpath = new DOMXPath($cdoc);
+
+							$og_image = $cxpath->query("//meta[@property='og:image']")->item(0);
+
+							if ($og_image) {
+
+								$og_src = $og_image->getAttribute("content");
+
+								if ($og_src) {
+									$img = $doc->createElement('img');
+									$img->setAttribute("src", $og_src);
+
+									$br = $doc->createElement('br');
+									$entry->parentNode->insertBefore($img, $entry);
+									$entry->parentNode->insertBefore($br, $entry);
+
+									$found = true;
+								}
+							}
+						}
+					}
+				}
+
 			}
 
 			// remove tiny thumbnails
@@ -534,8 +570,9 @@ class Af_RedditImgur extends Plugin {
 
 				if ($content_type && strpos($content_type, "text/html") !== FALSE) {
 
-					$tmp = fetch_file_contents(array("url" => $url,
-						"useragent" => $useragent_compat));
+					$tmp = fetch_file_contents(["url" => $url,
+						"useragent" => $useragent_compat,
+						"http_accept" => "text/html"]);
 
 					if ($debug) _debug("tmplen: " . mb_strlen($tmp));
 
