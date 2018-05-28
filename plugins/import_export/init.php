@@ -151,9 +151,9 @@ class Import_Export extends Plugin implements IHandler {
 					(marked = true OR feed_id IS NULL) AND
 					ref_id = ttrss_entries.id AND
 					ttrss_user_entries.owner_uid = ?
-				ORDER BY ttrss_entries.id LIMIT ? OFFSET ?");
+				ORDER BY ttrss_entries.id LIMIT $limit OFFSET $offset");
 
-			$sth->execute([$_SESSION['uid'], $limit, $offset]);
+			$sth->execute([$_SESSION['uid']]);
 
 			$exportname = sha1($_SESSION['uid'] . $_SESSION['login']);
 
