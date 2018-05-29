@@ -629,16 +629,52 @@ class Article extends Handler_Protected {
 				}
 			}
 
+			$enclosures = self::get_article_enclosures($line["id"]);
+
 			if ($zoom_mode) {
 				header("Content-Type: text/html");
-				$rv['content'] .= "<html><head>
+				$rv['content'] .= "<!DOCTYPE html>
+						<html><head>
 						<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
 						<title>".$line["title"]."</title>".
 						stylesheet_tag("css/default.css")."
 						<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
-						<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">
+						<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">";
+				
+				$rv['content'] .= "<meta property=\"og:title\" content=\"".htmlspecialchars($line["title"])."\"/>\n";
+				$rv['content'] .= "<meta property=\"og:site_name\" content=\"".htmlspecialchars($line["feed_title"])."\"/>\n";
+				$rv['content'] .= "<meta property=\"og:description\" content=\"".
+					htmlspecialchars(truncate_string(strip_tags($line["content"]), 500, "..."))."\"/>\n";
 
-					</head><body class=\"claro ttrss_utility ttrss_zoom\">";
+				$rv['content'] .= "</head>";
+
+				$og_image = false;
+
+				foreach ($enclosures as $enc) {
+					if (strpos($enc["content_type"], "image/") !== FALSE) {
+						$og_image = $enc["content_url"];
+						break;
+					}
+				}
+
+				if (!$og_image) {
+					$tmpdoc = new DOMDocument();
+
+					if (@$tmpdoc->loadHTML(mb_substr($line["content"], 0, 131070))) {
+						$tmpxpath = new DOMXPath($tmpdoc);
+						$first_img = $tmpxpath->query("//img")->item(0);
+
+						if ($first_img) {
+							$og_image = $first_img->getAttribute("src");
+						}
+					}
+				}
+
+				if ($og_image) {
+					$rv['content'] .= "<meta property=\"og:image\" content=\"" . htmlspecialchars($og_image) . "\"/>";
+				}
+
+				$rv['content'] .= "<body class=\"claro ttrss_utility ttrss_zoom\">";
 			}
 
 			$rv['content'] .= "<div class=\"postReply\" id=\"POST-$id\">";
