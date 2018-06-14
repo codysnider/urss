@@ -14,6 +14,8 @@
 				if (preg_match("/^ref: (.*)/", $head, $matches)) {
 					$ref = $matches[1];
 
+					if (!file_exists("$root_dir/.git/$ref"))
+						return VERSION_STATIC;
 					$suffix = substr(trim(file_get_contents("$root_dir/.git/$ref")), 0, 7);
 					$timestamp = filemtime("$root_dir/.git/$ref");
 
