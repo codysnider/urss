@@ -24,8 +24,8 @@
 							(SELECT COUNT(id) = 0 FROM ttrss_feeds AS tf
 								WHERE tf.feed_url = qqq.feed_url
 									AND owner_uid = ?) $search_qpart
-						GROUP BY feed_url, site_url, title ORDER BY subscribers DESC LIMIT ?");
-			$sth->execute([$_SESSION['uid'], $limit]);
+						GROUP BY feed_url, site_url, title ORDER BY subscribers DESC LIMIT " . (int)$limit);
+			$sth->execute([$_SESSION['uid']]);
 
 		} else if ($mode == 2) {
 			$sth = $pdo->prepare("SELECT *,
@@ -38,9 +38,9 @@
 							WHERE ttrss_feeds.feed_url = ttrss_archived_feeds.feed_url AND
 								owner_uid = :uid) = 0	AND
 						owner_uid = :uid $search_qpart
-						ORDER BY id DESC LIMIT :limit");
+						ORDER BY id DESC LIMIT " . (int)$limit);
 
-			$sth->execute([":uid" => $_SESSION['uid'], ":limit" => $limit]);
+			$sth->execute([":uid" => $_SESSION['uid']]);
 		}
 
 		$feedctr = 0;
