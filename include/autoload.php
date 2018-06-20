@@ -2,12 +2,21 @@
 	require_once "functions.php";
 
 	spl_autoload_register(function($class) {
-		$class_file = str_replace("_", "/", strtolower(basename($class)));
+		list ($namespace, $class_name) = explode('\\', $class, 2);
 
-		$file = dirname(__FILE__)."/../classes/$class_file.php";
+		$root_dir = dirname(__DIR__); // we're in tt-rss/include
 
-		if (file_exists($file)) {
-			require $file;
+		// 1. third party libraries with namespaces are loaded from vendor/
+		// 2. internal tt-rss classes are loaded from classes/ and use special naming logic instead of namespaces
+		// 3. plugin classes are loaded by PluginHandler from plugins.local/ and plugins/ (TODO: use generic autoloader?)
+
+		if ($namespace && $class_name) {
+			$class_file = "$root_dir/vendor/$namespace/" . str_replace('\\', '/', $class_name) . ".php";
+		} else {
+			$class_file = "$root_dir/classes/" . str_replace("_", "/", strtolower($class)) . ".php";
 		}
+
+		if (file_exists($class_file))
+			include $class_file;
 
 	});

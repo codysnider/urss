@@ -1,4 +1,7 @@
 <?php
+use andreskrey\Readability\Readability;
+use andreskrey\Readability\Configuration;
+
 class Af_Readability extends Plugin {
 
 	/* @var PluginHost $host */
@@ -162,30 +165,35 @@ class Af_Readability extends Plugin {
 				$tmp = $tmpdoc->saveHTML();
 			}
 
-			$r = new Readability($tmp, $fetch_effective_url);
+			$r = new Readability(new Configuration());
 
-			if ($r->init()) {
-				$tmpxpath = new DOMXPath($r->dom);
+			try {
+				if ($r->parse($tmp)) {
 
-				$entries = $tmpxpath->query('(//a[@href]|//img[@src])');
+					$tmpxpath = new DOMXPath($r->getDOMDOcument());
+					$entries = $tmpxpath->query('(//a[@href]|//img[@src])');
 
-				foreach ($entries as $entry) {
-					if ($entry->hasAttribute("href")) {
-						$entry->setAttribute("href",
-								rewrite_relative_url($fetch_effective_url, $entry->getAttribute("href")));
+					foreach ($entries as $entry) {
+						if ($entry->hasAttribute("href")) {
+							$entry->setAttribute("href",
+									rewrite_relative_url($fetch_effective_url, $entry->getAttribute("href")));
 
+						}
+
+						if ($entry->hasAttribute("src")) {
+							$entry->setAttribute("src",
+									rewrite_relative_url($fetch_effective_url, $entry->getAttribute("src")));
+
+						}
 					}
 
-					if ($entry->hasAttribute("src")) {
-						$entry->setAttribute("src",
-								rewrite_relative_url($fetch_effective_url, $entry->getAttribute("src")));
-
-					}
-
+					return $r->getContent();
 				}
 
-				return $r->articleContent->innerHTML;
+			} catch (ParseException $e) {
+				return false;
 			}
+
 		}
 
 		return false;
