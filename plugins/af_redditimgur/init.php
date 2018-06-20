@@ -1,4 +1,7 @@
 <?php
+use andreskrey\Readability\Readability;
+use andreskrey\Readability\Configuration;
+
 class Af_RedditImgur extends Plugin {
 
 	/* @var PluginHost $host */
@@ -556,10 +559,8 @@ class Af_RedditImgur extends Plugin {
 
 			if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
 
-			if ($url &&
-				strpos($url, "twitter.com") === FALSE &&
-				strpos($url, "youtube.com") === FALSE &&
-				strpos($url, "reddit.com") === FALSE) {
+			// do not try to embed posts linking back to other reddit posts
+			if ($url &&	strpos($url, "reddit.com") === FALSE) {
 
 				/* link may lead to a huge video file or whatever, we need to check content type before trying to
 				parse it which p much requires curl */
@@ -578,30 +579,34 @@ class Af_RedditImgur extends Plugin {
 
 					if ($tmp && mb_strlen($tmp) < 1024 * 500) {
 
-						$r = new Readability($tmp, $url);
+						$r = new Readability(new Configuration());
 
-						if ($r->init()) {
+						try {
+							if ($r->parse($tmp)) {
 
-							$tmpxpath = new DOMXPath($r->dom);
+								$tmpxpath = new DOMXPath($r->getDOMDocument());
 
-							$entries = $tmpxpath->query('(//a[@href]|//img[@src])');
+								$entries = $tmpxpath->query('(//a[@href]|//img[@src])');
 
-							foreach ($entries as $entry) {
-								if ($entry->hasAttribute("href")) {
-									$entry->setAttribute("href",
-										rewrite_relative_url($url, $entry->getAttribute("href")));
+								foreach ($entries as $entry) {
+									if ($entry->hasAttribute("href")) {
+										$entry->setAttribute("href",
+											rewrite_relative_url($url, $entry->getAttribute("href")));
+
+									}
+
+									if ($entry->hasAttribute("src")) {
+										$entry->setAttribute("src",
+											rewrite_relative_url($url, $entry->getAttribute("src")));
+
+									}
 
 								}
 
-								if ($entry->hasAttribute("src")) {
-									$entry->setAttribute("src",
-										rewrite_relative_url($url, $entry->getAttribute("src")));
-
-								}
-
+								$article["content"] = $r->getContent() . "<hr/>" . $article["content"];
 							}
-
-							$article["content"] = $r->articleContent->innerHTML . "<hr/>" . $article["content"];
+						} catch (ParseException $e) {
+							//
 						}
 					}
 				}
