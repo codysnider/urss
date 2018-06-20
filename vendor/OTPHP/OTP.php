@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2011 Le Lag 
+ * Copyright (c) 2011 Le Lag
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -22,12 +22,12 @@
 
 namespace OTPHP {
 /**
- * One Time Password Generator 
- * 
+ * One Time Password Generator
+ *
  * The OTP class allow the generation of one-time
  * password that is described in rfc 4xxx.
- * 
- * This is class is meant to be compatible with 
+ *
+ * This is class is meant to be compatible with
  * Google Authenticator.
  *
  * This class was originally ported from the rotp
@@ -49,7 +49,7 @@ class OTP {
     /**
      * The number of digits in the one-time password
      * @var integer
-     */ 
+     */
     public $digits;
 
     /**
@@ -76,7 +76,7 @@ class OTP {
      * @param integer $input : number used to seed the hmac hash function.
      * This number is usually a counter (HOTP) or calculated based on the current
      * timestamp (see TOTP class).
-     * @return integer the one-time password 
+     * @return integer the one-time password
      */
     public function generateOTP($input) {
       $hash = hash_hmac($this->digest, $this->intToBytestring($input), $this->byteSecret());
@@ -99,7 +99,7 @@ class OTP {
      * @return binary secret key
      */
     public function byteSecret() {
-      return \Base32::decode($this->secret);
+      return Base32::decode($this->secret);
     }
 
     /**
