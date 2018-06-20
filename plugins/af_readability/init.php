@@ -142,8 +142,6 @@ class Af_Readability extends Plugin {
 	public function extract_content($url) {
 		global $fetch_effective_url;
 
-		if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
-
 		$tmp = fetch_file_contents([
 			"url" => $url,
 			"http_accept" => "text/*",

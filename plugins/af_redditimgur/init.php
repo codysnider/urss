@@ -557,8 +557,6 @@ class Af_RedditImgur extends Plugin {
 		if (!defined('NO_CURL') && function_exists("curl_init") && $this->host->get($this, "enable_readability") &&
 			mb_strlen(strip_tags($article["content"])) <= 150) {
 
-			if (!class_exists("Readability")) require_once(dirname(dirname(__DIR__)). "/lib/readability/Readability.php");
-
 			// do not try to embed posts linking back to other reddit posts
 			if ($url &&	strpos($url, "reddit.com") === FALSE) {
 
