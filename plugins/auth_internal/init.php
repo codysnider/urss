@@ -33,11 +33,7 @@ class Auth_Internal extends Plugin implements IAuthModule {
 
 				if ($row = $sth->fetch()) {
 
-					require_once "lib/otphp/vendor/base32.php";
-					require_once "lib/otphp/lib/otp.php";
-					require_once "lib/otphp/lib/totp.php";
-
-					$base32 = new Base32();
+					$base32 = new \OTPHP\Base32();
 
 					$otp_enabled = $row['otp_enabled'];
 					$secret = $base32->encode(sha1($row['salt']));
