@@ -2386,7 +2386,6 @@
 	}
 
 	function get_minified_js($files) {
-		require_once 'lib/jshrink/Minifier.php';
 
 		$rv = '';
 

@@ -80,8 +80,6 @@
 		'use strict';
 		require({cache:{}});
 	<?php
-		require_once 'lib/jshrink/Minifier.php';
-
 		print get_minified_js(["functions.js", "prefs.js"]);
 	?>
 	</script>
