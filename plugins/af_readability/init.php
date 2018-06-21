@@ -29,6 +29,10 @@ class Af_Readability extends Plugin {
 	{
 		$this->host = $host;
 
+		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+			return;
+		}
+
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 		$host->add_hook($host::HOOK_PREFS_EDIT_FEED, $this);
@@ -41,6 +45,10 @@ class Af_Readability extends Plugin {
 		if ($args != "prefFeeds") return;
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Readability settings (af_readability)')."\">";
+
+		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+			print_error("This plugin requires PHP version 5.6.");
+		}
 
 		print_notice("Enable the plugin for specific feeds in the feed editor.");
 
@@ -201,7 +209,10 @@ class Af_Readability extends Plugin {
 
 		$extracted_content = $this->extract_content($article["link"]);
 
-		if ($extracted_content) {
+		# let's see if there's anything of value in there
+		$content_test = trim(strip_tags(sanitize($extracted_content)));
+
+		if ($content_test) {
 			$article["content"] = $extracted_content;
 		}
 

@@ -32,6 +32,10 @@ class Af_RedditImgur extends Plugin {
 		$enable_readability = $this->host->get($this, "enable_readability");
 		$enable_content_dupcheck = $this->host->get($this, "enable_content_dupcheck");
 
+		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+			print_error("Readability requires PHP version 5.6.");
+		}
+
 		print "<form dojoType=\"dijit.form.Form\">";
 
 		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
@@ -51,9 +55,6 @@ class Af_RedditImgur extends Plugin {
 		print_hidden("op", "pluginhandler");
 		print_hidden("method", "save");
 		print_hidden("plugin", "af_redditimgur");
-
-		print "<p>" . __("Uses Readability (full-text-rss) implementation by <a target='_blank' href='https://bitbucket.org/fivefilters/'>FiveFilters.org</a>");
-		print "<p/>";
 
 		print_checkbox("enable_readability", $enable_readability);
 		print "&nbsp;<label for=\"enable_readability\">" . __("Extract missing content using Readability") . "</label>";
@@ -287,64 +288,6 @@ class Af_RedditImgur extends Plugin {
 					$found = true;
 				}
 
-				// linked albums & pages
-
-				/*if (!$found && preg_match("/^https?:\/\/(m\.)?imgur.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches) ||
-					preg_match("/^https?:\/\/(m\.)?imgur.com\/(a|album|gallery)\/[^\.]+$/", $entry->getAttribute("href"), $matches)) {
-
-					_debug("Handling as an imgur page/album/gallery", $debug);
-
-					$album_content = fetch_file_contents($entry->getAttribute("href"),
-						false, false, false, false, 10);
-
-					if ($album_content) {
-						$adoc = new DOMDocument();
-
-						if (@$adoc->loadHTML($album_content)) {
-							$axpath = new DOMXPath($adoc);
-
-							$aentries = $axpath->query("(//div[@class='post-image']/img[@src] | //a[@class='zoom']/img[@src] | //div[@class='video-elements']/source)");
-							$urls = [];
-
-							foreach ($aentries as $aentry) {
-
-								$url = $aentry->getAttribute("src");
-
-								if (!in_array($url, $urls)) {
-
-									if ($aentry->tagName == "img") {
-
-										$img = $doc->createElement('img');
-										$img->setAttribute("src", $url);
-										$entry->parentNode->insertBefore($doc->createElement('br'), $entry);
-
-										$br = $doc->createElement('br');
-
-										$entry->parentNode->insertBefore($img, $entry);
-										$entry->parentNode->insertBefore($br, $entry);
-									} else if ($aentry->tagName == "source") {
-
-										if (strpos($url, "imgur.com") !== FALSE)
-											$poster_url = str_replace(".mp4", "h.jpg", $url);
-										else
-											$poster_url = "";
-
-										$this->handle_as_video($doc, $entry, $url, $poster_url);
-
-									}
-
-									array_push($urls, $url);
-
-									$found = true;
-								}
-
-							}
-
-							if ($debug) print_r($urls);
-						}
-					}
-				} */
-
 				// wtf is this even
 				if (!$found && preg_match("/^https?:\/\/gyazo\.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches)) {
 					$img_id = $matches[1];
@@ -558,7 +501,8 @@ class Af_RedditImgur extends Plugin {
 			mb_strlen(strip_tags($article["content"])) <= 150) {
 
 			// do not try to embed posts linking back to other reddit posts
-			if ($url &&	strpos($url, "reddit.com") === FALSE) {
+			// readability.php requires PHP 5.6
+			if ($url &&	strpos($url, "reddit.com") === FALSE && version_compare(PHP_VERSION, '5.6.0', '>=')) {
 
 				/* link may lead to a huge video file or whatever, we need to check content type before trying to
 				parse it which p much requires curl */
