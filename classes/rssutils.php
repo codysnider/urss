@@ -1008,7 +1008,7 @@ class RSSUtils {
 
 					if (DB_TYPE == "pgsql") {
 						$params[":ts_lang"] = $feed_language;
-						$params[":ts_content"] = mb_substr(strip_tags($entry_title . " " . $entry_content), 0, 1000000);
+						$params[":ts_content"] = mb_substr(strip_tags($entry_title . " " . $entry_content), 0, 900000);
 					}
 
 					$sth->execute($params);
