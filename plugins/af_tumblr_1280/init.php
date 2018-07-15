@@ -4,7 +4,7 @@ class Af_Tumblr_1280 extends Plugin {
 
 	function about() {
 		return array(1.0,
-			"Replace Tumblr pictures with largest size if available (requires CURL)",
+			"Replace Tumblr pictures and videos with largest size if available (requires CURL)",
 			"fox");
 	}
 
@@ -61,6 +61,19 @@ class Af_Tumblr_1280 extends Plugin {
 						$img->setAttribute("src", $test_src);
 						$found = true;
 					}
+				}
+			}
+
+			$video_sources = $xpath->query('//video/source[contains(@src, \'.tumblr.com/video_file\')]');
+
+			foreach ($video_sources as $source) {
+				$src = $source->getAttribute("src");
+
+				$new_src = preg_replace("/\/\d{3}$/", "", $src);
+
+				if ($src != $new_src) {
+					$source->setAttribute("src", $new_src);
+					$found = true;
 				}
 			}
 
