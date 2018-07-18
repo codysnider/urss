@@ -2,7 +2,11 @@
 	require_once "functions.php";
 
 	spl_autoload_register(function($class) {
-		list ($namespace, $class_name) = explode('\\', $class, 2);
+		$namespace = '';
+		$class_name = $class;
+
+		if (strpos($class, '\\') !== FALSE)
+			list ($namespace, $class_name) = explode('\\', $class, 2);
 
 		$root_dir = dirname(__DIR__); // we're in tt-rss/include
 
