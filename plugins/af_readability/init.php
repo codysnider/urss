@@ -196,7 +196,7 @@ class Af_Readability extends Plugin {
 					return $r->getContent();
 				}
 
-			} catch (ParseException $e) {
+			} catch (Exception $e) {
 				return false;
 			}
 

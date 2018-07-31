@@ -547,7 +547,7 @@ class Af_RedditImgur extends Plugin {
 
 								$article["content"] = $r->getContent() . "<hr/>" . $article["content"];
 							}
-						} catch (ParseException $e) {
+						} catch (Exception $e) {
 							//
 						}
 					}
