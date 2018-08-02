@@ -9,7 +9,6 @@
  * @author    Christian Weiske <cweiske@php.net>
  * @copyright 2011 Christian Weiske <cweiske@php.net>
  * @license   http://www.debian.org/misc/bsd.license BSD
- * @version   SVN: $Id$
  * @link      http://pear.php.net/package/Text_LanguageDetect/
  */
 
@@ -23,7 +22,7 @@
  * @package   Text_LanguageDetect
  * @author    Christian Weiske <cweiske@php.net>
  * @copyright 2011 Christian Weiske <cweiske@php.net>
- * @license   http://www.debian.org/misc/bsd.license BSD
+ * @license   BSD http://www.opensource.org/licenses/bsd-license.php
  * @link      http://www.loc.gov/standards/iso639-2/php/code_list.php
  *
  * @SuppressWarnings(PHPMD)

@@ -1,4 +1,20 @@
 <?php
+/**
+ * Part of Text_LanguageDetect
+ *
+ * PHP version 5
+ *
+ * @category  Text
+ * @package   Text_LanguageDetect
+ * @author    Nicholas Pisarro <infinityminusnine+pear@gmail.com>
+ * @copyright 2005-2006 Nicholas Pisarro
+ * @license   BSD http://www.opensource.org/licenses/bsd-license.php
+ * @link      http://pear.php.net/package/Text_LanguageDetect/
+ */
+
+require_once __DIR__ . '/LanguageDetect/Exception.php';
+require_once __DIR__ . '/LanguageDetect/Parser.php';
+require_once __DIR__ . '/LanguageDetect/ISO639.php';
 
 /**
  * Detects the language of a given piece of text.
@@ -9,26 +25,7 @@
  * Implements a version of a technique originally proposed by Cavnar & Trenkle
  * (1994): "N-Gram-Based Text Categorization"
  *
- * PHP version 5
- *
- * @category  Text
- * @package   Text_LanguageDetect
- * @author    Nicholas Pisarro <infinityminusnine+pear@gmail.com>
- * @copyright 2005-2006 Nicholas Pisarro
- * @license   http://www.debian.org/misc/bsd.license BSD
- * @version   SVN: $Id: LanguageDetect.php 322353 2012-01-16 08:41:43Z cweiske $
- * @link      http://pear.php.net/package/Text_LanguageDetect/
- * @link      http://langdetect.blogspot.com/
- */
-
-require_once __DIR__ . '/Text/LanguageDetect/Exception.php';
-require_once __DIR__ . '/Text/LanguageDetect/Parser.php';
-require_once __DIR__ . '/Text/LanguageDetect/ISO639.php';
-
-/**
- * Language detection class
- *
- * Requires the langauge model database (lang.dat) that should have
+ * Requires the language model database (lang.dat) that should have
  * accompanied this class definition in order to be instantiated.
  *
  * Example usage:
@@ -60,10 +57,9 @@ require_once __DIR__ . '/Text/LanguageDetect/ISO639.php';
  * @package   Text_LanguageDetect
  * @author    Nicholas Pisarro <infinityminusnine+pear@gmail.com>
  * @copyright 2005 Nicholas Pisarro
- * @license   http://www.debian.org/misc/bsd.license BSD
+ * @license   BSD http://www.opensource.org/licenses/bsd-license.php
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/Text_LanguageDetect/
- * @todo      allow users to generate their own language models
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -75,10 +71,9 @@ class Text_LanguageDetect
      * If this value starts with a slash (/) or a dot (.) the value of
      * $this->_data_dir will be ignored
      *
-     * @var      string
-     * @access   private
+     * @var string
      */
-    var $_db_filename = 'lang.dat';
+    protected $_db_filename = 'lang.dat';
 
     /**
      * The filename that stores the unicode block definitions
@@ -87,83 +82,74 @@ class Text_LanguageDetect
      * $this->_data_dir will be ignored
      *
      * @var string
-     * @access private
      */
-    var $_unicode_db_filename = 'unicode_blocks.dat';
+    protected $_unicode_db_filename = 'unicode_blocks.dat';
 
     /**
      * The data directory
      *
      * Should be set by PEAR installer
      *
-     * @var      string
-     * @access   private
+     * @var string
      */
-    var $_data_dir = '@data_dir@';
+    protected $_data_dir = '@data_dir@';
 
     /**
      * The trigram data for comparison
      *
      * Will be loaded on start from $this->_db_filename
      *
-     * @var      array
-     * @access   private
-     */
-    var $_lang_db = array();
-
-    /**
-     * stores the map of the trigram data to unicode characters
-     *
-     * @access private
      * @var array
      */
-    var $_unicode_map;
+    protected $_lang_db = array();
+
+    /**
+     * Stores the map of the trigram data to unicode characters
+     *
+     * @var array
+     */
+    protected $_unicode_map;
 
     /**
      * The size of the trigram data arrays
      *
-     * @var      int
-     * @access   private
+     * @var int
      */
-    var $_threshold = 300;
+    protected $_threshold = 300;
 
     /**
-     * the maximum possible score.
+     * The maximum possible score.
      *
-     * needed for score normalization. Different depending on the
+     * Needed for score normalization. Different depending on the
      * perl compatibility setting
      *
-     * @access  private
-     * @var     int
-     * @see     setPerlCompatible()
+     * @var int
+     * @see setPerlCompatible()
      */
-    var $_max_score = 0;
+    protected $_max_score = 0;
 
     /**
      * Whether or not to simulate perl's Language::Guess exactly
      *
-     * @access  private
-     * @var     bool
-     * @see     setPerlCompatible()
+     * @var bool
+     * @see setPerlCompatible()
      */
-    var $_perl_compatible = false;
+    protected $_perl_compatible = false;
 
     /**
      * Whether to use the unicode block detection to speed up processing
      *
-     * @access private
      * @var bool
      */
-    var $_use_unicode_narrowing = true;
+    protected $_use_unicode_narrowing = true;
 
     /**
-     * stores the result of the clustering operation
+     * Stores the result of the clustering operation
      *
-     * @access  private
-     * @var     array
-     * @see     clusterLanguages()
+     * @var array
+     * @see clusterLanguages()
      */
-    var $_clusters;
+    protected $_clusters;
 
     /**
      * Which type of "language names" are accepted and returned:
@@ -172,7 +158,7 @@ class Text_LanguageDetect
      * 2 - 2-letter ISO 639-1 code ("en")
      * 3 - 3-letter ISO 639-2 code ("eng")
      */
-    var $_name_mode = 0;
+    protected $_name_mode = 0;
 
     /**
      * Constructor
@@ -180,7 +166,7 @@ class Text_LanguageDetect
      * Will attempt to load the language database. If it fails, you will get
      * an exception.
      */
-    function __construct()
+    public function __construct()
     {
         $data = $this->_readdb($this->_db_filename);
         $this->_checkTrigram($data['trigram']);
@@ -202,9 +188,8 @@ class Text_LanguageDetect
      * @param string $fname File name to load
      *
      * @return string expected path to the language model database
-     * @access private
      */
-    function _get_data_loc($fname)
+    protected function _get_data_loc($fname)
     {
         if ($fname{0} == '/' || $fname{0} == '.') {
             // if filename starts with a slash, assume it's an absolute pathname
@@ -218,7 +203,7 @@ class Text_LanguageDetect
         } else {
             // assume this was just unpacked somewhere
             // try the local working directory if otherwise
-            return __DIR__ . '/data/' . $fname;
+            return __DIR__ . '/../data/' . $fname;
         }
     }
 
@@ -231,9 +216,8 @@ class Text_LanguageDetect
      *
      * @return array the language model data
      * @throws Text_LanguageDetect_Exception
-     * @access private
      */
-    function _readdb($fname)
+    protected function _readdb($fname)
     {
         // finds the correct data dir
         $fname = $this->_get_data_loc($fname);
@@ -261,9 +245,8 @@ class Text_LanguageDetect
      * @param array $trigram Trigram data from database
      *
      * @return void
-     * @access private
      */
-    function _checkTrigram($trigram)
+    protected function _checkTrigram($trigram)
     {
         if (!is_array($trigram)) {
             if (ini_get('magic_quotes_runtime')) {
@@ -355,11 +338,10 @@ class Text_LanguageDetect
     /**
      * Returns the number of languages that this object can detect
      *
-     * @access public
      * @return int            the number of languages
-     * @throws   Text_LanguageDetect_Exception
+     * @throws Text_LanguageDetect_Exception
      */
-    function getLanguageCount()
+    public function getLanguageCount()
     {
         return count($this->_lang_db);
     }
@@ -397,11 +379,10 @@ class Text_LanguageDetect
     /**
      * Returns the list of detectable languages
      *
-     * @access public
      * @return array        the names of the languages known to this object<<<<<<<
-     * @throws   Text_LanguageDetect_Exception
+     * @throws Text_LanguageDetect_Exception
      */
-    function getLanguages()
+    public function getLanguages()
     {
         return $this->_convertToNameMode(
             array_keys($this->_lang_db)
@@ -439,7 +420,7 @@ class Text_LanguageDetect
      *
      * @return void
      */
-    function setNameMode($name_mode)
+    public function setNameMode($name_mode)
     {
         $this->_name_mode = $name_mode;
     }
@@ -469,10 +450,9 @@ class Text_LanguageDetect
      * @param string $text text to convert
      *
      * @return     array array of trigram frequencies
-     * @access     private
      * @deprecated Superceded by the Text_LanguageDetect_Parser class
      */
-    function _trigram($text)
+    protected function _trigram($text)
     {
         $s = new Text_LanguageDetect_Parser($text);
         $s->prepareTrigram();
@@ -490,9 +470,8 @@ class Text_LanguageDetect
      * @param array $arr array of trigram
      *
      * @return array ranks of trigrams
-     * @access protected
      */
-    function _arr_rank($arr)
+    protected function _arr_rank($arr)
     {
 
         // sorts alphabetically first as a standard way of breaking rank ties
@@ -520,12 +499,11 @@ class Text_LanguageDetect
     /**
      * Sorts an array by value breaking ties alphabetically
      *
-     * @param array &$arr the array to sort
+     * @param array $arr the array to sort
      *
      * @return void
-     * @access private
      */
-    function _bub_sort(&$arr)
+    protected function _bub_sort(&$arr)
     {
         // should do the same as this perl statement:
         // sort { $trigrams{$b} == $trigrams{$a}
@@ -563,9 +541,8 @@ class Text_LanguageDetect
      *
      * @return int 1 if $a is greater, -1 if not
      * @see    _bub_sort()
-     * @access private
      */
-    function _sort_func($a, $b)
+    protected function _sort_func($a, $b)
     {
         // each is actually a key/value pair, so that it can compare using both
         list($a_key, $a_value) = $a;
@@ -603,9 +580,8 @@ class Text_LanguageDetect
      *
      * @return int the sum of the differences between the ranks of
      *             the two trigram sets
-     * @access private
      */
-    function _distance($arr1, $arr2)
+    protected function _distance($arr1, $arr2)
     {
         $sumdist = 0;
 
@@ -636,9 +612,8 @@ class Text_LanguageDetect
      *
      * @return float the normalized score
      * @see    _distance()
-     * @access private
      */
-    function _normalize_score($score, $base_count = null)
+    protected function _normalize_score($score, $base_count = null)
     {
         if ($base_count === null) {
             $base_count = $this->_threshold;
@@ -714,7 +689,7 @@ class Text_LanguageDetect
         $sample_obj->setPadStart(!$this->_perl_compatible);
         $sample_obj->analyze();
 
-        $trigram_freqs =& $sample_obj->getTrigramRanks();
+        $trigram_freqs = $sample_obj->getTrigramRanks();
         $trigram_count = count($trigram_freqs);
 
         if ($trigram_count == 0) {
@@ -725,7 +700,7 @@ class Text_LanguageDetect
 
         // use unicode block detection to narrow down the possibilities
         if ($this->_use_unicode_narrowing) {
-            $blocks =& $sample_obj->getUnicodeBlocks();
+            $blocks = $sample_obj->getUnicodeBlocks();
 
             if (is_array($blocks)) {
                 $present_blocks = array_keys($blocks);
@@ -977,9 +952,8 @@ class Text_LanguageDetect
      *
      * @return mixed Block name, -1 if it failed
      * @see    unicodeBlockName()
-     * @access protected
      */
-    function _unicode_block_name($unicode, $blocks, $block_count = -1)
+    protected function _unicode_block_name($unicode, $blocks, $block_count = -1)
     {
         // for a reference, see
         // http://www.unicode.org/Public/UNIDATA/Blocks.txt
@@ -1030,9 +1004,8 @@ class Text_LanguageDetect
      *
      * @return array the database of unicode block definitions
      * @throws Text_LanguageDetect_Exception
-     * @access protected
      */
-    function _read_unicode_block_db()
+    protected function _read_unicode_block_db()
     {
         // since the unicode definitions are always going to be the same,
         // might as well share the memory for the db with all other instances
@@ -1151,14 +1124,13 @@ class Text_LanguageDetect
      * Uses a nearest neighbor technique to generate the maximum possible
      * number of dendograms from the similarity data.
      *
-     * @access      public
-     * @return      array language cluster data
-     * @throws      Text_LanguageDetect_Exception
-     * @see         languageSimilarity()
-     * @deprecated  this function will eventually be removed and placed into
+     * @return     array language cluster data
+     * @throws     Text_LanguageDetect_Exception
+     * @see        languageSimilarity()
+     * @deprecated this function will eventually be removed and placed into
      *              the model generation class
      */
-    function clusterLanguages()
+    public function clusterLanguages()
     {
         // todo: set the maximum number of clusters
         // return cached result, if any
@@ -1467,7 +1439,7 @@ class Text_LanguageDetect
     }
 
     /**
-     * ut8-safe strlen()
+     * UTF8-safe strlen()
      *
      * Returns the numbers of characters (not bytes) in a utf8 string
      *
@@ -1491,10 +1463,9 @@ class Text_LanguageDetect
      * @param string $char a utf8 (possibly multi-byte) char
      *
      * @return int unicode value
-     * @access protected
      * @link   http://en.wikipedia.org/wiki/UTF-8
      */
-    function _utf8char2unicode($char)
+    protected function _utf8char2unicode($char)
     {
         // strlen() here will actually get the binary length of a single char
         switch (strlen($char)) {
@@ -1531,20 +1502,19 @@ class Text_LanguageDetect
     }
 
     /**
-     * utf8-safe fast character iterator
+     * UTF8-safe fast character iterator
      *
      * Will get the next character starting from $counter, which will then be
      * incremented. If a multi-byte char the bytes will be concatenated and
      * $counter will be incremeted by the number of bytes in the char.
      *
      * @param string $str             the string being iterated over
-     * @param int    &$counter        the iterator, will increment by reference
+     * @param int    $counter         the iterator, will increment by reference
      * @param bool   $special_convert whether to do special conversions
      *
      * @return char the next (possibly multi-byte) char from $counter
-     * @access private
      */
-    static function _next_char($str, &$counter, $special_convert = false)
+    protected static function _next_char($str, &$counter, $special_convert = false)
     {
         $char = $str{$counter++};
         $ord = ord($char);
@@ -1636,7 +1606,7 @@ class Text_LanguageDetect
      *
      * @return string|array Language name
      */
-    function _convertFromNameMode($lang, $convertKey = false)
+    protected function _convertFromNameMode($lang, $convertKey = false)
     {
         if ($this->_name_mode == 0) {
             return $lang;
@@ -1676,7 +1646,7 @@ class Text_LanguageDetect
      *
      * @return string|array Language name
      */
-    function _convertToNameMode($lang, $convertKey = false)
+    protected function _convertToNameMode($lang, $convertKey = false)
     {
         if ($this->_name_mode == 0) {
             return $lang;

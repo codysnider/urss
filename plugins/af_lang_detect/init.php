@@ -4,7 +4,7 @@ class Af_Lang_Detect extends Plugin {
 	private $lang;
 
 	function about() {
-		return array(1.0,
+		return array(1.1,
 			"Detect article language",
 			"fox");
 	}
@@ -14,7 +14,7 @@ class Af_Lang_Detect extends Plugin {
 
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 
-		require_once __DIR__ . "/languagedetect/LanguageDetect.php";
+		require_once __DIR__ . "/languagedetect/Text/LanguageDetect.php";
 
 		$this->lang = new Text_LanguageDetect();
 		$this->lang->setNameMode(2);
