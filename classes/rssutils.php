@@ -767,7 +767,7 @@ class RSSUtils {
 				_debug("plugin data: $entry_plugin_data", $debug_enabled);
 
 				// Workaround: 4-byte unicode requires utf8mb4 in MySQL. See https://tt-rss.org/forum/viewtopic.php?f=1&t=3377&p=20077#p20077
-				if (DB_TYPE == "mysql") {
+				if (DB_TYPE == "mysql" && MYSQL_CHARSET != "UTF8MB4") {
 					foreach ($article as $k => $v) {
 						// i guess we'll have to take the risk of 4byte unicode labels & tags here
 						if (is_string($article[$k])) {
@@ -1053,7 +1053,7 @@ class RSSUtils {
 							$e->type, $e->length, $e->title, $e->width, $e->height);
 
 						// Yet another episode of "mysql utf8_general_ci is gimped"
-						if (DB_TYPE == "mysql") {
+						if (DB_TYPE == "mysql" && MYSQL_CHARSET != "UTF8MB4") {
 							for ($i = 0; $i < count($e_item); $i++) {
 								if (is_string($e_item[$i])) {
 									$e_item[$i] = RSSUtils::strip_utf8mb4($e_item[$i]);
