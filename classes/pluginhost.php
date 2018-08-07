@@ -170,15 +170,37 @@ class PluginHost {
 
 			// try system plugin directory first
 			$file = __DIR__ . "/../plugins/$class_file/init.php";
+			$vendor_dir = __DIR__ . "/../plugins/$class_file/vendor";
 
 			if (!file_exists($file)) {
 				$file = __DIR__ . "/../plugins.local/$class_file/init.php";
+				$vendor_dir = __DIR__ . "/../plugins.local/$class_file/vendor";
 			}
 
 			if (!isset($this->plugins[$class])) {
 				if (file_exists($file)) require_once $file;
 
 				if (class_exists($class) && is_subclass_of($class, "Plugin")) {
+
+					// register plugin autoloader if necessary, for namespaced classes ONLY
+					// layout corresponds to tt-rss main /vendor/author/Package/Class.php
+
+					if (file_exists($vendor_dir)) {
+						spl_autoload_register(function($class) use ($vendor_dir) {
+
+							if (strpos($class, '\\') !== FALSE) {
+								list ($namespace, $class_name) = explode('\\', $class, 2);
+
+								if ($namespace && $class_name) {
+									$class_file = "$vendor_dir/$namespace/" . str_replace('\\', '/', $class_name) . ".php";
+
+									if (file_exists($class_file))
+										require_once $class_file;
+								}
+							}
+						});
+					}
+
 					$plugin = new $class($this);
 
 					$plugin_api = $plugin->api_version();
