@@ -197,4 +197,13 @@ class FeedItem_Atom extends FeedItem_Common {
 		return $encs;
 	}
 
+	function get_language() {
+		$elem = $this->elem;
+		do {
+			$lang = $elem->getAttributeNS("http://www.w3.org/XML/1998/namespace", "lang");
+			$elem = $elem->parentNode;
+		} while (empty($lang) && $elem instanceof DOMElement);
+
+		return $lang;
+	}
 }

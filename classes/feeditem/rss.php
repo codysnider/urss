@@ -189,4 +189,14 @@ class FeedItem_RSS extends FeedItem_Common {
 		return $encs;
 	}
 
+	function get_language() {
+		$languages = $this->doc->getElementsByTagName('language');
+
+		if (count($languages) == 0) {
+			return "";
+		}
+
+		return $languages[0]->textContent;
+	}
+
 }

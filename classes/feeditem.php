@@ -11,5 +11,6 @@ abstract class FeedItem {
 	abstract function get_categories();
 	abstract function get_enclosures();
 	abstract function get_author();
+	abstract function get_language();
 }
 
