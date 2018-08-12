@@ -637,8 +637,11 @@ class RSSUtils {
 
 				$entry_link = rewrite_relative_url($site_url, $item->get_link());
 
+				$entry_language = mb_substr(trim($item->get_language()), 0, 2);
+
 				_debug("title $entry_title", $debug_enabled);
 				_debug("link $entry_link", $debug_enabled);
+				_debug("language $entry_language", $debug_enabled);
 
 				if (!$entry_title) $entry_title = date("Y-m-d H:i:s", $entry_timestamp);;
 
@@ -694,7 +697,6 @@ class RSSUtils {
 					$base_entry_id = $row["id"];
 					$entry_stored_hash = $row["content_hash"];
 					$article_labels = Article::get_article_labels($base_entry_id, $owner_uid);
-					$entry_language = $row["lang"];
 
 					$existing_tags = Article::get_article_tags($base_entry_id, $owner_uid);
 					$entry_tags = array_unique(array_merge($entry_tags, $existing_tags));
@@ -702,7 +704,6 @@ class RSSUtils {
 					$base_entry_id = false;
 					$entry_stored_hash = "";
 					$article_labels = array();
-					$entry_language = "";
 				}
 
 				$article = array("owner_uid" => $owner_uid, // read only
