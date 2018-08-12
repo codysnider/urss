@@ -205,7 +205,11 @@ class FeedItem_Atom extends FeedItem_Common {
 			return $lang;
 		} else {
 			// Fall back to the language declared on the feed, if any.
-			return $this->doc->firstChild->getAttributeNS(self::NS_XML, "lang");
+			foreach ($this->doc->childNodes as $child) {
+				if (method_exists($child, "getAttributeNS")) {
+					return $child->getAttributeNS(self::NS_XML, "lang");
+				}
+			}
 		}
 	}
 }
