@@ -1,5 +1,6 @@
 <?php
 class FeedItem_Atom extends FeedItem_Common {
+	const NS_XML = "http://www.w3.org/XML/1998/namespace";
 
 	function get_id() {
 		$id = $this->elem->getElementsByTagName("id")->item(0);
@@ -198,12 +199,13 @@ class FeedItem_Atom extends FeedItem_Common {
 	}
 
 	function get_language() {
-		$elem = $this->elem;
-		do {
-			$lang = $elem->getAttributeNS("http://www.w3.org/XML/1998/namespace", "lang");
-			$elem = $elem->parentNode;
-		} while (empty($lang) && $elem instanceof DOMElement);
+		$lang = $this->elem->getAttributeNS(self::NS_XML, "lang");
 
-		return $lang;
+		if (!empty($lang)) {
+			return $lang;
+		} else {
+			// Fall back to the language declared on the feed, if any.
+			return $this->doc->firstChild->getAttributeNS(self::NS_XML, "lang");
+		}
 	}
 }
