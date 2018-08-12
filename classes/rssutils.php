@@ -637,7 +637,7 @@ class RSSUtils {
 
 				$entry_link = rewrite_relative_url($site_url, $item->get_link());
 
-				$entry_language = $item->get_language();
+				$entry_language = mb_substr(trim($item->get_language()), 0, 2);
 
 				_debug("title $entry_title", $debug_enabled);
 				_debug("link $entry_link", $debug_enabled);
