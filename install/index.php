@@ -39,7 +39,7 @@
 		$errors = array();
 
 		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-			array_push($errors, "PHP version 5.6.0 or newer required.");
+			array_push($errors, "PHP version 5.6.0 or newer required. You're using " . PHP_VERSION . ".");
 		}
 
 		if (!function_exists("curl_init") && !ini_get("allow_url_fopen")) {
