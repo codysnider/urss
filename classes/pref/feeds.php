@@ -513,8 +513,6 @@ class Pref_Feeds extends Handler_Protected {
 			print '<div dojoType="dijit.layout.TabContainer" style="height : 450px">
         		<div dojoType="dijit.layout.ContentPane" title="'.__('General').'">';
 
-			$auth_pass_encrypted = $row["auth_pass_encrypted"];
-
 			$title = htmlspecialchars($row["title"]);
 
 			print_hidden("id", "$feed_id");
@@ -615,14 +613,8 @@ class Pref_Feeds extends Handler_Protected {
 			print "</div>";
 
 			$auth_login = htmlspecialchars($row["auth_login"]);
-			$auth_pass = $row["auth_pass"];
+			$auth_pass = htmlspecialchars($row["auth_pass"]);
 
-			if ($auth_pass_encrypted && function_exists("mcrypt_decrypt")) {
-				require_once "crypt.php";
-				$auth_pass = decrypt_string($auth_pass);
-			}
-
-			$auth_pass = htmlspecialchars($auth_pass);
 			$auth_enabled = $auth_login !== '' || $auth_pass !== '';
 
 			$auth_style = $auth_enabled ? '' : 'display: none';

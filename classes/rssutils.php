@@ -218,24 +218,15 @@ class RSSUtils {
 
 		$pdo = Db::pdo();
 
-		$sth = $pdo->prepare("SELECT owner_uid,feed_url,auth_pass,auth_login,auth_pass_encrypted
+		$sth = $pdo->prepare("SELECT owner_uid,feed_url,auth_pass,auth_login
 				FROM ttrss_feeds WHERE id = ?");
 		$sth->execute([$feed]);
 
 		if ($row = $sth->fetch()) {
 
 			$owner_uid = $row["owner_uid"];
-
-			$auth_pass_encrypted = $row["auth_pass_encrypted"];
-
 			$auth_login = $row["auth_login"];
 			$auth_pass = $row["auth_pass"];
-
-			if ($auth_pass_encrypted && function_exists("mcrypt_decrypt")) {
-				require_once "crypt.php";
-				$auth_pass = decrypt_string($auth_pass);
-			}
-
 			$fetch_url = $row["feed_url"];
 
 			$pluginhost = new PluginHost();
@@ -347,7 +338,6 @@ class RSSUtils {
 
 			$owner_uid = $row["owner_uid"];
 			$mark_unread_on_update = $row["mark_unread_on_update"];
-			$auth_pass_encrypted = $row["auth_pass_encrypted"];
 
 			$sth = $pdo->prepare("UPDATE ttrss_feeds SET last_update_started = NOW()
 				WHERE id = ?");
@@ -355,16 +345,11 @@ class RSSUtils {
 
 			$auth_login = $row["auth_login"];
 			$auth_pass = $row["auth_pass"];
-
-			if ($auth_pass_encrypted && function_exists("mcrypt_decrypt")) {
-				require_once "crypt.php";
-				$auth_pass = decrypt_string($auth_pass);
-			}
-
 			$stored_last_modified = $row["last_modified"];
 			$last_unconditional = $row["last_unconditional"];
 			$cache_images = $row["cache_images"];
 			$fetch_url = $row["feed_url"];
+
 			$feed_language = mb_strtolower($row["feed_language"]);
 			if (!$feed_language) $feed_language = 'english';
 

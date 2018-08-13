@@ -417,39 +417,6 @@
 		exit($rc);
 	}
 
-	if (isset($options["decrypt-feeds"])) {
-
-		if (!function_exists("mcrypt_decrypt")) {
-			_debug("mcrypt functions not available.");
-			return;
-		}
-
-		$res = $pdo->query("SELECT id, auth_pass FROM ttrss_feeds WHERE auth_pass_encrypted = true");
-
-		require_once "crypt.php";
-
-		$total = 0;
-
-		$pdo->beginTransaction();
-
-		$usth = $pdo->prepare("UPDATE ttrss_feeds SET auth_pass_encrypted = false, auth_pass = ?
-				WHERE id = ?");
-
-		while ($line = $res->fetch()) {
-			_debug("processing feed id " . $line["id"]);
-
-			$auth_pass = decrypt_string($line["auth_pass"]);
-
-			$usth->execute([$auth_pass, $line['id']]);
-
-			++$total;
-		}
-
-		$pdo->commit();
-
-		_debug("$total feeds processed.");
-	}
-
 	PluginHost::getInstance()->run_commands($options);
 
 	if (file_exists(LOCK_DIRECTORY . "/$lock_filename"))
