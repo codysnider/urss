@@ -49,6 +49,9 @@ class Logger {
 		case "syslog":
 			$this->adapter = new Logger_Syslog();
 			break;
+		case "stdout":
+			$this->adapter = new Logger_Stdout();
+			break;
 		default:
 			$this->adapter = false;
 		}
