@@ -934,17 +934,17 @@ class Handler_Public extends Handler {
 	}
 
 	function cached_url() {
-		@$hash = basename($_GET['hash']);
+		@$req_filename = basename($_GET['hash']);
 
 		// we don't need an extension to find the file, hash is a complete URL
-		$hash = preg_replace("/\.[^\.]*$/", "", $hash);
+		$hash = preg_replace("/\.[^\.]*$/", "", $req_filename);
 
 		if ($hash) {
 
 			$filename = CACHE_DIR . '/images/' . $hash;
 
 			if (file_exists($filename)) {
-				header("Content-Disposition: inline; filename=\"$hash\"");
+				header("Content-Disposition: inline; filename=\"$req_filename\"");
 
 				send_local_file($filename);
 
