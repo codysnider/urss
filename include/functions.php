@@ -2574,6 +2574,13 @@
 			}
 
 			$mimetype = mime_content_type($filename);
+
+			// this is hardly ideal but 1) only media is cached in images/ and 2) seemingly only mp4
+			// video files are detected as octet-stream by mime_content_type()
+
+			if ($mimetype == "application/octet-stream")
+				$mimetype = "video/mp4";
+
 			header("Content-type: $mimetype");
 
 			$stamp = gmdate("D, d M Y H:i:s", filemtime($filename)) . " GMT";

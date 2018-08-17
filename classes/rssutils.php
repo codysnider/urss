@@ -1239,9 +1239,11 @@ class RSSUtils {
 
 				$local_filename = CACHE_DIR . "/images/" . sha1($src);
 
-				if ($debug) _debug("cache_media: downloading: $src to $local_filename");
+				if ($debug) _debug("cache_media: checking $src");
 
 				if (!file_exists($local_filename)) {
+					if ($debug) _debug("cache_media: downloading: $src to $local_filename");
+
 					$file_content = fetch_file_contents($src);
 
 					if ($file_content && strlen($file_content) > MIN_CACHE_FILE_SIZE) {
