@@ -1074,7 +1074,7 @@ class RSSUtils {
 				}
 
 				$esth = $pdo->prepare("SELECT id FROM ttrss_enclosures
-						WHERE content_url = ? AND post_id = ?");
+						WHERE content_url = ? AND content_type = ? AND post_id = ?");
 
 				$usth = $pdo->prepare("INSERT INTO ttrss_enclosures
 							(content_url, content_type, title, duration, post_id, width, height) VALUES
@@ -1088,7 +1088,7 @@ class RSSUtils {
 					$enc_width = intval($enc[4]);
 					$enc_height = intval($enc[5]);
 
-					$esth->execute([$enc_url, $entry_ref_id]);
+					$esth->execute([$enc_url, $enc_type, $entry_ref_id]);
 
 					if (!$esth->fetch()) {
 						$usth->execute([$enc_url, $enc_type, (string)$enc_title, $enc_dur, $entry_ref_id, $enc_width, $enc_height]);
