@@ -2586,7 +2586,13 @@
 			$stamp = gmdate("D, d M Y H:i:s", filemtime($filename)) . " GMT";
 			header("Last-Modified: $stamp", true);
 
-			return readfile($filename);
+			if (defined('_NGINX_XACCEL_PREFIX') && _NGINX_XACCEL_PREFIX) {
+				header("X-Accel-Redirect: " . _NGINX_XACCEL_PREFIX . "/" . $filename);
+
+				return false;
+			} else {
+				return readfile($filename);
+			}
 		} else {
 			return false;
 		}
