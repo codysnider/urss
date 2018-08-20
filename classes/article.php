@@ -610,6 +610,8 @@ class Article extends Handler_Protected {
 				$line = $p->hook_render_article($line);
 			}
 
+			$line['content'] = rewrite_cached_urls($line['content']);
+
 			$num_comments = (int) $line["num_comments"];
 			$entry_comments = "";
 

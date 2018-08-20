@@ -477,6 +477,8 @@ class Feeds extends Handler_Protected {
 						$line = $p->hook_render_article_cdm($line);
 					}
 
+					$line['content'] = rewrite_cached_urls($line['content']);
+
 					if ($vfeed_group_enabled && $line["feed_title"]) {
 						if ($feed_id != $vgroup_last_feed) {
 
