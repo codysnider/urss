@@ -1579,16 +1579,16 @@
 		$doc->loadHTML($charset_hack . $res);
 		$xpath = new DOMXPath($doc);
 
-		$entries = $xpath->query('(//img[@src]|//video/source[@src]|//audio/source[@src])');
+		$entries = $xpath->query('(//img[@src]|//video[@poster]|//video/source[@src]|//audio/source[@src])');
 
 		$need_saving = false;
 
 		foreach ($entries as $entry) {
 
-			if ($entry->hasAttribute('src')) {
+			if ($entry->hasAttribute('src') || $entry->hasAttribute('poster')) {
 
 				// should be already absolutized because this is called after sanitize()
-				$src = $entry->getAttribute('src');
+				$src = $entry->hasAttribute('poster') ? $entry->getAttribute('poster') : $entry->getAttribute('src');
 				$cached_filename = CACHE_DIR . '/images/' . sha1($src);
 
 				if (file_exists($cached_filename)) {
@@ -1606,7 +1606,11 @@
 
 					$src = get_self_url_prefix() . '/public.php?op=cached_url&hash=' . sha1($src) . $suffix;
 
-					$entry->setAttribute('src', $src);
+					if ($entry->hasAttribute('poster'))
+						$entry->setAttribute('poster', $src);
+					else
+						$entry->setAttribute('src', $src);
+
 					$need_saving = true;
 				}
 			}
