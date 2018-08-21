@@ -138,62 +138,7 @@ class FeedItem_Atom extends FeedItem_Common {
 			}
 		}
 
-		$enclosures = $this->xpath->query("media:content", $this->elem);
-
-		foreach ($enclosures as $enclosure) {
-			$enc = new FeedEnclosure();
-
-			$enc->type = $enclosure->getAttribute("type");
-			$enc->link = $enclosure->getAttribute("url");
-			$enc->length = $enclosure->getAttribute("length");
-			$enc->height = $enclosure->getAttribute("height");
-			$enc->width = $enclosure->getAttribute("width");
-
-			$desc = $this->xpath->query("media:description", $enclosure)->item(0);
-			if ($desc) $enc->title = strip_tags($desc->nodeValue);
-
-			array_push($encs, $enc);
-		}
-
-
-		$enclosures = $this->xpath->query("media:group", $this->elem);
-
-		foreach ($enclosures as $enclosure) {
-			$enc = new FeedEnclosure();
-
-			$content = $this->xpath->query("media:content", $enclosure)->item(0);
-
-			if ($content) {
-				$enc->type = $content->getAttribute("type");
-				$enc->link = $content->getAttribute("url");
-				$enc->length = $content->getAttribute("length");
-				$enc->height = $content->getAttribute("height");
-				$enc->width = $content->getAttribute("width");
-
-				$desc = $this->xpath->query("media:description", $content)->item(0);
-				if ($desc) {
-					$enc->title = strip_tags($desc->nodeValue);
-				} else {
-					$desc = $this->xpath->query("media:description", $enclosure)->item(0);
-					if ($desc) $enc->title = strip_tags($desc->nodeValue);
-				}
-
-				array_push($encs, $enc);
-			}
-		}
-
-		$enclosures = $this->xpath->query("media:thumbnail", $this->elem);
-
-		foreach ($enclosures as $enclosure) {
-			$enc = new FeedEnclosure();
-
-			$enc->type = "image/generic";
-			$enc->link = $enclosure->getAttribute("url");
-			$enc->height = $enclosure->getAttribute("height");
-			$enc->width = $enclosure->getAttribute("width");
-
-			array_push($encs, $enc);
-		}
+		$encs = array_merge($encs, parent::get_enclosures());
 
 		return $encs;
 	}
