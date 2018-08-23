@@ -2601,6 +2601,9 @@
 		should be loaded systemwide in config.php */
 	function send_local_file($filename) {
 		if (file_exists($filename)) {
+
+			if (is_writable($filename)) touch($filename);
+
 			$tmppluginhost = new PluginHost();
 
 			$tmppluginhost->load(PLUGINS, PluginHost::KIND_SYSTEM);
