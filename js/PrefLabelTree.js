@@ -1,4 +1,4 @@
-require(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/form/DropDownButton"], function (declare, domConstruct) {
+define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/form/DropDownButton"], function (declare, domConstruct) {
 
 	return declare("fox.PrefLabelTree", lib.CheckBoxTree, {
 		setNameById: function (id, name) {

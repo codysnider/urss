@@ -245,6 +245,7 @@ function init() {
 			"dijit/tree/dndSource",
 			"dijit/tree/ForestStoreModel",
 			"dojo/data/ItemFileWriteStore",
+			"fox/FeedStoreModel",
 			"fox/FeedTree" ], function (dojo, ready, parser) {
 
 			ready(function() {

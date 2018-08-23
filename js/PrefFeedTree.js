@@ -1,23 +1,4 @@
-require(["dojo/_base/declare", "dojo/data/ItemFileWriteStore"], function (declare) {
-
-	return declare("fox.PrefFeedStore", dojo.data.ItemFileWriteStore, {
-
-		_saveEverything: function(saveCompleteCallback, saveFailedCallback,
-								  newFileContentString) {
-
-			dojo.xhrPost({
-				url: "backend.php",
-				content: {op: "pref-feeds", method: "savefeedorder",
-					payload: newFileContentString},
-				error: saveFailedCallback,
-				load: saveCompleteCallback});
-		},
-
-	});
-
-});
-
-require(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], function (declare, domConstruct) {
+define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], function (declare, domConstruct) {
 
 	return declare("fox.PrefFeedTree", lib.CheckBoxTree, {
 		_createTreeNode: function(args) {

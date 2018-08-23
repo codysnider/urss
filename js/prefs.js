@@ -832,6 +832,10 @@ function init() {
 		"dijit/Tree",
 		"dijit/tree/dndSource",
 		"dojo/data/ItemFileWriteStore",
+		"lib/CheckBoxStoreModel",
+		"lib/CheckBoxTree",
+		"fox/PrefFeedStore",
+		"fox/PrefFilterStore",
 		"fox/PrefFeedTree",
 		"fox/PrefFilterTree",
 		"fox/PrefLabelTree"], function (dojo, ready, parser) {
