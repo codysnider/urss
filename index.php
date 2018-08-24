@@ -64,7 +64,7 @@
 	<?php echo stylesheet_tag("lib/dijit/themes/claro/claro.css"); ?>
 
 	<?php if ($_SESSION["uid"]) {
-		$theme = get_pref( "USER_CSS_THEME", $_SESSION["uid"], false);
+		$theme = get_pref("USER_CSS_THEME");
 		if ($theme && theme_valid("$theme")) {
 			echo stylesheet_tag(get_theme_path($theme));
 		} else {
