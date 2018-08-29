@@ -11,7 +11,7 @@ class API extends Handler {
 	static function param_to_bool($p) {
 		return $p && ($p !== "f" && $p !== "false");
 	}
-	
+
 	function before($method) {
 		if (parent::before($method)) {
 			header("Content-Type: text/json");
@@ -186,7 +186,7 @@ class API extends Handler {
 
 	function getHeadlines() {
 		$feed_id = clean($_REQUEST["feed_id"]);
-		if ($feed_id != "") {
+		if (is_int($feed_id)) {
 
 			if (is_numeric($feed_id)) $feed_id = (int) $feed_id;
 
@@ -293,8 +293,8 @@ class API extends Handler {
 
 			$article_qmarks = arr_qmarks($article_ids);
 
-			$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET 
-				$field = $set_to $additional_fields 
+			$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET
+				$field = $set_to $additional_fields
 				WHERE ref_id IN ($article_qmarks) AND owner_uid = ?");
 			$sth->execute(array_merge($article_ids, [$_SESSION['uid']]));
 
@@ -625,7 +625,7 @@ class API extends Handler {
 					id, feed_url, cat_id, title, order_id, ".
 						SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated
 						FROM ttrss_feeds WHERE
-						(cat_id = :cat OR (:cat = 0 AND cat_id IS NULL)) 
+						(cat_id = :cat OR (:cat = 0 AND cat_id IS NULL))
 						AND owner_uid = :uid
 						ORDER BY cat_id, title " . $limit_qpart);
 				$sth->execute([":uid" => $_SESSION['uid'], ":cat" => $cat_id]);
