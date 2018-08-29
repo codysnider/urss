@@ -755,7 +755,7 @@ class API extends Handler {
 						"is_updated" => $is_updated,
 						"title" => $line["title"],
 						"link" => $line["link"],
-						"feed_id" => $line["feed_id"],
+						"feed_id" => $line["feed_id"] ? $line['feed_id'] : 0,
 						"tags" => $tags,
 					);
 
