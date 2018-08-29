@@ -186,7 +186,7 @@ class API extends Handler {
 
 	function getHeadlines() {
 		$feed_id = clean($_REQUEST["feed_id"]);
-		if (is_int($feed_id)) {
+		if ($feed_id !== "") {
 
 			if (is_numeric($feed_id)) $feed_id = (int) $feed_id;
 
