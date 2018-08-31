@@ -124,16 +124,9 @@ class Af_Comics extends Plugin {
 					$node = $xpath->query('//picture[contains(@class, "item-comic-image")]/img')->item(0);
 
 					if ($node) {
-					    $node->removeAttribute("width");
-
-						if ($node->hasAttribute("srcset") && preg_match("|/transparent\.png$|", $node->getAttribute("srcset"))) {
-							if ($node->hasAttribute("data-srcset")) {
-								$node->setAttribute("srcset", $node->getAttribute("data-srcset"));
-								$node->removeAttribute("data-srcset");
-							} elseif ($node->hasAttribute("src")) {
-								$node->removeAttribute("srcset");
-							}
-						}
+						$node->removeAttribute("width");
+						$node->removeAttribute("data-srcset");
+						$node->removeAttribute("srcset");
 
 						$tpl->setVariable('ARTICLE_ID', $article_link, true);
 						$tpl->setVariable('ARTICLE_LINK', $article_link, true);
@@ -146,6 +139,7 @@ class Af_Comics extends Plugin {
 						$tpl->setVariable('ARTICLE_SOURCE_TITLE', $feed_title, true);
 
 						$tpl->addBlock('entry');
+
 					}
 				}
 			}
