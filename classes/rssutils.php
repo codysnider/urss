@@ -187,7 +187,12 @@ class RSSUtils {
 					array_push($batch_owners, $tline["owner_uid"]);
 
 				$fstarted = microtime(true);
-				RSSUtils::update_rss_feed($tline["id"], true, false);
+
+				try {
+					RSSUtils::update_rss_feed($tline["id"], true, false);
+				} catch (PDOException $e) {
+					Logger::get()->log_error(E_USER_NOTICE, $e->getMessage(), $e->getFile(), $e->getLine(), $e->getTraceAsString());
+				}
 				_debug_suppress(false);
 
 				_debug(sprintf("    %.4f (sec)", microtime(true) - $fstarted));
