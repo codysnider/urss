@@ -63,7 +63,7 @@ class Db
 			exit(101);
 		}
 
-		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		if (DB_TYPE == "pgsql") {
 
