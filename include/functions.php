@@ -1682,22 +1682,32 @@
 						}
 					}
 				}
+			}
 
-				if (($owner && get_pref("STRIP_IMAGES", $owner)) ||
-					$force_remove_images || $_SESSION["bw_limit"]) {
+			if ($entry->hasAttribute('src') &&
+					($owner && get_pref("STRIP_IMAGES", $owner)) || $force_remove_images || $_SESSION["bw_limit"]) {
 
-					$p = $doc->createElement('p');
+				$p = $doc->createElement('p');
 
-					$a = $doc->createElement('a');
-					$a->setAttribute('href', $entry->getAttribute('src'));
+				$a = $doc->createElement('a');
+				$a->setAttribute('href', $entry->getAttribute('src'));
 
-					$a->appendChild(new DOMText($entry->getAttribute('src')));
-					$a->setAttribute('target', '_blank');
-					$a->setAttribute('rel', 'noopener noreferrer');
+				$a->appendChild(new DOMText($entry->getAttribute('src')));
+				$a->setAttribute('target', '_blank');
+				$a->setAttribute('rel', 'noopener noreferrer');
 
-					$p->appendChild($a);
+				$p->appendChild($a);
 
-					$entry->parentNode->replaceChild($p, $entry);
+				if ($entry->nodeName == 'source') {
+
+					if ($entry->parentNode && $entry->parentNode->parentNode)
+						$entry->parentNode->parentNode->replaceChild($p, $entry->parentNode);
+
+				} else if ($entry->nodeName == 'img') {
+
+					if ($entry->parentNode)
+						$entry->parentNode->replaceChild($p, $entry);
+
 				}
 			}
 
