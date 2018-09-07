@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss unstable\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-28 17:03+0300\n"
+"POT-Creation-Date: 2018-09-07 10:24+0300\n"
 "PO-Revision-Date: 2013-07-13 11:05+0900\n"
 "Last-Translator: Yak! <yak_ex@mx.scn.tv>\n"
 "Language-Team: \n"
@@ -165,13 +165,13 @@ msgstr "フィードが見つかりません。"
 msgid "Plugin not found"
 msgstr "ユーザーが見つかりません"
 
-#: index.php:153
-#: index.php:169
-#: index.php:287
-#: prefs.php:122
+#: index.php:151
+#: index.php:167
+#: index.php:285
+#: prefs.php:120
 #: classes/backend.php:5
 #: classes/pref/labels.php:294
-#: classes/pref/feeds.php:1238
+#: classes/pref/feeds.php:1230
 #: classes/pref/filters.php:822
 #: js/feedlist.js:148
 #: js/feedlist.js:491
@@ -180,217 +180,217 @@ msgstr "ユーザーが見つかりません"
 #: js/functions.js:1336
 #: js/prefs.js:562
 #: js/prefs.js:754
-#: js/prefs.js:1484
-#: js/prefs.js:1499
-#: js/tt-rss.js:546
+#: js/prefs.js:1488
+#: js/prefs.js:1503
+#: js/tt-rss.js:547
 #: js/viewfeed.js:1180
 #: plugins/import_export/import_export.js:17
 #: js/functions.js:565
-#: js/prefs.js:1196
-#: js/prefs.js:1249
-#: js/prefs.js:1288
-#: js/prefs.js:1301
-#: js/prefs.js:1312
-#: js/prefs.js:1327
-#: js/tt-rss.js:563
+#: js/prefs.js:1200
+#: js/prefs.js:1253
+#: js/prefs.js:1292
+#: js/prefs.js:1305
+#: js/prefs.js:1316
+#: js/prefs.js:1331
+#: js/tt-rss.js:564
 #: js/viewfeed.js:760
 msgid "Loading, please wait..."
 msgstr "読み込みんでいます。しばらくお待ちください..."
 
-#: index.php:191
+#: index.php:189
 msgid "Show articles"
 msgstr "記事を表示"
 
-#: index.php:194
+#: index.php:192
 msgid "Adaptive"
 msgstr "適応的"
 
-#: index.php:195
+#: index.php:193
 msgid "All Articles"
 msgstr "すべての記事"
 
-#: index.php:196
-#: include/functions.php:1198
+#: index.php:194
+#: include/functions.php:1227
 #: classes/feeds.php:110
 msgid "Starred"
 msgstr "お気に入り"
 
-#: index.php:197
-#: include/functions.php:1199
+#: index.php:195
+#: include/functions.php:1228
 #: classes/feeds.php:111
 msgid "Published"
 msgstr "公開済み"
 
-#: index.php:198
+#: index.php:196
 #: classes/feeds.php:103
 #: classes/feeds.php:109
 msgid "Unread"
 msgstr "未読"
 
-#: index.php:199
+#: index.php:197
 msgid "With Note"
 msgstr "ノート付き"
 
-#: index.php:200
+#: index.php:198
 msgid "Ignore Scoring"
 msgstr "スコア計算の無効化"
 
-#: index.php:203
+#: index.php:201
 msgid "Sort articles"
 msgstr "記事をソート"
 
-#: index.php:206
+#: index.php:204
 msgid "Default"
 msgstr "標準"
 
-#: index.php:207
+#: index.php:205
 msgid "Newest first"
 msgstr "新しい順"
 
-#: index.php:208
+#: index.php:206
 msgid "Oldest first"
 msgstr "古い順"
 
-#: index.php:209
+#: index.php:207
 msgid "Title"
 msgstr "題名"
 
-#: index.php:213
-#: index.php:253
-#: include/functions.php:1186
+#: index.php:211
+#: index.php:251
+#: include/functions.php:1215
 #: classes/feeds.php:115
-#: js/FeedTree.js:138
-#: js/FeedTree.js:166
+#: js/FeedTree.js:41
+#: js/FeedTree.js:69
 msgid "Mark as read"
 msgstr "既読にする"
 
-#: index.php:216
+#: index.php:214
 msgid "Older than one day"
 msgstr "1日前より古い項目"
 
-#: index.php:219
+#: index.php:217
 msgid "Older than one week"
 msgstr "1週間前より古い項目"
 
-#: index.php:222
+#: index.php:220
 msgid "Older than two weeks"
 msgstr "2週間前より古い項目"
 
-#: index.php:238
+#: index.php:236
 msgid "Communication problem with server."
 msgstr "サーバーとの通信に問題が発生しました。"
 
-#: index.php:243
+#: index.php:241
 msgid "Actions..."
 msgstr "操作..."
 
-#: index.php:245
+#: index.php:243
 msgid "Preferences..."
 msgstr "設定..."
 
-#: index.php:246
+#: index.php:244
 msgid "Search..."
 msgstr "検索..."
 
-#: index.php:247
+#: index.php:245
 msgid "Feed actions:"
 msgstr "フィード操作:"
 
-#: index.php:248
+#: index.php:246
 #: classes/handler/public.php:551
 msgid "Subscribe to feed..."
 msgstr "フィードを購読する..."
 
-#: index.php:249
+#: index.php:247
 msgid "Edit this feed..."
 msgstr "フィードを編集する..."
 
-#: index.php:250
+#: index.php:248
 msgid "Rescore feed"
 msgstr "フィードのスコアを再計算しています..."
 
-#: index.php:251
-#: classes/pref/feeds.php:778
-#: classes/pref/feeds.php:1211
-#: js/PrefFeedTree.js:80
+#: index.php:249
+#: classes/pref/feeds.php:770
+#: classes/pref/feeds.php:1203
+#: js/PrefFeedTree.js:61
 msgid "Unsubscribe"
 msgstr "購読をやめる"
 
-#: index.php:252
+#: index.php:250
 msgid "All feeds:"
 msgstr "すべてのフィード:"
 
-#: index.php:254
+#: index.php:252
 msgid "(Un)hide read feeds"
 msgstr "読んだフィードを隠す/再表示する"
 
-#: index.php:255
+#: index.php:253
 msgid "Other actions:"
 msgstr "その他の操作:"
 
-#: index.php:256
-#: include/functions.php:1172
+#: index.php:254
+#: include/functions.php:1201
 msgid "Toggle widescreen mode"
 msgstr "ワイド表示モードの切り替え"
 
-#: index.php:257
+#: index.php:255
 msgid "Create label..."
 msgstr "ラベルを作成する..."
 
-#: index.php:258
+#: index.php:256
 msgid "Create filter..."
 msgstr "フィルターを作成しています..."
 
-#: index.php:259
+#: index.php:257
 msgid "Keyboard shortcuts help"
 msgstr "キーボードショートカット"
 
-#: index.php:268
+#: index.php:266
 msgid "Logout"
 msgstr "ログアウト"
 
-#: index.php:274
+#: index.php:272
 msgid "Updates are available from Git."
 msgstr ""
 
 #: prefs.php:33
-#: prefs.php:140
-#: include/functions.php:1201
+#: prefs.php:138
+#: include/functions.php:1230
 #: classes/pref/prefs.php:425
 msgid "Preferences"
 msgstr "設定"
 
-#: prefs.php:131
+#: prefs.php:129
 msgid "Keyboard shortcuts"
 msgstr "キーボードショートカット"
 
-#: prefs.php:132
+#: prefs.php:130
 msgid "Exit preferences"
 msgstr "設定を終了する"
 
-#: prefs.php:143
+#: prefs.php:141
 #: classes/pref/feeds.php:114
-#: classes/pref/feeds.php:1146
-#: classes/pref/feeds.php:1200
+#: classes/pref/feeds.php:1138
+#: classes/pref/feeds.php:1192
 msgid "Feeds"
 msgstr "フィード"
 
-#: prefs.php:146
+#: prefs.php:144
 #: classes/pref/filters.php:276
 msgid "Filters"
 msgstr "フィルター"
 
-#: prefs.php:149
+#: prefs.php:147
 #: classes/pref/labels.php:94
-#: classes/feeds.php:1708
+#: classes/feeds.php:1710
 msgid "Labels"
 msgstr "ラベル"
 
-#: prefs.php:153
+#: prefs.php:151
 msgid "Users"
 msgstr "ユーザー"
 
-#: prefs.php:156
+#: prefs.php:154
 msgid "System"
 msgstr "システム"
 
@@ -467,7 +467,7 @@ msgstr "アカウントの作成に成功しました。"
 msgid "New user registrations are currently closed."
 msgstr "新規ユーザーの登録は現在行っていません。"
 
-#: update.php:67
+#: update.php:66
 msgid "Tiny Tiny RSS data update script."
 msgstr "Tiny Tiny RSS データ更新スクリプト。"
 
@@ -483,7 +483,7 @@ msgstr "すべてのフィード"
 #: classes/opml.php:512
 #: classes/digest.php:120
 #: classes/pref/feeds.php:233
-#: classes/feeds.php:1720
+#: classes/feeds.php:1722
 msgid "Uncategorized"
 msgstr "カテゴリー割り当てなし"
 
@@ -497,276 +497,276 @@ msgstr[0] "保管された記事 %d 件"
 msgid "No feeds found."
 msgstr "フィードがありません。"
 
-#: include/functions.php:954
+#: include/functions.php:983
 #, php-format
 msgid "%d min"
 msgstr ""
 
-#: include/functions.php:1148
+#: include/functions.php:1177
 msgid "Navigation"
 msgstr "ナビゲーション"
 
-#: include/functions.php:1149
+#: include/functions.php:1178
 msgid "Open next feed"
 msgstr "次のフィードを開く"
 
-#: include/functions.php:1150
+#: include/functions.php:1179
 msgid "Open previous feed"
 msgstr "前のフィードを開く"
 
-#: include/functions.php:1151
+#: include/functions.php:1180
 msgid "Open next article"
 msgstr "次の記事を開く"
 
-#: include/functions.php:1152
+#: include/functions.php:1181
 msgid "Open previous article"
 msgstr "前の記事を開く"
 
-#: include/functions.php:1153
+#: include/functions.php:1182
 msgid "Open next article (don't scroll long articles)"
 msgstr "次の記事を開く(スクロールしない)"
 
-#: include/functions.php:1154
+#: include/functions.php:1183
 msgid "Open previous article (don't scroll long articles)"
 msgstr "前の記事を開く(スクロールしない)"
 
-#: include/functions.php:1155
+#: include/functions.php:1184
 msgid "Move to next article (don't expand or mark read)"
 msgstr "次の記事へ移動する(展開せず既読にもしない)"
 
-#: include/functions.php:1156
+#: include/functions.php:1185
 msgid "Move to previous article (don't expand or mark read)"
 msgstr "前の記事へ移動する(展開せず既読にもしない)"
 
-#: include/functions.php:1157
+#: include/functions.php:1186
 msgid "Show search dialog"
 msgstr "検索ダイアログを表示する"
 
-#: include/functions.php:1158
+#: include/functions.php:1187
 msgid "Article"
 msgstr "記事"
 
-#: include/functions.php:1159
+#: include/functions.php:1188
 #: js/viewfeed.js:1695
 msgid "Toggle starred"
 msgstr "お気に入りを切り替える"
 
-#: include/functions.php:1160
+#: include/functions.php:1189
 #: js/viewfeed.js:1707
 msgid "Toggle published"
 msgstr "公開を切り替える"
 
-#: include/functions.php:1161
+#: include/functions.php:1190
 #: js/viewfeed.js:1682
 msgid "Toggle unread"
 msgstr "未読/既読を切り替える"
 
-#: include/functions.php:1162
+#: include/functions.php:1191
 msgid "Edit tags"
 msgstr "タグを編集する"
 
-#: include/functions.php:1163
+#: include/functions.php:1192
 msgid "Open in new window"
 msgstr "新しいウィンドウで開く"
 
-#: include/functions.php:1164
+#: include/functions.php:1193
 #: js/viewfeed.js:1728
 msgid "Mark below as read"
 msgstr "これより下を既読にする"
 
-#: include/functions.php:1165
+#: include/functions.php:1194
 #: js/viewfeed.js:1721
 msgid "Mark above as read"
 msgstr "これより上を既読にする"
 
-#: include/functions.php:1166
+#: include/functions.php:1195
 msgid "Scroll down"
 msgstr "下にスクロール"
 
-#: include/functions.php:1167
+#: include/functions.php:1196
 msgid "Scroll up"
 msgstr "上にスクロール"
 
-#: include/functions.php:1168
+#: include/functions.php:1197
 msgid "Select article under cursor"
 msgstr "マウスカーソルの下の記事を選択する"
 
-#: include/functions.php:1169
+#: include/functions.php:1198
 msgid "Email article"
 msgstr "記事をメールする"
 
-#: include/functions.php:1170
+#: include/functions.php:1199
 msgid "Close/collapse article"
 msgstr "記事を閉じる"
 
-#: include/functions.php:1171
+#: include/functions.php:1200
 msgid "Toggle article expansion (combined mode)"
 msgstr "記事の展開状態の切り替え(組み合わせモード)"
 
-#: include/functions.php:1173
+#: include/functions.php:1202
 #: plugins/embed_original/init.php:33
 msgid "Toggle embed original"
 msgstr "元の記事の埋め込みモードの切り替え"
 
-#: include/functions.php:1174
+#: include/functions.php:1203
 msgid "Article selection"
 msgstr "記事の選択"
 
-#: include/functions.php:1175
+#: include/functions.php:1204
 msgid "Select all articles"
 msgstr "すべての記事を選択する"
 
-#: include/functions.php:1176
+#: include/functions.php:1205
 msgid "Select unread"
 msgstr "未読記事を選択する"
 
-#: include/functions.php:1177
+#: include/functions.php:1206
 msgid "Select starred"
 msgstr "お気に入りの記事を選択する"
 
-#: include/functions.php:1178
+#: include/functions.php:1207
 msgid "Select published"
 msgstr "公開済みの記事を選択する"
 
-#: include/functions.php:1179
+#: include/functions.php:1208
 msgid "Invert selection"
 msgstr "選択を反転する"
 
-#: include/functions.php:1180
+#: include/functions.php:1209
 msgid "Deselect everything"
 msgstr "選択を全て解除する"
 
-#: include/functions.php:1181
-#: classes/pref/feeds.php:524
-#: classes/pref/feeds.php:802
+#: include/functions.php:1210
+#: classes/pref/feeds.php:522
+#: classes/pref/feeds.php:794
 msgid "Feed"
 msgstr "フィード"
 
-#: include/functions.php:1182
+#: include/functions.php:1211
 msgid "Refresh current feed"
 msgstr "現在のフィードを更新する"
 
-#: include/functions.php:1183
+#: include/functions.php:1212
 msgid "Un/hide read feeds"
 msgstr "読んだフィードを隠す/再表示する"
 
-#: include/functions.php:1184
-#: classes/pref/feeds.php:1203
+#: include/functions.php:1213
+#: classes/pref/feeds.php:1195
 msgid "Subscribe to feed"
 msgstr "フィードを購読する"
 
-#: include/functions.php:1185
-#: js/FeedTree.js:145
-#: js/PrefFeedTree.js:74
+#: include/functions.php:1214
+#: js/FeedTree.js:48
+#: js/PrefFeedTree.js:55
 #: js/viewfeed.js:1846
 msgid "Edit feed"
 msgstr "フィードを編集する"
 
-#: include/functions.php:1187
+#: include/functions.php:1216
 msgid "Reverse headlines"
 msgstr "ヘッドラインの順序を逆転する"
 
-#: include/functions.php:1188
+#: include/functions.php:1217
 msgid "Toggle headline grouping"
 msgstr ""
 
-#: include/functions.php:1189
+#: include/functions.php:1218
 msgid "Debug feed update"
 msgstr "フィードの更新を確認する"
 
-#: include/functions.php:1190
+#: include/functions.php:1219
 #, fuzzy
 msgid "Debug viewfeed()"
 msgstr "フィードの更新を確認する"
 
-#: include/functions.php:1191
-#: js/FeedTree.js:194
+#: include/functions.php:1220
+#: js/FeedTree.js:97
 msgid "Mark all feeds as read"
 msgstr "すべてのフィードを既読に設定する"
 
-#: include/functions.php:1192
+#: include/functions.php:1221
 msgid "Un/collapse current category"
 msgstr "カテゴリーの開閉"
 
-#: include/functions.php:1193
+#: include/functions.php:1222
 msgid "Toggle combined mode"
 msgstr "組み合わせモードの切り替え"
 
-#: include/functions.php:1194
+#: include/functions.php:1223
 msgid "Toggle auto expand in combined mode"
 msgstr "組み合わせモードでの自動展開の切り替え"
 
-#: include/functions.php:1195
+#: include/functions.php:1224
 msgid "Go to"
 msgstr "移動"
 
-#: include/functions.php:1196
-#: classes/feeds.php:1581
+#: include/functions.php:1225
+#: classes/feeds.php:1583
 msgid "All articles"
 msgstr "すべての記事"
 
-#: include/functions.php:1197
+#: include/functions.php:1226
 msgid "Fresh"
 msgstr "新しい記事"
 
-#: include/functions.php:1200
-#: js/tt-rss.js:490
-#: js/tt-rss.js:659
+#: include/functions.php:1229
+#: js/tt-rss.js:491
+#: js/tt-rss.js:660
 msgid "Tag cloud"
 msgstr "タグクラウド"
 
-#: include/functions.php:1202
+#: include/functions.php:1231
 msgid "Other"
 msgstr "その他"
 
-#: include/functions.php:1203
+#: include/functions.php:1232
 #: classes/pref/labels.php:279
 msgid "Create label"
 msgstr "ラベルを作成する"
 
-#: include/functions.php:1204
+#: include/functions.php:1233
 #: classes/pref/filters.php:801
 msgid "Create filter"
 msgstr "フィルターを作成する"
 
-#: include/functions.php:1205
+#: include/functions.php:1234
 msgid "Un/collapse sidebar"
 msgstr "サイドバーを開閉する"
 
-#: include/functions.php:1206
+#: include/functions.php:1235
 msgid "Show help dialog"
 msgstr "ヘルプダイアログを表示する"
 
-#: include/functions.php:2507
+#: include/functions.php:2582
 msgid "There is no error, the file uploaded with success"
 msgstr ""
 
-#: include/functions.php:2508
+#: include/functions.php:2583
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 
-#: include/functions.php:2509
+#: include/functions.php:2584
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
 
-#: include/functions.php:2510
+#: include/functions.php:2585
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
-#: include/functions.php:2511
+#: include/functions.php:2586
 #, fuzzy
 msgid "No file was uploaded"
 msgstr "ファイルがアップロードされていません。"
 
-#: include/functions.php:2512
+#: include/functions.php:2587
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: include/functions.php:2513
+#: include/functions.php:2588
 msgid "Failed to write file to disk."
 msgstr ""
 
-#: include/functions.php:2514
+#: include/functions.php:2589
 msgid "A PHP extension stopped the file upload."
 msgstr ""
 
@@ -791,7 +791,7 @@ msgstr "プロファイル:"
 
 #: include/login_form.php:133
 #: classes/handler/public.php:252
-#: classes/pref/prefs.php:1043
+#: classes/pref/prefs.php:1037
 #: classes/rpc.php:69
 msgid "Default profile"
 msgstr "標準のプロファイル"
@@ -836,14 +836,14 @@ msgstr "この記事のタグ (カンマで区切ります):"
 #: classes/article.php:236
 #: classes/pref/labels.php:82
 #: classes/pref/users.php:103
-#: classes/pref/feeds.php:782
-#: classes/pref/feeds.php:922
+#: classes/pref/feeds.php:774
+#: classes/pref/feeds.php:914
 #: classes/pref/filters.php:525
-#: classes/pref/prefs.php:988
+#: classes/pref/prefs.php:982
 #: plugins/nsfw/init.php:85
 #: plugins/note/init.php:58
-#: plugins/af_readability/init.php:69
-#: plugins/af_redditimgur/init.php:62
+#: plugins/af_readability/init.php:80
+#: plugins/af_redditimgur/init.php:66
 #: plugins/af_psql_trgm/init.php:188
 #: plugins/mail/init.php:65
 #: plugins/af_zz_imgproxy/init.php:238
@@ -855,25 +855,25 @@ msgstr "保存"
 #: classes/handler/public.php:457
 #: classes/pref/labels.php:84
 #: classes/pref/users.php:105
-#: classes/pref/feeds.php:783
-#: classes/pref/feeds.php:925
-#: classes/pref/feeds.php:1680
+#: classes/pref/feeds.php:775
+#: classes/pref/feeds.php:917
+#: classes/pref/feeds.php:1672
 #: classes/pref/filters.php:528
 #: classes/pref/filters.php:945
 #: classes/pref/filters.php:1022
 #: classes/pref/filters.php:1115
-#: classes/pref/prefs.php:990
-#: classes/feeds.php:1035
-#: classes/feeds.php:1087
-#: classes/feeds.php:1126
+#: classes/pref/prefs.php:984
+#: classes/feeds.php:1037
+#: classes/feeds.php:1089
+#: classes/feeds.php:1128
 #: plugins/note/init.php:60
 #: plugins/mail/init.php:179
 msgid "Cancel"
 msgstr "取り消し"
 
 #: classes/article.php:337
-#: classes/article.php:682
-#: classes/article.php:837
+#: classes/article.php:720
+#: classes/article.php:875
 msgid "no tags"
 msgstr "タグがありません"
 
@@ -885,39 +885,39 @@ msgstr "未知の種類"
 msgid "Attachments"
 msgstr "添付"
 
-#: classes/article.php:624
-#: classes/feeds.php:659
+#: classes/article.php:626
+#: classes/feeds.php:661
 msgid "comment"
 msgid_plural "comments"
 msgstr[0] ""
 
-#: classes/article.php:628
-#: classes/feeds.php:663
+#: classes/article.php:630
+#: classes/feeds.php:665
 #, fuzzy
 msgid "comments"
 msgstr "添付"
 
-#: classes/article.php:651
+#: classes/article.php:689
 msgid " - "
 msgstr " - "
 
-#: classes/article.php:692
-#: classes/feeds.php:645
+#: classes/article.php:730
+#: classes/feeds.php:647
 msgid "Edit tags for this article"
 msgstr "この記事のタグを編集する"
 
-#: classes/article.php:725
-#: classes/feeds.php:600
+#: classes/article.php:763
+#: classes/feeds.php:602
 msgid "Originally from:"
 msgstr "元の記事:"
 
-#: classes/article.php:736
-#: classes/pref/feeds.php:541
-#: classes/feeds.php:611
+#: classes/article.php:774
+#: classes/pref/feeds.php:539
+#: classes/feeds.php:613
 msgid "Feed URL"
 msgstr "フィード URL"
 
-#: classes/article.php:773
+#: classes/article.php:811
 #: classes/backend.php:103
 #: classes/dlg.php:33
 #: classes/dlg.php:56
@@ -925,18 +925,18 @@ msgstr "フィード URL"
 #: classes/dlg.php:154
 #: classes/dlg.php:181
 #: classes/dlg.php:197
-#: classes/pref/feeds.php:1474
-#: classes/pref/feeds.php:1541
+#: classes/pref/feeds.php:1466
+#: classes/pref/feeds.php:1533
 #: classes/pref/filters.php:208
-#: classes/pref/prefs.php:1105
+#: classes/pref/prefs.php:1099
 #: plugins/af_psql_trgm/init.php:109
-#: plugins/import_export/init.php:425
-#: plugins/import_export/init.php:471
+#: plugins/import_export/init.php:446
+#: plugins/import_export/init.php:490
 #: plugins/share/init.php:128
 msgid "Close this window"
 msgstr "このウィンドウを閉じる"
 
-#: classes/article.php:875
+#: classes/article.php:913
 msgid "(edit note)"
 msgstr "(ノートの編集)"
 
@@ -993,12 +993,12 @@ msgid "Upload failed with error code %d"
 msgstr "エラーコード %d でアップロードが失敗しました"
 
 #: classes/opml.php:570
-#: plugins/import_export/init.php:452
+#: plugins/import_export/init.php:471
 msgid "Unable to move uploaded file."
 msgstr "アップロードされたファイルを移動できません。"
 
 #: classes/opml.php:574
-#: plugins/import_export/init.php:456
+#: plugins/import_export/init.php:475
 msgid "Error: please upload OPML file."
 msgstr "エラー: OPML ファイルをアップロードしてください。"
 
@@ -1080,7 +1080,7 @@ msgid "Title:"
 msgstr "題名:"
 
 #: classes/handler/public.php:397
-#: classes/pref/feeds.php:539
+#: classes/pref/feeds.php:537
 msgid "URL:"
 msgstr "URL:"
 
@@ -1214,54 +1214,54 @@ msgstr "ラベル <b>%s</b> を作成しました"
 
 #: classes/pref/labels.php:270
 #: classes/pref/users.php:356
-#: classes/pref/feeds.php:1191
-#: classes/pref/feeds.php:1422
-#: classes/pref/feeds.php:1487
+#: classes/pref/feeds.php:1183
+#: classes/pref/feeds.php:1414
+#: classes/pref/feeds.php:1479
 #: classes/pref/filters.php:388
 #: classes/pref/filters.php:446
 #: classes/pref/filters.php:792
 #: classes/pref/filters.php:875
 #: classes/pref/filters.php:902
-#: classes/pref/prefs.php:999
+#: classes/pref/prefs.php:993
 msgid "Select"
 msgstr "選択"
 
 #: classes/pref/labels.php:273
 #: classes/pref/users.php:359
-#: classes/pref/feeds.php:1194
-#: classes/pref/feeds.php:1425
-#: classes/pref/feeds.php:1490
+#: classes/pref/feeds.php:1186
+#: classes/pref/feeds.php:1417
+#: classes/pref/feeds.php:1482
 #: classes/pref/filters.php:391
 #: classes/pref/filters.php:449
 #: classes/pref/filters.php:795
 #: classes/pref/filters.php:878
 #: classes/pref/filters.php:905
-#: classes/pref/prefs.php:1002
+#: classes/pref/prefs.php:996
 #: classes/feeds.php:102
 msgid "All"
 msgstr "すべて"
 
 #: classes/pref/labels.php:275
 #: classes/pref/users.php:361
-#: classes/pref/feeds.php:1196
-#: classes/pref/feeds.php:1427
-#: classes/pref/feeds.php:1492
+#: classes/pref/feeds.php:1188
+#: classes/pref/feeds.php:1419
+#: classes/pref/feeds.php:1484
 #: classes/pref/filters.php:393
 #: classes/pref/filters.php:451
 #: classes/pref/filters.php:797
 #: classes/pref/filters.php:880
 #: classes/pref/filters.php:907
-#: classes/pref/prefs.php:1004
+#: classes/pref/prefs.php:998
 #: classes/feeds.php:105
 msgid "None"
 msgstr "なし"
 
 #: classes/pref/labels.php:282
 #: classes/pref/users.php:370
-#: classes/pref/feeds.php:760
+#: classes/pref/feeds.php:752
 #: classes/pref/filters.php:518
 #: classes/pref/filters.php:814
-#: classes/feeds.php:1086
+#: classes/feeds.php:1088
 msgid "Remove"
 msgstr "削除"
 
@@ -1280,9 +1280,9 @@ msgid "Edit user"
 msgstr "ルールの編集"
 
 #: classes/pref/users.php:61
-#: classes/pref/feeds.php:630
-#: classes/pref/feeds.php:857
-#: classes/feeds.php:1007
+#: classes/pref/feeds.php:622
+#: classes/pref/feeds.php:849
+#: classes/feeds.php:1009
 msgid "Authentication"
 msgstr "認証"
 
@@ -1291,8 +1291,8 @@ msgid "Access level: "
 msgstr "アクセスレベル: "
 
 #: classes/pref/users.php:82
-#: classes/pref/feeds.php:656
-#: classes/pref/feeds.php:875
+#: classes/pref/feeds.php:648
+#: classes/pref/feeds.php:867
 msgid "Options"
 msgstr "オプション"
 
@@ -1358,10 +1358,10 @@ msgid "[tt-rss] Password change notification"
 msgstr "[tt-rss] パスワード変更通知"
 
 #: classes/pref/users.php:346
-#: classes/pref/feeds.php:1187
+#: classes/pref/feeds.php:1179
 #: classes/pref/filters.php:788
-#: classes/feeds.php:1057
-#: classes/feeds.php:1125
+#: classes/feeds.php:1059
+#: classes/feeds.php:1127
 #: js/tt-rss.js:165
 msgid "Search"
 msgstr "検索"
@@ -1376,10 +1376,10 @@ msgid "Edit"
 msgstr "編集"
 
 #: classes/pref/users.php:404
-#: classes/pref/feeds.php:634
-#: classes/pref/feeds.php:861
-#: classes/pref/feeds.php:1657
-#: classes/feeds.php:1011
+#: classes/pref/feeds.php:626
+#: classes/pref/feeds.php:853
+#: classes/pref/feeds.php:1649
+#: classes/feeds.php:1013
 msgid "Login"
 msgstr "ログイン"
 
@@ -1450,235 +1450,237 @@ msgstr[0] "フィードを編集する"
 msgid "General"
 msgstr "全体"
 
-#: classes/pref/feeds.php:530
+#: classes/pref/feeds.php:528
 msgid "Feed Title"
 msgstr "フィードの題名"
 
-#: classes/pref/feeds.php:562
-#: classes/pref/feeds.php:809
-#: classes/pref/feeds.php:1643
-#: classes/feeds.php:987
+#: classes/pref/feeds.php:560
+#: classes/pref/feeds.php:801
+#: classes/pref/feeds.php:1635
+#: classes/feeds.php:989
 msgid "Place in category:"
 msgstr "カテゴリーの場所:"
 
-#: classes/pref/feeds.php:574
+#: classes/pref/feeds.php:572
 #, fuzzy
 msgid "Site URL:"
 msgstr "記事の URL:"
 
-#: classes/pref/feeds.php:576
+#: classes/pref/feeds.php:574
 #, fuzzy
 msgid "Site URL"
 msgstr "フィード URL"
 
-#: classes/pref/feeds.php:587
-#: classes/pref/feeds.php:823
+#: classes/pref/feeds.php:585
+#: classes/pref/feeds.php:815
 #, fuzzy
 msgid "Language:"
 msgstr "言語"
 
-#: classes/pref/feeds.php:594
-#: classes/pref/feeds.php:832
+#: classes/pref/feeds.php:592
+#: classes/pref/feeds.php:824
 msgid "Update"
 msgstr "更新"
 
-#: classes/pref/feeds.php:609
-#: classes/pref/feeds.php:848
+#: classes/pref/feeds.php:607
+#: classes/pref/feeds.php:840
 msgid "Article purging:"
 msgstr "記事の削除:"
 
-#: classes/pref/feeds.php:640
-#: classes/pref/feeds.php:869
-#: classes/pref/feeds.php:1660
+#: classes/pref/feeds.php:632
+#: classes/pref/feeds.php:861
+#: classes/pref/feeds.php:1652
 #: classes/pref/prefs.php:243
-#: classes/feeds.php:1015
+#: classes/feeds.php:1017
 msgid "Password"
 msgstr "パスワード"
 
-#: classes/pref/feeds.php:644
+#: classes/pref/feeds.php:636
 msgid "<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds."
 msgstr "<b>ヒント:</b> Twitter フィード以外でもしフィードが認証を要求するなら、ログイン情報を入力する必要があります。"
 
-#: classes/pref/feeds.php:654
-#: classes/feeds.php:1026
+#: classes/pref/feeds.php:646
+#: classes/feeds.php:1028
 msgid "This feed requires authentication."
 msgstr "このフィードは認証を要求します。"
 
-#: classes/pref/feeds.php:670
-#: classes/pref/feeds.php:879
+#: classes/pref/feeds.php:662
+#: classes/pref/feeds.php:871
 msgid "Hide from Popular feeds"
 msgstr "人気のあるフィードから隠す"
 
-#: classes/pref/feeds.php:682
-#: classes/pref/feeds.php:885
+#: classes/pref/feeds.php:674
+#: classes/pref/feeds.php:877
 msgid "Include in e-mail digest"
 msgstr "電子メールダイジェストに含む"
 
-#: classes/pref/feeds.php:695
-#: classes/pref/feeds.php:891
+#: classes/pref/feeds.php:687
+#: classes/pref/feeds.php:883
 msgid "Always display image attachments"
 msgstr "常に添付画像を表示する"
 
-#: classes/pref/feeds.php:708
-#: classes/pref/feeds.php:899
-msgid "Do not embed images"
+#: classes/pref/feeds.php:700
+#: classes/pref/feeds.php:891
+#, fuzzy
+msgid "Do not embed media"
 msgstr "画像を埋め込まない"
 
-#: classes/pref/feeds.php:721
-#: classes/pref/feeds.php:907
+#: classes/pref/feeds.php:713
+#: classes/pref/feeds.php:899
 msgid "Cache media"
 msgstr ""
 
-#: classes/pref/feeds.php:733
-#: classes/pref/feeds.php:913
+#: classes/pref/feeds.php:725
+#: classes/pref/feeds.php:905
 msgid "Mark updated articles as unread"
 msgstr "更新された記事を既読にする"
 
-#: classes/pref/feeds.php:737
+#: classes/pref/feeds.php:729
 msgid "Icon"
 msgstr "アイコン"
 
-#: classes/pref/feeds.php:751
-#: classes/pref/feeds.php:1292
+#: classes/pref/feeds.php:743
+#: classes/pref/feeds.php:1284
+#: plugins/import_export/init.php:71
 #, fuzzy
 msgid "Choose file..."
 msgstr "フィルターを作成しています..."
 
-#: classes/pref/feeds.php:758
+#: classes/pref/feeds.php:750
 msgid "Replace"
 msgstr "置き換え"
 
-#: classes/pref/feeds.php:765
+#: classes/pref/feeds.php:757
 #: classes/pref/prefs.php:679
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: classes/pref/feeds.php:1162
+#: classes/pref/feeds.php:1154
 msgid "Feeds with errors"
 msgstr "エラーのあったフィード"
 
-#: classes/pref/feeds.php:1169
+#: classes/pref/feeds.php:1161
 msgid "Inactive feeds"
 msgstr "活発でないフィード"
 
-#: classes/pref/feeds.php:1205
+#: classes/pref/feeds.php:1197
 msgid "Edit selected feeds"
 msgstr "選択したフィードを編集"
 
-#: classes/pref/feeds.php:1207
-#: classes/pref/feeds.php:1221
+#: classes/pref/feeds.php:1199
+#: classes/pref/feeds.php:1213
 #: classes/pref/filters.php:810
 msgid "Reset sort order"
 msgstr "ソート順のリセット"
 
-#: classes/pref/feeds.php:1209
-#: js/prefs.js:1458
+#: classes/pref/feeds.php:1201
+#: js/prefs.js:1462
 msgid "Batch subscribe"
 msgstr "一括購読"
 
-#: classes/pref/feeds.php:1216
+#: classes/pref/feeds.php:1208
 msgid "Categories"
 msgstr "カテゴリー"
 
-#: classes/pref/feeds.php:1219
+#: classes/pref/feeds.php:1211
 msgid "Add category"
 msgstr "カテゴリーを追加"
 
-#: classes/pref/feeds.php:1223
+#: classes/pref/feeds.php:1215
 msgid "Remove selected"
 msgstr "選択したカテゴリーを削除"
 
-#: classes/pref/feeds.php:1280
+#: classes/pref/feeds.php:1272
 msgid "OPML"
 msgstr "OPML"
 
-#: classes/pref/feeds.php:1282
+#: classes/pref/feeds.php:1274
 msgid "Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings."
 msgstr "OPML を使うことで、フィード、フィルター、ラベル、Tiny Tiny RSS の設定をエクスポート、インポートできます。"
 
-#: classes/pref/feeds.php:1283
+#: classes/pref/feeds.php:1275
 msgid "Only main settings profile can be migrated using OPML."
 msgstr "OPML を使って移行できるのはメインの設定プロファイルのみです。"
 
-#: classes/pref/feeds.php:1298
+#: classes/pref/feeds.php:1290
 msgid "Import my OPML"
 msgstr "OPML インポート"
 
-#: classes/pref/feeds.php:1304
+#: classes/pref/feeds.php:1296
 msgid "Filename:"
 msgstr "ファイル名:"
 
-#: classes/pref/feeds.php:1306
+#: classes/pref/feeds.php:1298
 msgid "Include settings"
 msgstr "設定を含める"
 
-#: classes/pref/feeds.php:1310
+#: classes/pref/feeds.php:1302
 msgid "Export OPML"
 msgstr "OPML エクスポート"
 
-#: classes/pref/feeds.php:1314
+#: classes/pref/feeds.php:1306
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
 msgstr "あなたの OPML は公に公開でき、以下の URL を知っている人であれば誰でも購読できます。"
 
-#: classes/pref/feeds.php:1318
+#: classes/pref/feeds.php:1310
 msgid "Public OPML URL"
 msgstr "公開 OPML URL"
 
-#: classes/pref/feeds.php:1319
+#: classes/pref/feeds.php:1311
 msgid "Display published OPML URL"
 msgstr "公開 OPML URL を表示"
 
-#: classes/pref/feeds.php:1326
+#: classes/pref/feeds.php:1318
 msgid "Published & shared articles / Generated feeds"
 msgstr "公開・共有した記事 / 生成したフィード"
 
-#: classes/pref/feeds.php:1328
+#: classes/pref/feeds.php:1320
 msgid "Published articles are exported as a public RSS feed and can be subscribed by anyone who knows the URL specified below."
 msgstr "公開した記事は公開 RSS フィードとしてエクスポートされ、以下の URL を知っている人であれば誰でも購読できます。"
 
-#: classes/pref/feeds.php:1335
+#: classes/pref/feeds.php:1327
 #: classes/feeds.php:54
 #: classes/feeds.php:140
 msgid "View as RSS"
 msgstr "RSS として閲覧する"
 
-#: classes/pref/feeds.php:1336
+#: classes/pref/feeds.php:1328
 msgid "Display URL"
 msgstr "URL の表示"
 
-#: classes/pref/feeds.php:1339
+#: classes/pref/feeds.php:1331
 msgid "Clear all generated URLs"
 msgstr "生成された URL をすべて消去する"
 
-#: classes/pref/feeds.php:1418
+#: classes/pref/feeds.php:1410
 msgid "These feeds have not been updated with new content for 3 months (oldest first):"
 msgstr "3 ヶ月間更新されていないフィード(古いもの順):"
 
-#: classes/pref/feeds.php:1452
-#: classes/pref/feeds.php:1517
+#: classes/pref/feeds.php:1444
+#: classes/pref/feeds.php:1509
 msgid "Click to edit feed"
 msgstr "編集するにはクリック"
 
-#: classes/pref/feeds.php:1470
-#: classes/pref/feeds.php:1537
+#: classes/pref/feeds.php:1462
+#: classes/pref/feeds.php:1529
 msgid "Unsubscribe from selected feeds"
 msgstr "選択したフィードの購読をやめる"
 
-#: classes/pref/feeds.php:1640
+#: classes/pref/feeds.php:1632
 msgid "Add one valid RSS feed per line (no feed detection is done)"
 msgstr "1 行に 1 フィードずつ有効な RSS フィードを追加(フィードの自動検出は行われません)"
 
-#: classes/pref/feeds.php:1649
+#: classes/pref/feeds.php:1641
 msgid "Feeds to subscribe, One per line"
 msgstr "購読するフィード(1 行 1 フィード)"
 
-#: classes/pref/feeds.php:1672
+#: classes/pref/feeds.php:1664
 msgid "Feeds require authentication."
 msgstr "このフィードは認証を要求します。"
 
-#: classes/pref/feeds.php:1679
-#: classes/feeds.php:1029
-#: classes/feeds.php:1085
+#: classes/pref/feeds.php:1671
+#: classes/feeds.php:1031
+#: classes/feeds.php:1087
 msgid "Subscribe"
 msgstr "購読"
 
@@ -1765,7 +1767,7 @@ msgid "on field"
 msgstr "対象項目"
 
 #: classes/pref/filters.php:1001
-#: js/PrefFilterTree.js:64
+#: js/PrefFilterTree.js:43
 msgid "in"
 msgstr "フィード"
 
@@ -1983,7 +1985,8 @@ msgid "Click to register your SSL client certificate with tt-rss"
 msgstr "クリックして tt-rss に SSL クライアント証明書を登録する"
 
 #: classes/pref/prefs.php:51
-msgid "Do not embed images in articles"
+#, fuzzy
+msgid "Do not embed media in articles"
 msgstr "記事内に画像を表示しない"
 
 #: classes/pref/prefs.php:52
@@ -1995,7 +1998,7 @@ msgid "Strip all but most common HTML tags when reading articles."
 msgstr "記事を読み込む際、最も一般的な HTML タグ以外を除去する。"
 
 #: classes/pref/prefs.php:53
-#: js/prefs.js:1420
+#: js/prefs.js:1424
 msgid "Customize stylesheet"
 msgstr "スタイルシートのカスタマイズ"
 
@@ -2207,34 +2210,34 @@ msgstr "ユーザープラグイン"
 msgid "Enable selected plugins"
 msgstr "選択したプラグインを有効にする"
 
-#: classes/pref/prefs.php:912
+#: classes/pref/prefs.php:906
 msgid "Incorrect one time password"
 msgstr "ワンタイムパスワードが正しくありません"
 
-#: classes/pref/prefs.php:917
-#: classes/pref/prefs.php:948
+#: classes/pref/prefs.php:911
+#: classes/pref/prefs.php:942
 msgid "Incorrect password"
 msgstr "パスワードが正しくありません"
 
-#: classes/pref/prefs.php:973
+#: classes/pref/prefs.php:967
 #, php-format
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here. <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">This file</a> can be used as a baseline."
 msgstr "現在選択されているテーマの色、フォント、レイアウトをこのカスタム CSS 宣言で上書きできます。<a target=\"_blank\" class=\"visibleLink\" href=\"%s\">このファイル</a>がベースラインとして使えます。"
 
-#: classes/pref/prefs.php:1013
+#: classes/pref/prefs.php:1007
 msgid "Create profile"
 msgstr "プロファイルを作成する"
 
-#: classes/pref/prefs.php:1037
-#: classes/pref/prefs.php:1065
+#: classes/pref/prefs.php:1031
+#: classes/pref/prefs.php:1059
 msgid "(active)"
 msgstr "(有効)"
 
-#: classes/pref/prefs.php:1099
+#: classes/pref/prefs.php:1093
 msgid "Remove selected profiles"
 msgstr "選択したプロファイルを削除しますか"
 
-#: classes/pref/prefs.php:1101
+#: classes/pref/prefs.php:1095
 msgid "Activate profile"
 msgstr "プロファイルを有効にする"
 
@@ -2288,7 +2291,7 @@ msgid "Feed:"
 msgstr "フィード:"
 
 #: classes/feeds.php:193
-#: classes/feeds.php:817
+#: classes/feeds.php:819
 msgid "Feed not found."
 msgstr "フィードが見つかりません。"
 
@@ -2302,118 +2305,118 @@ msgid "Imported at %s"
 msgstr "%s にインポート"
 
 #: classes/feeds.php:394
-#: classes/feeds.php:485
+#: classes/feeds.php:487
 #, fuzzy
 msgid "mark feed as read"
 msgstr "既読にする"
 
-#: classes/feeds.php:540
+#: classes/feeds.php:542
 msgid "Collapse article"
 msgstr "記事を閉じる"
 
-#: classes/feeds.php:701
+#: classes/feeds.php:703
 msgid "No unread articles found to display."
 msgstr "表示する未読記事が見つかりませんでした。"
 
-#: classes/feeds.php:704
+#: classes/feeds.php:706
 msgid "No updated articles found to display."
 msgstr "表示する更新された記事が見つかりませんでした。"
 
-#: classes/feeds.php:707
+#: classes/feeds.php:709
 msgid "No starred articles found to display."
 msgstr "表示するお気に入りの記事が見つかりませんでした。"
 
-#: classes/feeds.php:711
+#: classes/feeds.php:713
 msgid "No articles found to display. You can assign articles to labels manually from article header context menu (applies to all selected articles) or use a filter."
 msgstr "表示する記事が見つかりません。手動でラベルに記事を割り当てるか(上の操作メニューを参照します)、フィルターを使うことができます。"
 
-#: classes/feeds.php:713
+#: classes/feeds.php:715
 msgid "No articles found to display."
 msgstr "表示する記事が見つかりません。"
 
-#: classes/feeds.php:729
-#: classes/feeds.php:920
+#: classes/feeds.php:731
+#: classes/feeds.php:922
 #, php-format
 msgid "Feeds last updated at %s"
 msgstr "%s に最終更新されたフィード"
 
-#: classes/feeds.php:741
-#: classes/feeds.php:932
+#: classes/feeds.php:743
+#: classes/feeds.php:934
 msgid "Some feeds have update errors (click for details)"
 msgstr "いくつかのフィードの更新エラーです (詳細はクリックしてください)"
 
-#: classes/feeds.php:909
+#: classes/feeds.php:911
 msgid "No feed selected."
 msgstr "フィードが選択されていません。"
 
-#: classes/feeds.php:973
-#: classes/feeds.php:981
+#: classes/feeds.php:975
+#: classes/feeds.php:983
 msgid "Feed or site URL"
 msgstr "フィードかサイトの URL"
 
-#: classes/feeds.php:995
+#: classes/feeds.php:997
 msgid "Available feeds"
 msgstr "利用可能なフィード"
 
-#: classes/feeds.php:1032
+#: classes/feeds.php:1034
 msgid "More feeds"
 msgstr "さらなるフィード"
 
-#: classes/feeds.php:1061
+#: classes/feeds.php:1063
 msgid "Popular feeds"
 msgstr "人気のあるフィード"
 
-#: classes/feeds.php:1062
+#: classes/feeds.php:1064
 msgid "Feed archive"
 msgstr "フィード保管庫"
 
-#: classes/feeds.php:1065
+#: classes/feeds.php:1067
 msgid "limit:"
 msgstr "制限:"
 
-#: classes/feeds.php:1099
+#: classes/feeds.php:1101
 msgid "Look for"
 msgstr "検索"
 
-#: classes/feeds.php:1107
+#: classes/feeds.php:1109
 #, php-format
 msgid "in %s"
 msgstr ""
 
-#: classes/feeds.php:1112
+#: classes/feeds.php:1114
 msgid "Used for word stemming"
 msgstr ""
 
-#: classes/feeds.php:1121
+#: classes/feeds.php:1123
 #, fuzzy
 msgid "Search syntax"
 msgstr "検索"
 
-#: classes/feeds.php:1575
+#: classes/feeds.php:1577
 msgid "Starred articles"
 msgstr "お気に入りの記事"
 
-#: classes/feeds.php:1577
+#: classes/feeds.php:1579
 msgid "Published articles"
 msgstr "公開済みの記事"
 
-#: classes/feeds.php:1579
+#: classes/feeds.php:1581
 msgid "Fresh articles"
 msgstr "新しい記事"
 
-#: classes/feeds.php:1583
+#: classes/feeds.php:1585
 msgid "Archived articles"
 msgstr "保管された記事"
 
-#: classes/feeds.php:1585
+#: classes/feeds.php:1587
 msgid "Recently read"
 msgstr "最近読んだ"
 
-#: classes/feeds.php:1706
+#: classes/feeds.php:1708
 msgid "Special"
 msgstr "特別"
 
-#: classes/feeds.php:1963
+#: classes/feeds.php:1965
 #, php-format
 msgid "Search results: %s"
 msgstr "検索結果: %s"
@@ -2445,67 +2448,63 @@ msgstr "記事のノートを編集する"
 msgid "Shared articles"
 msgstr "共有した記事"
 
-#: plugins/auth_internal/init.php:71
+#: plugins/auth_internal/init.php:67
 msgid "Please enter your one time password:"
 msgstr "ワンタイムパスワードを入力してください:"
 
-#: plugins/auth_internal/init.php:212
+#: plugins/auth_internal/init.php:208
 msgid "Password has been changed."
 msgstr "パスワードを変更しました。"
 
-#: plugins/auth_internal/init.php:214
+#: plugins/auth_internal/init.php:210
 msgid "Old password is incorrect."
 msgstr "古いパスワードが不正確です。"
 
-#: plugins/af_readability/init.php:22
+#: plugins/af_readability/init.php:25
 msgid "Data saved."
 msgstr ""
 
-#: plugins/af_readability/init.php:34
+#: plugins/af_readability/init.php:41
 #, fuzzy
 msgid "Inline content"
 msgstr "記事のノートを編集する"
 
-#: plugins/af_readability/init.php:40
+#: plugins/af_readability/init.php:47
 msgid "Readability settings (af_readability)"
 msgstr ""
 
-#: plugins/af_readability/init.php:67
+#: plugins/af_readability/init.php:78
 msgid "Use Readability for pages shared via bookmarklet."
 msgstr ""
 
-#: plugins/af_readability/init.php:79
+#: plugins/af_readability/init.php:90
 #: plugins/af_psql_trgm/init.php:198
 msgid "Currently enabled for (click to edit):"
 msgstr ""
 
-#: plugins/af_readability/init.php:96
+#: plugins/af_readability/init.php:107
 #, fuzzy
 msgid "Readability"
 msgstr "有効性の確認"
 
-#: plugins/af_readability/init.php:107
+#: plugins/af_readability/init.php:118
 #, fuzzy
 msgid "Inline article content"
 msgstr "記事のノートを編集する"
 
-#: plugins/af_redditimgur/init.php:27
+#: plugins/af_redditimgur/init.php:30
 msgid "Reddit content settings (af_redditimgur)"
 msgstr ""
 
-#: plugins/af_redditimgur/init.php:52
-msgid "Uses Readability (full-text-rss) implementation by <a target='_blank' href='https://bitbucket.org/fivefilters/'>FiveFilters.org</a>"
-msgstr ""
-
-#: plugins/af_redditimgur/init.php:56
+#: plugins/af_redditimgur/init.php:60
 msgid "Extract missing content using Readability"
 msgstr ""
 
-#: plugins/af_redditimgur/init.php:61
+#: plugins/af_redditimgur/init.php:65
 msgid "Enable additional duplicate checking"
 msgstr ""
 
-#: plugins/af_redditimgur/init.php:75
+#: plugins/af_redditimgur/init.php:79
 #: plugins/af_zz_imgproxy/init.php:252
 #, fuzzy
 msgid "Configuration saved"
@@ -2569,66 +2568,66 @@ msgstr ""
 msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
 msgstr ""
 
-#: plugins/import_export/init.php:62
+#: plugins/import_export/init.php:53
 msgid "Import and export"
 msgstr "インポート・エクスポート"
 
-#: plugins/import_export/init.php:64
+#: plugins/import_export/init.php:55
 msgid "You can export and import your Starred and Archived articles for safekeeping or when migrating between tt-rss instances of same version."
 msgstr "保護のため、あるいは、同一バージョンの tt-rss で移行する際に、お気に入りの記事や保管された記事をエクスポート・インポートできます。"
 
-#: plugins/import_export/init.php:69
+#: plugins/import_export/init.php:60
 msgid "Export my data"
 msgstr "データのエクスポート"
 
-#: plugins/import_export/init.php:85
+#: plugins/import_export/init.php:78
 msgid "Import"
 msgstr "インポート"
 
-#: plugins/import_export/init.php:235
+#: plugins/import_export/init.php:242
 msgid "Could not import: incorrect schema version."
 msgstr "インポートできませんでした: スキーマのバージョンが不正です。"
 
-#: plugins/import_export/init.php:240
+#: plugins/import_export/init.php:247
 msgid "Could not import: unrecognized document format."
 msgstr "インポートできませんでした: フォーマットが認識できません。"
 
-#: plugins/import_export/init.php:401
+#: plugins/import_export/init.php:422
 msgid "Finished: "
 msgstr "完了: "
 
-#: plugins/import_export/init.php:402
+#: plugins/import_export/init.php:423
 #, php-format
 msgid "%d article processed, "
 msgid_plural "%d articles processed, "
 msgstr[0] "%d 件の記事を処理, "
 
-#: plugins/import_export/init.php:403
+#: plugins/import_export/init.php:424
 #, php-format
 msgid "%d imported, "
 msgid_plural "%d imported, "
 msgstr[0] "%d 件インポート済み, "
 
-#: plugins/import_export/init.php:404
+#: plugins/import_export/init.php:425
 #, php-format
 msgid "%d feed created."
 msgid_plural "%d feeds created."
 msgstr[0] "%d 件のフィードを作成。"
 
-#: plugins/import_export/init.php:409
+#: plugins/import_export/init.php:430
 msgid "Could not load XML document."
 msgstr "XML 文書を読み込めません。"
 
-#: plugins/import_export/init.php:421
+#: plugins/import_export/init.php:442
 msgid "Prepare data"
 msgstr "データの準備"
 
-#: plugins/import_export/init.php:438
+#: plugins/import_export/init.php:459
 #, fuzzy, php-format
 msgid "Upload failed with error code %d (%s)"
 msgstr "エラーコード %d でアップロードが失敗しました"
 
-#: plugins/import_export/init.php:464
+#: plugins/import_export/init.php:483
 msgid "No file uploaded."
 msgstr "ファイルがアップロードされていません。"
 
@@ -2748,20 +2747,20 @@ msgstr "以下のユニーク URL によってこの記事を共有できます�
 msgid "Unshare article"
 msgstr "記事の共有を解除"
 
-#: js/FeedTree.js:172
+#: js/FeedTree.js:75
 #, fuzzy
 msgid "(Un)collapse"
 msgstr "サイドバーを開閉する"
 
-#: js/PrefFeedTree.js:54
+#: js/PrefFeedTree.js:35
 msgid "Edit category"
 msgstr "カテゴリーの編集"
 
-#: js/PrefFeedTree.js:61
+#: js/PrefFeedTree.js:42
 msgid "Remove category"
 msgstr "カテゴリーの削除"
 
-#: js/PrefFilterTree.js:67
+#: js/PrefFilterTree.js:46
 msgid "Inverse"
 msgstr "反転"
 
@@ -2851,13 +2850,13 @@ msgid "Generate new syndication address for this feed?"
 msgstr "このフィードに対して新しいシンジケートアドレスを生成しますか?"
 
 #: js/functions.js:1140
-#: js/prefs.js:1091
+#: js/prefs.js:1095
 msgid "Trying to change address..."
 msgstr "アドレスの変更をしようとしています..."
 
 #: js/functions.js:1245
-#: js/tt-rss.js:445
-#: js/tt-rss.js:672
+#: js/tt-rss.js:446
+#: js/tt-rss.js:673
 msgid "You can't edit this kind of feed."
 msgstr "この種類のフィードは編集できません。"
 
@@ -2881,7 +2880,7 @@ msgstr "さらなるフィード"
 #: js/prefs.js:398
 #: js/prefs.js:540
 #: js/prefs.js:558
-#: js/prefs.js:1073
+#: js/prefs.js:1077
 msgid "No feeds are selected."
 msgstr "フィードが選択されていません。"
 
@@ -2894,12 +2893,12 @@ msgid "Feeds with update errors"
 msgstr "更新エラーのあるフィード"
 
 #: js/functions.js:1446
-#: js/prefs.js:1054
+#: js/prefs.js:1058
 msgid "Remove selected feeds?"
 msgstr "選択したフィードを削除しますか?"
 
 #: js/functions.js:1449
-#: js/prefs.js:1057
+#: js/prefs.js:1061
 msgid "Removing selected feeds..."
 msgstr "選択したフィードを削除しています..."
 
@@ -2940,7 +2939,7 @@ msgid "Removing selected labels..."
 msgstr "選択したラベルを削除しています..."
 
 #: js/prefs.js:308
-#: js/prefs.js:1140
+#: js/prefs.js:1144
 msgid "No labels are selected."
 msgstr "ラベルが選択されていません。"
 
@@ -3028,19 +3027,19 @@ msgstr "はじめに OPML ファイルを選択してください。"
 msgid "Importing, please wait..."
 msgstr "インポートしています。しばらくお待ちください..."
 
-#: js/prefs.js:865
+#: js/prefs.js:869
 msgid "Reset to defaults?"
 msgstr "標準に戻しますか?"
 
-#: js/prefs.js:1464
+#: js/prefs.js:1468
 msgid "Subscribing to feeds..."
 msgstr "フィードを購読しています..."
 
-#: js/prefs.js:1483
+#: js/prefs.js:1487
 msgid "Clear stored data for this plugin?"
 msgstr "このプラグイン用に保存されたデータを消去しますか?"
 
-#: js/prefs.js:1497
+#: js/prefs.js:1501
 msgid "Clear all messages in the error log?"
 msgstr "エラーログの全メッセージを消去しますか?"
 
@@ -3052,34 +3051,34 @@ msgstr "すべての記事を既読にしますか?"
 msgid "Marking all feeds as read..."
 msgstr "すべてのフィードを既読に設定しています..."
 
-#: js/tt-rss.js:397
+#: js/tt-rss.js:398
 msgid "Please enable mail plugin first."
 msgstr "はじめにメールプラグインを有効にしてください。"
 
-#: js/tt-rss.js:526
+#: js/tt-rss.js:527
 msgid "Please enable embed_original plugin first."
 msgstr "はじめに embed_original プラグインを有効にしてください。"
 
-#: js/tt-rss.js:539
-#: js/tt-rss.js:722
+#: js/tt-rss.js:540
+#: js/tt-rss.js:723
 msgid "Widescreen is not available in combined mode."
 msgstr ""
 
-#: js/tt-rss.js:820
+#: js/tt-rss.js:821
 msgid "You can't rescore this kind of feed."
 msgstr "この種類のフィードはスコアを再計算できません。"
 
-#: js/tt-rss.js:825
-#: js/tt-rss.js:685
+#: js/tt-rss.js:826
+#: js/tt-rss.js:686
 msgid "Please select some feed first."
 msgstr "はじめにいくつかのフィードを選択してください。"
 
-#: js/tt-rss.js:830
+#: js/tt-rss.js:831
 #, perl-format
 msgid "Rescore articles in %s?"
 msgstr "%s の記事のスコアを再計算しますか?"
 
-#: js/tt-rss.js:833
+#: js/tt-rss.js:834
 msgid "Rescoring articles..."
 msgstr "記事のスコアを再計算しています..."
 
@@ -3257,7 +3256,7 @@ msgid "This will invalidate all previously shared article URLs. Continue?"
 msgstr "この操作は過去に共有された記事の URL 全てを無効化します。続けますか?"
 
 #: plugins/share/share_prefs.js:6
-#: js/prefs.js:1273
+#: js/prefs.js:1277
 msgid "Clearing URLs..."
 msgstr "URL を消去しています..."
 
@@ -3332,7 +3331,7 @@ msgid "Create Filter"
 msgstr "フィルターを作成する"
 
 #: js/functions.js:1060
-#: js/tt-rss.js:691
+#: js/tt-rss.js:692
 msgid "Unsubscribe from %s?"
 msgstr "%s の購読をやめますか?"
 
@@ -3344,89 +3343,89 @@ msgstr "フィードを削除しています..."
 msgid "Help"
 msgstr "ヘルプ"
 
-#: js/prefs.js:969
+#: js/prefs.js:973
 msgid "Remove category %s? Any nested feeds would be placed into Uncategorized."
 msgstr "カテゴリー %s を削除しますか?カテゴリー内のフィードは全てカテゴリー割り当てなしに配置されます。"
 
-#: js/prefs.js:975
+#: js/prefs.js:979
 msgid "Removing category..."
 msgstr "カテゴリーを削除しています..."
 
-#: js/prefs.js:993
+#: js/prefs.js:997
 msgid "Remove selected categories?"
 msgstr "選択したカテゴリーを削除しますか?"
 
-#: js/prefs.js:996
+#: js/prefs.js:1000
 msgid "Removing selected categories..."
 msgstr "選択したカテゴリーを削除しています..."
 
-#: js/prefs.js:1009
+#: js/prefs.js:1013
 msgid "No categories are selected."
 msgstr "カテゴリーが選択されていません。"
 
-#: js/prefs.js:1016
+#: js/prefs.js:1020
 msgid "Category title:"
 msgstr "カテゴリーの題名:"
 
-#: js/prefs.js:1020
+#: js/prefs.js:1024
 msgid "Creating category..."
 msgstr "カテゴリーを作成しています..."
 
-#: js/prefs.js:1043
+#: js/prefs.js:1047
 msgid "Feeds without recent updates"
 msgstr "最近の更新がないフィード"
 
-#: js/prefs.js:1087
+#: js/prefs.js:1091
 msgid "Replace current OPML publishing address with a new one?"
 msgstr "新しいもので現在の OPML 公開アドレスを置き換えますか?"
 
-#: js/prefs.js:1125
+#: js/prefs.js:1129
 msgid "Reset selected labels to default colors?"
 msgstr "選択したラベルの色を標準にリセットしますか?"
 
-#: js/prefs.js:1157
+#: js/prefs.js:1161
 msgid "Settings Profiles"
 msgstr "設定プロファイル"
 
-#: js/prefs.js:1166
+#: js/prefs.js:1170
 msgid "Remove selected profiles? Active and default profiles will not be removed."
 msgstr "選択したプロファイルを削除しますか?現在のプロファイル、標準のプロファイルは削除されません。"
 
-#: js/prefs.js:1169
+#: js/prefs.js:1173
 msgid "Removing selected profiles..."
 msgstr "選択したプロファイルを削除しています..."
 
-#: js/prefs.js:1185
+#: js/prefs.js:1189
 msgid "No profiles are selected."
 msgstr "プロファイルが選択されていません。"
 
-#: js/prefs.js:1193
-#: js/prefs.js:1246
+#: js/prefs.js:1197
+#: js/prefs.js:1250
 msgid "Activate selected profile?"
 msgstr "選択したプロファイルを有効にしますか?"
 
-#: js/prefs.js:1210
-#: js/prefs.js:1262
+#: js/prefs.js:1214
+#: js/prefs.js:1266
 msgid "Please choose a profile to activate."
 msgstr "有効にするプロファイルを選択してください。"
 
-#: js/prefs.js:1215
+#: js/prefs.js:1219
 msgid "Creating profile..."
 msgstr "プロファイルを作成しています..."
 
-#: js/prefs.js:1270
+#: js/prefs.js:1274
 msgid "This will invalidate all previously generated feed URLs. Continue?"
 msgstr "この操作は過去に生成されたフィードの URL 全てを無効化します。続けますか?"
 
-#: js/prefs.js:1280
+#: js/prefs.js:1284
 msgid "Generated URLs cleared."
 msgstr "生成された URL を消去しました。"
 
-#: js/prefs.js:1352
+#: js/prefs.js:1356
 msgid "Label Editor"
 msgstr "ラベルエディター"
 
-#: js/tt-rss.js:680
+#: js/tt-rss.js:681
 msgid "You can't unsubscribe from the category."
 msgstr "カテゴリーから購読をやめることができません。"
 
