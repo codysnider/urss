@@ -697,7 +697,7 @@ class Pref_Feeds extends Handler_Protected {
 			print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"hide_images\"
 		name=\"hide_images\"
 			$checked>&nbsp;<label for=\"hide_images\">".
-				__('Do not embed images')."</label>";
+				__('Do not embed media')."</label>";
 
 			$cache_images = $row["cache_images"];
 
@@ -888,7 +888,7 @@ class Pref_Feeds extends Handler_Protected {
 			name=\"hide_images\"
 			dojoType=\"dijit.form.CheckBox\">&nbsp;<label class='insensitive' id=\"hide_images_l\"
 			for=\"hide_images\">".
-		__('Do not embed images')."</label>";
+		__('Do not embed media')."</label>";
 
 		print "&nbsp;"; $this->batch_edit_cbox("hide_images", "hide_images_l");
 

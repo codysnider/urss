@@ -48,7 +48,7 @@ class Pref_Prefs extends Handler_Protected {
 			"SHOW_CONTENT_PREVIEW" => array(__("Show content preview in headlines list"), ""),
 			"SORT_HEADLINES_BY_FEED_DATE" => array(__("Sort headlines by feed date"), __("Use feed-specified date to sort headlines instead of local import date.")),
 			"SSL_CERT_SERIAL" => array(__("Login with an SSL certificate"), __("Click to register your SSL client certificate with tt-rss")),
-			"STRIP_IMAGES" => array(__("Do not embed images in articles"), ""),
+			"STRIP_IMAGES" => array(__("Do not embed media in articles"), ""),
 			"STRIP_UNSAFE_TAGS" => array(__("Strip unsafe tags from articles"), __("Strip all but most common HTML tags when reading articles.")),
 			"USER_STYLESHEET" => array(__("Customize stylesheet"), __("Customize CSS stylesheet to your liking")),
 			"USER_TIMEZONE" => array(__("Time zone"), ""),
