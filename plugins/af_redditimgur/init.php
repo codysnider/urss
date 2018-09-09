@@ -132,26 +132,11 @@ class Af_RedditImgur extends Plugin {
 
 					_debug("Handling as Gfycat", $debug);
 
-					$tmp = fetch_file_contents($entry->getAttribute("href"));
+					$source_stream = 'https://giant.gfycat.com/' . $matches[2] . '.mp4';
+					$poster_url = 'https://thumbs.gfycat.com/' . $matches[2] . '-mobile.jpg';
 
-					if ($tmp) {
-						$tmpdoc = new DOMDocument();
-
-						if (@$tmpdoc->loadHTML($tmp)) {
-							$tmpxpath = new DOMXPath($tmpdoc);
-
-							$source_node = $tmpxpath->query("//video[contains(@class,'share-video')]//source[contains(@src, '.mp4')]")->item(0);
-							$poster_node = $tmpxpath->query("//video[contains(@class,'share-video') and @poster]")->item(0);
-
-							if ($source_node && $poster_node) {
-								$source_stream = $source_node->getAttribute("src");
-								$poster_url = $poster_node->getAttribute("poster");
-
-								$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
-								$found = 1;
-							}
-						}
-					}
+					$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
+					$found = 1;
 				}
 
 				if (!$found && preg_match("/https?:\/\/v\.redd\.it\/(.*)$/i", $entry->getAttribute("href"), $matches)) {
