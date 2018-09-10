@@ -135,8 +135,12 @@ class Af_RedditImgur extends Plugin {
 					$source_stream = 'https://giant.gfycat.com/' . $matches[2] . '.mp4';
 					$poster_url = 'https://thumbs.gfycat.com/' . $matches[2] . '-mobile.jpg';
 
-					$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
-					$found = 1;
+					$content_type = $this->get_content_type($source_stream);
+
+					if (strpos($content_type, "video/") !== FALSE) {
+						$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
+						$found = 1;
+					}
 				}
 
 				if (!$found && preg_match("/https?:\/\/v\.redd\.it\/(.*)$/i", $entry->getAttribute("href"), $matches)) {
@@ -303,8 +307,25 @@ class Af_RedditImgur extends Plugin {
 							$cxpath = new DOMXPath($cdoc);
 
 							$og_image = $cxpath->query("//meta[@property='og:image']")->item(0);
+							$og_video = $cxpath->query("//meta[@property='og:video']")->item(0);
 
-							if ($og_image) {
+							if ($og_video) {
+
+								$source_stream = $og_video->getAttribute("content");
+
+								if ($source_stream) {
+
+									if ($og_image) {
+										$poster_url = $og_image->getAttribute("content");
+									} else {
+										$poster_url = false;
+									}
+
+									$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
+									$found = true;
+								}
+
+							} else if ($og_image) {
 
 								$og_src = $og_image->getAttribute("content");
 
