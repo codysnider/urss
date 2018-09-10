@@ -49,13 +49,15 @@ class Db
 		error_reporting($er);
 	}
 
-	private function pdo_connect() {
+	// this really shouldn't be used unless a separate PDO connection is needed
+	// normal usage is Db::pdo()->prepare(...) etc
+	public function pdo_connect() {
 
 		$db_port = defined('DB_PORT') && DB_PORT ? ';port=' . DB_PORT : '';
 		$db_host = defined('DB_HOST') && DB_HOST ? ';host=' . DB_HOST : '';
 
 		try {
-			$this->pdo = new PDO(DB_TYPE . ':dbname=' . DB_NAME . $db_host . $db_port,
+			$pdo = new PDO(DB_TYPE . ':dbname=' . DB_NAME . $db_host . $db_port,
 				DB_USER,
 				DB_PASS);
 		} catch (Exception $e) {
@@ -63,22 +65,31 @@ class Db
 			exit(101);
 		}
 
-		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		if (DB_TYPE == "pgsql") {
 
-			$this->pdo->query("set client_encoding = 'UTF-8'");
-			$this->pdo->query("set datestyle = 'ISO, european'");
-			$this->pdo->query("set TIME ZONE 0");
-			$this->pdo->query("set cpu_tuple_cost = 0.5");
+			$pdo->query("set client_encoding = 'UTF-8'");
+			$pdo->query("set datestyle = 'ISO, european'");
+			$pdo->query("set TIME ZONE 0");
+			$pdo->query("set cpu_tuple_cost = 0.5");
 
 		} else if (DB_TYPE == "mysql") {
-			$this->pdo->query("SET time_zone = '+0:0'");
+			$pdo->query("SET time_zone = '+0:0'");
 
 			if (defined('MYSQL_CHARSET') && MYSQL_CHARSET) {
-				$this->pdo->query("SET NAMES " . MYSQL_CHARSET);
+				$pdo->query("SET NAMES " . MYSQL_CHARSET);
 			}
 		}
+
+		return $pdo;
+	}
+
+	public static function instance() {
+		if (self::$instance == null)
+			self::$instance = new self();
+
+		return self::$instance;
 	}
 
 	public static function get() {
@@ -97,7 +108,7 @@ class Db
 			self::$instance = new self();
 
 		if (!self::$instance->pdo) {
-			self::$instance->pdo_connect();
+			self::$instance->pdo = self::$instance->pdo_connect();
 		}
 
 		return self::$instance->pdo;
