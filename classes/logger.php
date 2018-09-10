@@ -32,7 +32,7 @@ class Logger {
 
 	function log($string) {
 		if ($this->adapter)
-			return $this->adapter->log($string);
+			return $this->adapter->log_error(E_USER_NOTICE, $string, '', 0, '');
 		else
 			return false;
 	}
