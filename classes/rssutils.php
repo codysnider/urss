@@ -1218,7 +1218,7 @@ class RSSUtils {
 					if ($file_content && strlen($file_content) > MIN_CACHE_FILE_SIZE) {
 						file_put_contents($local_filename, $file_content);
 					}
-				} else {
+				} else if (is_writable($local_filename)) {
 					touch($local_filename);
 				}
 			}
@@ -1254,7 +1254,7 @@ class RSSUtils {
 					if ($file_content && strlen($file_content) > MIN_CACHE_FILE_SIZE) {
 						file_put_contents($local_filename, $file_content);
 					}
-				} else {
+				} else if (is_writable($local_filename)) {
 					touch($local_filename);
 				}
 			}
