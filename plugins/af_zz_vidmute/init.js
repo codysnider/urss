@@ -4,7 +4,7 @@ require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 			if (row) {
 
 				row.select("video").each(function (v) {
-					v.setAttribute("muted", true);
+					v.muted = true;
 				});
 			}
 
@@ -15,7 +15,7 @@ require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 			if (row) {
 
 				row.select("video").each(function (v) {
-					v.setAttribute("muted", true);
+					v.muted = true;
 				});
 			}
 
