@@ -30,15 +30,19 @@ require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 
 				window.setTimeout(function() {
 					if (row) {
-						if (row.offsetHeight >= _shorten_expanded_threshold * window.innerHeight) {
-							var content = row.select(".cdmContentInner")[0];
+						var c_inner = row.select(".cdmContentInner")[0];
+						var c_inter = row.select(".cdmIntermediate")[0];
 
-							if (content) {
-								content.innerHTML = "<div class='contentSizeWrapper'>" +
-									content.innerHTML + "</div><button class='expandPrompt' onclick='return expandSizeWrapper(\""+row.id+"\")' "+
-									"href='#'>" + __("Click to expand article") + "</button>";
+						if (c_inner && c_inter &&
+							row.offsetHeight >= _shorten_expanded_threshold * window.innerHeight) {
 
-							}
+							c_inter.parentNode.removeChild(c_inter);
+
+							c_inner.innerHTML = "<div class='contentSizeWrapper'>" +
+								c_inner.innerHTML +
+								c_inter.innerHTML + "</div>" +
+								"<button class='expandPrompt' onclick='return expandSizeWrapper(\""+row.id+"\")' href='#'>" +
+									__("Click to expand article") + "</button>";
 						}
 					}
 				}, 150);
