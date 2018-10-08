@@ -561,17 +561,17 @@ msgstr "全部文章"
 #: include/functions.php:1188
 #: js/viewfeed.js:1695
 msgid "Toggle starred"
-msgstr "锁定加星标的项"
+msgstr "加星此文章"
 
 #: include/functions.php:1189
 #: js/viewfeed.js:1707
 msgid "Toggle published"
-msgstr "锁定发布的项"
+msgstr "发布此文章"
 
 #: include/functions.php:1190
 #: js/viewfeed.js:1682
 msgid "Toggle unread"
-msgstr "锁定未读项"
+msgstr "标记为未读"
 
 #: include/functions.php:1191
 msgid "Edit tags"
