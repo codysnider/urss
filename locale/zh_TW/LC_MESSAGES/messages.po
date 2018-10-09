@@ -552,17 +552,17 @@ msgstr "文章"
 #: include/functions.php:1188
 #: js/viewfeed.js:1695
 msgid "Toggle starred"
-msgstr "鎖定加星標的項"
+msgstr "加星此文章"
 
 #: include/functions.php:1189
 #: js/viewfeed.js:1707
 msgid "Toggle published"
-msgstr "鎖定發布的項"
+msgstr "發布此文章"
 
 #: include/functions.php:1190
 #: js/viewfeed.js:1682
 msgid "Toggle unread"
-msgstr "鎖定未讀項"
+msgstr "標記為未讀"
 
 #: include/functions.php:1191
 msgid "Edit tags"
@@ -593,7 +593,7 @@ msgstr "向上捲動"
 #: include/functions.php:1197
 #, fuzzy
 msgid "Select article under cursor"
-msgstr "選擇鼠標指向的文章"
+msgstr "選擇滑鼠指向的文章"
 
 #: include/functions.php:1198
 #, fuzzy
@@ -3211,7 +3211,7 @@ msgstr "移除預定義標籤"
 #: js/viewfeed.js:1817
 #, fuzzy
 msgid "Select articles in group"
-msgstr "選擇鼠標指向的文章"
+msgstr "選擇滑鼠指向的文章"
 
 #: js/viewfeed.js:1827
 #, fuzzy
