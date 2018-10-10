@@ -618,7 +618,7 @@ msgstr "关闭/折叠文章"
 #: include/functions.php:1200
 #, fuzzy
 msgid "Toggle article expansion (combined mode)"
-msgstr "切换文章展开 (连续模式)"
+msgstr "切换文章展开 (合并模式)"
 
 #: include/functions.php:1202
 #: plugins/embed_original/init.php:33
@@ -705,7 +705,7 @@ msgstr "调试信息源更新"
 #: include/functions.php:1219
 #, fuzzy
 msgid "Debug viewfeed()"
-msgstr "调试信息源更新"
+msgstr "调试 viewfeed()"
 
 #: include/functions.php:1220
 #: js/FeedTree.js:97
@@ -720,12 +720,12 @@ msgstr "展开/折叠 当前分类"
 #: include/functions.php:1222
 #, fuzzy
 msgid "Toggle combined mode"
-msgstr "切换连续模式"
+msgstr "切换合并模式"
 
 #: include/functions.php:1223
 #, fuzzy
 msgid "Toggle auto expand in combined mode"
-msgstr "切换连续模式中的自动展开功能"
+msgstr "切换合并模式中的自动展开功能"
 
 #: include/functions.php:1224
 #, fuzzy
@@ -774,19 +774,19 @@ msgstr "显示帮助对话框"
 
 #: include/functions.php:2582
 msgid "There is no error, the file uploaded with success"
-msgstr ""
+msgstr "没有错误，文件上传成功"
 
 #: include/functions.php:2583
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
-msgstr ""
+msgstr "上传的文件大小超过了 php.ini 中定义的限制 upload_max_filesize"
 
 #: include/functions.php:2584
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
-msgstr ""
+msgstr "上传的文件大小超过了 HTML form 中定义的限制 MAX_FILE_SIZE"
 
 #: include/functions.php:2585
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "上传文件中断"
 
 #: include/functions.php:2586
 #, fuzzy
@@ -795,15 +795,15 @@ msgstr "没有文件上传。"
 
 #: include/functions.php:2587
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "无法找到临时文件夹"
 
 #: include/functions.php:2588
 msgid "Failed to write file to disk."
-msgstr ""
+msgstr "文件写入硬盘失败"
 
 #: include/functions.php:2589
 msgid "A PHP extension stopped the file upload."
-msgstr ""
+msgstr "文件上传被某个 PHP 扩展终止"
 
 #: include/login_form.php:107
 #: classes/handler/public.php:446
@@ -1812,7 +1812,7 @@ msgstr "测试"
 
 #: classes/pref/filters.php:804
 msgid "Combine"
-msgstr "连续"
+msgstr "合并"
 
 #: classes/pref/filters.php:942
 msgid "Create"
@@ -1838,7 +1838,7 @@ msgstr "在"
 #: classes/pref/filters.php:1014
 #, fuzzy
 msgid "Wiki: Filters"
-msgstr "过滤器"
+msgstr "Wiki: 过滤器"
 
 #: classes/pref/filters.php:1019
 #, fuzzy
@@ -1852,12 +1852,12 @@ msgstr "添加规则"
 
 #: classes/pref/filters.php:1042
 msgid "Perform Action"
-msgstr "执行动作"
+msgstr "执行操作"
 
 #: classes/pref/filters.php:1093
 #, fuzzy
 msgid "No actions available"
-msgstr "有可用的新版本啦！"
+msgstr "无操作可用"
 
 #: classes/pref/filters.php:1112
 #, fuzzy
@@ -1873,13 +1873,13 @@ msgstr "添加操作"
 #: classes/pref/filters.php:1139
 #, fuzzy
 msgid "[No caption]"
-msgstr "[无标题]"
+msgstr "[无题注]"
 
 #: classes/pref/filters.php:1141
 #, php-format
 msgid "%s (%d rule)"
 msgid_plural "%s (%d rules)"
-msgstr[0] ""
+msgstr[0] "%s (%d 规则)"
 
 #: classes/pref/filters.php:1155
 #, fuzzy
@@ -1907,7 +1907,7 @@ msgstr "摘要"
 #: classes/pref/prefs.php:25
 #, fuzzy
 msgid "Allow duplicate articles"
-msgstr "允许重复文章"
+msgstr "允许重复的文章"
 
 #: classes/pref/prefs.php:26
 msgid "Blacklisted tags"
@@ -1916,7 +1916,7 @@ msgstr "被列入黑名单的标签"
 #: classes/pref/prefs.php:26
 #, fuzzy
 msgid "When auto-detecting tags in articles these tags will not be applied (comma-separated list)."
-msgstr "自动检测文章标签时，这些标签将被忽略（半角逗号隔开的列表）。"
+msgstr "自动检测文章标签时，忽略这些标签（多个标签以半角逗号分隔）。"
 
 #: classes/pref/prefs.php:27
 msgid "Automatically mark articles as read"
@@ -1929,7 +1929,7 @@ msgstr "在滚动页面的同时自动将文章标记为已读。"
 
 #: classes/pref/prefs.php:28
 msgid "Automatically expand articles in combined mode"
-msgstr "在连续模式下自动展开文章"
+msgstr "在合并模式下自动展开文章"
 
 #: classes/pref/prefs.php:29
 msgid "Combined feed display"
@@ -1954,7 +1954,7 @@ msgstr "默认更新间隔"
 
 #: classes/pref/prefs.php:32
 msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
-msgstr ""
+msgstr "全局最短更新间隔，适用于所有更新方法"
 
 #: classes/pref/prefs.php:33
 msgid "Mark articles in e-mail digest as read"
@@ -1980,11 +1980,11 @@ msgstr "用户所在时区"
 
 #: classes/pref/prefs.php:36
 msgid "Enable API access"
-msgstr "启用API访问"
+msgstr "启用 API 访问"
 
 #: classes/pref/prefs.php:36
 msgid "Allows external clients to access this account through the API"
-msgstr "允许外部客户端通过API来访问该账户"
+msgstr "允许外部客户端通过 API 来访问该账户"
 
 #: classes/pref/prefs.php:37
 msgid "Enable feed categories"
@@ -2014,7 +2014,7 @@ msgstr "长时间格式"
 
 #: classes/pref/prefs.php:42
 msgid "The syntax used is identical to the PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
-msgstr "所使用的语法与PHP <a href='http://php.net/manual/function.date.php'>date()</a> 函数相同."
+msgstr "所使用的语法与 PHP <a href='http://php.net/manual/function.date.php'>date()</a> 函数相同."
 
 #: classes/pref/prefs.php:43
 msgid "On catchup show next feed"
@@ -2107,7 +2107,7 @@ msgstr "主题："
 
 #: classes/pref/prefs.php:57
 msgid "Select one of the available CSS themes"
-msgstr "选择一个可用的CSS主题"
+msgstr "选择一个可用的 CSS 主题"
 
 #: classes/pref/prefs.php:126
 msgid "The configuration was saved."
@@ -2124,7 +2124,7 @@ msgstr "你的偏好设置已经重置为默认值。"
 #: classes/pref/prefs.php:179
 #, fuzzy
 msgid "Personal data / Authentication"
-msgstr "登录密码"
+msgstr "个人数据 / 用户认证"
 
 #: classes/pref/prefs.php:199
 msgid "Personal data"
@@ -2148,7 +2148,7 @@ msgstr "保存信息"
 
 #: classes/pref/prefs.php:279
 msgid "Changing your current password will disable OTP."
-msgstr "更改当前密码会使OTP动态口令失效。"
+msgstr "更改当前密码会使 OTP 动态口令失效。"
 
 #: classes/pref/prefs.php:284
 msgid "Old password"
@@ -2183,11 +2183,11 @@ msgstr "用户名或密码错误"
 #: classes/pref/prefs.php:348
 #, fuzzy
 msgid "Disable OTP"
-msgstr "禁用OTP动态口令"
+msgstr "禁用 OTP 动态口令"
 
 #: classes/pref/prefs.php:354
 msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
-msgstr "更改当前密码会自动禁用OTP动态口令。"
+msgstr "更改当前密码会自动禁用 OTP 动态口令。"
 
 #: classes/pref/prefs.php:356
 msgid "Scan the following code by the Authenticator application:"
@@ -2196,20 +2196,20 @@ msgstr "使用认证应用扫描下面编码"
 #: classes/pref/prefs.php:393
 #, fuzzy
 msgid "Enter the generated one time password"
-msgstr "请填写动态口令："
+msgstr "请填写生成的 OTP 动态口令："
 
 #: classes/pref/prefs.php:407
 #, fuzzy
 msgid "Enable OTP"
-msgstr "已启用"
+msgstr "已启用 OTP 动态口令"
 
 #: classes/pref/prefs.php:413
 msgid "PHP GD functions are required for OTP support."
-msgstr ""
+msgstr "OTP 动态口令需要开启 PHP GD"
 
 #: classes/pref/prefs.php:456
 msgid "Some preferences are only available in default profile."
-msgstr ""
+msgstr "部分设置仅支持默认偏好"
 
 #: classes/pref/prefs.php:545
 msgid "Customize"
@@ -2255,7 +2255,7 @@ msgstr "系统插件"
 
 #: classes/pref/prefs.php:712
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
-msgstr ""
+msgstr "在 <strong>config.php</strong> 中启用的系统插件适用于所有用户"
 
 #: classes/pref/prefs.php:717
 #: classes/pref/prefs.php:773
@@ -2332,7 +2332,7 @@ msgstr "启用偏好文件"
 
 #: classes/feeds.php:53
 msgid "View as RSS feed"
-msgstr "以RSS信息源方式阅读"
+msgstr "以 RSS 信息源方式阅读"
 
 #: classes/feeds.php:62
 #, fuzzy, php-format
@@ -2458,7 +2458,7 @@ msgstr "更多信息源"
 
 #: classes/feeds.php:1063
 msgid "Popular feeds"
-msgstr "最受欢迎的信息源"
+msgstr "热门信息源"
 
 #: classes/feeds.php:1064
 msgid "Feed archive"
@@ -2479,7 +2479,7 @@ msgstr ""
 
 #: classes/feeds.php:1114
 msgid "Used for word stemming"
-msgstr ""
+msgstr "词干提取"
 
 #: classes/feeds.php:1123
 #, fuzzy
@@ -2518,15 +2518,15 @@ msgstr "搜索结果：%s"
 #: plugins/nsfw/init.php:30
 #: plugins/nsfw/init.php:42
 msgid "Not work safe (click to toggle)"
-msgstr ""
+msgstr "不宜在工作场所观看（点击开启）"
 
 #: plugins/nsfw/init.php:52
 msgid "NSFW Plugin"
-msgstr ""
+msgstr "NSFW 插件"
 
 #: plugins/nsfw/init.php:79
 msgid "Tags to consider NSFW (comma-separated)"
-msgstr ""
+msgstr "不宜在工作场所观看的标签（多个标签以逗号分隔）"
 
 #: plugins/nsfw/init.php:100
 #, fuzzy
@@ -2559,7 +2559,7 @@ msgstr "原密码输入错误。"
 
 #: plugins/af_readability/init.php:25
 msgid "Data saved."
-msgstr ""
+msgstr "数据已保存"
 
 #: plugins/af_readability/init.php:41
 #, fuzzy
@@ -2568,7 +2568,7 @@ msgstr "滚动文章内容"
 
 #: plugins/af_readability/init.php:47
 msgid "Readability settings (af_readability)"
-msgstr ""
+msgstr "Readability 设置 (af_readability)"
 
 #: plugins/af_readability/init.php:78
 msgid "Use Readability for pages shared via bookmarklet."
@@ -2577,7 +2577,7 @@ msgstr ""
 #: plugins/af_readability/init.php:90
 #: plugins/af_psql_trgm/init.php:198
 msgid "Currently enabled for (click to edit):"
-msgstr ""
+msgstr "当前启用（点击编辑）"
 
 #: plugins/af_readability/init.php:107
 #, fuzzy
@@ -2591,15 +2591,15 @@ msgstr "滚动文章内容"
 
 #: plugins/af_redditimgur/init.php:30
 msgid "Reddit content settings (af_redditimgur)"
-msgstr ""
+msgstr "Reddit 内容设置"
 
 #: plugins/af_redditimgur/init.php:60
 msgid "Extract missing content using Readability"
-msgstr ""
+msgstr "使用 Readability 提取缺失的内容"
 
 #: plugins/af_redditimgur/init.php:65
 msgid "Enable additional duplicate checking"
-msgstr ""
+msgstr "开启额外的重复检查"
 
 #: plugins/af_redditimgur/init.php:79
 #: plugins/af_zz_imgproxy/init.php:252
@@ -2610,7 +2610,7 @@ msgstr "设置已保存。"
 #: plugins/af_psql_trgm/init.php:29
 #, php-format
 msgid "Data saved (%s, %d)"
-msgstr ""
+msgstr "数据已保存 (%s, %d)"
 
 #: plugins/af_psql_trgm/init.php:119
 #, fuzzy
@@ -2625,20 +2625,20 @@ msgstr "将所有文章标记为已读？"
 
 #: plugins/af_psql_trgm/init.php:164
 msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
-msgstr ""
+msgstr "PostgreSQL trigram 扩展将返回一个文本相似度的浮点数（0-1）。设置过低的阈值可能导致错误的结果，0 为关闭相似度检查。"
 
 #: plugins/af_psql_trgm/init.php:167
 #, fuzzy
 msgid "Global settings"
-msgstr "包含设置"
+msgstr "全局设置"
 
 #: plugins/af_psql_trgm/init.php:171
 msgid "Minimum similarity:"
-msgstr ""
+msgstr "最低相似度："
 
 #: plugins/af_psql_trgm/init.php:176
 msgid "Minimum title length:"
-msgstr ""
+msgstr "最短标题长度："
 
 #: plugins/af_psql_trgm/init.php:181
 #, fuzzy
@@ -2647,23 +2647,23 @@ msgstr "启用信息源分类"
 
 #: plugins/af_psql_trgm/init.php:216
 msgid "Similarity (pg_trgm)"
-msgstr ""
+msgstr "相似度 (pg_trgm)"
 
 #: plugins/af_comics/init.php:49
 msgid "Feeds supported by af_comics"
-msgstr "af_comics的feed源"
+msgstr "af_comics 的 feed 源"
 
 #: plugins/af_comics/init.php:51
 msgid "The following comics are currently supported:"
-msgstr "下面的comics已被支持："
+msgstr "漫画支持支持："
 
 #: plugins/af_comics/init.php:69
 msgid "To subscribe to GoComics use the comic's regular web page as the feed URL (e.g. for the <em>Garfield</em> comic use <code>http://www.gocomics.com/garfield</code>)."
-msgstr ""
+msgstr "订阅 GoComics 时，使用漫画网址作为源地址。例如 <em>Garfield</em>，则地址为<code>http://www.gocomics.com/garfield</code>。"
 
 #: plugins/af_comics/init.php:71
 msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
-msgstr ""
+msgstr "将新版的过滤器放置于插件目录下的 <code>filters.local</code> 文件夹中"
 
 #: plugins/import_export/init.php:53
 msgid "Import and export"
@@ -2671,7 +2671,7 @@ msgstr "导入和导出"
 
 #: plugins/import_export/init.php:55
 msgid "You can export and import your Starred and Archived articles for safekeeping or when migrating between tt-rss instances of same version."
-msgstr "你可以导出和导入所有的加星文章、归档文章，来进行安全备份，或在同版本的tt-rss实例之间迁移。"
+msgstr "你可以导出和导入所有的加星文章、归档文章，来进行安全备份，或在同版本的 tt-rss 实例之间迁移。"
 
 #: plugins/import_export/init.php:60
 msgid "Export my data"
@@ -2683,7 +2683,7 @@ msgstr "导入"
 
 #: plugins/import_export/init.php:242
 msgid "Could not import: incorrect schema version."
-msgstr "无法导入：不正确的schema版本。"
+msgstr "无法导入：不正确的 schema 版本。"
 
 #: plugins/import_export/init.php:247
 msgid "Could not import: unrecognized document format."
@@ -2703,7 +2703,7 @@ msgstr[0] "编辑文章注记"
 #, fuzzy, php-format
 msgid "%d imported, "
 msgid_plural "%d imported, "
-msgstr[0] "已经导入过。"
+msgstr[0] "已导入。"
 
 #: plugins/import_export/init.php:425
 #, fuzzy, php-format
@@ -2713,7 +2713,7 @@ msgstr[0] "没有选中的信息源。"
 
 #: plugins/import_export/init.php:430
 msgid "Could not load XML document."
-msgstr "无法加载XML文档。"
+msgstr "无法加载 XML 文档。"
 
 #: plugins/import_export/init.php:442
 msgid "Prepare data"
@@ -2730,12 +2730,12 @@ msgstr "没有文件上传。"
 
 #: plugins/mail/init.php:29
 msgid "Mail addresses saved."
-msgstr ""
+msgstr "邮件地址已保存"
 
 #: plugins/mail/init.php:35
 #, fuzzy
 msgid "Mail plugin"
-msgstr "用户插件"
+msgstr "邮件插件"
 
 #: plugins/mail/init.php:37
 msgid "You can set predefined email addressed here (comma-separated list):"
@@ -2751,7 +2751,7 @@ msgstr "[已转发]"
 #: plugins/mail/init.php:118
 #: plugins/mailto/init.php:50
 msgid "Multiple articles"
-msgstr "多个文章"
+msgstr "多篇文章"
 
 #: plugins/mail/init.php:146
 msgid "To:"
@@ -2771,7 +2771,7 @@ msgstr "关闭文章"
 
 #: plugins/bookmarklets/init.php:20
 msgid "Bookmarklets"
-msgstr ""
+msgstr "小书签"
 
 #: plugins/bookmarklets/init.php:22
 msgid "Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it."
@@ -2796,7 +2796,7 @@ msgstr "收缩侧边栏"
 
 #: plugins/af_zz_imgproxy/init.php:208
 msgid "Image proxy settings (af_zz_imgproxy)"
-msgstr ""
+msgstr "图片代理设置 (af_zz_imgproxy)"
 
 #: plugins/af_zz_imgproxy/init.php:232
 #, fuzzy
@@ -2898,7 +2898,7 @@ msgstr "全部文章"
 
 #: js/functions.js:74
 msgid "Close"
-msgstr ""
+msgstr "关闭"
 
 #: js/functions.js:141
 #, fuzzy
@@ -2943,7 +2943,7 @@ msgstr "无法下载指定的 URL 。"
 #: js/functions.js:672
 #, fuzzy, perl-format
 msgid "XML validation failed: %s"
-msgstr "XML验证失败："
+msgstr "XML 验证失败："
 
 #: js/functions.js:676
 msgid "You are already subscribed to this feed."
@@ -3182,7 +3182,7 @@ msgstr "请先选几个信息源吧。"
 #: js/tt-rss.js:540
 #: js/tt-rss.js:723
 msgid "Widescreen is not available in combined mode."
-msgstr ""
+msgstr "在合并模式下无法启用宽"
 
 #: js/tt-rss.js:821
 msgid "You can't rescore this kind of feed."
@@ -3191,7 +3191,7 @@ msgstr "无法重置本类信息源的评分。"
 #: js/tt-rss.js:826
 #: js/tt-rss.js:686
 msgid "Please select some feed first."
-msgstr "请先选几个信息源吧。"
+msgstr "请选择信息源。"
 
 #: js/tt-rss.js:831
 #, perl-format
@@ -3243,7 +3243,7 @@ msgstr[0] "将存档的 %d 篇文章移回原处？"
 
 #: js/viewfeed.js:969
 msgid "Please note that unstarred articles might get purged on next feed update."
-msgstr ""
+msgstr "未加星的文章可能在下一次文章更新中被清除"
 
 #: js/viewfeed.js:1009
 #, fuzzy, perl-format
@@ -3341,7 +3341,7 @@ msgstr "用邮件转发文章"
 
 #: plugins/mail/mail.js:36
 msgid "Error sending email:"
-msgstr ""
+msgstr "邮件发送错误："
 
 #: plugins/mail/mail.js:38
 #, fuzzy
@@ -3368,7 +3368,7 @@ msgstr "请填写类别名称："
 
 #: plugins/share/share.js:18
 msgid "Trying to change URL..."
-msgstr "尝试更改URL..."
+msgstr "尝试更改 URL..."
 
 #: plugins/share/share.js:55
 #, fuzzy
@@ -3390,7 +3390,7 @@ msgstr "清理 URLs..."
 
 #: plugins/share/share_prefs.js:13
 msgid "Shared URLs cleared."
-msgstr "分享的URL已被清除。"
+msgstr "分享的 URL 已被清除。"
 
 #: js/feedlist.js:204
 #, fuzzy
@@ -3452,7 +3452,7 @@ msgstr "信息源动作"
 
 #: js/functions.js:860
 msgid "Looking for articles (%d processed, %f found)..."
-msgstr ""
+msgstr "搜索文章中 (%d 已处理, %f 已发现)..."
 
 #: js/functions.js:890
 #, fuzzy
@@ -3470,7 +3470,7 @@ msgstr "从 %s 取消订阅？"
 
 #: js/functions.js:1063
 msgid "Removing feed..."
-msgstr "删除feed..."
+msgstr "删除 feed..."
 
 #: js/functions.js:1489
 msgid "Help"
@@ -3478,7 +3478,7 @@ msgstr "帮助"
 
 #: js/prefs.js:973
 msgid "Remove category %s? Any nested feeds would be placed into Uncategorized."
-msgstr ""
+msgstr "删除类别 %s？该类别下的源将被归入未分类中。"
 
 #: js/prefs.js:979
 #, fuzzy
@@ -3752,7 +3752,7 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 #~ msgstr "请仅选择一个实例。"
 
 #~ msgid "The error will be reported to the configured log destination."
-#~ msgstr "error会保存在配置的目标日志中"
+#~ msgstr "错误会保存在预设的日志中"
 
 #, fuzzy
 #~ msgid "Are you sure to report this exception to tt-rss.org? The report will include information about your web browser and tt-rss configuration. Your IP will be saved in the database."
@@ -3781,16 +3781,16 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 #~ msgstr "本过滤器下没有匹配到文章。"
 
 #~ msgid "All done. %d out of %d articles imported."
-#~ msgstr "完成。已成功导入%d条文章，全部%d条文章。"
+#~ msgstr "完成。已成功导入 %d 条文章，全部 %d 条文章。"
 
 #~ msgid "The document has incorrect format."
 #~ msgstr "文档格式错误。"
 
 #~ msgid "Import starred or shared items from Google Reader"
-#~ msgstr "从Google Reader中导入加星或共享条目。"
+#~ msgstr "从 Google Reader 中导入加星或共享条目。"
 
 #~ msgid "Paste your starred.json or shared.json into the form below."
-#~ msgstr "把你的starred.json 或 shared.json复制到下面的表格中。"
+#~ msgstr "把你的 starred.json 或 shared.json 复制到下面的输入框中。"
 
 #~ msgid "Import my Starred items"
 #~ msgstr "导入我的加星条目"
@@ -3812,7 +3812,7 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 #~ msgstr "当前服务器系统时间: %s (UTC)"
 
 #~ msgid "Google Reader Import"
-#~ msgstr "导入Google Reader"
+#~ msgstr "导入 Google Reader"
 
 #, fuzzy
 #~ msgid "Please choose a file first."
@@ -3835,7 +3835,7 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 #~ msgstr "本信息源"
 
 #~ msgid "Complex expressions might not give results while testing due to issues with database server regexp implementation."
-#~ msgstr "使用复杂的表达式可能没有返回结果。"
+#~ msgstr "数据库的正则设置可能导致复杂的表达式返回无结果。"
 
 #~ msgid "Old password cannot be blank."
 #~ msgstr "请输入之前使用的密码。"
@@ -3880,7 +3880,7 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 
 #, fuzzy
 #~ msgid "Session failed to validate (user agent changed)"
-#~ msgstr "无法验证会话（user agent发生变化）"
+#~ msgstr "无法验证会话（user agent 发生变化）"
 
 #~ msgid "Assign articles to labels automatically"
 #~ msgstr "为文章自动分配预定义标签？"
@@ -3889,7 +3889,7 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 #~ msgstr "Tiny Tiny RSS 有可用的新版本 (%s)。"
 
 #~ msgid "You can update using built-in updater in the Preferences or by using update.php"
-#~ msgstr "你可以使用内置的更新器，或者update.php，来进行更新。"
+#~ msgstr "你可以使用内置的更新器，或者 update.php，来进行更新。"
 
 #~ msgid "See the release notes"
 #~ msgstr "查看版本发布记录"
@@ -3916,13 +3916,13 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 #~ msgstr "在更新完成前不要关闭此对话框。"
 
 #~ msgid "It is suggested to backup your tt-rss directory first."
-#~ msgstr "强烈建议先备份你的tt-rss目录。"
+#~ msgstr "强烈建议先备份你的 tt-rss 目录。"
 
 #~ msgid "Your database will not be modified."
 #~ msgstr "你的数据库将不会被修改。"
 
 #~ msgid "Your current tt-rss installation directory will not be modified. It will be renamed and left in the parent directory. You will be able to migrate all your customized files after update finishes."
-#~ msgstr "你当前的tt-rss安装目录不会被修改。它将会被重命名，保存在父目录里。在更新完成后，你可以迁移所有的自定义文件。"
+#~ msgstr "你当前的 tt-rss 安装目录不会被修改。它将会被重命名，保存在父目录里。在更新完成后，你可以迁移所有的自定义文件。"
 
 #, fuzzy
 #~ msgid "Ready to update."
@@ -3933,7 +3933,7 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 #~ msgstr "开始更新"
 
 #~ msgid "Backup your tt-rss directory before continuing. Please type 'yes' to continue."
-#~ msgstr "请先备份你的tt-rss目录。 敲击'yes'来继续下一步。"
+#~ msgstr "请先备份你的 tt-rss 目录。 输入'yes'来继续下一步。"
 
 #~ msgid "From:"
 #~ msgstr "发信人："
@@ -3987,7 +3987,7 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 #~ msgstr "主页"
 
 #~ msgid "Nothing found (click to reload feed)."
-#~ msgstr "啥也没找到（点击以重新加载信息源）。"
+#~ msgstr "无结果（点击以重新加载信息源）。"
 
 #~ msgid "Enable categories"
 #~ msgstr "启用类别"
@@ -4068,7 +4068,7 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 #~ msgstr "无法找到必要的表结构文件，需要版本："
 
 #~ msgid ", found: "
-#~ msgstr "，找到："
+#~ msgstr "，发现："
 
 #~ msgid "Tiny Tiny RSS database is up to date."
 #~ msgstr "Tiny Tiny RSS 数据库是最新版。"
@@ -4180,7 +4180,7 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 
 #, fuzzy
 #~ msgid "Back to feeds"
-#~ msgstr "很久不活跃的信息源"
+#~ msgstr "返回源列表"
 
 #~ msgid "This will clear your stored authentication information for Twitter. Continue?"
 #~ msgstr "这将会清空所有保存过的 Twitter 认证信息。是否继续？"
@@ -4376,4 +4376,4 @@ msgstr[0] "将 %d 篇文章标记为已读？"
 #~ msgstr "过滤器测试结果"
 
 #~ msgid "When \"Mark as read\" button is clicked in toolbar, automatically open next feed with unread articles."
-#~ msgstr "当工具栏上 \"标记为已读 \" 按钮被点击时，自动打开下一个信息源中的未读文章。"
+#~ msgstr "点击工具栏上的 \"标记为已读 \" 按钮时，自动打开下一个信息源中的未读文章。"
