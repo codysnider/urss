@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 10:24+0300\n"
+"POT-Creation-Date: 2018-10-10 08:24+0300\n"
 "PO-Revision-Date: 2014-11-01 23:36+0300\n"
 "Last-Translator: Valdis Vītoliņš <valdis.vitolins@odo.lv>\n"
 "Language-Team: \n"
@@ -3232,7 +3232,7 @@ msgstr "Jūsu ziņojums ir nosūtīts."
 msgid "Sorry, your browser does not support sandboxed iframes."
 msgstr "Piedodiet, jūsu pārlūkprogramma neatbalsta iegultos rāmjus (iframe) smilšu kastē."
 
-#: plugins/shorten_expanded/init.js:39
+#: plugins/shorten_expanded/init.js:45
 msgid "Click to expand article"
 msgstr "Klikšķiniet, lai izvērstu rakstu"
 

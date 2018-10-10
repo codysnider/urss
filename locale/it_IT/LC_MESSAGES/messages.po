@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 10:24+0300\n"
+"POT-Creation-Date: 2018-10-10 08:24+0300\n"
 "PO-Revision-Date: 2017-03-29 22:05+0200\n"
 "Last-Translator: dedioste <dedioste@gmail.com>\n"
 "Language-Team: \n"
@@ -3206,7 +3206,7 @@ msgstr "Il messaggio è stato inviato."
 msgid "Sorry, your browser does not support sandboxed iframes."
 msgstr "Mi dispiace, il browser non supporda gli iframe nella sandbox."
 
-#: plugins/shorten_expanded/init.js:39
+#: plugins/shorten_expanded/init.js:45
 msgid "Click to expand article"
 msgstr "Fare clic per espandere l'articolo."
 

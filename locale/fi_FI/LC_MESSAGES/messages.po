@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss 1.7.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 10:24+0300\n"
+"POT-Creation-Date: 2018-10-10 08:24+0300\n"
 "PO-Revision-Date: 2015-06-25 22:05+0300\n"
 "Last-Translator: Henrik Ahlgren <pablo@seestieto.com>\n"
 "Language-Team: \n"
@@ -3241,7 +3241,7 @@ msgstr "Viestisi lähetettiin."
 msgid "Sorry, your browser does not support sandboxed iframes."
 msgstr ""
 
-#: plugins/shorten_expanded/init.js:39
+#: plugins/shorten_expanded/init.js:45
 msgid "Click to expand article"
 msgstr "Napsauta nähdäksesi koko artikkelin."
 

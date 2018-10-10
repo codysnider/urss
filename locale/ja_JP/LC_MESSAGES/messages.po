@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss unstable\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 10:24+0300\n"
+"POT-Creation-Date: 2018-10-10 08:24+0300\n"
 "PO-Revision-Date: 2013-07-13 11:05+0900\n"
 "Last-Translator: Yak! <yak_ex@mx.scn.tv>\n"
 "Language-Team: \n"
@@ -3226,7 +3226,7 @@ msgstr "個人データを変更しました。"
 msgid "Sorry, your browser does not support sandboxed iframes."
 msgstr "あなたのブラウザはサンドボックス化された iframe をサポートしていません。"
 
-#: plugins/shorten_expanded/init.js:39
+#: plugins/shorten_expanded/init.js:45
 #, fuzzy
 msgid "Click to expand article"
 msgstr "編集するにはクリック"

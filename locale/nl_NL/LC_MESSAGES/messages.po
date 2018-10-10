@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 10:24+0300\n"
+"POT-Creation-Date: 2018-10-10 08:24+0300\n"
 "PO-Revision-Date: 2013-05-02 13:55+0100\n"
 "Last-Translator: ArmyOfPirates\n"
 "Language-Team: translations <LL@li.org>\n"
@@ -3251,7 +3251,7 @@ msgstr "Uw persoonlijke gegevens zijn opgeslagen."
 msgid "Sorry, your browser does not support sandboxed iframes."
 msgstr "Sorry, uw browser lijkt iframes in een sandbox niet te ondersteunen."
 
-#: plugins/shorten_expanded/init.js:39
+#: plugins/shorten_expanded/init.js:45
 #, fuzzy
 msgid "Click to expand article"
 msgstr "Klik om artikel uit te klappen."

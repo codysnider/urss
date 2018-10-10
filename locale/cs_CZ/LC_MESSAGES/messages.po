@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TT-RSS CZech\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 10:24+0300\n"
+"POT-Creation-Date: 2018-10-10 08:24+0300\n"
 "PO-Revision-Date: 2014-09-09 08:13+0100\n"
 "Last-Translator: Trottel <trottel09@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -3244,7 +3244,7 @@ msgstr "Vaše zpráva byla odeslána."
 msgid "Sorry, your browser does not support sandboxed iframes."
 msgstr "Bohužel, váš prohlížeč nepodporuje vložené rámce v izolovaném prostoru."
 
-#: plugins/shorten_expanded/init.js:39
+#: plugins/shorten_expanded/init.js:45
 msgid "Click to expand article"
 msgstr "Klikněte pro rozbalení článku"
 
