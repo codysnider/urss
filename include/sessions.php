@@ -49,6 +49,19 @@
         $pdo = Db::pdo();
 
 		if ($_SESSION["uid"]) {
+
+			if (!defined('_SKIP_SESSION_ADDRESS_CHECKS') || !_SKIP_SESSION_ADDRESS_CHECKS) {
+				if ($_SESSION["ip_address"] != $_SERVER["REMOTE_ADDR"]) {
+					$_SESSION["login_error_msg"] = __("Session failed to validate.");
+					return false;
+				}
+			}
+
+			if ($_SESSION["user_agent"] != sha1($_SERVER['HTTP_USER_AGENT'])) {
+				$_SESSION["login_error_msg"] = __("Session failed to validate.");
+				return false;
+			}
+
 			$sth = $pdo->prepare("SELECT pwd_hash FROM ttrss_users WHERE id = ?");
 			$sth->execute([$_SESSION['uid']]);
 
