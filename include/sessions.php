@@ -13,7 +13,6 @@
 	$session_name = (!defined('TTRSS_SESSION_NAME')) ? "ttrss_sid" : TTRSS_SESSION_NAME;
 
 	if (is_server_https()) {
-		$session_name .= "_ssl";
 		ini_set("session.cookie_secure", true);
 	}
 
