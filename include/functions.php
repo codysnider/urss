@@ -718,8 +718,8 @@
 					session_commit();
 				}
 
-				session_start();
 				session_regenerate_id(true);
+				session_start();
 
 				$_SESSION["uid"] = $user_id;
 				$_SESSION["version"] = VERSION_STATIC;
