@@ -712,7 +712,14 @@
 			}
 
 			if ($user_id && !$check_only) {
-				@session_start();
+
+				if (session_status() != PHP_SESSION_NONE) {
+					session_destroy();
+					session_commit();
+				}
+
+				session_start();
+				session_regenerate_id(true);
 
 				$_SESSION["uid"] = $user_id;
 				$_SESSION["version"] = VERSION_STATIC;

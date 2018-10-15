@@ -160,9 +160,5 @@
 	if (!defined('NO_SESSION_AUTOSTART')) {
 		if (isset($_COOKIE[session_name()])) {
 			@session_start();
-
-			if (!$_SESSION['uid']) {
-				logout_user();
-			}
 		}
 	}
