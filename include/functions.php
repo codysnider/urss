@@ -700,13 +700,14 @@
 
 		if (!SINGLE_USER_MODE) {
 			$user_id = false;
+			$auth_module = false;
 
 			foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_AUTH_USER) as $plugin) {
 
 				$user_id = (int) $plugin->authenticate($login, $password);
 
 				if ($user_id) {
-					$_SESSION["auth_module"] = strtolower(get_class($plugin));
+					$auth_module = strtolower(get_class($plugin));
 					break;
 				}
 			}
@@ -723,6 +724,7 @@
 
 				$_SESSION["uid"] = $user_id;
 				$_SESSION["version"] = VERSION_STATIC;
+				$_SESSION["auth_module"] = $auth_module;
 
 				$pdo = DB::pdo();
 				$sth = $pdo->prepare("SELECT login,access_level,pwd_hash FROM ttrss_users
