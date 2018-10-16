@@ -503,7 +503,9 @@ class Handler_Public extends Handler {
 				// start an empty session to deliver login error message
 				@session_start();
 
-				$_SESSION["login_error_msg"] = __("Incorrect username or password");
+				if (!isset($_SESSION["login_error_msg"]))
+					$_SESSION["login_error_msg"] = __("Incorrect username or password");
+
 				user_error("Failed login attempt for $login from {$_SERVER['REMOTE_ADDR']}", E_USER_WARNING);
 			}
 
