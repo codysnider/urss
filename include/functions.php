@@ -714,13 +714,6 @@
 
 			if ($user_id && !$check_only) {
 
-				/* if a session is started here there's a stale login cookie we need to clean */
-
-				if (session_status() != PHP_SESSION_NONE) {
-					$_SESSION["login_error_msg"] = __("Stale session cookie found, try logging in again");
-					return false;
-				}
-
 				session_regenerate_id(true);
 				session_start();
 
