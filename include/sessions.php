@@ -49,15 +49,8 @@
 
 		if ($_SESSION["uid"]) {
 
-			if (!defined('_SKIP_SESSION_ADDRESS_CHECKS') || !_SKIP_SESSION_ADDRESS_CHECKS) {
-				if ($_SESSION["ip_address"] != $_SERVER["REMOTE_ADDR"]) {
-					$_SESSION["login_error_msg"] = __("Session failed to validate.");
-					return false;
-				}
-			}
-
 			if ($_SESSION["user_agent"] != sha1($_SERVER['HTTP_USER_AGENT'])) {
-				$_SESSION["login_error_msg"] = __("Session failed to validate.");
+				$_SESSION["login_error_msg"] = __("Session failed to validate (UA changed).");
 				return false;
 			}
 
