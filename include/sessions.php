@@ -45,7 +45,7 @@
 				__("Session failed to validate (schema version changed)");
 			return false;
 		}
-        $pdo = Db::pdo();
+		  $pdo = Db::pdo();
 
 		if ($_SESSION["uid"]) {
 
@@ -59,21 +59,21 @@
 
 			// user not found
 			if ($row = $sth->fetch()) {
-                $pwd_hash = $row["pwd_hash"];
+					 $pwd_hash = $row["pwd_hash"];
 
-                if ($pwd_hash != $_SESSION["pwd_hash"]) {
+					 if ($pwd_hash != $_SESSION["pwd_hash"]) {
 
-                    $_SESSION["login_error_msg"] =
-                        __("Session failed to validate (password changed)");
+						  $_SESSION["login_error_msg"] =
+								__("Session failed to validate (password changed)");
 
-                    return false;
-                }
+						  return false;
+					 }
 			} else {
 
-                $_SESSION["login_error_msg"] =
-                    __("Session failed to validate (user not found)");
+					 $_SESSION["login_error_msg"] =
+						  __("Session failed to validate (user not found)");
 
-                return false;
+					 return false;
 
 			}
 		}
@@ -95,16 +95,16 @@
 		$sth->execute([$id]);
 
 		if ($row = $sth->fetch()) {
-            return base64_decode($row["data"]);
+				return base64_decode($row["data"]);
 
 		} else {
-            $expire = time() + $session_expire;
+				$expire = time() + $session_expire;
 
-            $sth = Db::pdo()->prepare("INSERT INTO ttrss_sessions (id, data, expire)
+				$sth = Db::pdo()->prepare("INSERT INTO ttrss_sessions (id, data, expire)
 					VALUES (?, '', ?)");
-            $sth->execute([$id, $expire]);
+				$sth->execute([$id, $expire]);
 
-            return "";
+				return "";
 
 		}
 
@@ -116,8 +116,17 @@
 		$data = base64_encode($data);
 		$expire = time() + $session_expire;
 
-        $sth = Db::pdo()->prepare("UPDATE ttrss_sessions SET data=?, expire=? WHERE id=?");
-        $sth->execute([$data, $expire, $id]);
+		$sth = Db::pdo()->prepare("SELECT id FROM ttrss_sessions WHERE id=?");
+		$sth->execute([$id]);
+
+		if ($row = $sth->fetch()) {
+			$sth = Db::pdo()->prepare("UPDATE ttrss_sessions SET data=?, expire=? WHERE id=?");
+			$sth->execute([$data, $expire, $id]);
+		} else {
+			$sth = Db::pdo()->prepare("INSERT INTO ttrss_sessions (id, data, expire)
+				VALUES (?, ?, ?)");
+			$sth->execute([$id, $data, $expire]);
+		}
 
 		return true;
 	}

@@ -465,14 +465,6 @@ class Handler_Public extends Handler {
 
 	function login() {
 		if (!SINGLE_USER_MODE) {
-			/* if a session is started here there's a stale login cookie we need to clean */
-
-			if (session_status() != PHP_SESSION_NONE) {
-				$_SESSION["login_error_msg"] = __("Stale session cookie found, try logging in again");
-
-				header("Location: " . get_self_url_prefix());
-				exit;
-			}
 
 			$login = clean($_POST["login"]);
 			$password = clean($_POST["password"]);

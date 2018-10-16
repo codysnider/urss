@@ -714,8 +714,8 @@
 
 			if ($user_id && !$check_only) {
 
-				session_regenerate_id(true);
 				session_start();
+				session_regenerate_id(true);
 
 				$_SESSION["uid"] = $user_id;
 				$_SESSION["version"] = VERSION_STATIC;
