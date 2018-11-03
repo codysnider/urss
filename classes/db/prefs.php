@@ -53,16 +53,14 @@ class Db_Prefs {
 
 	function read($pref_name, $user_id = false, $die_on_error = false) {
 
-		$profile = false;
-
 		if (!$user_id) {
 			$user_id = $_SESSION["uid"];
 			@$profile = $_SESSION["profile"];
 		} else {
-			$user_id = sprintf("%d", $user_id);
+			$profile = false;
 		}
 
-		if (isset($this->cache[$pref_name]) && !$user_id) {
+		if ($user_id == $_SESSION['uid'] && isset($this->cache[$pref_name])) {
 			$tuple = $this->cache[$pref_name];
 			return $this->convert($tuple["value"], $tuple["type"]);
 		}
@@ -114,8 +112,6 @@ class Db_Prefs {
 		if (!$user_id) {
 			$user_id = $_SESSION["uid"];
 			@$profile = $_SESSION["profile"];
-		} else {
-			$user_id = sprintf("%d", $user_id);
 		}
 
 		if (!$profile || get_schema_version() < 63) $profile = null;
@@ -149,7 +145,7 @@ class Db_Prefs {
 					$value = "false";
 				}
 			} else if ($type_name == "integer") {
-				$value = sprintf("%d", $value);
+				$value = (int)$value;
 			}
 
 			if ($pref_name == 'USER_TIMEZONE' && $value == '') {
