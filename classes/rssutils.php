@@ -50,8 +50,8 @@ class RSSUtils {
 			if (!$tmph->fetch()) {
 
 				$tmph = $pdo->prepare("INSERT INTO ttrss_feedbrowser_cache
-					(feed_url, site_url, title, subscribers) 
-					VALUES 
+					(feed_url, site_url, title, subscribers)
+					VALUES
 					(?, ?, ?, ?)");
 
 				$tmph->execute([$feed_url, $site_url, $title, $subscribers]);
@@ -192,6 +192,13 @@ class RSSUtils {
 					RSSUtils::update_rss_feed($tline["id"], true, false);
 				} catch (PDOException $e) {
 					Logger::get()->log_error(E_USER_NOTICE, $e->getMessage(), $e->getFile(), $e->getLine(), $e->getTraceAsString());
+
+					try {
+						$pdo->rollback();
+					} catch (PDOException $e) {
+						// it doesn't matter if there wasn't actually anything to rollback, PDO Exception can be
+						// thrown outside of an active transaction during feed update
+					}
 				}
 				_debug_suppress(false);
 
@@ -333,12 +340,12 @@ class RSSUtils {
 		$sth = $pdo->prepare("SELECT id,update_interval,auth_login,
 			feed_url,auth_pass,cache_images,
 			mark_unread_on_update, owner_uid,
-			auth_pass_encrypted, feed_language, 
-			last_modified, 
-			".SUBSTRING_FOR_DATE."(last_unconditional, 1, 19) AS last_unconditional			
+			auth_pass_encrypted, feed_language,
+			last_modified,
+			".SUBSTRING_FOR_DATE."(last_unconditional, 1, 19) AS last_unconditional
 			FROM ttrss_feeds WHERE id = ?");
 		$sth->execute([$feed]);
-		
+
 		if ($row = $sth->fetch()) {
 
 			$owner_uid = $row["owner_uid"];
@@ -852,7 +859,7 @@ class RSSUtils {
 
 					$usth = $pdo->prepare(
 						"INSERT INTO ttrss_entries
-							(title, 
+							(title,
 							guid,
 							link,
 							updated,
@@ -921,7 +928,7 @@ class RSSUtils {
 
 						_debug("user record FOUND: RID: $entry_ref_id, IID: $entry_int_id", $debug_enabled);
 					} else {
-						
+
 						_debug("user record not found, creating...", $debug_enabled);
 
 						if ($score >= -500 && !RSSUtils::find_article_filter($article_filters, 'catchup') && !$entry_force_catchup) {
@@ -984,7 +991,7 @@ class RSSUtils {
 							num_comments = :num_comments,
 							plugin_data = :plugin_data,
 							author = :author,
-							lang = :lang														
+							lang = :lang
 						WHERE id = :id");
 
 					$params = [":title" => $entry_title,
