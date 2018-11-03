@@ -75,7 +75,7 @@ class Opml extends Handler_Protected {
 
 		$sth = $this->pdo->prepare("SELECT id,title
 			FROM ttrss_feed_categories WHERE
-				(parent_cat = :cat OR (:cat = 0 AND parent_cat IS NULL)) AND 
+				(parent_cat = :cat OR (:cat = 0 AND parent_cat IS NULL)) AND
 				owner_uid = :uid ORDER BY order_id, title");
 
 		$sth->execute([':cat' => $cat_id, ':uid' => $owner_uid]);
@@ -85,7 +85,7 @@ class Opml extends Handler_Protected {
 		}
 
 		$fsth = $this->pdo->prepare("select title, feed_url, site_url
-				FROM ttrss_feeds WHERE 
+				FROM ttrss_feeds WHERE
 					(cat_id = :cat OR (:cat = 0 AND cat_id IS NULL)) AND owner_uid = :uid AND $hide_qpart
 				ORDER BY order_id, title");
 
@@ -421,9 +421,9 @@ class Opml extends Handler_Protected {
                             $inverse = bool_to_sql_bool($rule["inverse"]);
                             $match_on = json_encode($match_on);
 
-                            $usth = $this->pdo->prepare("INSERT INTO ttrss_filters2_rules 
+                            $usth = $this->pdo->prepare("INSERT INTO ttrss_filters2_rules
 								(feed_id,cat_id,match_on,filter_id,filter_type,reg_exp,cat_filter,inverse)
-                                VALUES 
+                                VALUES
                                 (NULL, NULL, ?, ?, ?, ?, false, ?)");
                             $usth->execute([$match_on, $filter_id, $filter_type, $reg_exp, $inverse]);
 
@@ -454,9 +454,9 @@ class Opml extends Handler_Protected {
                             $filter_type = (int)$rule["filter_type"];
                             $inverse = bool_to_sql_bool($rule["inverse"]);
 
-                            $usth = $this->pdo->prepare("INSERT INTO ttrss_filters2_rules 
+                            $usth = $this->pdo->prepare("INSERT INTO ttrss_filters2_rules
 								(feed_id,cat_id,filter_id,filter_type,reg_exp,cat_filter,inverse)
-                                VALUES 
+                                VALUES
                                 (?, ?, ?, ?, ?, ?, ?)");
                             $usth->execute([$feed_id, $cat_id, $filter_id, $filter_type, $reg_exp, $cat_filter, $inverse]);
                         }
@@ -467,9 +467,9 @@ class Opml extends Handler_Protected {
 						$action_id = (int)$action["action_id"];
 						$action_param = $action["action_param"];
 
-						$usth = $this->pdo->prepare("INSERT INTO ttrss_filters2_actions 
+						$usth = $this->pdo->prepare("INSERT INTO ttrss_filters2_actions
 							(filter_id,action_id,action_param)
-							VALUES 
+							VALUES
 							(?, ?, ?)");
 						$usth->execute([$filter_id, $action_id, $action_param]);
 					}
@@ -613,7 +613,7 @@ class Opml extends Handler_Protected {
 		$parent_cat_id = (int) $parent_cat_id;
 
 		$sth = $this->pdo->prepare("SELECT id FROM ttrss_feed_categories
-			WHERE title = :title 
+			WHERE title = :title
 			AND (parent_cat = :parent OR (:parent = 0 AND parent_cat IS NULL))
 			AND owner_uid = :uid");
 

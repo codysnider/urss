@@ -130,7 +130,7 @@ class CCache {
 
 			if (!$pcat_fast) {
 				$sth = $pdo->prepare("SELECT id FROM ttrss_feeds
-						WHERE owner_uid = :uid AND 
+						WHERE owner_uid = :uid AND
 							(cat_id = :cat OR (:cat = 0 AND cat_id IS NULL))");
 				$sth->execute([":uid" => $owner_uid, ":cat" => $feed_id]);
 
@@ -141,7 +141,7 @@ class CCache {
 
 			$sth = $pdo->prepare("SELECT SUM(value) AS sv
 				FROM ttrss_counters_cache, ttrss_feeds
-				WHERE id = feed_id AND 
+				WHERE id = feed_id AND
 				(cat_id = :cat OR (:cat = 0 AND cat_id IS NULL)) AND
 				ttrss_counters_cache.owner_uid = :uid AND
 				ttrss_feeds.owner_uid = :uid");

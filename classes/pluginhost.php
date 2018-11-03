@@ -96,7 +96,7 @@ class PluginHost {
 	function get_pdo() {
 		return $this->pdo;
 	}
-	
+
 	function get_plugin_names() {
 		$names = array();
 

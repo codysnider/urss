@@ -173,7 +173,7 @@ class Feeds extends Handler_Protected {
 		$method_split = explode(":", $method);
 
 		if ($method == "ForceUpdate" && $feed > 0 && is_numeric($feed)) {
-            $sth = $this->pdo->prepare("UPDATE ttrss_feeds 
+            $sth = $this->pdo->prepare("UPDATE ttrss_feeds
                             SET last_updated = '1970-01-01', last_update_started = '1970-01-01'
                             WHERE id = ?");
             $sth->execute([$feed]);
@@ -527,7 +527,7 @@ class Feeds extends Handler_Protected {
 					$tmp_content .= "<span id=\"RTITLE-$id\"
                     onclick=\"return cdmClicked(event, $id);\"
                     data-article-id=\"$id\"
-                    class=\"titleWrap hlMenuAttach $hlc_suffix\">						
+                    class=\"titleWrap hlMenuAttach $hlc_suffix\">
                     <a class=\"title $hlc_suffix\"
                     title=\"".htmlspecialchars($line["title"])."\"
                     target=\"_blank\" rel=\"noopener noreferrer\" href=\"".
@@ -1471,7 +1471,7 @@ class Feeds extends Handler_Protected {
 		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_SUBSCRIBE_FEED) as $plugin) {
 			$contents = $plugin->hook_subscribe_feed($contents, $url, $auth_login, $auth_pass);
 		}
-		
+
 		if (!$contents) {
 			if (preg_match("/cloudflare\.com/", $fetch_last_error_content)) {
 				$fetch_last_error .= " (feed behind Cloudflare)";

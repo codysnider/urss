@@ -168,7 +168,7 @@ class Mail extends Plugin {
 
 		print "</td></tr>";
 
-		print "<tr><td colspan='2'><textarea dojoType=\"dijit.form.SimpleTextarea\" 
+		print "<tr><td colspan='2'><textarea dojoType=\"dijit.form.SimpleTextarea\"
 			style='height : 200px; font-size : 12px; width : 98%' rows=\"20\"
 			name='content'>$content</textarea>";
 

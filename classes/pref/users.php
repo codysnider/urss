@@ -170,12 +170,12 @@ class Pref_Users extends Handler_Protected {
 				}
 
 				print "</ul>";
-				
-				
+
+
 			} else {
 				print "<h1>".__('User not found')."</h1>";
 			}
-		
+
 		}
 
 		function editSave() {
@@ -188,7 +188,7 @@ class Pref_Users extends Handler_Protected {
 			if ($password) {
 				$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
 				$pwd_hash = encrypt_password($password, $salt, true);
-				$pass_query_part = "pwd_hash = ".$this->pdo->quote($pwd_hash).", 
+				$pass_query_part = "pwd_hash = ".$this->pdo->quote($pwd_hash).",
 					salt = ".$this->pdo->quote($salt).",";
 			} else {
 				$pass_query_part = "";
@@ -265,7 +265,7 @@ class Pref_Users extends Handler_Protected {
 			$sth = $pdo->prepare("SELECT login, email
 				FROM ttrss_users WHERE id = ?");
 			$sth->execute([$uid]);
-			
+
 			if ($row = $sth->fetch()) {
 
 				$login = $row["login"];
@@ -276,7 +276,7 @@ class Pref_Users extends Handler_Protected {
 
 				$pwd_hash = encrypt_password($tmp_user_pwd, $new_salt, true);
 
-				$sth = $pdo->prepare("UPDATE ttrss_users 
+				$sth = $pdo->prepare("UPDATE ttrss_users
 					  SET pwd_hash = ?, salt = ?, otp_enabled = false
 					WHERE id = ?");
 				$sth->execute([$pwd_hash, $new_salt, $uid]);
@@ -313,7 +313,7 @@ class Pref_Users extends Handler_Protected {
 
 					if (!$rc) print_error($mail->ErrorInfo);
 				}
-				
+
 			}
 		}
 

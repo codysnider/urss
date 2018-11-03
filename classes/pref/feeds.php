@@ -71,7 +71,7 @@ class Pref_Feeds extends Handler_Protected {
 		$fsth = $this->pdo->prepare("SELECT id, title, last_error,
 			".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated, update_interval
 			FROM ttrss_feeds
-			WHERE cat_id = :cat AND 
+			WHERE cat_id = :cat AND
 			owner_uid = :uid AND
 			(:search = '' OR (LOWER(title) LIKE :search OR LOWER(feed_url) LIKE :search))
 			ORDER BY order_id, title");
@@ -238,9 +238,9 @@ class Pref_Feeds extends Handler_Protected {
 			$cat['child_unread'] = 0;
 
 			$fsth = $this->pdo->prepare("SELECT id, title,last_error,
-				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated, update_interval				
+				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated, update_interval
 				FROM ttrss_feeds
-				WHERE cat_id IS NULL AND 
+				WHERE cat_id IS NULL AND
 				owner_uid = :uid AND
 				(:search = '' OR (LOWER(title) LIKE :search OR LOWER(feed_url) LIKE :search))
 				ORDER BY order_id, title");
@@ -745,7 +745,7 @@ class Pref_Feeds extends Handler_Protected {
 			</label>
 			<input type=\"hidden\" name=\"op\" value=\"pref-feeds\">
 			<input type=\"hidden\" name=\"feed_id\" value=\"$feed_id\">
-			<input type=\"hidden\" name=\"method\" value=\"uploadicon\">			
+			<input type=\"hidden\" name=\"method\" value=\"uploadicon\">
 			<button class=\"\" dojoType=\"dijit.form.Button\" onclick=\"return uploadFeedIcon();\"
 				type=\"submit\">".__('Replace')."</button>
 			<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"return removeFeedIcon($feed_id);\"
@@ -969,7 +969,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET
 				cat_id = :cat_id,
-				title = :title, 
+				title = :title,
 				feed_url = :feed_url,
 				site_url = :site_url,
 				update_interval = :upd_intl,

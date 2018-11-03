@@ -126,7 +126,7 @@ class Article extends Handler_Protected {
 		if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) return false;
 
 		$pdo = Db::pdo();
-		
+
 		$pdo->beginTransaction();
 
 		// only check for our user data here, others might have shared this with different content etc
@@ -309,7 +309,7 @@ class Article extends Handler_Protected {
 
 				if ($tag != '') {
 					$sth = $this->pdo->prepare("INSERT INTO ttrss_tags
-								(post_int_id, owner_uid, tag_name) 
+								(post_int_id, owner_uid, tag_name)
 								VALUES (?, ?, ?)");
 
 					$sth->execute([$int_id, $_SESSION['uid'], $tag]);
@@ -642,7 +642,7 @@ class Article extends Handler_Protected {
 						stylesheet_tag("css/default.css")."
 						<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
 						<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">";
-				
+
 				$rv['content'] .= "<meta property=\"og:title\" content=\"".htmlspecialchars($line["title"])."\"/>\n";
 				$rv['content'] .= "<meta property=\"og:site_name\" content=\"".htmlspecialchars($line["feed_title"])."\"/>\n";
 				$rv['content'] .= "<meta property=\"og:description\" content=\"".
@@ -829,7 +829,7 @@ class Article extends Handler_Protected {
 		$pdo = Db::pdo();
 
 		$sth = $pdo->prepare("SELECT DISTINCT tag_name,
-			owner_uid as owner FROM	ttrss_tags 
+			owner_uid as owner FROM	ttrss_tags
 			WHERE post_int_id = (SELECT int_id FROM ttrss_user_entries WHERE
 			ref_id = ? AND owner_uid = ? LIMIT 1) ORDER BY tag_name");
 
