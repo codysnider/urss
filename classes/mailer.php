@@ -30,8 +30,11 @@ class Mailer {
     foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_SEND_MAIL) as $p) {
       $rc = $p->hook_send_mail($this, $params);
 
-      if ($rc == 1 || $rc == -1)
+      if ($rc == 1)
         return $rc;
+
+      if ($rc == -1)
+        return 0;
     }
 
     $headers[] = "From: $from_combined";
