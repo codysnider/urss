@@ -183,13 +183,9 @@ class Mail extends Plugin {
 	}
 
 	function sendEmail() {
-		require_once 'classes/ttrssmailer.php';
-
 		$reply = array();
 
-		$mail = new ttrssMailer();
-
-		$mail->AddReplyTo(strip_tags($_REQUEST['from_email']),
+		/*$mail->AddReplyTo(strip_tags($_REQUEST['from_email']),
 			strip_tags($_REQUEST['from_name']));
 		//$mail->AddAddress($_REQUEST['destination']);
 		$addresses = explode(';', $_REQUEST['destination']);
@@ -200,10 +196,22 @@ class Mail extends Plugin {
 		$mail->Subject = $_REQUEST['subject'];
 		$mail->Body = $_REQUEST['content'];
 
-		$rc = $mail->Send();
+		$rc = $mail->Send(); */
+
+		$to = $_REQUEST["destination"];
+		$subject = strip_tags($_REQUEST["subject"]);
+		$message = strip_tags($_REQUEST["content"]);
+		$from = strip_tags($_REQUEST["from_email"]);
+
+		$mailer = new Mailer();
+
+		$mailer->mail(["to" => $to,
+			"headers" => ["Reply-To: $from"],
+			"subject" => $subject,
+			"message" => $message]);
 
 		if (!$rc) {
-			$reply['error'] =  $mail->ErrorInfo;
+			$reply['error'] =  $mailer->error();
 		} else {
 			//save_email_address($destination);
 			$reply['message'] = "UPDATE_COUNTERS";

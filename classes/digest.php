@@ -11,8 +11,6 @@ class Digest
 	 */
 	static function send_headlines_digests($debug = false) {
 
-		require_once 'classes/ttrssmailer.php';
-
 		$user_limit = 15; // amount of users to process (e.g. emails to send out)
 		$limit = 1000; // maximum amount of headlines to include
 
@@ -56,11 +54,16 @@ class Digest
 
 					if ($headlines_count > 0) {
 
-						$mail = new ttrssMailer();
+						$mailer = new Mailer();
 
-						$rc = $mail->quickMail($line["email"], $line["login"], DIGEST_SUBJECT, $digest, $digest_text);
+						//$rc = $mail->quickMail($line["email"], $line["login"], DIGEST_SUBJECT, $digest, $digest_text);
 
-						if (!$rc && $debug) _debug("ERROR: " . $mail->ErrorInfo);
+						$rc = $mailer->mail(["to" => $line["login"] . " <" . $line["email"] . ">",
+							"subject" => DIGEST_SUBJECT,
+							"message" => $digest_text,
+							"message_html" => $digest]);
+
+						//if (!$rc && $debug) _debug("ERROR: " . $mailer->lastError());
 
 						if ($debug) _debug("RC=$rc");
 

@@ -777,7 +777,6 @@ class Handler_Public extends Handler {
 						$resetpass_link = get_self_url_prefix() . "/public.php?op=forgotpass&hash=" . $resetpass_token .
 							"&login=" . urlencode($login);
 
-						require_once 'classes/ttrssmailer.php';
 						require_once "lib/MiniTemplator.class.php";
 
 						$tpl = new MiniTemplator;
@@ -793,13 +792,13 @@ class Handler_Public extends Handler {
 
 						$tpl->generateOutputToString($message);
 
-						$mail = new ttrssMailer();
+						$mailer = new Mailer();
 
-						$rc = $mail->quickMail($email, $login,
-							__("[tt-rss] Password reset request"),
-							$message, false);
+						$rc = $mailer->mail(["to" => "$login <$email>",
+							"subject" => __("[tt-rss] Password reset request"),
+							"message" => $message]);
 
-						if (!$rc) print_error($mail->ErrorInfo);
+						if (!$rc) print_error($mailer->error());
 
 						$resetpass_token_full = time() . ":" . $resetpass_token;
 
