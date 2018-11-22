@@ -205,7 +205,7 @@ class Mail extends Plugin {
 
 		$mailer = new Mailer();
 
-		$mailer->mail(["to" => $to,
+		$rc = $mailer->mail(["to_address" => $to,
 			"headers" => ["Reply-To: $from"],
 			"subject" => $subject,
 			"message" => $message]);

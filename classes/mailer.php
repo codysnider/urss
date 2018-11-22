@@ -6,16 +6,20 @@ class Mailer {
 
   function mail($params) {
 
-    $to = $params["to"];
+    $to_name = $params["to_name"];
+    $to_address = $params["to_address"];
     $subject = $params["subject"];
     $message = $params["message"];
     $message_html = $params["message_html"];
-    $from = $params["from"] ? $params["from"] : SMTP_FROM_NAME . " <" . SMTP_FROM_ADDRESS . ">";
+    $from_name = $params["from_name"] ? $params["from_name"] : SMTP_FROM_NAME;
+    $from_address = $params["from_address"] ? $params["from_address"] : SMTP_FROM_ADDRESS;
+
     $additional_headers = $params["headers"] ? $params["headers"] : [];
 
-    $headers[] = "From: $from";
+    $from_combined = $from_name ? "$to_name <$to_address>" : $to_address;
+    $to_combined = $to_name ? "$to_name <$to_address>" : $to_address;
 
-    Logger::get()->log("Sending mail from $from to $to [$subject]: $message");
+    Logger::get()->log("Sending mail from $from_combined to $to_combined <$to_address> [$subject]: $message");
 
     // HOOK_SEND_MAIL plugin instructions:
     // 1. return 1 or true if mail is handled
@@ -30,14 +34,16 @@ class Mailer {
         return $rc;
     }
 
-    return mail($to, $subject, $message, implode("\r\n", array_merge($headers, $additional_headers)));
+    $headers[] = "From: $from_combined";
+
+    return mail($to_combined, $subject, $message, implode("\r\n", array_merge($headers, $additional_headers)));
   }
 
   function set_error($message) {
     $this->last_error = $message;
   }
 
-  function error($value) {
+  function error() {
     return $this->last_error;
   }
 }

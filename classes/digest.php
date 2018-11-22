@@ -58,7 +58,8 @@ class Digest
 
 						//$rc = $mail->quickMail($line["email"], $line["login"], DIGEST_SUBJECT, $digest, $digest_text);
 
-						$rc = $mailer->mail(["to" => $line["login"] . " <" . $line["email"] . ">",
+						$rc = $mailer->mail(["to_name" => $line["login"],
+							"to_address" => $line["email"],
 							"subject" => DIGEST_SUBJECT,
 							"message" => $digest_text,
 							"message_html" => $digest]);

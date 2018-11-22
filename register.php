@@ -308,7 +308,7 @@
 						"If that wasn't you, just ignore this message. Thanks.";
 
 					$mailer = new Mailer();
-					$rc = $mailer->mail(["to" => $email,
+					$rc = $mailer->mail(["to_address" => $email,
 						"subject" => "Registration information for Tiny Tiny RSS",
 						"message" => $reg_text]);
 
@@ -322,7 +322,7 @@
 						"Email: $email\n";
 
 					$mailer = new Mailer();
-					$rc = $mailer->mail(["to" => REG_NOTIFY_ADDRESS,
+					$rc = $mailer->mail(["to_address" => REG_NOTIFY_ADDRESS,
 						"subject" => "Registration notice for Tiny Tiny RSS",
 						"message" => $reg_text]);
 

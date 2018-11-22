@@ -305,7 +305,8 @@ class Pref_Users extends Handler_Protected {
 
 					$mailer = new Mailer();
 
-					$rc = $mailer->mail(["to" => "$login <$email>",
+					$rc = $mailer->mail(["to_name" => $login,
+						"to_address" => $email,
 						"subject" => __("[tt-rss] Password change notification"),
 						"message" => $message]);
 
