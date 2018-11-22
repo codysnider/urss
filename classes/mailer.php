@@ -37,7 +37,7 @@ class Mailer {
     $this->last_error = $message;
   }
 
-  function error($value) {
+  function error() {
     return $this->last_error;
   }
 }
