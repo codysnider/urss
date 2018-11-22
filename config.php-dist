@@ -131,6 +131,9 @@
 	// Tiny Tiny RSS sends mail via PHP mail() function, unless handled
 	// by a plugin.
 
+	// If you need SMTP support, take a look here:
+	// https://git.tt-rss.org/fox/ttrss-mailer-smtp
+
 	define('SMTP_FROM_NAME', 'Tiny Tiny RSS');
 	define('SMTP_FROM_ADDRESS', 'noreply@your.domain.dom');
 	// Name, address and subject for sending outgoing mail. This applies
