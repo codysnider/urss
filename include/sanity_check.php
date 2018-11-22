@@ -75,7 +75,7 @@
 					"Configuration option checker sanity_config.php is outdated, please recreate it using ./utils/regen_config_checks.sh");
 			}
 
-			foreach ($requred_defines as $d) {
+			foreach ($required_defines as $d) {
 				if (!defined($d)) {
 					array_push($errors,
 						"Required configuration file parameter $d is not defined in config.php. You might need to copy it from config.php-dist.");
