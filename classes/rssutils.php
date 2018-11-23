@@ -1304,7 +1304,7 @@ class RSSUtils {
 	}
 
 	static function expire_cached_files($debug) {
-		foreach (array("simplepie", "feeds", "images", "export", "upload") as $dir) {
+		foreach (array("feeds", "images", "export", "upload") as $dir) {
 			$cache_dir = CACHE_DIR . "/$dir";
 
 //			if ($debug) _debug("Expiring $cache_dir");
