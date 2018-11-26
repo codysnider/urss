@@ -794,7 +794,8 @@ class Handler_Public extends Handler {
 
 						$mailer = new Mailer();
 
-						$rc = $mailer->mail(["to" => "$login <$email>",
+						$rc = $mailer->mail(["to_name" => $login, 
+							"to_address" => $email,
 							"subject" => __("[tt-rss] Password reset request"),
 							"message" => $message]);
 
