@@ -50,11 +50,11 @@ function updateFeedList() {
 			dijit.byId("feedTree").destroyRecursive();
 		}
 
-		var store = new dojo.data.ItemFileWriteStore({
+		const store = new dojo.data.ItemFileWriteStore({
 			url: "backend.php?op=pref_feeds&method=getfeedtree&mode=2"
 		});
 
-		var treeModel = new fox.FeedStoreModel({
+		const treeModel = new fox.FeedStoreModel({
 			store: store,
 			query: {
 				"type": getInitParam('enable_feed_cats') == 1 ? "category" : "feed"
@@ -64,12 +64,12 @@ function updateFeedList() {
 			childrenAttrs: ["items"]
 		});
 
-		var tree = new fox.FeedTree({
+		const tree = new fox.FeedTree({
 			model: treeModel,
 			onClick: function (item, node) {
-				var id = String(item.id);
-				var is_cat = id.match("^CAT:");
-				var feed = id.substr(id.indexOf(":") + 1);
+				const id = String(item.id);
+				const is_cat = id.match("^CAT:");
+				const feed = id.substr(id.indexOf(":") + 1);
 				viewfeed({feed: feed, is_cat: is_cat});
 				return false;
 			},
@@ -115,11 +115,11 @@ function updateFeedList() {
 
 function catchupAllFeeds() {
 
-	var str = __("Mark all articles as read?");
+	const str = __("Mark all articles as read?");
 
 	if (getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
 
-		var query_str = "backend.php?op=feeds&method=catchupAll";
+		const query_str = "backend.php?op=feeds&method=catchupAll";
 
 		notify_progress("Marking all feeds as read...");
 
@@ -154,13 +154,13 @@ function timeout() {
 }
 
 function search() {
-	var query = "backend.php?op=feeds&method=search&param=" +
+	const query = "backend.php?op=feeds&method=search&param=" +
 		param_escape(getActiveFeedId() + ":" + activeFeedIsCat());
 
 	if (dijit.byId("searchDlg"))
 		dijit.byId("searchDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "searchDlg",
 		title: __("Search"),
 		style: "width: 600px",
@@ -177,18 +177,10 @@ function search() {
 }
 
 function updateTitle() {
-	var tmp = "Tiny Tiny RSS";
+	let tmp = "Tiny Tiny RSS";
 
 	if (global_unread > 0) {
 		tmp = "(" + global_unread + ") " + tmp;
-	}
-
-	if (window.fluid) {
-		if (global_unread > 0) {
-			window.fluid.dockBadge = global_unread;
-		} else {
-			window.fluid.dockBadge = "";
-		}
 	}
 
 	document.title = tmp;
@@ -258,12 +250,12 @@ function init() {
 
 					loading_set_progress(30);
 
-					var a = document.createElement('audio');
+					const a = document.createElement('audio');
 
-					var hasAudio = !!a.canPlayType;
-					var hasSandbox = "sandbox" in document.createElement("iframe");
-					var hasMp3 = !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
-					var clientTzOffset = new Date().getTimezoneOffset() * 60;
+					const hasAudio = !!a.canPlayType;
+					const hasSandbox = "sandbox" in document.createElement("iframe");
+					const hasMp3 = !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
+					const clientTzOffset = new Date().getTimezoneOffset() * 60;
 
 					init_hotkey_actions();
 
@@ -290,13 +282,13 @@ function init() {
 
 function init_hotkey_actions() {
 	hotkey_actions["next_feed"] = function() {
-		var rv = dijit.byId("feedTree").getNextFeed(
+		const rv = dijit.byId("feedTree").getNextFeed(
 			getActiveFeedId(), activeFeedIsCat());
 
 		if (rv) viewfeed({feed: rv[0], is_cat: rv[1], can_wait: true})
 	};
 	hotkey_actions["prev_feed"] = function() {
-		var rv = dijit.byId("feedTree").getPreviousFeed(
+		const rv = dijit.byId("feedTree").getPreviousFeed(
 			getActiveFeedId(), activeFeedIsCat());
 
 		if (rv) viewfeed({feed: rv[0], is_cat: rv[1], can_wait: true})
@@ -320,8 +312,8 @@ function init_hotkey_actions() {
 		moveToPost('prev', true, true);
 	};
 	hotkey_actions["collapse_article"] = function() {
-		var id = getActiveArticleId();
-		var elem = $("CICD-"+id);
+		const id = getActiveArticleId();
+		const elem = $("CICD-"+id);
 
 		if (elem) {
 			if (elem.visible()) {
@@ -333,8 +325,8 @@ function init_hotkey_actions() {
 		}
 	};
 	hotkey_actions["toggle_expand"] = function() {
-		var id = getActiveArticleId();
-		var elem = $("CICD-"+id);
+		const id = getActiveArticleId();
+		const elem = $("CICD-"+id);
 
 		if (elem) {
 			if (elem.visible()) {
@@ -358,10 +350,10 @@ function init_hotkey_actions() {
 		selectionToggleUnread(undefined, false, true);
 	};
 	hotkey_actions["edit_tags"] = function() {
-		var id = getActiveArticleId();
+		const id = getActiveArticleId();
 		if (id) {
 			editArticleTags(id);
-		};
+		}
 	}
 	hotkey_actions["open_in_new_window"] = function() {
 		if (getActiveArticleId()) {
@@ -457,7 +449,7 @@ function init_hotkey_actions() {
 		reverseHeadlineOrder();
 	};
 	hotkey_actions["feed_toggle_vgroup"] = function() {
-		var query_str = "?op=rpc&method=togglepref&key=VFEED_GROUP_BY_FEED";
+		const query_str = "?op=rpc&method=togglepref&key=VFEED_GROUP_BY_FEED";
 
 		new Ajax.Request("backend.php", {
 			parameters: query_str,
@@ -494,12 +486,12 @@ function init_hotkey_actions() {
 		gotoPreferences();
 	};
 	hotkey_actions["select_article_cursor"] = function() {
-		var id = getArticleUnderPointer();
+		const id = getArticleUnderPointer();
 		if (id) {
-			var row = $("RROW-" + id);
+			const row = $("RROW-" + id);
 
 			if (row) {
-				var cb = dijit.getEnclosingWidget(
+				const cb = dijit.getEnclosingWidget(
 					row.getElementsByClassName("rchk")[0]);
 
 				if (cb) {
@@ -546,8 +538,8 @@ function init_hotkey_actions() {
 	hotkey_actions["toggle_combined_mode"] = function() {
 		notify_progress("Loading, please wait...");
 
-		var value = isCdmMode() ? "false" : "true";
-		var query = "?op=rpc&method=setpref&key=COMBINED_DISPLAY_MODE&value=" + value;
+		const value = isCdmMode() ? "false" : "true";
+		const query = "?op=rpc&method=setpref&key=COMBINED_DISPLAY_MODE&value=" + value;
 
 		new Ajax.Request("backend.php",	{
 			parameters: query,
@@ -563,8 +555,8 @@ function init_hotkey_actions() {
 	hotkey_actions["toggle_cdm_expanded"] = function() {
 		notify_progress("Loading, please wait...");
 
-		var value = getInitParam("cdm_expanded") ? "false" : "true";
-		var query = "?op=rpc&method=setpref&key=CDM_EXPANDED&value=" + value;
+		const value = getInitParam("cdm_expanded") ? "false" : "true";
+		const query = "?op=rpc&method=setpref&key=CDM_EXPANDED&value=" + value;
 
 		new Ajax.Request("backend.php",	{
 			parameters: query,
@@ -603,7 +595,7 @@ function init_second_stage() {
 
 	delCookie("ttrss_test");
 
-	var toolbar = document.forms["main_toolbar_form"];
+	const toolbar = document.forms["main_toolbar_form"];
 
 	dijit.getEnclosingWidget(toolbar.view_mode).attr('value',
 		getInitParam("default_view_mode"));
@@ -611,10 +603,10 @@ function init_second_stage() {
 	dijit.getEnclosingWidget(toolbar.order_by).attr('value',
 		getInitParam("default_view_order_by"));
 
-	var feeds_sort_by_unread = getInitParam("feeds_sort_by_unread") == 1;
+	const feeds_sort_by_unread = getInitParam("feeds_sort_by_unread") == 1;
 
-	var hash_feed_id = hash_get('f');
-	var hash_feed_is_cat = hash_get('c') == "1";
+	const hash_feed_id = hash_get('f');
+	const hash_feed_is_cat = hash_get('c') == "1";
 
 	if (hash_feed_id != undefined) {
 		setActiveFeedId(hash_feed_id, hash_feed_is_cat);
@@ -626,11 +618,11 @@ function init_second_stage() {
 	if ('sessionStorage' in window && window['sessionStorage'] !== null)
 		sessionStorage.clear();
 
-	var hotkeys = getInitParam("hotkeys");
-	var tmp = [];
+	const hotkeys = getInitParam("hotkeys");
+	const tmp = [];
 
-	for (var sequence in hotkeys[1]) {
-		var filtered = sequence.replace(/\|.*$/, "");
+	for (const sequence in hotkeys[1]) {
+		const filtered = sequence.replace(/\|.*$/, "");
 		tmp[filtered] = hotkeys[1][sequence];
 	}
 
@@ -733,11 +725,11 @@ function quickMenuGo(opid) {
 
 function toggleDispRead() {
 
-	var hide = !(getInitParam("hide_read_feeds") == "1");
+	const hide = !(getInitParam("hide_read_feeds") == "1");
 
 	hideOrShowFeeds(hide);
 
-	var query = "?op=rpc&method=setpref&key=HIDE_READ_FEEDS&value=" +
+	const query = "?op=rpc&method=setpref&key=HIDE_READ_FEEDS&value=" +
 		param_escape(hide);
 
 	setInitParam("hide_read_feeds", hide);
@@ -753,8 +745,8 @@ function parse_runtime_info(data) {
 
 	//console.log("parsing runtime info...");
 
-	for (var k in data) {
-		var v = data[k];
+	for (const k in data) {
+		const v = data[k];
 
 //		console.log("RI: " + k + " => " + v);
 
@@ -770,7 +762,7 @@ function parse_runtime_info(data) {
 		}
 
 		if (k == "update_result") {
-			var updatesIcon = dijit.byId("updatesIcon").domNode;
+			const updatesIcon = dijit.byId("updatesIcon").domNode;
 
 			if (v) {
 				Element.show(updatesIcon);
@@ -801,7 +793,7 @@ function parse_runtime_info(data) {
 function collapse_feedlist() {
 	Element.toggle("feeds-holder");
 
-	var splitter = $("feeds-holder_splitter");
+	const splitter = $("feeds-holder_splitter");
 
 	Element.visible("feeds-holder") ? splitter.show() : splitter.hide();
 
@@ -815,7 +807,7 @@ function viewModeChanged() {
 
 function rescoreCurrentFeed() {
 
-	var actid = getActiveFeedId();
+	const actid = getActiveFeedId();
 
 	if (activeFeedIsCat() || actid < 0) {
 		alert(__("You can't rescore this kind of feed."));
@@ -827,13 +819,13 @@ function rescoreCurrentFeed() {
 		return;
 	}
 
-	var fn = getFeedName(actid);
-	var pr = __("Rescore articles in %s?").replace("%s", fn);
+	const fn = getFeedName(actid);
+	const pr = __("Rescore articles in %s?").replace("%s", fn);
 
 	if (confirm(pr)) {
 		notify_progress("Rescoring articles...");
 
-		var query = "?op=pref-feeds&method=rescore&quiet=1&ids=" + actid;
+		const query = "?op=pref-feeds&method=rescore&quiet=1&ids=" + actid;
 
 		new Ajax.Request("backend.php",	{
 			parameters: query,
@@ -847,9 +839,9 @@ function hotkey_handler(e) {
 
 	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
 
-	var keycode = false;
+	let keycode = false;
 
-	var cmdline = $('cmdline');
+	const cmdline = $('cmdline');
 
 	if (window.event) {
 		keycode = window.event.keyCode;
@@ -865,12 +857,12 @@ function hotkey_handler(e) {
 	if (keycode == 17) return; // ignore lone ctrl
 
 	var hotkeys = getInitParam("hotkeys");
-	var keychar = String.fromCharCode(keycode).toLowerCase();
+	const keychar = String.fromCharCode(keycode).toLowerCase();
 
 	if (!hotkey_prefix && hotkeys[0].indexOf(keychar) != -1) {
 
-		var date = new Date();
-		var ts = Math.round(date.getTime() / 1000);
+		const date = new Date();
+		const ts = Math.round(date.getTime() / 1000);
 
 		hotkey_prefix = keychar;
 		hotkey_prefix_pressed = ts;
@@ -886,7 +878,7 @@ function hotkey_handler(e) {
 
 	Element.hide(cmdline);
 
-	var hotkey = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
+	let hotkey = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
 
 	// ensure ^*char notation
 	if (e.shiftKey) hotkey = "*" + hotkey;
@@ -897,17 +889,17 @@ function hotkey_handler(e) {
 	hotkey = hotkey_prefix ? hotkey_prefix + " " + hotkey : hotkey;
 	hotkey_prefix = false;
 
-	var hotkey_action = false;
+	let hotkey_action = false;
 	var hotkeys = getInitParam("hotkeys");
 
-	for (var sequence in hotkeys[1]) {
+	for (const sequence in hotkeys[1]) {
 		if (sequence == hotkey) {
 			hotkey_action = hotkeys[1][sequence];
 			break;
 		}
 	}
 
-	var action = hotkey_actions[hotkey_action];
+	const action = hotkey_actions[hotkey_action];
 
 	if (action != null) {
 		action();
@@ -922,10 +914,10 @@ function inPreferences() {
 
 function reverseHeadlineOrder() {
 
-	var toolbar = document.forms["main_toolbar_form"];
-	var order_by = dijit.getEnclosingWidget(toolbar.order_by);
+	const toolbar = document.forms["main_toolbar_form"];
+	const order_by = dijit.getEnclosingWidget(toolbar.order_by);
 
-	var value = order_by.attr('value');
+	let value = order_by.attr('value');
 
 	if (value == "date_reverse")
 		value = "default";
@@ -940,21 +932,21 @@ function reverseHeadlineOrder() {
 
 function handle_rpc_json(transport, scheduled_call) {
 
-	var netalert_dijit = dijit.byId("net-alert");
-	var netalert = false;
+	const netalert_dijit = dijit.byId("net-alert");
+	let netalert = false;
 
 	if (netalert_dijit) netalert = netalert_dijit.domNode;
 
 	try {
-		var reply = JSON.parse(transport.responseText);
+		const reply = JSON.parse(transport.responseText);
 
 		if (reply) {
 
-			var error = reply['error'];
+			const error = reply['error'];
 
 			if (error) {
-				var code = error['code'];
-				var msg = error['msg'];
+				const code = error['code'];
+				const msg = error['msg'];
 
 				console.warn("[handle_rpc_json] received fatal error " + code + "/" + msg);
 
@@ -964,7 +956,7 @@ function handle_rpc_json(transport, scheduled_call) {
 				}
 			}
 
-			var seq = reply['seq'];
+			const seq = reply['seq'];
 
 			if (seq) {
 				if (get_seq() != seq) {
@@ -974,7 +966,7 @@ function handle_rpc_json(transport, scheduled_call) {
 				}
 			}
 
-			var message = reply['message'];
+			const message = reply['message'];
 
 			if (message) {
 				if (message == "UPDATE_COUNTERS") {
@@ -984,24 +976,22 @@ function handle_rpc_json(transport, scheduled_call) {
 				}
 			}
 
-			var counters = reply['counters'];
+			const counters = reply['counters'];
 
 			if (counters)
 				parse_counters(counters, scheduled_call);
 
-			var runtime_info = reply['runtime-info'];
+			const runtime_info = reply['runtime-info'];
 
 			if (runtime_info)
 				parse_runtime_info(runtime_info);
 
 			if (netalert) netalert.hide();
 
-		} else {
-			if (netalert)
+		} else if (netalert)
 				netalert.show();
 			else
 				notify_error("Communication problem with server.");
-		}
 
 	} catch (e) {
 		if (netalert)
@@ -1018,7 +1008,7 @@ function handle_rpc_json(transport, scheduled_call) {
 function switchPanelMode(wide) {
 	if (isCdmMode()) return;
 
-	var article_id = getActiveArticleId();
+	const article_id = getActiveArticleId();
 
 	if (wide) {
 		dijit.byId("headlines-wrap-inner").attr("design", 'sidebar');
@@ -1077,11 +1067,11 @@ function update_random_feed() {
 }
 
 function hash_get(key) {
-	var kv = window.location.hash.substring(1).toQueryParams();
+	const kv = window.location.hash.substring(1).toQueryParams();
 	return kv[key];
 }
 function hash_set(key, value) {
-	var kv = window.location.hash.substring(1).toQueryParams();
+	const kv = window.location.hash.substring(1).toQueryParams();
 	kv[key] = value;
 	window.location.hash = $H(kv).toQueryString();
 }

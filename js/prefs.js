@@ -11,8 +11,8 @@ function notify_callback2(transport, sticky) {
 
 function updateFeedList() {
 
-	var user_search = $("feed_search");
-	var search = "";
+	const user_search = $("feed_search");
+	let search = "";
 	if (user_search) { search = user_search.value; }
 
 	new Ajax.Request("backend.php", {
@@ -36,14 +36,14 @@ function checkInactiveFeeds() {
 }
 
 function updateUsersList(sort_key) {
-	var user_search = $("user_search");
-	var search = "";
+	const user_search = $("user_search");
+	let search = "";
 	if (user_search) {
 		search = user_search.value;
 	}
 
-	var query = "?op=pref-users&sort="
-		+ param_escape(sort_key) +
+	const query = "?op=pref-users&sort=" +
+		param_escape(sort_key) +
 		"&search=" + param_escape(search);
 
 	new Ajax.Request("backend.php", {
@@ -57,7 +57,7 @@ function updateUsersList(sort_key) {
 }
 
 function addUser() {
-	var login = prompt(__("Please enter login:"), "");
+	const login = prompt(__("Please enter login:"), "");
 
 	if (login == null) {
 		return false;
@@ -70,7 +70,7 @@ function addUser() {
 
 	notify_progress("Adding user...");
 
-	var query = "?op=pref-users&method=add&login=" +
+	const query = "?op=pref-users&method=add&login=" +
 		param_escape(login);
 
 	new Ajax.Request("backend.php", {
@@ -85,7 +85,7 @@ function addUser() {
 
 function editUser(id) {
 
-	var query = "backend.php?op=pref-users&method=edit&id=" +
+	const query = "backend.php?op=pref-users&method=edit&id=" +
 		param_escape(id);
 
 	if (dijit.byId("userEditDlg"))
@@ -99,7 +99,7 @@ function editUser(id) {
 			if (this.validate()) {
 				notify_progress("Saving data...", true);
 
-				var query = dojo.formToQuery("user_edit_form");
+				const query = dojo.formToQuery("user_edit_form");
 
 				new Ajax.Request("backend.php", {
 					parameters: query,
@@ -118,7 +118,7 @@ function editUser(id) {
 
 function editFilter(id) {
 
-	var query = "backend.php?op=pref-filters&method=edit&id=" + param_escape(id);
+	const query = "backend.php?op=pref-filters&method=edit&id=" + param_escape(id);
 
 	if (dijit.byId("feedEditDlg"))
 		dijit.byId("feedEditDlg").destroyRecursive();
@@ -132,7 +132,7 @@ function editFilter(id) {
 		style: "width: 600px",
 
 		test: function () {
-			var query = "backend.php?" + dojo.formToQuery("filter_edit_form") + "&savemode=test";
+			const query = "backend.php?" + dojo.formToQuery("filter_edit_form") + "&savemode=test";
 
 			editFilterTest(query);
 		},
@@ -157,26 +157,26 @@ function editFilter(id) {
 			});
 		},
 		editRule: function (e) {
-			var li = e.parentNode;
-			var rule = li.getElementsByTagName("INPUT")[1].value;
+			const li = e.parentNode;
+			const rule = li.getElementsByTagName("INPUT")[1].value;
 			addFilterRule(li, rule);
 		},
 		editAction: function (e) {
-			var li = e.parentNode;
-			var action = li.getElementsByTagName("INPUT")[1].value;
+			const li = e.parentNode;
+			const action = li.getElementsByTagName("INPUT")[1].value;
 			addFilterAction(li, action);
 		},
 		removeFilter: function () {
-			var msg = __("Remove filter?");
+			const msg = __("Remove filter?");
 
 			if (confirm(msg)) {
 				this.hide();
 
 				notify_progress("Removing filter...");
 
-				var id = this.attr('value').id;
+				const id = this.attr('value').id;
 
-				var query = "?op=pref-filters&method=remove&ids=" +
+				const query = "?op=pref-filters&method=remove&ids=" +
 					param_escape(id);
 
 				new Ajax.Request("backend.php", {
@@ -208,7 +208,7 @@ function editFilter(id) {
 
 				notify_progress("Saving data...", true);
 
-				var query = dojo.formToQuery("filter_edit_form");
+				const query = dojo.formToQuery("filter_edit_form");
 
 				console.log(query);
 
@@ -229,9 +229,9 @@ function editFilter(id) {
 
 
 function getSelectedLabels() {
-	var tree = dijit.byId("labelTree");
-	var items = tree.model.getCheckedItems();
-	var rv = [];
+	const tree = dijit.byId("labelTree");
+	const items = tree.model.getCheckedItems();
+	const rv = [];
 
 	items.each(function(item) {
 		rv.push(tree.model.store.getValue(item, 'bare_id'));
@@ -245,9 +245,9 @@ function getSelectedUsers() {
 }
 
 function getSelectedFeeds() {
-	var tree = dijit.byId("feedTree");
-	var items = tree.model.getCheckedItems();
-	var rv = [];
+	const tree = dijit.byId("feedTree");
+	const items = tree.model.getCheckedItems();
+	const rv = [];
 
 	items.each(function(item) {
 		if (item.id[0].match("FEED:"))
@@ -258,9 +258,9 @@ function getSelectedFeeds() {
 }
 
 function getSelectedCategories() {
-	var tree = dijit.byId("feedTree");
-	var items = tree.model.getCheckedItems();
-	var rv = [];
+	const tree = dijit.byId("feedTree");
+	const items = tree.model.getCheckedItems();
+	const rv = [];
 
 	items.each(function(item) {
 		if (item.id[0].match("CAT:"))
@@ -271,9 +271,9 @@ function getSelectedCategories() {
 }
 
 function getSelectedFilters() {
-	var tree = dijit.byId("filterTree");
-	var items = tree.model.getCheckedItems();
-	var rv = [];
+	const tree = dijit.byId("filterTree");
+	const items = tree.model.getCheckedItems();
+	const rv = [];
 
 	items.each(function(item) {
 		rv.push(tree.model.store.getValue(item, 'bare_id'));
@@ -285,16 +285,16 @@ function getSelectedFilters() {
 
 function removeSelectedLabels() {
 
-	var sel_rows = getSelectedLabels();
+	const sel_rows = getSelectedLabels();
 
 	if (sel_rows.length > 0) {
 
-		var ok = confirm(__("Remove selected labels?"));
+		const ok = confirm(__("Remove selected labels?"));
 
 		if (ok) {
 			notify_progress("Removing selected labels...");
 
-			var query = "?op=pref-labels&method=remove&ids="+
+			const query = "?op=pref-labels&method=remove&ids="+
 				param_escape(sel_rows.toString());
 
 			new Ajax.Request("backend.php",	{
@@ -313,16 +313,16 @@ function removeSelectedLabels() {
 
 function removeSelectedUsers() {
 
-	var sel_rows = getSelectedUsers();
+	const sel_rows = getSelectedUsers();
 
 	if (sel_rows.length > 0) {
 
-		var ok = confirm(__("Remove selected users? Neither default admin nor your account will be removed."));
+		const ok = confirm(__("Remove selected users? Neither default admin nor your account will be removed."));
 
 		if (ok) {
 			notify_progress("Removing selected users...");
 
-			var query = "?op=pref-users&method=remove&ids=" +
+			const query = "?op=pref-users&method=remove&ids=" +
 				param_escape(sel_rows.toString());
 
 			new Ajax.Request("backend.php", {
@@ -343,16 +343,16 @@ function removeSelectedUsers() {
 
 function removeSelectedFilters() {
 
-	var sel_rows = getSelectedFilters();
+	const sel_rows = getSelectedFilters();
 
 	if (sel_rows.length > 0) {
 
-		var ok = confirm(__("Remove selected filters?"));
+		const ok = confirm(__("Remove selected filters?"));
 
 		if (ok) {
 			notify_progress("Removing selected filters...");
 
-			var query = "?op=pref-filters&method=remove&ids=" +
+			const query = "?op=pref-filters&method=remove&ids=" +
 				param_escape(sel_rows.toString());
 
 			new Ajax.Request("backend.php", {
@@ -371,17 +371,17 @@ function removeSelectedFilters() {
 
 function removeSelectedFeeds() {
 
-	var sel_rows = getSelectedFeeds();
+	const sel_rows = getSelectedFeeds();
 
 	if (sel_rows.length > 0) {
 
-		var ok = confirm(__("Unsubscribe from selected feeds?"));
+		const ok = confirm(__("Unsubscribe from selected feeds?"));
 
 		if (ok) {
 
 			notify_progress("Unsubscribing from selected feeds...", true);
 
-			var query = "?op=pref-feeds&method=remove&ids=" +
+			const query = "?op=pref-feeds&method=remove&ids=" +
 				param_escape(sel_rows.toString());
 
 			console.log(query);
@@ -402,7 +402,7 @@ function removeSelectedFeeds() {
 }
 
 function editSelectedUser() {
-	var rows = getSelectedUsers();
+	const rows = getSelectedUsers();
 
 	if (rows.length == 0) {
 		alert(__("No users are selected."));
@@ -421,7 +421,7 @@ function editSelectedUser() {
 
 function resetSelectedUserPass() {
 
-	var rows = getSelectedUsers();
+	const rows = getSelectedUsers();
 
 	if (rows.length == 0) {
 		alert(__("No users are selected."));
@@ -433,14 +433,14 @@ function resetSelectedUserPass() {
 		return;
 	}
 
-	var ok = confirm(__("Reset password of selected user?"));
+	const ok = confirm(__("Reset password of selected user?"));
 
 	if (ok) {
 		notify_progress("Resetting password for selected user...");
 
-		var id = rows[0];
+		const id = rows[0];
 
-		var query = "?op=pref-users&method=resetPass&id=" +
+		const query = "?op=pref-users&method=resetPass&id=" +
 			param_escape(id);
 
 		new Ajax.Request("backend.php", {
@@ -455,7 +455,7 @@ function resetSelectedUserPass() {
 
 function selectedUserDetails() {
 
-	var rows = getSelectedUsers();
+	const rows = getSelectedUsers();
 
 	if (rows.length == 0) {
 		alert(__("No users are selected."));
@@ -467,9 +467,9 @@ function selectedUserDetails() {
 		return;
 	}
 
-	var id = rows[0];
+	const id = rows[0];
 
-	var query = "backend.php?op=pref-users&method=userdetails&id=" + id;
+	const query = "backend.php?op=pref-users&method=userdetails&id=" + id;
 
 	if (dijit.byId("userDetailsDlg"))
 		dijit.byId("userDetailsDlg").destroyRecursive();
@@ -489,7 +489,7 @@ function selectedUserDetails() {
 
 
 function editSelectedFilter() {
-	var rows = getSelectedFilters();
+	const rows = getSelectedFilters();
 
 	if (rows.length == 0) {
 		alert(__("No filters are selected."));
@@ -508,19 +508,19 @@ function editSelectedFilter() {
 }
 
 function joinSelectedFilters() {
-	var rows = getSelectedFilters();
+	const rows = getSelectedFilters();
 
 	if (rows.length == 0) {
 		alert(__("No filters are selected."));
 		return;
 	}
 
-	var ok = confirm(__("Combine selected filters?"));
+	const ok = confirm(__("Combine selected filters?"));
 
 	if (ok) {
 		notify_progress("Joining filters...");
 
-		var query = "?op=pref-filters&method=join&ids="+
+		const query = "?op=pref-filters&method=join&ids="+
 			param_escape(rows.toString());
 
 		console.log(query);
@@ -534,7 +534,7 @@ function joinSelectedFilters() {
 }
 
 function editSelectedFeed() {
-	var rows = getSelectedFeeds();
+	const rows = getSelectedFeeds();
 
 	if (rows.length == 0) {
 		alert(__("No feeds are selected."));
@@ -552,7 +552,7 @@ function editSelectedFeed() {
 }
 
 function editSelectedFeeds() {
-	var rows = getSelectedFeeds();
+	const rows = getSelectedFeeds();
 
 	if (rows.length == 0) {
 		alert(__("No feeds are selected."));
@@ -561,7 +561,7 @@ function editSelectedFeeds() {
 
 	notify_progress("Loading, please wait...");
 
-	var query = "backend.php?op=pref-feeds&method=editfeeds&ids=" +
+	const query = "backend.php?op=pref-feeds&method=editfeeds&ids=" +
 		param_escape(rows.toString());
 
 	console.log(query);
@@ -580,7 +580,7 @@ function editSelectedFeeds() {
 				title: __("Edit Multiple Feeds"),
 				style: "width: 600px",
 				getChildByName: function (name) {
-					var rv = null;
+					let rv = null;
 					this.getChildren().each(
 						function (child) {
 							if (child.name == name) {
@@ -602,7 +602,7 @@ function editSelectedFeeds() {
 				},
 				execute: function () {
 					if (this.validate() && confirm(__("Save changes to selected feeds?"))) {
-						var query = dojo.objectToQuery(this.attr('value'));
+						let query = dojo.objectToQuery(this.attr('value'));
 
 						/* Form.serialize ignores unchecked checkboxes */
 
@@ -674,9 +674,9 @@ function opmlImportComplete(iframe) {
 	if (dijit.byId('opmlImportDlg'))
 		dijit.byId('opmlImportDlg').destroyRecursive();
 
-	var content = iframe.contentDocument.body.innerHTML;
+	const content = iframe.contentDocument.body.innerHTML;
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "opmlImportDlg",
 		title: __("OPML Import"),
 		style: "width: 600px",
@@ -694,7 +694,7 @@ function opmlImportComplete(iframe) {
 
 function opmlImport() {
 
-	var opml_file = $("opml_file");
+	const opml_file = $("opml_file");
 
 	if (opml_file.value.length == 0) {
 		alert(__("Please choose an OPML file first."));
@@ -710,8 +710,8 @@ function opmlImport() {
 
 
 function updateFilterList() {
-	var user_search = $("filter_search");
-	var search = "";
+	const user_search = $("filter_search");
+	let search = "";
 	if (user_search) { search = user_search.value; }
 
 	new Ajax.Request("backend.php",	{
@@ -767,7 +767,7 @@ function selectTab(id, noupdate) {
 			updateSystemList();
 		}
 
-		var tab = dijit.byId(id + "Tab");
+		const tab = dijit.byId(id + "Tab");
 		dijit.byId("pref-tabs").selectChild(tab);
 
 	}
@@ -778,17 +778,17 @@ function init_second_stage() {
 	loading_set_progress(50);
 	notify("");
 
-	var tab = getURLParam('tab');
+	let tab = getURLParam('tab');
 
 	if (tab) {
 		tab = dijit.byId(tab + "Tab");
 		if (tab) dijit.byId("pref-tabs").selectChild(tab);
 	}
 
-	var method = getURLParam('method');
+	const method = getURLParam('method');
 
 	if (method == 'editFeed') {
-		var param = getURLParam('methodparam');
+		const param = getURLParam('methodparam');
 
 		window.setTimeout(function() { editFeed(param) }, 100);
 	}
@@ -846,7 +846,7 @@ function init() {
 
 				loading_set_progress(50);
 
-				var clientTzOffset = new Date().getTimezoneOffset() * 60;
+				const clientTzOffset = new Date().getTimezoneOffset() * 60;
 
 				new Ajax.Request("backend.php", {
 					parameters: {
@@ -866,11 +866,11 @@ function init() {
 
 
 function validatePrefsReset() {
-	var ok = confirm(__("Reset to defaults?"));
+	const ok = confirm(__("Reset to defaults?"));
 
 	if (ok) {
 
-		var query = "?op=pref-prefs&method=resetconfig";
+		const query = "?op=pref-prefs&method=resetconfig";
 		console.log(query);
 
 		new Ajax.Request("backend.php", {
@@ -890,10 +890,10 @@ function pref_hotkey_handler(e) {
 
 	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
 
-	var keycode = false;
-	var shift_key = false;
+	let keycode = false;
+	let shift_key = false;
 
-	var cmdline = $('cmdline');
+	const cmdline = $('cmdline');
 
 	try {
 		shift_key = e.shiftKey;
@@ -907,7 +907,7 @@ function pref_hotkey_handler(e) {
 		keycode = e.which;
 	}
 
-	var keychar = String.fromCharCode(keycode);
+	let keychar = String.fromCharCode(keycode);
 
 	if (keycode == 27) { // escape
 		hotkey_prefix = false;
@@ -922,8 +922,8 @@ function pref_hotkey_handler(e) {
 
 	if (!hotkey_prefix && hotkeys[0].indexOf(keychar) != -1) {
 
-		var date = new Date();
-		var ts = Math.round(date.getTime() / 1000);
+		const date = new Date();
+		const ts = Math.round(date.getTime() / 1000);
 
 		hotkey_prefix = keychar;
 		hotkey_prefix_pressed = ts;
@@ -936,14 +936,14 @@ function pref_hotkey_handler(e) {
 
 	Element.hide(cmdline);
 
-	var hotkey = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
+	let hotkey = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
 	hotkey = hotkey_prefix ? hotkey_prefix + " " + hotkey : hotkey;
 	hotkey_prefix = false;
 
-	var hotkey_action = false;
+	let hotkey_action = false;
 	var hotkeys = getInitParam("hotkeys");
 
-	for (var sequence in hotkeys[1]) {
+	for (const sequence in hotkeys[1]) {
 		if (sequence == hotkey) {
 			hotkey_action = hotkeys[1][sequence];
 			break;
@@ -970,10 +970,10 @@ function pref_hotkey_handler(e) {
 
 function removeCategory(id, item) {
 
-	var ok = confirm(__("Remove category %s? Any nested feeds would be placed into Uncategorized.").replace("%s", item.name));
+	const ok = confirm(__("Remove category %s? Any nested feeds would be placed into Uncategorized.").replace("%s", item.name));
 
 	if (ok) {
-		var query = "?op=pref-feeds&method=removeCat&ids=" +
+		const query = "?op=pref-feeds&method=removeCat&ids=" +
 			param_escape(id);
 
 		notify_progress("Removing category...");
@@ -990,16 +990,16 @@ function removeCategory(id, item) {
 
 function removeSelectedCategories() {
 
-	var sel_rows = getSelectedCategories();
+	const sel_rows = getSelectedCategories();
 
 	if (sel_rows.length > 0) {
 
-		var ok = confirm(__("Remove selected categories?"));
+		const ok = confirm(__("Remove selected categories?"));
 
 		if (ok) {
 			notify_progress("Removing selected categories...");
 
-			var query = "?op=pref-feeds&method=removeCat&ids="+
+			const query = "?op=pref-feeds&method=removeCat&ids="+
 				param_escape(sel_rows.toString());
 
 			new Ajax.Request("backend.php",	{
@@ -1017,13 +1017,13 @@ function removeSelectedCategories() {
 }
 
 function createCategory() {
-	var title = prompt(__("Category title:"));
+	const title = prompt(__("Category title:"));
 
 	if (title) {
 
 		notify_progress("Creating category...");
 
-		var query = "?op=pref-feeds&method=addCat&cat=" +
+		const query = "?op=pref-feeds&method=addCat&cat=" +
 			param_escape(title);
 
 		new Ajax.Request("backend.php", {
@@ -1037,7 +1037,7 @@ function createCategory() {
 }
 
 function showInactiveFeeds() {
-	var query = "backend.php?op=pref-feeds&method=inactiveFeeds";
+	const query = "backend.php?op=pref-feeds&method=inactiveFeeds";
 
 	if (dijit.byId("inactiveFeedsDlg"))
 		dijit.byId("inactiveFeedsDlg").destroyRecursive();
@@ -1050,17 +1050,17 @@ function showInactiveFeeds() {
 			return getSelectedTableRowIds("prefInactiveFeedList");
 		},
 		removeSelected: function () {
-			var sel_rows = this.getSelectedFeeds();
+			const sel_rows = this.getSelectedFeeds();
 
 			console.log(sel_rows);
 
 			if (sel_rows.length > 0) {
-				var ok = confirm(__("Remove selected feeds?"));
+				const ok = confirm(__("Remove selected feeds?"));
 
 				if (ok) {
 					notify_progress("Removing selected feeds...", true);
 
-					var query = "?op=pref-feeds&method=remove&ids=" +
+					const query = "?op=pref-feeds&method=remove&ids=" +
 						param_escape(sel_rows.toString());
 
 					new Ajax.Request("backend.php", {
@@ -1088,22 +1088,22 @@ function showInactiveFeeds() {
 }
 
 function opmlRegenKey() {
-	var ok = confirm(__("Replace current OPML publishing address with a new one?"));
+	const ok = confirm(__("Replace current OPML publishing address with a new one?"));
 
 	if (ok) {
 
 		notify_progress("Trying to change address...", true);
 
-		var query = "?op=pref-feeds&method=regenOPMLKey";
+		const query = "?op=pref-feeds&method=regenOPMLKey";
 
 		new Ajax.Request("backend.php", {
 			parameters: query,
 			onComplete: function (transport) {
-				var reply = JSON.parse(transport.responseText);
+				const reply = JSON.parse(transport.responseText);
 
-				var new_link = reply.link;
+				const new_link = reply.link;
 
-				var e = $('pub_opml_url');
+				const e = $('pub_opml_url');
 
 				if (new_link) {
 					e.href = new_link;
@@ -1123,13 +1123,13 @@ function opmlRegenKey() {
 }
 
 function labelColorReset() {
-	var labels = getSelectedLabels();
+	const labels = getSelectedLabels();
 
 	if (labels.length > 0) {
-		var ok = confirm(__("Reset selected labels to default colors?"));
+		const ok = confirm(__("Reset selected labels to default colors?"));
 
 		if (ok) {
-			var query = "?op=pref-labels&method=colorreset&ids=" +
+			const query = "?op=pref-labels&method=colorreset&ids=" +
 				param_escape(labels.toString());
 
 			new Ajax.Request("backend.php", {
@@ -1154,7 +1154,7 @@ function editProfiles() {
 	if (dijit.byId("profileEditDlg"))
 		dijit.byId("profileEditDlg").destroyRecursive();
 
-	var query = "backend.php?op=pref-prefs&method=editPrefProfiles";
+	const query = "backend.php?op=pref-prefs&method=editPrefProfiles";
 
 	var dialog = new dijit.Dialog({
 		id: "profileEditDlg",
@@ -1164,15 +1164,15 @@ function editProfiles() {
 			return getSelectedTableRowIds("prefFeedProfileList");
 		},
 		removeSelected: function () {
-			var sel_rows = this.getSelectedProfiles();
+			const sel_rows = this.getSelectedProfiles();
 
 			if (sel_rows.length > 0) {
-				var ok = confirm(__("Remove selected profiles? Active and default profiles will not be removed."));
+				const ok = confirm(__("Remove selected profiles? Active and default profiles will not be removed."));
 
 				if (ok) {
 					notify_progress("Removing selected profiles...", true);
 
-					var query = "?op=rpc&method=remprofiles&ids=" +
+					const query = "?op=rpc&method=remprofiles&ids=" +
 						param_escape(sel_rows.toString());
 
 					new Ajax.Request("backend.php", {
@@ -1190,16 +1190,16 @@ function editProfiles() {
 			}
 		},
 		activateProfile: function () {
-			var sel_rows = this.getSelectedProfiles();
+			const sel_rows = this.getSelectedProfiles();
 
 			if (sel_rows.length == 1) {
 
-				var ok = confirm(__("Activate selected profile?"));
+				const ok = confirm(__("Activate selected profile?"));
 
 				if (ok) {
 					notify_progress("Loading, please wait...");
 
-					var query = "?op=rpc&method=setprofile&id=" +
+					const query = "?op=rpc&method=setprofile&id=" +
 						param_escape(sel_rows.toString());
 
 					new Ajax.Request("backend.php", {
@@ -1218,7 +1218,7 @@ function editProfiles() {
 			if (this.validate()) {
 				notify_progress("Creating profile...", true);
 
-				var query = "?op=rpc&method=addprofile&title=" +
+				const query = "?op=rpc&method=addprofile&title=" +
 					param_escape(dialog.attr('value').newprofile);
 
 				new Ajax.Request("backend.php", {
@@ -1243,16 +1243,16 @@ function editProfiles() {
 
 function activatePrefProfile() {
 
-	var sel_rows = getSelectedFeedCats();
+	const sel_rows = getSelectedFeedCats();
 
 	if (sel_rows.length == 1) {
 
-		var ok = confirm(__("Activate selected profile?"));
+		const ok = confirm(__("Activate selected profile?"));
 
 		if (ok) {
 			notify_progress("Loading, please wait...");
 
-			var query = "?op=rpc&method=setprofile&id="+
+			const query = "?op=rpc&method=setprofile&id="+
 				param_escape(sel_rows.toString());
 
 			new Ajax.Request("backend.php",	{
@@ -1271,12 +1271,12 @@ function activatePrefProfile() {
 
 function clearFeedAccessKeys() {
 
-	var ok = confirm(__("This will invalidate all previously generated feed URLs. Continue?"));
+	const ok = confirm(__("This will invalidate all previously generated feed URLs. Continue?"));
 
 	if (ok) {
 		notify_progress("Clearing URLs...");
 
-		var query = "?op=pref-feeds&method=clearKeys";
+		const query = "?op=pref-feeds&method=clearKeys";
 
 		new Ajax.Request("backend.php", {
 			parameters: query,
@@ -1298,7 +1298,6 @@ function resetFilterOrder() {
 		}
 	});
 }
-
 
 
 function resetFeedOrder() {
@@ -1324,7 +1323,7 @@ function resetCatOrder() {
 }
 
 function editCat(id, item) {
-	var new_name = prompt(__('Rename category to:'), item.name);
+	const new_name = prompt(__('Rename category to:'), item.name);
 
 	if (new_name && new_name != item.name) {
 
@@ -1345,20 +1344,20 @@ function editCat(id, item) {
 }
 
 function editLabel(id) {
-	var query = "backend.php?op=pref-labels&method=edit&id=" +
+	const query = "backend.php?op=pref-labels&method=edit&id=" +
 		param_escape(id);
 
 	if (dijit.byId("labelEditDlg"))
 		dijit.byId("labelEditDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "labelEditDlg",
 		title: __("Label Editor"),
 		style: "width: 600px",
 		setLabelColor: function (id, fg, bg) {
 
-			var kind = '';
-			var color = '';
+			let kind = '';
+			let color = '';
 
 			if (fg && bg) {
 				kind = 'both';
@@ -1370,13 +1369,13 @@ function editLabel(id) {
 				color = bg;
 			}
 
-			var query = "?op=pref-labels&method=colorset&kind=" + kind +
+			const query = "?op=pref-labels&method=colorset&kind=" + kind +
 				"&ids=" + param_escape(id) + "&fg=" + param_escape(fg) +
 				"&bg=" + param_escape(bg) + "&color=" + param_escape(color);
 
 			//		console.log(query);
 
-			var e = $("LICID-" + id);
+			const e = $("LICID-" + id);
 
 			if (e) {
 				if (fg) e.style.color = fg;
@@ -1389,10 +1388,10 @@ function editLabel(id) {
 		},
 		execute: function () {
 			if (this.validate()) {
-				var caption = this.attr('value').caption;
-				var fg_color = this.attr('value').fg_color;
-				var bg_color = this.attr('value').bg_color;
-				var query = dojo.objectToQuery(this.attr('value'));
+				const caption = this.attr('value').caption;
+				const fg_color = this.attr('value').fg_color;
+				const bg_color = this.attr('value').bg_color;
+				const query = dojo.objectToQuery(this.attr('value'));
 
 				dijit.byId('labelTree').setNameById(id, caption);
 				this.setLabelColor(id, fg_color, bg_color);
@@ -1414,12 +1413,12 @@ function editLabel(id) {
 
 
 function customizeCSS() {
-	var query = "backend.php?op=pref-prefs&method=customizeCSS";
+	const query = "backend.php?op=pref-prefs&method=customizeCSS";
 
 	if (dijit.byId("cssEditDlg"))
 		dijit.byId("cssEditDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "cssEditDlg",
 		title: __("Customize stylesheet"),
 		style: "width: 600px",
@@ -1445,13 +1444,13 @@ function insertSSLserial(value) {
 }
 
 function gotoExportOpml(filename, settings) {
-	var tmp = settings ? 1 : 0;
+	const tmp = settings ? 1 : 0;
 	document.location.href = "backend.php?op=opml&method=export&filename=" + filename + "&settings=" + tmp;
 }
 
 
 function batchSubscribe() {
-	var query = "backend.php?op=pref-feeds&method=batchSubscribe";
+	const query = "backend.php?op=pref-feeds&method=batchSubscribe";
 
 	// overlapping widgets
 	if (dijit.byId("batchSubDlg")) dijit.byId("batchSubDlg").destroyRecursive();
@@ -1501,7 +1500,7 @@ function clearSqlLog() {
 	if (confirm(__("Clear all messages in the error log?"))) {
 
 		notify_progress("Loading, please wait...");
-		var query = "?op=pref-system&method=clearLog";
+		const query = "?op=pref-system&method=clearLog";
 
 		new Ajax.Request("backend.php",	{
 			parameters: query,

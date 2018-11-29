@@ -24,10 +24,10 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 
 	console.log("headlines_callback2 [offset=" + offset + "] B:" + background + " I:" + infscroll_req);
 
-	var is_cat = false;
-	var feed_id = false;
+	let is_cat = false;
+	let feed_id = false;
 
-	var reply = false;
+	let reply = false;
 
 	try {
 		reply = JSON.parse(transport.responseText);
@@ -42,7 +42,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 		last_search_query = reply['headlines']['search_query'];
 
 		if (background) {
-			var content = reply['headlines']['content'];
+			let content = reply['headlines']['content'];
 
 			content = content + "<div id='headlines-spacer'></div>";
 			return;
@@ -63,14 +63,14 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 				$("floatingTitle").setAttribute("data-article-id", 0);
 				$("floatingTitle").innerHTML = "";
 			}
-		} catch (e) { };
+		} catch (e) { }
 
 		$("headlines-frame").removeClassName("cdm");
 		$("headlines-frame").removeClassName("normal");
 
 		$("headlines-frame").addClassName(isCdmMode() ? "cdm" : "normal");
 
-		var headlines_count = reply['headlines-info']['count'];
+		const headlines_count = reply['headlines-info']['count'];
 
 		vgroup_last_feed = reply['headlines-info']['vgroup_last_feed'];
 
@@ -81,8 +81,8 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 		}
 
 		current_first_id = reply['headlines']['first_id'];
-		var counters = reply['counters'];
-		var articles = reply['articles'];
+		const counters = reply['counters'];
+		const articles = reply['articles'];
 		//var runtime_info = reply['runtime-info'];
 
 		if (infscroll_req == false) {
@@ -132,13 +132,11 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 					"</span>";
 			}
 
-		} else {
-
-			if (headlines_count > 0 && feed_id == getActiveFeedId() && is_cat == activeFeedIsCat()) {
+		} else if (headlines_count > 0 && feed_id == getActiveFeedId() && is_cat == activeFeedIsCat()) {
 				console.log("adding some more headlines: " + headlines_count);
 
-				var c = dijit.byId("headlines-frame");
-				var ids = getSelectedArticleIds2();
+				const c = dijit.byId("headlines-frame");
+				const ids = getSelectedArticleIds2();
 
 				var hsp = $("headlines-spacer");
 
@@ -180,7 +178,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 			} else {
 				console.log("no new headlines received");
 
-				var first_id_changed = reply['headlines']['first_id_changed'];
+				const first_id_changed = reply['headlines']['first_id_changed'];
 				console.log("first id changed:" + first_id_changed);
 
 				var hsp = $("headlines-spacer");
@@ -197,11 +195,10 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 				}
 
 			}
-		}
 
 		if (articles) {
 			for (var i = 0; i < articles.length; i++) {
-				var a_id = articles[i]['id'];
+				const a_id = articles[i]['id'];
 				cache_set("article:" + a_id, articles[i]['content']);
 			}
 		} else {
@@ -244,11 +241,11 @@ function render_article(article) {
 	dijit.byId("headlines-wrap-inner").addChild(
 			dijit.byId("content-insert"));
 
-	var c = dijit.byId("content-insert");
+	const c = dijit.byId("content-insert");
 
 	try {
 		c.domNode.scrollTop = 0;
-	} catch (e) { };
+	} catch (e) { }
 
 	c.attr('content', article);
 	PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED, c.domNode);
@@ -257,11 +254,11 @@ function render_article(article) {
 
 	try {
 		c.focus();
-	} catch (e) { };
+	} catch (e) { }
 }
 
 function showArticleInHeadlines(id, noexpand) {
-	var row = $("RROW-" + id);
+	const row = $("RROW-" + id);
 	if (!row) return;
 
 	if (!noexpand)
@@ -279,7 +276,7 @@ function article_callback2(transport, id) {
 
 	handle_rpc_json(transport);
 
-	var reply = false;
+	let reply = false;
 
 	try {
 		reply = JSON.parse(transport.responseText);
@@ -310,17 +307,17 @@ function article_callback2(transport, id) {
 				__('Could not display article (invalid object received - see error console for details)') + "</div>");
 	}
 
-	var unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length
+	const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length
 	request_counters(unread_in_buffer == 0);
 
 	notify("");
 }
 
 function view(id, activefeed, noexpand) {
-	var oldrow = $("RROW-" + getActiveArticleId());
+	const oldrow = $("RROW-" + getActiveArticleId());
 	if (oldrow) oldrow.removeClassName("active");
 
-	var crow = $("RROW-" + id);
+	const crow = $("RROW-" + id);
 
 	if (!crow) return;
 	if (noexpand) {
@@ -331,19 +328,19 @@ function view(id, activefeed, noexpand) {
 
 	console.log("loading article: " + id);
 
-	var cached_article = cache_get("article:" + id);
+	const cached_article = cache_get("article:" + id);
 
 	console.log("cache check result: " + (cached_article != false));
 
-	var query = "?op=article&method=view&id=" + param_escape(id);
+	let query = "?op=article&method=view&id=" + param_escape(id);
 
-	var neighbor_ids = getRelativePostIds(id);
+	const neighbor_ids = getRelativePostIds(id);
 
 	/* only request uncached articles */
 
-	var cids_to_request = [];
+	const cids_to_request = [];
 
-	for (var i = 0; i < neighbor_ids.length; i++) {
+	for (let i = 0; i < neighbor_ids.length; i++) {
 		if (cids_requested.indexOf(neighbor_ids[i]) == -1)
 			if (!cache_get("article:" + neighbor_ids[i])) {
 				cids_to_request.push(neighbor_ids[i]);
@@ -355,7 +352,7 @@ function view(id, activefeed, noexpand) {
 
 	query = query + "&cids=" + cids_to_request.toString();
 
-	var article_is_unread = crow.hasClassName("Unread");
+	const article_is_unread = crow.hasClassName("Unread");
 
 	setActiveArticleId(id);
 	showArticleInHeadlines(id);
@@ -397,29 +394,29 @@ function view(id, activefeed, noexpand) {
 }
 
 function toggleMark(id, client_only) {
-	var query = "?op=rpc&id=" + id + "&method=mark";
+	let query = "?op=rpc&id=" + id + "&method=mark";
 
-	var row = $("RROW-" + id);
+	const row = $("RROW-" + id);
 	if (!row) return;
 
-	var imgs = [];
+	const imgs = [];
 
-	var row_imgs = row.getElementsByClassName("markedPic");
+	const row_imgs = row.getElementsByClassName("markedPic");
 
 	for (var i = 0; i < row_imgs.length; i++)
 		imgs.push(row_imgs[i]);
 
-	var ft = $("floatingTitle");
+	const ft = $("floatingTitle");
 
 	if (ft && ft.getAttribute("data-article-id") == id) {
-		var fte = ft.getElementsByClassName("markedPic");
+		const fte = ft.getElementsByClassName("markedPic");
 
 		for (var i = 0; i < fte.length; i++)
 			imgs.push(fte[i]);
 	}
 
 	for (i = 0; i < imgs.length; i++) {
-		var img = imgs[i];
+		const img = imgs[i];
 
 		if (!row.hasClassName("marked")) {
 			img.src = img.src.replace("mark_unset", "mark_set");
@@ -443,7 +440,7 @@ function toggleMark(id, client_only) {
 }
 
 function togglePub(id, client_only, no_effects, note) {
-	var query = "?op=rpc&id=" + id + "&method=publ";
+	let query = "?op=rpc&id=" + id + "&method=publ";
 
 	if (note != undefined) {
 		query = query + "&note=" + param_escape(note);
@@ -451,27 +448,27 @@ function togglePub(id, client_only, no_effects, note) {
 		query = query + "&note=undefined";
 	}
 
-	var row = $("RROW-" + id);
+	const row = $("RROW-" + id);
 	if (!row) return;
 
-	var imgs = [];
+	const imgs = [];
 
-	var row_imgs = row.getElementsByClassName("pubPic");
+	const row_imgs = row.getElementsByClassName("pubPic");
 
 	for (var i = 0; i < row_imgs.length; i++)
 		imgs.push(row_imgs[i]);
 
-	var ft = $("floatingTitle");
+	const ft = $("floatingTitle");
 
 	if (ft && ft.getAttribute("data-article-id") == id) {
-		var fte = ft.getElementsByClassName("pubPic");
+		const fte = ft.getElementsByClassName("pubPic");
 
 		for (var i = 0; i < fte.length; i++)
 			imgs.push(fte[i]);
 	}
 
 	for (var i = 0; i < imgs.length; i++) {
-		var img = imgs[i];
+		const img = imgs[i];
 
 		if (!row.hasClassName("published") || note != undefined) {
 			img.src = img.src.replace("pub_unset", "pub_set");
@@ -498,10 +495,10 @@ function togglePub(id, client_only, no_effects, note) {
 }
 
 function moveToPost(mode, noscroll, noexpand) {
-	var rows = getLoadedArticleIds();
+	const rows = getLoadedArticleIds();
 
-	var prev_id = false;
-	var next_id = false;
+	let prev_id = false;
+	let next_id = false;
 
 	if (!$('RROW-' + getActiveArticleId())) {
 		setActiveArticleId(0);
@@ -511,13 +508,13 @@ function moveToPost(mode, noscroll, noexpand) {
 		next_id = rows[0];
 		prev_id = rows[rows.length-1]
 	} else {
-		for (var i = 0; i < rows.length; i++) {
+		for (let i = 0; i < rows.length; i++) {
 			if (rows[i] == getActiveArticleId()) {
 
 				// Account for adjacent identical article ids.
 				if (i > 0) prev_id = rows[i-1];
 
-				for (var j = i+1; j < rows.length; j++) {
+				for (let j = i+1; j < rows.length; j++) {
 					if (rows[j] != getActiveArticleId()) {
 						next_id = rows[j];
 						break;
@@ -559,7 +556,7 @@ function moveToPost(mode, noscroll, noexpand) {
 			if (isCdmMode()) {
 
 				var article = $("RROW-" + getActiveArticleId());
-				var prev_article = $("RROW-" + prev_id);
+				const prev_article = $("RROW-" + prev_id);
 				var ctr = $("headlines-frame");
 
 				if (!getInitParam("cdm_expanded")) {
@@ -570,9 +567,7 @@ function moveToPost(mode, noscroll, noexpand) {
 						cdmExpandArticle(prev_id, noexpand);
 						cdmScrollToArticleId(prev_id, true);
 					}
-				} else {
-
-					if (!noscroll && article && article.offsetTop < ctr.scrollTop) {
+				} else if (!noscroll && article && article.offsetTop < ctr.scrollTop) {
 						scrollArticle(-ctr.offsetHeight/3);
 					} else if (!noscroll && prev_article &&
 							prev_article.offsetTop < ctr.scrollTop) {
@@ -582,7 +577,6 @@ function moveToPost(mode, noscroll, noexpand) {
 						cdmExpandArticle(prev_id, noexpand);
 						cdmScrollToArticleId(prev_id, noscroll);
 					}
-				}
 
 			} else if (prev_id) {
 				correctHeadlinesOffset(prev_id);
@@ -594,10 +588,10 @@ function moveToPost(mode, noscroll, noexpand) {
 }
 
 function toggleSelected(id, force_on) {
-	var row = $("RROW-" + id);
+	const row = $("RROW-" + id);
 
 	if (row) {
-		var cb = dijit.getEnclosingWidget(
+		const cb = dijit.getEnclosingWidget(
 				row.getElementsByClassName("rchk")[0]);
 
 		if (row.hasClassName('Selected') && !force_on) {
@@ -613,8 +607,8 @@ function toggleSelected(id, force_on) {
 }
 
 function updateSelectedPrompt() {
-	var count = getSelectedArticleIds2().size();
-	var elem = $("selected_prompt");
+	const count = getSelectedArticleIds2().size();
+	const elem = $("selected_prompt");
 
 	if (elem) {
 		elem.innerHTML = ngettext("%d article selected",
@@ -629,9 +623,9 @@ function updateSelectedPrompt() {
 }
 
 function toggleUnread(id, cmode, effect) {
-	var row = $("RROW-" + id);
+	const row = $("RROW-" + id);
 	if (row) {
-		var tmpClassName = row.className;
+		const tmpClassName = row.className;
 
 		if (cmode == undefined || cmode == 2) {
 			if (row.hasClassName("Unread")) {
@@ -651,7 +645,7 @@ function toggleUnread(id, cmode, effect) {
 
 		if (cmode == undefined) cmode = 2;
 
-		var query = "?op=rpc&method=catchupSelected" +
+		const query = "?op=rpc&method=catchupSelected" +
 			"&cmode=" + param_escape(cmode) + "&ids=" + param_escape(id);
 
 //			notify_progress("Loading, please wait...");
@@ -676,7 +670,7 @@ function selectionRemoveLabel(id, ids) {
 		return;
 	}
 
-	var query = "?op=article&method=removeFromLabel&ids=" +
+	const query = "?op=article&method=removeFromLabel&ids=" +
 		param_escape(ids.toString()) + "&lid=" + param_escape(id);
 
 	console.log(query);
@@ -698,7 +692,7 @@ function selectionAssignLabel(id, ids) {
 		return;
 	}
 
-	var query = "?op=article&method=assignToLabel&ids=" +
+	const query = "?op=article&method=assignToLabel&ids=" +
 		param_escape(ids.toString()) + "&lid=" + param_escape(id);
 
 	console.log(query);
@@ -712,15 +706,15 @@ function selectionAssignLabel(id, ids) {
 }
 
 function selectionToggleUnread(set_state, callback, no_error, ids) {
-	var rows = ids ? ids : getSelectedArticleIds2();
+	const rows = ids ? ids : getSelectedArticleIds2();
 
 	if (rows.length == 0 && !no_error) {
 		alert(__("No articles are selected."));
 		return;
 	}
 
-	for (var i = 0; i < rows.length; i++) {
-		var row = $("RROW-" + rows[i]);
+	for (let i = 0; i < rows.length; i++) {
+		const row = $("RROW-" + rows[i]);
 		if (row) {
 			if (set_state == undefined) {
 				if (row.hasClassName("Unread")) {
@@ -744,7 +738,7 @@ function selectionToggleUnread(set_state, callback, no_error, ids) {
 
 	if (rows.length > 0) {
 
-		var cmode = "";
+		let cmode = "";
 
 		if (set_state == undefined) {
 			cmode = "2";
@@ -754,7 +748,7 @@ function selectionToggleUnread(set_state, callback, no_error, ids) {
 			cmode = "0";
 		}
 
-		var query = "?op=rpc&method=catchupSelected" +
+		const query = "?op=rpc&method=catchupSelected" +
 			"&cmode=" + cmode + "&ids=" + param_escape(rows.toString());
 
 		notify_progress("Loading, please wait...");
@@ -771,20 +765,20 @@ function selectionToggleUnread(set_state, callback, no_error, ids) {
 
 // sel_state ignored
 function selectionToggleMarked(sel_state, callback, no_error, ids) {
-	var rows = ids ? ids : getSelectedArticleIds2();
+	const rows = ids ? ids : getSelectedArticleIds2();
 
 	if (rows.length == 0 && !no_error) {
 		alert(__("No articles are selected."));
 		return;
 	}
 
-	for (var i = 0; i < rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		toggleMark(rows[i], true, true);
 	}
 
 	if (rows.length > 0) {
 
-		var query = "?op=rpc&method=markSelected&ids=" +
+		const query = "?op=rpc&method=markSelected&ids=" +
 			param_escape(rows.toString()) + "&cmode=2";
 
 		new Ajax.Request("backend.php", {
@@ -799,20 +793,20 @@ function selectionToggleMarked(sel_state, callback, no_error, ids) {
 
 // sel_state ignored
 function selectionTogglePublished(sel_state, callback, no_error, ids) {
-	var rows = ids ? ids : getSelectedArticleIds2();
+	const rows = ids ? ids : getSelectedArticleIds2();
 
 	if (rows.length == 0 && !no_error) {
 		alert(__("No articles are selected."));
 		return;
 	}
 
-	for (var i = 0; i < rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		togglePub(rows[i], true, true);
 	}
 
 	if (rows.length > 0) {
 
-		var query = "?op=rpc&method=publishSelected&ids=" +
+		const query = "?op=rpc&method=publishSelected&ids=" +
 			param_escape(rows.toString()) + "&cmode=2";
 
 		new Ajax.Request("backend.php", {
@@ -826,7 +820,7 @@ function selectionTogglePublished(sel_state, callback, no_error, ids) {
 
 function getSelectedArticleIds2() {
 
-	var rv = [];
+	const rv = [];
 
 	$$("#headlines-frame > div[id*=RROW][class*=Selected]").each(
 		function(child) {
@@ -837,9 +831,9 @@ function getSelectedArticleIds2() {
 }
 
 function getLoadedArticleIds() {
-	var rv = [];
+	const rv = [];
 
-	var children = $$("#headlines-frame > div[id*=RROW-]");
+	const children = $$("#headlines-frame > div[id*=RROW-]");
 
 	children.each(function(child) {
 		if (Element.visible(child)) {
@@ -855,12 +849,12 @@ function getLoadedArticleIds() {
 function selectArticles(mode, query) {
 	if (!query) query = "#headlines-frame > div[id*=RROW]";
 
-	var children = $$(query);
+	const children = $$(query);
 
 	children.each(function(child) {
-		var id = child.getAttribute("data-article-id");
+		const id = child.getAttribute("data-article-id");
 
-		var cb = dijit.getEnclosingWidget(
+		const cb = dijit.getEnclosingWidget(
 				child.getElementsByClassName("rchk")[0]);
 
 		if (mode == "all") {
@@ -911,15 +905,15 @@ function selectArticles(mode, query) {
 
 function deleteSelection() {
 
-	var rows = getSelectedArticleIds2();
+	const rows = getSelectedArticleIds2();
 
 	if (rows.length == 0) {
 		alert(__("No articles are selected."));
 		return;
 	}
 
-	var fn = getFeedName(getActiveFeedId(), activeFeedIsCat());
-	var str;
+	const fn = getFeedName(getActiveFeedId(), activeFeedIsCat());
+	let str;
 
 	if (getActiveFeedId() != 0) {
 		str = ngettext("Delete %d selected article in %s?", "Delete %d selected articles in %s?", rows.length);
@@ -934,7 +928,7 @@ function deleteSelection() {
 		return;
 	}
 
-	var query = "?op=rpc&method=delete&ids=" + param_escape(rows);
+	const query = "?op=rpc&method=delete&ids=" + param_escape(rows);
 
 	console.log(query);
 
@@ -949,16 +943,16 @@ function deleteSelection() {
 
 function archiveSelection() {
 
-	var rows = getSelectedArticleIds2();
+	const rows = getSelectedArticleIds2();
 
 	if (rows.length == 0) {
 		alert(__("No articles are selected."));
 		return;
 	}
 
-	var fn = getFeedName(getActiveFeedId(), activeFeedIsCat());
-	var str;
-	var op;
+	const fn = getFeedName(getActiveFeedId(), activeFeedIsCat());
+	let str;
+	let op;
 
 	if (getActiveFeedId() != 0) {
 		str = ngettext("Archive %d selected article in %s?", "Archive %d selected articles in %s?", rows.length);
@@ -978,11 +972,11 @@ function archiveSelection() {
 		return;
 	}
 
-	var query = "?op=rpc&method="+op+"&ids=" + param_escape(rows);
+	const query = "?op=rpc&method="+op+"&ids=" + param_escape(rows);
 
 	console.log(query);
 
-	for (var i = 0; i < rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		cache_delete("article:" + rows[i]);
 	}
 
@@ -997,16 +991,16 @@ function archiveSelection() {
 
 function catchupSelection() {
 
-	var rows = getSelectedArticleIds2();
+	const rows = getSelectedArticleIds2();
 
 	if (rows.length == 0) {
 		alert(__("No articles are selected."));
 		return;
 	}
 
-	var fn = getFeedName(getActiveFeedId(), activeFeedIsCat());
+	const fn = getFeedName(getActiveFeedId(), activeFeedIsCat());
 
-	var str = ngettext("Mark %d selected article in %s as read?", "Mark %d selected articles in %s as read?", rows.length);
+	let str = ngettext("Mark %d selected article in %s as read?", "Mark %d selected articles in %s as read?", rows.length);
 
 	str = str.replace("%d", rows.length);
 	str = str.replace("%s", fn);
@@ -1019,7 +1013,7 @@ function catchupSelection() {
 }
 
 function editArticleTags(id) {
-	var query = "backend.php?op=article&method=editArticleTags&param=" + param_escape(id);
+	const query = "backend.php?op=article&method=editArticleTags&param=" + param_escape(id);
 
 	if (dijit.byId("editTagsDlg"))
 		dijit.byId("editTagsDlg").destroyRecursive();
@@ -1030,7 +1024,7 @@ function editArticleTags(id) {
 		style: "width: 600px",
 		execute: function() {
 			if (this.validate()) {
-				var query = dojo.objectToQuery(this.attr('value'));
+				const query = dojo.objectToQuery(this.attr('value'));
 
 				notify_progress("Saving article tags...", true);
 
@@ -1041,15 +1035,15 @@ function editArticleTags(id) {
 						notify('');
 						dialog.hide();
 
-						var data = JSON.parse(transport.responseText);
+						const data = JSON.parse(transport.responseText);
 
 						if (data) {
-							var id = data.id;
+							const id = data.id;
 
 							console.log(id);
 
-							var tags = $("ATSTR-" + id);
-							var tooltip = dijit.byId("ATSTRTIP-" + id);
+							const tags = $("ATSTR-" + id);
+							const tooltip = dijit.byId("ATSTRTIP-" + id);
 
 							if (tags) tags.innerHTML = data.content;
 							if (tooltip) tooltip.attr('label', data.content_full);
@@ -1077,8 +1071,8 @@ function editArticleTags(id) {
 }
 
 function cdmScrollToArticleId(id, force) {
-	var ctr = $("headlines-frame");
-	var e = $("RROW-" + id);
+	const ctr = $("headlines-frame");
+	const e = $("RROW-" + id);
 
 	if (!e || !ctr) return;
 
@@ -1114,7 +1108,7 @@ function unpackVisibleHeadlines() {
 
 	$$("#headlines-frame span.cencw[id]").each(
 		function (child) {
-			var row = $("RROW-" + child.id.replace("CENCW-", ""));
+			const row = $("RROW-" + child.id.replace("CENCW-", ""));
 
 			if (row && row.offsetTop <= $("headlines-frame").scrollTop +
 				$("headlines-frame").offsetHeight) {
@@ -1142,7 +1136,7 @@ function headlines_scroll_handler(e) {
 
 		_headlines_scroll_offset = e.scrollTop;
 
-		var hsp = $("headlines-spacer");
+		const hsp = $("headlines-spacer");
 
 		unpackVisibleHeadlines();
 
@@ -1151,9 +1145,9 @@ function headlines_scroll_handler(e) {
 				getSelectedArticleIds2().length <= 1 &&
 				getInitParam("cdm_expanded")) {
 
-			var rows = $$("#headlines-frame > div[id*=RROW]");
+			const rows = $$("#headlines-frame > div[id*=RROW]");
 
-			for (var i = 0; i < rows.length; i++) {
+			for (let i = 0; i < rows.length; i++) {
 				var child = rows[i];
 
 				if ($("headlines-frame").scrollTop <= child.offsetTop &&
@@ -1161,7 +1155,7 @@ function headlines_scroll_handler(e) {
 					child.getAttribute("data-article-id") != _active_article_id) {
 
 					if (_active_article_id) {
-						var row = $("RROW-" + _active_article_id);
+						const row = $("RROW-" + _active_article_id);
 						if (row) row.removeClassName("active");
 					}
 
@@ -1194,7 +1188,7 @@ function headlines_scroll_handler(e) {
 		if (getInitParam("cdm_auto_catchup") == 1) {
 
 			// let's get DOM some time to settle down
-			var ts = new Date().getTime();
+			const ts = new Date().getTime();
 			if (ts - _last_headlines_update < 100) return;
 
 			$$("#headlines-frame > div[id*=RROW][class*=Unread]").each(
@@ -1202,7 +1196,7 @@ function headlines_scroll_handler(e) {
 					if (child.hasClassName("Unread") && $("headlines-frame").scrollTop >
 							(child.offsetTop + child.offsetHeight/2)) {
 
-						var id = child.getAttribute("data-article-id")
+						const id = child.getAttribute("data-article-id")
 
 						if (catchup_id_batch.indexOf(id) == -1)
 							catchup_id_batch.push(id);
@@ -1233,8 +1227,8 @@ function headlines_scroll_handler(e) {
 }
 
 function openNextUnreadFeed() {
-	var is_cat = activeFeedIsCat();
-	var nuf = getNextUnreadFeed(getActiveFeedId(), is_cat);
+	const is_cat = activeFeedIsCat();
+	const nuf = getNextUnreadFeed(getActiveFeedId(), is_cat);
 	if (nuf) viewfeed({feed: nuf, is_cat: is_cat});
 }
 
@@ -1244,8 +1238,8 @@ function catchupBatchedArticles() {
 		console.log("catchupBatchedArticles: working");
 
 		// make a copy of the array
-		var batch = catchup_id_batch.slice();
-		var query = "?op=rpc&method=catchupSelected" +
+		const batch = catchup_id_batch.slice();
+		const query = "?op=rpc&method=catchupSelected" +
 			"&cmode=0&ids=" + param_escape(batch.toString());
 
 		console.log(query);
@@ -1259,12 +1253,12 @@ function catchupBatchedArticles() {
 
 				_catchup_request_sent = false;
 
-				var reply = JSON.parse(transport.responseText);
-				var batch = reply.ids;
+				const reply = JSON.parse(transport.responseText);
+				const batch = reply.ids;
 
 				batch.each(function (id) {
 					console.log(id);
-					var elem = $("RROW-" + id);
+					const elem = $("RROW-" + id);
 					if (elem) elem.removeClassName("Unread");
 					catchup_id_batch.remove(id);
 				});
@@ -1285,9 +1279,9 @@ function catchupRelativeToArticle(below, id) {
 		return;
 	}
 
-	var visible_ids = getLoadedArticleIds();
+	const visible_ids = getLoadedArticleIds();
 
-	var ids_to_mark = new Array();
+	const ids_to_mark = new Array();
 
 	if (!below) {
 		for (var i = 0; i < visible_ids.length; i++) {
@@ -1318,7 +1312,7 @@ function catchupRelativeToArticle(below, id) {
 	if (ids_to_mark.length == 0) {
 		alert(__("No articles found to mark"));
 	} else {
-		var msg = ngettext("Mark %d article as read?", "Mark %d articles as read?", ids_to_mark.length).replace("%d", ids_to_mark.length);
+		const msg = ngettext("Mark %d article as read?", "Mark %d articles as read?", ids_to_mark.length).replace("%d", ids_to_mark.length);
 
 		if (getInitParam("confirm_feed_catchup") != 1 || confirm(msg)) {
 
@@ -1327,7 +1321,7 @@ function catchupRelativeToArticle(below, id) {
 				e.removeClassName("Unread");
 			}
 
-			var query = "?op=rpc&method=catchupSelected" +
+			const query = "?op=rpc&method=catchupSelected" +
 				"&cmode=0" + "&ids=" + param_escape(ids_to_mark.toString());
 
 			new Ajax.Request("backend.php", {
@@ -1344,11 +1338,11 @@ function catchupRelativeToArticle(below, id) {
 function cdmCollapseArticle(event, id, unmark) {
 	if (unmark == undefined) unmark = true;
 
-	var row = $("RROW-" + id);
-	var elem = $("CICD-" + id);
+	const row = $("RROW-" + id);
+	const elem = $("CICD-" + id);
 
 	if (elem && row) {
-		var collapse = row.select("span[class='collapseBtn']")[0];
+		const collapse = row.select("span[class='collapseBtn']")[0];
 
 		Element.hide(elem);
 		Element.show("CEXC-" + id);
@@ -1381,20 +1375,20 @@ function cdmCollapseArticle(event, id, unmark) {
 function cdmExpandArticle(id, noexpand) {
 	console.log("cdmExpandArticle " + id);
 
-	var row = $("RROW-" + id);
+	const row = $("RROW-" + id);
 
 	if (!row) return false;
 
-	var oldrow = $("RROW-" + getActiveArticleId());
+	const oldrow = $("RROW-" + getActiveArticleId());
 
-	var elem = $("CICD-" + getActiveArticleId());
+	let elem = $("CICD-" + getActiveArticleId());
 
 	if (id == getActiveArticleId() && Element.visible(elem))
 		return true;
 
 	selectArticles("none");
 
-	var old_offset = row.offsetTop;
+	const old_offset = row.offsetTop;
 
 	if (getActiveArticleId() && elem && !getInitParam("cdm_expanded")) {
 		var collapse = oldrow.select("span[class='collapseBtn']")[0];
@@ -1412,7 +1406,7 @@ function cdmExpandArticle(id, noexpand) {
 
 	var collapse = row.select("span[class='collapseBtn']")[0];
 
-	var cencw = $("CENCW-" + id);
+	const cencw = $("CENCW-" + id);
 
 	if (!Element.visible(elem) && !noexpand) {
 		if (cencw) {
@@ -1426,7 +1420,7 @@ function cdmExpandArticle(id, noexpand) {
 		Element.show(collapse);
 	}
 
-	var new_offset = row.offsetTop;
+	const new_offset = row.offsetTop;
 
 	if (old_offset > new_offset)
 		$("headlines-frame").scrollTop -= (old_offset - new_offset);
@@ -1452,12 +1446,12 @@ function getArticleUnderPointer() {
 
 function scrollArticle(offset) {
 	if (!isCdmMode()) {
-		var ci = $("content-insert");
+		const ci = $("content-insert");
 		if (ci) {
 			ci.scrollTop += offset;
 		}
 	} else {
-		var hi = $("headlines-frame");
+		const hi = $("headlines-frame");
 		if (hi) {
 			hi.scrollTop += offset;
 		}
@@ -1466,7 +1460,7 @@ function scrollArticle(offset) {
 }
 
 function show_labels_in_headlines(transport) {
-	var data = JSON.parse(transport.responseText);
+	const data = JSON.parse(transport.responseText);
 
 	if (data) {
 		data['info-for-headlines'].each(function (elem) {
@@ -1506,7 +1500,7 @@ function cdmClicked(event, id, in_body) {
 				updateFloatingTitle(true);
 			}
 
-			var query = "?op=rpc&method=catchupSelected" +
+			const query = "?op=rpc&method=catchupSelected" +
 				"&cmode=0&ids=" + param_escape(id);
 
 			new Ajax.Request("backend.php", {
@@ -1537,7 +1531,7 @@ function cdmClicked(event, id, in_body) {
 		return true;
 	}
 
-	var unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length
+	const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length
 	request_counters(unread_in_buffer == 0);
 
 	return false;
@@ -1559,7 +1553,7 @@ function hlClicked(event, id) {
 function openArticleInNewWindow(id) {
 	toggleUnread(id, 0, false);
 
-	var w = window.open("");
+	const w = window.open("");
 	w.opener = null;
 	w.location = "backend.php?op=article&method=redirect&id=" + id;
 }
@@ -1571,9 +1565,9 @@ function isCdmMode() {
 function markHeadline(id, marked) {
 	if (marked == undefined) marked = true;
 
-	var row = $("RROW-" + id);
+	const row = $("RROW-" + id);
 	if (row) {
-		var check = dijit.getEnclosingWidget(
+		const check = dijit.getEnclosingWidget(
 				row.getElementsByClassName("rchk")[0]);
 
 		if (check) {
@@ -1589,15 +1583,15 @@ function markHeadline(id, marked) {
 
 function getRelativePostIds(id, limit) {
 
-	var tmp = [];
+	const tmp = [];
 
 	if (!limit) limit = 6; //3
 
-	var ids = getLoadedArticleIds();
+	const ids = getLoadedArticleIds();
 
-	for (var i = 0; i < ids.length; i++) {
+	for (let i = 0; i < ids.length; i++) {
 		if (ids[i] == id) {
-			for (var k = 1; k <= limit; k++) {
+			for (let k = 1; k <= limit; k++) {
 				//if (i > k-1) tmp.push(ids[i-k]);
 				if (i < ids.length - k) tmp.push(ids[i + k]);
 			}
@@ -1610,15 +1604,15 @@ function getRelativePostIds(id, limit) {
 
 function correctHeadlinesOffset(id) {
 
-	var container = $("headlines-frame");
-	var row = $("RROW-" + id);
+	const container = $("headlines-frame");
+	const row = $("RROW-" + id);
 
 	if (!container || !row) return;
 
-	var viewport = container.offsetHeight;
+	const viewport = container.offsetHeight;
 
-	var rel_offset_top = row.offsetTop - container.scrollTop;
-	var rel_offset_bottom = row.offsetTop + row.offsetHeight - container.scrollTop;
+	const rel_offset_top = row.offsetTop - container.scrollTop;
+	const rel_offset_bottom = row.offsetTop + row.offsetHeight - container.scrollTop;
 
 	//console.log("Rtop: " + rel_offset_top + " Rbtm: " + rel_offset_bottom);
 	//console.log("Vport: " + viewport);
@@ -1649,7 +1643,7 @@ function closeArticlePanel() {
 function initFloatingMenu() {
 	if (!dijit.byId("floatingMenu")) {
 
-		var menu = new dijit.Menu({
+		const menu = new dijit.Menu({
 			id: "floatingMenu",
 			targetNodeIds: ["floatingTitle"]
 		});
@@ -1682,9 +1676,9 @@ function headlinesMenuCommon(menu) {
 		label: __("Toggle unread"),
 		onClick: function (event) {
 
-			var ids = getSelectedArticleIds2();
+			let ids = getSelectedArticleIds2();
 			// cast to string
-			var id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
+			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 			ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 			selectionToggleUnread(undefined, false, true, ids);
@@ -1694,9 +1688,9 @@ function headlinesMenuCommon(menu) {
 	menu.addChild(new dijit.MenuItem({
 		label: __("Toggle starred"),
 		onClick: function (event) {
-			var ids = getSelectedArticleIds2();
+			let ids = getSelectedArticleIds2();
 			// cast to string
-			var id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
+			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 			ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 			selectionToggleMarked(undefined, false, true, ids);
@@ -1706,9 +1700,9 @@ function headlinesMenuCommon(menu) {
 	menu.addChild(new dijit.MenuItem({
 		label: __("Toggle published"),
 		onClick: function (event) {
-			var ids = getSelectedArticleIds2();
+			let ids = getSelectedArticleIds2();
 			// cast to string
-			var id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
+			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 			ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 			selectionTogglePublished(undefined, false, true, ids);
@@ -1732,27 +1726,27 @@ function headlinesMenuCommon(menu) {
 	}));
 
 
-	var labels = getInitParam("labels");
+	const labels = getInitParam("labels");
 
 	if (labels && labels.length) {
 
 		menu.addChild(new dijit.MenuSeparator());
 
-		var labelAddMenu = new dijit.Menu({ownerMenu: menu});
-		var labelDelMenu = new dijit.Menu({ownerMenu: menu});
+		const labelAddMenu = new dijit.Menu({ownerMenu: menu});
+		const labelDelMenu = new dijit.Menu({ownerMenu: menu});
 
 		labels.each(function (label) {
-			var bare_id = label.id;
-			var name = label.caption;
+			const bare_id = label.id;
+			const name = label.caption;
 
 			labelAddMenu.addChild(new dijit.MenuItem({
 				label: name,
 				labelId: bare_id,
 				onClick: function (event) {
 
-					var ids = getSelectedArticleIds2();
+					let ids = getSelectedArticleIds2();
 					// cast to string
-					var id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
+					const id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
 
 					ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
@@ -1764,9 +1758,9 @@ function headlinesMenuCommon(menu) {
 				label: name,
 				labelId: bare_id,
 				onClick: function (event) {
-					var ids = getSelectedArticleIds2();
+					let ids = getSelectedArticleIds2();
 					// cast to string
-					var id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
+					const id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
 
 					ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
@@ -1884,7 +1878,7 @@ function cancelSearch() {
 }
 
 function setSelectionScore() {
-	var ids = getSelectedArticleIds2();
+	const ids = getSelectedArticleIds2();
 
 	if (ids.length > 0) {
 		console.log(ids);
@@ -1892,21 +1886,21 @@ function setSelectionScore() {
 		var score = prompt(__("Please enter new score for selected articles:"), score);
 
 		if (score != undefined) {
-			var query = "op=article&method=setScore&id=" + param_escape(ids.toString()) +
+			const query = "op=article&method=setScore&id=" + param_escape(ids.toString()) +
 				"&score=" + param_escape(score);
 
 			new Ajax.Request("backend.php", {
 				parameters: query,
 				onComplete: function (transport) {
-					var reply = JSON.parse(transport.responseText);
+					const reply = JSON.parse(transport.responseText);
 					if (reply) {
 						console.log(ids);
 
 						ids.each(function (id) {
-							var row = $("RROW-" + id);
+							const row = $("RROW-" + id);
 
 							if (row) {
-								var pic = row.getElementsByClassName("hlScorePic")[0];
+								const pic = row.getElementsByClassName("hlScorePic")[0];
 
 								if (pic) {
 									pic.src = pic.src.replace(/score_.*?\.png/,
@@ -1926,18 +1920,18 @@ function setSelectionScore() {
 }
 
 function updateScore(id) {
-	var pic = $$("#RROW-" + id + " .hlScorePic")[0];
+	const pic = $$("#RROW-" + id + " .hlScorePic")[0];
 
 	if (pic) {
 
-		var query = "op=article&method=getScore&id=" + param_escape(id);
+		const query = "op=article&method=getScore&id=" + param_escape(id);
 
 		new Ajax.Request("backend.php", {
 			parameters: query,
 			onComplete: function (transport) {
 				console.log(transport.responseText);
 
-				var reply = JSON.parse(transport.responseText);
+				const reply = JSON.parse(transport.responseText);
 
 				if (reply) {
 					pic.src = pic.src.replace(/score_.*?\.png/, reply["score_pic"]);
@@ -1950,19 +1944,19 @@ function updateScore(id) {
 }
 
 function changeScore(id, pic) {
-	var score = pic.getAttribute("score");
+	const score = pic.getAttribute("score");
 
-	var new_score = prompt(__("Please enter new score for this article:"), score);
+	const new_score = prompt(__("Please enter new score for this article:"), score);
 
 	if (new_score != undefined) {
 
-		var query = "op=article&method=setScore&id=" + param_escape(id) +
+		const query = "op=article&method=setScore&id=" + param_escape(id) +
 			"&score=" + param_escape(new_score);
 
 		new Ajax.Request("backend.php", {
 			parameters: query,
 			onComplete: function (transport) {
-				var reply = JSON.parse(transport.responseText);
+				const reply = JSON.parse(transport.responseText);
 
 				if (reply) {
 					pic.src = pic.src.replace(/score_.*?\.png/, reply["score_pic"]);
@@ -1975,12 +1969,12 @@ function changeScore(id, pic) {
 }
 
 function displayArticleUrl(id) {
-	var query = "op=rpc&method=getlinktitlebyid&id=" + param_escape(id);
+	const query = "op=rpc&method=getlinktitlebyid&id=" + param_escape(id);
 
 	new Ajax.Request("backend.php", {
 		parameters: query,
 		onComplete: function (transport) {
-			var reply = JSON.parse(transport.responseText);
+			const reply = JSON.parse(transport.responseText);
 
 			if (reply && reply.link) {
 				prompt(__("Article URL:"), reply.link);
@@ -1990,7 +1984,7 @@ function displayArticleUrl(id) {
 }
 
 function scrollToRowId(id) {
-	var row = $(id);
+	const row = $(id);
 
 	if (row)
 		$("headlines-frame").scrollTop = row.offsetTop - 4;
@@ -1999,17 +1993,17 @@ function scrollToRowId(id) {
 function updateFloatingTitle(unread_only) {
 	if (!isCdmMode()) return;
 
-	var hf = $("headlines-frame");
+	const hf = $("headlines-frame");
 
-	var elems = $$("#headlines-frame > div[id*=RROW]");
+	const elems = $$("#headlines-frame > div[id*=RROW]");
 
-	for (var i = 0; i < elems.length; i++) {
+	for (let i = 0; i < elems.length; i++) {
 
-		var child = elems[i];
+		const child = elems[i];
 
 		if (child && child.offsetTop + child.offsetHeight > hf.scrollTop) {
 
-			var header = child.getElementsByClassName("cdmHeader")[0];
+			const header = child.getElementsByClassName("cdmHeader")[0];
 
 			if (unread_only || child.getAttribute("data-article-id") != $("floatingTitle").getAttribute("data-article-id")) {
 				if (child.getAttribute("data-article-id") != $("floatingTitle").getAttribute("data-article-id")) {
@@ -2020,7 +2014,7 @@ function updateFloatingTitle(unread_only) {
 
 					initFloatingMenu();
 
-					var cb = $$("#floatingTitle .dijitCheckBox")[0];
+					const cb = $$("#floatingTitle .dijitCheckBox")[0];
 
 					if (cb)
 						cb.parentNode.removeChild(cb);

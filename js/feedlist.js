@@ -15,12 +15,12 @@ function resetCounterCache() {
 function loadMoreHeadlines() {
 	console.log("loadMoreHeadlines");
 
-	var offset = 0;
+	let offset = 0;
 
-	var view_mode = document.forms["main_toolbar_form"].view_mode.value;
-	var unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
-	var num_all = $$("#headlines-frame > div[id*=RROW]").length;
-	var num_unread = getFeedUnread(getActiveFeedId(), activeFeedIsCat());
+	const view_mode = document.forms["main_toolbar_form"].view_mode.value;
+	const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
+	const num_all = $$("#headlines-frame > div[id*=RROW]").length;
+	const num_unread = getFeedUnread(getActiveFeedId(), activeFeedIsCat());
 
 	// TODO implement marked & published
 
@@ -48,7 +48,7 @@ function loadMoreHeadlines() {
 }
 
 function cleanup_memory(root) {
-	var dijits = dojo.query("[widgetid]", dijit.byId(root).domNode).map(dijit.byNode);
+	const dijits = dojo.query("[widgetid]", dijit.byId(root).domNode).map(dijit.byNode);
 
 	dijits.each(function (d) {
 		dojo.destroy(d.domNode);
@@ -60,14 +60,14 @@ function cleanup_memory(root) {
 }
 
 function viewfeed(params) {
-	var feed = params.feed;
-	var is_cat = params.is_cat;
-	var offset = params.offset;
-	var background = params.background;
-	var infscroll_req = params.infscroll_req;
-	var can_wait = params.can_wait;
-	var viewfeed_debug = params.viewfeed_debug;
-	var method = params.method;
+	const feed = params.feed;
+	let is_cat = params.is_cat;
+	let offset = params.offset;
+	let background = params.background;
+	let infscroll_req = params.infscroll_req;
+	const can_wait = params.can_wait;
+	const viewfeed_debug = params.viewfeed_debug;
+	const method = params.method;
 
 	if (is_cat == undefined)
 		is_cat = false;
@@ -96,7 +96,7 @@ function viewfeed(params) {
 		}
 
 		if (infscroll_req) {
-			var timestamp = get_timestamp();
+			const timestamp = get_timestamp();
 
 			if (_infscroll_request_sent && _infscroll_request_sent + 30 > timestamp) {
 				//console.log("infscroll request in progress, aborting");
@@ -109,9 +109,9 @@ function viewfeed(params) {
 
 	Form.enable("main_toolbar_form");
 
-	var toolbar_query = Form.serialize("main_toolbar_form");
+	const toolbar_query = Form.serialize("main_toolbar_form");
 
-	var query = "?op=feeds&method=view&feed=" + param_escape(feed) + "&" +
+	let query = "?op=feeds&method=view&feed=" + param_escape(feed) + "&" +
 		toolbar_query;
 
 	if (method) query += "&m=" + param_escape(method);
@@ -135,11 +135,9 @@ function viewfeed(params) {
 			if (vgroup_last_feed) {
 				query = query + "&vgrlf=" + param_escape(vgroup_last_feed);
 			}
-		} else {
-			if (!is_cat && feed == getActiveFeedId() && !params.method) {
+		} else if (!is_cat && feed == getActiveFeedId() && !params.method) {
 				query = query + "&m=ForceUpdate";
 			}
-		}
 
 		Form.enable("main_toolbar_form");
 
@@ -163,7 +161,7 @@ function viewfeed(params) {
 		window.open("backend.php" + query + "&debug=1&csrf_token=" + getInitParam("csrf_token"));
 	}
 
-	var timeout_ms = can_wait ? 250 : 0;
+	const timeout_ms = can_wait ? 250 : 0;
 	_viewfeed_timeout = setTimeout(function() {
 
 		new Ajax.Request("backend.php", {
@@ -200,7 +198,7 @@ function feedlist_init() {
 	if (getInitParam("is_default_pw")) {
 		console.warn("user password is at default value");
 
-		var dialog = new dijit.Dialog({
+		const dialog = new dijit.Dialog({
 			title: __("Your password is at default value"),
 			href: "backend.php?op=dlg&method=defaultpasswordwarning",
 			id: 'infoBox',
@@ -229,15 +227,15 @@ function feedlist_init() {
 
 
 function request_counters(force) {
-	var date = new Date();
-	var timestamp = Math.round(date.getTime() / 1000);
+	const date = new Date();
+	const timestamp = Math.round(date.getTime() / 1000);
 
 	if (force || timestamp - counters_last_request > 5) {
 		console.log("scheduling request of counters...");
 
 		counters_last_request = timestamp;
 
-		var query = "?op=rpc&method=getAllCounters&seq=" + next_seq();
+		let query = "?op=rpc&method=getAllCounters&seq=" + next_seq();
 
 		if (!force)
 			query = query + "&last_article_id=" + getInitParam("last_article_id");
@@ -260,8 +258,8 @@ function request_counters(force) {
 // http://adripofjavascript.com/blog/drips/object-equality-in-javascript.html
 function counter_is_equal(a, b) {
 	// Create arrays of property names
-	var aProps = Object.getOwnPropertyNames(a);
-	var bProps = Object.getOwnPropertyNames(b);
+	const aProps = Object.getOwnPropertyNames(a);
+	const bProps = Object.getOwnPropertyNames(b);
 
 	// If number of properties is different,
 	// objects are not equivalent
@@ -269,8 +267,8 @@ function counter_is_equal(a, b) {
 		return false;
 	}
 
-	for (var i = 0; i < aProps.length; i++) {
-		var propName = aProps[i];
+	for (let i = 0; i < aProps.length; i++) {
+		const propName = aProps[i];
 
 		// If values of same property are not equal,
 		// objects are not equivalent
@@ -286,19 +284,19 @@ function counter_is_equal(a, b) {
 
 
 function parse_counters(elems) {
-	for (var l = 0; l < elems.length; l++) {
+	for (let l = 0; l < elems.length; l++) {
 
 		if (_counters_prev[l] && counter_is_equal(elems[l], _counters_prev[l])) {
 			continue;
 		}
 
-		var id = elems[l].id;
-		var kind = elems[l].kind;
-		var ctr = parseInt(elems[l].counter);
-		var error = elems[l].error;
-		var has_img = elems[l].has_img;
-		var updated = elems[l].updated;
-		var auxctr = parseInt(elems[l].auxcounter);
+		const id = elems[l].id;
+		const kind = elems[l].kind;
+		const ctr = parseInt(elems[l].counter);
+		const error = elems[l].error;
+		const has_img = elems[l].has_img;
+		const updated = elems[l].updated;
+		const auxctr = parseInt(elems[l].auxcounter);
 
 		if (id == "global-unread") {
 			global_unread = ctr;
@@ -340,7 +338,7 @@ function parse_counters(elems) {
 
 function getFeedUnread(feed, is_cat) {
 	try {
-		var tree = dijit.byId("feedTree");
+		const tree = dijit.byId("feedTree");
 
 		if (tree && tree.model)
 			return tree.model.getFeedUnread(feed, is_cat);
@@ -354,7 +352,7 @@ function getFeedUnread(feed, is_cat) {
 
 function getFeedCategory(feed) {
 	try {
-		var tree = dijit.byId("feedTree");
+		const tree = dijit.byId("feedTree");
 
 		if (tree && tree.model)
 			return tree.getFeedCategory(feed);
@@ -367,7 +365,7 @@ function getFeedCategory(feed) {
 }
 
 function hideOrShowFeeds(hide) {
-	var tree = dijit.byId("feedTree");
+	const tree = dijit.byId("feedTree");
 
 	if (tree)
 		return tree.hideRead(hide, getInitParam("hide_read_shows_special"));
@@ -377,7 +375,7 @@ function getFeedName(feed, is_cat) {
 
 	if (isNaN(feed)) return feed; // it's a tag
 
-	var tree = dijit.byId("feedTree");
+	const tree = dijit.byId("feedTree");
 
 	if (tree && tree.model)
 		return tree.model.getFeedValue(feed, is_cat, 'name');
@@ -385,7 +383,7 @@ function getFeedName(feed, is_cat) {
 
 function getFeedValue(feed, is_cat, key) {
 	try {
-		var tree = dijit.byId("feedTree");
+		const tree = dijit.byId("feedTree");
 
 		if (tree && tree.model)
 			return tree.model.getFeedValue(feed, is_cat, key);
@@ -397,7 +395,7 @@ function getFeedValue(feed, is_cat, key) {
 }
 
 function setFeedUnread(feed, is_cat, unread) {
-	var tree = dijit.byId("feedTree");
+	const tree = dijit.byId("feedTree");
 
 	if (tree && tree.model)
 		return tree.model.setFeedUnread(feed, is_cat, unread);
@@ -405,7 +403,7 @@ function setFeedUnread(feed, is_cat, unread) {
 
 function setFeedValue(feed, is_cat, key, value) {
 	try {
-		var tree = dijit.byId("feedTree");
+		const tree = dijit.byId("feedTree");
 
 		if (tree && tree.model)
 			return tree.model.setFeedValue(feed, is_cat, key, value);
@@ -416,19 +414,19 @@ function setFeedValue(feed, is_cat, key, value) {
 }
 
 function selectFeed(feed, is_cat) {
-	var tree = dijit.byId("feedTree");
+	const tree = dijit.byId("feedTree");
 
 	if (tree) return tree.selectFeed(feed, is_cat);
 }
 
 function setFeedIcon(feed, is_cat, src) {
-	var tree = dijit.byId("feedTree");
+	const tree = dijit.byId("feedTree");
 
 	if (tree) return tree.setFeedIcon(feed, is_cat, src);
 }
 
 function setFeedExpandoIcon(feed, is_cat, src) {
-	var tree = dijit.byId("feedTree");
+	const tree = dijit.byId("feedTree");
 
 	if (tree) return tree.setFeedExpandoIcon(feed, is_cat, src);
 
@@ -436,8 +434,8 @@ function setFeedExpandoIcon(feed, is_cat, src) {
 }
 
 function getNextUnreadFeed(feed, is_cat) {
-	var tree = dijit.byId("feedTree");
-	var nuf = tree.model.getNextUnreadFeed(feed, is_cat);
+	const tree = dijit.byId("feedTree");
+	const nuf = tree.model.getNextUnreadFeed(feed, is_cat);
 
 	if (nuf)
 		return tree.model.store.getValue(nuf, 'bare_id');
@@ -448,13 +446,13 @@ function catchupCurrentFeed(mode) {
 }
 
 function catchupFeedInGroup(id) {
-	var title = getFeedName(id);
+	const title = getFeedName(id);
 
-	var str = __("Mark all articles in %s as read?").replace("%s", title);
+	const str = __("Mark all articles in %s as read?").replace("%s", title);
 
 	if (getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
 
-		var rows = $$("#headlines-frame > div[id*=RROW][data-orig-feed-id='"+id+"']");
+		const rows = $$("#headlines-frame > div[id*=RROW][data-orig-feed-id='"+id+"']");
 
 		if (rows.length > 0) {
 
@@ -467,9 +465,9 @@ function catchupFeedInGroup(id) {
 
 			});
 
-			var feedTitles = $$("#headlines-frame > div[class='cdmFeedTitle']");
+			const feedTitles = $$("#headlines-frame > div[class='cdmFeedTitle']");
 
-			for (var i = 0; i < feedTitles.length; i++) {
+			for (let i = 0; i < feedTitles.length; i++) {
 				if (feedTitles[i].getAttribute("data-feed-id") == id) {
 
 					if (i < feedTitles.length - 1) {
@@ -483,7 +481,7 @@ function catchupFeedInGroup(id) {
 			updateFloatingTitle(true);
 		}
 
-		var catchup_query = "?op=rpc&method=catchupFeed&feed_id=" +
+		const catchup_query = "?op=rpc&method=catchupFeed&feed_id=" +
 				id + "&is_cat=false";
 
 		console.log(catchup_query);
@@ -504,7 +502,7 @@ function catchupFeedInGroup(id) {
 function catchupFeed(feed, is_cat, mode) {
 	if (is_cat == undefined) is_cat = false;
 
-	var str = false;
+	let str = false;
 
 	switch (mode) {
 	case "1day":
@@ -520,8 +518,8 @@ function catchupFeed(feed, is_cat, mode) {
 		str = __("Mark %w in %s as read?");
 	}
 
-	var mark_what = last_search_query && last_search_query[0] ? __("search results") : __("all articles");
-	var fn = getFeedName(feed, is_cat);
+	const mark_what = last_search_query && last_search_query[0] ? __("search results") : __("all articles");
+	const fn = getFeedName(feed, is_cat);
 
 	str = str.replace("%s", fn)
 		.replace("%w", mark_what);
@@ -530,7 +528,7 @@ function catchupFeed(feed, is_cat, mode) {
 		return;
 	}
 
-	var catchup_query = {op: 'rpc', method: 'catchupFeed', feed_id: feed,
+	const catchup_query = {op: 'rpc', method: 'catchupFeed', feed_id: feed,
 		is_cat: is_cat, mode: mode, search_query: last_search_query[0],
 		search_lang: last_search_query[1]};
 
@@ -543,19 +541,17 @@ function catchupFeed(feed, is_cat, mode) {
 		onComplete: function(transport) {
 				handle_rpc_json(transport);
 
-				var show_next_feed = getInitParam("on_catchup_show_next_feed") == "1";
+				const show_next_feed = getInitParam("on_catchup_show_next_feed") == "1";
 
 				if (show_next_feed) {
-					var nuf = getNextUnreadFeed(feed, is_cat);
+					const nuf = getNextUnreadFeed(feed, is_cat);
 
 					if (nuf) {
 						viewfeed({feed: nuf, is_cat: is_cat});
 					}
-				} else {
-					if (feed == getActiveFeedId() && is_cat == activeFeedIsCat()) {
+				} else if (feed == getActiveFeedId() && is_cat == activeFeedIsCat()) {
 						viewCurrentFeed();
 					}
-				}
 
 				notify("");
 			} });
@@ -563,7 +559,7 @@ function catchupFeed(feed, is_cat, mode) {
 }
 
 function decrementFeedCounter(feed, is_cat) {
-	var ctr = getFeedUnread(feed, is_cat);
+	let ctr = getFeedUnread(feed, is_cat);
 
 	if (ctr > 0) {
 		setFeedUnread(feed, is_cat, ctr - 1);
@@ -571,7 +567,7 @@ function decrementFeedCounter(feed, is_cat) {
 		updateTitle();
 
 		if (!is_cat) {
-			var cat = parseInt(getFeedCategory(feed));
+			const cat = parseInt(getFeedCategory(feed));
 
 			if (!isNaN(cat)) {
 				ctr = getFeedUnread(cat, true);
