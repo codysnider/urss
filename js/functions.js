@@ -1,3 +1,5 @@
+/* global dijit, __ */
+
 var loading_progress = 0;
 var sanity_check_done = false;
 var init_params = {};
@@ -459,12 +461,7 @@ function loading_set_progress(p) {
 }
 
 function remove_splash() {
-
-	if (Element.visible("overlay")) {
-		console.log("about to remove splash, OMG!");
-		Element.hide("overlay");
-		console.log("removed splash!");
-	}
+	Element.hide("overlay");
 }
 
 function strip_tags(s) {
@@ -850,9 +847,9 @@ function editFilterTest(query) {
 						const result = JSON.parse(transport.responseText);
 
 						if (result && dijit.byId("filterTestDlg") && dijit.byId("filterTestDlg").open) {
-							test_dlg.results += result.size();
+							test_dlg.results += result.length;
 
-							console.log("got results:" + result.size());
+							console.log("got results:" + result.length);
 
 							$("prefFilterProgressMsg").innerHTML = __("Looking for articles (%d processed, %f found)...")
 								.replace("%f", test_dlg.results)
@@ -860,7 +857,7 @@ function editFilterTest(query) {
 
 							console.log(offset + " " + test_dlg.max_offset);
 
-							for (let i = 0; i < result.size(); i++) {
+							for (let i = 0; i < result.length; i++) {
 								const tmp = new Element("table");
 								tmp.innerHTML = result[i];
 								dojo.parser.parse(tmp);
@@ -1291,7 +1288,7 @@ function feedBrowser() {
 		style: "width: 600px",
 		getSelectedFeedIds: function () {
 			const list = $$("#browseFeedList li[id*=FBROW]");
-			const selected = new Array();
+			const selected = [];
 
 			list.each(function (child) {
 				const id = child.id.replace("FBROW-", "");
@@ -1305,7 +1302,7 @@ function feedBrowser() {
 		},
 		getSelectedFeeds: function () {
 			const list = $$("#browseFeedList li.Selected");
-			const selected = new Array();
+			const selected = [];
 
 			list.each(function (child) {
 				const title = child.getElementsBySelector("span.fb_feedTitle")[0].innerHTML;

@@ -632,7 +632,7 @@ class Feeds extends Handler_Protected {
 
 					$tmp_content .= "</div>"; // cdmIntermediate
 
-					$tmp_content .= "<div class=\"cdmFooter\" onclick=\"cdmFooterClick(event)\">";
+					$tmp_content .= "<div class=\"cdmFooter\" onclick=\"event.stopPropagation()\">";
 
 					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_LEFT_BUTTON) as $p) {
 						$tmp_content .= $p->hook_article_left_button($line);

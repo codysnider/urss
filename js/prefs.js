@@ -1,4 +1,6 @@
-let init_params = new Array();
+/* global dijit, __ */
+
+let init_params = [];
 
 let hotkey_prefix = false;
 let hotkey_prefix_pressed = false;

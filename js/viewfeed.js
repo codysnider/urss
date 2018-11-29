@@ -1,3 +1,5 @@
+/* global dijit, __ */
+
 let _active_article_id = 0;
 
 let vgroup_last_feed = false;
@@ -607,7 +609,7 @@ function toggleSelected(id, force_on) {
 }
 
 function updateSelectedPrompt() {
-	const count = getSelectedArticleIds2().size();
+	const count = getSelectedArticleIds2().length;
 	const elem = $("selected_prompt");
 
 	if (elem) {
@@ -1148,7 +1150,7 @@ function headlines_scroll_handler(e) {
 			const rows = $$("#headlines-frame > div[id*=RROW]");
 
 			for (let i = 0; i < rows.length; i++) {
-				var child = rows[i];
+				const child = rows[i];
 
 				if ($("headlines-frame").scrollTop <= child.offsetTop &&
 					child.offsetTop - $("headlines-frame").scrollTop < 100 &&
@@ -1193,8 +1195,7 @@ function headlines_scroll_handler(e) {
 
 			$$("#headlines-frame > div[id*=RROW][class*=Unread]").each(
 				function(child) {
-					if (child.hasClassName("Unread") && $("headlines-frame").scrollTop >
-							(child.offsetTop + child.offsetHeight/2)) {
+					if ($("headlines-frame").scrollTop > (child.offsetTop + child.offsetHeight/2)) {
 
 						const id = child.getAttribute("data-article-id")
 
@@ -1207,7 +1208,7 @@ function headlines_scroll_handler(e) {
 				});
 
 			if (_infscroll_disable) {
-				var child = $$("#headlines-frame div[id*=RROW]").last();
+				const child = $$("#headlines-frame div[id*=RROW]").last();
 
 				if (child && $("headlines-frame").scrollTop >
 						(child.offsetTop + child.offsetHeight - 50)) {
@@ -1281,7 +1282,7 @@ function catchupRelativeToArticle(below, id) {
 
 	const visible_ids = getLoadedArticleIds();
 
-	const ids_to_mark = new Array();
+	const ids_to_mark = [];
 
 	if (!below) {
 		for (var i = 0; i < visible_ids.length; i++) {
@@ -1391,7 +1392,7 @@ function cdmExpandArticle(id, noexpand) {
 	const old_offset = row.offsetTop;
 
 	if (getActiveArticleId() && elem && !getInitParam("cdm_expanded")) {
-		var collapse = oldrow.select("span[class='collapseBtn']")[0];
+		let collapse = oldrow.select("span[class='collapseBtn']")[0];
 
 		Element.hide(elem);
 		Element.show("CEXC-" + getActiveArticleId());
@@ -1404,7 +1405,7 @@ function cdmExpandArticle(id, noexpand) {
 
 	elem = $("CICD-" + id);
 
-	var collapse = row.select("span[class='collapseBtn']")[0];
+	let collapse = row.select("span[class='collapseBtn']")[0];
 
 	const cencw = $("CENCW-" + id);
 
@@ -1480,15 +1481,15 @@ function cdmClicked(event, id, in_body) {
 			return cdmExpandArticle(id);
 		} else {
 
-			var elem = $("RROW-" + getActiveArticleId());
+			let elem = $("RROW-" + getActiveArticleId());
 
 			if (elem) elem.removeClassName("active");
 
 			selectArticles("none");
 			toggleSelected(id);
 
-			var elem = $("RROW-" + id);
-			var article_is_unread = elem.hasClassName("Unread");
+			elem = $("RROW-" + id);
+			const article_is_unread = elem.hasClassName("Unread");
 
 			elem.removeClassName("Unread");
 			elem.addClassName("active");
@@ -1517,8 +1518,8 @@ function cdmClicked(event, id, in_body) {
 
 		toggleSelected(id, true);
 
-		var elem = $("RROW-" + id);
-		var article_is_unread = elem.hasClassName("Unread");
+		let elem = $("RROW-" + id);
+		const article_is_unread = elem.hasClassName("Unread");
 
 		if (article_is_unread) {
 			decrementFeedCounter(getActiveFeedId(), activeFeedIsCat());
@@ -1674,12 +1675,12 @@ function headlinesMenuCommon(menu) {
 
 	menu.addChild(new dijit.MenuItem({
 		label: __("Toggle unread"),
-		onClick: function (event) {
+		onClick: function () {
 
 			let ids = getSelectedArticleIds2();
 			// cast to string
 			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
-			ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
+			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 			selectionToggleUnread(undefined, false, true, ids);
 		}
@@ -1687,11 +1688,11 @@ function headlinesMenuCommon(menu) {
 
 	menu.addChild(new dijit.MenuItem({
 		label: __("Toggle starred"),
-		onClick: function (event) {
+		onClick: function () {
 			let ids = getSelectedArticleIds2();
 			// cast to string
 			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
-			ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
+			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 			selectionToggleMarked(undefined, false, true, ids);
 		}
@@ -1699,11 +1700,11 @@ function headlinesMenuCommon(menu) {
 
 	menu.addChild(new dijit.MenuItem({
 		label: __("Toggle published"),
-		onClick: function (event) {
+		onClick: function () {
 			let ids = getSelectedArticleIds2();
 			// cast to string
 			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
-			ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
+			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 			selectionTogglePublished(undefined, false, true, ids);
 		}
@@ -1713,14 +1714,14 @@ function headlinesMenuCommon(menu) {
 
 	menu.addChild(new dijit.MenuItem({
 		label: __("Mark above as read"),
-		onClick: function (event) {
+		onClick: function () {
 			catchupRelativeToArticle(0, this.getParent().currentTarget.getAttribute("data-article-id"));
 		}
 	}));
 
 	menu.addChild(new dijit.MenuItem({
 		label: __("Mark below as read"),
-		onClick: function (event) {
+		onClick: function () {
 			catchupRelativeToArticle(1, this.getParent().currentTarget.getAttribute("data-article-id"));
 		}
 	}));
@@ -1742,13 +1743,13 @@ function headlinesMenuCommon(menu) {
 			labelAddMenu.addChild(new dijit.MenuItem({
 				label: name,
 				labelId: bare_id,
-				onClick: function (event) {
+				onClick: function () {
 
 					let ids = getSelectedArticleIds2();
 					// cast to string
 					const id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
 
-					ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
+					ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 					selectionAssignLabel(this.labelId, ids);
 				}
@@ -1757,12 +1758,12 @@ function headlinesMenuCommon(menu) {
 			labelDelMenu.addChild(new dijit.MenuItem({
 				label: name,
 				labelId: bare_id,
-				onClick: function (event) {
+				onClick: function () {
 					let ids = getSelectedArticleIds2();
 					// cast to string
 					const id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
 
-					ids = ids.size() != 0 && ids.indexOf(id) != -1 ? ids : [id];
+					ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
 					selectionRemoveLabel(this.labelId, ids);
 				}
@@ -1786,7 +1787,7 @@ function headlinesMenuCommon(menu) {
 function initHeadlinesMenu() {
 	if (!dijit.byId("headlinesMenu")) {
 
-		var menu = new dijit.Menu({
+		const menu = new dijit.Menu({
 			id: "headlinesMenu",
 			targetNodeIds: ["headlines-frame"],
 			selector: ".hlMenuAttach"
@@ -1801,7 +1802,7 @@ function initHeadlinesMenu() {
 
 	if (!dijit.byId("headlinesFeedTitleMenu")) {
 
-		var menu = new dijit.Menu({
+		const menu = new dijit.Menu({
 			id: "headlinesFeedTitleMenu",
 			targetNodeIds: ["headlines-frame"],
 			selector: "div.cdmFeedTitle"
@@ -1819,7 +1820,7 @@ function initHeadlinesMenu() {
 
 		menu.addChild(new dijit.MenuItem({
 			label: __("Mark group as read"),
-			onClick: function (event) {
+			onClick: function () {
 				selectArticles("none");
 				selectArticles("all",
 					"#headlines-frame > div[id*=RROW]" +
@@ -1831,14 +1832,14 @@ function initHeadlinesMenu() {
 
 		menu.addChild(new dijit.MenuItem({
 			label: __("Mark feed as read"),
-			onClick: function (event) {
+			onClick: function () {
 				catchupFeedInGroup(this.getParent().currentTarget.getAttribute("data-feed-id"));
 			}
 		}));
 
 		menu.addChild(new dijit.MenuItem({
 			label: __("Edit feed"),
-			onClick: function (event) {
+			onClick: function () {
 				editFeed(this.getParent().currentTarget.getAttribute("data-feed-id"));
 			}
 		}));
@@ -1883,7 +1884,7 @@ function setSelectionScore() {
 	if (ids.length > 0) {
 		console.log(ids);
 
-		var score = prompt(__("Please enter new score for selected articles:"), score);
+		const score = prompt(__("Please enter new score for selected articles:"));
 
 		if (score != undefined) {
 			const query = "op=article&method=setScore&id=" + param_escape(ids.toString()) +
@@ -2050,8 +2051,4 @@ function catchupCurrentBatchIfNeeded() {
 			catchupBatchedArticles();
 		}
 	}
-}
-
-function cdmFooterClick(event) {
-	event.stopPropagation();
 }

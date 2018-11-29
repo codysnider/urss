@@ -1,3 +1,5 @@
+/* global dijit, __ */
+
 let global_unread = -1;
 let hotkey_prefix = false;
 let hotkey_prefix_pressed = false;
@@ -78,14 +80,6 @@ function updateFeedList() {
 			persist: true,
 			id: "feedTree",
 		}, "feedTree");
-
-		/*		var menu = new dijit.Menu({id: 'feedMenu'});
-
-		 menu.addChild(new dijit.MenuItem({
-		 label: "Simple menu item"
-		 }));
-
-		 //		menu.bindDomNode(tree.domNode); */
 
 		var tmph = dojo.connect(dijit.byId('feedMenu'), '_openMyself', function (event) {
 			console.log(dijit.getEnclosingWidget(event.target));
@@ -603,8 +597,6 @@ function init_second_stage() {
 	dijit.getEnclosingWidget(toolbar.order_by).attr('value',
 		getInitParam("default_view_order_by"));
 
-	const feeds_sort_by_unread = getInitParam("feeds_sort_by_unread") == 1;
-
 	const hash_feed_id = hash_get('f');
 	const hash_feed_is_cat = hash_get('c') == "1";
 
@@ -829,7 +821,7 @@ function rescoreCurrentFeed() {
 
 		new Ajax.Request("backend.php",	{
 			parameters: query,
-			onComplete: function(transport) {
+			onComplete: function() {
 				viewCurrentFeed();
 			} });
 	}
@@ -839,24 +831,15 @@ function hotkey_handler(e) {
 
 	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
 
-	let keycode = false;
+	let keycode = e.which;
 
-	const cmdline = $('cmdline');
-
-	if (window.event) {
-		keycode = window.event.keyCode;
-	} else if (e) {
-		keycode = e.which;
-	}
-
-	if (keycode == 27) { // escape
+	if (keycode == 27) { // escape and drop prefix
 		hotkey_prefix = false;
 	}
 
-	if (keycode == 16) return; // ignore lone shift
-	if (keycode == 17) return; // ignore lone ctrl
+	if (keycode == 16 || keycode == 17) return; // ignore lone shift / ctrl
 
-	var hotkeys = getInitParam("hotkeys");
+	const hotkeys = getInitParam("hotkeys");
 	const keychar = String.fromCharCode(keycode).toLowerCase();
 
 	if (!hotkey_prefix && hotkeys[0].indexOf(keychar) != -1) {
@@ -867,8 +850,8 @@ function hotkey_handler(e) {
 		hotkey_prefix = keychar;
 		hotkey_prefix_pressed = ts;
 
-		cmdline.innerHTML = keychar;
-		Element.show(cmdline);
+		$("cmdline").innerHTML = keychar;
+		Element.show("cmdline");
 
 		e.stopPropagation();
 
@@ -876,7 +859,7 @@ function hotkey_handler(e) {
 		return true;
 	}
 
-	Element.hide(cmdline);
+	Element.hide("cmdline");
 
 	let hotkey = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
 
@@ -890,7 +873,6 @@ function hotkey_handler(e) {
 	hotkey_prefix = false;
 
 	let hotkey_action = false;
-	var hotkeys = getInitParam("hotkeys");
 
 	for (const sequence in hotkeys[1]) {
 		if (sequence == hotkey) {
@@ -958,22 +940,18 @@ function handle_rpc_json(transport, scheduled_call) {
 
 			const seq = reply['seq'];
 
-			if (seq) {
-				if (get_seq() != seq) {
-					console.log("[handle_rpc_json] sequence mismatch: " + seq +
-						" (want: " + get_seq() + ")");
-					return true;
-				}
+			if (get_seq() != seq) {
+				console.log("[handle_rpc_json] sequence mismatch: " + seq +
+					" (want: " + get_seq() + ")");
+				return true;
 			}
 
 			const message = reply['message'];
 
-			if (message) {
-				if (message == "UPDATE_COUNTERS") {
-					console.log("need to refresh counters...");
-					setInitParam("last_article_id", -1);
-					request_counters(true);
-				}
+			if (message == "UPDATE_COUNTERS") {
+				console.log("need to refresh counters...");
+				setInitParam("last_article_id", -1);
+				request_counters(true);
 			}
 
 			const counters = reply['counters'];
@@ -988,7 +966,8 @@ function handle_rpc_json(transport, scheduled_call) {
 
 			if (netalert) netalert.hide();
 
-		} else if (netalert)
+		} else
+			if (netalert)
 				netalert.show();
 			else
 				notify_error("Communication problem with server.");
