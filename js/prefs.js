@@ -1,7 +1,5 @@
 /* global dijit, __ */
 
-let init_params = [];
-
 let hotkey_prefix = false;
 let hotkey_prefix_pressed = false;
 
@@ -93,7 +91,7 @@ function editUser(id) {
 	if (dijit.byId("userEditDlg"))
 		dijit.byId("userEditDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "userEditDlg",
 		title: __("User Editor"),
 		style: "width: 600px",
@@ -128,7 +126,7 @@ function editFilter(id) {
 	if (dijit.byId("filterEditDlg"))
 		dijit.byId("filterEditDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "filterEditDlg",
 		title: __("Edit Filter"),
 		style: "width: 600px",
@@ -476,7 +474,7 @@ function selectedUserDetails() {
 	if (dijit.byId("userDetailsDlg"))
 		dijit.byId("userDetailsDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "userDetailsDlg",
 		title: __("User details"),
 		style: "width: 600px",
@@ -577,7 +575,7 @@ function editSelectedFeeds() {
 
 			notify("");
 
-			var dialog = new dijit.Dialog({
+			const dialog = new dijit.Dialog({
 				id: "feedEditDlg",
 				title: __("Edit Multiple Feeds"),
 				style: "width: 600px",
@@ -1044,7 +1042,7 @@ function showInactiveFeeds() {
 	if (dijit.byId("inactiveFeedsDlg"))
 		dijit.byId("inactiveFeedsDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "inactiveFeedsDlg",
 		title: __("Feeds without recent updates"),
 		style: "width: 600px",
@@ -1158,7 +1156,7 @@ function editProfiles() {
 
 	const query = "backend.php?op=pref-prefs&method=editPrefProfiles";
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "profileEditDlg",
 		title: __("Settings Profiles"),
 		style: "width: 600px",
@@ -1458,7 +1456,7 @@ function batchSubscribe() {
 	if (dijit.byId("batchSubDlg")) dijit.byId("batchSubDlg").destroyRecursive();
 	if (dijit.byId("feedAddDlg"))    dijit.byId("feedAddDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "batchSubDlg",
 		title: __("Batch subscribe"),
 		style: "width: 600px",

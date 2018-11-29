@@ -581,7 +581,7 @@ function quickAddFeed() {
 	if (dijit.byId("batchSubDlg")) dijit.byId("batchSubDlg").destroyRecursive();
 	if (dijit.byId("feedAddDlg"))	dijit.byId("feedAddDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "feedAddDlg",
 		title: __("Subscribe to Feed"),
 		style: "width: 600px",
@@ -931,7 +931,7 @@ function quickAddFilter() {
 	if (dijit.byId("filterEditDlg"))
 		dijit.byId("filterEditDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "filterEditDlg",
 		title: __("Create Filter"),
 		style: "width: 600px",
@@ -1249,7 +1249,7 @@ function editFeed(feed) {
 	if (dijit.byId("feedEditDlg"))
 		dijit.byId("feedEditDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "feedEditDlg",
 		title: __("Edit Feed"),
 		style: "width: 600px",
@@ -1282,7 +1282,7 @@ function feedBrowser() {
 	if (dijit.byId("feedBrowserDlg"))
 		dijit.byId("feedBrowserDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "feedBrowserDlg",
 		title: __("More Feeds"),
 		style: "width: 600px",
@@ -1362,15 +1362,11 @@ function feedBrowser() {
 
 					Element.hide('feed_browser_spinner');
 
-					const c = $("browseFeedList");
-
 					const reply = JSON.parse(transport.responseText);
-
-					const r = reply['content'];
 					const mode = reply['mode'];
 
-					if (c && r) {
-						c.innerHTML = r;
+					if ($("browseFeedList") && reply['content']) {
+                        $("browseFeedList").innerHTML = reply['content'];
 					}
 
 					dojo.parser.parse("browseFeedList");
@@ -1424,7 +1420,7 @@ function showFeedsWithErrors() {
 	if (dijit.byId("errorFeedsDlg"))
 		dijit.byId("errorFeedsDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "errorFeedsDlg",
 		title: __("Feeds with update errors"),
 		style: "width: 600px",

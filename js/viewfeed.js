@@ -1020,7 +1020,7 @@ function editArticleTags(id) {
 	if (dijit.byId("editTagsDlg"))
 		dijit.byId("editTagsDlg").destroyRecursive();
 
-	var dialog = new dijit.Dialog({
+	const dialog = new dijit.Dialog({
 		id: "editTagsDlg",
 		title: __("Edit article Tags"),
 		style: "width: 600px",
