@@ -1,9 +1,9 @@
-var init_params = new Array();
+let init_params = new Array();
 
-var hotkey_prefix = false;
-var hotkey_prefix_pressed = false;
+let hotkey_prefix = false;
+let hotkey_prefix_pressed = false;
 
-var seq = "";
+let seq = "";
 
 function notify_callback2(transport, sticky) {
 	notify_info(transport.responseText, sticky);

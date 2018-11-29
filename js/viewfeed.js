@@ -1,23 +1,23 @@
-var _active_article_id = 0;
+let _active_article_id = 0;
 
-var vgroup_last_feed = false;
-var post_under_pointer = false;
+let vgroup_last_feed = false;
+let post_under_pointer = false;
 
-var last_requested_article = false;
+let last_requested_article = false;
 
-var catchup_id_batch = [];
-var catchup_timeout_id = false;
+let catchup_id_batch = [];
+let catchup_timeout_id = false;
 
-var cids_requested = [];
-var loaded_article_ids = [];
-var _last_headlines_update = 0;
-var _headlines_scroll_offset = 0;
-var current_first_id = 0;
-var last_search_query;
+let cids_requested = [];
+let loaded_article_ids = [];
+let _last_headlines_update = 0;
+let _headlines_scroll_offset = 0;
+let current_first_id = 0;
+let last_search_query;
 
-var _catchup_request_sent = false;
+let _catchup_request_sent = false;
 
-var has_storage = 'sessionStorage' in window && window['sessionStorage'] !== null;
+let has_storage = 'sessionStorage' in window && window['sessionStorage'] !== null;
 
 function headlines_callback2(transport, offset, background, infscroll_req) {
 	handle_rpc_json(transport);

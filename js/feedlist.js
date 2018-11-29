@@ -1,12 +1,12 @@
-var _infscroll_disable = 0;
-var _infscroll_request_sent = 0;
+let _infscroll_disable = 0;
+let _infscroll_request_sent = 0;
 
-var _search_query = false;
-var _viewfeed_last = 0;
-var _viewfeed_timeout = false;
+let _search_query = false;
+let _viewfeed_last = 0;
+let _viewfeed_timeout = false;
 
-var counters_last_request = 0;
-var _counters_prev = [];
+let counters_last_request = 0;
+let _counters_prev = [];
 
 function resetCounterCache() {
 	_counters_prev = [];

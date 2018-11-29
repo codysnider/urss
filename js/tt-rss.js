@@ -1,11 +1,11 @@
-var global_unread = -1;
-var hotkey_prefix = false;
-var hotkey_prefix_pressed = false;
-var hotkey_actions = {};
-var _widescreen_mode = false;
-var _rpc_seq = 0;
-var _active_feed_id = 0;
-var _active_feed_is_cat = false;
+let global_unread = -1;
+let hotkey_prefix = false;
+let hotkey_prefix_pressed = false;
+let hotkey_actions = {};
+let _widescreen_mode = false;
+let _rpc_seq = 0;
+let _active_feed_id = 0;
+let _active_feed_is_cat = false;
 
 function next_seq() {
 	_rpc_seq += 1;
