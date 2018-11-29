@@ -372,8 +372,7 @@ class Article extends Handler_Protected {
 		$ids = explode(",", clean($_REQUEST["ids"]));
 		$label_id = clean($_REQUEST["lid"]);
 
-		$label = db_escape_string(Labels::find_caption($label_id,
-		$_SESSION["uid"]));
+		$label = Labels::find_caption($label_id, $_SESSION["uid"]);
 
 		$reply["info-for-headlines"] = array();
 
