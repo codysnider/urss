@@ -4,7 +4,7 @@ define(["dojo/_base/declare", "dijit/tree/ForestStoreModel"], function (declare)
 		getItemsInCategory: function (id) {
 			if (!this.store._itemsByIdentity) return undefined;
 
-			cat = this.store._itemsByIdentity['CAT:' + id];
+			let cat = this.store._itemsByIdentity['CAT:' + id];
 
 			if (cat && cat.items)
 				return cat.items;
@@ -30,7 +30,7 @@ define(["dojo/_base/declare", "dijit/tree/ForestStoreModel"], function (declare)
 			return this.getFeedValue(feed, is_cat, 'name');
 		},
 		getFeedUnread: function (feed, is_cat) {
-			var unread = parseInt(this.getFeedValue(feed, is_cat, 'unread'));
+			const unread = parseInt(this.getFeedValue(feed, is_cat, 'unread'));
 			return (isNaN(unread)) ? 0 : unread;
 		},
 		setFeedUnread: function (feed, is_cat, unread) {
@@ -58,14 +58,14 @@ define(["dojo/_base/declare", "dijit/tree/ForestStoreModel"], function (declare)
 				treeItem = this.store._itemsByIdentity['FEED:' + feed];
 			}
 
-			items = this.store._arrayOfAllItems;
+			let items = this.store._arrayOfAllItems;
 
-			for (var i = 0; i < items.length; i++) {
+			for (let i = 0; i < items.length; i++) {
 				if (items[i] == treeItem) {
 
 					for (var j = i + 1; j < items.length; j++) {
-						var unread = this.store.getValue(items[j], 'unread');
-						var id = this.store.getValue(items[j], 'id');
+						let unread = this.store.getValue(items[j], 'unread');
+						let id = this.store.getValue(items[j], 'id');
 
 						if (unread > 0 && ((is_cat && id.match("CAT:")) || (!is_cat && id.match("FEED:")))) {
 							if (!is_cat || !(this.store.hasAttribute(items[j], 'parent_id') && this.store.getValue(items[j], 'parent_id') == feed)) return items[j];
@@ -73,8 +73,8 @@ define(["dojo/_base/declare", "dijit/tree/ForestStoreModel"], function (declare)
 					}
 
 					for (var j = 0; j < i; j++) {
-						var unread = this.store.getValue(items[j], 'unread');
-						var id = this.store.getValue(items[j], 'id');
+						let unread = this.store.getValue(items[j], 'unread');
+						let id = this.store.getValue(items[j], 'id');
 
 						if (unread > 0 && ((is_cat && id.match("CAT:")) || (!is_cat && id.match("FEED:")))) {
 							if (!is_cat || !(this.store.hasAttribute(items[j], 'parent_id') && this.store.getValue(items[j], 'parent_id') == feed)) return items[j];

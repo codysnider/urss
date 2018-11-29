@@ -1,6 +1,6 @@
 // based on http://www.velvetcache.org/2010/08/19/a-simple-javascript-hooks-system
 
-var PluginHost = {
+const PluginHost = {
 	HOOK_ARTICLE_RENDERED: 1,
 	HOOK_ARTICLE_RENDERED_CDM: 2,
 	HOOK_ARTICLE_SET_ACTIVE: 3,

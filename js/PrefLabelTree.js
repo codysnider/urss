@@ -1,23 +1,24 @@
+/* global lib,dijit */
 define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/form/DropDownButton"], function (declare, domConstruct) {
 
 	return declare("fox.PrefLabelTree", lib.CheckBoxTree, {
 		setNameById: function (id, name) {
-			var item = this.model.store._itemsByIdentity['LABEL:' + id];
+			const item = this.model.store._itemsByIdentity['LABEL:' + id];
 
 			if (item)
 				this.model.store.setValue(item, 'name', name);
 
 		},
 		_createTreeNode: function(args) {
-			var tnode = this.inherited(arguments);
+			const tnode = this.inherited(arguments);
 
-			var fg_color = this.model.store.getValue(args.item, 'fg_color');
-			var bg_color = this.model.store.getValue(args.item, 'bg_color');
-			var type = this.model.store.getValue(args.item, 'type');
-			var bare_id = this.model.store.getValue(args.item, 'bare_id');
+			const fg_color = this.model.store.getValue(args.item, 'fg_color');
+			const bg_color = this.model.store.getValue(args.item, 'bg_color');
+			const type = this.model.store.getValue(args.item, 'type');
+			const bare_id = this.model.store.getValue(args.item, 'bare_id');
 
 			if (type == 'label') {
-				var span = dojo.doc.createElement('span');
+				const span = dojo.doc.createElement('span');
 				span.innerHTML = '&alpha;';
 				span.className = 'labelColorIndicator';
 				span.id = 'LICID-' + bare_id;
