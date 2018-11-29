@@ -940,7 +940,7 @@ function handle_rpc_json(transport, scheduled_call) {
 
 			const seq = reply['seq'];
 
-			if (get_seq() != seq) {
+			if (seq && get_seq() != seq) {
 				console.log("[handle_rpc_json] sequence mismatch: " + seq +
 					" (want: " + get_seq() + ")");
 				return true;
