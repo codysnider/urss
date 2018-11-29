@@ -5,7 +5,7 @@ let _active_article_id = 0;
 let vgroup_last_feed = false;
 let post_under_pointer = false;
 
-let last_requested_article = false;
+let last_requested_article = 0;
 
 let catchup_id_batch = [];
 let catchup_timeout_id = false;
@@ -22,20 +22,15 @@ let _catchup_request_sent = false;
 let has_storage = 'sessionStorage' in window && window['sessionStorage'] !== null;
 
 function headlines_callback2(transport, offset, background, infscroll_req) {
-	handle_rpc_json(transport);
+	const reply = handle_rpc_json(transport);
 
 	console.log("headlines_callback2 [offset=" + offset + "] B:" + background + " I:" + infscroll_req);
 
-	let is_cat = false;
-	let feed_id = false;
+	if (background)
+		return;
 
-	let reply = false;
-
-	try {
-		reply = JSON.parse(transport.responseText);
-	} catch (e) {
-		console.error(e);
-	}
+	var is_cat = false;
+	var feed_id = false;
 
 	if (reply) {
 
@@ -43,19 +38,10 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 		feed_id = reply['headlines']['id'];
 		last_search_query = reply['headlines']['search_query'];
 
-		if (background) {
-			let content = reply['headlines']['content'];
-
-			content = content + "<div id='headlines-spacer'></div>";
-			return;
-		}
+        console.log(feed_id, getActiveFeedId(), is_cat, activeFeedIsCat());
 
 		if (feed_id != -7 && (feed_id != getActiveFeedId() || is_cat != activeFeedIsCat()))
 			return;
-
-		/* dijit.getEnclosingWidget(
-			document.forms["main_toolbar_form"].update).attr('disabled',
-				is_cat || feed_id <= 0); */
 
 		try {
 			if (infscroll_req == false) {
@@ -85,7 +71,6 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 		current_first_id = reply['headlines']['first_id'];
 		const counters = reply['counters'];
 		const articles = reply['articles'];
-		//var runtime_info = reply['runtime-info'];
 
 		if (infscroll_req == false) {
 			loaded_article_ids = [];
@@ -94,17 +79,9 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 					reply['headlines']['toolbar'],
 					{parseContent: true});
 
-			/*dojo.html.set($("headlines-frame"),
-				reply['headlines']['content'],
-				{parseContent: true});
-
-			$$("#headlines-frame div[id*='RROW']").each(function(row) {
-				loaded_article_ids.push(row.id);
-			});*/
-
 			$("headlines-frame").innerHTML = '';
 
-			var tmp = new Element("div");
+			let tmp = document.createElement("div");
 			tmp.innerHTML = reply['headlines']['content'];
 			dojo.parser.parse(tmp);
 
@@ -118,7 +95,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 				}
 			}
 
-			var hsp = $("headlines-spacer");
+			let hsp = $("headlines-spacer");
 			if (!hsp) hsp = new Element("DIV", {"id": "headlines-spacer"});
 			dijit.byId('headlines-frame').domNode.appendChild(hsp);
 
@@ -140,17 +117,17 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 				const c = dijit.byId("headlines-frame");
 				const ids = getSelectedArticleIds2();
 
-				var hsp = $("headlines-spacer");
+				let hsp = $("headlines-spacer");
 
 				if (hsp)
 					c.domNode.removeChild(hsp);
 
-				var tmp = new Element("div");
+				let tmp = document.createElement("div");
 				tmp.innerHTML = reply['headlines']['content'];
 				dojo.parser.parse(tmp);
 
 				while (tmp.hasChildNodes()) {
-					var row = tmp.removeChild(tmp.firstChild);
+					let row = tmp.removeChild(tmp.firstChild);
 
 					if (loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("cdmFeedTitle")) {
 						dijit.byId("headlines-frame").domNode.appendChild(row);
@@ -166,7 +143,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 
 				console.log("restore selected ids: " + ids);
 
-				for (var i = 0; i < ids.length; i++) {
+				for (let i = 0; i < ids.length; i++) {
 					markHeadline(ids[i]);
 				}
 
@@ -183,7 +160,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 				const first_id_changed = reply['headlines']['first_id_changed'];
 				console.log("first id changed:" + first_id_changed);
 
-				var hsp = $("headlines-spacer");
+				let hsp = $("headlines-spacer");
 
 				if (hsp) {
 					if (first_id_changed) {
@@ -199,7 +176,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 			}
 
 		if (articles) {
-			for (var i = 0; i < articles.length; i++) {
+			for (let i = 0; i < articles.length; i++) {
 				const a_id = articles[i]['id'];
 				cache_set("article:" + a_id, articles[i]['content']);
 			}

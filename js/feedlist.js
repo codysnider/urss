@@ -61,21 +61,14 @@ function cleanup_memory(root) {
 
 function viewfeed(params) {
 	const feed = params.feed;
-	let is_cat = params.is_cat;
-	let offset = params.offset;
-	let background = params.background;
-	let infscroll_req = params.infscroll_req;
+	let is_cat = !!params.is_cat || false;
+	let offset = params.offset || 0;
+	let background = params.background || false;
+	let infscroll_req = params.infscroll_req || false;
 	const can_wait = params.can_wait;
 	const viewfeed_debug = params.viewfeed_debug;
 	const method = params.method;
 
-	if (is_cat == undefined)
-		is_cat = false;
-	else
-		is_cat = !!is_cat;
-
-	if (offset == undefined) offset = 0;
-	if (background == undefined) background = false;
 	if (infscroll_req == undefined) infscroll_req = false;
 
 	last_requested_article = 0;
@@ -148,8 +141,6 @@ function viewfeed(params) {
 
 	query += "&cat=" + is_cat;
 
-	console.log(query);
-
 	if (can_wait && _viewfeed_timeout) {
 		setFeedExpandoIcon(getActiveFeedId(), activeFeedIsCat(), 'images/blank_icon.gif');
 		clearTimeout(_viewfeed_timeout);
@@ -162,19 +153,18 @@ function viewfeed(params) {
 	}
 
 	const timeout_ms = can_wait ? 250 : 0;
-	_viewfeed_timeout = setTimeout(function() {
+	_viewfeed_timeout = setTimeout(() => {
 
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-				try {
-					setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
-					headlines_callback2(transport, offset, background, infscroll_req);
-					PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
-				} catch (e) {
-					exception_error(e);
-				}
-			} });
+		xhrPost("backend.php", query, (transport) => {
+            try {
+                setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
+                headlines_callback2(transport, offset, background, infscroll_req);
+                PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
+            } catch (e) {
+                exception_error(e);
+            }
+		});
+
 	}, timeout_ms); // Wait 250ms
 
 }
@@ -235,18 +225,14 @@ function request_counters(force) {
 
 		counters_last_request = timestamp;
 
-		let query = "?op=rpc&method=getAllCounters&seq=" + next_seq();
+		let query = {op: "rpc", method: "getAllCounters", seq: next_seq()};
 
 		if (!force)
-			query = query + "&last_article_id=" + getInitParam("last_article_id");
+			query.last_article_id = getInitParam("last_article_id");
 
-		console.log(query);
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-				handle_rpc_json(transport);
-			} });
+		xhrPost("backend.php", query, (transport) => {
+            handle_rpc_json(transport);
+		});
 
 	} else {
 		console.log("request_counters: rate limit reached: " + (timestamp - counters_last_request));
@@ -481,21 +467,11 @@ function catchupFeedInGroup(id) {
 			updateFloatingTitle(true);
 		}
 
-		const catchup_query = "?op=rpc&method=catchupFeed&feed_id=" +
-				id + "&is_cat=false";
-
-		console.log(catchup_query);
-
 		notify_progress("Loading, please wait...", true);
 
-		new Ajax.Request("backend.php", {
-			parameters: catchup_query,
-			onComplete: function (transport) {
-				handle_rpc_json(transport);
-			}
-		} );
-
-		//return viewCurrentFeed('MarkAllReadGR:' + id);
+		xhrPost("backend.php", { op: "rpc", method: "catchupFeed", feed_id: id, is_cat: false}, (transport) => {
+            handle_rpc_json(transport);
+		});
 	}
 }
 
@@ -532,30 +508,25 @@ function catchupFeed(feed, is_cat, mode) {
 		is_cat: is_cat, mode: mode, search_query: last_search_query[0],
 		search_lang: last_search_query[1]};
 
-	console.log(catchup_query);
-
 	notify_progress("Loading, please wait...", true);
 
-	new Ajax.Request("backend.php",	{
-		parameters: catchup_query,
-		onComplete: function(transport) {
-				handle_rpc_json(transport);
+	xhrPost("backend.php", catchup_query, (transport) => {
+        handle_rpc_json(transport);
 
-				const show_next_feed = getInitParam("on_catchup_show_next_feed") == "1";
+        const show_next_feed = getInitParam("on_catchup_show_next_feed") == "1";
 
-				if (show_next_feed) {
-					const nuf = getNextUnreadFeed(feed, is_cat);
+        if (show_next_feed) {
+            const nuf = getNextUnreadFeed(feed, is_cat);
 
-					if (nuf) {
-						viewfeed({feed: nuf, is_cat: is_cat});
-					}
-				} else if (feed == getActiveFeedId() && is_cat == activeFeedIsCat()) {
-						viewCurrentFeed();
-					}
+            if (nuf) {
+                viewfeed({feed: nuf, is_cat: is_cat});
+            }
+        } else if (feed == getActiveFeedId() && is_cat == activeFeedIsCat()) {
+            viewCurrentFeed();
+        }
 
-				notify("");
-			} });
-
+        notify("");
+	});
 }
 
 function decrementFeedCounter(feed, is_cat) {

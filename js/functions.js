@@ -1,10 +1,9 @@
 /* global dijit, __ */
 
-var loading_progress = 0;
-var sanity_check_done = false;
-var init_params = {};
-var _label_base_index = -1024;
-var notify_hide_timerid = false;
+let init_params = {};
+let _label_base_index = -1024;
+let loading_progress = 0;
+let notify_hide_timerid = false;
 
 Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(
 	function (callOriginal, options) {
@@ -23,6 +22,29 @@ Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(
 		return callOriginal(options);
 	}
 );
+
+/* xhr shorthand helpers */
+
+function xhrPost(url, params, complete) {
+	console.log("xhrPost:", params);
+    new Ajax.Request(url, {
+        parameters: params,
+        onComplete: complete
+    });
+}
+
+function xhrJson(url, params, complete) {
+    xhrPost(url, params, (reply) => {
+        try {
+            const obj = JSON.parse(reply.responseText);
+            complete(obj);
+        } catch (e) {
+            console.error("xhrJson", e, reply);
+            complete(null);
+        }
+
+    })
+}
 
 /* add method to remove element from array */
 
@@ -46,14 +68,14 @@ function exception_error(e, e_compat, filename, lineno, colno) {
 		const msg = e.toString();
 
 		try {
-			new Ajax.Request("backend.php", {
-				parameters: {op: "rpc", method: "log",
+			xhrPost("backend.php",
+				{op: "rpc", method: "log",
 					file: e.fileName ? e.fileName : filename,
 					line: e.lineNumber ? e.lineNumber : lineno,
 					msg: msg, context: e.stack},
-				onComplete: function (transport) {
+				(transport) => {
 					console.warn(transport.responseText);
-				} });
+				});
 
 		} catch (e) {
 			console.error("Exception while trying to log the error.", e);
@@ -1082,13 +1104,6 @@ function unsubscribeFeed(feed_id, title) {
 
 function backend_sanity_check_callback(transport) {
 
-	if (sanity_check_done) {
-		fatalError(11, "Sanity check request received twice. This can indicate "+
-		  "presence of Firebug or some other disrupting extension. "+
-			"Please disable it and try again.");
-		return;
-	}
-
 	const reply = JSON.parse(transport.responseText);
 
 	if (!reply) {
@@ -1120,10 +1135,7 @@ function backend_sanity_check_callback(transport) {
 		window.PluginHost && PluginHost.run(PluginHost.HOOK_PARAMS_LOADED, init_params);
 	}
 
-	sanity_check_done = true;
-
 	init_second_stage();
-
 }
 
 function genUrlChangeKey(feed, is_cat) {
