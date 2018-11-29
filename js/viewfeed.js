@@ -855,65 +855,55 @@ function deleteSelection() {
 		return;
 	}
 
-	const query = "?op=rpc&method=delete&ids=" + param_escape(rows);
+	const query = { op: "rpc", method: "delete", ids: rows.toString() };
 
-	console.log(query);
-
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function (transport) {
-			handle_rpc_json(transport);
-			viewCurrentFeed();
-		}
+	xhrPost("backend.php", query, (transport) => {
+        handle_rpc_json(transport);
+        viewCurrentFeed();
 	});
 }
 
 function archiveSelection() {
 
-	const rows = getSelectedArticleIds2();
+    const rows = getSelectedArticleIds2();
 
-	if (rows.length == 0) {
-		alert(__("No articles are selected."));
-		return;
-	}
+    if (rows.length == 0) {
+        alert(__("No articles are selected."));
+        return;
+    }
 
-	const fn = getFeedName(getActiveFeedId(), activeFeedIsCat());
-	let str;
-	let op;
+    const fn = getFeedName(getActiveFeedId(), activeFeedIsCat());
+    let str;
+    let op;
 
-	if (getActiveFeedId() != 0) {
-		str = ngettext("Archive %d selected article in %s?", "Archive %d selected articles in %s?", rows.length);
-		op = "archive";
-	} else {
-		str = ngettext("Move %d archived article back?", "Move %d archived articles back?", rows.length);
+    if (getActiveFeedId() != 0) {
+        str = ngettext("Archive %d selected article in %s?", "Archive %d selected articles in %s?", rows.length);
+        op = "archive";
+    } else {
+        str = ngettext("Move %d archived article back?", "Move %d archived articles back?", rows.length);
 
-		str += " " + __("Please note that unstarred articles might get purged on next feed update.");
+        str += " " + __("Please note that unstarred articles might get purged on next feed update.");
 
-		op = "unarchive";
-	}
+        op = "unarchive";
+    }
 
-	str = str.replace("%d", rows.length);
-	str = str.replace("%s", fn);
+    str = str.replace("%d", rows.length);
+    str = str.replace("%s", fn);
 
-	if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
-		return;
-	}
+    if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+        return;
+    }
 
-	const query = "?op=rpc&method="+op+"&ids=" + param_escape(rows);
+    for (let i = 0; i < rows.length; i++) {
+        cache_delete("article:" + rows[i]);
+    }
 
-	console.log(query);
+    const query = {op: "rpc", method: op, ids: rows.toString()};
 
-	for (let i = 0; i < rows.length; i++) {
-		cache_delete("article:" + rows[i]);
-	}
-
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function(transport) {
-				handle_rpc_json(transport);
-				viewCurrentFeed();
-			} });
-
+    xhrPost("backend.php", query, (transport) => {
+        handle_rpc_json(transport);
+        viewCurrentFeed();
+    });
 }
 
 function catchupSelection() {
@@ -955,31 +945,26 @@ function editArticleTags(id) {
 
 				notify_progress("Saving article tags...", true);
 
-				new Ajax.Request("backend.php",	{
-				parameters: query,
-				onComplete: function(transport) {
-					try {
-						notify('');
-						dialog.hide();
+				xhrPost("backend.php", this.attr('value'), (transport) => {
+                    try {
+                        notify('');
+                        dialog.hide();
 
-						const data = JSON.parse(transport.responseText);
+                        const data = JSON.parse(transport.responseText);
 
-						if (data) {
-							const id = data.id;
+                        if (data) {
+                            const id = data.id;
 
-							console.log(id);
+                            const tags = $("ATSTR-" + id);
+                            const tooltip = dijit.byId("ATSTRTIP-" + id);
 
-							const tags = $("ATSTR-" + id);
-							const tooltip = dijit.byId("ATSTRTIP-" + id);
-
-							if (tags) tags.innerHTML = data.content;
-							if (tooltip) tooltip.attr('label', data.content_full);
-						}
-					} catch (e) {
-						exception_error(e);
-					}
-
-				}});
+                            if (tags) tags.innerHTML = data.content;
+                            if (tooltip) tooltip.attr('label', data.content_full);
+                        }
+                    } catch (e) {
+                        exception_error(e);
+                    }
+				});
 			}
 		},
 		href: query
@@ -1165,33 +1150,28 @@ function catchupBatchedArticles() {
 
 		// make a copy of the array
 		const batch = catchup_id_batch.slice();
-		const query = "?op=rpc&method=catchupSelected" +
-			"&cmode=0&ids=" + param_escape(batch.toString());
-
-		console.log(query);
+		const query = { op: "rpc", method: "catchupSelected",
+			cmode: 0, ids: batch.toString() };
 
 		_catchup_request_sent = true;
 
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function (transport) {
-				handle_rpc_json(transport);
+		xhrPost("backend.php", query, (transport) => {
+            const reply = handle_rpc_json(transport);
 
-				_catchup_request_sent = false;
+            _catchup_request_sent = false;
 
-				const reply = JSON.parse(transport.responseText);
-				const batch = reply.ids;
+            if (reply) {
+                const batch = reply.ids;
 
-				batch.each(function (id) {
-					console.log(id);
-					const elem = $("RROW-" + id);
-					if (elem) elem.removeClassName("Unread");
-					catchup_id_batch.remove(id);
-				});
+                batch.each(function (id) {
+                    console.log(id);
+                    const elem = $("RROW-" + id);
+                    if (elem) elem.removeClassName("Unread");
+                    catchup_id_batch.remove(id);
+                });
+            }
 
-				updateFloatingTitle(true);
-
-			}
+            updateFloatingTitle(true);
 		});
 	}
 }
@@ -1247,16 +1227,12 @@ function catchupRelativeToArticle(below, id) {
 				e.removeClassName("Unread");
 			}
 
-			const query = "?op=rpc&method=catchupSelected" +
-				"&cmode=0" + "&ids=" + param_escape(ids_to_mark.toString());
+			const query = { op: "rpc", method: "catchupSelected",
+				cmode: 0, ids: ids_to_mark.toString() };
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function (transport) {
-					handle_rpc_json(transport);
-				}
+			xhrPost("backend.php", query, (transport) => {
+                handle_rpc_json(transport);
 			});
-
 		}
 	}
 }
@@ -1422,19 +1398,18 @@ function cdmClicked(event, id, in_body) {
 			setActiveArticleId(id);
 
 			if (article_is_unread) {
-				decrementFeedCounter(getActiveFeedId(), activeFeedIsCat());
-				updateFloatingTitle(true);
-			}
+                decrementFeedCounter(getActiveFeedId(), activeFeedIsCat());
+                updateFloatingTitle(true);
 
-			const query = "?op=rpc&method=catchupSelected" +
-				"&cmode=0&ids=" + param_escape(id);
+                const query = {
+                    op: "rpc", method: "catchupSelected",
+                    cmode: 0, ids: id
+                };
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function (transport) {
-					handle_rpc_json(transport);
-				}
-			});
+                xhrPost("backend.php", query, (transport) => {
+                    handle_rpc_json(transport);
+                });
+            }
 
 			return !event.shiftKey;
 		}
@@ -1812,31 +1787,25 @@ function setSelectionScore() {
 		const score = prompt(__("Please enter new score for selected articles:"));
 
 		if (score != undefined) {
-			const query = "op=article&method=setScore&id=" + param_escape(ids.toString()) +
-				"&score=" + param_escape(score);
+			const query = { op: "article", method: "setScore", id: ids.toString(),
+				score: score };
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function (transport) {
-					const reply = JSON.parse(transport.responseText);
-					if (reply) {
-						console.log(ids);
+			xhrJson("backend.php", query, (reply) => {
+				if (reply) {
+                    reply.id.each((id) => {
+                        const row = $("RROW-" + id);
 
-						ids.each(function (id) {
-							const row = $("RROW-" + id);
+                        if (row) {
+                            const pic = row.getElementsByClassName("hlScorePic")[0];
 
-							if (row) {
-								const pic = row.getElementsByClassName("hlScorePic")[0];
-
-								if (pic) {
-									pic.src = pic.src.replace(/score_.*?\.png/,
-										reply["score_pic"]);
-									pic.setAttribute("score", score);
-								}
-							}
-						});
-					}
-				}
+                            if (pic) {
+                                pic.src = pic.src.replace(/score_.*?\.png/,
+                                    reply["score_pic"]);
+                                pic.setAttribute("score", reply["score"]);
+                            }
+                        }
+                    });
+                }
 			});
 		}
 
@@ -1845,6 +1814,7 @@ function setSelectionScore() {
 	}
 }
 
+/*
 function updateScore(id) {
 	const pic = $$("#RROW-" + id + " .hlScorePic")[0];
 
@@ -1867,7 +1837,7 @@ function updateScore(id) {
 			}
 		});
 	}
-}
+} */
 
 function changeScore(id, pic) {
 	const score = pic.getAttribute("score");
@@ -1875,38 +1845,27 @@ function changeScore(id, pic) {
 	const new_score = prompt(__("Please enter new score for this article:"), score);
 
 	if (new_score != undefined) {
+		const query = { op: "article", method: "setScore", id: id, score: new_score };
 
-		const query = "op=article&method=setScore&id=" + param_escape(id) +
-			"&score=" + param_escape(new_score);
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function (transport) {
-				const reply = JSON.parse(transport.responseText);
-
-				if (reply) {
-					pic.src = pic.src.replace(/score_.*?\.png/, reply["score_pic"]);
-					pic.setAttribute("score", new_score);
-					pic.setAttribute("title", new_score);
-				}
-			}
+		xhrJson("backend.php", query, (reply) => {
+            if (reply) {
+                pic.src = pic.src.replace(/score_.*?\.png/, reply["score_pic"]);
+                pic.setAttribute("score", new_score);
+                pic.setAttribute("title", new_score);
+            }
 		});
 	}
 }
 
 function displayArticleUrl(id) {
-	const query = "op=rpc&method=getlinktitlebyid&id=" + param_escape(id);
+	const query = { op: "rpc", method: "getlinktitlebyid", id: id };
 
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function (transport) {
-			const reply = JSON.parse(transport.responseText);
-
-			if (reply && reply.link) {
-				prompt(__("Article URL:"), reply.link);
-			}
-		}
+	xhrJson("backend.php", query, (reply) => {
+        if (reply && reply.link) {
+            prompt(__("Article URL:"), reply.link);
+        }
 	});
+
 }
 
 function scrollToRowId(id) {
