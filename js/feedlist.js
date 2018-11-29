@@ -102,34 +102,31 @@ function viewfeed(params) {
 
 	Form.enable("main_toolbar_form");
 
-	const toolbar_query = Form.serialize("main_toolbar_form");
+	let query = Object.assign({op: "feeds", method: "view", feed: feed},
+        dojo.formToObject("main_toolbar_form"));
 
-	let query = "?op=feeds&method=view&feed=" + param_escape(feed) + "&" +
-		toolbar_query;
-
-	if (method) query += "&m=" + param_escape(method);
+	if (method) query.m = method;
 
 	if (offset > 0) {
 		if (current_first_id) {
-			query = query + "&fid=" + param_escape(current_first_id);
+			query.fid = current_first_id;
 		}
 	}
 
 	if (!background) {
 		if (_search_query) {
-			query = query + "&" + _search_query;
-			//_search_query = false;
+			query = Object.assign(query, _search_query);
 		}
 
 		if (offset != 0) {
-			query = query + "&skip=" + offset;
+			query.skip = offset;
 
 			// to prevent duplicate feed titles when showing grouped vfeeds
 			if (vgroup_last_feed) {
-				query = query + "&vgrlf=" + param_escape(vgroup_last_feed);
+				query.vgrlf = vgroup_last_feed;
 			}
 		} else if (!is_cat && feed == getActiveFeedId() && !params.method) {
-				query = query + "&m=ForceUpdate";
+				query.m = "ForceUpdate";
 			}
 
 		Form.enable("main_toolbar_form");
@@ -139,7 +136,7 @@ function viewfeed(params) {
 				notify_progress("Loading, please wait...", true);
 	}
 
-	query += "&cat=" + is_cat;
+	query.cat = is_cat;
 
 	if (can_wait && _viewfeed_timeout) {
 		setFeedExpandoIcon(getActiveFeedId(), activeFeedIsCat(), 'images/blank_icon.gif');
@@ -149,7 +146,10 @@ function viewfeed(params) {
 	setActiveFeedId(feed, is_cat);
 
 	if (viewfeed_debug) {
-		window.open("backend.php" + query + "&debug=1&csrf_token=" + getInitParam("csrf_token"));
+		window.open("backend.php?" +
+			dojo.objectToQuery(
+				Object.assign({debug: 1, csrf_token: getInitParam("csrf_token")}, query)
+			));
 	}
 
 	const timeout_ms = can_wait ? 250 : 0;

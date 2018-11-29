@@ -38,8 +38,6 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 		feed_id = reply['headlines']['id'];
 		last_search_query = reply['headlines']['search_query'];
 
-        console.log(feed_id, getActiveFeedId(), is_cat, activeFeedIsCat());
-
 		if (feed_id != -7 && (feed_id != getActiveFeedId() || is_cat != activeFeedIsCat()))
 			return;
 
@@ -253,15 +251,7 @@ function showArticleInHeadlines(id, noexpand) {
 function article_callback2(transport, id) {
 	console.log("article_callback2 " + id);
 
-	handle_rpc_json(transport);
-
-	let reply = false;
-
-	try {
-		reply = JSON.parse(transport.responseText);
-	} catch (e) {
-		console.error(e);
-	}
+	const reply = handle_rpc_json(transport);
 
 	if (reply) {
 
@@ -274,11 +264,6 @@ function article_callback2(transport, id) {
 			cache_set("article:" + article['id'], article['content']);
 		});
 
-//			if (id != last_requested_article) {
-//				console.log("requested article id is out of sequence, aborting");
-//				return;
-//			}
-
 	} else {
 		console.error("Invalid object received: " + transport.responseText);
 
@@ -286,7 +271,7 @@ function article_callback2(transport, id) {
 				__('Could not display article (invalid object received - see error console for details)') + "</div>");
 	}
 
-	const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length
+	const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
 	request_counters(unread_in_buffer == 0);
 
 	notify("");
@@ -311,7 +296,7 @@ function view(id, activefeed, noexpand) {
 
 	console.log("cache check result: " + (cached_article != false));
 
-	let query = "?op=article&method=view&id=" + param_escape(id);
+	const query = {op: "article", method: "view", id: id};
 
 	const neighbor_ids = getRelativePostIds(id);
 
@@ -329,7 +314,7 @@ function view(id, activefeed, noexpand) {
 
 	console.log("additional ids: " + cids_to_request.toString());
 
-	query = query + "&cids=" + cids_to_request.toString();
+	query.cids = cids_to_request.toString();
 
 	const article_is_unread = crow.hasClassName("Unread");
 
@@ -337,14 +322,10 @@ function view(id, activefeed, noexpand) {
 	showArticleInHeadlines(id);
 
 	if (cached_article && article_is_unread) {
-
-		query = query + "&mode=prefetch";
-
+		query.mode = "prefetch";
 		render_article(cached_article);
-
 	} else if (cached_article) {
-
-		query = query + "&mode=prefetch_old";
+        query.mode = "prefetch_old";
 		render_article(cached_article);
 
 		// if we don't need to request any relative ids, we might as well skip
@@ -362,18 +343,16 @@ function view(id, activefeed, noexpand) {
 		decrementFeedCounter(getActiveFeedId(), activeFeedIsCat());
 	}
 
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function(transport) {
-			article_callback2(transport, id);
-		} });
+	xhrPost("backend.php", query, (transport) => {
+        article_callback2(transport, id);
+	})
 
 	return false;
 
 }
 
 function toggleMark(id, client_only) {
-	let query = "?op=rpc&id=" + id + "&method=mark";
+	const query = { op: "rpc", id: id, method: "mark" };
 
 	const row = $("RROW-" + id);
 	if (!row) return;
@@ -382,7 +361,7 @@ function toggleMark(id, client_only) {
 
 	const row_imgs = row.getElementsByClassName("markedPic");
 
-	for (var i = 0; i < row_imgs.length; i++)
+	for (let i = 0; i < row_imgs.length; i++)
 		imgs.push(row_imgs[i]);
 
 	const ft = $("floatingTitle");
@@ -399,32 +378,28 @@ function toggleMark(id, client_only) {
 
 		if (!row.hasClassName("marked")) {
 			img.src = img.src.replace("mark_unset", "mark_set");
-			query = query + "&mark=1";
+			query.mark = 1;
 		} else {
 			img.src = img.src.replace("mark_set", "mark_unset");
-			query = query + "&mark=0";
+			query.mark = 0;
 		}
 	}
 
 	row.toggleClassName("marked");
 
-	if (!client_only) {
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function (transport) {
-				handle_rpc_json(transport);
-			}
+	if (!client_only)
+		xhrPost("backend.php", query, (transport) => {
+			handle_rpc_json(transport);
 		});
 	}
-}
 
 function togglePub(id, client_only, no_effects, note) {
-	let query = "?op=rpc&id=" + id + "&method=publ";
+    const query = { op: "rpc", id: id, method: "publ" };
 
 	if (note != undefined) {
-		query = query + "&note=" + param_escape(note);
+		query.note = note;
 	} else {
-		query = query + "&note=undefined";
+		query.note = "undefined";
 	}
 
 	const row = $("RROW-" + id);
@@ -434,7 +409,7 @@ function togglePub(id, client_only, no_effects, note) {
 
 	const row_imgs = row.getElementsByClassName("pubPic");
 
-	for (var i = 0; i < row_imgs.length; i++)
+	for (let i = 0; i < row_imgs.length; i++)
 		imgs.push(row_imgs[i]);
 
 	const ft = $("floatingTitle");
@@ -442,19 +417,19 @@ function togglePub(id, client_only, no_effects, note) {
 	if (ft && ft.getAttribute("data-article-id") == id) {
 		const fte = ft.getElementsByClassName("pubPic");
 
-		for (var i = 0; i < fte.length; i++)
+		for (let i = 0; i < fte.length; i++)
 			imgs.push(fte[i]);
 	}
 
-	for (var i = 0; i < imgs.length; i++) {
+	for (let i = 0; i < imgs.length; i++) {
 		const img = imgs[i];
 
 		if (!row.hasClassName("published") || note != undefined) {
 			img.src = img.src.replace("pub_unset", "pub_set");
-			query = query + "&pub=1";
+			query.pub = 1;
 		} else {
 			img.src = img.src.replace("pub_set", "pub_unset");
-			query = query + "&pub=0";
+			query.pub = 0;
 		}
 	}
 
@@ -463,14 +438,10 @@ function togglePub(id, client_only, no_effects, note) {
 	else
 		row.toggleClassName("published");
 
-	if (!client_only) {
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
+	if (!client_only)
+		xhrPost("backend.php", query, (transport) => {
 				handle_rpc_json(transport);
-			} });
-	}
-
+		});
 }
 
 function moveToPost(mode, noscroll, noexpand) {
@@ -601,7 +572,7 @@ function updateSelectedPrompt() {
 
 }
 
-function toggleUnread(id, cmode, effect) {
+function toggleUnread(id, cmode) {
 	const row = $("RROW-" + id);
 	if (row) {
 		const tmpClassName = row.className;
@@ -622,22 +593,17 @@ function toggleUnread(id, cmode, effect) {
 			row.addClassName("Unread");
 		}
 
-		if (cmode == undefined) cmode = 2;
-
-		const query = "?op=rpc&method=catchupSelected" +
-			"&cmode=" + param_escape(cmode) + "&ids=" + param_escape(id);
-
-//			notify_progress("Loading, please wait...");
-
 		if (tmpClassName != row.className) {
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function (transport) {
+            if (cmode == undefined) cmode = 2;
+
+            const query = {op: "rpc", method: "catchupSelected",
+                cmode: cmode, ids: id};
+
+            xhrPost("backend.php", query, (transport) => {
 					handle_rpc_json(transport);
-				}
+
 			});
 		}
-
 	}
 }
 
@@ -649,18 +615,13 @@ function selectionRemoveLabel(id, ids) {
 		return;
 	}
 
-	const query = "?op=article&method=removeFromLabel&ids=" +
-		param_escape(ids.toString()) + "&lid=" + param_escape(id);
+	const query = { op: "article", method: "removeFromLabel",
+		ids: ids.toString(), lid: id };
 
-	console.log(query);
-
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function(transport) {
-			handle_rpc_json(transport);
-			show_labels_in_headlines(transport);
-		} });
-
+	xhrPost("backend.php", query, (transport) => {
+        handle_rpc_json(transport);
+        show_labels_in_headlines(transport);
+	});
 }
 
 function selectionAssignLabel(id, ids) {
@@ -671,17 +632,13 @@ function selectionAssignLabel(id, ids) {
 		return;
 	}
 
-	const query = "?op=article&method=assignToLabel&ids=" +
-		param_escape(ids.toString()) + "&lid=" + param_escape(id);
+	const query = { op: "article", method: "assignToLabel",
+		ids: ids.toString(), lid: id };
 
-	console.log(query);
-
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function(transport) {
-			handle_rpc_json(transport);
-			show_labels_in_headlines(transport);
-		} });
+    xhrPost("backend.php", query, (transport) => {
+        handle_rpc_json(transport);
+        show_labels_in_headlines(transport);
+    });
 }
 
 function selectionToggleUnread(set_state, callback, no_error, ids) {
@@ -727,17 +684,15 @@ function selectionToggleUnread(set_state, callback, no_error, ids) {
 			cmode = "0";
 		}
 
-		const query = "?op=rpc&method=catchupSelected" +
-			"&cmode=" + cmode + "&ids=" + param_escape(rows.toString());
+		const query = {op: "rpc", method: "catchupSelected",
+			cmode: cmode, ids: rows.toString() };
 
 		notify_progress("Loading, please wait...");
 
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-				handle_rpc_json(transport);
-				if (callback) callback(transport);
-			} });
+        xhrPost("backend.php", query, (transport) => {
+            handle_rpc_json(transport);
+            if (callback) callback(transport);
+        });
 
 	}
 }
@@ -756,17 +711,13 @@ function selectionToggleMarked(sel_state, callback, no_error, ids) {
 	}
 
 	if (rows.length > 0) {
+		const query = { op: "rpc", method: "markSelected",
+			ids:  rows.toString(), cmode: 2 };
 
-		const query = "?op=rpc&method=markSelected&ids=" +
-			param_escape(rows.toString()) + "&cmode=2";
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-				handle_rpc_json(transport);
-				if (callback) callback(transport);
-			} });
-
+        xhrPost("backend.php", query, (transport) => {
+            handle_rpc_json(transport);
+            if (callback) callback(transport);
+        });
 	}
 }
 
@@ -784,16 +735,13 @@ function selectionTogglePublished(sel_state, callback, no_error, ids) {
 	}
 
 	if (rows.length > 0) {
+        const query = { op: "rpc", method: "publishSelected",
+            ids:  rows.toString(), cmode: 2 };
 
-		const query = "?op=rpc&method=publishSelected&ids=" +
-			param_escape(rows.toString()) + "&cmode=2";
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-				handle_rpc_json(transport);
-			} });
-
+        xhrPost("backend.php", query, (transport) => {
+            handle_rpc_json(transport);
+            if (callback) callback(transport);
+        });
 	}
 }
 
@@ -831,7 +779,7 @@ function selectArticles(mode, query) {
 	const children = $$(query);
 
 	children.each(function(child) {
-		const id = child.getAttribute("data-article-id");
+		//const id = child.getAttribute("data-article-id");
 
 		const cb = dijit.getEnclosingWidget(
 				child.getElementsByClassName("rchk")[0]);

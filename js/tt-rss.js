@@ -154,7 +154,7 @@ function search() {
 		style: "width: 600px",
 		execute: function() {
 			if (this.validate()) {
-				_search_query = dojo.objectToQuery(this.attr('value'));
+				_search_query = this.attr('value');
 				this.hide();
 				viewCurrentFeed();
 			}
