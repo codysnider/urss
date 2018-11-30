@@ -12,31 +12,26 @@ function editArticleNote(id) {
 			style: "width: 600px",
 			execute: function() {
 				if (this.validate()) {
-					var query = dojo.objectToQuery(this.attr('value'));
-
 					notify_progress("Saving article note...", true);
 
-					new Ajax.Request("backend.php",	{
-					parameters: query,
-					onComplete: function(transport) {
-						notify('');
-						dialog.hide();
+					xhrJson("backend.php", this.attr('value'), (reply) => {
+                        notify('');
+                        dialog.hide();
 
-						var reply = JSON.parse(transport.responseText);
+                        if (reply) {
+                            cache_delete("article:" + id);
 
-						cache_delete("article:" + id);
+                            var elem = $("POSTNOTE-" + id);
 
-						var elem = $("POSTNOTE-" + id);
+                            if (elem) {
+                                Element.hide(elem);
+                                elem.innerHTML = reply.note;
 
-						if (elem) {
-							Element.hide(elem);
-							elem.innerHTML = reply.note;
-
-							if (reply.raw_length != 0)
-								new Effect.Appear(elem);
-						}
-
-					}});
+                                if (reply.raw_length != 0)
+                                    new Effect.Appear(elem);
+                            }
+                        }
+                    });
 				}
 			},
 			href: query,

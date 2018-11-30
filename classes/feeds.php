@@ -417,7 +417,7 @@ class Feeds extends Handler_Protected {
 
 					$reply['content'] .= "<div onclick='return hlClicked(event, $id)'
                     class=\"hlTitle\"><span class='hlContent $hlc_suffix'>";
-					$reply['content'] .= "<a id=\"RTITLE-$id\" class=\"title $hlc_suffix\"
+					$reply['content'] .= "<a class=\"title $hlc_suffix\"
                     href=\"" . htmlspecialchars($line["link"]) . "\"
                     onclick=\"\">" .
 						truncate_string($line["title"], 200);
@@ -523,7 +523,7 @@ class Feeds extends Handler_Protected {
 					}
 
 					// data-article-id included for context menu
-					$tmp_content .= "<span id=\"RTITLE-$id\"
+					$tmp_content .= "<span
                     onclick=\"return cdmClicked(event, $id);\"
                     data-article-id=\"$id\"
                     class=\"titleWrap hlMenuAttach $hlc_suffix\">
@@ -564,7 +564,7 @@ class Feeds extends Handler_Protected {
 
 					$tmp_content .= "</div>"; //cdmHeader
 
-					$tmp_content .= "<div class=\"cdmContent\" onclick=\"return cdmClicked(event, $id, true);\" id=\"CICD-$id\">";
+					$tmp_content .= "<div class=\"cdmContent\" onclick=\"return cdmClicked(event, $id, true);\">";
 
 					$tmp_content .= "<div id=\"POSTNOTE-$id\">";
 					if ($line['note']) {
