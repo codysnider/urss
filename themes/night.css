@@ -195,4 +195,7 @@ body.claro.ttrss_main .post .header {
 	border-color : #666;
 }
 
+body.claro.ttrss_main .hl.Unread div.title a {
+    color: #bbb;
+}
 
