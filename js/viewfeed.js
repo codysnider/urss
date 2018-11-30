@@ -455,6 +455,8 @@ function moveToPost(mode, noscroll, noexpand) {
 	}
 
 	if (!getActiveArticleId()) {
+		console.log('hurr', rows[0]);
+
 		next_id = rows[0];
 		prev_id = rows[rows.length-1]
 	} else {
@@ -982,6 +984,8 @@ function cdmScrollToArticleId(id, force) {
 
 		// expanded cdm has a 4px margin now
 		ctr.scrollTop = parseInt(e.offsetTop) - 4;
+
+		setActiveArticleId(id);
 
 		// article is selected manually, set it read
 		toggleUnread(id, 0);1
