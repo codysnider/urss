@@ -1164,8 +1164,7 @@
 				"feed_debug_viewfeed" => __("Debug viewfeed()"),
 				"catchup_all" => __("Mark all feeds as read"),
 				"cat_toggle_collapse" => __("Un/collapse current category"),
-				"toggle_combined_mode" => __("Toggle combined mode"),
-				"toggle_cdm_expanded" => __("Toggle auto expand in combined mode")),
+				"toggle_combined_mode" => __("Toggle combined mode")),
 			__("Go to") => array(
 				"goto_all" => __("All articles"),
 				"goto_fresh" => __("Fresh"),
@@ -1233,7 +1232,6 @@
 			"f *d" => "feed_debug_update",
 			"f *g" => "feed_debug_viewfeed",
 			"f *c" => "toggle_combined_mode",
-			"f c" => "toggle_cdm_expanded",
 			"*q" => "catchup_all",
 			"x" => "cat_toggle_collapse",
 	//			"goto" => array(
@@ -1310,7 +1308,6 @@
 		$data["num_feeds"] = (int) $num_feeds;
 
 		$data['last_article_id'] = Article::getLastArticleId();
-		$data['cdm_expanded'] = get_pref('CDM_EXPANDED');
 
 		$data['dep_ts'] = calculate_dep_timestamp();
 		$data['reload_on_ts_change'] = !defined('_NO_RELOAD_ON_TS_CHANGE');

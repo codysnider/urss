@@ -26,27 +26,24 @@ require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 
 	ready(function() {
 		PluginHost.register(PluginHost.HOOK_ARTICLE_RENDERED_CDM, function(row) {
-			if (getInitParam('cdm_expanded')) {
+			window.setTimeout(function() {
+				if (row) {
+					const c_inner = row.select(".cdmContentInner")[0];
+					const c_inter = row.select(".cdmIntermediate")[0];
 
-				window.setTimeout(function() {
-					if (row) {
-						const c_inner = row.select(".cdmContentInner")[0];
-						const c_inter = row.select(".cdmIntermediate")[0];
+					if (c_inner && c_inter &&
+						row.offsetHeight >= _shorten_expanded_threshold * window.innerHeight) {
 
-						if (c_inner && c_inter &&
-							row.offsetHeight >= _shorten_expanded_threshold * window.innerHeight) {
+						c_inter.parentNode.removeChild(c_inter);
 
-							c_inter.parentNode.removeChild(c_inter);
-
-							c_inner.innerHTML = "<div class='contentSizeWrapper'>" +
-								c_inner.innerHTML +
-								c_inter.innerHTML + "</div>" +
-								"<button class='expandPrompt' onclick='return expandSizeWrapper(\""+row.id+"\")' href='#'>" +
-									__("Click to expand article") + "</button>";
-						}
+						c_inner.innerHTML = "<div class='contentSizeWrapper'>" +
+							c_inner.innerHTML +
+							c_inter.innerHTML + "</div>" +
+							"<button class='expandPrompt' onclick='return expandSizeWrapper(\""+row.id+"\")' href='#'>" +
+								__("Click to expand article") + "</button>";
 					}
-				}, 150);
-			}
+				}
+			}, 150);
 
 			return true;
 		});

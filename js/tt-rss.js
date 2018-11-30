@@ -299,32 +299,6 @@ function init_hotkey_actions() {
 	hotkey_actions["prev_article_noexpand"] = function() {
 		moveToPost('prev', true, true);
 	};
-	hotkey_actions["collapse_article"] = function() {
-		const id = getActiveArticleId();
-		const elem = $("CICD-"+id);
-
-		if (elem) {
-			if (elem.visible()) {
-				cdmCollapseArticle(null, id);
-			}
-			else {
-				cdmExpandArticle(id);
-			}
-		}
-	};
-	hotkey_actions["toggle_expand"] = function() {
-		const id = getActiveArticleId();
-		const elem = $("CICD-"+id);
-
-		if (elem) {
-			if (elem.visible()) {
-				cdmCollapseArticle(null, id, false);
-			}
-			else {
-				cdmExpandArticle(id);
-			}
-		}
-	};
 	hotkey_actions["search_dialog"] = function() {
 		search();
 	};
@@ -361,13 +335,7 @@ function init_hotkey_actions() {
 		scrollArticle(-40);
 	};
 	hotkey_actions["close_article"] = function() {
-		if (isCdmMode()) {
-			if (!getInitParam("cdm_expanded")) {
-				cdmCollapseArticle(false, getActiveArticleId());
-			}
-		} else {
-			closeArticlePanel();
-		}
+		closeArticlePanel();
 	};
 	hotkey_actions["email_article"] = function() {
 		if (typeof emailArticle != "undefined") {
@@ -530,16 +498,6 @@ function init_hotkey_actions() {
             closeArticlePanel();
             viewCurrentFeed();
 		})
-	};
-	hotkey_actions["toggle_cdm_expanded"] = function() {
-		notify_progress("Loading, please wait...");
-
-        const value = getInitParam("cdm_expanded") ? "false" : "true";
-
-		xhrPost("backend.php", {op: "rpc", method: "setpref", key: "CDM_EXPANDED", value: value}, () => {
-            setInitParam("cdm_expanded", !getInitParam("cdm_expanded"));
-            viewCurrentFeed();
-        });
 	};
 }
 

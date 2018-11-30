@@ -490,7 +490,6 @@ function moveToPost(mode, noscroll, noexpand) {
 					scrollArticle(ctr.offsetHeight/4);
 
 				} else if (next_id) {
-					cdmExpandArticle(next_id, noexpand);
 					cdmScrollToArticleId(next_id, true);
 				}
 
@@ -509,24 +508,14 @@ function moveToPost(mode, noscroll, noexpand) {
 				const prev_article = $("RROW-" + prev_id);
 				var ctr = $("headlines-frame");
 
-				if (!getInitParam("cdm_expanded")) {
-
-					if (!noscroll && article && article.offsetTop < ctr.scrollTop) {
-						scrollArticle(-ctr.offsetHeight/4);
-					} else {
-						cdmExpandArticle(prev_id, noexpand);
-						cdmScrollToArticleId(prev_id, true);
-					}
-				} else if (!noscroll && article && article.offsetTop < ctr.scrollTop) {
-						scrollArticle(-ctr.offsetHeight/3);
-					} else if (!noscroll && prev_article &&
-							prev_article.offsetTop < ctr.scrollTop) {
-						cdmExpandArticle(prev_id, noexpand);
-						scrollArticle(-ctr.offsetHeight/4);
-					} else if (prev_id) {
-						cdmExpandArticle(prev_id, noexpand);
-						cdmScrollToArticleId(prev_id, noscroll);
-					}
+				if (!noscroll && article && article.offsetTop < ctr.scrollTop) {
+					scrollArticle(-ctr.offsetHeight/3);
+				} else if (!noscroll && prev_article &&
+						prev_article.offsetTop < ctr.scrollTop) {
+					scrollArticle(-ctr.offsetHeight/4);
+				} else if (prev_id) {
+					cdmScrollToArticleId(prev_id, noscroll);
+				}
 
 			} else if (prev_id) {
 				correctHeadlinesOffset(prev_id);
@@ -1016,7 +1005,7 @@ function postMouseOut(id) {
 }
 
 function unpackVisibleHeadlines() {
-	if (!isCdmMode() || !getInitParam("cdm_expanded")) return;
+	if (!isCdmMode()) return;
 
     $$("#headlines-frame div[id*=RROW][data-content]").each((row) => {
     	//console.log('checking', row.id);
@@ -1058,8 +1047,7 @@ function headlines_scroll_handler(e) {
 
 		// set topmost child in the buffer as active
 		if (isCdmMode() && getInitParam("cdm_auto_catchup") == 1 &&
-				getSelectedArticleIds2().length <= 1 &&
-				getInitParam("cdm_expanded")) {
+				getSelectedArticleIds2().length <= 1) {
 
 			const rows = $$("#headlines-frame > div[id*=RROW]");
 
@@ -1241,111 +1229,6 @@ function catchupRelativeToArticle(below, id) {
 	}
 }
 
-function cdmCollapseArticle(event, id, unmark) {
-	if (unmark == undefined) unmark = true;
-
-	const row = $("RROW-" + id);
-	const elem = $("CICD-" + id);
-
-	if (elem && row) {
-		const collapse = row.select("span[class='collapseBtn']")[0];
-
-		Element.hide(elem);
-		Element.show("CEXC-" + id);
-		Element.hide(collapse);
-
-		if (unmark) {
-			row.removeClassName("active");
-
-			markHeadline(id, false);
-
-			if (id == getActiveArticleId()) {
-				setActiveArticleId(0);
-			}
-
-			updateSelectedPrompt();
-		}
-
-		if (event) Event.stop(event);
-
-		PluginHost.run(PluginHost.HOOK_ARTICLE_COLLAPSED, id);
-
-		if (row.offsetTop < $("headlines-frame").scrollTop)
-			scrollToRowId(row.id);
-
-		$("floatingTitle").style.visibility = "hidden";
-		$("floatingTitle").setAttribute("data-article-id", 0);
-	}
-}
-
-function cdmExpandArticle(id, noexpand) {
-	console.log("cdmExpandArticle " + id);
-
-	const row = $("RROW-" + id);
-
-	if (!row) return false;
-
-	const oldrow = $("RROW-" + getActiveArticleId());
-
-	let elem = $("CICD-" + getActiveArticleId());
-
-	if (id == getActiveArticleId() && Element.visible(elem))
-		return true;
-
-	selectArticles("none");
-
-	const old_offset = row.offsetTop;
-
-	if (getActiveArticleId() && elem && !getInitParam("cdm_expanded")) {
-		let collapse = oldrow.select("span[class='collapseBtn']")[0];
-
-		Element.hide(elem);
-		Element.show("CEXC-" + getActiveArticleId());
-		Element.hide(collapse);
-	}
-
-	if (oldrow) oldrow.removeClassName("active");
-
-	setActiveArticleId(id);
-
-	elem = $("CICD-" + id);
-
-	let collapse = row.select("span[class='collapseBtn']")[0];
-
-	const cencw = $("CENCW-" + id);
-
-	if (!Element.visible(elem) && !noexpand) {
-		if (cencw) {
-			cencw.innerHTML = htmlspecialchars_decode(cencw.innerHTML);
-			cencw.setAttribute('id', '');
-			Element.show(cencw);
-		}
-
-		Element.show(elem);
-		Element.hide("CEXC-" + id);
-		Element.show(collapse);
-	}
-
-	const new_offset = row.offsetTop;
-
-	if (old_offset > new_offset)
-		$("headlines-frame").scrollTop -= (old_offset - new_offset);
-
-	if (!noexpand) {
-		if (catchup_id_batch.indexOf(id) == -1)
-			catchup_id_batch.push(id);
-
-		catchupCurrentBatchIfNeeded();
-	}
-
-	toggleSelected(id);
-	row.addClassName("active");
-
-	PluginHost.run(PluginHost.HOOK_ARTICLE_EXPANDED, id);
-
-	return false;
-}
-
 function getArticleUnderPointer() {
 	return post_under_pointer;
 }
@@ -1382,41 +1265,36 @@ function cdmClicked(event, id, in_body) {
 
 	if (!event.ctrlKey && !event.metaKey) {
 
-		if (!getInitParam("cdm_expanded")) {
-			return cdmExpandArticle(id);
-		} else {
+		let elem = $("RROW-" + getActiveArticleId());
 
-			let elem = $("RROW-" + getActiveArticleId());
+		if (elem) elem.removeClassName("active");
 
-			if (elem) elem.removeClassName("active");
+		selectArticles("none");
+		toggleSelected(id);
 
-			selectArticles("none");
-			toggleSelected(id);
+		elem = $("RROW-" + id);
+		const article_is_unread = elem.hasClassName("Unread");
 
-			elem = $("RROW-" + id);
-			const article_is_unread = elem.hasClassName("Unread");
+		elem.removeClassName("Unread");
+		elem.addClassName("active");
 
-			elem.removeClassName("Unread");
-			elem.addClassName("active");
+		setActiveArticleId(id);
 
-			setActiveArticleId(id);
+		if (article_is_unread) {
+			decrementFeedCounter(getActiveFeedId(), activeFeedIsCat());
+			updateFloatingTitle(true);
 
-			if (article_is_unread) {
-                decrementFeedCounter(getActiveFeedId(), activeFeedIsCat());
-                updateFloatingTitle(true);
+			const query = {
+				op: "rpc", method: "catchupSelected",
+				cmode: 0, ids: id
+			};
 
-                const query = {
-                    op: "rpc", method: "catchupSelected",
-                    cmode: 0, ids: id
-                };
-
-                xhrPost("backend.php", query, (transport) => {
-                    handle_rpc_json(transport);
-                });
-            }
-
-			return !event.shiftKey;
+			xhrPost("backend.php", query, (transport) => {
+				handle_rpc_json(transport);
+			});
 		}
+
+		return !event.shiftKey;
 
 	} else if (!in_body) {
 

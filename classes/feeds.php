@@ -277,7 +277,6 @@ class Feeds extends Handler_Protected {
         $lnum = $offset;
         $num_unread = 0;
         if ($_REQUEST["debug"]) $timing_info = print_checkpoint("PS", $timing_info);
-        $expand_cdm = get_pref('CDM_EXPANDED');
 
         if (is_object($result)) {
 
@@ -497,11 +496,9 @@ class Feeds extends Handler_Protected {
 						}
 					}
 
-					$expanded_class = $expand_cdm ? "expanded" : "expandable";
-
                     $content_encoded = htmlspecialchars(json_encode($line["content"]));
 
-                    $tmp_content = "<div class=\"cdm $hlc_suffix $expanded_class $class\"
+                    $tmp_content = "<div class=\"cdm expanded $hlc_suffix $class\"
                         id=\"RROW-$id\" data-content=\"$content_encoded\" data-article-id='$id' data-orig-feed-id='$feed_id' $mouseover_attrs>";
 
 					$tmp_content .= "<div class=\"cdmHeader\">";
@@ -543,13 +540,6 @@ class Feeds extends Handler_Protected {
                     <img src=\"images/collapse.png\" onclick=\"cdmCollapseArticle(event, $id)\"
                     title=\"".__("Collapse article")."\"/></span>";
 
-					if (!$expand_cdm)
-						$content_hidden = "style=\"display : none\"";
-					else
-						$excerpt_hidden = "style=\"display : none\"";
-
-					$tmp_content .= "<span $excerpt_hidden id=\"CEXC-$id\" class=\"cdmExcerpt\">" . $content_preview . "</span>";
-
 					$tmp_content .= "</span>";
 
 					if (!$vfeed_group_enabled) {
@@ -578,9 +568,7 @@ class Feeds extends Handler_Protected {
 
 					$tmp_content .= "</div>"; //cdmHeader
 
-					$tmp_content .= "<div class=\"cdmContent\" $content_hidden
-                    onclick=\"return cdmClicked(event, $id, true);\"
-                    id=\"CICD-$id\">";
+					$tmp_content .= "<div class=\"cdmContent\" onclick=\"return cdmClicked(event, $id, true);\" id=\"CICD-$id\">";
 
 					$tmp_content .= "<div id=\"POSTNOTE-$id\">";
 					if ($line['note']) {
@@ -590,6 +578,7 @@ class Feeds extends Handler_Protected {
 
 					if (!$line['lang']) $line['lang'] = 'en';
 
+					// this is filled from RROW data-content
 					$tmp_content .= "<div class=\"cdmContentInner\" lang=\"".$line['lang']."\">";
 
 					if ($line["orig_feed_id"]) {
