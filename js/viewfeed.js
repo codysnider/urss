@@ -1008,11 +1008,12 @@ function unpackVisibleHeadlines() {
 	if (!isCdmMode()) return;
 
     const rows = $$("#headlines-frame div[id*=RROW][data-content]");
+	const threshold = $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight + 100;
 
     for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
 
-        if (row.offsetTop <= $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight) {
+        if (row.offsetTop <= threshold) {
             console.log("unpacking: " + row.id);
 
             const content = row.getAttribute("data-content");
