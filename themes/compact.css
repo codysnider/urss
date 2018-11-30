@@ -2,14 +2,14 @@
 
 body,
 .claro .dijitMenu .dijitMenuItemLabel,
-.claro .cdmContentInner,
+.claro .content-inner,
 .claro #content-insert,
-.claro .cdm .cdmContent,
-.claro .postReply .postContent { 
+.claro .cdm .content,
+.claro .post .content { 
 	font-size : 12px ! important;
 }
 
-.claro .postReply .postHeader,
+.claro .post .header,
 .claro #floatingTitle a.title,
 .claro .cdm .title {
 	font-size : 13px ! important;
