@@ -1007,22 +1007,24 @@ function postMouseOut(id) {
 function unpackVisibleHeadlines() {
 	if (!isCdmMode()) return;
 
-    $$("#headlines-frame div[id*=RROW][data-content]").each((row) => {
-    	//console.log('checking', row.id);
+    const rows = $$("#headlines-frame div[id*=RROW][data-content]");
 
-    	if (row.offsetTop <= $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight) {
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+
+        if (row.offsetTop <= $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight) {
             console.log("unpacking: " + row.id);
 
             const content = row.getAttribute("data-content");
 
-			row.select(".cdmContentInner")[0].innerHTML = content;
+            row.select(".cdmContentInner")[0].innerHTML = content;
             row.removeAttribute("data-content");
 
             PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
-		} else {
-    		throw $break;
-		}
-    });
+        } else {
+            break;
+        }
+    }
 }
 
 function headlines_scroll_handler(e) {
@@ -1035,8 +1037,6 @@ function headlines_scroll_handler(e) {
 
 		_headlines_scroll_offset = e.scrollTop;
 
-		const hsp = $("headlines-spacer");
-
 		unpackVisibleHeadlines();
 
 		// set topmost child in the buffer as active
@@ -1046,18 +1046,18 @@ function headlines_scroll_handler(e) {
 			const rows = $$("#headlines-frame > div[id*=RROW]");
 
 			for (let i = 0; i < rows.length; i++) {
-				const child = rows[i];
+				const row = rows[i];
 
-				if ($("headlines-frame").scrollTop <= child.offsetTop &&
-					child.offsetTop - $("headlines-frame").scrollTop < 100 &&
-					child.getAttribute("data-article-id") != _active_article_id) {
+				if ($("headlines-frame").scrollTop <= row.offsetTop &&
+					row.offsetTop - $("headlines-frame").scrollTop < 100 &&
+					row.getAttribute("data-article-id") != _active_article_id) {
 
 					if (_active_article_id) {
 						const row = $("RROW-" + _active_article_id);
 						if (row) row.removeClassName("active");
 					}
 
-					_active_article_id = child.getAttribute("data-article-id");
+					_active_article_id = row.getAttribute("data-article-id");
 					showArticleInHeadlines(_active_article_id, true);
 					updateSelectedPrompt();
 					break;
@@ -1066,6 +1066,8 @@ function headlines_scroll_handler(e) {
 		}
 
 		if (!_infscroll_disable) {
+            const hsp = $("headlines-spacer");
+
 			if (hsp && hsp.offsetTop - 250 <= e.scrollTop + e.offsetHeight) {
 
 				hsp.innerHTML = "<span class='loading'><img src='images/indicator_tiny.gif'> " +
@@ -1081,33 +1083,31 @@ function headlines_scroll_handler(e) {
 			updateFloatingTitle();
 		}
 
-		catchupCurrentBatchIfNeeded();
-
 		if (getInitParam("cdm_auto_catchup") == 1) {
 
-			// let's get DOM some time to settle down
-			const ts = new Date().getTime();
-			if (ts - _last_headlines_update < 100) return;
+			let rows = $$("#headlines-frame > div[id*=RROW][class*=Unread]");
 
-			$$("#headlines-frame > div[id*=RROW][class*=Unread]").each(
-				function(child) {
-					if ($("headlines-frame").scrollTop > (child.offsetTop + child.offsetHeight/2)) {
+			for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+				
+				if ($("headlines-frame").scrollTop > (row.offsetTop + row.offsetHeight/2)) {
 
-						const id = child.getAttribute("data-article-id")
+                    const id = row.getAttribute("data-article-id")
 
-						if (catchup_id_batch.indexOf(id) == -1)
-							catchup_id_batch.push(id);
+                    if (catchup_id_batch.indexOf(id) == -1)
+                        catchup_id_batch.push(id);
 
-						//console.log("auto_catchup_batch: " + catchup_id_batch.toString());
-					}
-
-				});
+                    //console.log("auto_catchup_batch: " + catchup_id_batch.toString());
+                } else {
+					break;
+				}
+            }
 
 			if (_infscroll_disable) {
-				const child = $$("#headlines-frame div[id*=RROW]").last();
+				const row = $$("#headlines-frame div[id*=RROW]").last();
 
-				if (child && $("headlines-frame").scrollTop >
-						(child.offsetTop + child.offsetHeight - 50)) {
+				if (row && $("headlines-frame").scrollTop >
+						(row.offsetTop + row.offsetHeight - 50)) {
 
 					console.log("we seem to be at an end");
 
@@ -1132,7 +1132,7 @@ function openNextUnreadFeed() {
 function catchupBatchedArticles() {
 	if (catchup_id_batch.length > 0 && !_infscroll_request_sent && !_catchup_request_sent) {
 
-		console.log("catchupBatchedArticles: working");
+		console.log("catchupBatchedArticles, size=", catchup_id_batch.length);
 
 		// make a copy of the array
 		const batch = catchup_id_batch.slice();
@@ -1150,7 +1150,6 @@ function catchupBatchedArticles() {
                 const batch = reply.ids;
 
                 batch.each(function (id) {
-                    console.log(id);
                     const elem = $("RROW-" + id);
                     if (elem) elem.removeClassName("Unread");
                     catchup_id_batch.remove(id);
@@ -1798,17 +1797,6 @@ function updateFloatingTitle(unread_only) {
 
 			return;
 
-		}
-	}
-}
-
-function catchupCurrentBatchIfNeeded() {
-	if (catchup_id_batch.length > 0) {
-		window.clearTimeout(catchup_timeout_id);
-		catchup_timeout_id = window.setTimeout(catchupBatchedArticles, 1000);
-
-		if (catchup_id_batch.length >= 10) {
-			catchupBatchedArticles();
 		}
 	}
 }

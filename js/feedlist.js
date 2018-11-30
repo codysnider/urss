@@ -176,6 +176,7 @@ function feedlist_init() {
 
 	document.onkeydown = hotkey_handler;
 	setInterval(hotkey_prefix_timeout, 5*1000);
+	setInterval(catchupBatchedArticles, 3*1000);
 
 	if (!getActiveFeedId()) {
 		viewfeed({feed: -3});
