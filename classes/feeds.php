@@ -536,10 +536,6 @@ class Feeds extends Handler_Protected {
 
 					$tmp_content .= $labels_str;
 
-					$tmp_content .= "<span class='collapseBtn' style='display : none'>
-                    <img src=\"images/collapse.png\" onclick=\"cdmCollapseArticle(event, $id)\"
-                    title=\"".__("Collapse article")."\"/></span>";
-
 					$tmp_content .= "</span>";
 
 					if (!$vfeed_group_enabled) {
