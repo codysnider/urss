@@ -15,44 +15,31 @@ function updateFeedList() {
 	let search = "";
 	if (user_search) { search = user_search.value; }
 
-	new Ajax.Request("backend.php", {
-		parameters: "?op=pref-feeds&search=" + param_escape(search),
-		onComplete: function(transport) {
-			dijit.byId('feedConfigTab').attr('content', transport.responseText);
-			selectTab("feedConfig", true);
-			notify("");
-		} });
+	xhrPost("backend.php", { op: "pref-feeds", search: search }, (transport) => {
+		dijit.byId('feedConfigTab').attr('content', transport.responseText);
+		selectTab("feedConfig", true);
+		notify("");
+	});
 }
 
 function checkInactiveFeeds() {
-	new Ajax.Request("backend.php", {
-		parameters: "?op=pref-feeds&method=getinactivefeeds",
-		onComplete: function (transport) {
-			if (parseInt(transport.responseText) > 0) {
-				Element.show(dijit.byId("pref_feeds_inactive_btn").domNode);
-			}
+	xhrPost("backend.php", { op: "pref-feeds", method: "getinactivefeeds" }, (transport) => {
+		if (parseInt(transport.responseText) > 0) {
+			Element.show(dijit.byId("pref_feeds_inactive_btn").domNode);
 		}
 	});
 }
 
 function updateUsersList(sort_key) {
 	const user_search = $("user_search");
-	let search = "";
-	if (user_search) {
-		search = user_search.value;
-	}
+	const search = user_search ? user_search.value : "";
 
-	const query = "?op=pref-users&sort=" +
-		param_escape(sort_key) +
-		"&search=" + param_escape(search);
+	const query = { op: "pref-users", sort:  sort_key, search: search };
 
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function (transport) {
-			dijit.byId('userConfigTab').attr('content', transport.responseText);
-			selectTab("userConfig", true)
-			notify("");
-		}
+	xhrPost("backend.php", query, (transport) => {
+		dijit.byId('userConfigTab').attr('content', transport.responseText);
+		selectTab("userConfig", true)
+		notify("");
 	});
 }
 
@@ -70,16 +57,10 @@ function addUser() {
 
 	notify_progress("Adding user...");
 
-	const query = "?op=pref-users&method=add&login=" +
-		param_escape(login);
-
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function (transport) {
-			notify_callback2(transport);
-			updateUsersList();
-		}
-	});
+	xhrPost("backend.php", { op: "pref-users", method: "add", login: login }, (transport) => {
+        notify_callback2(transport);
+        updateUsersList();
+    });
 
 }
 
@@ -99,15 +80,10 @@ function editUser(id) {
 			if (this.validate()) {
 				notify_progress("Saving data...", true);
 
-				const query = dojo.formToQuery("user_edit_form");
-
-				new Ajax.Request("backend.php", {
-					parameters: query,
-					onComplete: function (transport) {
-						dialog.hide();
-						updateUsersList();
-					}
-				});
+				xhrPost("backend.php", dojo.formToObject("user_edit_form"), (transport) => {
+                    dialog.hide();
+                    updateUsersList();
+                });
 			}
 		},
 		href: query
@@ -174,16 +150,10 @@ function editFilter(id) {
 
 				notify_progress("Removing filter...");
 
-				const id = this.attr('value').id;
+				const query = { op: "pref-filters", method: "remove", ids: this.attr('value').id };
 
-				const query = "?op=pref-filters&method=remove&ids=" +
-					param_escape(id);
-
-				new Ajax.Request("backend.php", {
-					parameters: query,
-					onComplete: function (transport) {
-						updateFilterList();
-					}
+				xhrPost("backend.php", query, () => {
+					updateFilterList();
 				});
 			}
 		},
@@ -208,16 +178,9 @@ function editFilter(id) {
 
 				notify_progress("Saving data...", true);
 
-				const query = dojo.formToQuery("filter_edit_form");
-
-				console.log(query);
-
-				new Ajax.Request("backend.php", {
-					parameters: query,
-					onComplete: function (transport) {
-						dialog.hide();
-						updateFilterList();
-					}
+				xhrPost("backend.php", dojo.formToObject("filter_edit_form"), () => {
+					dialog.hide();
+					updateFilterList();
 				});
 			}
 		},
@@ -294,15 +257,12 @@ function removeSelectedLabels() {
 		if (ok) {
 			notify_progress("Removing selected labels...");
 
-			const query = "?op=pref-labels&method=remove&ids="+
-				param_escape(sel_rows.toString());
+			const query = { op: "pref-labels", method: "remove",
+				ids: sel_rows.toString() };
 
-			new Ajax.Request("backend.php",	{
-				parameters: query,
-				onComplete: function(transport) {
-						updateLabelList();
-					} });
-
+			xhrPost("backend.php",	query, () => {
+				updateLabelList();
+			});
 		}
 	} else {
 		alert(__("No labels are selected."));
@@ -322,16 +282,12 @@ function removeSelectedUsers() {
 		if (ok) {
 			notify_progress("Removing selected users...");
 
-			const query = "?op=pref-users&method=remove&ids=" +
-				param_escape(sel_rows.toString());
+			const query = { op: "pref-users", method: "remove",
+				ids: sel_rows.toString() };
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function (transport) {
-					updateUsersList();
-				}
+			xhrPost("backend.php", query, () => {
+				updateUsersList();
 			});
-
 		}
 
 	} else {
@@ -352,14 +308,11 @@ function removeSelectedFilters() {
 		if (ok) {
 			notify_progress("Removing selected filters...");
 
-			const query = "?op=pref-filters&method=remove&ids=" +
-				param_escape(sel_rows.toString());
+			const query = { op: "pref-filters", method: "remove",
+				ids:  sel_rows.toString() };
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function (transport) {
-					updateFilterList();
-				}
+			xhrPost("backend.php", query, () => {
+				updateFilterList();
 			});
 		}
 	} else {
@@ -381,16 +334,11 @@ function removeSelectedFeeds() {
 
 			notify_progress("Unsubscribing from selected feeds...", true);
 
-			const query = "?op=pref-feeds&method=remove&ids=" +
-				param_escape(sel_rows.toString());
+			const query = { op: "pref-feeds", method: "remove",
+				ids: sel_rows.toString() };
 
-			console.log(query);
-
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function (transport) {
-					updateFeedList();
-				}
+			xhrPost("backend.php", query, () => {
+				updateFeedList();
 			});
 		}
 
@@ -440,14 +388,8 @@ function resetSelectedUserPass() {
 
 		const id = rows[0];
 
-		const query = "?op=pref-users&method=resetPass&id=" +
-			param_escape(id);
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function (transport) {
-				notify_info(transport.responseText, true);
-			}
+		xhrPost("backend.php", { op: "pref-users", method: "resetPass", id: id }, (transport) => {
+			notify_info(transport.responseText, true);
 		});
 
 	}
@@ -467,9 +409,7 @@ function selectedUserDetails() {
 		return;
 	}
 
-	const id = rows[0];
-
-	const query = "backend.php?op=pref-users&method=userdetails&id=" + id;
+	const query = "backend.php?op=pref-users&method=userdetails&id=" + param_escape(rows[0]);
 
 	if (dijit.byId("userDetailsDlg"))
 		dijit.byId("userDetailsDlg").destroyRecursive();
@@ -520,16 +460,9 @@ function joinSelectedFilters() {
 	if (ok) {
 		notify_progress("Joining filters...");
 
-		const query = "?op=pref-filters&method=join&ids="+
-			param_escape(rows.toString());
-
-		console.log(query);
-
-		new Ajax.Request("backend.php",	{
-			parameters: query,
-			onComplete: function(transport) {
-					updateFilterList();
-			} });
+		xhrPost("backend.php", { op: "pref-filters", method: "join", ids: rows.toString() }, () => {
+			updateFilterList();
+		});
 	}
 }
 
@@ -602,19 +535,21 @@ function editSelectedFeeds() {
 				},
 				execute: function () {
 					if (this.validate() && confirm(__("Save changes to selected feeds?"))) {
-						let query = dojo.objectToQuery(this.attr('value'));
+						const query = this.attr('value');
+
+						//console.log(query); return;
 
 						/* Form.serialize ignores unchecked checkboxes */
 
-						if (!query.match("&private=") &&
+						/*if (!query.match("&private=") &&
 							this.getChildByName('private').attr('disabled') == false) {
-							query = query + "&private=false";
+							query.private = "false";
 						}
 
 						try {
 							if (!query.match("&cache_images=") &&
 								this.getChildByName('cache_images').attr('disabled') == false) {
-								query = query + "&cache_images=false";
+								query.cache_images = "false";
 							}
 						} catch (e) {
 						}
@@ -622,36 +557,31 @@ function editSelectedFeeds() {
 						try {
 							if (!query.match("&hide_images=") &&
 								this.getChildByName('hide_images').attr('disabled') == false) {
-								query = query + "&hide_images=false";
+								query.hide_images = "false";
 							}
 						} catch (e) {
 						}
 
 						if (!query.match("&include_in_digest=") &&
 							this.getChildByName('include_in_digest').attr('disabled') == false) {
-							query = query + "&include_in_digest=false";
+							query.include_in_digest = "false";
 						}
 
 						if (!query.match("&always_display_enclosures=") &&
 							this.getChildByName('always_display_enclosures').attr('disabled') == false) {
-							query = query + "&always_display_enclosures=false";
+							query.always_display_enclosures = "false";
 						}
 
 						if (!query.match("&mark_unread_on_update=") &&
 							this.getChildByName('mark_unread_on_update').attr('disabled') == false) {
-							query = query + "&mark_unread_on_update=false";
-						}
-
-						console.log(query);
+							query.mark_unread_on_update = "false";
+						}*/
 
 						notify_progress("Saving data...", true);
 
-						new Ajax.Request("backend.php", {
-							parameters: query,
-							onComplete: function (transport) {
-								dialog.hide();
-								updateFeedList();
-							}
+						xhrPost("backend.php", query, () => {
+							dialog.hide();
+							updateFeedList();
 						});
 					}
 				},
@@ -1172,17 +1102,13 @@ function editProfiles() {
 				if (ok) {
 					notify_progress("Removing selected profiles...", true);
 
-					const query = "?op=rpc&method=remprofiles&ids=" +
-						param_escape(sel_rows.toString());
+					const query = { op: "rpc", method: "remprofiles",
+						ids: sel_rows.toString() };
 
-					new Ajax.Request("backend.php", {
-						parameters: query,
-						onComplete: function (transport) {
-							notify('');
-							editProfiles();
-						}
+					xhrPost("backend.php", query, () => {
+						notify('');
+						editProfiles();
 					});
-
 				}
 
 			} else {
@@ -1199,15 +1125,9 @@ function editProfiles() {
 				if (ok) {
 					notify_progress("Loading, please wait...");
 
-					const query = "?op=rpc&method=setprofile&id=" +
-						param_escape(sel_rows.toString());
-
-					new Ajax.Request("backend.php", {
-						parameters: query,
-						onComplete: function (transport) {
-							window.location.reload();
-						}
-					});
+                    xhrPost("backend.php", { op: "rpc", method: "setprofile", id: sel_rows.toString() },  () => {
+                        window.location.reload();
+                    });
 				}
 
 			} else {
@@ -1218,15 +1138,11 @@ function editProfiles() {
 			if (this.validate()) {
 				notify_progress("Creating profile...", true);
 
-				const query = "?op=rpc&method=addprofile&title=" +
-					param_escape(dialog.attr('value').newprofile);
+				const query = { op: "rpc", method: "addprofile", title: dialog.attr('value').newprofile };
 
-				new Ajax.Request("backend.php", {
-					parameters: query,
-					onComplete: function (transport) {
-						notify('');
-						editProfiles();
-					}
+				xhrPost("backend.php", query, () => {
+					notify('');
+					editProfiles();
 				});
 
 			}
@@ -1241,6 +1157,7 @@ function editProfiles() {
 	dialog.show();
 }
 
+/*
 function activatePrefProfile() {
 
 	const sel_rows = getSelectedFeedCats();
@@ -1252,14 +1169,9 @@ function activatePrefProfile() {
 		if (ok) {
 			notify_progress("Loading, please wait...");
 
-			const query = "?op=rpc&method=setprofile&id="+
-				param_escape(sel_rows.toString());
-
-			new Ajax.Request("backend.php",	{
-				parameters: query,
-				onComplete: function(transport) {
-					window.location.reload();
-				} });
+			xhrPost("backend.php", { op: "rpc", method: "setprofile", id: sel_rows.toString() },  () => {
+				window.location.reload();
+			});
 		}
 
 	} else {
@@ -1267,7 +1179,7 @@ function activatePrefProfile() {
 	}
 
 	return false;
-}
+} */
 
 function clearFeedAccessKeys() {
 
@@ -1276,13 +1188,9 @@ function clearFeedAccessKeys() {
 	if (ok) {
 		notify_progress("Clearing URLs...");
 
-		const query = "?op=pref-feeds&method=clearKeys";
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-				notify_info("Generated URLs cleared.");
-			} });
+		xhrPost("backend.php", { op: "pref-feeds", method: "clearKeys" }, () => {
+            notify_info("Generated URLs cleared.");
+        });
 	}
 
 	return false;
@@ -1291,34 +1199,25 @@ function clearFeedAccessKeys() {
 function resetFilterOrder() {
 	notify_progress("Loading, please wait...");
 
-	new Ajax.Request("backend.php", {
-		parameters: "?op=pref-filters&method=filtersortreset",
-		onComplete: function (transport) {
-			updateFilterList();
-		}
-	});
+    xhrPost("backend.php", { op: "pref-filters", method: "filtersortreset" }, () => {
+        updateFilterList();
+    });
 }
 
 
 function resetFeedOrder() {
 	notify_progress("Loading, please wait...");
 
-	new Ajax.Request("backend.php", {
-		parameters: "?op=pref-feeds&method=feedsortreset",
-		onComplete: function (transport) {
-			updateFeedList();
-		}
-	});
+    xhrPost("backend.php", { op: "pref-feeds", method: "feedsortreset" }, () => {
+        updateFeedList();
+    });
 }
 
 function resetCatOrder() {
 	notify_progress("Loading, please wait...");
 
-	new Ajax.Request("backend.php", {
-		parameters: "?op=pref-feeds&method=catsortreset",
-		onComplete: function (transport) {
-			updateFeedList();
-		}
+	xhrPost("backend.php", { op: "pref-feeds", method: "catsortreset" }, () => {
+		updateFeedList();
 	});
 }
 
@@ -1329,16 +1228,8 @@ function editCat(id, item) {
 
 		notify_progress("Loading, please wait...");
 
-		new Ajax.Request("backend.php", {
-			parameters: {
-				op: 'pref-feeds',
-				method: 'renamecat',
-				id: id,
-				title: new_name,
-			},
-			onComplete: function (transport) {
-				updateFeedList();
-			}
+		xhrPost("backend.php", { op: 'pref-feeds', method: 'renamecat', id: id, title: new_name }, () => {
+			updateFeedList();
 		});
 	}
 }
@@ -1369,12 +1260,6 @@ function editLabel(id) {
 				color = bg;
 			}
 
-			const query = "?op=pref-labels&method=colorset&kind=" + kind +
-				"&ids=" + param_escape(id) + "&fg=" + param_escape(fg) +
-				"&bg=" + param_escape(bg) + "&color=" + param_escape(color);
-
-			//		console.log(query);
-
 			const e = $("LICID-" + id);
 
 			if (e) {
@@ -1382,26 +1267,26 @@ function editLabel(id) {
 				if (bg) e.style.backgroundColor = bg;
 			}
 
-			new Ajax.Request("backend.php", {parameters: query});
+            const query = { op: "pref-labels", method: "colorset", kind: kind,
+                ids: id, fg: fg, bg: bg, color: color };
 
-			updateFilterList();
+            xhrPost("backend.php", query, () => {
+                updateFilterList(); // maybe there's labels in there
+			});
+
 		},
 		execute: function () {
 			if (this.validate()) {
 				const caption = this.attr('value').caption;
 				const fg_color = this.attr('value').fg_color;
 				const bg_color = this.attr('value').bg_color;
-				const query = dojo.objectToQuery(this.attr('value'));
 
 				dijit.byId('labelTree').setNameById(id, caption);
 				this.setLabelColor(id, fg_color, bg_color);
 				this.hide();
 
-				new Ajax.Request("backend.php", {
-					parameters: query,
-					onComplete: function (transport) {
-						updateFilterList();
-					}
+				xhrPost("backend.php", this.attr('value'), () => {
+                    updateFilterList(); // maybe there's labels in there
 				});
 			}
 		},
@@ -1424,12 +1309,9 @@ function customizeCSS() {
 		style: "width: 600px",
 		execute: function () {
 			notify_progress('Saving data...', true);
-			new Ajax.Request("backend.php", {
-				parameters: dojo.objectToQuery(this.attr('value')),
-				onComplete: function (transport) {
-					notify('');
-					window.location.reload();
-				}
+
+			xhrPost("backend.php", this.attr('value'), () => {
+				window.location.reload();
 			});
 
 		},
@@ -1462,17 +1344,12 @@ function batchSubscribe() {
 		style: "width: 600px",
 		execute: function () {
 			if (this.validate()) {
-				console.log(dojo.objectToQuery(this.attr('value')));
-
 				notify_progress(__("Subscribing to feeds..."), true);
 
-				new Ajax.Request("backend.php", {
-					parameters: dojo.objectToQuery(this.attr('value')),
-					onComplete: function (transport) {
-						notify("");
-						updateFeedList();
-						dialog.hide();
-					}
+				xhrPost("backend.php", this.attr('value'), () => {
+					notify("");
+					updateFeedList();
+					dialog.hide();
 				});
 			}
 		},
@@ -1486,12 +1363,10 @@ function clearPluginData(name) {
 	if (confirm(__("Clear stored data for this plugin?"))) {
 		notify_progress("Loading, please wait...");
 
-		new Ajax.Request("backend.php", {
-			parameters: "?op=pref-prefs&method=clearplugindata&name=" + param_escape(name),
-			onComplete: function(transport) {
-				notify('');
-				updatePrefsList();
-			} });
+		xhrPost("backend.php", { op: "pref-prefs", method: "clearplugindata", name: name }, () => {
+			notify('');
+			updatePrefsList();
+		});
 	}
 }
 
@@ -1500,13 +1375,10 @@ function clearSqlLog() {
 	if (confirm(__("Clear all messages in the error log?"))) {
 
 		notify_progress("Loading, please wait...");
-		const query = "?op=pref-system&method=clearLog";
 
-		new Ajax.Request("backend.php",	{
-			parameters: query,
-			onComplete: function(transport) {
-				updateSystemList();
-			} });
+		xhrPost("backend.php",	{ op: "pref-system", method: "clearLog" }, () => {
+			updateSystemList();
+		});
 
 	}
 }

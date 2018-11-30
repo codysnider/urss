@@ -1087,7 +1087,7 @@ function backend_sanity_check_callback(transport) {
 		console.log('reading init-params...');
 
 		for (const k in params) {
-			console.log("IP: " + k + " => " + JSON.stringify(params[k]));
+			console.log("IP:", k, "=>", params[k]);
 			if (k == "label_base_index") _label_base_index = parseInt(params[k]);
 		}
 
