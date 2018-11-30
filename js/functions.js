@@ -336,15 +336,12 @@ function displayDlg(title, id, param, callback) {
 
 	notify_progress("Loading, please wait...", true);
 
-	const query = "?op=dlg&method=" +
-		param_escape(id) + "&param=" + param_escape(param);
+	const query = { op: "dlg", method: id, param: param };
 
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function (transport) {
-			infobox_callback2(transport, title);
-			if (callback) callback(transport);
-		} });
+	xhrPost("backend.php", query, (transport) => {
+        infobox_callback2(transport, title);
+        if (callback) callback(transport);
+	});
 
 	return false;
 }
@@ -527,22 +524,19 @@ function uploadIconHandler(rc) {
 
 function removeFeedIcon(id) {
 	if (confirm(__("Remove stored feed icon?"))) {
-		const query = "backend.php?op=pref-feeds&method=removeicon&feed_id=" + param_escape(id);
-
-		console.log(query);
 
 		notify_progress("Removing feed icon...", true);
 
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-				notify_info("Feed icon removed.");
-				if (inPreferences()) {
-					updateFeedList();
-				} else {
-					setTimeout('updateFeedList(false, false)', 50);
-				}
-			} });
+        const query = { op: "pref-feeds", method: "removeicon", feed_id: id };
+
+		xhrPost("backend.php", query, (transport) => {
+            notify_info("Feed icon removed.");
+            if (inPreferences()) {
+                updateFeedList();
+            } else {
+                setTimeout('updateFeedList(false, false)', 50);
+            }
+        });
 	}
 
 	return false;
@@ -572,26 +566,22 @@ function addLabel(select, callback) {
 			return false;
 		}
 
-		let query = "?op=pref-labels&method=add&caption=" +
-			param_escape(caption);
+		const query = { op: "pref-labels", method: "add", caption: caption };
 
 		if (select)
-			query += "&output=select";
+			Object.extend(query, {output: "select"});
 
 		notify_progress("Loading, please wait...", true);
 
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-				if (callback) {
-					callback(transport);
-				} else if (inPreferences()) {
-					updateLabelList();
-				} else {
-					updateFeedList();
-				}
-		} });
-
+		xhrPost("backend.php", query, (transport) => {
+            if (callback) {
+                callback(transport);
+            } else if (inPreferences()) {
+                updateLabelList();
+            } else {
+                updateFeedList();
+            }
+        });
 	}
 
 }
@@ -625,82 +615,78 @@ function quickAddFeed() {
 				Element.show("feed_add_spinner");
 				Element.hide("fadd_error_message");
 
-				new Ajax.Request("backend.php", {
-					parameters: dojo.objectToQuery(this.attr('value')),
-					onComplete: function(transport) {
-						try {
+				xhrPost("backend.php", this.attr('value'), (transport) => {
+                    try {
 
-							try {
-								var reply = JSON.parse(transport.responseText);
-							} catch (e) {
-								Element.hide("feed_add_spinner");
-								alert(__("Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."));
-								console.log('quickAddFeed, backend returned:' + transport.responseText);
-								return;
-							}
+                        try {
+                            var reply = JSON.parse(transport.responseText);
+                        } catch (e) {
+                            Element.hide("feed_add_spinner");
+                            alert(__("Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."));
+                            console.log('quickAddFeed, backend returned:' + transport.responseText);
+                            return;
+                        }
 
-							const rc = reply['result'];
+                        const rc = reply['result'];
 
-							notify('');
-							Element.hide("feed_add_spinner");
+                        notify('');
+                        Element.hide("feed_add_spinner");
 
-							console.log(rc);
+                        console.log(rc);
 
-							switch (parseInt(rc['code'])) {
-							case 1:
-								dialog.hide();
-								notify_info(__("Subscribed to %s").replace("%s", feed_url));
+                        switch (parseInt(rc['code'])) {
+                            case 1:
+                                dialog.hide();
+                                notify_info(__("Subscribed to %s").replace("%s", feed_url));
 
-								updateFeedList();
-								break;
-							case 2:
-								dialog.show_error(__("Specified URL seems to be invalid."));
-								break;
-							case 3:
-								dialog.show_error(__("Specified URL doesn't seem to contain any feeds."));
-								break;
-							case 4:
-								var feeds = rc['feeds'];
+                                updateFeedList();
+                                break;
+                            case 2:
+                                dialog.show_error(__("Specified URL seems to be invalid."));
+                                break;
+                            case 3:
+                                dialog.show_error(__("Specified URL doesn't seem to contain any feeds."));
+                                break;
+                            case 4:
+                                const feeds = rc['feeds'];
 
-								Element.show("fadd_multiple_notify");
+                                Element.show("fadd_multiple_notify");
 
-								var select = dijit.byId("feedDlg_feedContainerSelect");
+                                const select = dijit.byId("feedDlg_feedContainerSelect");
 
-								while (select.getOptions().length > 0)
-									select.removeOption(0);
+                                while (select.getOptions().length > 0)
+                                    select.removeOption(0);
 
-								select.addOption({value: '', label: __("Expand to select feed")});
+                                select.addOption({value: '', label: __("Expand to select feed")});
 
-								var count = 0;
-								for (const feedUrl in feeds) {
-									select.addOption({value: feedUrl, label: feeds[feedUrl]});
-									count++;
-								}
+                                let count = 0;
+                                for (const feedUrl in feeds) {
+                                    select.addOption({value: feedUrl, label: feeds[feedUrl]});
+                                    count++;
+                                }
 
-								Effect.Appear('feedDlg_feedsContainer', {duration : 0.5});
+                                Effect.Appear('feedDlg_feedsContainer', {duration : 0.5});
 
-								break;
-							case 5:
-								dialog.show_error(__("Couldn't download the specified URL: %s").
-										replace("%s", rc['message']));
-								break;
-							case 6:
-								dialog.show_error(__("XML validation failed: %s").
-										replace("%s", rc['message']));
-								break;
-							case 0:
-								dialog.show_error(__("You are already subscribed to this feed."));
-								break;
-							}
+                                break;
+                            case 5:
+                                dialog.show_error(__("Couldn't download the specified URL: %s").
+                                replace("%s", rc['message']));
+                                break;
+                            case 6:
+                                dialog.show_error(__("XML validation failed: %s").
+                                replace("%s", rc['message']));
+                                break;
+                            case 0:
+                                dialog.show_error(__("You are already subscribed to this feed."));
+                                break;
+                        }
 
-						} catch (e) {
-							console.error(transport.responseText);
-							exception_error(e);
-						}
-
-					} });
-
-				}
+                    } catch (e) {
+                        console.error(transport.responseText);
+                        exception_error(e);
+                    }
+				});
+			}
 		},
 		href: query});
 
@@ -712,43 +698,38 @@ function createNewRuleElement(parentNode, replaceNode) {
 
 	//form.reg_exp.value = form.reg_exp.value.replace(/(<([^>]+)>)/ig,"");
 
-	const query = "backend.php?op=pref-filters&method=printrulename&rule="+
-		param_escape(dojo.formToJson(form));
+	const query = { op: "pref-filters", method: "printrulename", rule: dojo.formToJson(form) };
 
-	console.log(query);
+	xhrPost("backend.php", query, (transport) => {
+		try {
+			const li = dojo.create("li");
 
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function (transport) {
-			try {
-				const li = dojo.create("li");
+			const cb = dojo.create("input", { type: "checkbox" }, li);
 
-				const cb = dojo.create("input", { type: "checkbox" }, li);
+			new dijit.form.CheckBox({
+				onChange: function() {
+					toggleSelectListRow2(this) },
+			}, cb);
 
-				new dijit.form.CheckBox({
-					onChange: function() {
-						toggleSelectListRow2(this) },
-				}, cb);
+			dojo.create("input", { type: "hidden",
+				name: "rule[]",
+				value: dojo.formToJson(form) }, li);
 
-				dojo.create("input", { type: "hidden",
-					name: "rule[]",
-					value: dojo.formToJson(form) }, li);
+			dojo.create("span", {
+				onclick: function() {
+					dijit.byId('filterEditDlg').editRule(this);
+				},
+				innerHTML: transport.responseText }, li);
 
-				dojo.create("span", {
-					onclick: function() {
-						dijit.byId('filterEditDlg').editRule(this);
-					},
-					innerHTML: transport.responseText }, li);
-
-				if (replaceNode) {
-					parentNode.replaceChild(li, replaceNode);
-				} else {
-					parentNode.appendChild(li);
-				}
-			} catch (e) {
-				exception_error(e);
+			if (replaceNode) {
+				parentNode.replaceChild(li, replaceNode);
+			} else {
+				parentNode.appendChild(li);
 			}
-	} });
+		} catch (e) {
+			exception_error(e);
+		}
+	});
 }
 
 function createNewActionElement(parentNode, replaceNode) {
@@ -760,44 +741,40 @@ function createNewActionElement(parentNode, replaceNode) {
 		form.action_param.value = form.action_param_plugin.value;
 	}
 
-	const query = "backend.php?op=pref-filters&method=printactionname&action="+
-		param_escape(dojo.formToJson(form));
+	const query = { op: "pref-filters", method: "printactionname",
+		action: dojo.formToJson(form) };
 
-	console.log(query);
+	xhrPost("backend.php", query, (transport) => {
+		try {
+			const li = dojo.create("li");
 
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function (transport) {
-			try {
-				const li = dojo.create("li");
+			const cb = dojo.create("input", { type: "checkbox" }, li);
 
-				const cb = dojo.create("input", { type: "checkbox" }, li);
+			new dijit.form.CheckBox({
+				onChange: function() {
+					toggleSelectListRow2(this) },
+			}, cb);
 
-				new dijit.form.CheckBox({
-					onChange: function() {
-						toggleSelectListRow2(this) },
-				}, cb);
+			dojo.create("input", { type: "hidden",
+				name: "action[]",
+				value: dojo.formToJson(form) }, li);
 
-				dojo.create("input", { type: "hidden",
-					name: "action[]",
-					value: dojo.formToJson(form) }, li);
+			dojo.create("span", {
+				onclick: function() {
+					dijit.byId('filterEditDlg').editAction(this);
+				},
+				innerHTML: transport.responseText }, li);
 
-				dojo.create("span", {
-					onclick: function() {
-						dijit.byId('filterEditDlg').editAction(this);
-					},
-					innerHTML: transport.responseText }, li);
-
-				if (replaceNode) {
-					parentNode.replaceChild(li, replaceNode);
-				} else {
-					parentNode.appendChild(li);
-				}
-
-			} catch (e) {
-				exception_error(e);
+			if (replaceNode) {
+				parentNode.replaceChild(li, replaceNode);
+			} else {
+				parentNode.appendChild(li);
 			}
-		} });
+
+		} catch (e) {
+			exception_error(e);
+		}
+	});
 }
 
 
@@ -858,72 +835,70 @@ function editFilterTest(query) {
 		limit: 100,
 		max_offset: 10000,
 		getTestResults: function(query, offset) {
-			const updquery = query + "&offset=" + offset + "&limit=" + test_dlg.limit;
+		const updquery = query + "&offset=" + offset + "&limit=" + test_dlg.limit;
 
-			console.log("getTestResults:" + offset);
+		console.log("getTestResults:" + offset);
 
-			new Ajax.Request("backend.php", {
-				parameters: updquery,
-				onComplete: function (transport) {
-					try {
-						const result = JSON.parse(transport.responseText);
+		xhrPost("backend.php", updquery, (transport) => {
+				try {
+					const result = JSON.parse(transport.responseText);
 
-						if (result && dijit.byId("filterTestDlg") && dijit.byId("filterTestDlg").open) {
-							test_dlg.results += result.length;
+					if (result && dijit.byId("filterTestDlg") && dijit.byId("filterTestDlg").open) {
+						test_dlg.results += result.length;
 
-							console.log("got results:" + result.length);
+						console.log("got results:" + result.length);
 
-							$("prefFilterProgressMsg").innerHTML = __("Looking for articles (%d processed, %f found)...")
-								.replace("%f", test_dlg.results)
-								.replace("%d", offset);
+						$("prefFilterProgressMsg").innerHTML = __("Looking for articles (%d processed, %f found)...")
+							.replace("%f", test_dlg.results)
+							.replace("%d", offset);
 
-							console.log(offset + " " + test_dlg.max_offset);
+						console.log(offset + " " + test_dlg.max_offset);
 
-							for (let i = 0; i < result.length; i++) {
-								const tmp = new Element("table");
-								tmp.innerHTML = result[i];
-								dojo.parser.parse(tmp);
+						for (let i = 0; i < result.length; i++) {
+							const tmp = new Element("table");
+							tmp.innerHTML = result[i];
+							dojo.parser.parse(tmp);
 
-								$("prefFilterTestResultList").innerHTML += tmp.innerHTML;
-							}
+							$("prefFilterTestResultList").innerHTML += tmp.innerHTML;
+						}
 
-							if (test_dlg.results < 30 && offset < test_dlg.max_offset) {
+						if (test_dlg.results < 30 && offset < test_dlg.max_offset) {
 
-								// get the next batch
-								window.setTimeout(function () {
-									test_dlg.getTestResults(query, offset + test_dlg.limit);
-								}, 0);
+							// get the next batch
+							window.setTimeout(function () {
+								test_dlg.getTestResults(query, offset + test_dlg.limit);
+							}, 0);
 
-							} else {
-								// all done
-
-								Element.hide("prefFilterLoadingIndicator");
-
-								if (test_dlg.results == 0) {
-									$("prefFilterTestResultList").innerHTML = "<tr><td align='center'>No recent articles matching this filter have been found.</td></tr>";
-									$("prefFilterProgressMsg").innerHTML = "Articles matching this filter:";
-								} else {
-									$("prefFilterProgressMsg").innerHTML = __("Found %d articles matching this filter:")
-										.replace("%d", test_dlg.results);
-								}
-
-							}
-
-						} else if (!result) {
-							console.log("getTestResults: can't parse results object");
+						} else {
+							// all done
 
 							Element.hide("prefFilterLoadingIndicator");
 
-							notify_error("Error while trying to get filter test results.");
+							if (test_dlg.results == 0) {
+								$("prefFilterTestResultList").innerHTML = "<tr><td align='center'>No recent articles matching this filter have been found.</td></tr>";
+								$("prefFilterProgressMsg").innerHTML = "Articles matching this filter:";
+							} else {
+								$("prefFilterProgressMsg").innerHTML = __("Found %d articles matching this filter:")
+									.replace("%d", test_dlg.results);
+							}
 
-						} else {
-							console.log("getTestResults: dialog closed, bailing out.");
 						}
-					} catch (e) {
-						exception_error(e);
-					}
 
-				} });
+					} else if (!result) {
+						console.log("getTestResults: can't parse results object");
+
+						Element.hide("prefFilterLoadingIndicator");
+
+						notify_error("Error while trying to get filter test results.");
+
+					} else {
+						console.log("getTestResults: dialog closed, bailing out.");
+					}
+				} catch (e) {
+					exception_error(e);
+				}
+
+			});
 		},
 		href: query});
 
@@ -1005,17 +980,13 @@ function quickAddFilter() {
 
 				const query = dojo.formToQuery("filter_new_form");
 
-				console.log(query);
+				xhrPost("backend.php", query, (transport) => {
+					if (inPreferences()) {
+						updateFilterList();
+					}
 
-				new Ajax.Request("backend.php", {
-					parameters: query,
-					onComplete: function (transport) {
-						if (inPreferences()) {
-							updateFilterList();
-						}
-
-						dialog.hide();
-				} });
+					dialog.hide();
+				});
 			}
 		},
 		href: query});
@@ -1037,11 +1008,9 @@ function quickAddFilter() {
 
 			} else {
 
-				const query = "op=rpc&method=getlinktitlebyid&id=" + getActiveArticleId();
+				const query = { op: "rpc", method: "getlinktitlebyid", id: getActiveArticleId() };
 
-				new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function(transport) {
+				xhrPost("backend.php", query, (transport) => {
 					const reply = JSON.parse(transport.responseText);
 
 					let title = false;
@@ -1059,11 +1028,8 @@ function quickAddFilter() {
 
 						addFilterRule(null, dojo.toJson(rule));
 					}
-
-				} });
-
+				});
 			}
-
 		});
 	}
 
@@ -1078,24 +1044,20 @@ function unsubscribeFeed(feed_id, title) {
 	if (title == undefined || confirm(msg)) {
 		notify_progress("Removing feed...");
 
-		const query = "?op=pref-feeds&quiet=1&method=remove&ids=" + feed_id;
+		const query = { op: "pref-feeds", quiet: 1, method: "remove", ids: feed_id };
 
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
+		xhrPost("backend.php", query, (transport) => {
+			if (dijit.byId("feedEditDlg")) dijit.byId("feedEditDlg").hide();
 
-					if (dijit.byId("feedEditDlg")) dijit.byId("feedEditDlg").hide();
+			if (inPreferences()) {
+				updateFeedList();
+			} else {
+				if (feed_id == getActiveFeedId())
+					setTimeout(function() { viewfeed({feed:-5}) }, 100);
 
-					if (inPreferences()) {
-						updateFeedList();
-					} else {
-						if (feed_id == getActiveFeedId())
-							setTimeout(function() { viewfeed({feed:-5}) }, 100);
-
-						if (feed_id < 0) updateFeedList();
-					}
-
-				} });
+				if (feed_id < 0) updateFeedList();
+			}
+		});
 	}
 
 	return false;
@@ -1145,33 +1107,27 @@ function genUrlChangeKey(feed, is_cat) {
 
 		notify_progress("Trying to change address...", true);
 
-		const query = "?op=pref-feeds&method=regenFeedKey&id=" + param_escape(feed) +
-			"&is_cat=" + param_escape(is_cat);
+		const query = { op: "pref-feeds", method: "regenFeedKey", id: feed, is_cat: is_cat };
 
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-					const reply = JSON.parse(transport.responseText);
-					const new_link = reply.link;
+		xhrJson("backend.php", query, (reply) => {
+			const new_link = reply.link;
+			const e = $('gen_feed_url');
 
-					const e = $('gen_feed_url');
+			if (new_link) {
+				e.innerHTML = e.innerHTML.replace(/\&amp;key=.*$/,
+					"&amp;key=" + new_link);
 
-					if (new_link) {
+				e.href = e.href.replace(/\&key=.*$/,
+					"&key=" + new_link);
 
-						e.innerHTML = e.innerHTML.replace(/\&amp;key=.*$/,
-							"&amp;key=" + new_link);
+				new Effect.Highlight(e);
 
-						e.href = e.href.replace(/\&key=.*$/,
-							"&key=" + new_link);
+				notify('');
 
-						new Effect.Highlight(e);
-
-						notify('');
-
-					} else {
-						notify_error("Could not change feed URL.");
-					}
-			} });
+			} else {
+				notify_error("Could not change feed URL.");
+			}
+		});
 	}
 	return false;
 }
@@ -1267,17 +1223,13 @@ function editFeed(feed) {
 		style: "width: 600px",
 		execute: function() {
 			if (this.validate()) {
-//					console.log(dojo.objectToQuery(this.attr('value')));
-
 				notify_progress("Saving data...", true);
 
-				new Ajax.Request("backend.php", {
-					parameters: dojo.objectToQuery(dialog.attr('value')),
-					onComplete: function(transport) {
-						dialog.hide();
-						notify('');
-						updateFeedList();
-				}});
+				xhrPost("backend.php", dialog.attr('value'), (transport) => {
+					dialog.hide();
+					notify('');
+					updateFeedList();
+				});
 			}
 		},
 		href: query});
@@ -1341,20 +1293,12 @@ function feedBrowser() {
 
 				notify_progress("Loading, please wait...", true);
 
-				// we use dojo.toJson instead of JSON.stringify because
-				// it somehow escapes everything TWICE, at least in Chrome 9
+				const query = { op: "rpc", method: "massSubscribe",
+					payload: JSON.stringify(selected), mode: mode };
 
-				const query = "?op=rpc&method=massSubscribe&payload=" +
-					param_escape(dojo.toJson(selected)) + "&mode=" + param_escape(mode);
-
-				console.log(query);
-
-				new Ajax.Request("backend.php", {
-					parameters: query,
-					onComplete: function (transport) {
-						notify('');
-						updateFeedList();
-					}
+				xhrPost("backend.php", query, () => {
+					notify('');
+					updateFeedList();
 				});
 
 			} else {
@@ -1363,32 +1307,26 @@ function feedBrowser() {
 
 		},
 		update: function () {
-			const query = dojo.objectToQuery(dialog.attr('value'));
-
 			Element.show('feed_browser_spinner');
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function (transport) {
-					notify('');
+			xhrPost("backend.php", dialog.attr("value"), (transport) => {
+				notify('');
 
-					Element.hide('feed_browser_spinner');
+				Element.hide('feed_browser_spinner');
 
-					const reply = JSON.parse(transport.responseText);
-					const mode = reply['mode'];
+				const reply = JSON.parse(transport.responseText);
+				const mode = reply['mode'];
 
-					if ($("browseFeedList") && reply['content']) {
-                        $("browseFeedList").innerHTML = reply['content'];
-					}
+				if ($("browseFeedList") && reply['content']) {
+					$("browseFeedList").innerHTML = reply['content'];
+				}
 
-					dojo.parser.parse("browseFeedList");
+				dojo.parser.parse("browseFeedList");
 
-					if (mode == 2) {
-						Element.show(dijit.byId('feed_archive_remove').domNode);
-					} else {
-						Element.hide(dijit.byId('feed_archive_remove').domNode);
-					}
-
+				if (mode == 2) {
+					Element.show(dijit.byId('feed_archive_remove').domNode);
+				} else {
+					Element.hide(dijit.byId('feed_archive_remove').domNode);
 				}
 			});
 		},
@@ -1402,15 +1340,10 @@ function feedBrowser() {
 				if (confirm(pr)) {
 					Element.show('feed_browser_spinner');
 
-					const query = "?op=rpc&method=remarchive&ids=" +
-						param_escape(selected.toString());
+					const query = { op: "rpc", method: "remarchive", ids: selected.toString() };
 
-
-					new Ajax.Request("backend.php", {
-						parameters: query,
-						onComplete: function (transport) {
-							dialog.update();
-						}
+					xhrPost("backend.php", query, () => {
+						dialog.update();
 					});
 				}
 			}
@@ -1450,16 +1383,14 @@ function showFeedsWithErrors() {
 				if (ok) {
 					notify_progress("Removing selected feeds...", true);
 
-					const query = "?op=pref-feeds&method=remove&ids="+
-						param_escape(sel_rows.toString());
+					const query = { op: "pref-feeds", method: "remove",
+						ids: sel_rows.toString() };
 
-					new Ajax.Request("backend.php",	{
-						parameters: query,
-						onComplete: function(transport) {
-							notify('');
-							dialog.hide();
-							updateFeedList();
-						} });
+					xhrPost("backend.php",	query, () => {
+                        notify('');
+                        dialog.hide();
+                        updateFeedList();
+                    });
 				}
 
 			} else {
@@ -1468,6 +1399,7 @@ function showFeedsWithErrors() {
 		},
 		execute: function() {
 			if (this.validate()) {
+				//
 			}
 		},
 		href: query});

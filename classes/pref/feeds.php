@@ -1711,11 +1711,11 @@ class Pref_Feeds extends Handler_Protected {
 
 	function regenFeedKey() {
 		$feed_id = clean($_REQUEST['id']);
-		$is_cat = clean($_REQUEST['is_cat']) == "true";
+		$is_cat = clean($_REQUEST['is_cat']);
 
 		$new_key = $this->update_feed_access_key($feed_id, $is_cat);
 
-		print json_encode(array("link" => $new_key));
+		print json_encode(["link" => $new_key]);
 	}
 
 
@@ -1725,7 +1725,7 @@ class Pref_Feeds extends Handler_Protected {
 		// clear old value and generate new one
 		$sth = $this->pdo->prepare("DELETE FROM ttrss_access_keys
 			WHERE feed_id = ? AND is_cat = ? AND owner_uid = ?");
-		$sth->execute([$feed_id, $is_cat, $owner_uid]);
+		$sth->execute([$feed_id, bool_to_sql_bool($is_cat), $owner_uid]);
 
 		return get_feed_access_key($feed_id, $is_cat, $owner_uid);
 	}
