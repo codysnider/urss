@@ -233,20 +233,20 @@ body.ttrss_main {
 			padding: 4px 6px;
 		}
 
-		div.hlLeft {
+		div.left {
 			display : table-cell;
 			vertical-align : middle;
 			white-space: nowrap;
 		}
 
-		div.hlRight {
+		div.right {
 			display : table-cell;
 			white-space: nowrap;
 			text-align : right;
 			vertical-align : middle;
 		}
 
-		div.hlRight img {
+		div.right img {
 			max-width : 16px;
 			max-height : 16px;
 		}
@@ -272,7 +272,7 @@ body.ttrss_main {
 			color : @color-accent;
 		}
 
-		span.hlUpdated {
+		span.updated {
 			color : @default-text;
 			display : table-cell;
 			vertical-align : middle;
@@ -282,24 +282,24 @@ body.ttrss_main {
 			padding-left : 10px;
 		}
 
-		span.hlUpdated div {
+		span.updated div {
 			display : inline-block;
 		}
 
-		div.hlLeft {
+		div.left {
 			padding-left : 8px;
 		}
 
-		div.hlLeft input {
+		div.left input {
 			margin-left : 4px;
 			margin-right : 4px;
 		}
 
-		div.hlLeft img, div.hlRight img {
+		div.left img, div.right img {
 			margin : 0px 4px;
 		}
 
-		div.hlLeft img {
+		div.left img {
 			width : 16px;
 			height : 16px;
 		}
@@ -311,17 +311,17 @@ body.ttrss_main {
 			color : #777;
 		}
 
-		a.title.high, span.hlContent.high .contentPreview {
+		a.title.high, span.hl-content.high .preview {
 			color : #00aa00;
 		}
 	}
 
-	.hl.Unread a.title.high, .hl.Unread span.hlContent.high .contentPreview {
+	.hl.Unread a.title.high, .hl.Unread span.hl-content.high .preview {
 		color : #00dd00;
 	}
 
-	.hl a.title.low, span.hlContent.low .contentPreview,
-	.hl.Unread a.title.low, .hl.Unread span.hlContent.low .contentPreview {
+	.hl a.title.low, span.hl-content.low .preview,
+	.hl.Unread a.title.low, .hl.Unread span.hl-content.low .preview {
 		color : #909090;
 		text-decoration : line-through;
 	}
@@ -346,7 +346,7 @@ body.ttrss_main {
 
 		a,
 		.feed a,
-		.hlContent a.title,
+		.hl-content a.title,
 		span {
 			color : white;
 		}
@@ -541,7 +541,7 @@ body.ttrss_main {
 	}
 
 
-	span.contentPreview {
+	span.preview {
 		color : #999;
 		font-weight : normal;
 		font-size : 12px;

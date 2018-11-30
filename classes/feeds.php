@@ -402,7 +402,7 @@ class Feeds extends Handler_Protected {
 
 					$reply['content'] .= "<div class='hl hlMenuAttach $class' data-orig-feed-id='$feed_id' data-article-id='$id' id='RROW-$id' $mouseover_attrs>";
 
-					$reply['content'] .= "<div class='hlLeft'>";
+					$reply['content'] .= "<div class='left'>";
 
 					$reply['content'] .= "<input dojoType=\"dijit.form.CheckBox\"
                         type=\"checkbox\" onclick=\"toggleSelectRow2(this)\"
@@ -414,14 +414,14 @@ class Feeds extends Handler_Protected {
 					$reply['content'] .= "</div>";
 
 					$reply['content'] .= "<div onclick='return hlClicked(event, $id)'
-                    class=\"title\"><span class='hlContent $hlc_suffix'>";
+                    class=\"title\"><span class='hl-content $hlc_suffix'>";
 					$reply['content'] .= "<a class=\"title $hlc_suffix\"
                     href=\"" . htmlspecialchars($line["link"]) . "\"
                     onclick=\"\">" .
 						truncate_string($line["title"], 200);
 
 					if (get_pref('SHOW_CONTENT_PREVIEW')) {
-						$reply['content'] .= "<span class=\"contentPreview\">" . $line["content_preview"] . "</span>";
+						$reply['content'] .= "<span class=\"preview\">" . $line["content_preview"] . "</span>";
 					}
 
 					$reply['content'] .= "</a></span>";
@@ -440,12 +440,12 @@ class Feeds extends Handler_Protected {
 					}
 
 
-					$reply['content'] .= "<span class=\"hlUpdated\">";
+					$reply['content'] .= "<span class=\"updated\">";
 
 					$reply['content'] .= "<div title='$date_entered_fmt'>$updated_fmt</div>
                     </span>";
 
-					$reply['content'] .= "<div class=\"hlRight\">";
+					$reply['content'] .= "<div class=\"right\">";
 
 					$reply['content'] .= $score_pic;
 

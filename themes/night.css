@@ -73,12 +73,13 @@ body.claro.ttrss_main #overlay {
 	color : #ccc;
 }
 
-body.claro.ttrss_main .hlFeed a {
+body.claro.ttrss_main .hl .feed a,
+body.claro.ttrss_main .cdm .feed a {
 	color : white;
 }
 
-body.claro.ttrss_main div.cdm.expanded div.cdmFooter,
-body.claro.ttrss_main div.cdm.expandable div.cdmFooter {
+body.claro.ttrss_main div.cdm.expanded div.footer,
+body.claro.ttrss_main div.cdm.expandable div.footer {
 	border-color : #666;
 	color : #ccc;
 }
@@ -87,12 +88,12 @@ body.claro.ttrss_main div.cdm.expandable.Selected {
 	background : #6280AD;
 }
 
-body.claro.ttrss_main div.cdm.expanded.Unread div.cdmHeader a.title,
+body.claro.ttrss_main div.cdm.expanded.Unread .header a.title,
 body.claro.ttrss_main div.cdm.expandable.Unread a.title {
 	color : #ccc;
 }
 
-body.claro.ttrss_main div.cdm.expanded div.cdmHeader a.title,
+body.claro.ttrss_main div.cdm.expanded .header a.title,
 body.claro.ttrss_main div.cdm.expandable a.title {
 	color : #aaa;
 }
@@ -107,21 +108,27 @@ body.claro.ttrss_main .cdm.active {
 	background : transparent ! important;
 }
 
-body.claro.ttrss_main .cdm .cdmContentInner,
+body.claro.ttrss_main .cdm .content-inner,
 body.claro.ttrss_main .cdm .titleWrap {
 	color : #bbb;
 }
 
-#content-insert blockquote, #headlines-frame blockquote, .dijitContentPane blockquote {
+body.claro.ttrss_main #content-insert blockquote,
+body.claro.ttrss_main #headlines-frame blockquote,
+body.claro.ttrss_main .dijitContentPane blockquote {
 	color : #999;
 	border-color : #666;
 }
 
-#content-insert code, #headlines-frame code, .dijitContentPane code {
+body.claro.ttrss_main #content-insert code,
+body.claro.ttrss_main #headlines-frame code,
+body.claro.ttrss_main .dijitContentPane code {
 	color : #009900;
 }
 
-#content-insert pre, #headlines-frame pre, .dijitContentPane pre {
+body.claro.ttrss_main #content-insert pre,
+body.claro.ttrss_main #headlines-frame pre,
+body.claro.ttrss_main.dijitContentPane pre {
 	color : #999;
 	background : black;
 }
@@ -130,21 +137,21 @@ body.claro.ttrss_main .dijitInputField.dijitButtonText {
 	background : #333;
 }
 
-body.claro.ttrss_main .cdm .cdmContentInner img,
+/*body.claro.ttrss_main .cdm .content-inner img,
 body.claro.ttrss_main .cdm img.tinyFeedIcon,
-body.claro.ttrss_main .cdm .cdmFooter img,
+body.claro.ttrss_main .cdm .footer img,
 body.claro.ttrss_main #feedTree img,
-body.claro.ttrss_main .postContent img {
+body.claro.ttrss_main .post .content img {
 	filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); // firefox lol
 	filter: grayscale(1);
 	-webkit-filter: grayscale(1);
-}
+}*/
 
 body.claro.ttrss_main .hl img.hlScorePic {
 	opacity : 0.5;
 }
 
-body.claro.ttrss_main .cdm .cdmFooter img {
+body.claro.ttrss_main .cdm .footer img {
 	opacity : 0.6;
 }
 
@@ -174,7 +181,7 @@ body.claro.ttrss_main .hl {
 	border-color : #666;
 }
 
-body.claro.ttrss_main .hl .hlTitle a {
+body.claro.ttrss_main .hl .hl-title a {
 	color : #ccc;
 }
 
@@ -183,7 +190,7 @@ body.claro.ttrss_main .hl.active {
 	background : #6280AD ! important;
 }
 
-body.claro.ttrss_main .postHeader {
+body.claro.ttrss_main .post .header {
 	background : #333;
 	border-color : #666;
 }
