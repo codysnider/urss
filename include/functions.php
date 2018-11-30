@@ -1249,10 +1249,8 @@
 			"^(191)|Ctrl+/" => "help_dialog",
 		);
 
-		if (get_pref('COMBINED_DISPLAY_MODE')) {
-			$hotkeys["^(38)|Ctrl-up"] = "prev_article_noscroll";
-			$hotkeys["^(40)|Ctrl-down"] = "next_article_noscroll";
-		}
+		$hotkeys["^(38)|Ctrl-up"] = "prev_article_noscroll";
+		$hotkeys["^(40)|Ctrl-down"] = "next_article_noscroll";
 
 		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_HOTKEY_MAP) as $plugin) {
 			$hotkeys = $plugin->hook_hotkey_map($hotkeys);
