@@ -491,6 +491,7 @@ function moveToPost(mode, noscroll, noexpand) {
 
 				} else if (next_id) {
 					cdmScrollToArticleId(next_id, true);
+					toggleUnread(next_id, 0);
 				}
 
 			} else if (next_id) {
@@ -515,6 +516,7 @@ function moveToPost(mode, noscroll, noexpand) {
 					scrollArticle(-ctr.offsetHeight/4);
 				} else if (prev_id) {
 					cdmScrollToArticleId(prev_id, noscroll);
+					toggleUnread(next_id, 0);1
 				}
 
 			} else if (prev_id) {
