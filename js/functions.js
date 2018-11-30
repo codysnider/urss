@@ -1118,9 +1118,7 @@ function backend_sanity_check_callback(transport) {
 }
 
 function genUrlChangeKey(feed, is_cat) {
-	const ok = confirm(__("Generate new syndication address for this feed?"));
-
-	if (ok) {
+	if (confirm(__("Generate new syndication address for this feed?"))) {
 
 		notify_progress("Trying to change address...", true);
 
@@ -1392,12 +1390,8 @@ function showFeedsWithErrors() {
 		removeSelected: function() {
 			const sel_rows = this.getSelectedFeeds();
 
-			console.log(sel_rows);
-
 			if (sel_rows.length > 0) {
-				const ok = confirm(__("Remove selected feeds?"));
-
-				if (ok) {
+				if (confirm(__("Remove selected feeds?"))) {
 					notify_progress("Removing selected feeds...", true);
 
 					const query = { op: "pref-feeds", method: "remove",

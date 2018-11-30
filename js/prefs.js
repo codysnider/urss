@@ -248,10 +248,7 @@ function removeSelectedLabels() {
 	const sel_rows = getSelectedLabels();
 
 	if (sel_rows.length > 0) {
-
-		const ok = confirm(__("Remove selected labels?"));
-
-		if (ok) {
+		if (confirm(__("Remove selected labels?"))) {
 			notify_progress("Removing selected labels...");
 
 			const query = { op: "pref-labels", method: "remove",
@@ -274,9 +271,7 @@ function removeSelectedUsers() {
 
 	if (sel_rows.length > 0) {
 
-		const ok = confirm(__("Remove selected users? Neither default admin nor your account will be removed."));
-
-		if (ok) {
+		if (confirm(__("Remove selected users? Neither default admin nor your account will be removed."))) {
 			notify_progress("Removing selected users...");
 
 			const query = { op: "pref-users", method: "remove",
@@ -299,10 +294,7 @@ function removeSelectedFilters() {
 	const sel_rows = getSelectedFilters();
 
 	if (sel_rows.length > 0) {
-
-		const ok = confirm(__("Remove selected filters?"));
-
-		if (ok) {
+		if (confirm(__("Remove selected filters?"))) {
 			notify_progress("Removing selected filters...");
 
 			const query = { op: "pref-filters", method: "remove",
@@ -324,10 +316,7 @@ function removeSelectedFeeds() {
 	const sel_rows = getSelectedFeeds();
 
 	if (sel_rows.length > 0) {
-
-		const ok = confirm(__("Unsubscribe from selected feeds?"));
-
-		if (ok) {
+		if (confirm(__("Unsubscribe from selected feeds?"))) {
 
 			notify_progress("Unsubscribing from selected feeds...", true);
 
@@ -378,9 +367,7 @@ function resetSelectedUserPass() {
 		return;
 	}
 
-	const ok = confirm(__("Reset password of selected user?"));
-
-	if (ok) {
+	if (confirm(__("Reset password of selected user?"))) {
 		notify_progress("Resetting password for selected user...");
 
 		const id = rows[0];
@@ -452,9 +439,7 @@ function joinSelectedFilters() {
 		return;
 	}
 
-	const ok = confirm(__("Combine selected filters?"));
-
-	if (ok) {
+	if (confirm(__("Combine selected filters?"))) {
 		notify_progress("Joining filters...");
 
 		xhrPost("backend.php", { op: "pref-filters", method: "join", ids: rows.toString() }, () => {
@@ -947,9 +932,7 @@ function editProfiles() {
 			const sel_rows = this.getSelectedProfiles();
 
 			if (sel_rows.length > 0) {
-				const ok = confirm(__("Remove selected profiles? Active and default profiles will not be removed."));
-
-				if (ok) {
+				if (confirm(__("Remove selected profiles? Active and default profiles will not be removed."))) {
 					notify_progress("Removing selected profiles...", true);
 
 					const query = { op: "rpc", method: "remprofiles",
@@ -969,10 +952,7 @@ function editProfiles() {
 			const sel_rows = this.getSelectedProfiles();
 
 			if (sel_rows.length == 1) {
-
-				const ok = confirm(__("Activate selected profile?"));
-
-				if (ok) {
+				if (confirm(__("Activate selected profile?"))) {
 					notify_progress("Loading, please wait...");
 
                     xhrPost("backend.php", { op: "rpc", method: "setprofile", id: sel_rows.toString() },  () => {
@@ -1033,9 +1013,7 @@ function activatePrefProfile() {
 
 function clearFeedAccessKeys() {
 
-	const ok = confirm(__("This will invalidate all previously generated feed URLs. Continue?"));
-
-	if (ok) {
+	if (confirm(__("This will invalidate all previously generated feed URLs. Continue?"))) {
 		notify_progress("Clearing URLs...");
 
 		xhrPost("backend.php", { op: "pref-feeds", method: "clearKeys" }, () => {

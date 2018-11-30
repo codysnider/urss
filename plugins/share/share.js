@@ -10,10 +10,7 @@ function shareArticle(id) {
 			title: __("Share article by URL"),
 			style: "width: 600px",
 			newurl: function() {
-
-				var ok = confirm(__("Generate new share URL for this article?"));
-
-				if (ok) {
+				if (confirm(__("Generate new share URL for this article?"))) {
 
 					notify_progress("Trying to change URL...", true);
 
@@ -51,10 +48,7 @@ function shareArticle(id) {
 
 			},
 			unshare: function() {
-
-				var ok = confirm(__("Remove sharing for this article?"));
-
-				if (ok) {
+				if (confirm(__("Remove sharing for this article?"))) {
 
 					notify_progress("Trying to unshare...", true);
 
