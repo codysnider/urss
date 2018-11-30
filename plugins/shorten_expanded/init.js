@@ -2,13 +2,13 @@ var _shorten_expanded_threshold = 1.5; //window heights
 
 function expandSizeWrapper(id) {
 	try {
-		var row = $(id);
+		const row = $(id);
 
 		console.log(row);
 
 		if (row) {
-			var content = row.select(".contentSizeWrapper")[0];
-			var link = row.select(".expandPrompt")[0];
+			const content = row.select(".contentSizeWrapper")[0];
+			const link = row.select(".expandPrompt")[0];
 
 			if (content) content.removeClassName("contentSizeWrapper");
 			if (link) Element.hide(link);
@@ -30,8 +30,8 @@ require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 
 				window.setTimeout(function() {
 					if (row) {
-						var c_inner = row.select(".cdmContentInner")[0];
-						var c_inter = row.select(".cdmIntermediate")[0];
+						const c_inner = row.select(".cdmContentInner")[0];
+						const c_inter = row.select(".cdmIntermediate")[0];
 
 						if (c_inner && c_inter &&
 							row.offsetHeight >= _shorten_expanded_threshold * window.innerHeight) {

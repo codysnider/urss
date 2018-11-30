@@ -1,7 +1,7 @@
 function showTrgmRelated(id) {
 	try {
 
-		var query = "backend.php?op=pluginhandler&plugin=af_psql_trgm&method=showrelated&param=" + param_escape(id);
+		const query = "backend.php?op=pluginhandler&plugin=af_psql_trgm&method=showrelated&param=" + param_escape(id);
 
 		if (dijit.byId("trgmRelatedDlg"))
 			dijit.byId("trgmRelatedDlg").destroyRecursive();

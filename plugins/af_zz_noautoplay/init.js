@@ -5,7 +5,7 @@ require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 				console.log("af_zz_noautoplay!");
 				console.log(row);
 
-				var videos = row.getElementsByTagName("video");
+				const videos = row.getElementsByTagName("video");
 				console.log(row.innerHTML);
 
 				for (i = 0; i < videos.length; i++) {
@@ -23,7 +23,7 @@ require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 
 		PluginHost.register(PluginHost.HOOK_ARTICLE_RENDERED, function (row) {
 			if (row) {
-				var videos = row.getElementsByTagName("video");
+				const videos = row.getElementsByTagName("video");
 
 				for (i = 0; i < videos.length; i++) {
 					videos[i].removeAttribute("autoplay");

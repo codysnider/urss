@@ -1,16 +1,16 @@
 function embedOriginalArticle(id) {
 	try {
-		var hasSandbox = "sandbox" in document.createElement("iframe");
+		const hasSandbox = "sandbox" in document.createElement("iframe");
 
 		if (!hasSandbox) {
 			alert(__("Sorry, your browser does not support sandboxed iframes."));
 			return;
 		}
 
-		var query = "op=pluginhandler&plugin=embed_original&method=getUrl&id=" +
+		const query = "op=pluginhandler&plugin=embed_original&method=getUrl&id=" +
 			param_escape(id);
 
-		var c = false;
+		let c = false;
 
 		if (isCdmMode()) {
 			c = $$("div#RROW-" + id + " div[class=cdmContentInner]")[0];
@@ -19,7 +19,7 @@ function embedOriginalArticle(id) {
 		}
 
 		if (c) {
-			var iframe = c.parentNode.getElementsByClassName("embeddedContent")[0];
+			const iframe = c.parentNode.getElementsByClassName("embeddedContent")[0];
 
 			if (iframe) {
 				Element.show(c);
@@ -36,11 +36,11 @@ function embedOriginalArticle(id) {
 		new Ajax.Request("backend.php",	{
 			parameters: query,
 			onComplete: function(transport) {
-				var ti = JSON.parse(transport.responseText);
+				const ti = JSON.parse(transport.responseText);
 
 				if (ti) {
 
-					var iframe = new Element("iframe", {
+					const iframe = new Element("iframe", {
 						class: "embeddedContent",
 						src: ti.url,
 						width: (c.parentNode.offsetWidth-5)+'px',
