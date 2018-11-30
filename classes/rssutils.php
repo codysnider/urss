@@ -744,7 +744,7 @@ class RSSUtils {
 					$start = microtime(true);
 					$article = $plugin->hook_article_filter($article);
 
-					Debug::log(sprintf("=== %.4f (sec)"), Debug::$LOG_VERBOSE);
+					Debug::log(sprintf("=== %.4f (sec)", microtime(true) - $start), Debug::$LOG_VERBOSE);
 
 					$entry_plugin_data .= mb_strtolower(get_class($plugin)) . ",";
 				}
