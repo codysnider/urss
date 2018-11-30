@@ -620,13 +620,13 @@ class Article extends Handler_Protected {
 				} else {
 					$comments_url = htmlspecialchars($line["link"]);
 				}
-				$entry_comments = "<a class=\"postComments\"
+				$entry_comments = "<a class=\"comments\"
 					target='_blank' rel=\"noopener noreferrer\" href=\"$comments_url\">$num_comments ".
 					_ngettext("comment", "comments", $num_comments)."</a>";
 
 			} else {
 				if ($line["comments"] && $line["link"] != $line["comments"]) {
-					$entry_comments = "<a class=\"postComments\" target='_blank' rel=\"noopener noreferrer\" href=\"".htmlspecialchars($line["comments"])."\">".__("comments")."</a>";
+					$entry_comments = "<a class=\"comments\" target='_blank' rel=\"noopener noreferrer\" href=\"".htmlspecialchars($line["comments"])."\">".__("comments")."</a>";
 				}
 			}
 
@@ -720,7 +720,7 @@ class Article extends Handler_Protected {
 
 			if (!$entry_comments) $entry_comments = "&nbsp;"; # placeholder
 
-			$rv['content'] .= "<div class='postTags' style='float : right'>
+			$rv['content'] .= "<div class='tags' style='float : right'>
 				<img src='images/tag.png'
 				class='tagsPic' alt='Tags' title='Tags'>&nbsp;";
 
