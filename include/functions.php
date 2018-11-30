@@ -1761,6 +1761,10 @@
 						array_push($attrs_to_remove, $attr);
 					}
 
+					if (strpos($attr->nodeName, "data-") === 0) {
+						array_push($attrs_to_remove, $attr);
+					}
+
 					if ($attr->nodeName == 'href' && stripos($attr->value, 'javascript:') === 0) {
 						array_push($attrs_to_remove, $attr);
 					}
