@@ -1690,31 +1690,6 @@ function setSelectionScore() {
 	}
 }
 
-/*
-function updateScore(id) {
-	const pic = $$("#RROW-" + id + " .hlScorePic")[0];
-
-	if (pic) {
-
-		const query = "op=article&method=getScore&id=" + param_escape(id);
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function (transport) {
-				console.log(transport.responseText);
-
-				const reply = JSON.parse(transport.responseText);
-
-				if (reply) {
-					pic.src = pic.src.replace(/score_.*?\.png/, reply["score_pic"]);
-					pic.setAttribute("score", reply["score"]);
-					pic.setAttribute("title", reply["score"]);
-				}
-			}
-		});
-	}
-} */
-
 function changeScore(id, pic) {
 	const score = pic.getAttribute("score");
 

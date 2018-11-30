@@ -7,9 +7,6 @@ function embedOriginalArticle(id) {
 			return;
 		}
 
-		const query = "op=pluginhandler&plugin=embed_original&method=getUrl&id=" +
-			param_escape(id);
-
 		let c = false;
 
 		if (isCdmMode()) {
@@ -33,34 +30,29 @@ function embedOriginalArticle(id) {
 			}
 		}
 
-		new Ajax.Request("backend.php",	{
-			parameters: query,
-			onComplete: function(transport) {
-				const ti = JSON.parse(transport.responseText);
+		const query = { op: "pluginhandler", plugin: "embed_original", method: "getUrl", id: id };
 
-				if (ti) {
+		xhrJson("backend.php", query, (reply) => {
+			if (reply) {
+				const iframe = new Element("iframe", {
+					class: "embeddedContent",
+					src: reply.url,
+					width: (c.parentNode.offsetWidth - 5) + 'px',
+					height: (c.parentNode.parentNode.offsetHeight - c.parentNode.firstChild.offsetHeight - 5) + 'px',
+					style: "overflow: auto; border: none; min-height: " + (document.body.clientHeight / 2) + "px;",
+					sandbox: 'allow-scripts',
+				});
 
-					const iframe = new Element("iframe", {
-						class: "embeddedContent",
-						src: ti.url,
-						width: (c.parentNode.offsetWidth-5)+'px',
-						height: (c.parentNode.parentNode.offsetHeight-c.parentNode.firstChild.offsetHeight-5)+'px',
-						style: "overflow: auto; border: none; min-height: "+(document.body.clientHeight/2)+"px;",
-						sandbox: 'allow-scripts',
-					});
+				if (c) {
+					Element.hide(c);
+					c.parentNode.insertBefore(iframe, c);
 
-					if (c) {
-						Element.hide(c);
-						c.parentNode.insertBefore(iframe,c);
-
-						if (isCdmMode()) {
-							cdmScrollToArticleId(id, true);
-						}
+					if (isCdmMode()) {
+						cdmScrollToArticleId(id, true);
 					}
 				}
-
-			} });
-
+			}
+		});
 
 	} catch (e) {
 		exception_error("embedOriginalArticle", e);

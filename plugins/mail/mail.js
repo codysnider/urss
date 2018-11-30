@@ -22,15 +22,9 @@ function emailArticle(id) {
 			style: "width: 600px",
 			execute: function() {
 				if (this.validate()) {
-
-					new Ajax.Request("backend.php", {
-						parameters: dojo.objectToQuery(this.attr('value')),
-						onComplete: function(transport) {
-							console.log(transport.responseText);
-
-							var reply = JSON.parse(transport.responseText);
-
-							var error = reply['error'];
+					xhrJson("backend.php", this.attr('value'), (reply) => {
+						if (reply) {
+							const error = reply['error'];
 
 							if (error) {
 								alert(__('Error sending email:') + ' ' + error);
@@ -39,7 +33,8 @@ function emailArticle(id) {
 								dialog.hide();
 							}
 
-					} });
+						}
+					});
 				}
 			},
 			href: query});
