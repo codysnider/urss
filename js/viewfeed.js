@@ -1013,13 +1013,7 @@ function unpackVisibleHeadlines() {
     	if (row.offsetTop <= $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight) {
             console.log("unpacking: " + row.id);
 
-            let content;
-
-            try {
-                content = JSON.parse(row.getAttribute("data-content"));
-            } catch (e) {
-            	content = "Error decoding content: " + row.getAttribute("data-content");
-			}
+            const content = row.getAttribute("data-content");
 
 			row.select(".cdmContentInner")[0].innerHTML = content;
             row.removeAttribute("data-content");

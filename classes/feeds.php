@@ -496,7 +496,7 @@ class Feeds extends Handler_Protected {
 						}
 					}
 
-                    $content_encoded = htmlspecialchars(json_encode($line["content"]));
+                    $content_encoded = htmlspecialchars($line["content"]);
 
                     $tmp_content = "<div class=\"cdm expanded $hlc_suffix $class\"
                         id=\"RROW-$id\" data-content=\"$content_encoded\" data-article-id='$id' data-orig-feed-id='$feed_id' $mouseover_attrs>";
