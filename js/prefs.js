@@ -734,16 +734,12 @@ function init() {
 				loading_set_progress(50);
 
 				const clientTzOffset = new Date().getTimezoneOffset() * 60;
+				const params = { op: "rpc", method: "sanityCheck", clientTzOffset: clientTzOffset };
 
-				new Ajax.Request("backend.php", {
-					parameters: {
-						op: "rpc", method: "sanityCheck",
-						clientTzOffset: clientTzOffset
-					},
-					onComplete: function (transport) {
-						backend_sanity_check_callback(transport);
-					}
+				xhrPost("backend.php", params, (transport) => {
+					backend_sanity_check_callback(transport);
 				});
+
 			} catch (e) {
 				exception_error(e);
 			}
@@ -793,44 +789,32 @@ function pref_hotkey_handler(e) {
 
 function removeCategory(id, item) {
 
-	const ok = confirm(__("Remove category %s? Any nested feeds would be placed into Uncategorized.").replace("%s", item.name));
-
-	if (ok) {
-		const query = "?op=pref-feeds&method=removeCat&ids=" +
-			param_escape(id);
-
+	if (confirm(__("Remove category %s? Any nested feeds would be placed into Uncategorized.").replace("%s", item.name))) {
 		notify_progress("Removing category...");
 
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function (transport) {
-				notify('');
-				updateFeedList();
-			}
-		});
+        const query = { op: "pref-feeds", method: "removeCat",
+            ids: id };
+
+		xhrPost("backend.php", query, () => {
+            notify('');
+            updateFeedList();
+        });
 	}
 }
 
 function removeSelectedCategories() {
-
 	const sel_rows = getSelectedCategories();
 
 	if (sel_rows.length > 0) {
-
-		const ok = confirm(__("Remove selected categories?"));
-
-		if (ok) {
+		if (confirm(__("Remove selected categories?"))) {
 			notify_progress("Removing selected categories...");
 
-			const query = "?op=pref-feeds&method=removeCat&ids="+
-				param_escape(sel_rows.toString());
+			const query = { op: "pref-feeds", method: "removeCat",
+				ids: sel_rows.toString() };
 
-			new Ajax.Request("backend.php",	{
-				parameters: query,
-				onComplete: function(transport) {
-						updateFeedList();
-					} });
-
+			xhrPost("backend.php", query, () => {
+                updateFeedList();
+            });
 		}
 	} else {
 		alert(__("No categories are selected."));
@@ -843,19 +827,12 @@ function createCategory() {
 	const title = prompt(__("Category title:"));
 
 	if (title) {
-
 		notify_progress("Creating category...");
 
-		const query = "?op=pref-feeds&method=addCat&cat=" +
-			param_escape(title);
-
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function (transport) {
-				notify('');
-				updateFeedList();
-			}
-		});
+		xhrPost("backend.php", { op: "pref-feeds", method: "addCat", cat: title }, () => {
+            notify('');
+            updateFeedList();
+        });
 	}
 }
 
@@ -875,25 +852,18 @@ function showInactiveFeeds() {
 		removeSelected: function () {
 			const sel_rows = this.getSelectedFeeds();
 
-			console.log(sel_rows);
-
 			if (sel_rows.length > 0) {
-				const ok = confirm(__("Remove selected feeds?"));
-
-				if (ok) {
+				if (confirm(__("Remove selected feeds?"))) {
 					notify_progress("Removing selected feeds...", true);
 
-					const query = "?op=pref-feeds&method=remove&ids=" +
-						param_escape(sel_rows.toString());
+					const query = { op: "pref-feeds", method: "remove",
+						ids: sel_rows.toString() };
 
-					new Ajax.Request("backend.php", {
-						parameters: query,
-						onComplete: function (transport) {
-							notify('');
-							dialog.hide();
-							updateFeedList();
-						}
-					});
+					xhrPost("backend.php", query, () => {
+                        notify('');
+                        dialog.hide();
+                        updateFeedList();
+                    });
 				}
 
 			} else {
@@ -911,36 +881,27 @@ function showInactiveFeeds() {
 }
 
 function opmlRegenKey() {
-	const ok = confirm(__("Replace current OPML publishing address with a new one?"));
-
-	if (ok) {
-
+	if (confirm(__("Replace current OPML publishing address with a new one?"))) {
 		notify_progress("Trying to change address...", true);
 
-		const query = "?op=pref-feeds&method=regenOPMLKey";
+		xhrJson("backend.php", { op: "pref-feeds", method: "regenOPMLKey" }, (reply) => {
+            if (reply) {
+                const new_link = reply.link;
+                const e = $('pub_opml_url');
 
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function (transport) {
-				const reply = JSON.parse(transport.responseText);
+                if (new_link) {
+                    e.href = new_link;
+                    e.innerHTML = new_link;
 
-				const new_link = reply.link;
+                    new Effect.Highlight(e);
 
-				const e = $('pub_opml_url');
+                    notify('');
 
-				if (new_link) {
-					e.href = new_link;
-					e.innerHTML = new_link;
-
-					new Effect.Highlight(e);
-
-					notify('');
-
-				} else {
-					notify_error("Could not change feed URL.");
-				}
-			}
-		});
+                } else {
+                    notify_error("Could not change feed URL.");
+                }
+            }
+        });
 	}
 	return false;
 }
@@ -949,18 +910,14 @@ function labelColorReset() {
 	const labels = getSelectedLabels();
 
 	if (labels.length > 0) {
-		const ok = confirm(__("Reset selected labels to default colors?"));
+		if (confirm(__("Reset selected labels to default colors?"))) {
 
-		if (ok) {
-			const query = "?op=pref-labels&method=colorreset&ids=" +
-				param_escape(labels.toString());
+			const query = { op: "pref-labels", method: "colorreset",
+				ids: labels.toString() };
 
-			new Ajax.Request("backend.php", {
-				parameters: query,
-				onComplete: function (transport) {
-					updateLabelList();
-				}
-			});
+			xhrPost("backend.php", query, () => {
+                updateLabelList();
+            });
 		}
 
 	} else {

@@ -235,17 +235,15 @@ function init() {
 						return false;
 
 					loading_set_progress(30);
-
-					const a = document.createElement('audio');
-
-					const hasAudio = !!a.canPlayType;
-					const hasSandbox = "sandbox" in document.createElement("iframe");
-					const hasMp3 = !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
-					const clientTzOffset = new Date().getTimezoneOffset() * 60;
-
 					init_hotkey_actions();
 
-					const params = {
+                    const a = document.createElement('audio');
+                    const hasAudio = !!a.canPlayType;
+                    const hasSandbox = "sandbox" in document.createElement("iframe");
+                    const hasMp3 = !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
+                    const clientTzOffset = new Date().getTimezoneOffset() * 60;
+
+                    const params = {
                             op: "rpc", method: "sanityCheck", hasAudio: hasAudio,
                             hasMp3: hasMp3,
                             clientTzOffset: clientTzOffset,
