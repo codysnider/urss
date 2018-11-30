@@ -5,6 +5,9 @@ let _label_base_index = -1024;
 let loading_progress = 0;
 let notify_hide_timerid = false;
 
+let hotkey_prefix = 0;
+let hotkey_prefix_pressed = false;
+
 Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(
 	function (callOriginal, options) {
 
@@ -27,14 +30,14 @@ Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(
 
 function xhrPost(url, params, complete) {
 	console.log("xhrPost:", params);
-    new Ajax.Request(url, {
+    return new Ajax.Request(url, {
         parameters: params,
         onComplete: complete
     });
 }
 
 function xhrJson(url, params, complete) {
-    xhrPost(url, params, (reply) => {
+    return xhrPost(url, params, (reply) => {
         try {
             const obj = JSON.parse(reply.responseText);
             complete(obj);
@@ -498,9 +501,6 @@ function hotkey_prefix_timeout() {
 		hotkey_prefix = false;
 		Element.hide('cmdline');
 	}
-
-	setTimeout(hotkey_prefix_timeout, 1000);
-
 }
 
 function uploadIconHandler(rc) {
@@ -1087,8 +1087,25 @@ function backend_sanity_check_callback(transport) {
 		console.log('reading init-params...');
 
 		for (const k in params) {
-			console.log("IP:", k, "=>", params[k]);
-			if (k == "label_base_index") _label_base_index = parseInt(params[k]);
+			switch (k) {
+				case "label_base_index":
+                    _label_base_index = parseInt(params[k])
+					break;
+				case "hotkeys":
+					// filter mnemonic definitions (used for help panel) from hotkeys map
+					// i.e. *(191)|Ctrl-/ -> *(191)
+
+                    const tmp = [];
+                    for (const sequence in params[k][1]) {
+                        const filtered = sequence.replace(/\|.*$/, "");
+                        tmp[filtered] = params[k][1][sequence];
+                    }
+
+                    params[k][1] = tmp;
+                    break;
+			}
+
+            console.log("IP:", k, "=>", params[k]);
 		}
 
 		init_params = params;
@@ -1536,4 +1553,59 @@ function openArticlePopup(id) {
 
 	w.opener = null;
 	w.location = "backend.php?op=article&method=view&mode=raw&html=1&zoom=1&id=" + id + "&csrf_token=" + getInitParam("csrf_token");
+}
+
+function keyevent_to_action(e) {
+
+    const hotkeys_map = getInitParam("hotkeys");
+    const keycode = e.which;
+    const keychar = String.fromCharCode(keycode).toLowerCase();
+
+    if (keycode == 27) { // escape and drop prefix
+        hotkey_prefix = false;
+    }
+
+    if (keycode == 16 || keycode == 17) return; // ignore lone shift / ctrl
+
+    if (!hotkey_prefix && hotkeys_map[0].indexOf(keychar) != -1) {
+
+        const date = new Date();
+        const ts = Math.round(date.getTime() / 1000);
+
+        hotkey_prefix = keychar;
+        hotkey_prefix_pressed = ts;
+
+        $("cmdline").innerHTML = keychar;
+        Element.show("cmdline");
+
+        e.stopPropagation();
+
+        return false;
+    }
+
+    Element.hide("cmdline");
+
+    let hotkey_name = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
+
+    // ensure ^*char notation
+    if (e.shiftKey) hotkey_name = "*" + hotkey_name;
+    if (e.ctrlKey) hotkey_name = "^" + hotkey_name;
+    if (e.altKey) hotkey_name = "+" + hotkey_name;
+    if (e.metaKey) hotkey_name = "%" + hotkey_name;
+
+    const hotkey_full = hotkey_prefix ? hotkey_prefix + " " + hotkey_name : hotkey_name;
+    hotkey_prefix = false;
+
+    let action_name = false;
+
+    for (const sequence in hotkeys_map[1]) {
+        if (sequence == hotkey_full) {
+            action_name = hotkeys_map[1][sequence];
+            break;
+        }
+    }
+
+    console.log('keyevent_to_action', hotkey_full, '=>', action_name);
+
+    return action_name;
 }

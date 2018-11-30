@@ -175,7 +175,7 @@ function feedlist_init() {
 	loading_set_progress(50);
 
 	document.onkeydown = hotkey_handler;
-	setTimeout(hotkey_prefix_timeout, 5*1000);
+	setInterval(hotkey_prefix_timeout, 5*1000);
 
 	if (!getActiveFeedId()) {
 		viewfeed({feed: -3});

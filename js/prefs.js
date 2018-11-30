@@ -1,8 +1,5 @@
 /* global dijit, __ */
 
-let hotkey_prefix = false;
-let hotkey_prefix_pressed = false;
-
 let seq = "";
 
 function notify_callback2(transport, sticky) {
@@ -494,72 +491,62 @@ function editSelectedFeeds() {
 
 	notify_progress("Loading, please wait...");
 
-	const query = "backend.php?op=pref-feeds&method=editfeeds&ids=" +
-		param_escape(rows.toString());
-
-	console.log(query);
-
 	if (dijit.byId("feedEditDlg"))
 		dijit.byId("feedEditDlg").destroyRecursive();
 
-	new Ajax.Request("backend.php", {
-		parameters: query,
-		onComplete: function (transport) {
+	xhrPost("backend.php", { op: "pref-feeds", method: "editfeeds", ids: rows.toString() }, (transport) => {
+		notify("");
 
-			notify("");
+		const dialog = new dijit.Dialog({
+			id: "feedEditDlg",
+			title: __("Edit Multiple Feeds"),
+			style: "width: 600px",
+			getChildByName: function (name) {
+				let rv = null;
+				this.getChildren().each(
+					function (child) {
+						if (child.name == name) {
+							rv = child;
+							return;
+						}
+					});
+				return rv;
+			},
+			toggleField: function (checkbox, elem, label) {
+				this.getChildByName(elem).attr('disabled', !checkbox.checked);
 
-			const dialog = new dijit.Dialog({
-				id: "feedEditDlg",
-				title: __("Edit Multiple Feeds"),
-				style: "width: 600px",
-				getChildByName: function (name) {
-					let rv = null;
-					this.getChildren().each(
-						function (child) {
-							if (child.name == name) {
-								rv = child;
-								return;
-							}
-						});
-					return rv;
-				},
-				toggleField: function (checkbox, elem, label) {
-					this.getChildByName(elem).attr('disabled', !checkbox.checked);
+				if ($(label))
+					if (checkbox.checked)
+						$(label).removeClassName('insensitive');
+					else
+						$(label).addClassName('insensitive');
 
-					if ($(label))
-						if (checkbox.checked)
-							$(label).removeClassName('insensitive');
-						else
-							$(label).addClassName('insensitive');
+			},
+			execute: function () {
+				if (this.validate() && confirm(__("Save changes to selected feeds?"))) {
+					const query = this.attr('value');
 
-				},
-				execute: function () {
-					if (this.validate() && confirm(__("Save changes to selected feeds?"))) {
-						const query = this.attr('value');
+					/* normalize unchecked checkboxes because [] is not serialized */
 
-						/* normalize unchecked checkboxes because [] is not serialized */
+					Object.keys(query).each((key) => {
+						let val = query[key];
 
-						Object.keys(query).each((key) => {
-							let val = query[key];
+						if (typeof val == "object" && val.length == 0)
+							query[key] = ["off"];
+					});
 
-							if (typeof val == "object" && val.length == 0)
-								query[key] = ["off"];
-						});
+					notify_progress("Saving data...", true);
 
-						notify_progress("Saving data...", true);
+					xhrPost("backend.php", query, () => {
+						dialog.hide();
+						updateFeedList();
+					});
+				}
+			},
+			content: transport.responseText
+		});
 
-						xhrPost("backend.php", query, () => {
-							dialog.hide();
-							updateFeedList();
-						});
-					}
-				},
-				content: transport.responseText
-			});
-
-			dialog.show();
-
-		}
+		dialog.show();
 	});
 }
 
@@ -613,57 +600,58 @@ function updateFilterList() {
 	let search = "";
 	if (user_search) { search = user_search.value; }
 
-	new Ajax.Request("backend.php",	{
-		parameters: "?op=pref-filters&search=" + param_escape(search),
-		onComplete: function(transport) {
-			dijit.byId('filterConfigTab').attr('content', transport.responseText);
-			notify("");
-		} });
+	xhrPost("backend.php", { op: "pref-filters", search: search }, (transport) => {
+        dijit.byId('filterConfigTab').attr('content', transport.responseText);
+        notify("");
+    });
 }
 
 function updateLabelList() {
-	new Ajax.Request("backend.php",	{
-		parameters: "?op=pref-labels",
-		onComplete: function(transport) {
-			dijit.byId('labelConfigTab').attr('content', transport.responseText);
-			notify("");
-		} });
+	xhrPost("backend.php", { op: "pref-labels" }, (transport) => {
+        dijit.byId('labelConfigTab').attr('content', transport.responseText);
+        notify("");
+    });
 }
 
 function updatePrefsList() {
-	new Ajax.Request("backend.php", {
-		parameters: "?op=pref-prefs",
-		onComplete: function(transport) {
-			dijit.byId('genConfigTab').attr('content', transport.responseText);
-			notify("");
-		} });
+    xhrPost("backend.php", { op: "pref-prefs" }, (transport) => {
+        dijit.byId('genConfigTab').attr('content', transport.responseText);
+        notify("");
+    });
 }
 
 function updateSystemList() {
-	new Ajax.Request("backend.php", {
-		parameters: "?op=pref-system",
-		onComplete: function(transport) {
-			dijit.byId('systemConfigTab').attr('content', transport.responseText);
-			notify("");
-		} });
+    xhrPost("backend.php", { op: "pref-system" }, (transport) => {
+        dijit.byId('systemConfigTab').attr('content', transport.responseText);
+        notify("");
+    });
 }
 
 function selectTab(id, noupdate) {
 	if (!noupdate) {
 		notify_progress("Loading, please wait...");
 
-		if (id == "feedConfig") {
-			updateFeedList();
-		} else if (id == "filterConfig") {
-			updateFilterList();
-		} else if (id == "labelConfig") {
-			updateLabelList();
-		} else if (id == "genConfig") {
-			updatePrefsList();
-		} else if (id == "userConfig") {
-			updateUsersList();
-		} else if (id == "systemConfig") {
-			updateSystemList();
+		switch (id) {
+			case "feedConfig":
+                updateFeedList();
+				break;
+			case "filterConfig":
+                updateFilterList();
+				break;
+			case "labelConfig":
+                updateLabelList();
+				break;
+			case "genConfig":
+                updatePrefsList();
+				break;
+			case "userConfig":
+                updateUsersList();
+				break;
+			case "systemConfig":
+                updateSystemList();
+				break;
+			default:
+				console.warn("unknown tab", id);
 		}
 
 		const tab = dijit.byId(id + "Tab");
@@ -692,7 +680,7 @@ function init_second_stage() {
 		window.setTimeout(function() { editFeed(param) }, 100);
 	}
 
-	setTimeout(hotkey_prefix_timeout, 5*1000);
+	setInterval(hotkey_prefix_timeout, 5*1000);
 }
 
 function init() {
@@ -765,105 +753,41 @@ function init() {
 
 
 function validatePrefsReset() {
-	const ok = confirm(__("Reset to defaults?"));
-
-	if (ok) {
+	if (confirm(__("Reset to defaults?"))) {
 
 		const query = "?op=pref-prefs&method=resetconfig";
-		console.log(query);
 
-		new Ajax.Request("backend.php", {
-			parameters: query,
-			onComplete: function(transport) {
-				updatePrefsList();
-				notify_info(transport.responseText);
-			} });
-
+		xhrPost("backend.php", { op: "pref-prefs", method: "resetconfig" }, (transport) => {
+            updatePrefsList();
+            notify_info(transport.responseText);
+        });
 	}
 
 	return false;
-
 }
 
 function pref_hotkey_handler(e) {
+    if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
 
-	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
+    const action_name = keyevent_to_action(e);
 
-	let keycode = false;
-	let shift_key = false;
-
-	const cmdline = $('cmdline');
-
-	try {
-		shift_key = e.shiftKey;
-	} catch (e) {
-
-	}
-
-	if (window.event) {
-		keycode = window.event.keyCode;
-	} else if (e) {
-		keycode = e.which;
-	}
-
-	let keychar = String.fromCharCode(keycode);
-
-	if (keycode == 27) { // escape
-		hotkey_prefix = false;
-	}
-
-	if (keycode == 16) return; // ignore lone shift
-	if (keycode == 17) return; // ignore lone ctrl
-
-	if (!shift_key) keychar = keychar.toLowerCase();
-
-	var hotkeys = getInitParam("hotkeys");
-
-	if (!hotkey_prefix && hotkeys[0].indexOf(keychar) != -1) {
-
-		const date = new Date();
-		const ts = Math.round(date.getTime() / 1000);
-
-		hotkey_prefix = keychar;
-		hotkey_prefix_pressed = ts;
-
-		cmdline.innerHTML = keychar;
-		Element.show(cmdline);
-
-		return true;
-	}
-
-	Element.hide(cmdline);
-
-	let hotkey = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
-	hotkey = hotkey_prefix ? hotkey_prefix + " " + hotkey : hotkey;
-	hotkey_prefix = false;
-
-	let hotkey_action = false;
-	var hotkeys = getInitParam("hotkeys");
-
-	for (const sequence in hotkeys[1]) {
-		if (sequence == hotkey) {
-			hotkey_action = hotkeys[1][sequence];
-			break;
-		}
-	}
-
-	switch (hotkey_action) {
-		case "feed_subscribe":
-			quickAddFeed();
-			return false;
-		case "create_label":
-			addLabel();
-			return false;
-		case "create_filter":
-			quickAddFilter();
-			return false;
-		case "help_dialog":
-			//helpDialog("prefs");
-			return false;
-		default:
-			console.log("unhandled action: " + hotkey_action + "; hotkey: " + hotkey);
+    if (action_name) {
+        switch (action_name) {
+            case "feed_subscribe":
+                quickAddFeed();
+                return false;
+            case "create_label":
+                addLabel();
+                return false;
+            case "create_filter":
+                quickAddFilter();
+                return false;
+            case "help_dialog":
+                helpDialog("main");
+                return false;
+            default:
+                console.log("unhandled action: " + action_name + "; keycode: " + e.which);
+        }
 	}
 }
 

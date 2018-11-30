@@ -1,13 +1,11 @@
 /* global dijit, __ */
 
 let global_unread = -1;
-let hotkey_prefix = false;
-let hotkey_prefix_pressed = false;
-let hotkey_actions = {};
 let _widescreen_mode = false;
 let _rpc_seq = 0;
 let _active_feed_id = 0;
 let _active_feed_is_cat = false;
+let hotkey_actions = {};
 
 function next_seq() {
 	_rpc_seq += 1;
@@ -596,7 +594,7 @@ function init_second_stage() {
 	if ('sessionStorage' in window && window['sessionStorage'] !== null)
 		sessionStorage.clear();
 
-	const hotkeys = getInitParam("hotkeys");
+	/*const hotkeys = getInitParam("hotkeys");
 	const tmp = [];
 
 	for (const sequence in hotkeys[1]) {
@@ -605,7 +603,7 @@ function init_second_stage() {
 	}
 
 	hotkeys[1] = tmp;
-	setInitParam("hotkeys", hotkeys);
+	setInitParam("hotkeys", hotkeys);*/
 
 	_widescreen_mode = getInitParam("widescreen");
 	switchPanelMode(_widescreen_mode);
@@ -767,65 +765,18 @@ function viewModeChanged() {
 }
 
 function hotkey_handler(e) {
-
 	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
 
-	let keycode = e.which;
+    const action_name = keyevent_to_action(e);
 
-	if (keycode == 27) { // escape and drop prefix
-		hotkey_prefix = false;
-	}
+    if (action_name) {
+        const action_func = hotkey_actions[action_name];
 
-	if (keycode == 16 || keycode == 17) return; // ignore lone shift / ctrl
-
-	const hotkeys = getInitParam("hotkeys");
-	const keychar = String.fromCharCode(keycode).toLowerCase();
-
-	if (!hotkey_prefix && hotkeys[0].indexOf(keychar) != -1) {
-
-		const date = new Date();
-		const ts = Math.round(date.getTime() / 1000);
-
-		hotkey_prefix = keychar;
-		hotkey_prefix_pressed = ts;
-
-		$("cmdline").innerHTML = keychar;
-		Element.show("cmdline");
-
-		e.stopPropagation();
-
-		// returning false here literally disables ctrl-c in browser lol (because C is a valid prefix)
-		return true;
-	}
-
-	Element.hide("cmdline");
-
-	let hotkey = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
-
-	// ensure ^*char notation
-	if (e.shiftKey) hotkey = "*" + hotkey;
-	if (e.ctrlKey) hotkey = "^" + hotkey;
-	if (e.altKey) hotkey = "+" + hotkey;
-	if (e.metaKey) hotkey = "%" + hotkey;
-
-	hotkey = hotkey_prefix ? hotkey_prefix + " " + hotkey : hotkey;
-	hotkey_prefix = false;
-
-	let hotkey_action = false;
-
-	for (const sequence in hotkeys[1]) {
-		if (sequence == hotkey) {
-			hotkey_action = hotkeys[1][sequence];
-			break;
-		}
-	}
-
-	const action = hotkey_actions[hotkey_action];
-
-	if (action != null) {
-		action();
-		e.stopPropagation();
-		return false;
+        if (action_func != null) {
+            action_func();
+            e.stopPropagation();
+            return false;
+        }
 	}
 }
 
