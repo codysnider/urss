@@ -455,8 +455,6 @@ function moveToPost(mode, noscroll, noexpand) {
 	}
 
 	if (!getActiveArticleId()) {
-		console.log('hurr', rows[0]);
-
 		next_id = rows[0];
 		prev_id = rows[rows.length-1]
 	} else {
