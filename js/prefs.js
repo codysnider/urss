@@ -537,45 +537,14 @@ function editSelectedFeeds() {
 					if (this.validate() && confirm(__("Save changes to selected feeds?"))) {
 						const query = this.attr('value');
 
-						//console.log(query); return;
+						/* normalize unchecked checkboxes because [] is not serialized */
 
-						/* Form.serialize ignores unchecked checkboxes */
+						Object.keys(query).each((key) => {
+							let val = query[key];
 
-						/*if (!query.match("&private=") &&
-							this.getChildByName('private').attr('disabled') == false) {
-							query.private = "false";
-						}
-
-						try {
-							if (!query.match("&cache_images=") &&
-								this.getChildByName('cache_images').attr('disabled') == false) {
-								query.cache_images = "false";
-							}
-						} catch (e) {
-						}
-
-						try {
-							if (!query.match("&hide_images=") &&
-								this.getChildByName('hide_images').attr('disabled') == false) {
-								query.hide_images = "false";
-							}
-						} catch (e) {
-						}
-
-						if (!query.match("&include_in_digest=") &&
-							this.getChildByName('include_in_digest').attr('disabled') == false) {
-							query.include_in_digest = "false";
-						}
-
-						if (!query.match("&always_display_enclosures=") &&
-							this.getChildByName('always_display_enclosures').attr('disabled') == false) {
-							query.always_display_enclosures = "false";
-						}
-
-						if (!query.match("&mark_unread_on_update=") &&
-							this.getChildByName('mark_unread_on_update').attr('disabled') == false) {
-							query.mark_unread_on_update = "false";
-						}*/
+							if (typeof val == "object" && val.length == 0)
+								query[key] = ["off"];
+						});
 
 						notify_progress("Saving data...", true);
 
