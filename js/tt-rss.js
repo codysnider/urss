@@ -509,14 +509,11 @@ function init_hotkey_actions() {
 		notify_progress("Loading, please wait...");
 
 		const value = getInitParam("cdm_expanded") ? "false" : "true";
-		const query = "?op=rpc&method=setpref&key=CDM_EXPANDED&value=" + value;
 
-		new Ajax.Request("backend.php",  {
-			parameters: query,
-			onComplete: function(transport) {
-				setInitParam("cdm_expanded", !getInitParam("cdm_expanded"));
-				viewCurrentFeed();
-			} });
+		xhrPost("backend.php", { op: "rpc", method: "setpref", key: "CDM_EXPANDED", value: value }, () => {
+			setInitParam("cdm_expanded", !getInitParam("cdm_expanded"));
+			viewCurrentFeed();
+		});
 	};
 
 }
