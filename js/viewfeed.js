@@ -1400,7 +1400,7 @@ function show_labels_in_headlines(transport) {
 }
 
 function cdmClicked(event, id, in_body) {
-	if (event.ctrlKey && !in_body) {
+	if (event.ctrlKey && !in_body || !in_body) {
 		openArticleInNewWindow(id);
 	}
 
