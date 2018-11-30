@@ -287,7 +287,7 @@ class Af_Psql_Trgm extends Plugin {
 		$row = $sth->fetch();
 		$nequal = $row['nequal'];
 
-		_debug("af_psql_trgm: num equals: $nequal");
+		Debug::log("af_psql_trgm: num equals: $nequal", Debug::$LOG_EXTENDED);
 
 		if ($nequal != 0) {
 			$article["force_catchup"] = true;
@@ -304,7 +304,7 @@ class Af_Psql_Trgm extends Plugin {
 		$row = $sth->fetch();
 		$similarity_result = $row['ms'];
 
-		_debug("af_psql_trgm: similarity result: $similarity_result");
+		Debug::log("af_psql_trgm: similarity result: $similarity_result", Debug::$LOG_EXTENDED);
 
 		if ($similarity_result >= $similarity) {
 			$article["force_catchup"] = true;

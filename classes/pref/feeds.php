@@ -328,13 +328,12 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	private function process_category_order(&$data_map, $item_id, $parent_id = false, $nest_level = 0) {
-		$debug = isset($_REQUEST["debug"]);
 
 		$prefix = "";
 		for ($i = 0; $i < $nest_level; $i++)
 			$prefix .= "   ";
 
-		if ($debug) _debug("$prefix C: $item_id P: $parent_id");
+		Debug::log("$prefix C: $item_id P: $parent_id");
 
 		$bare_item_id = substr($item_id, strpos($item_id, ':')+1);
 
@@ -361,7 +360,7 @@ class Pref_Feeds extends Handler_Protected {
 				$id = $item['_reference'];
 				$bare_id = substr($id, strpos($id, ':')+1);
 
-				if ($debug) _debug("$prefix [$order_id] $id/$bare_id");
+				Debug::log("$prefix [$order_id] $id/$bare_id");
 
 				if ($item['_reference']) {
 
@@ -1545,12 +1544,10 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	static function remove_feed($id, $owner_uid) {
-		$debug = isset($_REQUEST["debug"]);
-
 		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_UNSUBSCRIBE_FEED) as $p) {
-			if( ! $p->hook_unsubscribe_feed($id, $owner_uid)){
-					if($debug) _debug("Feed not removed due to Error in Plugin. (HOOK_UNSUBSCRIBE_FEED)");
-					return;
+			if (! $p->hook_unsubscribe_feed($id, $owner_uid)) {
+                user_error("Feed $id (owner: $owner_uid) not removed due to plugin error (HOOK_UNSUBSCRIBE_FEED).", E_USER_WARNING);
+                return;
 			}
 		}
 

@@ -59,12 +59,12 @@
 				if (file_is_locked("update_daemon-$pid.lock")) {
 					array_push($tmp, $pid);
 				} else {
-					_debug("[reap_children] child $pid seems active but lockfile is unlocked.");
+					Debug::log("[reap_children] child $pid seems active but lockfile is unlocked.");
 					unset($ctimes[$pid]);
 
 				}
 			} else {
-				_debug("[reap_children] child $pid reaped.");
+				Debug::log("[reap_children] child $pid reaped.");
 				unset($ctimes[$pid]);
 			}
 		}
@@ -81,7 +81,7 @@
 			$started = $ctimes[$pid];
 
 			if (time() - $started > MAX_CHILD_RUNTIME) {
-				_debug("[MASTER] child process $pid seems to be stuck, aborting...");
+				Debug::log("[MASTER] child process $pid seems to be stuck, aborting...");
 				posix_kill($pid, SIGKILL);
 			}
 		}
@@ -93,7 +93,7 @@
 	function sigchld_handler($signal) {
 		$running_jobs = reap_children();
 
-		_debug("[SIGCHLD] jobs left: $running_jobs");
+		Debug::log("[SIGCHLD] jobs left: $running_jobs");
 
 		pcntl_waitpid(-1, $status, WNOHANG);
 	}
@@ -101,7 +101,7 @@
 	function shutdown($caller_pid) {
 		if ($caller_pid == posix_getpid()) {
 			if (file_exists(LOCK_DIRECTORY . "/update_daemon.lock")) {
-				_debug("removing lockfile (master)...");
+				Debug::log("removing lockfile (master)...");
 				unlink(LOCK_DIRECTORY . "/update_daemon.lock");
 			}
 		}
@@ -111,19 +111,19 @@
 		$pid = posix_getpid();
 
 		if (file_exists(LOCK_DIRECTORY . "/update_daemon-$pid.lock")) {
-			_debug("removing lockfile ($pid)...");
+			Debug::log("removing lockfile ($pid)...");
 			unlink(LOCK_DIRECTORY . "/update_daemon-$pid.lock");
 		}
 	}
 
 	function sigint_handler() {
-		_debug("[MASTER] SIG_INT received.\n");
+		Debug::log("[MASTER] SIG_INT received.\n");
 		shutdown(posix_getpid());
 		die;
 	}
 
 	function task_sigint_handler() {
-		_debug("[TASK] SIG_INT received.\n");
+		Debug::log("[TASK] SIG_INT received.\n");
 		task_shutdown();
 		die;
 	}
@@ -131,6 +131,7 @@
 	pcntl_signal(SIGCHLD, 'sigchld_handler');
 
 	$longopts = array("log:",
+			"log-level:",
 			"tasks:",
 			"interval:",
 			"quiet",
@@ -142,6 +143,7 @@
 		print "Tiny Tiny RSS update daemon.\n\n";
 		print "Options:\n";
 		print "  --log FILE           - log messages to FILE\n";
+        print "  --log-level N        - log verbosity level\n";
 		print "  --tasks N            - amount of update tasks to spawn\n";
 		print "                         default: " . MAX_JOBS . "\n";
 		print "  --interval N         - task spawn interval\n";
@@ -150,17 +152,27 @@
 		return;
 	}
 
-	define('QUIET', isset($options['quiet']));
+    Debug::set_enabled(true);
+    Debug::set_quiet(isset($options['quiet']));
+
+    if (isset($options["log-level"])) {
+        Debug::set_loglevel((int)$options["log-level"]);
+    }
+
+    if (isset($options["log"])) {
+        Debug::set_logfile($options["log"]);
+        Debug::log("Logging to " . $options["log"]);
+    }
 
 	if (isset($options["tasks"])) {
-		_debug("Set to spawn " . $options["tasks"] . " children.");
+		Debug::log("Set to spawn " . $options["tasks"] . " children.");
 		$max_jobs = $options["tasks"];
 	} else {
 		$max_jobs = MAX_JOBS;
 	}
 
 	if (isset($options["interval"])) {
-		_debug("Spawn interval: " . $options["interval"] . " seconds.");
+		Debug::log("Spawn interval: " . $options["interval"] . " seconds.");
 		$spawn_interval = $options["interval"];
 	} else {
 		$spawn_interval = SPAWN_INTERVAL;
@@ -168,12 +180,7 @@
 
 	// let's enforce a minimum spawn interval as to not forkbomb the host
 	$spawn_interval = max(60, $spawn_interval);
-	_debug("Spawn interval: $spawn_interval sec");
-
-	if (isset($options["log"])) {
-		_debug("Logging to " . $options["log"]);
-		define('LOGFILE', $options["log"]);
-	}
+	Debug::log("Spawn interval: $spawn_interval sec");
 
 	if (file_is_locked("update_daemon.lock")) {
 		die("error: Can't create lockfile. ".
@@ -205,7 +212,7 @@
 
 		if ($next_spawn % 60 == 0) {
 			$running_jobs = count($children);
-			_debug("[MASTER] active jobs: $running_jobs, next spawn at $next_spawn sec.");
+			Debug::log("[MASTER] active jobs: $running_jobs, next spawn at $next_spawn sec.");
 		}
 
 		if ($last_checkpoint + $spawn_interval < time()) {
@@ -219,14 +226,14 @@
 				} else if ($pid) {
 
 					if (!$master_handlers_installed) {
-						_debug("[MASTER] installing shutdown handlers");
+						Debug::log("[MASTER] installing shutdown handlers");
 						pcntl_signal(SIGINT, 'sigint_handler');
 						pcntl_signal(SIGTERM, 'sigint_handler');
 						register_shutdown_function('shutdown', posix_getpid());
 						$master_handlers_installed = true;
 					}
 
-					_debug("[MASTER] spawned client $j [PID:$pid]...");
+					Debug::log("[MASTER] spawned client $j [PID:$pid]...");
 					array_push($children, $pid);
 					$ctimes[$pid] = time();
 				} else {

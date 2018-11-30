@@ -24,11 +24,11 @@ class Import_Export extends Plugin implements IHandler {
 			return;
 		}
 
-		_debug("please enter your username:");
+		Debug::log("please enter your username:");
 
 		$username = trim(read_stdin());
 
-		_debug("importing $filename for user $username...\n");
+		Debug::log("importing $filename for user $username...\n");
 
 		$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE login = ?");
 		$sth->execute($username);

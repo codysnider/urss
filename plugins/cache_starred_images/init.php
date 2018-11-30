@@ -170,7 +170,7 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 
 		$status_filename = $this->cache_dir . $article_id . "-" . sha1($site_url) . ".status";
 
-		//_debug("status: $status_filename"); return;
+		Debug::log("status: $status_filename", Debug::$LOG_EXTENDED);
 
         if (file_exists($status_filename))
             $status = json_decode(file_get_contents($status_filename), true);
@@ -181,7 +181,7 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 
         // only allow several download attempts for article
         if ($status["attempt"] > $this->max_cache_attempts) {
-            _debug("too many attempts for $site_url");
+            Debug::log("too many attempts for $site_url", Debug::$LOG_VERBOSE);
             return;
         }
 
@@ -214,7 +214,7 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 
 				$local_filename = $this->cache_dir . $article_id . "-" . sha1($src) . $extension;
 
-				//_debug("cache_images: downloading: $src to $local_filename");
+				Debug::log("cache_images: downloading: $src to $local_filename", Debug::$LOG_VERBOSE);
 
 				if (!file_exists($local_filename)) {
 					$file_content = fetch_file_contents(["url" => $src, "max_size" => MAX_CACHE_FILE_SIZE]);

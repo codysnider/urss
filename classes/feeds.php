@@ -1134,6 +1134,9 @@ class Feeds extends Handler_Protected {
 	function update_debugger() {
 		header("Content-type: text/html");
 
+		Debug::set_enabled(true);
+		Debug::set_loglevel($_REQUEST["xdebug"]);
+
 		$feed_id = (int)$_REQUEST["feed_id"];
 		@$do_update = $_REQUEST["action"] == "do_update";
 		$csrf_token = $_REQUEST["csrf_token"];

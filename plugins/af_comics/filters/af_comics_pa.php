@@ -8,10 +8,6 @@ class Af_Comics_Pa extends Af_ComicFilter {
 	function process(&$article) {
 		if (strpos($article["link"], "penny-arcade.com") !== FALSE && strpos($article["title"], "Comic:") !== FALSE) {
 
-				/*if ($debug_enabled) {
-					_debug("af_pennyarcade: Processing comic");
-				}*/
-
 				$doc = new DOMDocument();
 
 				if ($doc->loadHTML(fetch_file_contents($article["link"]))) {
@@ -27,9 +23,6 @@ class Af_Comics_Pa extends Af_ComicFilter {
 		}
 
 		if (strpos($article["link"], "penny-arcade.com") !== FALSE && strpos($article["title"], "News Post:") !== FALSE) {
-				/*if ($debug_enabled) {
-					_debug("af_pennyarcade: Processing news post");
-				}*/
 				$doc = new DOMDocument();
 
 				if ($doc->loadHTML(fetch_file_contents($article["link"]))) {

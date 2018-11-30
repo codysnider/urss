@@ -9,12 +9,12 @@ class Digest
 	 * @param integer $limit The maximum number of articles by digest.
 	 * @return boolean Return false if digests are not enabled.
 	 */
-	static function send_headlines_digests($debug = false) {
+	static function send_headlines_digests() {
 
 		$user_limit = 15; // amount of users to process (e.g. emails to send out)
 		$limit = 1000; // maximum amount of headlines to include
 
-		if ($debug) _debug("Sending digests, batch of max $user_limit users, headline limit = $limit");
+		Debug::log("Sending digests, batch of max $user_limit users, headline limit = $limit");
 
 		if (DB_TYPE == "pgsql") {
 			$interval_qpart = "last_digest_sent < NOW() - INTERVAL '1 days'";
@@ -37,7 +37,7 @@ class Digest
 					time() - $preferred_ts <= 7200
 				) {
 
-					if ($debug) _debug("Sending digest for UID:" . $line['id'] . " - " . $line["email"]);
+					Debug::log("Sending digest for UID:" . $line['id'] . " - " . $line["email"]);
 
 					$do_catchup = get_pref('DIGEST_CATCHUP', $line['id'], false);
 
@@ -64,16 +64,16 @@ class Digest
 							"message" => $digest_text,
 							"message_html" => $digest]);
 
-						//if (!$rc && $debug) _debug("ERROR: " . $mailer->lastError());
+						//if (!$rc && $debug) Debug::log("ERROR: " . $mailer->lastError());
 
-						if ($debug) _debug("RC=$rc");
+						Debug::log("RC=$rc");
 
 						if ($rc && $do_catchup) {
-							if ($debug) _debug("Marking affected articles as read...");
+							Debug::log("Marking affected articles as read...");
 							Article::catchupArticlesById($affected_ids, 0, $line["id"]);
 						}
 					} else {
-						if ($debug) _debug("No headlines");
+						Debug::log("No headlines");
 					}
 
 					$sth = $pdo->prepare("UPDATE ttrss_users SET last_digest_sent = NOW()
@@ -84,7 +84,7 @@ class Digest
 			}
 		}
 
-		if ($debug) _debug("All done.");
+		Debug::log("All done.");
 
 	}
 

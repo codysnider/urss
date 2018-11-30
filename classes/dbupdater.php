@@ -47,8 +47,8 @@ class DbUpdater {
 								print_notice("Query: $line");
 								print_error("Error: " . implode(", ", $this->pdo->errorInfo()));
 							} else {
-								_debug("Query: $line");
-								_debug("Error: " . implode(", ", $this->pdo->errorInfo()));
+								Debug::log("Query: $line");
+								Debug::log("Error: " . implode(", ", $this->pdo->errorInfo()));
 							}
 
 							return false;

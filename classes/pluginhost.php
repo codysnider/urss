@@ -10,7 +10,6 @@ class PluginHost {
 	private $api_methods = array();
 	private $plugin_actions = array();
 	private $owner_uid;
-	private $debug;
 	private $last_registered;
 	private static $instance;
 
@@ -398,14 +397,6 @@ class PluginHost {
 				AND owner_uid = ?");
 			$sth->execute([$idx, $this->owner_uid]);
 		}
-	}
-
-	function set_debug($debug) {
-		$this->debug = $debug;
-	}
-
-	function get_debug() {
-		return $this->debug;
 	}
 
 	// Plugin feed functions are *EXPERIMENTAL*!
