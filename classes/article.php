@@ -678,9 +678,9 @@ class Article extends Handler_Protected {
 				$rv['content'] .= "<body class=\"claro ttrss_utility ttrss_zoom\">";
 			}
 
-			$rv['content'] .= "<div class=\"postReply\" id=\"POST-$id\">";
+			$rv['content'] .= "<div class=\"post\" id=\"POST-$id\">";
 
-			$rv['content'] .= "<div class=\"postHeader\" id=\"POSTHDR-$id\">";
+			$rv['content'] .= "<div class=\"header\">";
 
 			$entry_author = $line["author"];
 
@@ -692,25 +692,25 @@ class Article extends Handler_Protected {
 				$owner_uid, true);
 
 			if (!$zoom_mode)
-				$rv['content'] .= "<div class=\"postDate\">$parsed_updated</div>";
+				$rv['content'] .= "<div class=\"date\">$parsed_updated</div>";
 
 			if ($line["link"]) {
-				$rv['content'] .= "<div class='postTitle'><a target='_blank' rel='noopener noreferrer'
+				$rv['content'] .= "<div class='title'><a target='_blank' rel='noopener noreferrer'
 					title=\"".htmlspecialchars($line['title'])."\"
 					href=\"" .
 					htmlspecialchars($line["link"]) . "\">" .
 					$line["title"] . "</a>" .
 					"<span class='author'>$entry_author</span></div>";
 			} else {
-				$rv['content'] .= "<div class='postTitle'>" . $line["title"] . "$entry_author</div>";
+				$rv['content'] .= "<div class='title'>" . $line["title"] . "$entry_author</div>";
 			}
 
 			if ($zoom_mode) {
 				$feed_title = htmlspecialchars($line["feed_title"]);
 
-				$rv['content'] .= "<div class=\"postFeedTitle\">$feed_title</div>";
+				$rv['content'] .= "<div class=\"feed-title\">$feed_title</div>";
 
-				$rv['content'] .= "<div class=\"postDate\">$parsed_updated</div>";
+				$rv['content'] .= "<div class=\"date\">$parsed_updated</div>";
 			}
 
 			$tags_str = Article::format_tags_string($line["tags"], $id);
@@ -786,7 +786,7 @@ class Article extends Handler_Protected {
 
 			if (!$line['lang']) $line['lang'] = 'en';
 
-			$rv['content'] .= "<div class=\"postContent\" lang=\"".$line['lang']."\">";
+			$rv['content'] .= "<div class=\"content\" lang=\"".$line['lang']."\">";
 
 			$rv['content'] .= $line["content"];
 

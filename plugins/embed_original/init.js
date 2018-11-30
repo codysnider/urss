@@ -12,7 +12,7 @@ function embedOriginalArticle(id) {
 		if (isCdmMode()) {
 			c = $$("div#RROW-" + id + " div[class=content-inner]")[0];
 		} else if (id == getActiveArticleId()) {
-			c = $$("div[class=postContent]")[0];
+			c = $$(".post .content")[0];
 		}
 
 		if (c) {
