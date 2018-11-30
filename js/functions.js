@@ -478,12 +478,8 @@ function loading_set_progress(p) {
 		dijit.byId("loading_bar").update({progress: loading_progress});
 
 	if (loading_progress >= 90)
-		remove_splash();
+		Element.hide("overlay");
 
-}
-
-function remove_splash() {
-	Element.hide("overlay");
 }
 
 function strip_tags(s) {
