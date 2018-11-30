@@ -8,9 +8,9 @@ let post_under_pointer = false;
 let last_requested_article = 0;
 
 let catchup_id_batch = [];
-let catchup_timeout_id = false;
+//let catchup_timeout_id = false;
 
-let cids_requested = [];
+//let cids_requested = [];
 let loaded_article_ids = [];
 let _last_headlines_update = 0;
 let _headlines_scroll_offset = 0;
@@ -29,8 +29,8 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 	if (background)
 		return;
 
-	var is_cat = false;
-	var feed_id = false;
+	let is_cat = false;
+	let feed_id = false;
 
 	if (reply) {
 
@@ -110,82 +110,68 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 			}
 
 		} else if (headlines_count > 0 && feed_id == getActiveFeedId() && is_cat == activeFeedIsCat()) {
-				console.log("adding some more headlines: " + headlines_count);
+			console.log("adding some more headlines: " + headlines_count);
 
-				const c = dijit.byId("headlines-frame");
-				const ids = getSelectedArticleIds2();
+			const c = dijit.byId("headlines-frame");
+			//const ids = getSelectedArticleIds2();
 
-				let hsp = $("headlines-spacer");
+			let hsp = $("headlines-spacer");
 
-				if (hsp)
-					c.domNode.removeChild(hsp);
+			if (hsp)
+				c.domNode.removeChild(hsp);
 
-				let tmp = document.createElement("div");
-				tmp.innerHTML = reply['headlines']['content'];
-				dojo.parser.parse(tmp);
+			let tmp = document.createElement("div");
+			tmp.innerHTML = reply['headlines']['content'];
+			dojo.parser.parse(tmp);
 
-				while (tmp.hasChildNodes()) {
-					let row = tmp.removeChild(tmp.firstChild);
+			while (tmp.hasChildNodes()) {
+				let row = tmp.removeChild(tmp.firstChild);
 
-					if (loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("feed-title")) {
-						dijit.byId("headlines-frame").domNode.appendChild(row);
+				if (loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("feed-title")) {
+					dijit.byId("headlines-frame").domNode.appendChild(row);
 
-						loaded_article_ids.push(row.id);
-					}
+					loaded_article_ids.push(row.id);
 				}
+			}
 
-				if (!hsp) hsp = new Element("DIV", {"id": "headlines-spacer"});
-				c.domNode.appendChild(hsp);
+			if (!hsp) hsp = new Element("DIV", {"id": "headlines-spacer"});
+			c.domNode.appendChild(hsp);
 
-				if (headlines_count < 30) _infscroll_disable = true;
+			if (headlines_count < 30) _infscroll_disable = true;
 
-				console.log("restore selected ids: " + ids);
+			/* console.log("restore selected ids: " + ids);
 
-				for (let i = 0; i < ids.length; i++) {
-					markHeadline(ids[i]);
-				}
+			for (let i = 0; i < ids.length; i++) {
+				markHeadline(ids[i]);
+			} */
 
-				initHeadlinesMenu();
+			initHeadlinesMenu();
 
-				if (_infscroll_disable) {
+			if (_infscroll_disable) {
+				hsp.innerHTML = "<a href='#' onclick='openNextUnreadFeed()'>" +
+				__("Click to open next unread feed.") + "</a>";
+			}
+
+		} else {
+			console.log("no new headlines received");
+
+			const first_id_changed = reply['headlines']['first_id_changed'];
+			console.log("first id changed:" + first_id_changed);
+
+			let hsp = $("headlines-spacer");
+
+			if (hsp) {
+				if (first_id_changed) {
+					hsp.innerHTML = "<a href='#' onclick='viewCurrentFeed()'>" +
+					__("New articles found, reload feed to continue.") + "</a>";
+				} else {
 					hsp.innerHTML = "<a href='#' onclick='openNextUnreadFeed()'>" +
 					__("Click to open next unread feed.") + "</a>";
 				}
 
-			} else {
-				console.log("no new headlines received");
-
-				const first_id_changed = reply['headlines']['first_id_changed'];
-				console.log("first id changed:" + first_id_changed);
-
-				let hsp = $("headlines-spacer");
-
-				if (hsp) {
-					if (first_id_changed) {
-						hsp.innerHTML = "<a href='#' onclick='viewCurrentFeed()'>" +
-						__("New articles found, reload feed to continue.") + "</a>";
-					} else {
-						hsp.innerHTML = "<a href='#' onclick='openNextUnreadFeed()'>" +
-						__("Click to open next unread feed.") + "</a>";
-					}
-
-				}
-
 			}
 
-		if (articles) {
-			for (let i = 0; i < articles.length; i++) {
-				const a_id = articles[i]['id'];
-				cache_set("article:" + a_id, articles[i]['content']);
-			}
-		} else {
-			console.log("no cached articles received");
 		}
-
-		if (counters)
-			parse_counters(counters);
-		else
-			request_counters();
 
 	} else {
 		console.error("Invalid object received: " + transport.responseText);
@@ -234,6 +220,7 @@ function render_article(article) {
 	} catch (e) { }
 }
 
+/*
 function showArticleInHeadlines(id, noexpand) {
 	const row = $("RROW-" + id);
 	if (!row) return;
@@ -276,9 +263,67 @@ function article_callback2(transport, id) {
 
 	notify("");
 }
+*/
+function view(id, noexpand) {
+	setActiveArticleId(id);
 
-function view(id, activefeed, noexpand) {
-	const oldrow = $("RROW-" + getActiveArticleId());
+	if (!noexpand) {
+		console.log("loading article", id);
+
+		const neighbor_ids = getRelativePostIds(id);
+		const cids = [];
+
+		/* only request uncached articles */
+
+		neighbor_ids.each((n) => {
+			if (!cache_get("article:" + n))
+				cids.push(n);
+		});
+
+		const cached_article = cache_get("article:" + id);
+
+		if (cached_article) {
+			console.log('rendering cached', id);
+			render_article(cached_article);
+			return false;
+		}
+
+		xhrPost("backend.php", {op: "article", method: "view", id: id, cids: cids.toString()}, (transport) => {
+			try {
+				const reply = handle_rpc_json(transport);
+
+				if (reply) {
+
+					reply.each(function(article) {
+						if (getActiveArticleId() == article['id']) {
+							render_article(article['content']);
+						}
+						//cids_requested.remove(article['id']);
+
+						cache_set("article:" + article['id'], article['content']);
+					});
+
+				} else {
+					console.error("Invalid object received: " + transport.responseText);
+
+					render_article("<div class='whiteBox'>" +
+						__('Could not display article (invalid object received - see error console for details)') + "</div>");
+				}
+
+				//const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
+				//request_counters(unread_in_buffer == 0);
+
+				notify("");
+
+			} catch (e) {
+				exception_error(e);
+			}
+		})
+	}
+
+	return false;
+
+/*	const oldrow = $("RROW-" + getActiveArticleId());
 	if (oldrow) oldrow.removeClassName("active");
 
 	const crow = $("RROW-" + id);
@@ -302,7 +347,7 @@ function view(id, activefeed, noexpand) {
 
 	/* only request uncached articles */
 
-	const cids_to_request = [];
+/*	const cids_to_request = [];
 
 	for (let i = 0; i < neighbor_ids.length; i++) {
 		if (cids_requested.indexOf(neighbor_ids[i]) == -1)
@@ -348,7 +393,7 @@ function view(id, activefeed, noexpand) {
 	})
 
 	return false;
-
+*/
 }
 
 function toggleMark(id, client_only) {
@@ -481,8 +526,8 @@ function moveToPost(mode, noscroll, noexpand) {
 		if (next_id || getActiveArticleId()) {
 			if (isCdmMode()) {
 
-				var article = $("RROW-" + getActiveArticleId());
-				var ctr = $("headlines-frame");
+				const article = $("RROW-" + getActiveArticleId());
+				const ctr = $("headlines-frame");
 
 				if (!noscroll && article && article.offsetTop + article.offsetHeight >
 						ctr.scrollTop + ctr.offsetHeight) {
@@ -491,11 +536,12 @@ function moveToPost(mode, noscroll, noexpand) {
 
 				} else if (next_id) {
 					cdmScrollToArticleId(next_id, true);
+					setActiveArticleId(next_id);
 				}
 
 			} else if (next_id) {
 				correctHeadlinesOffset(next_id);
-				view(next_id, getActiveFeedId(), noexpand);
+				view(next_id, noexpand);
 			}
 		}
 	}
@@ -504,9 +550,9 @@ function moveToPost(mode, noscroll, noexpand) {
 		if (prev_id || getActiveArticleId()) {
 			if (isCdmMode()) {
 
-				var article = $("RROW-" + getActiveArticleId());
+				const article = $("RROW-" + getActiveArticleId());
 				const prev_article = $("RROW-" + prev_id);
-				var ctr = $("headlines-frame");
+				const ctr = $("headlines-frame");
 
 				if (!noscroll && article && article.offsetTop < ctr.scrollTop) {
 					scrollArticle(-ctr.offsetHeight/3);
@@ -515,18 +561,19 @@ function moveToPost(mode, noscroll, noexpand) {
 					scrollArticle(-ctr.offsetHeight/4);
 				} else if (prev_id) {
 					cdmScrollToArticleId(prev_id, noscroll);
+					setActiveArticleId(prev_id);
 				}
 
 			} else if (prev_id) {
 				correctHeadlinesOffset(prev_id);
-				view(prev_id, getActiveFeedId(), noexpand);
+				view(prev_id, noexpand);
 			}
 		}
 	}
 
 }
 
-function toggleSelected(id, force_on) {
+/* function toggleSelected(id, force_on) {
 	const row = $("RROW-" + id);
 
 	if (row) {
@@ -543,7 +590,7 @@ function toggleSelected(id, force_on) {
 	}
 
 	updateSelectedPrompt();
-}
+} */
 
 function updateSelectedPrompt() {
 	const count = getSelectedArticleIds2().length;
@@ -563,6 +610,7 @@ function updateSelectedPrompt() {
 
 function toggleUnread(id, cmode) {
 	const row = $("RROW-" + id);
+
 	if (row) {
 		const tmpClassName = row.className;
 
@@ -575,9 +623,7 @@ function toggleUnread(id, cmode) {
 			}
 
 		} else if (cmode == 0) {
-
 			row.removeClassName("Unread");
-
 		} else if (cmode == 1) {
 			row.addClassName("Unread");
 		}
@@ -589,8 +635,7 @@ function toggleUnread(id, cmode) {
 				cmode: cmode, ids: id};
 
 			xhrPost("backend.php", query, (transport) => {
-					handle_rpc_json(transport);
-
+				handle_rpc_json(transport);
 			});
 		}
 	}
@@ -743,6 +788,11 @@ function getSelectedArticleIds2() {
 			rv.push(child.getAttribute("data-article-id"));
 		});
 
+	// i wonder if this is a good idea: consider active article a honorary member
+	// of selected articles
+	if (getActiveArticleId())
+		rv.push(getActiveArticleId());
+
 	return rv;
 }
 
@@ -762,7 +812,62 @@ function getLoadedArticleIds() {
 }
 
 // mode = all,none,unread,invert,marked,published
-function selectArticles(mode, query) {
+function selectArticles(mode) {
+	let query = "#headlines-frame > div[id*=RROW]";
+
+	switch (mode) {
+		case "none":
+		case "all":
+		case "invert":
+			break;
+		case "marked":
+			query += "[class*=marked]";
+			break;
+		case "published":
+			query += "[class*=published]";
+			break;
+		case "unread":
+			query += "[class*=Unread]";
+			break;
+		default:
+			console.warn("selectArticles: unknown mode", mode);
+	}
+
+	const rows = $$(query);
+
+	for (let i = 0; i < rows.length; i++) {
+		const row = rows[i];
+		const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
+
+		switch (mode) {
+			case "none":
+				row.removeClassName("Selected");
+
+				if (!row.hasClassName("active"))
+					cb.attr("checked", false);
+				break;
+			case "invert":
+				if (row.hasClassName("Selected")) {
+					row.removeClassName("Selected");
+
+					if (!row.hasClassName("active"))
+						cb.attr("checked", false);
+				} else {
+					row.addClassName("Selected");
+					cb.attr("checked", true);
+				}
+				break;
+			default:
+				row.addClassName("Selected");
+				cb.attr("checked", true);
+		}
+
+		updateSelectedPrompt();
+	}
+}
+
+// mode = all,none,unread,invert,marked,published
+/* function selectArticles(mode, query) {
 	if (!query) query = "#headlines-frame > div[id*=RROW]";
 
 	const children = $$(query);
@@ -817,7 +922,7 @@ function selectArticles(mode, query) {
 	});
 
 	updateSelectedPrompt();
-}
+} */
 
 function deleteSelection() {
 
@@ -983,18 +1088,48 @@ function cdmScrollToArticleId(id, force) {
 		// expanded cdm has a 4px margin now
 		ctr.scrollTop = parseInt(e.offsetTop) - 4;
 
-		setActiveArticleId(id);
+		/*setActiveArticleId(id);
 
 		// article is selected manually, set it read
-		toggleUnread(id, 0);1
+		toggleUnread(id, 0); */
 	}
 }
 
+// for the time being active article does not affect buffer selection (we still re/set the checkbox
+// because of getSelectedArticleIds2() hack
 function setActiveArticleId(id) {
-	console.log("setActiveArticleId:" + id);
+	console.log("setActiveArticleId", id);
+
+	$$("div[id*=RROW][class*=active]").each((e) => {
+		e.removeClassName("active");
+
+		if (!e.hasClassName("Selected")) {
+			const cb = dijit.getEnclosingWidget(e.select(".rchk")[0]);
+			if (cb) cb.attr("checked", false);
+		}
+	})
 
 	_active_article_id = id;
-	PluginHost.run(PluginHost.HOOK_ARTICLE_SET_ACTIVE, _active_article_id);
+
+	const row = $("RROW-" + id);
+
+	if (row) {
+		if (row.hasClassName("Unread")) {
+			toggleUnread(id, 0);
+
+			decrementFeedCounter(getActiveFeedId(), activeFeedIsCat());
+			updateFloatingTitle(true);
+		}
+
+		row.addClassName("active");
+
+		if (!row.hasClassName("Selected")) {
+			const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
+			if (cb) cb.attr("checked", true);
+		}
+
+		PluginHost.run(PluginHost.HOOK_ARTICLE_SET_ACTIVE, _active_article_id);
+	}
 }
 
 function getActiveArticleId() {
@@ -1021,12 +1156,15 @@ function unpackVisibleHeadlines() {
 		if (row.offsetTop <= threshold) {
 			console.log("unpacking: " + row.id);
 
-			const content = row.getAttribute("data-content");
-
-			row.select(".content-inner")[0].innerHTML = content;
+			row.select(".content-inner")[0].innerHTML = row.getAttribute("data-content");
 			row.removeAttribute("data-content");
 
 			PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
+
+			// i wonder if this is a good idea?
+			if (!getActiveArticleId() && !row.hasClassName("Unread"))
+				setActiveArticleId(row.getAttribute("data-article-id"));
+
 		} else {
 			break;
 		}
@@ -1046,8 +1184,7 @@ function headlines_scroll_handler(e) {
 		unpackVisibleHeadlines();
 
 		// set topmost child in the buffer as active
-		if (isCdmMode() && getInitParam("cdm_auto_catchup") == 1 &&
-				getSelectedArticleIds2().length <= 1) {
+		if (isCdmMode() && getInitParam("cdm_auto_catchup") == 1) {
 
 			const rows = $$("#headlines-frame > div[id*=RROW]");
 
@@ -1056,16 +1193,19 @@ function headlines_scroll_handler(e) {
 
 				if ($("headlines-frame").scrollTop <= row.offsetTop &&
 					row.offsetTop - $("headlines-frame").scrollTop < 100 &&
-					row.getAttribute("data-article-id") != _active_article_id) {
+					row.getAttribute("data-article-id") != getActiveArticleId()) {
 
-					if (_active_article_id) {
+					/* if (_active_article_id) {
 						const row = $("RROW-" + _active_article_id);
 						if (row) row.removeClassName("active");
 					}
 
 					_active_article_id = row.getAttribute("data-article-id");
 					showArticleInHeadlines(_active_article_id, true);
-					updateSelectedPrompt();
+					updateSelectedPrompt(); */
+
+					setActiveArticleId(row.getAttribute("data-article-id"));
+
 					break;
 				}
 			}
@@ -1181,9 +1321,9 @@ function catchupRelativeToArticle(below, id) {
 	const ids_to_mark = [];
 
 	if (!below) {
-		for (var i = 0; i < visible_ids.length; i++) {
+		for (let i = 0; i < visible_ids.length; i++) {
 			if (visible_ids[i] != id) {
-				var e = $("RROW-" + visible_ids[i]);
+				const e = $("RROW-" + visible_ids[i]);
 
 				if (e && e.hasClassName("Unread")) {
 					ids_to_mark.push(visible_ids[i]);
@@ -1193,9 +1333,9 @@ function catchupRelativeToArticle(below, id) {
 			}
 		}
 	} else {
-		for (var i = visible_ids.length - 1; i >= 0; i--) {
+		for (let i = visible_ids.length - 1; i >= 0; i--) {
 			if (visible_ids[i] != id) {
-				var e = $("RROW-" + visible_ids[i]);
+				const e = $("RROW-" + visible_ids[i]);
 
 				if (e && e.hasClassName("Unread")) {
 					ids_to_mark.push(visible_ids[i]);
@@ -1260,9 +1400,15 @@ function show_labels_in_headlines(transport) {
 }
 
 function cdmClicked(event, id, in_body) {
+	if (event.ctrlKey && !in_body) {
+		openArticleInNewWindow(id);
+	}
+
+	setActiveArticleId(id);
+
 	//var shift_key = event.shiftKey;
 
-	if (!event.ctrlKey && !event.metaKey) {
+	/* if (!event.ctrlKey && !event.metaKey) {
 
 		let elem = $("RROW-" + getActiveArticleId());
 
@@ -1314,13 +1460,22 @@ function cdmClicked(event, id, in_body) {
 	}
 
 	const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length
-	request_counters(unread_in_buffer == 0);
+	request_counters(unread_in_buffer == 0); */
 
 	return false;
 }
 
 function hlClicked(event, id) {
-	if (event.which == 2) {
+	if (event.ctrlKey) {
+		openArticleInNewWindow(id);
+		setActiveArticleId(id);
+	} else {
+		view(id);
+	}
+
+	return false;
+
+	/* if (event.which == 2) {
 		view(id);
 		return true;
 	} else if (event.ctrlKey || event.metaKey) {
@@ -1329,12 +1484,10 @@ function hlClicked(event, id) {
 	} else {
 		view(id);
 		return false;
-	}
+	} */
 }
 
 function openArticleInNewWindow(id) {
-	toggleUnread(id, 0, false);
-
 	const w = window.open("");
 	w.opener = null;
 	w.location = "backend.php?op=article&method=redirect&id=" + id;
@@ -1344,7 +1497,7 @@ function isCdmMode() {
 	return getInitParam("combined_display_mode");
 }
 
-function markHeadline(id, marked) {
+/* function markHeadline(id, marked) {
 	if (marked == undefined) marked = true;
 
 	const row = $("RROW-" + id);
@@ -1361,7 +1514,7 @@ function markHeadline(id, marked) {
 		else
 			row.removeClassName("Selected");
 	}
-}
+} */
 
 function getRelativePostIds(id, limit) {
 
@@ -1385,7 +1538,6 @@ function getRelativePostIds(id, limit) {
 }
 
 function correctHeadlinesOffset(id) {
-
 	const container = $("headlines-frame");
 	const row = $("RROW-" + id);
 
@@ -1402,10 +1554,6 @@ function correctHeadlinesOffset(id) {
 	if (rel_offset_top <= 0 || rel_offset_top > viewport) {
 		container.scrollTop = row.offsetTop;
 	} else if (rel_offset_bottom > viewport) {
-
-		/* doesn't properly work with Opera in some cases because
-		 Opera fucks up element scrolling */
-
 		container.scrollTop = row.offsetTop + row.offsetHeight - viewport;
 	}
 }
@@ -1416,7 +1564,6 @@ function headlineActionsChange(elem) {
 }
 
 function closeArticlePanel() {
-
 	if (dijit.byId("content-insert"))
 		dijit.byId("headlines-wrap-inner").removeChild(
 			dijit.byId("content-insert"));
@@ -1724,6 +1871,7 @@ function displayArticleUrl(id) {
 
 }
 
+// floatingTitle goto button uses this
 function scrollToRowId(id) {
 	const row = $(id);
 
@@ -1735,7 +1883,6 @@ function updateFloatingTitle(unread_only) {
 	if (!isCdmMode()) return;
 
 	const hf = $("headlines-frame");
-
 	const elems = $$("#headlines-frame > div[id*=RROW]");
 
 	for (let i = 0; i < elems.length; i++) {
@@ -1744,7 +1891,7 @@ function updateFloatingTitle(unread_only) {
 
 		if (child && child.offsetTop + child.offsetHeight > hf.scrollTop) {
 
-			const header = child.getElementsByClassName("header")[0];
+			const header = child.select(".header")[0];
 
 			if (unread_only || child.getAttribute("data-article-id") != $("floatingTitle").getAttribute("data-article-id")) {
 				if (child.getAttribute("data-article-id") != $("floatingTitle").getAttribute("data-article-id")) {

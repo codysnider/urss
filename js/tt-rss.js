@@ -443,10 +443,12 @@ function init_hotkey_actions() {
 
 			if (row) {
 				const cb = dijit.getEnclosingWidget(
-					row.getElementsByClassName("rchk")[0]);
+					row.select(".rchk")[0]);
 
 				if (cb) {
-					cb.attr("checked", !cb.attr("checked"));
+					if (!row.hasClassName("active"))
+						cb.attr("checked", !cb.attr("checked"));
+
 					toggleSelectRowById(cb, "RROW-" + id);
 					return false;
 				}
