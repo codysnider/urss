@@ -55,9 +55,9 @@ function addUser() {
 	notify_progress("Adding user...");
 
 	xhrPost("backend.php", { op: "pref-users", method: "add", login: login }, (transport) => {
-        notify_callback2(transport);
-        updateUsersList();
-    });
+		notify_callback2(transport);
+		updateUsersList();
+	});
 
 }
 
@@ -78,9 +78,9 @@ function editUser(id) {
 				notify_progress("Saving data...", true);
 
 				xhrPost("backend.php", dojo.formToObject("user_edit_form"), (transport) => {
-                    dialog.hide();
-                    updateUsersList();
-                });
+					dialog.hide();
+					updateUsersList();
+				});
 			}
 		},
 		href: query
@@ -552,7 +552,7 @@ function opmlImportComplete(iframe) {
 		title: __("OPML Import"),
 		style: "width: 600px",
 		onCancel: function () {
-            window.location.reload();
+			window.location.reload();
 		},
 		execute: function () {
 			window.location.reload();
@@ -586,30 +586,30 @@ function updateFilterList() {
 	if (user_search) { search = user_search.value; }
 
 	xhrPost("backend.php", { op: "pref-filters", search: search }, (transport) => {
-        dijit.byId('filterConfigTab').attr('content', transport.responseText);
-        notify("");
-    });
+		dijit.byId('filterConfigTab').attr('content', transport.responseText);
+		notify("");
+	});
 }
 
 function updateLabelList() {
 	xhrPost("backend.php", { op: "pref-labels" }, (transport) => {
-        dijit.byId('labelConfigTab').attr('content', transport.responseText);
-        notify("");
-    });
+		dijit.byId('labelConfigTab').attr('content', transport.responseText);
+		notify("");
+	});
 }
 
 function updatePrefsList() {
-    xhrPost("backend.php", { op: "pref-prefs" }, (transport) => {
-        dijit.byId('genConfigTab').attr('content', transport.responseText);
-        notify("");
-    });
+	xhrPost("backend.php", { op: "pref-prefs" }, (transport) => {
+		dijit.byId('genConfigTab').attr('content', transport.responseText);
+		notify("");
+	});
 }
 
 function updateSystemList() {
-    xhrPost("backend.php", { op: "pref-system" }, (transport) => {
-        dijit.byId('systemConfigTab').attr('content', transport.responseText);
-        notify("");
-    });
+	xhrPost("backend.php", { op: "pref-system" }, (transport) => {
+		dijit.byId('systemConfigTab').attr('content', transport.responseText);
+		notify("");
+	});
 }
 
 function selectTab(id, noupdate) {
@@ -618,22 +618,22 @@ function selectTab(id, noupdate) {
 
 		switch (id) {
 			case "feedConfig":
-                updateFeedList();
+				updateFeedList();
 				break;
 			case "filterConfig":
-                updateFilterList();
+				updateFilterList();
 				break;
 			case "labelConfig":
-                updateLabelList();
+				updateLabelList();
 				break;
 			case "genConfig":
-                updatePrefsList();
+				updatePrefsList();
 				break;
 			case "userConfig":
-                updateUsersList();
+				updateUsersList();
 				break;
 			case "systemConfig":
-                updateSystemList();
+				updateSystemList();
 				break;
 			default:
 				console.warn("unknown tab", id);
@@ -684,7 +684,7 @@ function init() {
 		"dijit/form/CheckBox",
 		"dijit/form/DropDownButton",
 		"dijit/form/FilteringSelect",
-        "dijit/form/MultiSelect",
+		"dijit/form/MultiSelect",
 		"dijit/form/Form",
 		"dijit/form/RadioButton",
 		"dijit/form/ComboButton",
@@ -739,36 +739,36 @@ function validatePrefsReset() {
 		const query = "?op=pref-prefs&method=resetconfig";
 
 		xhrPost("backend.php", { op: "pref-prefs", method: "resetconfig" }, (transport) => {
-            updatePrefsList();
-            notify_info(transport.responseText);
-        });
+			updatePrefsList();
+			notify_info(transport.responseText);
+		});
 	}
 
 	return false;
 }
 
 function pref_hotkey_handler(e) {
-    if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
+	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
 
-    const action_name = keyevent_to_action(e);
+	const action_name = keyevent_to_action(e);
 
-    if (action_name) {
-        switch (action_name) {
-            case "feed_subscribe":
-                quickAddFeed();
-                return false;
-            case "create_label":
-                addLabel();
-                return false;
-            case "create_filter":
-                quickAddFilter();
-                return false;
-            case "help_dialog":
-                helpDialog("main");
-                return false;
-            default:
-                console.log("unhandled action: " + action_name + "; keycode: " + e.which);
-        }
+	if (action_name) {
+		switch (action_name) {
+			case "feed_subscribe":
+				quickAddFeed();
+				return false;
+			case "create_label":
+				addLabel();
+				return false;
+			case "create_filter":
+				quickAddFilter();
+				return false;
+			case "help_dialog":
+				helpDialog("main");
+				return false;
+			default:
+				console.log("unhandled action: " + action_name + "; keycode: " + e.which);
+		}
 	}
 }
 
@@ -777,13 +777,13 @@ function removeCategory(id, item) {
 	if (confirm(__("Remove category %s? Any nested feeds would be placed into Uncategorized.").replace("%s", item.name))) {
 		notify_progress("Removing category...");
 
-        const query = { op: "pref-feeds", method: "removeCat",
-            ids: id };
+		const query = { op: "pref-feeds", method: "removeCat",
+			ids: id };
 
 		xhrPost("backend.php", query, () => {
-            notify('');
-            updateFeedList();
-        });
+			notify('');
+			updateFeedList();
+		});
 	}
 }
 
@@ -798,8 +798,8 @@ function removeSelectedCategories() {
 				ids: sel_rows.toString() };
 
 			xhrPost("backend.php", query, () => {
-                updateFeedList();
-            });
+				updateFeedList();
+			});
 		}
 	} else {
 		alert(__("No categories are selected."));
@@ -815,9 +815,9 @@ function createCategory() {
 		notify_progress("Creating category...");
 
 		xhrPost("backend.php", { op: "pref-feeds", method: "addCat", cat: title }, () => {
-            notify('');
-            updateFeedList();
-        });
+			notify('');
+			updateFeedList();
+		});
 	}
 }
 
@@ -845,10 +845,10 @@ function showInactiveFeeds() {
 						ids: sel_rows.toString() };
 
 					xhrPost("backend.php", query, () => {
-                        notify('');
-                        dialog.hide();
-                        updateFeedList();
-                    });
+						notify('');
+						dialog.hide();
+						updateFeedList();
+					});
 				}
 
 			} else {
@@ -870,23 +870,23 @@ function opmlRegenKey() {
 		notify_progress("Trying to change address...", true);
 
 		xhrJson("backend.php", { op: "pref-feeds", method: "regenOPMLKey" }, (reply) => {
-            if (reply) {
-                const new_link = reply.link;
-                const e = $('pub_opml_url');
+			if (reply) {
+				const new_link = reply.link;
+				const e = $('pub_opml_url');
 
-                if (new_link) {
-                    e.href = new_link;
-                    e.innerHTML = new_link;
+				if (new_link) {
+					e.href = new_link;
+					e.innerHTML = new_link;
 
-                    new Effect.Highlight(e);
+					new Effect.Highlight(e);
 
-                    notify('');
+					notify('');
 
-                } else {
-                    notify_error("Could not change feed URL.");
-                }
-            }
-        });
+				} else {
+					notify_error("Could not change feed URL.");
+				}
+			}
+		});
 	}
 	return false;
 }
@@ -901,8 +901,8 @@ function labelColorReset() {
 				ids: labels.toString() };
 
 			xhrPost("backend.php", query, () => {
-                updateLabelList();
-            });
+				updateLabelList();
+			});
 		}
 
 	} else {
@@ -955,9 +955,9 @@ function editProfiles() {
 				if (confirm(__("Activate selected profile?"))) {
 					notify_progress("Loading, please wait...");
 
-                    xhrPost("backend.php", { op: "rpc", method: "setprofile", id: sel_rows.toString() },  () => {
-                        window.location.reload();
-                    });
+					xhrPost("backend.php", { op: "rpc", method: "setprofile", id: sel_rows.toString() },  () => {
+						window.location.reload();
+					});
 				}
 
 			} else {
@@ -1017,8 +1017,8 @@ function clearFeedAccessKeys() {
 		notify_progress("Clearing URLs...");
 
 		xhrPost("backend.php", { op: "pref-feeds", method: "clearKeys" }, () => {
-            notify_info("Generated URLs cleared.");
-        });
+			notify_info("Generated URLs cleared.");
+		});
 	}
 
 	return false;
@@ -1027,18 +1027,18 @@ function clearFeedAccessKeys() {
 function resetFilterOrder() {
 	notify_progress("Loading, please wait...");
 
-    xhrPost("backend.php", { op: "pref-filters", method: "filtersortreset" }, () => {
-        updateFilterList();
-    });
+	xhrPost("backend.php", { op: "pref-filters", method: "filtersortreset" }, () => {
+		updateFilterList();
+	});
 }
 
 
 function resetFeedOrder() {
 	notify_progress("Loading, please wait...");
 
-    xhrPost("backend.php", { op: "pref-feeds", method: "feedsortreset" }, () => {
-        updateFeedList();
-    });
+	xhrPost("backend.php", { op: "pref-feeds", method: "feedsortreset" }, () => {
+		updateFeedList();
+	});
 }
 
 function resetCatOrder() {
@@ -1095,11 +1095,11 @@ function editLabel(id) {
 				if (bg) e.style.backgroundColor = bg;
 			}
 
-            const query = { op: "pref-labels", method: "colorset", kind: kind,
-                ids: id, fg: fg, bg: bg, color: color };
+			const query = { op: "pref-labels", method: "colorset", kind: kind,
+				ids: id, fg: fg, bg: bg, color: color };
 
-            xhrPost("backend.php", query, () => {
-                updateFilterList(); // maybe there's labels in there
+			xhrPost("backend.php", query, () => {
+				updateFilterList(); // maybe there's labels in there
 			});
 
 		},
@@ -1114,7 +1114,7 @@ function editLabel(id) {
 				this.hide();
 
 				xhrPost("backend.php", this.attr('value'), () => {
-                    updateFilterList(); // maybe there's labels in there
+					updateFilterList(); // maybe there's labels in there
 				});
 			}
 		},
@@ -1164,7 +1164,7 @@ function batchSubscribe() {
 
 	// overlapping widgets
 	if (dijit.byId("batchSubDlg")) dijit.byId("batchSubDlg").destroyRecursive();
-	if (dijit.byId("feedAddDlg"))    dijit.byId("feedAddDlg").destroyRecursive();
+	if (dijit.byId("feedAddDlg"))	dijit.byId("feedAddDlg").destroyRecursive();
 
 	const dialog = new dijit.Dialog({
 		id: "batchSubDlg",

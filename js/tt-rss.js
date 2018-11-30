@@ -206,7 +206,7 @@ function init() {
 			"dijit/form/Form",
 			"dijit/form/RadioButton",
 			"dijit/form/Select",
-        	"dijit/form/MultiSelect",
+			"dijit/form/MultiSelect",
 			"dijit/form/SimpleTextarea",
 			"dijit/form/TextBox",
 			"dijit/form/ComboBox",
@@ -237,25 +237,25 @@ function init() {
 					loading_set_progress(30);
 					init_hotkey_actions();
 
-                    const a = document.createElement('audio');
-                    const hasAudio = !!a.canPlayType;
-                    const hasSandbox = "sandbox" in document.createElement("iframe");
-                    const hasMp3 = !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
-                    const clientTzOffset = new Date().getTimezoneOffset() * 60;
+					const a = document.createElement('audio');
+					const hasAudio = !!a.canPlayType;
+					const hasSandbox = "sandbox" in document.createElement("iframe");
+					const hasMp3 = !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
+					const clientTzOffset = new Date().getTimezoneOffset() * 60;
 
-                    const params = {
-                            op: "rpc", method: "sanityCheck", hasAudio: hasAudio,
-                            hasMp3: hasMp3,
-                            clientTzOffset: clientTzOffset,
-                            hasSandbox: hasSandbox
-                        };
+					const params = {
+							op: "rpc", method: "sanityCheck", hasAudio: hasAudio,
+							hasMp3: hasMp3,
+							clientTzOffset: clientTzOffset,
+							hasSandbox: hasSandbox
+						};
 
 					xhrPost("backend.php", params, (transport) => {
-                        try {
-                            backend_sanity_check_callback(transport);
-                        } catch (e) {
-                            console.error(e);
-                        }
+						try {
+							backend_sanity_check_callback(transport);
+						} catch (e) {
+							console.error(e);
+						}
 					});
 
 				} catch (e) {
@@ -492,11 +492,11 @@ function init_hotkey_actions() {
 		const value = isCdmMode() ? "false" : "true";
 
 		xhrPost("backend.php", {op: "rpc", method: "setpref", key: "COMBINED_DISPLAY_MODE", value: value}, () => {
-            setInitParam("combined_display_mode",
-                !getInitParam("combined_display_mode"));
+			setInitParam("combined_display_mode",
+				!getInitParam("combined_display_mode"));
 
-            closeArticlePanel();
-            viewCurrentFeed();
+			closeArticlePanel();
+			viewCurrentFeed();
 		})
 	};
 }
@@ -651,8 +651,8 @@ function toggleDispRead() {
 	const hide = !(getInitParam("hide_read_feeds") == "1");
 
 	xhrPost("backend.php", {op: "rpc", method: "setpref", key: "HIDE_READ_FEEDS", value: hide}, () => {
-        hideOrShowFeeds(hide);
-        setInitParam("hide_read_feeds", hide);
+		hideOrShowFeeds(hide);
+		setInitParam("hide_read_feeds", hide);
 	});
 }
 
@@ -723,16 +723,16 @@ function viewModeChanged() {
 function hotkey_handler(e) {
 	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
 
-    const action_name = keyevent_to_action(e);
+	const action_name = keyevent_to_action(e);
 
-    if (action_name) {
-        const action_func = hotkey_actions[action_name];
+	if (action_name) {
+		const action_func = hotkey_actions[action_name];
 
-        if (action_func != null) {
-            action_func();
-            e.stopPropagation();
-            return false;
-        }
+		if (action_func != null) {
+			action_func();
+			e.stopPropagation();
+			return false;
+		}
 	}
 }
 
@@ -815,11 +815,11 @@ function handle_rpc_json(transport, scheduled_call) {
 			return reply;
 
 		} else {
-            if (netalert)
-                netalert.show();
-            else
-                notify_error("Communication problem with server.");
-        }
+			if (netalert)
+				netalert.show();
+			else
+				notify_error("Communication problem with server.");
+		}
 
 	} catch (e) {
 		if (netalert)

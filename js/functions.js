@@ -30,23 +30,23 @@ Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(
 
 function xhrPost(url, params, complete) {
 	console.log("xhrPost:", params);
-    return new Ajax.Request(url, {
-        parameters: params,
-        onComplete: complete
-    });
+	return new Ajax.Request(url, {
+		parameters: params,
+		onComplete: complete
+	});
 }
 
 function xhrJson(url, params, complete) {
-    return xhrPost(url, params, (reply) => {
-        try {
-            const obj = JSON.parse(reply.responseText);
-            complete(obj);
-        } catch (e) {
-            console.error("xhrJson", e, reply);
-            complete(null);
-        }
+	return xhrPost(url, params, (reply) => {
+		try {
+			const obj = JSON.parse(reply.responseText);
+			complete(obj);
+		} catch (e) {
+			console.error("xhrJson", e, reply);
+			complete(null);
+		}
 
-    })
+	})
 }
 
 /* add method to remove element from array */
@@ -246,15 +246,15 @@ function getCookie(name) {
 	const prefix = name + "=";
 	let begin = dc.indexOf("; " + prefix);
 	if (begin == -1) {
-	    begin = dc.indexOf(prefix);
-	    if (begin != 0) return null;
+		begin = dc.indexOf(prefix);
+		if (begin != 0) return null;
 	}
 	else {
-	    begin += 2;
+		begin += 2;
 	}
 	let end = document.cookie.indexOf(";", begin);
 	if (end == -1) {
-	    end = dc.length;
+		end = dc.length;
 	}
 	return unescape(dc.substring(begin + prefix.length, end));
 }
@@ -342,8 +342,8 @@ function displayDlg(title, id, param, callback) {
 	const query = { op: "dlg", method: id, param: param };
 
 	xhrPost("backend.php", query, (transport) => {
-        infobox_callback2(transport, title);
-        if (callback) callback(transport);
+		infobox_callback2(transport, title);
+		if (callback) callback(transport);
 	});
 
 	return false;
@@ -527,16 +527,16 @@ function removeFeedIcon(id) {
 
 		notify_progress("Removing feed icon...", true);
 
-        const query = { op: "pref-feeds", method: "removeicon", feed_id: id };
+		const query = { op: "pref-feeds", method: "removeicon", feed_id: id };
 
 		xhrPost("backend.php", query, (transport) => {
-            notify_info("Feed icon removed.");
-            if (inPreferences()) {
-                updateFeedList();
-            } else {
-                setTimeout('updateFeedList(false, false)', 50);
-            }
-        });
+			notify_info("Feed icon removed.");
+			if (inPreferences()) {
+				updateFeedList();
+			} else {
+				setTimeout('updateFeedList(false, false)', 50);
+			}
+		});
 	}
 
 	return false;
@@ -574,14 +574,14 @@ function addLabel(select, callback) {
 		notify_progress("Loading, please wait...", true);
 
 		xhrPost("backend.php", query, (transport) => {
-            if (callback) {
-                callback(transport);
-            } else if (inPreferences()) {
-                updateLabelList();
-            } else {
-                updateFeedList();
-            }
-        });
+			if (callback) {
+				callback(transport);
+			} else if (inPreferences()) {
+				updateLabelList();
+			} else {
+				updateFeedList();
+			}
+		});
 	}
 
 }
@@ -616,75 +616,75 @@ function quickAddFeed() {
 				Element.hide("fadd_error_message");
 
 				xhrPost("backend.php", this.attr('value'), (transport) => {
-                    try {
+					try {
 
-                        try {
-                            var reply = JSON.parse(transport.responseText);
-                        } catch (e) {
-                            Element.hide("feed_add_spinner");
-                            alert(__("Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."));
-                            console.log('quickAddFeed, backend returned:' + transport.responseText);
-                            return;
-                        }
+						try {
+							var reply = JSON.parse(transport.responseText);
+						} catch (e) {
+							Element.hide("feed_add_spinner");
+							alert(__("Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."));
+							console.log('quickAddFeed, backend returned:' + transport.responseText);
+							return;
+						}
 
-                        const rc = reply['result'];
+						const rc = reply['result'];
 
-                        notify('');
-                        Element.hide("feed_add_spinner");
+						notify('');
+						Element.hide("feed_add_spinner");
 
-                        console.log(rc);
+						console.log(rc);
 
-                        switch (parseInt(rc['code'])) {
-                            case 1:
-                                dialog.hide();
-                                notify_info(__("Subscribed to %s").replace("%s", feed_url));
+						switch (parseInt(rc['code'])) {
+							case 1:
+								dialog.hide();
+								notify_info(__("Subscribed to %s").replace("%s", feed_url));
 
-                                updateFeedList();
-                                break;
-                            case 2:
-                                dialog.show_error(__("Specified URL seems to be invalid."));
-                                break;
-                            case 3:
-                                dialog.show_error(__("Specified URL doesn't seem to contain any feeds."));
-                                break;
-                            case 4:
-                                const feeds = rc['feeds'];
+								updateFeedList();
+								break;
+							case 2:
+								dialog.show_error(__("Specified URL seems to be invalid."));
+								break;
+							case 3:
+								dialog.show_error(__("Specified URL doesn't seem to contain any feeds."));
+								break;
+							case 4:
+								const feeds = rc['feeds'];
 
-                                Element.show("fadd_multiple_notify");
+								Element.show("fadd_multiple_notify");
 
-                                const select = dijit.byId("feedDlg_feedContainerSelect");
+								const select = dijit.byId("feedDlg_feedContainerSelect");
 
-                                while (select.getOptions().length > 0)
-                                    select.removeOption(0);
+								while (select.getOptions().length > 0)
+									select.removeOption(0);
 
-                                select.addOption({value: '', label: __("Expand to select feed")});
+								select.addOption({value: '', label: __("Expand to select feed")});
 
-                                let count = 0;
-                                for (const feedUrl in feeds) {
-                                    select.addOption({value: feedUrl, label: feeds[feedUrl]});
-                                    count++;
-                                }
+								let count = 0;
+								for (const feedUrl in feeds) {
+									select.addOption({value: feedUrl, label: feeds[feedUrl]});
+									count++;
+								}
 
-                                Effect.Appear('feedDlg_feedsContainer', {duration : 0.5});
+								Effect.Appear('feedDlg_feedsContainer', {duration : 0.5});
 
-                                break;
-                            case 5:
-                                dialog.show_error(__("Couldn't download the specified URL: %s").
-                                replace("%s", rc['message']));
-                                break;
-                            case 6:
-                                dialog.show_error(__("XML validation failed: %s").
-                                replace("%s", rc['message']));
-                                break;
-                            case 0:
-                                dialog.show_error(__("You are already subscribed to this feed."));
-                                break;
-                        }
+								break;
+							case 5:
+								dialog.show_error(__("Couldn't download the specified URL: %s").
+								replace("%s", rc['message']));
+								break;
+							case 6:
+								dialog.show_error(__("XML validation failed: %s").
+								replace("%s", rc['message']));
+								break;
+							case 0:
+								dialog.show_error(__("You are already subscribed to this feed."));
+								break;
+						}
 
-                    } catch (e) {
-                        console.error(transport.responseText);
-                        exception_error(e);
-                    }
+					} catch (e) {
+						console.error(transport.responseText);
+						exception_error(e);
+					}
 				});
 			}
 		},
@@ -1089,23 +1089,23 @@ function backend_sanity_check_callback(transport) {
 		for (const k in params) {
 			switch (k) {
 				case "label_base_index":
-                    _label_base_index = parseInt(params[k])
+					_label_base_index = parseInt(params[k])
 					break;
 				case "hotkeys":
 					// filter mnemonic definitions (used for help panel) from hotkeys map
 					// i.e. *(191)|Ctrl-/ -> *(191)
 
-                    const tmp = [];
-                    for (const sequence in params[k][1]) {
-                        const filtered = sequence.replace(/\|.*$/, "");
-                        tmp[filtered] = params[k][1][sequence];
-                    }
+					const tmp = [];
+					for (const sequence in params[k][1]) {
+						const filtered = sequence.replace(/\|.*$/, "");
+						tmp[filtered] = params[k][1][sequence];
+					}
 
-                    params[k][1] = tmp;
-                    break;
+					params[k][1] = tmp;
+					break;
 			}
 
-            console.log("IP:", k, "=>", params[k]);
+			console.log("IP:", k, "=>", params[k]);
 		}
 
 		init_params = params;
@@ -1398,10 +1398,10 @@ function showFeedsWithErrors() {
 						ids: sel_rows.toString() };
 
 					xhrPost("backend.php",	query, () => {
-                        notify('');
-                        dialog.hide();
-                        updateFeedList();
-                    });
+						notify('');
+						dialog.hide();
+						updateFeedList();
+					});
 				}
 
 			} else {
@@ -1424,19 +1424,19 @@ function get_timestamp() {
 }
 
 function helpDialog(topic) {
-    const query = "backend.php?op=backend&method=help&topic=" + param_escape(topic);
+	const query = "backend.php?op=backend&method=help&topic=" + param_escape(topic);
 
-    if (dijit.byId("helpDlg"))
-        dijit.byId("helpDlg").destroyRecursive();
+	if (dijit.byId("helpDlg"))
+		dijit.byId("helpDlg").destroyRecursive();
 
-    const dialog = new dijit.Dialog({
-        id: "helpDlg",
-        title: __("Help"),
-        style: "width: 600px",
-        href: query,
-    });
+	const dialog = new dijit.Dialog({
+		id: "helpDlg",
+		title: __("Help"),
+		style: "width: 600px",
+		href: query,
+	});
 
-    dialog.show();
+	dialog.show();
 }
 
 function label_to_feed_id(label) {
@@ -1487,55 +1487,55 @@ function openArticlePopup(id) {
 
 function keyevent_to_action(e) {
 
-    const hotkeys_map = getInitParam("hotkeys");
-    const keycode = e.which;
-    const keychar = String.fromCharCode(keycode).toLowerCase();
+	const hotkeys_map = getInitParam("hotkeys");
+	const keycode = e.which;
+	const keychar = String.fromCharCode(keycode).toLowerCase();
 
-    if (keycode == 27) { // escape and drop prefix
-        hotkey_prefix = false;
-    }
+	if (keycode == 27) { // escape and drop prefix
+		hotkey_prefix = false;
+	}
 
-    if (keycode == 16 || keycode == 17) return; // ignore lone shift / ctrl
+	if (keycode == 16 || keycode == 17) return; // ignore lone shift / ctrl
 
-    if (!hotkey_prefix && hotkeys_map[0].indexOf(keychar) != -1) {
+	if (!hotkey_prefix && hotkeys_map[0].indexOf(keychar) != -1) {
 
-        const date = new Date();
-        const ts = Math.round(date.getTime() / 1000);
+		const date = new Date();
+		const ts = Math.round(date.getTime() / 1000);
 
-        hotkey_prefix = keychar;
-        hotkey_prefix_pressed = ts;
+		hotkey_prefix = keychar;
+		hotkey_prefix_pressed = ts;
 
-        $("cmdline").innerHTML = keychar;
-        Element.show("cmdline");
+		$("cmdline").innerHTML = keychar;
+		Element.show("cmdline");
 
-        e.stopPropagation();
+		e.stopPropagation();
 
-        return false;
-    }
+		return false;
+	}
 
-    Element.hide("cmdline");
+	Element.hide("cmdline");
 
-    let hotkey_name = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
+	let hotkey_name = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
 
-    // ensure ^*char notation
-    if (e.shiftKey) hotkey_name = "*" + hotkey_name;
-    if (e.ctrlKey) hotkey_name = "^" + hotkey_name;
-    if (e.altKey) hotkey_name = "+" + hotkey_name;
-    if (e.metaKey) hotkey_name = "%" + hotkey_name;
+	// ensure ^*char notation
+	if (e.shiftKey) hotkey_name = "*" + hotkey_name;
+	if (e.ctrlKey) hotkey_name = "^" + hotkey_name;
+	if (e.altKey) hotkey_name = "+" + hotkey_name;
+	if (e.metaKey) hotkey_name = "%" + hotkey_name;
 
-    const hotkey_full = hotkey_prefix ? hotkey_prefix + " " + hotkey_name : hotkey_name;
-    hotkey_prefix = false;
+	const hotkey_full = hotkey_prefix ? hotkey_prefix + " " + hotkey_name : hotkey_name;
+	hotkey_prefix = false;
 
-    let action_name = false;
+	let action_name = false;
 
-    for (const sequence in hotkeys_map[1]) {
-        if (sequence == hotkey_full) {
-            action_name = hotkeys_map[1][sequence];
-            break;
-        }
-    }
+	for (const sequence in hotkeys_map[1]) {
+		if (sequence == hotkey_full) {
+			action_name = hotkeys_map[1][sequence];
+			break;
+		}
+	}
 
-    console.log('keyevent_to_action', hotkey_full, '=>', action_name);
+	console.log('keyevent_to_action', hotkey_full, '=>', action_name);
 
-    return action_name;
+	return action_name;
 }

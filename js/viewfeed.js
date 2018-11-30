@@ -325,7 +325,7 @@ function view(id, activefeed, noexpand) {
 		query.mode = "prefetch";
 		render_article(cached_article);
 	} else if (cached_article) {
-        query.mode = "prefetch_old";
+		query.mode = "prefetch_old";
 		render_article(cached_article);
 
 		// if we don't need to request any relative ids, we might as well skip
@@ -344,7 +344,7 @@ function view(id, activefeed, noexpand) {
 	}
 
 	xhrPost("backend.php", query, (transport) => {
-        article_callback2(transport, id);
+		article_callback2(transport, id);
 	})
 
 	return false;
@@ -394,7 +394,7 @@ function toggleMark(id, client_only) {
 	}
 
 function togglePub(id, client_only, no_effects, note) {
-    const query = { op: "rpc", id: id, method: "publ" };
+	const query = { op: "rpc", id: id, method: "publ" };
 
 	if (note != undefined) {
 		query.note = note;
@@ -583,12 +583,12 @@ function toggleUnread(id, cmode) {
 		}
 
 		if (tmpClassName != row.className) {
-            if (cmode == undefined) cmode = 2;
+			if (cmode == undefined) cmode = 2;
 
-            const query = {op: "rpc", method: "catchupSelected",
-                cmode: cmode, ids: id};
+			const query = {op: "rpc", method: "catchupSelected",
+				cmode: cmode, ids: id};
 
-            xhrPost("backend.php", query, (transport) => {
+			xhrPost("backend.php", query, (transport) => {
 					handle_rpc_json(transport);
 
 			});
@@ -608,8 +608,8 @@ function selectionRemoveLabel(id, ids) {
 		ids: ids.toString(), lid: id };
 
 	xhrPost("backend.php", query, (transport) => {
-        handle_rpc_json(transport);
-        show_labels_in_headlines(transport);
+		handle_rpc_json(transport);
+		show_labels_in_headlines(transport);
 	});
 }
 
@@ -624,10 +624,10 @@ function selectionAssignLabel(id, ids) {
 	const query = { op: "article", method: "assignToLabel",
 		ids: ids.toString(), lid: id };
 
-    xhrPost("backend.php", query, (transport) => {
-        handle_rpc_json(transport);
-        show_labels_in_headlines(transport);
-    });
+	xhrPost("backend.php", query, (transport) => {
+		handle_rpc_json(transport);
+		show_labels_in_headlines(transport);
+	});
 }
 
 function selectionToggleUnread(set_state, callback, no_error, ids) {
@@ -678,10 +678,10 @@ function selectionToggleUnread(set_state, callback, no_error, ids) {
 
 		notify_progress("Loading, please wait...");
 
-        xhrPost("backend.php", query, (transport) => {
-            handle_rpc_json(transport);
-            if (callback) callback(transport);
-        });
+		xhrPost("backend.php", query, (transport) => {
+			handle_rpc_json(transport);
+			if (callback) callback(transport);
+		});
 
 	}
 }
@@ -703,10 +703,10 @@ function selectionToggleMarked(sel_state, callback, no_error, ids) {
 		const query = { op: "rpc", method: "markSelected",
 			ids:  rows.toString(), cmode: 2 };
 
-        xhrPost("backend.php", query, (transport) => {
-            handle_rpc_json(transport);
-            if (callback) callback(transport);
-        });
+		xhrPost("backend.php", query, (transport) => {
+			handle_rpc_json(transport);
+			if (callback) callback(transport);
+		});
 	}
 }
 
@@ -724,13 +724,13 @@ function selectionTogglePublished(sel_state, callback, no_error, ids) {
 	}
 
 	if (rows.length > 0) {
-        const query = { op: "rpc", method: "publishSelected",
-            ids:  rows.toString(), cmode: 2 };
+		const query = { op: "rpc", method: "publishSelected",
+			ids:  rows.toString(), cmode: 2 };
 
-        xhrPost("backend.php", query, (transport) => {
-            handle_rpc_json(transport);
-            if (callback) callback(transport);
-        });
+		xhrPost("backend.php", query, (transport) => {
+			handle_rpc_json(transport);
+			if (callback) callback(transport);
+		});
 	}
 }
 
@@ -847,52 +847,52 @@ function deleteSelection() {
 	const query = { op: "rpc", method: "delete", ids: rows.toString() };
 
 	xhrPost("backend.php", query, (transport) => {
-        handle_rpc_json(transport);
-        viewCurrentFeed();
+		handle_rpc_json(transport);
+		viewCurrentFeed();
 	});
 }
 
 function archiveSelection() {
 
-    const rows = getSelectedArticleIds2();
+	const rows = getSelectedArticleIds2();
 
-    if (rows.length == 0) {
-        alert(__("No articles are selected."));
-        return;
-    }
+	if (rows.length == 0) {
+		alert(__("No articles are selected."));
+		return;
+	}
 
-    const fn = getFeedName(getActiveFeedId(), activeFeedIsCat());
-    let str;
-    let op;
+	const fn = getFeedName(getActiveFeedId(), activeFeedIsCat());
+	let str;
+	let op;
 
-    if (getActiveFeedId() != 0) {
-        str = ngettext("Archive %d selected article in %s?", "Archive %d selected articles in %s?", rows.length);
-        op = "archive";
-    } else {
-        str = ngettext("Move %d archived article back?", "Move %d archived articles back?", rows.length);
+	if (getActiveFeedId() != 0) {
+		str = ngettext("Archive %d selected article in %s?", "Archive %d selected articles in %s?", rows.length);
+		op = "archive";
+	} else {
+		str = ngettext("Move %d archived article back?", "Move %d archived articles back?", rows.length);
 
-        str += " " + __("Please note that unstarred articles might get purged on next feed update.");
+		str += " " + __("Please note that unstarred articles might get purged on next feed update.");
 
-        op = "unarchive";
-    }
+		op = "unarchive";
+	}
 
-    str = str.replace("%d", rows.length);
-    str = str.replace("%s", fn);
+	str = str.replace("%d", rows.length);
+	str = str.replace("%s", fn);
 
-    if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
-        return;
-    }
+	if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+		return;
+	}
 
-    for (let i = 0; i < rows.length; i++) {
-        cache_delete("article:" + rows[i]);
-    }
+	for (let i = 0; i < rows.length; i++) {
+		cache_delete("article:" + rows[i]);
+	}
 
-    const query = {op: "rpc", method: op, ids: rows.toString()};
+	const query = {op: "rpc", method: op, ids: rows.toString()};
 
-    xhrPost("backend.php", query, (transport) => {
-        handle_rpc_json(transport);
-        viewCurrentFeed();
-    });
+	xhrPost("backend.php", query, (transport) => {
+		handle_rpc_json(transport);
+		viewCurrentFeed();
+	});
 }
 
 function catchupSelection() {
@@ -935,24 +935,24 @@ function editArticleTags(id) {
 				notify_progress("Saving article tags...", true);
 
 				xhrPost("backend.php", this.attr('value'), (transport) => {
-                    try {
-                        notify('');
-                        dialog.hide();
+					try {
+						notify('');
+						dialog.hide();
 
-                        const data = JSON.parse(transport.responseText);
+						const data = JSON.parse(transport.responseText);
 
-                        if (data) {
-                            const id = data.id;
+						if (data) {
+							const id = data.id;
 
-                            const tags = $("ATSTR-" + id);
-                            const tooltip = dijit.byId("ATSTRTIP-" + id);
+							const tags = $("ATSTR-" + id);
+							const tooltip = dijit.byId("ATSTRTIP-" + id);
 
-                            if (tags) tags.innerHTML = data.content;
-                            if (tooltip) tooltip.attr('label', data.content_full);
-                        }
-                    } catch (e) {
-                        exception_error(e);
-                    }
+							if (tags) tags.innerHTML = data.content;
+							if (tooltip) tooltip.attr('label', data.content_full);
+						}
+					} catch (e) {
+						exception_error(e);
+					}
 				});
 			}
 		},
@@ -1007,25 +1007,25 @@ function postMouseOut(id) {
 function unpackVisibleHeadlines() {
 	if (!isCdmMode()) return;
 
-    const rows = $$("#headlines-frame div[id*=RROW][data-content]");
+	const rows = $$("#headlines-frame div[id*=RROW][data-content]");
 	const threshold = $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight + 300;
 
-    for (let i = 0; i < rows.length; i++) {
-        const row = rows[i];
+	for (let i = 0; i < rows.length; i++) {
+		const row = rows[i];
 
-        if (row.offsetTop <= threshold) {
-            console.log("unpacking: " + row.id);
+		if (row.offsetTop <= threshold) {
+			console.log("unpacking: " + row.id);
 
-            const content = row.getAttribute("data-content");
+			const content = row.getAttribute("data-content");
 
-            row.select(".cdmContentInner")[0].innerHTML = content;
-            row.removeAttribute("data-content");
+			row.select(".cdmContentInner")[0].innerHTML = content;
+			row.removeAttribute("data-content");
 
-            PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
-        } else {
-            break;
-        }
-    }
+			PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
+		} else {
+			break;
+		}
+	}
 }
 
 function headlines_scroll_handler(e) {
@@ -1067,7 +1067,7 @@ function headlines_scroll_handler(e) {
 		}
 
 		if (!_infscroll_disable) {
-            const hsp = $("headlines-spacer");
+			const hsp = $("headlines-spacer");
 
 			if (hsp && hsp.offsetTop - 250 <= e.scrollTop + e.offsetHeight) {
 
@@ -1089,20 +1089,20 @@ function headlines_scroll_handler(e) {
 			let rows = $$("#headlines-frame > div[id*=RROW][class*=Unread]");
 
 			for (let i = 0; i < rows.length; i++) {
-                const row = rows[i];
+				const row = rows[i];
 				
 				if ($("headlines-frame").scrollTop > (row.offsetTop + row.offsetHeight/2)) {
 
-                    const id = row.getAttribute("data-article-id")
+					const id = row.getAttribute("data-article-id")
 
-                    if (catchup_id_batch.indexOf(id) == -1)
-                        catchup_id_batch.push(id);
+					if (catchup_id_batch.indexOf(id) == -1)
+						catchup_id_batch.push(id);
 
-                    //console.log("auto_catchup_batch: " + catchup_id_batch.toString());
-                } else {
+					//console.log("auto_catchup_batch: " + catchup_id_batch.toString());
+				} else {
 					break;
 				}
-            }
+			}
 
 			if (_infscroll_disable) {
 				const row = $$("#headlines-frame div[id*=RROW]").last();
@@ -1143,21 +1143,21 @@ function catchupBatchedArticles() {
 		_catchup_request_sent = true;
 
 		xhrPost("backend.php", query, (transport) => {
-            const reply = handle_rpc_json(transport);
+			const reply = handle_rpc_json(transport);
 
-            _catchup_request_sent = false;
+			_catchup_request_sent = false;
 
-            if (reply) {
-                const batch = reply.ids;
+			if (reply) {
+				const batch = reply.ids;
 
-                batch.each(function (id) {
-                    const elem = $("RROW-" + id);
-                    if (elem) elem.removeClassName("Unread");
-                    catchup_id_batch.remove(id);
-                });
-            }
+				batch.each(function (id) {
+					const elem = $("RROW-" + id);
+					if (elem) elem.removeClassName("Unread");
+					catchup_id_batch.remove(id);
+				});
+			}
 
-            updateFloatingTitle(true);
+			updateFloatingTitle(true);
 		});
 	}
 }
@@ -1217,7 +1217,7 @@ function catchupRelativeToArticle(below, id) {
 				cmode: 0, ids: ids_to_mark.toString() };
 
 			xhrPost("backend.php", query, (transport) => {
-                handle_rpc_json(transport);
+				handle_rpc_json(transport);
 			});
 		}
 	}
@@ -1668,20 +1668,20 @@ function setSelectionScore() {
 
 			xhrJson("backend.php", query, (reply) => {
 				if (reply) {
-                    reply.id.each((id) => {
-                        const row = $("RROW-" + id);
+					reply.id.each((id) => {
+						const row = $("RROW-" + id);
 
-                        if (row) {
-                            const pic = row.getElementsByClassName("hlScorePic")[0];
+						if (row) {
+							const pic = row.getElementsByClassName("hlScorePic")[0];
 
-                            if (pic) {
-                                pic.src = pic.src.replace(/score_.*?\.png/,
-                                    reply["score_pic"]);
-                                pic.setAttribute("score", reply["score"]);
-                            }
-                        }
-                    });
-                }
+							if (pic) {
+								pic.src = pic.src.replace(/score_.*?\.png/,
+									reply["score_pic"]);
+								pic.setAttribute("score", reply["score"]);
+							}
+						}
+					});
+				}
 			});
 		}
 
@@ -1724,11 +1724,11 @@ function changeScore(id, pic) {
 		const query = { op: "article", method: "setScore", id: id, score: new_score };
 
 		xhrJson("backend.php", query, (reply) => {
-            if (reply) {
-                pic.src = pic.src.replace(/score_.*?\.png/, reply["score_pic"]);
-                pic.setAttribute("score", new_score);
-                pic.setAttribute("title", new_score);
-            }
+			if (reply) {
+				pic.src = pic.src.replace(/score_.*?\.png/, reply["score_pic"]);
+				pic.setAttribute("score", new_score);
+				pic.setAttribute("title", new_score);
+			}
 		});
 	}
 }
@@ -1737,9 +1737,9 @@ function displayArticleUrl(id) {
 	const query = { op: "rpc", method: "getlinktitlebyid", id: id };
 
 	xhrJson("backend.php", query, (reply) => {
-        if (reply && reply.link) {
-            prompt(__("Article URL:"), reply.link);
-        }
+		if (reply && reply.link) {
+			prompt(__("Article URL:"), reply.link);
+		}
 	});
 
 }

@@ -103,7 +103,7 @@ function viewfeed(params) {
 	Form.enable("main_toolbar_form");
 
 	let query = Object.assign({op: "feeds", method: "view", feed: feed},
-        dojo.formToObject("main_toolbar_form"));
+		dojo.formToObject("main_toolbar_form"));
 
 	if (method) query.m = method;
 
@@ -156,13 +156,13 @@ function viewfeed(params) {
 	_viewfeed_timeout = setTimeout(() => {
 
 		xhrPost("backend.php", query, (transport) => {
-            try {
-                setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
-                headlines_callback2(transport, offset, background, infscroll_req);
-                PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
-            } catch (e) {
-                exception_error(e);
-            }
+			try {
+				setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
+				headlines_callback2(transport, offset, background, infscroll_req);
+				PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
+			} catch (e) {
+				exception_error(e);
+			}
 		});
 
 	}, timeout_ms); // Wait 250ms
@@ -209,11 +209,11 @@ function feedlist_init() {
 	}
 
 	// bw_limit disables timeout() so we request initial counters separately
-    if (getInitParam("bw_limit") == "1") {
+	if (getInitParam("bw_limit") == "1") {
 		request_counters(true);
-    } else {
-    	setTimeout(timeout, 250);
-    }
+	} else {
+		setTimeout(timeout, 250);
+	}
 }
 
 
@@ -232,7 +232,7 @@ function request_counters(force) {
 			query.last_article_id = getInitParam("last_article_id");
 
 		xhrPost("backend.php", query, (transport) => {
-            handle_rpc_json(transport);
+			handle_rpc_json(transport);
 		});
 
 	} else {
@@ -471,7 +471,7 @@ function catchupFeedInGroup(id) {
 		notify_progress("Loading, please wait...", true);
 
 		xhrPost("backend.php", { op: "rpc", method: "catchupFeed", feed_id: id, is_cat: false}, (transport) => {
-            handle_rpc_json(transport);
+			handle_rpc_json(transport);
 		});
 	}
 }
@@ -512,21 +512,21 @@ function catchupFeed(feed, is_cat, mode) {
 	notify_progress("Loading, please wait...", true);
 
 	xhrPost("backend.php", catchup_query, (transport) => {
-        handle_rpc_json(transport);
+		handle_rpc_json(transport);
 
-        const show_next_feed = getInitParam("on_catchup_show_next_feed") == "1";
+		const show_next_feed = getInitParam("on_catchup_show_next_feed") == "1";
 
-        if (show_next_feed) {
-            const nuf = getNextUnreadFeed(feed, is_cat);
+		if (show_next_feed) {
+			const nuf = getNextUnreadFeed(feed, is_cat);
 
-            if (nuf) {
-                viewfeed({feed: nuf, is_cat: is_cat});
-            }
-        } else if (feed == getActiveFeedId() && is_cat == activeFeedIsCat()) {
-            viewCurrentFeed();
-        }
+			if (nuf) {
+				viewfeed({feed: nuf, is_cat: is_cat});
+			}
+		} else if (feed == getActiveFeedId() && is_cat == activeFeedIsCat()) {
+			viewCurrentFeed();
+		}
 
-        notify("");
+		notify("");
 	});
 }
 
