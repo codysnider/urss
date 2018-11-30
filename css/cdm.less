@@ -103,6 +103,10 @@
 	margin-top : 4px;
 	margin-bottom : 4px;
 
+	.collapse {
+		display : none;
+	}
+
 	.footer {
 		border: 0px solid #ddd;
 		border-bottom-width: 1px;
@@ -327,7 +331,7 @@ div#floatingTitle.Unread a.title {
 
 .cdm.high .header {
 	a.title.high,
-	.cdmExcerpt,
+	.excerpt,
 	span.author {
 		color : #00aa00;
 	}
@@ -335,18 +339,85 @@ div#floatingTitle.Unread a.title {
 
 .cdm.Unread.high .header {
 	a.title.high,
-	.cdmExcerpt,
+	.excerpt,
 	span.author {
 		color : #00dd00;
 	}
 }
 
 .cdm .header a.title.low,
-.cdm.low .header .cdmExcerpt,
+.cdm.low .header .excerpt,
 .cdm.Unread .header a.title.low,
-.cdm.Unread.low .header .cdmExcerpt,
+.cdm.Unread.low .header .excerpt,
 .cdm.low .header span.author {
 	color : #909090;
 	text-decoration : line-through;
 }
 
+.cdm.expandable {
+	background-color : #f0f0f0;
+	border: 0px solid #ddd;
+	border-bottom-width: 1px;
+
+	> hr {
+		display : none;
+	}
+
+	div.header span.titleWrap {
+		white-space : nowrap;
+		text-overflow : ellipsis;
+		overflow : hidden;
+		max-width : 500px;
+	}
+}
+
+.cdm.expandable.Unread {
+	background : white;
+}
+
+.cdm.expandable.Selected:not(.active) {
+	background : desaturate(@color-accent, 25%);
+
+	a,
+	.header a.title,
+	span {
+		color : white;
+	}
+}
+
+.cdm.expandable.active {
+	background : white ! important;
+}
+
+div.cdm.expandable.active div.header span.titleWrap {
+	white-space : normal;
+}
+
+div.cdm.expandable div.header a.title {
+	font-weight : 600;
+	color : @default-text;
+	font-size : 14px;
+	transition : color 0.2s, background 0.2s;
+	text-rendering: optimizelegibility;
+	font-family : @fonts-ui-bold;
+}
+
+div.cdm.expandable.Unread div.header a.title {
+	color : black;
+}
+
+div.cdm.expandable.active div.header a.title {
+	color: @color-link;
+	font-size: 16px;
+	font-weight: 600;
+	text-rendering: optimizelegibility;
+	font-family: @fonts-ui-bold;
+}
+
+div.cdm.expandable:not(.active) {
+	cursor : pointer;
+
+	.content, .collapse {
+		display : none;
+	}
+}

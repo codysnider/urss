@@ -535,8 +535,8 @@ function moveToPost(mode, noscroll, noexpand) {
 					scrollArticle(ctr.offsetHeight/4);
 
 				} else if (next_id) {
-					cdmScrollToArticleId(next_id, true);
 					setActiveArticleId(next_id);
+					cdmScrollToArticleId(next_id, true);
 				}
 
 			} else if (next_id) {
@@ -560,8 +560,8 @@ function moveToPost(mode, noscroll, noexpand) {
 						prev_article.offsetTop < ctr.scrollTop) {
 					scrollArticle(-ctr.offsetHeight/4);
 				} else if (prev_id) {
-					cdmScrollToArticleId(prev_id, noscroll);
 					setActiveArticleId(prev_id);
+					cdmScrollToArticleId(prev_id, noscroll);
 				}
 
 			} else if (prev_id) {
@@ -1162,8 +1162,8 @@ function unpackVisibleHeadlines() {
 			PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
 
 			// i wonder if this is a good idea?
-			if (!getActiveArticleId() && !row.hasClassName("Unread"))
-				setActiveArticleId(row.getAttribute("data-article-id"));
+			//if (!getActiveArticleId() && !row.hasClassName("Unread"))
+			//	setActiveArticleId(row.getAttribute("data-article-id"));
 
 		} else {
 			break;
@@ -1184,7 +1184,7 @@ function headlines_scroll_handler(e) {
 		unpackVisibleHeadlines();
 
 		// set topmost child in the buffer as active
-		if (isCdmMode() && getInitParam("cdm_auto_catchup") == 1) {
+		if (isCdmMode() && getInitParam("cdm_expanded") && getInitParam("cdm_auto_catchup") == 1) {
 
 			const rows = $$("#headlines-frame > div[id*=RROW]");
 
@@ -1400,11 +1400,15 @@ function show_labels_in_headlines(transport) {
 }
 
 function cdmClicked(event, id, in_body) {
-	if (event.ctrlKey && !in_body || !in_body) {
+
+	if (!in_body && (event.ctrlKey || id == getActiveArticleId() || getInitParam("cdm_expanded"))) {
 		openArticleInNewWindow(id);
 	}
 
 	setActiveArticleId(id);
+
+	if (!getInitParam("cdm_expanded"))
+		cdmScrollToArticleId(id);
 
 	//var shift_key = event.shiftKey;
 
@@ -1561,6 +1565,25 @@ function correctHeadlinesOffset(id) {
 function headlineActionsChange(elem) {
 	eval(elem.value);
 	elem.attr('value', 'false');
+}
+
+function cdmCollapseActive(event) {
+	const row = $("RROW-" + getActiveArticleId());
+
+	if (row) {
+		row.removeClassName("active");
+		const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
+
+		if (cb && !row.hasClassName("Selected"))
+			cb.attr("checked", false);
+
+		setActiveArticleId(0);
+
+		if (event)
+			event.stopPropagation();
+
+		return false;
+	}
 }
 
 function closeArticlePanel() {
@@ -1880,7 +1903,7 @@ function scrollToRowId(id) {
 }
 
 function updateFloatingTitle(unread_only) {
-	if (!isCdmMode()) return;
+	if (!isCdmMode() || !getInitParam("cdm_expanded")) return;
 
 	const hf = $("headlines-frame");
 	const elems = $$("#headlines-frame > div[id*=RROW]");

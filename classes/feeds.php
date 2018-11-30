@@ -496,7 +496,8 @@ class Feeds extends Handler_Protected {
 
                     $content_encoded = htmlspecialchars($line["content"]);
 
-                    $tmp_content = "<div class=\"cdm expanded $hlc_suffix $class\"
+					$expanded_class = get_pref("CDM_EXPANDED") ? "expanded" : "expandable";
+                    $tmp_content = "<div class=\"cdm $expanded_class $hlc_suffix $class\"
                         id=\"RROW-$id\" data-content=\"$content_encoded\" data-article-id='$id' data-orig-feed-id='$feed_id' $mouseover_attrs>";
 
 					$tmp_content .= "<div class=\"header\">";
@@ -533,6 +534,10 @@ class Feeds extends Handler_Protected {
 						"</a> <span class=\"author\">$entry_author</span>";
 
 					$tmp_content .= $labels_str;
+
+					$tmp_content .= "<span class='collapse'>
+                        <img src=\"images/collapse.png\" onclick=\"return cdmCollapseActive(event)\"
+                        title=\"".__("Collapse article")."\"/></span>";
 
 					$tmp_content .= "</span>";
 
