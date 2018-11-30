@@ -221,7 +221,7 @@ body.ttrss_main {
 		padding : 1px;
 		transition : color 0.2s, background 0.2s;
 
-		div.hlTitle {
+		div.title {
 			display : table-cell;
 			cursor : pointer;
 			width : 100%;
@@ -251,13 +251,13 @@ body.ttrss_main {
 			max-height : 16px;
 		}
 
-		span.hlFeed {
+		span.feed {
 			display : table-cell;
 			vertical-align : middle;
 			text-align : right;
 		}
 
-		span.hlFeed a {
+		span.feed a {
 			border-radius : 4px;
 			display : inline-block;
 			padding : 1px 4px 1px 4px;
@@ -268,7 +268,7 @@ body.ttrss_main {
 			white-space : nowrap;
 		}
 
-		span.hlFeed a:hover {
+		span.feed a:hover {
 			color : @color-accent;
 		}
 
@@ -304,7 +304,7 @@ body.ttrss_main {
 			height : 16px;
 		}
 
-		div.hlTitle a {
+		div.title a {
 			font-weight : 600;
 			text-rendering: optimizelegibility;
 			font-family : @fonts-ui;
@@ -326,11 +326,11 @@ body.ttrss_main {
 		text-decoration : line-through;
 	}
 
-	.hl.Unread div.hlTitle a {
+	.hl.Unread div.title a {
 		color : black;
 	}
 
-	.hl.active div.hlTitle a {
+	.hl.active div.title a {
 		color : @color-accent;
 		/* text-shadow : 1px 1px 2px #fff; */
 	}
@@ -345,7 +345,7 @@ body.ttrss_main {
 		background : desaturate(@color-accent, 25%);
 
 		a,
-		.hlFeed a,
+		.feed a,
 		.hlContent a.title,
 		span {
 			color : white;
@@ -704,17 +704,17 @@ body.ttrss_main {
 	}
 
 
-	div#headlines-frame.wide .hlTitle {
+	div#headlines-frame.wide .title {
 		max-width : none;
 		overflow : visible;
 		white-space : normal;
 	}
 
-	div#headlines-frame.wide .hl .hlFeed {
+	div#headlines-frame.wide .hl .feed {
 		display : none;
 	}
 
-	img.hlScorePic {
+	img.score-pic {
 		vertical-align : middle;
 		width : 16px;
 		height : 16px;

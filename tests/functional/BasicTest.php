@@ -41,6 +41,6 @@ class BasicTest extends PHPUnit_Extensions_Selenium2TestCase {
 
 		$this->byCssSelector('#dijit__TreeNode_3')->click();
 
-		$this->byCssSelector('#RROW-1 > div.cdmHeader')->displayed();
+		$this->byCssSelector('#RROW-1 > .header')->displayed();
 	}
 }

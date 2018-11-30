@@ -10,7 +10,7 @@ function embedOriginalArticle(id) {
 		let c = false;
 
 		if (isCdmMode()) {
-			c = $$("div#RROW-" + id + " div[class=cdmContentInner]")[0];
+			c = $$("div#RROW-" + id + " div[class=content-inner]")[0];
 		} else if (id == getActiveArticleId()) {
 			c = $$("div[class=postContent]")[0];
 		}

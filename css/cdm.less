@@ -1,27 +1,27 @@
 .cdm {
 	margin-right : 4px;
 
-	.cdmHeader, .cdmFooter {
+	.header, .footer {
 		display : table;
 	}
 
-	.cdmHeader img, .cdmHeader input, .cdmFooter img {
+	.header img, .header input, .footer img {
 		vertical-align : middle;
 	}
 
-	.cdmHeader > div, .cdmFooter > div {
+	.header > div, .footer > div {
 		white-space : nowrap;
 	}
 
-	.cdmHeader > span, .cdmFooter > span.left {
+	.header > span, .footer > span.left {
 		width : 100%;
 	}
 
-	.cdmHeader img, .cdmFooter img {
+	.header img, .footer img {
 		margin : 0px 4px;
 	}
 
-	.cdmHeader {
+	.header {
 		> * {
 			display : table-cell;
 			padding : 5px;
@@ -55,7 +55,7 @@
 		}
 	}
 
-	.cdmFooter {
+	.footer {
 		height : 30px;
 		padding-left : 5px;
 		font-weight : normal;
@@ -68,11 +68,11 @@
 		}
 	}
 
-	.cdmIntermediate {
+	.intermediate {
 		margin : 10px;
 	}
 
-	.cdmContentInner {
+	.content-inner {
 		margin : 10px;
 		line-height : 1.5;
 		font-size : 16px;
@@ -89,10 +89,10 @@
 
 	}
 
-	.cdmIntermediate img,
-	.cdmIntermediate video,
-	.cdmContentInner img,
-	.cdmContentInner video {
+	.intermediate img,
+	.intermediate video,
+	.content-inner img,
+	.content-inner video {
 		border-width : 0px;
 		max-width : 98%;
 		height : auto;
@@ -103,7 +103,7 @@
 	margin-top : 4px;
 	margin-bottom : 4px;
 
-	.cdmFooter {
+	.footer {
 		border: 0px solid #ddd;
 		border-bottom-width: 1px;
 	}
@@ -115,11 +115,11 @@
 
 }
 
-div.cdm.expanded div.cdmHeader {
+div.cdm.expanded div.header {
 	background : transparent ! important;
 }
 
-div.cdm.expanded div.cdmHeader a.title {
+div.cdm.expanded div.header a.title {
 	font-size : 16px;
 	color : #999;
 	font-weight : 600;
@@ -132,23 +132,23 @@ div.cdm.expanded.active {
 	background : white;
 }
 
-div.cdm.expanded.active div.cdmHeader a.title {
+div.cdm.expanded.active div.header a.title {
 	color : @color-link;
 }
 
-div.cdm.expanded.Unread div.cdmHeader a.title {
+div.cdm.expanded.Unread div.header a.title {
 	color : black;
 }
 
-div.cdm.expanded div.cdmContent {
+div.cdm.expanded div.content {
 	color : @default-text;
 }
 
-div.cdm.expanded.Unread div.cdmContent {
+div.cdm.expanded.Unread div.content {
 	color : black;
 }
 
-div.cdm.active div.cdmContent {
+div.cdm.active div.content {
 	color : black;
 }
 
@@ -160,37 +160,37 @@ span.cdmExcerpt {
 	cursor : pointer;
 }
 
-div.cdmContent div.postEnclosures {
+div.content div.postEnclosures {
 	margin-top : 1em;
 	color : @default-text;
 }
 
-div.cdmFeedTitle {
+div.feed-title {
 	border: 0px solid @color-link;
 	border-bottom-width: 1px;
 	padding : 5px 3px 5px 5px;
 }
 
-div.cdmFeedTitle a.title {
+div.feed-title a.title {
 	color : @default-text;
 	font-weight : bold;
 }
 
-div.cdmFeedTitle a {
+div.feed-title a {
 	color : @default-text;
 }
 
-div.cdmFeedTitle a:hover {
+div.feed-title a:hover {
 	color : @color-link;
 }
 
-div.cdmHeader span.hlFeed {
+div.header span.feed {
 	float : right;
 	font-weight : normal;
 	font-style : italic;
 }
 
-div.cdmHeader div.hlFeed, div.cdmHeader div.hlFeed a {
+div.header div.feed, div.header div.feed a {
 	vertical-align : middle;
 	color : @default-text;
 	font-weight : normal;
@@ -198,25 +198,25 @@ div.cdmHeader div.hlFeed, div.cdmHeader div.hlFeed a {
 	font-size : 11px;
 }
 
-div.cdm .hlFeed a {
+div.cdm .feed a {
 	border-radius : 4px;
 	display : inline-block;
 	padding : 1px 4px 1px 4px;
 }
 
-div.cdmContentInner p {
+div.content-inner p {
 	/*max-width : 650px;*/
 	-webkit-hyphens: auto;
 	-moz-hyphens: auto;
 	hyphens: auto;
 }
 
-div.cdmContentInner iframe {
+div.content-inner iframe {
 	min-width : 50%;
 	max-width : 98%;
 }
 
-div.cdmHeader span.author {
+div.header span.author {
 	white-space : nowrap;
 	color : @default-text;
 	font-size : 11px;
@@ -266,7 +266,7 @@ div#floatingTitle {
 		margin-left : 0px;
 	}
 
-	div.hlFeed {
+	div.feed {
 		padding-right : 10px;
 		color : @default-text;
 		font-weight : normal;
@@ -275,7 +275,7 @@ div#floatingTitle {
 		white-space : nowrap;
 	}
 
-	div.hlFeed a {
+	div.feed a {
 		border-radius : 4px;
 		display : inline-block;
 		padding : 1px 4px 1px 4px;
@@ -288,7 +288,7 @@ div#floatingTitle {
 		font-size : 11px;
 	}
 
-	div.hlFeed a {
+	div.feed a {
 		color : @default-text;
 	}
 
@@ -298,7 +298,7 @@ div#floatingTitle {
 	}
 
 	.dijit,
-	img.hlScorePic {
+	img.score-pic {
 		display : none;
 	}
 
@@ -308,7 +308,7 @@ div#floatingTitle.Unread a.title {
 	color : black;
 }
 
-.cdm.high .cdmHeader {
+.cdm.high .header {
 	a.title.high,
 	.cdmExcerpt,
 	span.author {
@@ -316,7 +316,7 @@ div#floatingTitle.Unread a.title {
 	}
 }
 
-.cdm.Unread.high .cdmHeader {
+.cdm.Unread.high .header {
 	a.title.high,
 	.cdmExcerpt,
 	span.author {
@@ -324,16 +324,16 @@ div#floatingTitle.Unread a.title {
 	}
 }
 
-.cdm .cdmHeader a.title.low,
-.cdm.low .cdmHeader .cdmExcerpt,
-.cdm.Unread .cdmHeader a.title.low,
-.cdm.Unread.low .cdmHeader .cdmExcerpt,
-.cdm.low .cdmHeader span.author {
+.cdm .header a.title.low,
+.cdm.low .header .cdmExcerpt,
+.cdm.Unread .header a.title.low,
+.cdm.Unread.low .header .cdmExcerpt,
+.cdm.low .header span.author {
 	color : #909090;
 	text-decoration : line-through;
 }
 
-.cdmFeedTitle {
+.feed-title {
 
 	> * {
 		display : table-cell;

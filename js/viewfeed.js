@@ -86,7 +86,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 			while (tmp.hasChildNodes()) {
 				var row = tmp.removeChild(tmp.firstChild);
 
-				if (loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("cdmFeedTitle")) {
+				if (loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("feed-title")) {
 					dijit.byId("headlines-frame").domNode.appendChild(row);
 
 					loaded_article_ids.push(row.id);
@@ -127,7 +127,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 				while (tmp.hasChildNodes()) {
 					let row = tmp.removeChild(tmp.firstChild);
 
-					if (loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("cdmFeedTitle")) {
+					if (loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("feed-title")) {
 						dijit.byId("headlines-frame").domNode.appendChild(row);
 
 						loaded_article_ids.push(row.id);
@@ -1018,7 +1018,7 @@ function unpackVisibleHeadlines() {
 
 			const content = row.getAttribute("data-content");
 
-			row.select(".cdmContentInner")[0].innerHTML = content;
+			row.select(".content-inner")[0].innerHTML = content;
 			row.removeAttribute("data-content");
 
 			PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
@@ -1672,7 +1672,7 @@ function setSelectionScore() {
 						const row = $("RROW-" + id);
 
 						if (row) {
-							const pic = row.getElementsByClassName("hlScorePic")[0];
+							const pic = row.getElementsByClassName("score-pic")[0];
 
 							if (pic) {
 								pic.src = pic.src.replace(/score_.*?\.png/,
@@ -1739,7 +1739,7 @@ function updateFloatingTitle(unread_only) {
 
 		if (child && child.offsetTop + child.offsetHeight > hf.scrollTop) {
 
-			const header = child.getElementsByClassName("cdmHeader")[0];
+			const header = child.getElementsByClassName("header")[0];
 
 			if (unread_only || child.getAttribute("data-article-id") != $("floatingTitle").getAttribute("data-article-id")) {
 				if (child.getAttribute("data-article-id") != $("floatingTitle").getAttribute("data-article-id")) {

@@ -28,8 +28,8 @@ require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 		PluginHost.register(PluginHost.HOOK_ARTICLE_RENDERED_CDM, function(row) {
 			window.setTimeout(function() {
 				if (row) {
-					const c_inner = row.select(".cdmContentInner")[0];
-					const c_inter = row.select(".cdmIntermediate")[0];
+					const c_inner = row.select(".content-inner")[0];
+					const c_inter = row.select(".intermediate")[0];
 
 					if (c_inner && c_inter &&
 						row.offsetHeight >= _shorten_expanded_threshold * window.innerHeight) {

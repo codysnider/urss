@@ -452,7 +452,7 @@ function catchupFeedInGroup(id) {
 
 			});
 
-			const feedTitles = $$("#headlines-frame > div[class='cdmFeedTitle']");
+			const feedTitles = $$("#headlines-frame > div[class='feed-title']");
 
 			for (let i = 0; i < feedTitles.length; i++) {
 				if (feedTitles[i].getAttribute("data-feed-id") == id) {
