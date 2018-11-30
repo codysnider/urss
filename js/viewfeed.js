@@ -1018,24 +1018,28 @@ function postMouseOut(id) {
 function unpackVisibleHeadlines() {
 	if (!isCdmMode() || !getInitParam("cdm_expanded")) return;
 
-	$$("#headlines-frame span.cencw[id]").each(
-		function (child) {
-			const row = $("RROW-" + child.id.replace("CENCW-", ""));
+    $$("#headlines-frame div[id*=RROW][data-content]").each((row) => {
+    	//console.log('checking', row.id);
 
-			if (row && row.offsetTop <= $("headlines-frame").scrollTop +
-				$("headlines-frame").offsetHeight) {
+    	if (row.offsetTop <= $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight) {
+            console.log("unpacking: " + row.id);
 
-				//console.log("unpacking: " + child.id);
+            let content;
 
-				child.innerHTML = htmlspecialchars_decode(child.innerHTML);
-				child.removeAttribute('id');
-
-				PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
-
-				Element.show(child);
+            try {
+                content = JSON.parse(row.getAttribute("data-content"));
+            } catch (e) {
+            	content = "Error decoding content: " + row.getAttribute("data-content");
 			}
+
+			row.select(".cdmContentInner")[0].innerHTML = content;
+            row.removeAttribute("data-content");
+
+            PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
+		} else {
+    		throw $break;
 		}
-	);
+    });
 }
 
 function headlines_scroll_handler(e) {

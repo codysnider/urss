@@ -499,8 +499,10 @@ class Feeds extends Handler_Protected {
 
 					$expanded_class = $expand_cdm ? "expanded" : "expandable";
 
-					$tmp_content = "<div class=\"cdm $hlc_suffix $expanded_class $class\"
-                    id=\"RROW-$id\" data-article-id='$id' data-orig-feed-id='$feed_id' $mouseover_attrs>";
+                    $content_encoded = htmlspecialchars(json_encode($line["content"]));
+
+                    $tmp_content = "<div class=\"cdm $hlc_suffix $expanded_class $class\"
+                        id=\"RROW-$id\" data-content=\"$content_encoded\" data-article-id='$id' data-orig-feed-id='$feed_id' $mouseover_attrs>";
 
 					$tmp_content .= "<div class=\"cdmHeader\">";
 					$tmp_content .= "<div style=\"vertical-align : middle\">";
@@ -616,14 +618,7 @@ class Feeds extends Handler_Protected {
 						}
 					}
 
-					$tmp_content .= "<span id=\"CWRAP-$id\">";
-					$tmp_content .= "<span id=\"CENCW-$id\" class=\"cencw\" style=\"display : none\">";
-					$tmp_content .= htmlspecialchars($line["content"]);
-					$tmp_content .= "</span>";
-					$tmp_content .= "</span>";
-
 					$tmp_content .= "</div>"; //cdmContentInner
-
 					$tmp_content .= "<div class=\"cdmIntermediate\">";
 
 					$always_display_enclosures = $line["always_display_enclosures"];
