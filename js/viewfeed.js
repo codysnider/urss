@@ -793,7 +793,7 @@ function getSelectedArticleIds2() {
 	if (getActiveArticleId())
 		rv.push(getActiveArticleId());
 
-	return rv;
+	return rv.uniq();
 }
 
 function getLoadedArticleIds() {
@@ -1130,6 +1130,8 @@ function setActiveArticleId(id) {
 
 		PluginHost.run(PluginHost.HOOK_ARTICLE_SET_ACTIVE, _active_article_id);
 	}
+
+	updateSelectedPrompt();
 }
 
 function getActiveArticleId() {
