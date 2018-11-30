@@ -1008,7 +1008,7 @@ function unpackVisibleHeadlines() {
 	if (!isCdmMode()) return;
 
     const rows = $$("#headlines-frame div[id*=RROW][data-content]");
-	const threshold = $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight + 100;
+	const threshold = $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight + 300;
 
     for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
