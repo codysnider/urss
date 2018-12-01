@@ -1603,7 +1603,7 @@ function displayArticleUrl(id) {
 } */
 
 function updateFloatingTitle(unread_only) {
-	if (!isCombinedMode() || !getInitParam("cdm_expanded")) return;
+	if (!isCombinedMode()/* || !getInitParam("cdm_expanded")*/) return;
 
 	const hf = $("headlines-frame");
 	const elems = $$("#headlines-frame > div[id*=RROW]");
