@@ -9,7 +9,7 @@ function embedOriginalArticle(id) {
 
 		let c = false;
 
-		if (isCombinedMode()) {
+		if (App.isCombinedMode()) {
 			c = $$("div#RROW-" + id + " div[class=content-inner]")[0];
 		} else if (id == getActiveArticleId()) {
 			c = $$(".post .content")[0];
@@ -22,7 +22,7 @@ function embedOriginalArticle(id) {
 				Element.show(c);
 				c.parentNode.removeChild(iframe);
 
-				if (isCombinedMode()) {
+				if (App.isCombinedMode()) {
 					cdmScrollToArticleId(id, true);
 				}
 
@@ -47,7 +47,7 @@ function embedOriginalArticle(id) {
 					Element.hide(c);
 					c.parentNode.insertBefore(iframe, c);
 
-					if (isCombinedMode()) {
+					if (App.isCombinedMode()) {
 						cdmScrollToArticleId(id, true);
 					}
 				}

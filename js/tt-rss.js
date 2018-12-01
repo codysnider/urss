@@ -1,148 +1,215 @@
 /* global dijit, __ */
 
-let global_unread = -1;
 let _widescreen_mode = false;
-let _rpc_seq = 0;
-let _active_feed_id = 0;
-let _active_feed_is_cat = false;
 let hotkey_actions = {};
-let _headlines_scroll_timeout = false;
 
-function next_seq() {
-	_rpc_seq += 1;
-	return _rpc_seq;
-}
+const App = {
+	_rpc_seq: 0,
+	global_unread: -1,
+	next_seq: function() {
+		this._rpc_seq += 1;
+		return this._rpc_seq;
+	},
+	get_seq: function() {
+		return this._rpc_seq;
+	},
+	updateTitle: function() {
+		let tmp = "Tiny Tiny RSS";
 
-function get_seq() {
-	return _rpc_seq;
-}
-
-function activeFeedIsCat() {
-	return !!_active_feed_is_cat;
-}
-
-function getActiveFeedId() {
-	return _active_feed_id;
-}
-
-function setActiveFeedId(id, is_cat) {
-	hash_set('f', id);
-	hash_set('c', is_cat ? 1 : 0);
-
-	_active_feed_id = id;
-	_active_feed_is_cat = is_cat;
-
-	$("headlines-frame").setAttribute("feed-id", id);
-	$("headlines-frame").setAttribute("is-cat", is_cat ? 1 : 0);
-
-	selectFeed(id, is_cat);
-
-	PluginHost.run(PluginHost.HOOK_FEED_SET_ACTIVE, _active_article_id);
-}
-
-
-function updateFeedList() {
-	try {
-		Element.show("feedlistLoading");
-
-		resetCounterCache();
-
-		if (dijit.byId("feedTree")) {
-			dijit.byId("feedTree").destroyRecursive();
+		if (this.global_unread > 0) {
+			tmp = "(" + this.global_unread + ") " + tmp;
 		}
 
-		const store = new dojo.data.ItemFileWriteStore({
-			url: "backend.php?op=pref_feeds&method=getfeedtree&mode=2"
-		});
+		document.title = tmp;
+	},
+	isCombinedMode: function() {
+		return getInitParam("combined_display_mode");
+	},
+	hotkeyHandler(event) {
+		if (event.target.nodeName == "INPUT" || event.target.nodeName == "TEXTAREA") return;
 
-		const treeModel = new fox.FeedStoreModel({
-			store: store,
-			query: {
-				"type": getInitParam('enable_feed_cats') == 1 ? "category" : "feed"
-			},
-			rootId: "root",
-			rootLabel: "Feeds",
-			childrenAttrs: ["items"]
-		});
+		const action_name = keyeventToAction(event);
 
-		const tree = new fox.FeedTree({
-			model: treeModel,
-			onClick: function (item, node) {
-				const id = String(item.id);
-				const is_cat = id.match("^CAT:");
-				const feed = id.substr(id.indexOf(":") + 1);
-				viewfeed({feed: feed, is_cat: is_cat});
+		if (action_name) {
+			const action_func = hotkey_actions[action_name];
+
+			if (action_func != null) {
+				action_func();
+				event.stopPropagation();
 				return false;
-			},
-			openOnClick: false,
-			showRoot: false,
-			persist: true,
-			id: "feedTree",
-		}, "feedTree");
-
-		var tmph = dojo.connect(dijit.byId('feedMenu'), '_openMyself', function (event) {
-			console.log(dijit.getEnclosingWidget(event.target));
-			dojo.disconnect(tmph);
-		});
-
-		$("feeds-holder").appendChild(tree.domNode);
-
-		var tmph = dojo.connect(tree, 'onLoad', function () {
-			dojo.disconnect(tmph);
-			Element.hide("feedlistLoading");
-
-			try {
-				feedlist_init();
-
-				setLoadingProgress(25);
-			} catch (e) {
-				exception_error(e);
 			}
-		});
+		}
+	},
+	switchPanelMode: function(wide) {
+		if (App.isCombinedMode()) return;
 
-		tree.startup();
-	} catch (e) {
-		exception_error(e);
-	}
-}
+		const article_id = getActiveArticleId();
 
-function catchupAllFeeds() {
+		if (wide) {
+			dijit.byId("headlines-wrap-inner").attr("design", 'sidebar');
+			dijit.byId("content-insert").attr("region", "trailing");
 
-	const str = __("Mark all articles as read?");
+			dijit.byId("content-insert").domNode.setStyle({width: '50%',
+				height: 'auto',
+				borderTopWidth: '0px' });
 
-	if (getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
+			if (parseInt(getCookie("ttrss_ci_width")) > 0) {
+				dijit.byId("content-insert").domNode.setStyle(
+					{width: getCookie("ttrss_ci_width") + "px" });
+			}
 
-		notify_progress("Marking all feeds as read...");
+			$("headlines-frame").setStyle({ borderBottomWidth: '0px' });
+			$("headlines-frame").addClassName("wide");
 
-		xhrPost("backend.php", {op: "feeds", method: "catchupAll"}, () => {
-			request_counters(true);
-			viewCurrentFeed();
-		});
+		} else {
 
-		global_unread = 0;
-		updateTitle("");
-	}
-}
+			dijit.byId("content-insert").attr("region", "bottom");
 
-function viewCurrentFeed(method) {
-	console.log("viewCurrentFeed: " + method);
+			dijit.byId("content-insert").domNode.setStyle({width: 'auto',
+				height: '50%',
+				borderTopWidth: '0px'});
 
-	if (getActiveFeedId() != undefined) {
-		viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat(), method: method});
-	}
-	return false; // block unneeded form submits
-}
+			if (parseInt(getCookie("ttrss_ci_height")) > 0) {
+				dijit.byId("content-insert").domNode.setStyle(
+					{height: getCookie("ttrss_ci_height") + "px" });
+			}
 
-function timeout() {
-	if (getInitParam("bw_limit") != "1") {
-		request_counters(true);
-		setTimeout(timeout, 60*1000);
-	}
-}
+			$("headlines-frame").setStyle({ borderBottomWidth: '1px' });
+			$("headlines-frame").removeClassName("wide");
+
+		}
+
+		Article.closeArticlePanel();
+
+		if (article_id) view(article_id);
+
+		xhrPost("backend.php", {op: "rpc", method: "setpanelmode", wide: wide ? 1 : 0});
+	},
+	parseRuntimeInfo: function(data) {
+
+		//console.log("parsing runtime info...");
+
+		for (const k in data) {
+			const v = data[k];
+
+			if (k == "dep_ts" && parseInt(getInitParam("dep_ts")) > 0) {
+				if (parseInt(getInitParam("dep_ts")) < parseInt(v) && getInitParam("reload_on_ts_change")) {
+					window.location.reload();
+				}
+			}
+
+			if (k == "daemon_is_running" && v != 1) {
+				notify_error("<span onclick=\"explainError(1)\">Update daemon is not running.</span>", true);
+				return;
+			}
+
+			if (k == "update_result") {
+				const updatesIcon = dijit.byId("updatesIcon").domNode;
+
+				if (v) {
+					Element.show(updatesIcon);
+				} else {
+					Element.hide(updatesIcon);
+				}
+			}
+
+			if (k == "daemon_stamp_ok" && v != 1) {
+				notify_error("<span onclick=\"explainError(3)\">Update daemon is not updating feeds.</span>", true);
+				return;
+			}
+
+			if (k == "max_feed_id" || k == "num_feeds") {
+				if (init_params[k] != v) {
+					console.log("feed count changed, need to reload feedlist.");
+					Feeds.reload();
+				}
+			}
+
+			init_params[k] = v;
+			notify('');
+		}
+
+		PluginHost.run(PluginHost.HOOK_RUNTIME_INFO_LOADED, data);
+	},
+	handleRpcJson: function(transport) {
+
+		const netalert_dijit = dijit.byId("net-alert");
+		let netalert = false;
+
+		if (netalert_dijit) netalert = netalert_dijit.domNode;
+
+		try {
+			const reply = JSON.parse(transport.responseText);
+
+			if (reply) {
+
+				const error = reply['error'];
+
+				if (error) {
+					const code = error['code'];
+					const msg = error['msg'];
+
+					console.warn("[handleRpcJson] received fatal error " + code + "/" + msg);
+
+					if (code != 0) {
+						fatalError(code, msg);
+						return false;
+					}
+				}
+
+				const seq = reply['seq'];
+
+				if (seq && this.get_seq() != seq) {
+					console.log("[handleRpcJson] sequence mismatch: " + seq +
+						" (want: " + this.get_seq() + ")");
+					return true;
+				}
+
+				const message = reply['message'];
+
+				if (message == "UPDATE_COUNTERS") {
+					console.log("need to refresh counters...");
+					setInitParam("last_article_id", -1);
+					Feeds.requestCounters(true);
+				}
+
+				const counters = reply['counters'];
+
+				if (counters)
+					Feeds.parseCounters(counters);
+
+				const runtime_info = reply['runtime-info'];
+
+				if (runtime_info)
+					this.parseRuntimeInfo(runtime_info);
+
+				if (netalert) netalert.hide();
+
+				return reply;
+
+			} else {
+				if (netalert)
+					netalert.show();
+				else
+					notify_error("Communication problem with server.");
+			}
+
+		} catch (e) {
+			if (netalert)
+				netalert.show();
+			else
+				notify_error("Communication problem with server.");
+
+			console.error(e);
+		}
+
+		return false;
+	},
+};
 
 function search() {
 	const query = "backend.php?op=feeds&method=search&param=" +
-		param_escape(getActiveFeedId() + ":" + activeFeedIsCat());
+		param_escape(Feeds.getActiveFeedId() + ":" + Feeds.activeFeedIsCat());
 
 	if (dijit.byId("searchDlg"))
 		dijit.byId("searchDlg").destroyRecursive();
@@ -153,24 +220,14 @@ function search() {
 		style: "width: 600px",
 		execute: function() {
 			if (this.validate()) {
-				_search_query = this.attr('value');
+				Feeds._search_query = this.attr('value');
 				this.hide();
-				viewCurrentFeed();
+				Feeds.viewCurrentFeed();
 			}
 		},
 		href: query});
 
 	dialog.show();
-}
-
-function updateTitle() {
-	let tmp = "Tiny Tiny RSS";
-
-	if (global_unread > 0) {
-		tmp = "(" + global_unread + ") " + tmp;
-	}
-
-	document.title = tmp;
 }
 
 function genericSanityCheck() {
@@ -272,15 +329,15 @@ function init() {
 function init_hotkey_actions() {
 	hotkey_actions["next_feed"] = function() {
 		const rv = dijit.byId("feedTree").getNextFeed(
-			getActiveFeedId(), activeFeedIsCat());
+			Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
 
-		if (rv) viewfeed({feed: rv[0], is_cat: rv[1], delayed: true})
+		if (rv) Feeds.viewfeed({feed: rv[0], is_cat: rv[1], delayed: true})
 	};
 	hotkey_actions["prev_feed"] = function() {
 		const rv = dijit.byId("feedTree").getPreviousFeed(
-			getActiveFeedId(), activeFeedIsCat());
+			Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
 
-		if (rv) viewfeed({feed: rv[0], is_cat: rv[1], delayed: true})
+		if (rv) Feeds.viewfeed({feed: rv[0], is_cat: rv[1], delayed: true})
 	};
 	hotkey_actions["next_article"] = function() {
 		moveToPost('next');
@@ -320,7 +377,7 @@ function init_hotkey_actions() {
 	}
 	hotkey_actions["open_in_new_window"] = function() {
 		if (getActiveArticleId()) {
-			openArticleInNewWindow(getActiveArticleId());
+			Article.openArticleInNewWindow(getActiveArticleId());
 		}
 	};
 	hotkey_actions["catchup_below"] = function() {
@@ -336,10 +393,10 @@ function init_hotkey_actions() {
 		scrollArticle(-40);
 	};
 	hotkey_actions["close_article"] = function() {
-		if (isCombinedMode()) {
+		if (App.isCombinedMode()) {
 			cdmCollapseActive();
 		} else {
-			closeArticlePanel();
+			Article.closeArticlePanel();
 		}
 	};
 	hotkey_actions["email_article"] = function() {
@@ -370,20 +427,20 @@ function init_hotkey_actions() {
 		selectArticles('none');
 	};
 	hotkey_actions["feed_refresh"] = function() {
-		if (getActiveFeedId() != undefined) {
-			viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat()});
+		if (Feeds.getActiveFeedId() != undefined) {
+			Feeds.viewfeed({feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat()});
 			return;
 		}
 	};
 	hotkey_actions["feed_unhide_read"] = function() {
-		toggleDispRead();
+		Feeds.toggleDispRead();
 	};
 	hotkey_actions["feed_subscribe"] = function() {
 		quickAddFeed();
 	};
 	hotkey_actions["feed_debug_update"] = function() {
-		if (!activeFeedIsCat() && parseInt(getActiveFeedId()) > 0) {
-			window.open("backend.php?op=feeds&method=update_debugger&feed_id=" + getActiveFeedId() +
+		if (!Feeds.activeFeedIsCat() && parseInt(Feeds.getActiveFeedId()) > 0) {
+			window.open("backend.php?op=feeds&method=update_debugger&feed_id=" + Feeds.getActiveFeedId() +
 				"&csrf_token=" + getInitParam("csrf_token"));
 		} else {
 			alert("You can't debug this kind of feed.");
@@ -391,17 +448,17 @@ function init_hotkey_actions() {
 	};
 
 	hotkey_actions["feed_debug_viewfeed"] = function() {
-		viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat(), viewfeed_debug: true});
+		Feeds.viewfeed({feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat(), viewfeed_debug: true});
 	};
 
 	hotkey_actions["feed_edit"] = function() {
-		if (activeFeedIsCat())
+		if (Feeds.activeFeedIsCat())
 			alert(__("You can't edit this kind of feed."));
 		else
-			editFeed(getActiveFeedId());
+			editFeed(Feeds.getActiveFeedId());
 	};
 	hotkey_actions["feed_catchup"] = function() {
-		if (getActiveFeedId() != undefined) {
+		if (Feeds.getActiveFeedId() != undefined) {
 			catchupCurrentFeed();
 			return;
 		}
@@ -411,32 +468,32 @@ function init_hotkey_actions() {
 	};
 	hotkey_actions["feed_toggle_vgroup"] = function() {
 		xhrPost("backend.php", {op: "rpc", method: "togglepref", key: "VFEED_GROUP_BY_FEED"}, () => {
-			viewCurrentFeed();
+			Feeds.viewCurrentFeed();
 		})
 	};
 	hotkey_actions["catchup_all"] = function() {
-		catchupAllFeeds();
+		Feeds.catchupAllFeeds();
 	};
 	hotkey_actions["cat_toggle_collapse"] = function() {
-		if (activeFeedIsCat()) {
-			dijit.byId("feedTree").collapseCat(getActiveFeedId());
+		if (Feeds.activeFeedIsCat()) {
+			dijit.byId("feedTree").collapseCat(Feeds.getActiveFeedId());
 			return;
 		}
 	};
 	hotkey_actions["goto_all"] = function() {
-		viewfeed({feed: -4});
+		Feeds.viewfeed({feed: -4});
 	};
 	hotkey_actions["goto_fresh"] = function() {
-		viewfeed({feed: -3});
+		Feeds.viewfeed({feed: -3});
 	};
 	hotkey_actions["goto_marked"] = function() {
-		viewfeed({feed: -1});
+		Feeds.viewfeed({feed: -1});
 	};
 	hotkey_actions["goto_published"] = function() {
-		viewfeed({feed: -2});
+		Feeds.viewfeed({feed: -2});
 	};
 	hotkey_actions["goto_tagcloud"] = function() {
-		displayDlg(__("Tag cloud"), "printTagCloud");
+		Utils.displayDlg(__("Tag cloud"), "printTagCloud");
 	};
 	hotkey_actions["goto_prefs"] = function() {
 		gotoPreferences();
@@ -467,7 +524,7 @@ function init_hotkey_actions() {
 		quickAddFilter();
 	};
 	hotkey_actions["collapse_sidebar"] = function() {
-		collapse_feedlist();
+		Feeds.viewCurrentFeed();
 	};
 	hotkey_actions["toggle_embed_original"] = function() {
 		if (typeof embedOriginalArticle != "undefined") {
@@ -478,32 +535,32 @@ function init_hotkey_actions() {
 		}
 	};
 	hotkey_actions["toggle_widescreen"] = function() {
-		if (!isCombinedMode()) {
+		if (!App.isCombinedMode()) {
 			_widescreen_mode = !_widescreen_mode;
 
 			// reset stored sizes because geometry changed
 			setCookie("ttrss_ci_width", 0);
 			setCookie("ttrss_ci_height", 0);
 
-			switchPanelMode(_widescreen_mode);
+			App.switchPanelMode(_widescreen_mode);
 		} else {
 			alert(__("Widescreen is not available in combined mode."));
 		}
 	};
 	hotkey_actions["help_dialog"] = function() {
-		helpDialog("main");
+		Utils.helpDialog("main");
 	};
 	hotkey_actions["toggle_combined_mode"] = function() {
 		notify_progress("Loading, please wait...");
 
-		const value = isCombinedMode() ? "false" : "true";
+		const value = App.isCombinedMode() ? "false" : "true";
 
 		xhrPost("backend.php", {op: "rpc", method: "setpref", key: "COMBINED_DISPLAY_MODE", value: value}, () => {
 			setInitParam("combined_display_mode",
 				!getInitParam("combined_display_mode"));
 
-			closeArticlePanel();
-			viewCurrentFeed();
+			Article.closeArticlePanel();
+			Feeds.viewCurrentFeed();
 		})
 	};
 	hotkey_actions["toggle_cdm_expanded"] = function() {
@@ -513,15 +570,15 @@ function init_hotkey_actions() {
 
 		xhrPost("backend.php", { op: "rpc", method: "setpref", key: "CDM_EXPANDED", value: value }, () => {
 			setInitParam("cdm_expanded", !getInitParam("cdm_expanded"));
-			viewCurrentFeed();
+			Feeds.viewCurrentFeed();
 		});
 	};
 
 }
 
 function init_second_stage() {
-	updateFeedList();
-	closeArticlePanel();
+	Feeds.reload();
+	Article.closeArticlePanel();
 
 	if (parseInt(getCookie("ttrss_fh_width")) > 0) {
 		dijit.byId("feeds-holder").domNode.setStyle(
@@ -559,7 +616,7 @@ function init_second_stage() {
 	const hash_feed_is_cat = hash_get('c') == "1";
 
 	if (hash_feed_id != undefined) {
-		setActiveFeedId(hash_feed_id, hash_feed_is_cat);
+		Feeds.setActiveFeedId(hash_feed_id, hash_feed_is_cat);
 	}
 
 	setLoadingProgress(50);
@@ -569,15 +626,9 @@ function init_second_stage() {
 		sessionStorage.clear();
 
 	_widescreen_mode = getInitParam("widescreen");
-	switchPanelMode(_widescreen_mode);
+	App.switchPanelMode(_widescreen_mode);
 
-	$("headlines-frame").onscroll = (event) => {
-		clearTimeout(_headlines_scroll_timeout);
-		_headlines_scroll_timeout = window.setTimeout(function() {
-			//console.log('done scrolling', event);
-			headlinesScrollHandler(event);
-		}, 50);
-	}
+	Headlines.initScrollHandler();
 
 	console.log("second stage ok");
 
@@ -596,7 +647,7 @@ function quickMenuGo(opid) {
 		document.location.href = "backend.php?op=logout";
 		break;
 	case "qmcTagCloud":
-		displayDlg(__("Tag cloud"), "printTagCloud");
+		Utils.displayDlg(__("Tag cloud"), "printTagCloud");
 		break;
 	case "qmcSearch":
 		search();
@@ -608,15 +659,15 @@ function quickMenuGo(opid) {
 		window.location.href = "backend.php?op=digest";
 		break;
 	case "qmcEditFeed":
-		if (activeFeedIsCat())
+		if (Feeds.activeFeedIsCat())
 			alert(__("You can't edit this kind of feed."));
 		else
-			editFeed(getActiveFeedId());
+			editFeed(Feeds.getActiveFeedId());
 		break;
 	case "qmcRemoveFeed":
-		var actid = getActiveFeedId();
+		var actid = Feeds.getActiveFeedId();
 
-		if (activeFeedIsCat()) {
+		if (Feeds.activeFeedIsCat()) {
 			alert(__("You can't unsubscribe from the category."));
 			return;
 		}
@@ -635,120 +686,35 @@ function quickMenuGo(opid) {
 		}
 		break;
 	case "qmcCatchupAll":
-		catchupAllFeeds();
+		Feeds.catchupAllFeeds();
 		break;
 	case "qmcShowOnlyUnread":
-		toggleDispRead();
+		Feeds.toggleDispRead();
 		break;
 	case "qmcToggleWidescreen":
-		if (!isCombinedMode()) {
+		if (!App.isCombinedMode()) {
 			_widescreen_mode = !_widescreen_mode;
 
 			// reset stored sizes because geometry changed
 			setCookie("ttrss_ci_width", 0);
 			setCookie("ttrss_ci_height", 0);
 
-			switchPanelMode(_widescreen_mode);
+			App.switchPanelMode(_widescreen_mode);
 		} else {
 			alert(__("Widescreen is not available in combined mode."));
 		}
 		break;
 	case "qmcHKhelp":
-		helpDialog("main");
+		Utils.helpDialog("main");
 		break;
 	default:
 		console.log("quickMenuGo: unknown action: " + opid);
 	}
 }
 
-function toggleDispRead() {
-
-	const hide = !(getInitParam("hide_read_feeds") == "1");
-
-	xhrPost("backend.php", {op: "rpc", method: "setpref", key: "HIDE_READ_FEEDS", value: hide}, () => {
-		hideOrShowFeeds(hide);
-		setInitParam("hide_read_feeds", hide);
-	});
-}
-
-function parse_runtime_info(data) {
-
-	//console.log("parsing runtime info...");
-
-	for (const k in data) {
-		const v = data[k];
-
-//		console.log("RI: " + k + " => " + v);
-
-		if (k == "dep_ts" && parseInt(getInitParam("dep_ts")) > 0) {
-			if (parseInt(getInitParam("dep_ts")) < parseInt(v) && getInitParam("reload_on_ts_change")) {
-				window.location.reload();
-			}
-		}
-
-		if (k == "daemon_is_running" && v != 1) {
-			notify_error("<span onclick=\"explainError(1)\">Update daemon is not running.</span>", true);
-			return;
-		}
-
-		if (k == "update_result") {
-			const updatesIcon = dijit.byId("updatesIcon").domNode;
-
-			if (v) {
-				Element.show(updatesIcon);
-			} else {
-				Element.hide(updatesIcon);
-			}
-		}
-
-		if (k == "daemon_stamp_ok" && v != 1) {
-			notify_error("<span onclick=\"explainError(3)\">Update daemon is not updating feeds.</span>", true);
-			return;
-		}
-
-		if (k == "max_feed_id" || k == "num_feeds") {
-			if (init_params[k] != v) {
-				console.log("feed count changed, need to reload feedlist.");
-				updateFeedList();
-			}
-		}
-
-		init_params[k] = v;
-		notify('');
-	}
-
-	PluginHost.run(PluginHost.HOOK_RUNTIME_INFO_LOADED, data);
-}
-
-function collapse_feedlist() {
-	Element.toggle("feeds-holder");
-
-	const splitter = $("feeds-holder_splitter");
-
-	Element.visible("feeds-holder") ? splitter.show() : splitter.hide();
-
-	dijit.byId("main").resize();
-}
-
 function viewModeChanged() {
 	cache_clear();
-	return viewCurrentFeed('');
-}
-
-function hotkey_handler(e) {
-	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
-
-	const action_name = keyeventToAction(e);
-
-	if (action_name) {
-		const action_func = hotkey_actions[action_name];
-
-		if (action_func != null) {
-			action_func();
-			e.stopPropagation();
-			return false;
-		}
-	}
+	return Feeds.viewCurrentFeed('');
 }
 
 function inPreferences() {
@@ -769,136 +735,15 @@ function reverseHeadlineOrder() {
 
 	order_by.attr('value', value);
 
-	viewCurrentFeed();
+	Feeds.viewCurrentFeed();
 
-}
-
-function handle_rpc_json(transport, scheduled_call) {
-
-	const netalert_dijit = dijit.byId("net-alert");
-	let netalert = false;
-
-	if (netalert_dijit) netalert = netalert_dijit.domNode;
-
-	try {
-		const reply = JSON.parse(transport.responseText);
-
-		if (reply) {
-
-			const error = reply['error'];
-
-			if (error) {
-				const code = error['code'];
-				const msg = error['msg'];
-
-				console.warn("[handle_rpc_json] received fatal error " + code + "/" + msg);
-
-				if (code != 0) {
-					fatalError(code, msg);
-					return false;
-				}
-			}
-
-			const seq = reply['seq'];
-
-			if (seq && get_seq() != seq) {
-				console.log("[handle_rpc_json] sequence mismatch: " + seq +
-					" (want: " + get_seq() + ")");
-				return true;
-			}
-
-			const message = reply['message'];
-
-			if (message == "UPDATE_COUNTERS") {
-				console.log("need to refresh counters...");
-				setInitParam("last_article_id", -1);
-				request_counters(true);
-			}
-
-			const counters = reply['counters'];
-
-			if (counters)
-				parse_counters(counters, scheduled_call);
-
-			const runtime_info = reply['runtime-info'];
-
-			if (runtime_info)
-				parse_runtime_info(runtime_info);
-
-			if (netalert) netalert.hide();
-
-			return reply;
-
-		} else {
-			if (netalert)
-				netalert.show();
-			else
-				notify_error("Communication problem with server.");
-		}
-
-	} catch (e) {
-		if (netalert)
-			netalert.show();
-		else
-			notify_error("Communication problem with server.");
-
-		console.error(e);
-	}
-
-	return false;
-}
-
-function switchPanelMode(wide) {
-	if (isCombinedMode()) return;
-
-	const article_id = getActiveArticleId();
-
-	if (wide) {
-		dijit.byId("headlines-wrap-inner").attr("design", 'sidebar');
-		dijit.byId("content-insert").attr("region", "trailing");
-
-  		dijit.byId("content-insert").domNode.setStyle({width: '50%',
-			height: 'auto',
-			borderTopWidth: '0px' });
-
-		if (parseInt(getCookie("ttrss_ci_width")) > 0) {
-			dijit.byId("content-insert").domNode.setStyle(
-				{width: getCookie("ttrss_ci_width") + "px" });
-		}
-
-		$("headlines-frame").setStyle({ borderBottomWidth: '0px' });
-		$("headlines-frame").addClassName("wide");
-
-	} else {
-
-		dijit.byId("content-insert").attr("region", "bottom");
-
-  		dijit.byId("content-insert").domNode.setStyle({width: 'auto',
-			height: '50%',
-			borderTopWidth: '0px'});
-
-		if (parseInt(getCookie("ttrss_ci_height")) > 0) {
-			dijit.byId("content-insert").domNode.setStyle(
-				{height: getCookie("ttrss_ci_height") + "px" });
-		}
-
-		$("headlines-frame").setStyle({ borderBottomWidth: '1px' });
-		$("headlines-frame").removeClassName("wide");
-
-	}
-
-	closeArticlePanel();
-
-	if (article_id) view(article_id);
-
-	xhrPost("backend.php", {op: "rpc", method: "setpanelmode", wide: wide ? 1 : 0});
 }
 
 function update_random_feed() {
 	console.log("in update_random_feed");
 
 	xhrPost("backend.php", { op: "rpc", method: "updateRandomFeed" }, (transport) => {
-		handle_rpc_json(transport, true);
+		App.handleRpcJson(transport, true);
 		window.setTimeout(update_random_feed, 30*1000);
 	});
 }

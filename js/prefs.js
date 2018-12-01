@@ -6,7 +6,7 @@ function notify_callback2(transport, sticky) {
 	notify_info(transport.responseText, sticky);
 }
 
-function updateFeedList() {
+function Feeds.reload() {
 
 	const user_search = $("feed_search");
 	let search = "";
@@ -324,7 +324,7 @@ function removeSelectedFeeds() {
 				ids: sel_rows.toString() };
 
 			xhrPost("backend.php", query, () => {
-				updateFeedList();
+				Feeds.reload();
 			});
 		}
 
@@ -524,7 +524,7 @@ function editSelectedFeeds() {
 
 					xhrPost("backend.php", query, () => {
 						dialog.hide();
-						updateFeedList();
+						Feeds.reload();
 					});
 				}
 			},
@@ -618,7 +618,7 @@ function selectTab(id, noupdate) {
 
 		switch (id) {
 			case "feedConfig":
-				updateFeedList();
+				Feeds.reload();
 				break;
 			case "filterConfig":
 				updateFilterList();
@@ -764,7 +764,7 @@ function pref_hotkey_handler(e) {
 				quickAddFilter();
 				return false;
 			case "help_dialog":
-				helpDialog("main");
+				Utils.helpDialog("main");
 				return false;
 			default:
 				console.log("unhandled action: " + action_name + "; keycode: " + e.which);
@@ -782,7 +782,7 @@ function removeCategory(id, item) {
 
 		xhrPost("backend.php", query, () => {
 			notify('');
-			updateFeedList();
+			Feeds.reload();
 		});
 	}
 }
@@ -798,7 +798,7 @@ function removeSelectedCategories() {
 				ids: sel_rows.toString() };
 
 			xhrPost("backend.php", query, () => {
-				updateFeedList();
+				Feeds.reload();
 			});
 		}
 	} else {
@@ -816,7 +816,7 @@ function createCategory() {
 
 		xhrPost("backend.php", { op: "pref-feeds", method: "addCat", cat: title }, () => {
 			notify('');
-			updateFeedList();
+			Feeds.reload();
 		});
 	}
 }
@@ -847,7 +847,7 @@ function showInactiveFeeds() {
 					xhrPost("backend.php", query, () => {
 						notify('');
 						dialog.hide();
-						updateFeedList();
+						Feeds.reload();
 					});
 				}
 
@@ -1037,7 +1037,7 @@ function resetFeedOrder() {
 	notify_progress("Loading, please wait...");
 
 	xhrPost("backend.php", { op: "pref-feeds", method: "feedsortreset" }, () => {
-		updateFeedList();
+		Feeds.reload();
 	});
 }
 
@@ -1045,7 +1045,7 @@ function resetCatOrder() {
 	notify_progress("Loading, please wait...");
 
 	xhrPost("backend.php", { op: "pref-feeds", method: "catsortreset" }, () => {
-		updateFeedList();
+		Feeds.reload();
 	});
 }
 
@@ -1057,7 +1057,7 @@ function editCat(id, item) {
 		notify_progress("Loading, please wait...");
 
 		xhrPost("backend.php", { op: 'pref-feeds', method: 'renamecat', id: id, title: new_name }, () => {
-			updateFeedList();
+			Feeds.reload();
 		});
 	}
 }
@@ -1176,7 +1176,7 @@ function batchSubscribe() {
 
 				xhrPost("backend.php", this.attr('value'), () => {
 					notify("");
-					updateFeedList();
+					Feeds.reload();
 					dialog.hide();
 				});
 			}

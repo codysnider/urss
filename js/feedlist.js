@@ -1,302 +1,430 @@
-let infscroll_in_progress = 0;
-let infscroll_disabled = 0;
-
-let _infscroll_timeout = false;
-let _search_query = false;
-let _viewfeed_wait_timeout = false;
-
 let counters_last_request = 0;
-let _counters_prev = [];
 
-function resetCounterCache() {
-	_counters_prev = [];
-}
+const Counters = {
+};
 
-function loadMoreHeadlines() {
-	const view_mode = document.forms["main_toolbar_form"].view_mode.value;
-	const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
-	const num_all = $$("#headlines-frame > div[id*=RROW]").length;
-	const num_unread = getFeedUnread(getActiveFeedId(), activeFeedIsCat());
+const Feeds = {
+	_active_feed_id: 0,
+	_active_feed_is_cat: false,
+	infscroll_in_progress: 0,
+	infscroll_disabled: 0,
+	_infscroll_timeout: false,
+	_search_query: false,
+	_viewfeed_wait_timeout: false,
+	_counters_prev: [],
+	// NOTE: this implementation is incomplete
+	// for general objects but good enough for counters
+	// http://adripofjavascript.com/blog/drips/object-equality-in-javascript.html
+	counterEquals: function(a, b) {
+		// Create arrays of property names
+		const aProps = Object.getOwnPropertyNames(a);
+		const bProps = Object.getOwnPropertyNames(b);
 
-	// TODO implement marked & published
-
-	let offset = num_all;
-
-	switch (view_mode) {
-		case "marked":
-		case "published":
-			console.warn("loadMoreHeadlines: ", view_mode, "not implemented");
-			break;
-		case "unread":
-			offset = unread_in_buffer;
-			break;
-		case "adaptive":
-			if (!(getActiveFeedId() == -1 && !activeFeedIsCat()))
-				offset = num_unread > 0 ? unread_in_buffer : num_all;
-			break;
-	}
-
-	console.log("loadMoreHeadlines, offset=", offset);
-
-	viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat(), offset: offset, infscroll_req: true});
-}
-
-function cleanup_memory(root) {
-	const dijits = dojo.query("[widgetid]", dijit.byId(root).domNode).map(dijit.byNode);
-
-	dijits.each(function (d) {
-		dojo.destroy(d.domNode);
-	});
-
-	$$("#" + root + " *").each(function (i) {
-		i.parentNode ? i.parentNode.removeChild(i) : true;
-	});
-}
-
-function viewfeed(params) {
-	const feed = params.feed;
-	const is_cat = !!params.is_cat || false;
-	const offset = params.offset || 0;
-	const viewfeed_debug = params.viewfeed_debug;
-	const method = params.method;
-	// this is used to quickly switch between feeds, sets active but xhr is on a timeout
-	const delayed = params.delayed || false;
-
-	if (feed != getActiveFeedId() || activeFeedIsCat() != is_cat) {
-		_search_query = false;
-	}
-
-	if (offset != 0) {
-		if (infscroll_in_progress)
-			return;
-
-		infscroll_in_progress = 1;
-
-		window.clearTimeout(_infscroll_timeout);
-		_infscroll_timeout = window.setTimeout(() => {
-			console.log('infscroll request timed out, aborting');
-			infscroll_in_progress = 0;
-
-			// call scroll handler to maybe repeat infscroll request
-			headlinesScrollHandler();
-		}, 10 * 1000);
-	}
-
-	Form.enable("main_toolbar_form");
-
-	let query = Object.assign({op: "feeds", method: "view", feed: feed},
-		dojo.formToObject("main_toolbar_form"));
-
-	if (method) query.m = method;
-
-	if (offset > 0) {
-		if (current_first_id) {
-			query.fid = current_first_id;
-		}
-	}
-
-	if (_search_query) {
-		query = Object.assign(query, _search_query);
-	}
-
-	if (offset != 0) {
-		query.skip = offset;
-
-		// to prevent duplicate feed titles when showing grouped vfeeds
-		if (vgroup_last_feed) {
-			query.vgrlf = vgroup_last_feed;
-		}
-	} else if (!is_cat && feed == getActiveFeedId() && !params.method) {
-			query.m = "ForceUpdate";
+		// If number of properties is different,
+		// objects are not equivalent
+		if (aProps.length != bProps.length) {
+			return false;
 		}
 
-	Form.enable("main_toolbar_form");
+		for (let i = 0; i < aProps.length; i++) {
+			const propName = aProps[i];
 
-	if (!delayed)
-		if (!setFeedExpandoIcon(feed, is_cat,
-			(is_cat) ? 'images/indicator_tiny.gif' : 'images/indicator_white.gif'))
-				notify_progress("Loading, please wait...", true);
+			// If values of same property are not equal,
+			// objects are not equivalent
+			if (a[propName] !== b[propName]) {
+				return false;
+			}
+		}
 
-	query.cat = is_cat;
+		// If we made it this far, objects
+		// are considered equivalent
+		return true;
+	},
+	resetCounters: function () {
+		this._counters_prev = [];
+	},
+	parseCounters: function (elems) {
+		for (let l = 0; l < elems.length; l++) {
 
-	setActiveFeedId(feed, is_cat);
+			if (this._counters_prev[l] && this.counterEquals(elems[l], this._counters_prev[l])) {
+				continue;
+			}
 
-	if (viewfeed_debug) {
-		window.open("backend.php?" +
-			dojo.objectToQuery(
-				Object.assign({debug: 1, csrf_token: getInitParam("csrf_token")}, query)
-			));
-	}
+			const id = elems[l].id;
+			const kind = elems[l].kind;
+			const ctr = parseInt(elems[l].counter);
+			const error = elems[l].error;
+			const has_img = elems[l].has_img;
+			const updated = elems[l].updated;
+			const auxctr = parseInt(elems[l].auxcounter);
 
-	window.clearTimeout(_viewfeed_wait_timeout);
-	_viewfeed_wait_timeout = window.setTimeout(() => {
-		catchupBatchedArticles(() => {
+			if (id == "global-unread") {
+				App.global_unread = ctr;
+				App.updateTitle();
+				continue;
+			}
+
+			if (id == "subscribed-feeds") {
+				/* feeds_found = ctr; */
+				continue;
+			}
+
+			/*if (getFeedUnread(id, (kind == "cat")) != ctr ||
+					(kind == "cat")) {
+			}*/
+
+			setFeedUnread(id, (kind == "cat"), ctr);
+			setFeedValue(id, (kind == "cat"), 'auxcounter', auxctr);
+
+			if (kind != "cat") {
+				setFeedValue(id, false, 'error', error);
+				setFeedValue(id, false, 'updated', updated);
+
+				if (id > 0) {
+					if (has_img) {
+						setFeedIcon(id, false,
+							getInitParam("icons_url") + "/" + id + ".ico?" + has_img);
+					} else {
+						setFeedIcon(id, false, 'images/blank_icon.gif');
+					}
+				}
+			}
+		}
+
+		this.hideOrShowFeeds(getInitParam("hide_read_feeds") == 1);
+		this._counters_prev = elems;
+	},
+	viewCurrentFeed: function(method) {
+		console.log("viewCurrentFeed: " + method);
+
+		if (this.getActiveFeedId() != undefined) {
+			this.viewfeed({feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat(), method: method});
+		}
+		return false; // block unneeded form submits
+	},
+	openNextUnreadFeed: function() {
+		const is_cat = Feeds.activeFeedIsCat();
+		const nuf = getNextUnreadFeed(Feeds.getActiveFeedId(), is_cat);
+		if (nuf) this.viewfeed({feed: nuf, is_cat: is_cat});
+	},
+	collapseFeedlist: function() {
+		Element.toggle("feeds-holder");
+
+		const splitter = $("feeds-holder_splitter");
+
+		Element.visible("feeds-holder") ? splitter.show() : splitter.hide();
+
+		dijit.byId("main").resize();
+	},
+	cancelSearch: function() {
+		this._search_query = "";
+		Feeds.viewCurrentFeed();
+	},
+	requestCounters: function(force) {
+		const date = new Date();
+		const timestamp = Math.round(date.getTime() / 1000);
+
+		if (force || timestamp - counters_last_request > 5) {
+			console.log("scheduling request of counters...");
+
+			counters_last_request = timestamp;
+
+			let query = {op: "rpc", method: "getAllCounters", seq: App.next_seq()};
+
+			if (!force)
+				query.last_article_id = getInitParam("last_article_id");
+
 			xhrPost("backend.php", query, (transport) => {
+				App.handleRpcJson(transport);
+			});
+
+		} else {
+			console.log("request_counters: rate limit reached: " + (timestamp - counters_last_request));
+		}
+	},
+	reload: function() {
+		try {
+			Element.show("feedlistLoading");
+
+			this.resetCounters();
+
+			if (dijit.byId("feedTree")) {
+				dijit.byId("feedTree").destroyRecursive();
+			}
+
+			const store = new dojo.data.ItemFileWriteStore({
+				url: "backend.php?op=pref_feeds&method=getfeedtree&mode=2"
+			});
+
+			const treeModel = new fox.FeedStoreModel({
+				store: store,
+				query: {
+					"type": getInitParam('enable_feed_cats') == 1 ? "category" : "feed"
+				},
+				rootId: "root",
+				rootLabel: "Feeds",
+				childrenAttrs: ["items"]
+			});
+
+			const tree = new fox.FeedTree({
+				model: treeModel,
+				onClick: function (item, node) {
+					const id = String(item.id);
+					const is_cat = id.match("^CAT:");
+					const feed = id.substr(id.indexOf(":") + 1);
+					Feeds.viewfeed({feed: feed, is_cat: is_cat});
+					return false;
+				},
+				openOnClick: false,
+				showRoot: false,
+				persist: true,
+				id: "feedTree",
+			}, "feedTree");
+
+			const tmph = dojo.connect(dijit.byId('feedMenu'), '_openMyself', function (event) {
+				console.log(dijit.getEnclosingWidget(event.target));
+				dojo.disconnect(tmph);
+			});
+
+			$("feeds-holder").appendChild(tree.domNode);
+
+			const tmph2 = dojo.connect(tree, 'onLoad', function () {
+				dojo.disconnect(tmph2);
+				Element.hide("feedlistLoading");
+
 				try {
-					setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
-					headlines_callback2(transport, offset);
-					PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
+					Feeds.init();
+					setLoadingProgress(25);
 				} catch (e) {
 					exception_error(e);
 				}
 			});
+
+			tree.startup();
+		} catch (e) {
+			exception_error(e);
+		}
+	},
+	init: function() {
+		console.log("in feedlist init");
+
+		setLoadingProgress(50);
+
+		document.onkeydown = App.hotkeyHandler;
+		setInterval(hotkeyPrefixTimeout, 3 * 1000);
+		setInterval(catchupBatchedArticles, 10 * 1000);
+
+		if (!this.getActiveFeedId()) {
+			this.viewfeed({feed: -3});
+		} else {
+			this.viewfeed({feed: this.getActiveFeedId(), is_cat: this.activeFeedIsCat()});
+		}
+
+		this.hideOrShowFeeds(getInitParam("hide_read_feeds") == 1);
+
+		if (getInitParam("is_default_pw")) {
+			console.warn("user password is at default value");
+
+			const dialog = new dijit.Dialog({
+				title: __("Your password is at default value"),
+				href: "backend.php?op=dlg&method=defaultpasswordwarning",
+				id: 'infoBox',
+				style: "width: 600px",
+				onCancel: function () {
+					return true;
+				},
+				onExecute: function () {
+					return true;
+				},
+				onClose: function () {
+					return true;
+				}
+			});
+
+			dialog.show();
+		}
+
+		// bw_limit disables timeout() so we request initial counters separately
+		if (getInitParam("bw_limit") == "1") {
+			this.requestCounters(true);
+		} else {
+			setTimeout(() => {
+				this.requestCounters(true);
+
+				setInterval(() => {
+					this.requestCounters();
+				}, 60 * 1000)
+			}, 250);
+		}
+	},
+	activeFeedIsCat: function() {
+		return !!this._active_feed_is_cat;
+	},
+	getActiveFeedId: function() {
+		return this._active_feed_id;
+	},
+	setActiveFeedId: function(id, is_cat) {
+		hash_set('f', id);
+		hash_set('c', is_cat ? 1 : 0);
+
+		this._active_feed_id = id;
+		this._active_feed_is_cat = is_cat;
+
+		$("headlines-frame").setAttribute("feed-id", id);
+		$("headlines-frame").setAttribute("is-cat", is_cat ? 1 : 0);
+
+		this.selectFeed(id, is_cat);
+
+		PluginHost.run(PluginHost.HOOK_FEED_SET_ACTIVE, _active_article_id);
+	},
+	selectFeed: function(feed, is_cat) {
+		const tree = dijit.byId("feedTree");
+
+		if (tree) return tree.selectFeed(feed, is_cat);
+	},
+	toggleDispRead: function() {
+		const hide = !(getInitParam("hide_read_feeds") == "1");
+
+		xhrPost("backend.php", {op: "rpc", method: "setpref", key: "HIDE_READ_FEEDS", value: hide}, () => {
+			this.hideOrShowFeeds(hide);
+			setInitParam("hide_read_feeds", hide);
 		});
-	}, delayed ? 250 : 0);
-}
+	},
+	hideOrShowFeeds: function(hide) {
+		const tree = dijit.byId("feedTree");
 
-function feedlist_init() {
-	console.log("in feedlist init");
+		if (tree)
+			return tree.hideRead(hide, getInitParam("hide_read_shows_special"));
+	},
+	viewfeed: function(params) {
+		const feed = params.feed;
+		const is_cat = !!params.is_cat || false;
+		const offset = params.offset || 0;
+		const viewfeed_debug = params.viewfeed_debug;
+		const method = params.method;
+		// this is used to quickly switch between feeds, sets active but xhr is on a timeout
+		const delayed = params.delayed || false;
 
-	setLoadingProgress(50);
+		if (feed != Feeds.getActiveFeedId() || Feeds.activeFeedIsCat() != is_cat) {
+			this._search_query = false;
+			setActiveArticleId(0);
+		}
 
-	document.onkeydown = hotkey_handler;
-	setInterval(hotkeyPrefixTimeout, 3*1000);
-	setInterval(catchupBatchedArticles, 10*1000);
+		if (offset != 0) {
+			if (this.infscroll_in_progress)
+				return;
 
-	if (!getActiveFeedId()) {
-		viewfeed({feed: -3});
-	} else {
-		viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat()});
-	}
+			this.infscroll_in_progress = 1;
 
-	hideOrShowFeeds(getInitParam("hide_read_feeds") == 1);
+			window.clearTimeout(this._infscroll_timeout);
+			this._infscroll_timeout = window.setTimeout(() => {
+				console.log('infscroll request timed out, aborting');
+				this.infscroll_in_progress = 0;
 
-	if (getInitParam("is_default_pw")) {
-		console.warn("user password is at default value");
+				// call scroll handler to maybe repeat infscroll request
+				Headlines.scrollHandler();
+			}, 10 * 1000);
+		}
 
-		const dialog = new dijit.Dialog({
-			title: __("Your password is at default value"),
-			href: "backend.php?op=dlg&method=defaultpasswordwarning",
-			id: 'infoBox',
-			style: "width: 600px",
-			onCancel: function() {
-				return true;
-			},
-			onExecute: function() {
-				return true;
-			},
-			onClose: function() {
-				return true;
+		Form.enable("main_toolbar_form");
+
+		let query = Object.assign({op: "feeds", method: "view", feed: feed},
+			dojo.formToObject("main_toolbar_form"));
+
+		if (method) query.m = method;
+
+		if (offset > 0) {
+			if (current_first_id) {
+				query.fid = current_first_id;
 			}
-		});
-
-		dialog.show();
-	}
-
-	// bw_limit disables timeout() so we request initial counters separately
-	if (getInitParam("bw_limit") == "1") {
-		request_counters(true);
-	} else {
-		setTimeout(timeout, 250);
-	}
-}
-
-
-function request_counters(force) {
-	const date = new Date();
-	const timestamp = Math.round(date.getTime() / 1000);
-
-	if (force || timestamp - counters_last_request > 5) {
-		console.log("scheduling request of counters...");
-
-		counters_last_request = timestamp;
-
-		let query = {op: "rpc", method: "getAllCounters", seq: next_seq()};
-
-		if (!force)
-			query.last_article_id = getInitParam("last_article_id");
-
-		xhrPost("backend.php", query, (transport) => {
-			handle_rpc_json(transport);
-		});
-
-	} else {
-		console.log("request_counters: rate limit reached: " + (timestamp - counters_last_request));
-	}
-}
-
-// NOTE: this implementation is incomplete
-// for general objects but good enough for counters
-// http://adripofjavascript.com/blog/drips/object-equality-in-javascript.html
-function counter_is_equal(a, b) {
-	// Create arrays of property names
-	const aProps = Object.getOwnPropertyNames(a);
-	const bProps = Object.getOwnPropertyNames(b);
-
-	// If number of properties is different,
-	// objects are not equivalent
-	if (aProps.length != bProps.length) {
-		return false;
-	}
-
-	for (let i = 0; i < aProps.length; i++) {
-		const propName = aProps[i];
-
-		// If values of same property are not equal,
-		// objects are not equivalent
-		if (a[propName] !== b[propName]) {
-			return false;
-		}
-	}
-
-	// If we made it this far, objects
-	// are considered equivalent
-	return true;
-}
-
-
-function parse_counters(elems) {
-	for (let l = 0; l < elems.length; l++) {
-
-		if (_counters_prev[l] && counter_is_equal(elems[l], _counters_prev[l])) {
-			continue;
 		}
 
-		const id = elems[l].id;
-		const kind = elems[l].kind;
-		const ctr = parseInt(elems[l].counter);
-		const error = elems[l].error;
-		const has_img = elems[l].has_img;
-		const updated = elems[l].updated;
-		const auxctr = parseInt(elems[l].auxcounter);
-
-		if (id == "global-unread") {
-			global_unread = ctr;
-			updateTitle();
-			continue;
+		if (this._search_query) {
+			query = Object.assign(query, this._search_query);
 		}
 
-		if (id == "subscribed-feeds") {
-			/* feeds_found = ctr; */
-			continue;
+		if (offset != 0) {
+			query.skip = offset;
+
+			// to prevent duplicate feed titles when showing grouped vfeeds
+			if (vgroup_last_feed) {
+				query.vgrlf = vgroup_last_feed;
+			}
+		} else if (!is_cat && feed == Feeds.getActiveFeedId() && !params.method) {
+			query.m = "ForceUpdate";
 		}
 
-		/*if (getFeedUnread(id, (kind == "cat")) != ctr ||
-				(kind == "cat")) {
-		}*/
+		Form.enable("main_toolbar_form");
 
-		setFeedUnread(id, (kind == "cat"), ctr);
-		setFeedValue(id, (kind == "cat"), 'auxcounter', auxctr);
+		if (!delayed)
+			if (!setFeedExpandoIcon(feed, is_cat,
+				(is_cat) ? 'images/indicator_tiny.gif' : 'images/indicator_white.gif'))
+				notify_progress("Loading, please wait...", true);
 
-		if (kind != "cat") {
-			setFeedValue(id, false, 'error', error);
-			setFeedValue(id, false, 'updated', updated);
+		query.cat = is_cat;
 
-			if (id > 0) {
-				if (has_img) {
-					setFeedIcon(id, false,
-						getInitParam("icons_url") + "/" + id + ".ico?" + has_img);
-				} else {
-					setFeedIcon(id, false, 'images/blank_icon.gif');
+		Feeds.setActiveFeedId(feed, is_cat);
+
+		if (viewfeed_debug) {
+			window.open("backend.php?" +
+				dojo.objectToQuery(
+					Object.assign({debug: 1, csrf_token: getInitParam("csrf_token")}, query)
+				));
+		}
+
+		window.clearTimeout(this._viewfeed_wait_timeout);
+		this._viewfeed_wait_timeout = window.setTimeout(() => {
+			catchupBatchedArticles(() => {
+				xhrPost("backend.php", query, (transport) => {
+					try {
+						setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
+						Headlines.onLoaded(transport, offset);
+						PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
+					} catch (e) {
+						exception_error(e);
+					}
+				});
+			});
+		}, delayed ? 250 : 0);
+	},
+	catchupAllFeeds: function() {
+		const str = __("Mark all articles as read?");
+
+		if (getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
+
+			notify_progress("Marking all feeds as read...");
+
+			xhrPost("backend.php", {op: "feeds", method: "catchupAll"}, () => {
+				this.requestCounters(true);
+				this.viewCurrentFeed();
+			});
+
+			App.global_unread = 0;
+			App.updateTitle();
+		}
+	},
+	decrementFeedCounter: function(feed, is_cat) {
+		let ctr = getFeedUnread(feed, is_cat);
+
+		if (ctr > 0) {
+			setFeedUnread(feed, is_cat, ctr - 1);
+			App.global_unread -= 1;
+			App.updateTitle();
+
+			if (!is_cat) {
+				const cat = parseInt(getFeedCategory(feed));
+
+				if (!isNaN(cat)) {
+					ctr = getFeedUnread(cat, true);
+
+					if (ctr > 0) {
+						setFeedUnread(cat, true, ctr - 1);
+					}
 				}
 			}
 		}
 	}
-
-	hideOrShowFeeds(getInitParam("hide_read_feeds") == 1);
-
-	_counters_prev = elems;
-}
+};
 
 function getFeedUnread(feed, is_cat) {
 	try {
@@ -324,13 +452,6 @@ function getFeedCategory(feed) {
 	}
 
 	return false;
-}
-
-function hideOrShowFeeds(hide) {
-	const tree = dijit.byId("feedTree");
-
-	if (tree)
-		return tree.hideRead(hide, getInitParam("hide_read_shows_special"));
 }
 
 function getFeedName(feed, is_cat) {
@@ -375,12 +496,6 @@ function setFeedValue(feed, is_cat, key, value) {
 	}
 }
 
-function selectFeed(feed, is_cat) {
-	const tree = dijit.byId("feedTree");
-
-	if (tree) return tree.selectFeed(feed, is_cat);
-}
-
 function setFeedIcon(feed, is_cat, src) {
 	const tree = dijit.byId("feedTree");
 
@@ -404,7 +519,7 @@ function getNextUnreadFeed(feed, is_cat) {
 }
 
 function catchupCurrentFeed(mode) {
-	catchupFeed(getActiveFeedId(), activeFeedIsCat(), mode);
+	catchupFeed(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat(), mode);
 }
 
 function catchupFeedInGroup(id) {
@@ -440,13 +555,13 @@ function catchupFeedInGroup(id) {
 				}
 			}
 
-			updateFloatingTitle(true);
+			Headlines.updateFloatingTitle(true);
 		}
 
 		notify_progress("Loading, please wait...", true);
 
 		xhrPost("backend.php", { op: "rpc", method: "catchupFeed", feed_id: id, is_cat: false}, (transport) => {
-			handle_rpc_json(transport);
+			App.handleRpcJson(transport);
 		});
 	}
 }
@@ -487,7 +602,7 @@ function catchupFeed(feed, is_cat, mode) {
 	notify_progress("Loading, please wait...", true);
 
 	xhrPost("backend.php", catchup_query, (transport) => {
-		handle_rpc_json(transport);
+		App.handleRpcJson(transport);
 
 		const show_next_feed = getInitParam("on_catchup_show_next_feed") == "1";
 
@@ -495,37 +610,15 @@ function catchupFeed(feed, is_cat, mode) {
 			const nuf = getNextUnreadFeed(feed, is_cat);
 
 			if (nuf) {
-				viewfeed({feed: nuf, is_cat: is_cat});
+				Feeds.viewfeed({feed: nuf, is_cat: is_cat});
 			}
-		} else if (feed == getActiveFeedId() && is_cat == activeFeedIsCat()) {
-			viewCurrentFeed();
+		} else if (feed == Feeds.getActiveFeedId() && is_cat == Feeds.activeFeedIsCat()) {
+			Feeds.viewCurrentFeed();
 		}
 
 		notify("");
 	});
 }
 
-function decrementFeedCounter(feed, is_cat) {
-	let ctr = getFeedUnread(feed, is_cat);
-
-	if (ctr > 0) {
-		setFeedUnread(feed, is_cat, ctr - 1);
-		global_unread = global_unread - 1;
-		updateTitle();
-
-		if (!is_cat) {
-			const cat = parseInt(getFeedCategory(feed));
-
-			if (!isNaN(cat)) {
-				ctr = getFeedUnread(cat, true);
-
-				if (ctr > 0) {
-					setFeedUnread(cat, true, ctr - 1);
-				}
-			}
-		}
-	}
-
-}
 
 

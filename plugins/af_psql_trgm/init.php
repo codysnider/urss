@@ -93,7 +93,7 @@ class Af_Psql_Trgm extends Plugin {
 				print " <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"$article_link\">".
 					$line["title"]."</a>";
 
-				print " (<a href=\"#\" onclick=\"viewfeed({feed:".$line["feed_id"]."})\">".
+				print " (<a href=\"#\" onclick=\"Feeds.viewfeed({feed:".$line["feed_id"]."})\">".
 					htmlspecialchars($line["feed_title"])."</a>)";
 
 				print " <span class='insensitive'>($sm)</span>";

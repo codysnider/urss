@@ -50,11 +50,83 @@ function xhrJson(url, params, complete) {
 }
 
 /* add method to remove element from array */
-
 Array.prototype.remove = function(s) {
 	for (let i=0; i < this.length; i++) {
 		if (s == this[i]) this.splice(i, 1);
 	}
+};
+
+const Utils = {
+	cleanupMemory: function(root) {
+		const dijits = dojo.query("[widgetid]", dijit.byId(root).domNode).map(dijit.byNode);
+
+		dijits.each(function (d) {
+			dojo.destroy(d.domNode);
+		});
+
+		$$("#" + root + " *").each(function (i) {
+			i.parentNode ? i.parentNode.removeChild(i) : true;
+		});
+	},
+	helpDialog: function(topic) {
+		const query = "backend.php?op=backend&method=help&topic=" + param_escape(topic);
+
+		if (dijit.byId("helpDlg"))
+			dijit.byId("helpDlg").destroyRecursive();
+
+		const dialog = new dijit.Dialog({
+			id: "helpDlg",
+			title: __("Help"),
+			style: "width: 600px",
+			href: query,
+		});
+
+		dialog.show();
+	},
+	displayDlg: function(title, id, param, callback) {
+		notify_progress("Loading, please wait...", true);
+
+		const query = {op: "dlg", method: id, param: param};
+
+		xhrPost("backend.php", query, (transport) => {
+			try {
+				const content = transport.responseText;
+
+				let dialog = dijit.byId("infoBox");
+
+				if (!dialog) {
+					dialog = new dijit.Dialog({
+						title: title,
+						id: 'infoBox',
+						style: "width: 600px",
+						onCancel: function () {
+							return true;
+						},
+						onExecute: function () {
+							return true;
+						},
+						onClose: function () {
+							return true;
+						},
+						content: content
+					});
+				} else {
+					dialog.attr('title', title);
+					dialog.attr('content', content);
+				}
+
+				dialog.show();
+
+				notify("");
+
+				if (callback) callback(transport);
+			} catch (e) {
+				exception_error(e);
+			}
+		});
+
+		return false;
+	},
 };
 
 function report_error(message, filename, lineno, colno, error) {
@@ -324,51 +396,6 @@ function closeInfoBox() {
 	return false;
 }
 
-function displayDlg(title, id, param, callback) {
-	notify_progress("Loading, please wait...", true);
-
-	const query = { op: "dlg", method: id, param: param };
-
-	xhrPost("backend.php", query, (transport) => {
-		try {
-			const content = transport.responseText;
-
-			let dialog = dijit.byId("infoBox");
-
-			if (!dialog) {
-				dialog = new dijit.Dialog({
-					title: title,
-					id: 'infoBox',
-					style: "width: 600px",
-					onCancel: function () {
-						return true;
-					},
-					onExecute: function () {
-						return true;
-					},
-					onClose: function () {
-						return true;
-					},
-					content: content
-				});
-			} else {
-				dialog.attr('title', title);
-				dialog.attr('content', content);
-			}
-
-			dialog.show();
-
-			notify("");
-
-			if (callback) callback(transport);
-		} catch (e) {
-			exception_error(e);
-		}
-	});
-
-	return false;
-}
-
 function getInitParam(key) {
 	return init_params[key];
 }
@@ -453,7 +480,7 @@ function filterDlgCheckAction(sender) {
 
 
 function explainError(code) {
-	return displayDlg(__("Error explained"), "explainError", code);
+	return Utils.displayDlg(__("Error explained"), "explainError", code);
 }
 
 function setLoadingProgress(p) {
@@ -489,9 +516,9 @@ function uploadIconHandler(rc) {
 		case 0:
 			notify_info("Upload complete.");
 			if (inPreferences()) {
-				updateFeedList();
+				Feeds.reload();
 			} else {
-				setTimeout('updateFeedList(false, false)', 50);
+				setTimeout('Feeds.reload(false, false)', 50);
 			}
 			break;
 		case 1:
@@ -514,9 +541,9 @@ function removeFeedIcon(id) {
 		xhrPost("backend.php", query, (transport) => {
 			notify_info("Feed icon removed.");
 			if (inPreferences()) {
-				updateFeedList();
+				Feeds.reload();
 			} else {
-				setTimeout('updateFeedList(false, false)', 50);
+				setTimeout('Feeds.reload(false, false)', 50);
 			}
 		});
 	}
@@ -556,7 +583,7 @@ function addLabel(select, callback) {
 			} else if (inPreferences()) {
 				updateLabelList();
 			} else {
-				updateFeedList();
+				Feeds.reload();
 			}
 		});
 	}
@@ -616,7 +643,7 @@ function quickAddFeed() {
 								dialog.hide();
 								notify_info(__("Subscribed to %s").replace("%s", feed_url));
 
-								updateFeedList();
+								Feeds.reload();
 								break;
 							case 2:
 								dialog.show_error(__("Specified URL seems to be invalid."));
@@ -889,7 +916,7 @@ function quickAddFilter() {
 
 	if (!inPreferences()) {
 		query = { op: "pref-filters", method: "newfilter",
-			feed: getActiveFeedId(), is_cat: activeFeedIsCat() };
+			feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat() };
 	} else {
 		query = { op: "pref-filters", method: "newfilter" };
 	}
@@ -973,8 +1000,8 @@ function quickAddFilter() {
 
 			if (selectedText != "") {
 
-				const feed_id = activeFeedIsCat() ? 'CAT:' + parseInt(getActiveFeedId()) :
-					getActiveFeedId();
+				const feed_id = Feeds.activeFeedIsCat() ? 'CAT:' + parseInt(Feeds.getActiveFeedId()) :
+					Feeds.getActiveFeedId();
 
 				const rule = { reg_exp: selectedText, feed_id: [feed_id], filter_type: 1 };
 
@@ -991,12 +1018,12 @@ function quickAddFilter() {
 
 					if (reply && reply.title) title = reply.title;
 
-					if (title || getActiveFeedId() || activeFeedIsCat()) {
+					if (title || Feeds.getActiveFeedId() || Feeds.activeFeedIsCat()) {
 
-						console.log(title + " " + getActiveFeedId());
+						console.log(title + " " + Feeds.getActiveFeedId());
 
-						const feed_id = activeFeedIsCat() ? 'CAT:' + parseInt(getActiveFeedId()) :
-							getActiveFeedId();
+						const feed_id = Feeds.activeFeedIsCat() ? 'CAT:' + parseInt(Feeds.getActiveFeedId()) :
+							Feeds.getActiveFeedId();
 
 						const rule = { reg_exp: title, feed_id: [feed_id], filter_type: 1 };
 
@@ -1024,12 +1051,13 @@ function unsubscribeFeed(feed_id, title) {
 			if (dijit.byId("feedEditDlg")) dijit.byId("feedEditDlg").hide();
 
 			if (inPreferences()) {
-				updateFeedList();
+				Feeds.reload();
 			} else {
-				if (feed_id == getActiveFeedId())
-					setTimeout(function() { viewfeed({feed:-5}) }, 100);
+				if (feed_id == Feeds.getActiveFeedId())
+					setTimeout(() => { Feeds.viewfeed({feed:-5}) },
+						100);
 
-				if (feed_id < 0) updateFeedList();
+				if (feed_id < 0) Feeds.reload();
 			}
 		});
 	}
@@ -1219,7 +1247,7 @@ function editFeed(feed) {
 				xhrPost("backend.php", dialog.attr('value'), () => {
 					dialog.hide();
 					notify('');
-					updateFeedList();
+					Feeds.reload();
 				});
 			}
 		},
@@ -1290,7 +1318,7 @@ function feedBrowser() {
 
 				xhrPost("backend.php", query, () => {
 					notify('');
-					updateFeedList();
+					Feeds.reload();
 				});
 
 			} else {
@@ -1375,7 +1403,7 @@ function showFeedsWithErrors() {
 					xhrPost("backend.php",	query, () => {
 						notify('');
 						dialog.hide();
-						updateFeedList();
+						Feeds.reload();
 					});
 				}
 
@@ -1397,22 +1425,6 @@ function showFeedsWithErrors() {
 function get_timestamp() {
 	const date = new Date();
 	return Math.round(date.getTime() / 1000);
-}
-
-function helpDialog(topic) {
-	const query = "backend.php?op=backend&method=help&topic=" + param_escape(topic);
-
-	if (dijit.byId("helpDlg"))
-		dijit.byId("helpDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "helpDlg",
-		title: __("Help"),
-		style: "width: 600px",
-		href: query,
-	});
-
-	dialog.show();
 }
 
 // noinspection JSUnusedGlobalSymbols

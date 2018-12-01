@@ -1174,7 +1174,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div style='float : right; padding-right : 4px;'>
 			<input dojoType=\"dijit.form.TextBox\" id=\"feed_search\" size=\"20\" type=\"search\"
 				value=\"$feed_search\">
-			<button dojoType=\"dijit.form.Button\" onclick=\"updateFeedList()\">".
+			<button dojoType=\"dijit.form.Button\" onclick=\"Feeds.reload()\">".
 				__('Search')."</button>
 			</div>";
 
@@ -1306,7 +1306,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print_warning("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.");
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return displayDlg('".__("Public OPML URL")."','pubOPMLUrl')\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Utils.displayDlg('".__("Public OPML URL")."','pubOPMLUrl')\">".
 			__('Display published OPML URL')."</button> ";
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB_SECTION,
@@ -1323,7 +1323,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<p>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return displayDlg('".__("View as RSS")."','generatedFeed', '$rss_url')\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Utils.displayDlg('".__("View as RSS")."','generatedFeed', '$rss_url')\">".
 			__('Display URL')."</button> ";
 
 		print "<button class=\"warning\" dojoType=\"dijit.form.Button\" onclick=\"return clearFeedAccessKeys()\">".
