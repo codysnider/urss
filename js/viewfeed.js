@@ -178,10 +178,11 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 	_infscroll_request_sent = 0;
 	_last_headlines_update = new Date().getTime();
 
-	unpackVisibleHeadlines();
+	// this is used to auto-catchup articles if needed after infscroll request has finished,
+	// unpack visible articles, etc
+	headlinesScrollHandler();
 
 	// if we have some more space in the buffer, why not try to fill it
-
 	if (!_infscroll_disable && $("headlines-spacer") &&
 			$("headlines-spacer").offsetTop < $("headlines-frame").offsetHeight) {
 
@@ -215,50 +216,6 @@ function render_article(article) {
 	} catch (e) { }
 }
 
-/*
-function showArticleInHeadlines(id, noexpand) {
-	const row = $("RROW-" + id);
-	if (!row) return;
-
-	if (!noexpand)
-		row.removeClassName("Unread");
-
-	row.addClassName("active");
-
-	selectArticles('none');
-
-	markHeadline(id);
-}
-
-function article_callback2(transport, id) {
-	console.log("article_callback2 " + id);
-
-	const reply = handle_rpc_json(transport);
-
-	if (reply) {
-
-		reply.each(function(article) {
-			if (getActiveArticleId() == article['id']) {
-				render_article(article['content']);
-			}
-			cids_requested.remove(article['id']);
-
-			cache_set("article:" + article['id'], article['content']);
-		});
-
-	} else {
-		console.error("Invalid object received: " + transport.responseText);
-
-		render_article("<div class='whiteBox'>" +
-				__('Could not display article (invalid object received - see error console for details)') + "</div>");
-	}
-
-	const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
-	request_counters(unread_in_buffer == 0);
-
-	notify("");
-}
-*/
 function view(id, noexpand) {
 	setActiveArticleId(id);
 
@@ -316,83 +273,10 @@ function view(id, noexpand) {
 	}
 
 	return false;
-
-/*	const oldrow = $("RROW-" + getActiveArticleId());
-	if (oldrow) oldrow.removeClassName("active");
-
-	const crow = $("RROW-" + id);
-
-	if (!crow) return;
-	if (noexpand) {
-		setActiveArticleId(id);
-		showArticleInHeadlines(id, noexpand);
-		return;
-	}
-
-	console.log("loading article: " + id);
-
-	const cached_article = cache_get("article:" + id);
-
-	console.log("cache check result: " + (cached_article != false));
-
-	const query = {op: "article", method: "view", id: id};
-
-	const neighbor_ids = getRelativePostIds(id);
-
-	/* only request uncached articles */
-
-/*	const cids_to_request = [];
-
-	for (let i = 0; i < neighbor_ids.length; i++) {
-		if (cids_requested.indexOf(neighbor_ids[i]) == -1)
-			if (!cache_get("article:" + neighbor_ids[i])) {
-				cids_to_request.push(neighbor_ids[i]);
-				cids_requested.push(neighbor_ids[i]);
-			}
-	}
-
-	console.log("additional ids: " + cids_to_request.toString());
-
-	query.cids = cids_to_request.toString();
-
-	const article_is_unread = crow.hasClassName("Unread");
-
-	setActiveArticleId(id);
-	showArticleInHeadlines(id);
-
-	if (cached_article && article_is_unread) {
-		query.mode = "prefetch";
-		render_article(cached_article);
-	} else if (cached_article) {
-		query.mode = "prefetch_old";
-		render_article(cached_article);
-
-		// if we don't need to request any relative ids, we might as well skip
-		// the server roundtrip altogether
-		if (cids_to_request.length == 0) {
-			return;
-		}
-	}
-
-	last_requested_article = id;
-
-	console.log(query);
-
-	if (article_is_unread) {
-		decrementFeedCounter(getActiveFeedId(), activeFeedIsCat());
-	}
-
-	xhrPost("backend.php", query, (transport) => {
-		article_callback2(transport, id);
-	})
-
-	return false;
-*/
 }
 
 function toggleMark(id, client_only) {
 	const query = { op: "rpc", id: id, method: "mark" };
-
 	const row = $("RROW-" + id);
 
 	if (row) {
@@ -526,27 +410,7 @@ function moveToPost(mode, noscroll, noexpand) {
 			}
 		}
 	}
-
 }
-
-/* function toggleSelected(id, force_on) {
-	const row = $("RROW-" + id);
-
-	if (row) {
-		const cb = dijit.getEnclosingWidget(
-				row.getElementsByClassName("rchk")[0]);
-
-		if (row.hasClassName('Selected') && !force_on) {
-			row.removeClassName('Selected');
-			if (cb) cb.attr("checked", false);
-		} else {
-			row.addClassName('Selected');
-			if (cb) cb.attr("checked", true);
-		}
-	}
-
-	updateSelectedPrompt();
-} */
 
 function updateSelectedPrompt() {
 	const count = getSelectedArticleIds2().length;
@@ -556,12 +420,8 @@ function updateSelectedPrompt() {
 		elem.innerHTML = ngettext("%d article selected",
 				"%d articles selected", count).replace("%d", count);
 
-		if (count > 0)
-			Element.show(elem);
-		else
-			Element.hide(elem);
+		count > 0 ? Element.show(elem) : Element.hide(elem);
 	}
-
 }
 
 function toggleUnread(id, cmode) {
@@ -721,8 +581,7 @@ function getSelectedArticleIds2() {
 			rv.push(child.getAttribute("data-article-id"));
 		});
 
-	// i wonder if this is a good idea: consider active article a honorary member
-	// of selected articles
+	// consider active article a honorary member of selected articles
 	if (getActiveArticleId())
 		rv.push(getActiveArticleId());
 
@@ -741,7 +600,6 @@ function getLoadedArticleIds() {
 	});
 
 	return rv;
-
 }
 
 // mode = all,none,unread,invert,marked,published
@@ -799,64 +657,7 @@ function selectArticles(mode) {
 	}
 }
 
-// mode = all,none,unread,invert,marked,published
-/* function selectArticles(mode, query) {
-	if (!query) query = "#headlines-frame > div[id*=RROW]";
-
-	const children = $$(query);
-
-	children.each(function(child) {
-		//const id = child.getAttribute("data-article-id");
-
-		const cb = dijit.getEnclosingWidget(
-				child.getElementsByClassName("rchk")[0]);
-
-		if (mode == "all") {
-			child.addClassName("Selected");
-			if (cb) cb.attr("checked", true);
-		} else if (mode == "unread") {
-			if (child.hasClassName("Unread")) {
-				child.addClassName("Selected");
-				if (cb) cb.attr("checked", true);
-			} else {
-				child.removeClassName("Selected");
-				if (cb) cb.attr("checked", false);
-			}
-		} else if (mode == "marked") {
-			if (child.hasClassName("marked")) {
-				child.addClassName("Selected");
-				if (cb) cb.attr("checked", true);
-			} else {
-				child.removeClassName("Selected");
-				if (cb) cb.attr("checked", false);
-			}
-		} else if (mode == "published") {
-			if (child.hasClassName("published")) {
-				child.addClassName("Selected");
-				if (cb) cb.attr("checked", true);
-			} else {
-				child.removeClassName("Selected");
-				if (cb) cb.attr("checked", false);
-			}
-
-		} else if (mode == "invert") {
-			if (child.hasClassName("Selected")) {
-				child.removeClassName("Selected");
-				if (cb) cb.attr("checked", false);
-			} else {
-				child.addClassName("Selected");
-				if (cb) cb.attr("checked", true);
-			}
-
-		} else {
-			child.removeClassName("Selected");
-			if (cb) cb.attr("checked", false);
-		}
-	});
-
-	updateSelectedPrompt();
-} */
-
+// noinspection JSUnusedGlobalSymbols
 function deleteSelection() {
 
 	const rows = getSelectedArticleIds2();
@@ -890,6 +691,7 @@ function deleteSelection() {
 	});
 }
 
+// noinspection JSUnusedGlobalSymbols
 function archiveSelection() {
 
 	const rows = getSelectedArticleIds2();
@@ -908,7 +710,6 @@ function archiveSelection() {
 		op = "archive";
 	} else {
 		str = ngettext("Move %d archived article back?", "Move %d archived articles back?", rows.length);
-
 		str += " " + __("Please note that unstarred articles might get purged on next feed update.");
 
 		op = "unarchive";
@@ -968,8 +769,6 @@ function editArticleTags(id) {
 		style: "width: 600px",
 		execute: function() {
 			if (this.validate()) {
-				const query = dojo.objectToQuery(this.attr('value'));
-
 				notify_progress("Saving article tags...", true);
 
 				xhrPost("backend.php", this.attr('value'), (transport) => {
@@ -997,7 +796,7 @@ function editArticleTags(id) {
 		href: query
 	});
 
-	var tmph = dojo.connect(dialog, 'onLoad', function() {
+	const tmph = dojo.connect(dialog, 'onLoad', function() {
 		dojo.disconnect(tmph);
 
 		new Ajax.Autocompleter('tags_str', 'tags_choices',
@@ -1021,17 +820,10 @@ function cdmScrollToArticleId(id, force) {
 		// expanded cdm has a 4px margin now
 		ctr.scrollTop = parseInt(e.offsetTop) - 4;
 
-		/*setActiveArticleId(id);
-
-		// article is selected manually, set it read
-		toggleUnread(id, 0); */
-
 		Element.hide("floatingTitle");
 	}
 }
 
-// for the time being active article does not affect buffer selection (we still re/set the checkbox
-// because of getSelectedArticleIds2() hack
 function setActiveArticleId(id) {
 	console.log("setActiveArticleId", id);
 
@@ -1042,7 +834,7 @@ function setActiveArticleId(id) {
 			const cb = dijit.getEnclosingWidget(e.select(".rchk")[0]);
 			if (cb) cb.attr("checked", false);
 		}
-	})
+	});
 
 	_active_article_id = id;
 
@@ -1059,10 +851,13 @@ function setActiveArticleId(id) {
 		}
 
 		if (row.hasClassName("Unread")) {
-			toggleUnread(id, 0);
 
-			decrementFeedCounter(getActiveFeedId(), activeFeedIsCat());
-			updateFloatingTitle(true);
+			catchupBatchedArticles(() => {
+				decrementFeedCounter(getActiveFeedId(), activeFeedIsCat());
+				toggleUnread(id, 0);
+				updateFloatingTitle(true);
+			});
+
 		}
 
 		row.addClassName("active");
@@ -1090,7 +885,7 @@ function postMouseOut(id) {
 	post_under_pointer = false;
 }
 
-function unpackVisibleHeadlines() {
+function unpackVisibleArticles() {
 	if (!isCombinedMode() || !getInitParam("cdm_expanded")) return;
 
 	const rows = $$("#headlines-frame div[id*=RROW][data-content]");
@@ -1106,20 +901,15 @@ function unpackVisibleHeadlines() {
 			row.removeAttribute("data-content");
 
 			PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
-
-			// i wonder if this is a good idea?
-			//if (!getActiveArticleId() && !row.hasClassName("Unread"))
-			//	setActiveArticleId(row.getAttribute("data-article-id"));
-
 		} else {
 			break;
 		}
 	}
 }
 
-function headlinesScrollHandler(event) {
+function headlinesScrollHandler(/* event */) {
 	try {
-		unpackVisibleHeadlines();
+		unpackVisibleArticles();
 
 		if (isCombinedMode()) {
 			updateFloatingTitle();
@@ -1158,7 +948,7 @@ function headlinesScrollHandler(event) {
 			}
 		}
 
-		if (getInitParam("cdm_auto_catchup") == 1) {
+		if (getInitParam("cdm_auto_catchup") == 1 && !_infscroll_request_sent) {
 
 			let rows = $$("#headlines-frame > div[id*=RROW][class*=Unread]");
 
@@ -1166,7 +956,6 @@ function headlinesScrollHandler(event) {
 				const row = rows[i];
 
 				if ($("headlines-frame").scrollTop > (row.offsetTop + row.offsetHeight/2)) {
-
 					const id = row.getAttribute("data-article-id")
 
 					if (catchup_id_batch.indexOf(id) == -1)
@@ -1202,10 +991,10 @@ function openNextUnreadFeed() {
 	if (nuf) viewfeed({feed: nuf, is_cat: is_cat});
 }
 
-function catchupBatchedArticles() {
-	if (catchup_id_batch.length > 0 && !_infscroll_request_sent && !_catchup_request_sent) {
+function catchupBatchedArticles(callback) {
+	console.log("catchupBatchedArticles, size=", catchup_id_batch.length);
 
-		console.log("catchupBatchedArticles, size=", catchup_id_batch.length);
+	if (catchup_id_batch.length > 0 /* && !_infscroll_request_sent */ && !_catchup_request_sent) {
 
 		// make a copy of the array
 		const batch = catchup_id_batch.slice();
@@ -1230,7 +1019,11 @@ function catchupBatchedArticles() {
 			}
 
 			updateFloatingTitle(true);
+
+			if (callback) callback();
 		});
+	} else {
+		if (callback) callback();
 	}
 }
 
