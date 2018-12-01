@@ -1,5 +1,6 @@
 <?php
 class Debug {
+	public static $LOG_DISABLED = -1;
     public static $LOG_NORMAL = 0;
     public static $LOG_VERBOSE = 1;
     public static $LOG_EXTENDED = 2;
@@ -9,7 +10,7 @@ class Debug {
     private static $logfile = false;
     private static $loglevel = 0;
 
-    public static function set_logfile($logfile) {
+	public static function set_logfile($logfile) {
         Debug::$logfile = $logfile;
     }
 

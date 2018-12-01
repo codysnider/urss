@@ -117,7 +117,6 @@
 	}
 
 	Debug::set_enabled(true);
-	Debug::set_quiet(isset($options['quiet']));
 
 	if (isset($options["log-level"])) {
 	    Debug::set_loglevel((int)$options["log-level"]);
@@ -126,6 +125,11 @@
 	if (isset($options["log"])) {
 		Debug::set_logfile($options["log"]);
         Debug::log("Logging to " . $options["log"]);
+		Debug::set_quiet(isset($options['quiet']));
+    } else {
+	    if (isset($options['quiet'])) {
+			Debug::set_loglevel(Debug::$LOG_DISABLED);
+        }
     }
 
 	if (!isset($options["daemon"])) {
