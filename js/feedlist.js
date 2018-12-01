@@ -6,6 +6,7 @@ const Feeds = {
 	infscroll_disabled: 0,
 	_infscroll_timeout: false,
 	_search_query: false,
+	last_search_query: [],
 	_viewfeed_wait_timeout: false,
 	_counters_prev: [],
 	// NOTE: this implementation is incomplete
@@ -206,7 +207,7 @@ const Feeds = {
 
 		Utils.setLoadingProgress(50);
 
-		document.onkeydown = App.hotkeyHandler;
+		document.onkeydown = () => { App.hotkeyHandler(event) };
 		window.setInterval(() => { hotkeyPrefixTimeout() }, 3 * 1000);
 		window.setInterval(() => { Headlines.catchupBatchedArticles() }, 10 * 1000);
 
@@ -436,7 +437,7 @@ const Feeds = {
 				str = __("Mark %w in %s as read?");
 		}
 
-		const mark_what = last_search_query && last_search_query[0] ? __("search results") : __("all articles");
+		const mark_what = this.last_search_query && this.last_search_query[0] ? __("search results") : __("all articles");
 		const fn = this.getFeedName(feed, is_cat);
 
 		str = str.replace("%s", fn)
@@ -448,8 +449,8 @@ const Feeds = {
 
 		const catchup_query = {
 			op: 'rpc', method: 'catchupFeed', feed_id: feed,
-			is_cat: is_cat, mode: mode, search_query: last_search_query[0],
-			search_lang: last_search_query[1]
+			is_cat: is_cat, mode: mode, search_query: this.last_search_query[0],
+			search_lang: this.last_search_query[1]
 		};
 
 		notify_progress("Loading, please wait...", true);

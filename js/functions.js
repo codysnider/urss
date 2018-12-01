@@ -1025,7 +1025,7 @@ function uploadIconHandler(rc) {
 	switch (rc) {
 		case 0:
 			notify_info("Upload complete.");
-			if (inPreferences()) {
+			if (App.isPrefs()) {
 				Feeds.reload();
 			} else {
 				setTimeout('Feeds.reload(false, false)', 50);
@@ -1050,7 +1050,7 @@ function removeFeedIcon(id) {
 
 		xhrPost("backend.php", query, (transport) => {
 			notify_info("Feed icon removed.");
-			if (inPreferences()) {
+			if (App.isPrefs()) {
 				Feeds.reload();
 			} else {
 				setTimeout('Feeds.reload(false, false)', 50);
@@ -1090,7 +1090,7 @@ function addLabel(select, callback) {
 		xhrPost("backend.php", query, (transport) => {
 			if (callback) {
 				callback(transport);
-			} else if (inPreferences()) {
+			} else if (App.isPrefs()) {
 				updateLabelList();
 			} else {
 				Feeds.reload();
@@ -1317,7 +1317,7 @@ function editFilterTest(query) {
 function quickAddFilter() {
 	let query;
 
-	if (!inPreferences()) {
+	if (!App.isPrefs()) {
 		query = { op: "pref-filters", method: "newfilter",
 			feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat() };
 	} else {
@@ -1385,7 +1385,7 @@ function quickAddFilter() {
 				const query = dojo.formToQuery("filter_new_form");
 
 				xhrPost("backend.php", query, (transport) => {
-					if (inPreferences()) {
+					if (App.isPrefs()) {
 						updateFilterList();
 					}
 
@@ -1395,7 +1395,7 @@ function quickAddFilter() {
 		},
 		href: "backend.php?" + dojo.objectToQuery(query)});
 
-	if (!inPreferences()) {
+	if (!App.isPrefs()) {
 		const selectedText = getSelectionText();
 
 		const lh = dojo.connect(dialog, "onLoad", function(){
@@ -1453,7 +1453,7 @@ function unsubscribeFeed(feed_id, title) {
 		xhrPost("backend.php", query, (transport) => {
 			if (dijit.byId("feedEditDlg")) dijit.byId("feedEditDlg").hide();
 
-			if (inPreferences()) {
+			if (App.isPrefs()) {
 				Feeds.reload();
 			} else {
 				if (feed_id == Feeds.getActiveFeedId())

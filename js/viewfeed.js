@@ -1,8 +1,5 @@
 /* global dijit, __, ngettext */
 
-let post_under_pointer = false;
-let last_search_query;
-
 const ArticleCache = {
 	has_storage: 'sessionStorage' in window && window['sessionStorage'] !== null,
 	set: function(id, obj) {
@@ -118,7 +115,7 @@ const Article = {
 		c.attr('content', article);
 		PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED, c.domNode);
 
-		correctHeadlinesOffset(Article.getActiveArticleId());
+		Headlines.correctHeadlinesOffset(Article.getActiveArticleId());
 
 		try {
 			c.focus();
@@ -126,7 +123,7 @@ const Article = {
 		}
 	},
 	view: function(id, noexpand) {
-		Article.setActiveArticleId(id);
+		this.setActiveArticleId(id);
 
 		if (!noexpand) {
 			console.log("loading article", id);
@@ -135,7 +132,7 @@ const Article = {
 
 			/* only request uncached articles */
 
-			getRelativePostIds(id).each((n) => {
+			this.getRelativePostIds(id).each((n) => {
 				if (!ArticleCache.get(n))
 					cids.push(n);
 			});
@@ -313,6 +310,49 @@ const Article = {
 	},
 	getActiveArticleId: function() {
 		return this._active_article_id;
+	},
+	scrollArticle: function(offset) {
+		if (!App.isCombinedMode()) {
+			const ci = $("content-insert");
+			if (ci) {
+				ci.scrollTop += offset;
+			}
+		} else {
+			const hi = $("headlines-frame");
+			if (hi) {
+				hi.scrollTop += offset;
+			}
+
+		}
+	},
+	getRelativePostIds: function(id, limit) {
+
+		const tmp = [];
+
+		if (!limit) limit = 6; //3
+
+		const ids = Headlines.getLoadedArticleIds();
+
+		for (let i = 0; i < ids.length; i++) {
+			if (ids[i] == id) {
+				for (let k = 1; k <= limit; k++) {
+					//if (i > k-1) tmp.push(ids[i-k]);
+					if (i < ids.length - k) tmp.push(ids[i + k]);
+				}
+				break;
+			}
+		}
+
+		return tmp;
+	},
+	mouseIn: function(id) {
+		this.post_under_pointer = id;
+	},
+	mouseOut: function(id) {
+		this.post_under_pointer = false;
+	},
+	getArticleUnderPointer: function() {
+		return this.post_under_pointer;
 	}
 };
 
@@ -485,7 +525,7 @@ const Headlines = {
 						ft.firstChild.innerHTML = "<img class='anchor marked-pic' src='images/page_white_go.png' " +
 							"onclick=\"Article.cdmScrollToArticleId(" + id + ", true)\">" + ft.firstChild.innerHTML;
 
-						initFloatingMenu();
+						this.initFloatingMenu();
 
 						const cb = ft.select(".rchk")[0];
 
@@ -546,7 +586,7 @@ const Headlines = {
 
 			is_cat = reply['headlines']['is_cat'];
 			feed_id = reply['headlines']['id'];
-			last_search_query = reply['headlines']['search_query'];
+			Feeds.last_search_query = reply['headlines']['search_query'];
 
 			if (feed_id != -7 && (feed_id != Feeds.getActiveFeedId() || is_cat != Feeds.activeFeedIsCat()))
 				return;
@@ -602,7 +642,7 @@ const Headlines = {
 				if (!hsp) hsp = new Element("DIV", {"id": "headlines-spacer"});
 				dijit.byId('headlines-frame').domNode.appendChild(hsp);
 
-				initHeadlinesMenu();
+				this.initHeadlinesMenu();
 
 				if (Feeds.infscroll_disabled)
 					hsp.innerHTML = "<a href='#' onclick='Feeds.openNextUnreadFeed()'>" +
@@ -646,7 +686,7 @@ const Headlines = {
 					markHeadline(ids[i]);
 				} */
 
-				initHeadlinesMenu();
+				this.initHeadlinesMenu();
 
 				if (Feeds.infscroll_disabled) {
 					hsp.innerHTML = "<a href='#' onclick='Feeds.openNextUnreadFeed()'>" +
@@ -894,7 +934,7 @@ const Headlines = {
 					if (!noscroll && article && article.offsetTop + article.offsetHeight >
 						ctr.scrollTop + ctr.offsetHeight) {
 
-						scrollArticle(ctr.offsetHeight / 4);
+						Article.scrollArticle(ctr.offsetHeight / 4);
 
 					} else if (next_id) {
 						Article.setActiveArticleId(next_id);
@@ -902,7 +942,7 @@ const Headlines = {
 					}
 
 				} else if (next_id) {
-					correctHeadlinesOffset(next_id);
+					Headlines.correctHeadlinesOffset(next_id);
 					Article.view(next_id, noexpand);
 				}
 			}
@@ -917,17 +957,17 @@ const Headlines = {
 					const ctr = $("headlines-frame");
 
 					if (!noscroll && article && article.offsetTop < ctr.scrollTop) {
-						scrollArticle(-ctr.offsetHeight / 3);
+						Article.scrollArticle(-ctr.offsetHeight / 3);
 					} else if (!noscroll && prev_article &&
 						prev_article.offsetTop < ctr.scrollTop) {
-						scrollArticle(-ctr.offsetHeight / 4);
+						Article.scrollArticle(-ctr.offsetHeight / 4);
 					} else if (prev_id) {
 						Article.setActiveArticleId(prev_id);
 						Article.cdmScrollToArticleId(prev_id, noscroll);
 					}
 
 				} else if (prev_id) {
-					correctHeadlinesOffset(prev_id);
+					Headlines.correctHeadlinesOffset(prev_id);
 					Article.view(prev_id, noexpand);
 				}
 			}
@@ -986,7 +1026,7 @@ const Headlines = {
 
 		xhrPost("backend.php", query, (transport) => {
 			Utils.handleRpcJson(transport);
-			updateHeadlineLabels(transport);
+			this.onLabelsUpdated(transport);
 		});
 	},
 	selectionAssignLabel: function(id, ids) {
@@ -1004,7 +1044,7 @@ const Headlines = {
 
 		xhrPost("backend.php", query, (transport) => {
 			Utils.handleRpcJson(transport);
-			updateHeadlineLabels(transport);
+			this.onLabelsUpdated(transport);
 		});
 	},
 	deleteSelection: function() {
@@ -1212,362 +1252,306 @@ const Headlines = {
 		} else {
 			if (callback) callback();
 		}
-	}
-};
+	},
+	catchupRelativeToArticle: function(below, id) {
 
-function postMouseIn(e, id) {
-	post_under_pointer = id;
-}
+		if (!id) id = Article.getActiveArticleId();
 
-function postMouseOut(id) {
-	post_under_pointer = false;
-}
+		if (!id) {
+			alert(__("No article is selected."));
+			return;
+		}
 
-function catchupRelativeToArticle(below, id) {
+		const visible_ids = this.getLoadedArticleIds();
 
-	if (!id) id = Article.getActiveArticleId();
+		const ids_to_mark = [];
 
-	if (!id) {
-		alert(__("No article is selected."));
-		return;
-	}
+		if (!below) {
+			for (let i = 0; i < visible_ids.length; i++) {
+				if (visible_ids[i] != id) {
+					const e = $("RROW-" + visible_ids[i]);
 
-	const visible_ids = Headlines.getLoadedArticleIds();
-
-	const ids_to_mark = [];
-
-	if (!below) {
-		for (let i = 0; i < visible_ids.length; i++) {
-			if (visible_ids[i] != id) {
-				const e = $("RROW-" + visible_ids[i]);
-
-				if (e && e.hasClassName("Unread")) {
-					ids_to_mark.push(visible_ids[i]);
+					if (e && e.hasClassName("Unread")) {
+						ids_to_mark.push(visible_ids[i]);
+					}
+				} else {
+					break;
 				}
-			} else {
-				break;
+			}
+		} else {
+			for (let i = visible_ids.length - 1; i >= 0; i--) {
+				if (visible_ids[i] != id) {
+					const e = $("RROW-" + visible_ids[i]);
+
+					if (e && e.hasClassName("Unread")) {
+						ids_to_mark.push(visible_ids[i]);
+					}
+				} else {
+					break;
+				}
 			}
 		}
-	} else {
-		for (let i = visible_ids.length - 1; i >= 0; i--) {
-			if (visible_ids[i] != id) {
-				const e = $("RROW-" + visible_ids[i]);
 
-				if (e && e.hasClassName("Unread")) {
-					ids_to_mark.push(visible_ids[i]);
+		if (ids_to_mark.length == 0) {
+			alert(__("No articles found to mark"));
+		} else {
+			const msg = ngettext("Mark %d article as read?", "Mark %d articles as read?", ids_to_mark.length).replace("%d", ids_to_mark.length);
+
+			if (getInitParam("confirm_feed_catchup") != 1 || confirm(msg)) {
+
+				for (var i = 0; i < ids_to_mark.length; i++) {
+					var e = $("RROW-" + ids_to_mark[i]);
+					e.removeClassName("Unread");
 				}
-			} else {
-				break;
+
+				const query = {
+					op: "rpc", method: "catchupSelected",
+					cmode: 0, ids: ids_to_mark.toString()
+				};
+
+				xhrPost("backend.php", query, (transport) => {
+					Utils.handleRpcJson(transport);
+				});
 			}
 		}
-	}
+	},
+	onLabelsUpdated: function(transport) {
+		const data = JSON.parse(transport.responseText);
 
-	if (ids_to_mark.length == 0) {
-		alert(__("No articles found to mark"));
-	} else {
-		const msg = ngettext("Mark %d article as read?", "Mark %d articles as read?", ids_to_mark.length).replace("%d", ids_to_mark.length);
-
-		if (getInitParam("confirm_feed_catchup") != 1 || confirm(msg)) {
-
-			for (var i = 0; i < ids_to_mark.length; i++) {
-				var e = $("RROW-" + ids_to_mark[i]);
-				e.removeClassName("Unread");
-			}
-
-			const query = { op: "rpc", method: "catchupSelected",
-				cmode: 0, ids: ids_to_mark.toString() };
-
-			xhrPost("backend.php", query, (transport) => {
-				Utils.handleRpcJson(transport);
+		if (data) {
+			data['info-for-headlines'].each(function (elem) {
+				$$(".HLLCTR-" + elem.id).each(function (ctr) {
+					ctr.innerHTML = elem.labels;
+				});
 			});
 		}
-	}
-}
+	},
+	onActionChanged: function(elem) {
+		eval(elem.value);
+		elem.attr('value', 'false');
+	},
+	correctHeadlinesOffset: function(id) {
+		const container = $("headlines-frame");
+		const row = $("RROW-" + id);
 
-function getArticleUnderPointer() {
-	return post_under_pointer;
-}
+		if (!container || !row) return;
 
-function scrollArticle(offset) {
-	if (!App.isCombinedMode()) {
-		const ci = $("content-insert");
-		if (ci) {
-			ci.scrollTop += offset;
+		const viewport = container.offsetHeight;
+
+		const rel_offset_top = row.offsetTop - container.scrollTop;
+		const rel_offset_bottom = row.offsetTop + row.offsetHeight - container.scrollTop;
+
+		//console.log("Rtop: " + rel_offset_top + " Rbtm: " + rel_offset_bottom);
+		//console.log("Vport: " + viewport);
+
+		if (rel_offset_top <= 0 || rel_offset_top > viewport) {
+			container.scrollTop = row.offsetTop;
+		} else if (rel_offset_bottom > viewport) {
+			container.scrollTop = row.offsetTop + row.offsetHeight - viewport;
 		}
-	} else {
-		const hi = $("headlines-frame");
-		if (hi) {
-			hi.scrollTop += offset;
-		}
+	},
+	initFloatingMenu: function() {
+		if (!dijit.byId("floatingMenu")) {
 
-	}
-}
-
-function updateHeadlineLabels(transport) {
-	const data = JSON.parse(transport.responseText);
-
-	if (data) {
-		data['info-for-headlines'].each(function (elem) {
-			$$(".HLLCTR-" + elem.id).each(function (ctr) {
-				ctr.innerHTML = elem.labels;
+			const menu = new dijit.Menu({
+				id: "floatingMenu",
+				targetNodeIds: ["floatingTitle"]
 			});
-		});
-	}
-}
 
-function getRelativePostIds(id, limit) {
+			this.headlinesMenuCommon(menu);
 
-	const tmp = [];
+			menu.startup();
+		}
+	},
+	headlinesMenuCommon: function(menu) {
 
-	if (!limit) limit = 6; //3
-
-	const ids = Headlines.getLoadedArticleIds();
-
-	for (let i = 0; i < ids.length; i++) {
-		if (ids[i] == id) {
-			for (let k = 1; k <= limit; k++) {
-				//if (i > k-1) tmp.push(ids[i-k]);
-				if (i < ids.length - k) tmp.push(ids[i + k]);
+		menu.addChild(new dijit.MenuItem({
+			label: __("Open original article"),
+			onClick: function (event) {
+				Article.openArticleInNewWindow(this.getParent().currentTarget.getAttribute("data-article-id"));
 			}
-			break;
-		}
-	}
+		}));
 
-	return tmp;
-}
-
-function correctHeadlinesOffset(id) {
-	const container = $("headlines-frame");
-	const row = $("RROW-" + id);
-
-	if (!container || !row) return;
-
-	const viewport = container.offsetHeight;
-
-	const rel_offset_top = row.offsetTop - container.scrollTop;
-	const rel_offset_bottom = row.offsetTop + row.offsetHeight - container.scrollTop;
-
-	//console.log("Rtop: " + rel_offset_top + " Rbtm: " + rel_offset_bottom);
-	//console.log("Vport: " + viewport);
-
-	if (rel_offset_top <= 0 || rel_offset_top > viewport) {
-		container.scrollTop = row.offsetTop;
-	} else if (rel_offset_bottom > viewport) {
-		container.scrollTop = row.offsetTop + row.offsetHeight - viewport;
-	}
-}
-
-function headlineActionsChange(elem) {
-	eval(elem.value);
-	elem.attr('value', 'false');
-}
-
-function initFloatingMenu() {
-	if (!dijit.byId("floatingMenu")) {
-
-		const menu = new dijit.Menu({
-			id: "floatingMenu",
-			targetNodeIds: ["floatingTitle"]
-		});
-
-		headlinesMenuCommon(menu);
-
-		menu.startup();
-	}
-}
-
-function headlinesMenuCommon(menu) {
-
-	menu.addChild(new dijit.MenuItem({
-		label: __("Open original article"),
-		onClick: function (event) {
-			Article.openArticleInNewWindow(this.getParent().currentTarget.getAttribute("data-article-id"));
-		}
-	}));
-
-	menu.addChild(new dijit.MenuItem({
-		label: __("Display article URL"),
-		onClick: function (event) {
-			Article.displayArticleUrl(this.getParent().currentTarget.getAttribute("data-article-id"));
-		}
-	}));
-
-	menu.addChild(new dijit.MenuSeparator());
-
-	menu.addChild(new dijit.MenuItem({
-		label: __("Toggle unread"),
-		onClick: function () {
-
-			let ids = Headlines.getSelectedArticleIds2();
-			// cast to string
-			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
-			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
-
-			Headlines.selectionToggleUnread({ids: ids, no_error: 1});
-		}
-	}));
-
-	menu.addChild(new dijit.MenuItem({
-		label: __("Toggle starred"),
-		onClick: function () {
-			let ids = Headlines.getSelectedArticleIds2();
-			// cast to string
-			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
-			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
-
-			Headlines.selectionToggleMarked(ids);
-		}
-	}));
-
-	menu.addChild(new dijit.MenuItem({
-		label: __("Toggle published"),
-		onClick: function () {
-			let ids = Headlines.getSelectedArticleIds2();
-			// cast to string
-			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
-			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
-
-			Headlines.selectionTogglePublished(ids);
-		}
-	}));
-
-	menu.addChild(new dijit.MenuSeparator());
-
-	menu.addChild(new dijit.MenuItem({
-		label: __("Mark above as read"),
-		onClick: function () {
-			catchupRelativeToArticle(0, this.getParent().currentTarget.getAttribute("data-article-id"));
-		}
-	}));
-
-	menu.addChild(new dijit.MenuItem({
-		label: __("Mark below as read"),
-		onClick: function () {
-			catchupRelativeToArticle(1, this.getParent().currentTarget.getAttribute("data-article-id"));
-		}
-	}));
-
-
-	const labels = getInitParam("labels");
-
-	if (labels && labels.length) {
+		menu.addChild(new dijit.MenuItem({
+			label: __("Display article URL"),
+			onClick: function (event) {
+				Article.displayArticleUrl(this.getParent().currentTarget.getAttribute("data-article-id"));
+			}
+		}));
 
 		menu.addChild(new dijit.MenuSeparator());
 
-		const labelAddMenu = new dijit.Menu({ownerMenu: menu});
-		const labelDelMenu = new dijit.Menu({ownerMenu: menu});
+		menu.addChild(new dijit.MenuItem({
+			label: __("Toggle unread"),
+			onClick: function () {
 
-		labels.each(function (label) {
-			const bare_id = label.id;
-			const name = label.caption;
+				let ids = Headlines.getSelectedArticleIds2();
+				// cast to string
+				const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
+				ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
-			labelAddMenu.addChild(new dijit.MenuItem({
-				label: name,
-				labelId: bare_id,
-				onClick: function () {
+				Headlines.selectionToggleUnread({ids: ids, no_error: 1});
+			}
+		}));
 
-					let ids = Headlines.getSelectedArticleIds2();
-					// cast to string
-					const id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
+		menu.addChild(new dijit.MenuItem({
+			label: __("Toggle starred"),
+			onClick: function () {
+				let ids = Headlines.getSelectedArticleIds2();
+				// cast to string
+				const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
+				ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
-					ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
+				Headlines.selectionToggleMarked(ids);
+			}
+		}));
 
-					Headlines.selectionAssignLabel(this.labelId, ids);
+		menu.addChild(new dijit.MenuItem({
+			label: __("Toggle published"),
+			onClick: function () {
+				let ids = Headlines.getSelectedArticleIds2();
+				// cast to string
+				const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
+				ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
+
+				Headlines.selectionTogglePublished(ids);
+			}
+		}));
+
+		menu.addChild(new dijit.MenuSeparator());
+
+		menu.addChild(new dijit.MenuItem({
+			label: __("Mark above as read"),
+			onClick: function () {
+				Headlines.catchupRelativeToArticle(0, this.getParent().currentTarget.getAttribute("data-article-id"));
+			}
+		}));
+
+		menu.addChild(new dijit.MenuItem({
+			label: __("Mark below as read"),
+			onClick: function () {
+				Headlines.catchupRelativeToArticle(1, this.getParent().currentTarget.getAttribute("data-article-id"));
+			}
+		}));
+
+
+		const labels = getInitParam("labels");
+
+		if (labels && labels.length) {
+
+			menu.addChild(new dijit.MenuSeparator());
+
+			const labelAddMenu = new dijit.Menu({ownerMenu: menu});
+			const labelDelMenu = new dijit.Menu({ownerMenu: menu});
+
+			labels.each(function (label) {
+				const bare_id = label.id;
+				const name = label.caption;
+
+				labelAddMenu.addChild(new dijit.MenuItem({
+					label: name,
+					labelId: bare_id,
+					onClick: function () {
+
+						let ids = Headlines.getSelectedArticleIds2();
+						// cast to string
+						const id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
+
+						ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
+
+						Headlines.selectionAssignLabel(this.labelId, ids);
+					}
+				}));
+
+				labelDelMenu.addChild(new dijit.MenuItem({
+					label: name,
+					labelId: bare_id,
+					onClick: function () {
+						let ids = Headlines.getSelectedArticleIds2();
+						// cast to string
+						const id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
+
+						ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
+
+						Headlines.selectionRemoveLabel(this.labelId, ids);
+					}
+				}));
+
+			});
+
+			menu.addChild(new dijit.PopupMenuItem({
+				label: __("Assign label"),
+				popup: labelAddMenu
+			}));
+
+			menu.addChild(new dijit.PopupMenuItem({
+				label: __("Remove label"),
+				popup: labelDelMenu
+			}));
+
+		}
+	},
+	initHeadlinesMenu: function() {
+		if (!dijit.byId("headlinesMenu")) {
+
+			const menu = new dijit.Menu({
+				id: "headlinesMenu",
+				targetNodeIds: ["headlines-frame"],
+				selector: ".hlMenuAttach"
+			});
+
+			this.headlinesMenuCommon(menu);
+
+			menu.startup();
+		}
+
+		/* vgroup feed title menu */
+
+		if (!dijit.byId("headlinesFeedTitleMenu")) {
+
+			const menu = new dijit.Menu({
+				id: "headlinesFeedTitleMenu",
+				targetNodeIds: ["headlines-frame"],
+				selector: "div.cdmFeedTitle"
+			});
+
+			menu.addChild(new dijit.MenuItem({
+				label: __("Select articles in group"),
+				onClick: function (event) {
+					Headlines.selectArticles("all",
+						"#headlines-frame > div[id*=RROW]" +
+						"[data-orig-feed-id='" + this.getParent().currentTarget.getAttribute("data-feed-id") + "']");
+
 				}
 			}));
 
-			labelDelMenu.addChild(new dijit.MenuItem({
-				label: name,
-				labelId: bare_id,
+			menu.addChild(new dijit.MenuItem({
+				label: __("Mark group as read"),
 				onClick: function () {
-					let ids = Headlines.getSelectedArticleIds2();
-					// cast to string
-					const id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
+					Headlines.selectArticles("none");
+					Headlines.selectArticles("all",
+						"#headlines-frame > div[id*=RROW]" +
+						"[data-orig-feed-id='" + this.getParent().currentTarget.getAttribute("data-feed-id") + "']");
 
-					ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
-
-					Headlines.selectionRemoveLabel(this.labelId, ids);
+					Headlines.catchupSelection();
 				}
 			}));
 
-		});
+			menu.addChild(new dijit.MenuItem({
+				label: __("Mark feed as read"),
+				onClick: function () {
+					Feeds.catchupFeedInGroup(this.getParent().currentTarget.getAttribute("data-feed-id"));
+				}
+			}));
 
-		menu.addChild(new dijit.PopupMenuItem({
-			label: __("Assign label"),
-			popup: labelAddMenu
-		}));
+			menu.addChild(new dijit.MenuItem({
+				label: __("Edit feed"),
+				onClick: function () {
+					editFeed(this.getParent().currentTarget.getAttribute("data-feed-id"));
+				}
+			}));
 
-		menu.addChild(new dijit.PopupMenuItem({
-			label: __("Remove label"),
-			popup: labelDelMenu
-		}));
-
+			menu.startup();
+		}
 	}
-}
-
-function initHeadlinesMenu() {
-	if (!dijit.byId("headlinesMenu")) {
-
-		const menu = new dijit.Menu({
-			id: "headlinesMenu",
-			targetNodeIds: ["headlines-frame"],
-			selector: ".hlMenuAttach"
-		});
-
-		headlinesMenuCommon(menu);
-
-		menu.startup();
-	}
-
-	/* vgroup feed title menu */
-
-	if (!dijit.byId("headlinesFeedTitleMenu")) {
-
-		const menu = new dijit.Menu({
-			id: "headlinesFeedTitleMenu",
-			targetNodeIds: ["headlines-frame"],
-			selector: "div.cdmFeedTitle"
-		});
-
-		menu.addChild(new dijit.MenuItem({
-			label: __("Select articles in group"),
-			onClick: function (event) {
-				Headlines.selectArticles("all",
-					"#headlines-frame > div[id*=RROW]" +
-					"[data-orig-feed-id='" + this.getParent().currentTarget.getAttribute("data-feed-id") + "']");
-
-			}
-		}));
-
-		menu.addChild(new dijit.MenuItem({
-			label: __("Mark group as read"),
-			onClick: function () {
-				Headlines.selectArticles("none");
-				Headlines.selectArticles("all",
-					"#headlines-frame > div[id*=RROW]" +
-					"[data-orig-feed-id='" + this.getParent().currentTarget.getAttribute("data-feed-id") + "']");
-
-				Headlines.catchupSelection();
-			}
-		}));
-
-		menu.addChild(new dijit.MenuItem({
-			label: __("Mark feed as read"),
-			onClick: function () {
-				Feeds.catchupFeedInGroup(this.getParent().currentTarget.getAttribute("data-feed-id"));
-			}
-		}));
-
-		menu.addChild(new dijit.MenuItem({
-			label: __("Edit feed"),
-			onClick: function () {
-				editFeed(this.getParent().currentTarget.getAttribute("data-feed-id"));
-			}
-		}));
-
-		menu.startup();
-	}
-}
-
-
-
+};

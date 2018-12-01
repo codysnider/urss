@@ -95,7 +95,7 @@ class Feeds extends Handler_Protected {
 		$reply .= "</span> "; */
 
 		$reply .= "<select dojoType=\"dijit.form.Select\"
-			onchange=\"headlineActionsChange(this)\">";
+			onchange=\"Headlines.onActionChanged(this)\">";
 
 		$reply .= "<option value=\"0\" disabled='1'>".__('Select...')."</option>";
 
@@ -299,7 +299,7 @@ class Feeds extends Handler_Protected {
 				$label_cache = $line["label_cache"];
 				$labels = false;
 
-				$mouseover_attrs = "onmouseover='postMouseIn(event, $id)' onmouseout='postMouseOut($id)'";
+				$mouseover_attrs = "onmouseover='Article.mouseIn($id)' onmouseout='Article.mouseOut($id)'";
 
 				if ($label_cache) {
 					$label_cache = json_decode($label_cache, true);

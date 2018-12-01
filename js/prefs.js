@@ -65,7 +65,7 @@ const App = {
 		});
 	},
 	initSecondStage: function() {
-		document.onkeydown = this.hotkeyHandler;
+		document.onkeydown = () => { App.hotkeyHandler(event) };
 		Utils.setLoadingProgress(50);
 		notify("");
 
@@ -111,8 +111,11 @@ const App = {
 					console.log("unhandled action: " + action_name + "; keycode: " + event.which);
 			}
 		}
+	},
+	isPrefs: function() {
+		return true;
 	}
-}
+};
 
 function notify_callback2(transport, sticky) {
 	notify_info(transport.responseText, sticky);
@@ -907,10 +910,6 @@ function labelColorReset() {
 	} else {
 		alert(__("No labels are selected."));
 	}
-}
-
-function inPreferences() {
-	return true;
 }
 
 function editProfiles() {
