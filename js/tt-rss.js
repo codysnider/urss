@@ -326,7 +326,7 @@ function init_hotkey_actions() {
 	};
 	hotkey_actions["close_article"] = function () {
 		if (App.isCombinedMode()) {
-			cdmCollapseActive();
+			Article.cdmCollapseActive();
 		} else {
 			Article.closeArticlePanel();
 		}

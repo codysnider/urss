@@ -29,7 +29,7 @@ class Feeds extends Handler_Protected {
 		$tog_marked_link = "selectionToggleMarked()";
 		$tog_published_link = "selectionTogglePublished()";
 
-		$set_score_link = "setSelectionScore()";
+		$set_score_link = "Article.setSelectionScore()";
 
 		if ($is_cat) $cat_q = "&is_cat=$is_cat";
 
@@ -345,7 +345,7 @@ class Feeds extends Handler_Protected {
 
 				$score_pic = "images/" . get_score_pic($score);
 
-				$score_pic = "<img class='score-pic' score='$score' onclick='changeScore($id, this)' src=\"$score_pic\"
+				$score_pic = "<img class='score-pic' score='$score' onclick='Article.changeScore($id, this)' src=\"$score_pic\"
                 title=\"$score\">";
 
 				if ($score > 500) {
@@ -413,7 +413,7 @@ class Feeds extends Handler_Protected {
 
 					$reply['content'] .= "</div>";
 
-					$reply['content'] .= "<div onclick='return hlClicked(event, $id)'
+					$reply['content'] .= "<div onclick='return Headlines.click(event, $id)'
                     class=\"title\"><span class='hl-content $hlc_suffix'>";
 					$reply['content'] .= "<a class=\"title $hlc_suffix\"
                     href=\"" . htmlspecialchars($line["link"]) . "\"
@@ -523,7 +523,7 @@ class Feeds extends Handler_Protected {
 
 					// data-article-id included for context menu
 					$tmp_content .= "<span
-                    onclick=\"return cdmClicked(event, $id);\"
+                    onclick=\"return Headlines.click(event, $id);\"
                     data-article-id=\"$id\"
                     class=\"titleWrap hlMenuAttach $hlc_suffix\">
                     <a class=\"title $hlc_suffix\"
@@ -536,7 +536,7 @@ class Feeds extends Handler_Protected {
 					$tmp_content .= $labels_str;
 
 					$tmp_content .= "<span class='collapse'>
-                        <img src=\"images/collapse.png\" onclick=\"return cdmCollapseActive(event)\"
+                        <img src=\"images/collapse.png\" onclick=\"return Article.cdmCollapseActive(event)\"
                         title=\"".__("Collapse article")."\"/></span>";
 
 					$tmp_content .= "</span>";
@@ -567,7 +567,7 @@ class Feeds extends Handler_Protected {
 
 					$tmp_content .= "</div>"; //header
 
-					$tmp_content .= "<div class=\"content\" onclick=\"return cdmClicked(event, $id, true);\">";
+					$tmp_content .= "<div class=\"content\" onclick=\"return Headlines.click(event, $id, true);\">";
 
 					$tmp_content .= "<div id=\"POSTNOTE-$id\">";
 					if ($line['note']) {

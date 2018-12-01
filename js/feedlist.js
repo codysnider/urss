@@ -43,7 +43,7 @@ const Feeds = {
 	parseCounters: function (elems) {
 		for (let l = 0; l < elems.length; l++) {
 
-			if (this._counters_prev[l] && this.counterEquals(elems[l], this._counters_prev[l])) {
+			if (Feeds._counters_prev[l] && this.counterEquals(elems[l], this._counters_prev[l])) {
 				continue;
 			}
 
@@ -169,7 +169,7 @@ const Feeds = {
 					const id = String(item.id);
 					const is_cat = id.match("^CAT:");
 					const feed = id.substr(id.indexOf(":") + 1);
-					this.viewfeed({feed: feed, is_cat: is_cat});
+					Feeds.viewfeed({feed: feed, is_cat: is_cat});
 					return false;
 				},
 				openOnClick: false,

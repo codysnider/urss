@@ -38,6 +38,60 @@ const ArticleCache = {
 };
 
 const Article = {
+	setSelectionScore: function() {
+		const ids = getSelectedArticleIds2();
+
+		if (ids.length > 0) {
+			console.log(ids);
+
+			const score = prompt(__("Please enter new score for selected articles:"));
+
+			if (score != undefined) {
+				const query = {
+					op: "article", method: "setScore", id: ids.toString(),
+					score: score
+				};
+
+				xhrJson("backend.php", query, (reply) => {
+					if (reply) {
+						reply.id.each((id) => {
+							const row = $("RROW-" + id);
+
+							if (row) {
+								const pic = row.getElementsByClassName("score-pic")[0];
+
+								if (pic) {
+									pic.src = pic.src.replace(/score_.*?\.png/,
+										reply["score_pic"]);
+									pic.setAttribute("score", reply["score"]);
+								}
+							}
+						});
+					}
+				});
+			}
+
+		} else {
+			alert(__("No articles are selected."));
+		}
+	},
+	changeScore: function(id, pic) {
+		const score = pic.getAttribute("score");
+
+		const new_score = prompt(__("Please enter new score for this article:"), score);
+
+		if (new_score != undefined) {
+			const query = {op: "article", method: "setScore", id: id, score: new_score};
+
+			xhrJson("backend.php", query, (reply) => {
+				if (reply) {
+					pic.src = pic.src.replace(/score_.*?\.png/, reply["score_pic"]);
+					pic.setAttribute("score", new_score);
+					pic.setAttribute("title", new_score);
+				}
+			});
+		}
+	},
 	closeArticlePanel: function () {
 		if (dijit.byId("content-insert"))
 			dijit.byId("headlines-wrap-inner").removeChild(
@@ -136,10 +190,55 @@ const Article = {
 
 		return false;
 	},
-}
+	cdmCollapseActive: function(event) {
+		const row = $("RROW-" + getActiveArticleId());
+
+		if (row) {
+			row.removeClassName("active");
+			const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
+
+			if (cb && !row.hasClassName("Selected"))
+				cb.attr("checked", false);
+
+			setActiveArticleId(0);
+
+			if (event)
+				event.stopPropagation();
+
+			return false;
+		}
+	}
+};
 
 const Headlines = {
 	_headlines_scroll_timeout: 0,
+	click: function(event, id, in_body) {
+		in_body = in_body || false;
+
+		if (App.isCombinedMode()) {
+
+			if (!in_body && (event.ctrlKey || id == getActiveArticleId() || getInitParam("cdm_expanded"))) {
+				Article.openArticleInNewWindow(id);
+			}
+
+			setActiveArticleId(id);
+
+			if (!getInitParam("cdm_expanded"))
+				cdmScrollToArticleId(id);
+
+			return in_body;
+
+		} else {
+			if (event.ctrlKey) {
+				Article.openArticleInNewWindow(id);
+				setActiveArticleId(id);
+			} else {
+				Article.view(id);
+			}
+
+			return false;
+		}
+	},
 	initScrollHandler: function() {
 		$("headlines-frame").onscroll = (event) => {
 			clearTimeout(this._headlines_scroll_timeout);
@@ -1238,33 +1337,6 @@ function updateHeadlineLabels(transport) {
 	}
 }
 
-function cdmClicked(event, id, in_body) {
-	in_body = in_body || false;
-
-	if (!in_body && (event.ctrlKey || id == getActiveArticleId() || getInitParam("cdm_expanded"))) {
-		Article.openArticleInNewWindow(id);
-	}
-
-	setActiveArticleId(id);
-
-	if (!getInitParam("cdm_expanded"))
-		cdmScrollToArticleId(id);
-
-	return in_body;
-}
-
-function hlClicked(event, id) {
-	if (event.ctrlKey) {
-		Article.openArticleInNewWindow(id);
-		setActiveArticleId(id);
-	} else {
-		Article.view(id);
-	}
-
-	return false;
-}
-
-
 function getRelativePostIds(id, limit) {
 
 	const tmp = [];
@@ -1311,25 +1383,6 @@ function correctHeadlinesOffset(id) {
 function headlineActionsChange(elem) {
 	eval(elem.value);
 	elem.attr('value', 'false');
-}
-
-function cdmCollapseActive(event) {
-	const row = $("RROW-" + getActiveArticleId());
-
-	if (row) {
-		row.removeClassName("active");
-		const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
-
-		if (cb && !row.hasClassName("Selected"))
-			cb.attr("checked", false);
-
-		setActiveArticleId(0);
-
-		if (event)
-			event.stopPropagation();
-
-		return false;
-	}
 }
 
 function initFloatingMenu() {
@@ -1539,59 +1592,5 @@ function initHeadlinesMenu() {
 	}
 }
 
-// noinspection JSUnusedGlobalSymbols
-function setSelectionScore() {
-	const ids = getSelectedArticleIds2();
 
-	if (ids.length > 0) {
-		console.log(ids);
-
-		const score = prompt(__("Please enter new score for selected articles:"));
-
-		if (score != undefined) {
-			const query = { op: "article", method: "setScore", id: ids.toString(),
-				score: score };
-
-			xhrJson("backend.php", query, (reply) => {
-				if (reply) {
-					reply.id.each((id) => {
-						const row = $("RROW-" + id);
-
-						if (row) {
-							const pic = row.getElementsByClassName("score-pic")[0];
-
-							if (pic) {
-								pic.src = pic.src.replace(/score_.*?\.png/,
-									reply["score_pic"]);
-								pic.setAttribute("score", reply["score"]);
-							}
-						}
-					});
-				}
-			});
-		}
-
-	} else {
-		alert(__("No articles are selected."));
-	}
-}
-
-// noinspection JSUnusedGlobalSymbols
-function changeScore(id, pic) {
-	const score = pic.getAttribute("score");
-
-	const new_score = prompt(__("Please enter new score for this article:"), score);
-
-	if (new_score != undefined) {
-		const query = { op: "article", method: "setScore", id: id, score: new_score };
-
-		xhrJson("backend.php", query, (reply) => {
-			if (reply) {
-				pic.src = pic.src.replace(/score_.*?\.png/, reply["score_pic"]);
-				pic.setAttribute("score", new_score);
-				pic.setAttribute("title", new_score);
-			}
-		});
-	}
-}
 
