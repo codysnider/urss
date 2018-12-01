@@ -145,9 +145,7 @@ function viewfeed(params) {
 			));
 	}
 
-	const timeout_ms = can_wait ? 250 : 0;
-	_viewfeed_timeout = setTimeout(() => {
-
+	catchupBatchedArticles(() => {
 		xhrPost("backend.php", query, (transport) => {
 			try {
 				setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
@@ -157,9 +155,7 @@ function viewfeed(params) {
 				exception_error(e);
 			}
 		});
-
-	}, timeout_ms); // Wait 250ms
-
+	});
 }
 
 function feedlist_init() {
