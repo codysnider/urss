@@ -1149,7 +1149,7 @@ class Pref_Feeds extends Handler_Protected {
 		if ($num_errors > 0) {
 
 			$error_button = "<button dojoType=\"dijit.form.Button\"
-			  		onclick=\"showFeedsWithErrors()\" id=\"errorButton\">" .
+			  		onclick=\"CommonDialogs.showFeedsWithErrors()\" id=\"errorButton\">" .
 				__("Feeds with errors") . "</button>";
 		}
 
@@ -1190,7 +1190,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div dojoType=\"dijit.form.DropDownButton\">".
 				"<span>" . __('Feeds')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-		print "<div onclick=\"quickAddFeed()\"
+		print "<div onclick=\"CommonDialogs.quickAddFeed()\"
 			dojoType=\"dijit.MenuItem\">".__('Subscribe to feed')."</div>";
 		print "<div onclick=\"editSelectedFeed()\"
 			dojoType=\"dijit.MenuItem\">".__('Edit selected feeds')."</div>";

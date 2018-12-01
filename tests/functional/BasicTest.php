@@ -30,7 +30,7 @@ class BasicTest extends PHPUnit_Extensions_Selenium2TestCase {
 
 		$this->execute(["script" => "dijit.byId('filterEditDlg').hide();", "args" => []]);
 
-		$this->execute(["script" => "quickAddFeed()", "args" => []]);
+		$this->execute(["script" => "CommonDialog.quickAddFeed()", "args" => []]);
 		$this->byCssSelector("#feedAddDlg")->displayed();
 
 		$this->execute(["script" => "dijit.byId('feedAddDlg').hide();", "args" => []]);

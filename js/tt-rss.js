@@ -1,10 +1,10 @@
 /* global dijit, __ */
 
-let _widescreen_mode = false;
 let hotkey_actions = {};
 
 const App = {
 	global_unread: -1,
+	_widescreen_mode: false,
 	init: function() {
 
 		window.onerror = function (message, filename, lineno, colno, error) {
@@ -56,7 +56,7 @@ const App = {
 					if (!App.genericSanityCheck())
 						return false;
 
-					setLoadingProgress(30);
+					Utils.setLoadingProgress(30);
 					init_hotkey_actions();
 
 					const a = document.createElement('audio');
@@ -132,21 +132,21 @@ const App = {
 			Feeds.setActiveFeedId(hash_feed_id, hash_feed_is_cat);
 		}
 
-		setLoadingProgress(50);
+		Utils.setLoadingProgress(50);
 
 		ArticleCache.clear();
 
-		_widescreen_mode = getInitParam("widescreen");
-		this.switchPanelMode(_widescreen_mode);
+		this._widescreen_mode = getInitParam("widescreen");
+		this.switchPanelMode(this._widescreen_mode);
 
 		Headlines.initScrollHandler();
 
-		console.log("second stage ok");
-
 		if (getInitParam("simple_update")) {
 			console.log("scheduling simple feed updater...");
-			window.setTimeout(update_random_feed, 30 * 1000);
+			window.setInterval(Feeds.updateRandomFeed, 30 * 1000);
 		}
+
+		console.log("second stage ok");
 	},
 	genericSanityCheck: function() {
 		setCookie("ttrss_test", "TEST");
@@ -176,7 +176,7 @@ const App = {
 	hotkeyHandler(event) {
 		if (event.target.nodeName == "INPUT" || event.target.nodeName == "TEXTAREA") return;
 
-		const action_name = keyeventToAction(event);
+		const action_name = Utils.keyeventToAction(event);
 
 		if (action_name) {
 			const action_func = hotkey_actions[action_name];
@@ -235,29 +235,6 @@ const App = {
 	},
 };
 
-function search() {
-	const query = "backend.php?op=feeds&method=search&param=" +
-		param_escape(Feeds.getActiveFeedId() + ":" + Feeds.activeFeedIsCat());
-
-	if (dijit.byId("searchDlg"))
-		dijit.byId("searchDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "searchDlg",
-		title: __("Search"),
-		style: "width: 600px",
-		execute: function() {
-			if (this.validate()) {
-				Feeds._search_query = this.attr('value');
-				this.hide();
-				Feeds.viewCurrentFeed();
-			}
-		},
-		href: query});
-
-	dialog.show();
-}
-
 function init_hotkey_actions() {
 	hotkey_actions["next_feed"] = function () {
 		const rv = dijit.byId("feedTree").getNextFeed(
@@ -290,7 +267,7 @@ function init_hotkey_actions() {
 		moveToPost('prev', true, true);
 	};
 	hotkey_actions["search_dialog"] = function () {
-		search();
+		Feeds.search();
 	};
 	hotkey_actions["toggle_mark"] = function () {
 		selectionToggleMarked();
@@ -361,14 +338,13 @@ function init_hotkey_actions() {
 	hotkey_actions["feed_refresh"] = function () {
 		if (Feeds.getActiveFeedId() != undefined) {
 			Feeds.viewfeed({feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat()});
-			return;
 		}
 	};
 	hotkey_actions["feed_unhide_read"] = function () {
 		Feeds.toggleDispRead();
 	};
 	hotkey_actions["feed_subscribe"] = function () {
-		quickAddFeed();
+		CommonDialogs.quickAddFeed();
 	};
 	hotkey_actions["feed_debug_update"] = function () {
 		if (!Feeds.activeFeedIsCat() && parseInt(Feeds.getActiveFeedId()) > 0) {
@@ -392,7 +368,6 @@ function init_hotkey_actions() {
 	hotkey_actions["feed_catchup"] = function () {
 		if (Feeds.getActiveFeedId() != undefined) {
 			Feeds.catchupCurrentFeed();
-			return;
 		}
 	};
 	hotkey_actions["feed_reverse"] = function () {
@@ -467,13 +442,13 @@ function init_hotkey_actions() {
 	};
 	hotkey_actions["toggle_widescreen"] = function () {
 		if (!App.isCombinedMode()) {
-			_widescreen_mode = !_widescreen_mode;
+			App._widescreen_mode = !App._widescreen_mode;
 
 			// reset stored sizes because geometry changed
 			setCookie("ttrss_ci_width", 0);
 			setCookie("ttrss_ci_height", 0);
 
-			App.switchPanelMode(_widescreen_mode);
+			App.switchPanelMode(App._widescreen_mode);
 		} else {
 			alert(__("Widescreen is not available in combined mode."));
 		}
@@ -518,10 +493,10 @@ function quickMenuGo(opid) {
 		Utils.displayDlg(__("Tag cloud"), "printTagCloud");
 		break;
 	case "qmcSearch":
-		search();
+		Feeds.search();
 		break;
 	case "qmcAddFeed":
-		quickAddFeed();
+		CommonDialogs.quickAddFeed();
 		break;
 	case "qmcDigest":
 		window.location.href = "backend.php?op=digest";
@@ -561,13 +536,13 @@ function quickMenuGo(opid) {
 		break;
 	case "qmcToggleWidescreen":
 		if (!App.isCombinedMode()) {
-			_widescreen_mode = !_widescreen_mode;
+			App._widescreen_mode = !App._widescreen_mode;
 
 			// reset stored sizes because geometry changed
 			setCookie("ttrss_ci_width", 0);
 			setCookie("ttrss_ci_height", 0);
 
-			App.switchPanelMode(_widescreen_mode);
+			App.switchPanelMode(App._widescreen_mode);
 		} else {
 			alert(__("Widescreen is not available in combined mode."));
 		}
@@ -582,15 +557,6 @@ function quickMenuGo(opid) {
 
 function inPreferences() {
 	return false;
-}
-
-function update_random_feed() {
-	console.log("in update_random_feed");
-
-	xhrPost("backend.php", { op: "rpc", method: "updateRandomFeed" }, (transport) => {
-		Utils.handleRpcJson(transport, true);
-		window.setTimeout(update_random_feed, 30*1000);
-	});
 }
 
 function hash_get(key) {

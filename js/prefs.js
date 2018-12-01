@@ -49,7 +49,7 @@ const App = {
 				try {
 					parser.parse();
 
-					setLoadingProgress(50);
+					Utils.setLoadingProgress(50);
 
 					const clientTzOffset = new Date().getTimezoneOffset() * 60;
 					const params = {op: "rpc", method: "sanityCheck", clientTzOffset: clientTzOffset};
@@ -66,7 +66,7 @@ const App = {
 	},
 	initSecondStage: function() {
 		document.onkeydown = this.hotkeyHandler;
-		setLoadingProgress(50);
+		Utils.setLoadingProgress(50);
 		notify("");
 
 		let tab = getURLParam('tab');
@@ -91,12 +91,12 @@ const App = {
 	hotkeyHandler: function (event) {
 		if (event.target.nodeName == "INPUT" || event.target.nodeName == "TEXTAREA") return;
 
-		const action_name = keyeventToAction(event);
+		const action_name = Utils.keyeventToAction(event);
 
 		if (action_name) {
 			switch (action_name) {
 				case "feed_subscribe":
-					quickAddFeed();
+					CommonDialogs.quickAddFeed();
 					return false;
 				case "create_label":
 					addLabel();

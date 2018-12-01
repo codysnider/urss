@@ -190,7 +190,7 @@ const Feeds = {
 
 				try {
 					Feeds.init();
-					setLoadingProgress(25);
+					Utils.setLoadingProgress(25);
 				} catch (e) {
 					exception_error(e);
 				}
@@ -204,7 +204,7 @@ const Feeds = {
 	init: function() {
 		console.log("in feedlist init");
 
-		setLoadingProgress(50);
+		Utils.setLoadingProgress(50);
 
 		document.onkeydown = App.hotkeyHandler;
 		setInterval(hotkeyPrefixTimeout, 3 * 1000);
@@ -602,5 +602,35 @@ const Feeds = {
 
 		if (nuf)
 			return tree.model.store.getValue(nuf, 'bare_id');
-	}
+	},
+	search: function() {
+		const query = "backend.php?op=feeds&method=search&param=" +
+			param_escape(Feeds.getActiveFeedId() + ":" + Feeds.activeFeedIsCat());
+
+		if (dijit.byId("searchDlg"))
+			dijit.byId("searchDlg").destroyRecursive();
+
+		const dialog = new dijit.Dialog({
+			id: "searchDlg",
+			title: __("Search"),
+			style: "width: 600px",
+			execute: function () {
+				if (this.validate()) {
+					Feeds._search_query = this.attr('value');
+					this.hide();
+					Feeds.viewCurrentFeed();
+				}
+			},
+			href: query
+		});
+
+		dialog.show();
+	},
+	updateRandomFeed: function() {
+		console.log("in update_random_feed");
+
+		xhrPost("backend.php", {op: "rpc", method: "updateRandomFeed"}, (transport) => {
+			Utils.handleRpcJson(transport, true);
+		});
+	},
 };

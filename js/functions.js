@@ -65,6 +65,70 @@ const Utils = {
 	get_seq: function() {
 		return this._rpc_seq;
 	},
+	setLoadingProgress: function(p) {
+		loading_progress += p;
+
+		if (dijit.byId("loading_bar"))
+			dijit.byId("loading_bar").update({progress: loading_progress});
+
+		if (loading_progress >= 90)
+			Element.hide("overlay");
+
+	},
+	keyeventToAction: function(e) {
+
+		const hotkeys_map = getInitParam("hotkeys");
+		const keycode = e.which;
+		const keychar = String.fromCharCode(keycode).toLowerCase();
+
+		if (keycode == 27) { // escape and drop prefix
+			hotkey_prefix = false;
+		}
+
+		if (keycode == 16 || keycode == 17) return; // ignore lone shift / ctrl
+
+		if (!hotkey_prefix && hotkeys_map[0].indexOf(keychar) != -1) {
+
+			const date = new Date();
+			const ts = Math.round(date.getTime() / 1000);
+
+			hotkey_prefix = keychar;
+			hotkey_prefix_pressed = ts;
+
+			$("cmdline").innerHTML = keychar;
+			Element.show("cmdline");
+
+			e.stopPropagation();
+
+			return false;
+		}
+
+		Element.hide("cmdline");
+
+		let hotkey_name = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
+
+		// ensure ^*char notation
+		if (e.shiftKey) hotkey_name = "*" + hotkey_name;
+		if (e.ctrlKey) hotkey_name = "^" + hotkey_name;
+		if (e.altKey) hotkey_name = "+" + hotkey_name;
+		if (e.metaKey) hotkey_name = "%" + hotkey_name;
+
+		const hotkey_full = hotkey_prefix ? hotkey_prefix + " " + hotkey_name : hotkey_name;
+		hotkey_prefix = false;
+
+		let action_name = false;
+
+		for (const sequence in hotkeys_map[1]) {
+			if (sequence == hotkey_full) {
+				action_name = hotkeys_map[1][sequence];
+				break;
+			}
+		}
+
+		console.log('keyeventToAction', hotkey_full, '=>', action_name);
+
+		return action_name;
+	},
 	cleanupMemory: function(root) {
 		const dijits = dojo.query("[widgetid]", dijit.byId(root).domNode).map(dijit.byNode);
 
@@ -308,6 +372,281 @@ const Utils = {
 		}
 
 		App.initSecondStage();
+	}
+};
+
+const CommonDialogs = {
+	quickAddFeed: function() {
+		const query = "backend.php?op=feeds&method=quickAddFeed";
+
+		// overlapping widgets
+		if (dijit.byId("batchSubDlg")) dijit.byId("batchSubDlg").destroyRecursive();
+		if (dijit.byId("feedAddDlg")) dijit.byId("feedAddDlg").destroyRecursive();
+
+		const dialog = new dijit.Dialog({
+			id: "feedAddDlg",
+			title: __("Subscribe to Feed"),
+			style: "width: 600px",
+			show_error: function (msg) {
+				const elem = $("fadd_error_message");
+
+				elem.innerHTML = msg;
+
+				if (!Element.visible(elem))
+					new Effect.Appear(elem);
+
+			},
+			execute: function () {
+				if (this.validate()) {
+					console.log(dojo.objectToQuery(this.attr('value')));
+
+					const feed_url = this.attr('value').feed;
+
+					Element.show("feed_add_spinner");
+					Element.hide("fadd_error_message");
+
+					xhrPost("backend.php", this.attr('value'), (transport) => {
+						try {
+
+							try {
+								var reply = JSON.parse(transport.responseText);
+							} catch (e) {
+								Element.hide("feed_add_spinner");
+								alert(__("Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."));
+								console.log('quickAddFeed, backend returned:' + transport.responseText);
+								return;
+							}
+
+							const rc = reply['result'];
+
+							notify('');
+							Element.hide("feed_add_spinner");
+
+							console.log(rc);
+
+							switch (parseInt(rc['code'])) {
+								case 1:
+									dialog.hide();
+									notify_info(__("Subscribed to %s").replace("%s", feed_url));
+
+									Feeds.reload();
+									break;
+								case 2:
+									dialog.show_error(__("Specified URL seems to be invalid."));
+									break;
+								case 3:
+									dialog.show_error(__("Specified URL doesn't seem to contain any feeds."));
+									break;
+								case 4:
+									const feeds = rc['feeds'];
+
+									Element.show("fadd_multiple_notify");
+
+									const select = dijit.byId("feedDlg_feedContainerSelect");
+
+									while (select.getOptions().length > 0)
+										select.removeOption(0);
+
+									select.addOption({value: '', label: __("Expand to select feed")});
+
+									let count = 0;
+									for (const feedUrl in feeds) {
+										select.addOption({value: feedUrl, label: feeds[feedUrl]});
+										count++;
+									}
+
+									Effect.Appear('feedDlg_feedsContainer', {duration: 0.5});
+
+									break;
+								case 5:
+									dialog.show_error(__("Couldn't download the specified URL: %s").replace("%s", rc['message']));
+									break;
+								case 6:
+									dialog.show_error(__("XML validation failed: %s").replace("%s", rc['message']));
+									break;
+								case 0:
+									dialog.show_error(__("You are already subscribed to this feed."));
+									break;
+							}
+
+						} catch (e) {
+							console.error(transport.responseText);
+							exception_error(e);
+						}
+					});
+				}
+			},
+			href: query
+		});
+
+		dialog.show();
+	},
+	showFeedsWithErrors: function() {
+		const query = {op: "pref-feeds", method: "feedsWithErrors"};
+
+		if (dijit.byId("errorFeedsDlg"))
+			dijit.byId("errorFeedsDlg").destroyRecursive();
+
+		const dialog = new dijit.Dialog({
+			id: "errorFeedsDlg",
+			title: __("Feeds with update errors"),
+			style: "width: 600px",
+			getSelectedFeeds: function () {
+				return getSelectedTableRowIds("prefErrorFeedList");
+			},
+			removeSelected: function () {
+				const sel_rows = this.getSelectedFeeds();
+
+				if (sel_rows.length > 0) {
+					if (confirm(__("Remove selected feeds?"))) {
+						notify_progress("Removing selected feeds...", true);
+
+						const query = {
+							op: "pref-feeds", method: "remove",
+							ids: sel_rows.toString()
+						};
+
+						xhrPost("backend.php", query, () => {
+							notify('');
+							dialog.hide();
+							Feeds.reload();
+						});
+					}
+
+				} else {
+					alert(__("No feeds are selected."));
+				}
+			},
+			execute: function () {
+				if (this.validate()) {
+					//
+				}
+			},
+			href: "backend.php?" + dojo.objectToQuery(query)
+		});
+
+		dialog.show();
+	},
+	feedBrowser: function() {
+		const query = {op: "feeds", method: "feedBrowser"};
+
+		if (dijit.byId("feedAddDlg"))
+			dijit.byId("feedAddDlg").hide();
+
+		if (dijit.byId("feedBrowserDlg"))
+			dijit.byId("feedBrowserDlg").destroyRecursive();
+
+		// noinspection JSUnusedGlobalSymbols
+		const dialog = new dijit.Dialog({
+			id: "feedBrowserDlg",
+			title: __("More Feeds"),
+			style: "width: 600px",
+			getSelectedFeedIds: function () {
+				const list = $$("#browseFeedList li[id*=FBROW]");
+				const selected = [];
+
+				list.each(function (child) {
+					const id = child.id.replace("FBROW-", "");
+
+					if (child.hasClassName('Selected')) {
+						selected.push(id);
+					}
+				});
+
+				return selected;
+			},
+			getSelectedFeeds: function () {
+				const list = $$("#browseFeedList li.Selected");
+				const selected = [];
+
+				list.each(function (child) {
+					const title = child.getElementsBySelector("span.fb_feedTitle")[0].innerHTML;
+					const url = child.getElementsBySelector("a.fb_feedUrl")[0].href;
+
+					selected.push([title, url]);
+
+				});
+
+				return selected;
+			},
+
+			subscribe: function () {
+				const mode = this.attr('value').mode;
+				let selected = [];
+
+				if (mode == "1")
+					selected = this.getSelectedFeeds();
+				else
+					selected = this.getSelectedFeedIds();
+
+				if (selected.length > 0) {
+					dijit.byId("feedBrowserDlg").hide();
+
+					notify_progress("Loading, please wait...", true);
+
+					const query = {
+						op: "rpc", method: "massSubscribe",
+						payload: JSON.stringify(selected), mode: mode
+					};
+
+					xhrPost("backend.php", query, () => {
+						notify('');
+						Feeds.reload();
+					});
+
+				} else {
+					alert(__("No feeds are selected."));
+				}
+
+			},
+			update: function () {
+				Element.show('feed_browser_spinner');
+
+				xhrPost("backend.php", dialog.attr("value"), (transport) => {
+					notify('');
+
+					Element.hide('feed_browser_spinner');
+
+					const reply = JSON.parse(transport.responseText);
+					const mode = reply['mode'];
+
+					if ($("browseFeedList") && reply['content']) {
+						$("browseFeedList").innerHTML = reply['content'];
+					}
+
+					dojo.parser.parse("browseFeedList");
+
+					if (mode == 2) {
+						Element.show(dijit.byId('feed_archive_remove').domNode);
+					} else {
+						Element.hide(dijit.byId('feed_archive_remove').domNode);
+					}
+				});
+			},
+			removeFromArchive: function () {
+				const selected = this.getSelectedFeedIds();
+
+				if (selected.length > 0) {
+					if (confirm(__("Remove selected feeds from the archive? Feeds with stored articles will not be removed."))) {
+						Element.show('feed_browser_spinner');
+
+						const query = {op: "rpc", method: "remarchive", ids: selected.toString()};
+
+						xhrPost("backend.php", query, () => {
+							dialog.update();
+						});
+					}
+				}
+			},
+			execute: function () {
+				if (this.validate()) {
+					this.subscribe();
+				}
+			},
+			href: "backend.php?" + dojo.objectToQuery(query)
+		});
+
+		dialog.show();
 	}
 };
 
@@ -665,17 +1004,6 @@ function explainError(code) {
 	return Utils.displayDlg(__("Error explained"), "explainError", code);
 }
 
-function setLoadingProgress(p) {
-	loading_progress += p;
-
-	if (dijit.byId("loading_bar"))
-		dijit.byId("loading_bar").update({progress: loading_progress});
-
-	if (loading_progress >= 90)
-		Element.hide("overlay");
-
-}
-
 function strip_tags(s) {
 	return s.replace(/<\/?[^>]+(>|$)/g, "");
 }
@@ -770,113 +1098,6 @@ function addLabel(select, callback) {
 		});
 	}
 
-}
-
-function quickAddFeed() {
-	const query = "backend.php?op=feeds&method=quickAddFeed";
-
-	// overlapping widgets
-	if (dijit.byId("batchSubDlg")) dijit.byId("batchSubDlg").destroyRecursive();
-	if (dijit.byId("feedAddDlg"))	dijit.byId("feedAddDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "feedAddDlg",
-		title: __("Subscribe to Feed"),
-		style: "width: 600px",
-		show_error: function(msg) {
-			const elem = $("fadd_error_message");
-
-			elem.innerHTML = msg;
-
-			if (!Element.visible(elem))
-				new Effect.Appear(elem);
-
-		},
-		execute: function() {
-			if (this.validate()) {
-				console.log(dojo.objectToQuery(this.attr('value')));
-
-				const feed_url = this.attr('value').feed;
-
-				Element.show("feed_add_spinner");
-				Element.hide("fadd_error_message");
-
-				xhrPost("backend.php", this.attr('value'), (transport) => {
-					try {
-
-						try {
-							var reply = JSON.parse(transport.responseText);
-						} catch (e) {
-							Element.hide("feed_add_spinner");
-							alert(__("Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."));
-							console.log('quickAddFeed, backend returned:' + transport.responseText);
-							return;
-						}
-
-						const rc = reply['result'];
-
-						notify('');
-						Element.hide("feed_add_spinner");
-
-						console.log(rc);
-
-						switch (parseInt(rc['code'])) {
-							case 1:
-								dialog.hide();
-								notify_info(__("Subscribed to %s").replace("%s", feed_url));
-
-								Feeds.reload();
-								break;
-							case 2:
-								dialog.show_error(__("Specified URL seems to be invalid."));
-								break;
-							case 3:
-								dialog.show_error(__("Specified URL doesn't seem to contain any feeds."));
-								break;
-							case 4:
-								const feeds = rc['feeds'];
-
-								Element.show("fadd_multiple_notify");
-
-								const select = dijit.byId("feedDlg_feedContainerSelect");
-
-								while (select.getOptions().length > 0)
-									select.removeOption(0);
-
-								select.addOption({value: '', label: __("Expand to select feed")});
-
-								let count = 0;
-								for (const feedUrl in feeds) {
-									select.addOption({value: feedUrl, label: feeds[feedUrl]});
-									count++;
-								}
-
-								Effect.Appear('feedDlg_feedsContainer', {duration : 0.5});
-
-								break;
-							case 5:
-								dialog.show_error(__("Couldn't download the specified URL: %s").
-								replace("%s", rc['message']));
-								break;
-							case 6:
-								dialog.show_error(__("XML validation failed: %s").
-								replace("%s", rc['message']));
-								break;
-							case 0:
-								dialog.show_error(__("You are already subscribed to this feed."));
-								break;
-						}
-
-					} catch (e) {
-						console.error(transport.responseText);
-						exception_error(e);
-					}
-				});
-			}
-		},
-		href: query});
-
-	dialog.show();
 }
 
 function createNewRuleElement(parentNode, replaceNode) {
@@ -1382,172 +1603,6 @@ function editFeed(feed) {
 	dialog.show();
 }
 
-function feedBrowser() {
-	const query = { op: "feeds", method: "feedBrowser" };
-
-	if (dijit.byId("feedAddDlg"))
-		dijit.byId("feedAddDlg").hide();
-
-	if (dijit.byId("feedBrowserDlg"))
-		dijit.byId("feedBrowserDlg").destroyRecursive();
-
-	// noinspection JSUnusedGlobalSymbols
-	const dialog = new dijit.Dialog({
-		id: "feedBrowserDlg",
-		title: __("More Feeds"),
-		style: "width: 600px",
-		getSelectedFeedIds: function () {
-			const list = $$("#browseFeedList li[id*=FBROW]");
-			const selected = [];
-
-			list.each(function (child) {
-				const id = child.id.replace("FBROW-", "");
-
-				if (child.hasClassName('Selected')) {
-					selected.push(id);
-				}
-			});
-
-			return selected;
-		},
-		getSelectedFeeds: function () {
-			const list = $$("#browseFeedList li.Selected");
-			const selected = [];
-
-			list.each(function (child) {
-				const title = child.getElementsBySelector("span.fb_feedTitle")[0].innerHTML;
-				const url = child.getElementsBySelector("a.fb_feedUrl")[0].href;
-
-				selected.push([title, url]);
-
-			});
-
-			return selected;
-		},
-
-		subscribe: function () {
-			const mode = this.attr('value').mode;
-			let selected = [];
-
-			if (mode == "1")
-				selected = this.getSelectedFeeds();
-			else
-				selected = this.getSelectedFeedIds();
-
-			if (selected.length > 0) {
-				dijit.byId("feedBrowserDlg").hide();
-
-				notify_progress("Loading, please wait...", true);
-
-				const query = { op: "rpc", method: "massSubscribe",
-					payload: JSON.stringify(selected), mode: mode };
-
-				xhrPost("backend.php", query, () => {
-					notify('');
-					Feeds.reload();
-				});
-
-			} else {
-				alert(__("No feeds are selected."));
-			}
-
-		},
-		update: function () {
-			Element.show('feed_browser_spinner');
-
-			xhrPost("backend.php", dialog.attr("value"), (transport) => {
-				notify('');
-
-				Element.hide('feed_browser_spinner');
-
-				const reply = JSON.parse(transport.responseText);
-				const mode = reply['mode'];
-
-				if ($("browseFeedList") && reply['content']) {
-					$("browseFeedList").innerHTML = reply['content'];
-				}
-
-				dojo.parser.parse("browseFeedList");
-
-				if (mode == 2) {
-					Element.show(dijit.byId('feed_archive_remove').domNode);
-				} else {
-					Element.hide(dijit.byId('feed_archive_remove').domNode);
-				}
-			});
-		},
-		removeFromArchive: function () {
-			const selected = this.getSelectedFeedIds();
-
-			if (selected.length > 0) {
-				if (confirm(__("Remove selected feeds from the archive? Feeds with stored articles will not be removed."))) {
-					Element.show('feed_browser_spinner');
-
-					const query = { op: "rpc", method: "remarchive", ids: selected.toString() };
-
-					xhrPost("backend.php", query, () => {
-						dialog.update();
-					});
-				}
-			}
-		},
-		execute: function () {
-			if (this.validate()) {
-				this.subscribe();
-			}
-		},
-		href: "backend.php?" + dojo.objectToQuery(query)
-	});
-
-	dialog.show();
-}
-
-// noinspection JSUnusedGlobalSymbols
-function showFeedsWithErrors() {
-	const query = { op: "pref-feeds", method: "feedsWithErrors" };
-
-	if (dijit.byId("errorFeedsDlg"))
-		dijit.byId("errorFeedsDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "errorFeedsDlg",
-		title: __("Feeds with update errors"),
-		style: "width: 600px",
-		getSelectedFeeds: function() {
-			return getSelectedTableRowIds("prefErrorFeedList");
-		},
-		removeSelected: function() {
-			const sel_rows = this.getSelectedFeeds();
-
-			if (sel_rows.length > 0) {
-				if (confirm(__("Remove selected feeds?"))) {
-					notify_progress("Removing selected feeds...", true);
-
-					const query = { op: "pref-feeds", method: "remove",
-						ids: sel_rows.toString() };
-
-					xhrPost("backend.php",	query, () => {
-						notify('');
-						dialog.hide();
-						Feeds.reload();
-					});
-				}
-
-			} else {
-				alert(__("No feeds are selected."));
-			}
-		},
-		execute: function() {
-			if (this.validate()) {
-				//
-			}
-		},
-		href: "backend.php?" + dojo.objectToQuery(query)
-	});
-
-	dialog.show();
-}
-
 function get_timestamp() {
 	const date = new Date();
 	return Math.round(date.getTime() / 1000);
@@ -1601,59 +1656,4 @@ function popupOpenArticle(id) {
 
 	w.opener = null;
 	w.location = "backend.php?op=article&method=view&mode=raw&html=1&zoom=1&id=" + id + "&csrf_token=" + getInitParam("csrf_token");
-}
-
-function keyeventToAction(e) {
-
-	const hotkeys_map = getInitParam("hotkeys");
-	const keycode = e.which;
-	const keychar = String.fromCharCode(keycode).toLowerCase();
-
-	if (keycode == 27) { // escape and drop prefix
-		hotkey_prefix = false;
-	}
-
-	if (keycode == 16 || keycode == 17) return; // ignore lone shift / ctrl
-
-	if (!hotkey_prefix && hotkeys_map[0].indexOf(keychar) != -1) {
-
-		const date = new Date();
-		const ts = Math.round(date.getTime() / 1000);
-
-		hotkey_prefix = keychar;
-		hotkey_prefix_pressed = ts;
-
-		$("cmdline").innerHTML = keychar;
-		Element.show("cmdline");
-
-		e.stopPropagation();
-
-		return false;
-	}
-
-	Element.hide("cmdline");
-
-	let hotkey_name = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
-
-	// ensure ^*char notation
-	if (e.shiftKey) hotkey_name = "*" + hotkey_name;
-	if (e.ctrlKey) hotkey_name = "^" + hotkey_name;
-	if (e.altKey) hotkey_name = "+" + hotkey_name;
-	if (e.metaKey) hotkey_name = "%" + hotkey_name;
-
-	const hotkey_full = hotkey_prefix ? hotkey_prefix + " " + hotkey_name : hotkey_name;
-	hotkey_prefix = false;
-
-	let action_name = false;
-
-	for (const sequence in hotkeys_map[1]) {
-		if (sequence == hotkey_full) {
-			action_name = hotkeys_map[1][sequence];
-			break;
-		}
-	}
-
-	console.log('keyeventToAction', hotkey_full, '=>', action_name);
-
-	return action_name;
 }

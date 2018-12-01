@@ -722,7 +722,7 @@ class Feeds extends Handler_Protected {
 
 					if ($num_errors > 0) {
 						$reply['content'] .= "<br/>";
-						$reply['content'] .= "<a class=\"insensitive\" href=\"#\" onclick=\"showFeedsWithErrors()\">" .
+						$reply['content'] .= "<a class=\"insensitive\" href=\"#\" onclick=\"CommonDialogs.showFeedsWithErrors()\">" .
 							__('Some feeds have update errors (click for details)') . "</a>";
 					}
 					$reply['content'] .= "</span></p></div>";
@@ -913,7 +913,7 @@ class Feeds extends Handler_Protected {
 
 		if ($num_errors > 0) {
 			$reply['headlines']['content'] .= "<br/>";
-			$reply['headlines']['content'] .= "<a class=\"insensitive\" href=\"#\" onclick=\"showFeedsWithErrors()\">".
+			$reply['headlines']['content'] .= "<a class=\"insensitive\" href=\"#\" onclick=\"CommonDialogs.showFeedsWithErrors()\">".
 				__('Some feeds have update errors (click for details)')."</a>";
 		}
 		$reply['headlines']['content'] .= "</span></p>";
@@ -1014,7 +1014,7 @@ class Feeds extends Handler_Protected {
 			<button dojoType=\"dijit.form.Button\" class=\"btn-primary\" type=\"submit\" onclick=\"return dijit.byId('feedAddDlg').execute()\">".__('Subscribe')."</button>";
 
 		if (!(defined('_DISABLE_FEED_BROWSER') && _DISABLE_FEED_BROWSER)) {
-			print "<button dojoType=\"dijit.form.Button\" onclick=\"return feedBrowser()\">".__('More feeds')."</button>";
+			print "<button dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.feedBrowser()\">".__('More feeds')."</button>";
 		}
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('feedAddDlg').hide()\">".__('Cancel')."</button>
