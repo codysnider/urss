@@ -67,8 +67,6 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 		}
 
 		current_first_id = reply['headlines']['first_id'];
-		const counters = reply['counters'];
-		const articles = reply['articles'];
 
 		if (infscroll_req == false) {
 			loaded_article_ids = [];
@@ -84,7 +82,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 			dojo.parser.parse(tmp);
 
 			while (tmp.hasChildNodes()) {
-				var row = tmp.removeChild(tmp.firstChild);
+				const row = tmp.removeChild(tmp.firstChild);
 
 				if (loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("feed-title")) {
 					dijit.byId("headlines-frame").domNode.appendChild(row);
@@ -168,9 +166,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 					hsp.innerHTML = "<a href='#' onclick='openNextUnreadFeed()'>" +
 					__("Click to open next unread feed.") + "</a>";
 				}
-
 			}
-
 		}
 
 	} else {
@@ -270,12 +266,11 @@ function view(id, noexpand) {
 	if (!noexpand) {
 		console.log("loading article", id);
 
-		const neighbor_ids = getRelativePostIds(id);
 		const cids = [];
 
 		/* only request uncached articles */
 
-		neighbor_ids.each((n) => {
+		getRelativePostIds(id).each((n) => {
 			if (!cache_get("article:" + n))
 				cids.push(n);
 		});
@@ -423,22 +418,16 @@ function toggleMark(id, client_only) {
 	}
 }
 
-function togglePub(id, client_only, no_effects, note) {
-	const query = { op: "rpc", id: id, method: "publ" };
-
+function togglePub(id, client_only) {
 	const row = $("RROW-" + id);
 
 	if (row) {
-		if (note != undefined) {
-			query.note = note;
-		} else {
-			query.note = "undefined";
-		}
+		const query = { op: "rpc", id: id, method: "publ" };
 
 		const imgs = $$("img[class*=pub-pic][class*=pub-" + id + "]");
 
 		imgs.each((img) => {
-			if (!row.hasClassName("published") || note != undefined) {
+			if (!row.hasClassName("published")) {
 				img.src = img.src.replace("pub_unset", "pub_set");
 				query.pub = 1;
 			} else {
@@ -447,10 +436,7 @@ function togglePub(id, client_only, no_effects, note) {
 			}
 		});
 
-		if (note != undefined)
-			row.addClassName("published");
-		else
-			row.toggleClassName("published");
+		row.toggleClassName("published");
 
 		if (!client_only)
 			xhrPost("backend.php", query, (transport) => {
@@ -583,32 +569,27 @@ function toggleUnread(id, cmode) {
 	const row = $("RROW-" + id);
 
 	if (row) {
-		const tmpClassName = row.className;
+		const origClassName = row.className;
 
-		if (cmode == undefined || cmode == 2) {
-			if (row.hasClassName("Unread")) {
+		if (cmode == undefined) cmode = 2;
+
+		switch (cmode) {
+			case 0:
 				row.removeClassName("Unread");
-
-			} else {
+				break;
+			case 1:
 				row.addClassName("Unread");
-			}
-
-		} else if (cmode == 0) {
-			row.removeClassName("Unread");
-		} else if (cmode == 1) {
-			row.addClassName("Unread");
+				break;
+			case 2:
+				row.toggleClassName("Unread");
+				break;
 		}
 
-		if (tmpClassName != row.className) {
-			if (cmode == undefined) cmode = 2;
-
-			const query = {op: "rpc", method: "catchupSelected",
-				cmode: cmode, ids: id};
-
-			xhrPost("backend.php", query, (transport) => {
-				handle_rpc_json(transport);
+		if (row.className != origClassName)
+			xhrPost("backend.php",
+				{op: "rpc", method: "catchupSelected", cmode: cmode, ids: id},(transport) => {
+					handle_rpc_json(transport);
 			});
-		}
 	}
 }
 
@@ -646,67 +627,53 @@ function selectionAssignLabel(id, ids) {
 	});
 }
 
-function selectionToggleUnread(set_state, callback, no_error, ids) {
-	const rows = ids ? ids : getSelectedArticleIds2();
+function selectionToggleUnread(params) {
+	params = params || {};
 
-	if (rows.length == 0 && !no_error) {
-		alert(__("No articles are selected."));
+	const cmode = params.cmode || 2;
+	const callback = params.callback;
+	const no_error = params.no_error || false;
+	const ids = params.ids || getSelectedArticleIds2();
+
+	if (ids.length == 0) {
+		if (!no_error)
+			alert(__("No articles are selected."));
+
 		return;
 	}
 
-	for (let i = 0; i < rows.length; i++) {
-		const row = $("RROW-" + rows[i]);
+	ids.each((id) => {
+		const row = $("RROW-" + id);
+
 		if (row) {
-			if (set_state == undefined) {
-				if (row.hasClassName("Unread")) {
+			switch (cmode) {
+				case 0:
 					row.removeClassName("Unread");
-				} else {
+					break;
+				case 1:
 					row.addClassName("Unread");
-				}
-			}
-
-			if (set_state == false) {
-				row.removeClassName("Unread");
-			}
-
-			if (set_state == true) {
-				row.addClassName("Unread");
+					break;
+				case 2:
+					row.toggleClassName("Unread");
 			}
 		}
-	}
+	});
 
-	updateFloatingTitle(true);
+	const query = {op: "rpc", method: "catchupSelected",
+		cmode: cmode, ids: ids.toString() };
 
-	if (rows.length > 0) {
+	notify_progress("Loading, please wait...");
 
-		let cmode = "";
-
-		if (set_state == undefined) {
-			cmode = "2";
-		} else if (set_state == true) {
-			cmode = "1";
-		} else if (set_state == false) {
-			cmode = "0";
-		}
-
-		const query = {op: "rpc", method: "catchupSelected",
-			cmode: cmode, ids: rows.toString() };
-
-		notify_progress("Loading, please wait...");
-
-		xhrPost("backend.php", query, (transport) => {
-			handle_rpc_json(transport);
-			if (callback) callback(transport);
-		});
-
-	}
+	xhrPost("backend.php", query, (transport) => {
+		handle_rpc_json(transport);
+		if (callback) callback(transport);
+	});
 }
 
-// sel_state ignored
-function selectionToggleMarked(sel_state, callback, no_error, ids) {
-	const rows = ids ? ids : getSelectedArticleIds2();
+function selectionToggleMarked(ids) {
+	const rows = ids || getSelectedArticleIds2();
 
-	if (rows.length == 0 && !no_error) {
+	if (rows.length == 0) {
 		alert(__("No articles are selected."));
 		return;
 	}
@@ -715,28 +682,25 @@ function selectionToggleMarked(sel_state, callback, no_error, ids) {
 		toggleMark(rows[i], true, true);
 	}
 
-	if (rows.length > 0) {
-		const query = { op: "rpc", method: "markSelected",
-			ids:  rows.toString(), cmode: 2 };
+	const query = { op: "rpc", method: "markSelected",
+		ids:  rows.toString(), cmode: 2 };
 
-		xhrPost("backend.php", query, (transport) => {
-			handle_rpc_json(transport);
-			if (callback) callback(transport);
-		});
-	}
+	xhrPost("backend.php", query, (transport) => {
+		handle_rpc_json(transport);
+	});
 }
 
 // sel_state ignored
-function selectionTogglePublished(sel_state, callback, no_error, ids) {
-	const rows = ids ? ids : getSelectedArticleIds2();
+function selectionTogglePublished(ids) {
+	const rows = ids || getSelectedArticleIds2();
 
-	if (rows.length == 0 && !no_error) {
+	if (rows.length == 0) {
 		alert(__("No articles are selected."));
 		return;
 	}
 
 	for (let i = 0; i < rows.length; i++) {
-		togglePub(rows[i], true, true);
+		togglePub(rows[i], true);
 	}
 
 	if (rows.length > 0) {
@@ -745,7 +709,6 @@ function selectionTogglePublished(sel_state, callback, no_error, ids) {
 
 		xhrPost("backend.php", query, (transport) => {
 			handle_rpc_json(transport);
-			if (callback) callback(transport);
 		});
 	}
 }
@@ -991,7 +954,7 @@ function catchupSelection() {
 		return;
 	}
 
-	selectionToggleUnread(false, 'viewCurrentFeed()', true);
+	selectionToggleUnread({callback: viewCurrentFeed, no_error: 1});
 }
 
 function editArticleTags(id) {
@@ -1615,7 +1578,7 @@ function headlinesMenuCommon(menu) {
 			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
-			selectionToggleUnread(undefined, false, true, ids);
+			selectionToggleUnread({ids: ids, no_error: 1});
 		}
 	}));
 
@@ -1627,7 +1590,7 @@ function headlinesMenuCommon(menu) {
 			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
-			selectionToggleMarked(undefined, false, true, ids);
+			selectionToggleMarked(ids);
 		}
 	}));
 
@@ -1639,7 +1602,7 @@ function headlinesMenuCommon(menu) {
 			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
-			selectionTogglePublished(undefined, false, true, ids);
+			selectionTogglePublished(ids);
 		}
 	}));
 

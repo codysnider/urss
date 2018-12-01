@@ -303,13 +303,13 @@ function init_hotkey_actions() {
 		search();
 	};
 	hotkey_actions["toggle_mark"] = function() {
-		selectionToggleMarked(undefined, false, true);
+		selectionToggleMarked();
 	};
 	hotkey_actions["toggle_publ"] = function() {
-		selectionTogglePublished(undefined, false, true);
+		selectionTogglePublished();
 	};
 	hotkey_actions["toggle_unread"] = function() {
-		selectionToggleUnread(undefined, false, true);
+		selectionToggleUnread({no_error: 1});
 	};
 	hotkey_actions["edit_tags"] = function() {
 		const id = getActiveArticleId();
