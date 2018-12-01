@@ -274,10 +274,10 @@
 
 	<div id="headlines-wrap-inner" dojoType="dijit.layout.BorderContainer" region="center">
 
-		<div id="floatingTitle" style="visibility : hidden"></div>
+		<div id="floatingTitle" style=display : none"></div>
 
 		<div id="headlines-frame" dojoType="dijit.layout.ContentPane" tabindex="0"
-				onscroll="headlines_scroll_handler(this)" region="center">
+				region="center">
 			<div id="headlinesInnerContainer">
 				<div class="whiteBox"><?php echo __('Loading, please wait...') ?></div>
 			</div>

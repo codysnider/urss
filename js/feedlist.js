@@ -85,7 +85,6 @@ function viewfeed(params) {
 			_infscroll_disable = 0;
 
 			cleanup_memory("headlines-frame");
-			_headlines_scroll_offset = 0;
 		}
 
 		if (infscroll_req) {

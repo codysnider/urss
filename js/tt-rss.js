@@ -6,6 +6,7 @@ let _rpc_seq = 0;
 let _active_feed_id = 0;
 let _active_feed_is_cat = false;
 let hotkey_actions = {};
+let _headlines_scroll_timeout = false;
 
 function next_seq() {
 	_rpc_seq += 1;
@@ -567,19 +568,16 @@ function init_second_stage() {
 	if ('sessionStorage' in window && window['sessionStorage'] !== null)
 		sessionStorage.clear();
 
-	/*const hotkeys = getInitParam("hotkeys");
-	const tmp = [];
-
-	for (const sequence in hotkeys[1]) {
-		const filtered = sequence.replace(/\|.*$/, "");
-		tmp[filtered] = hotkeys[1][sequence];
-	}
-
-	hotkeys[1] = tmp;
-	setInitParam("hotkeys", hotkeys);*/
-
 	_widescreen_mode = getInitParam("widescreen");
 	switchPanelMode(_widescreen_mode);
+
+	$("headlines-frame").onscroll = (event) => {
+		clearTimeout(_headlines_scroll_timeout);
+		_headlines_scroll_timeout = window.setTimeout(function() {
+			//console.log('done scrolling', event);
+			headlinesScrollHandler(event);
+		}, 250);
+	}
 
 	console.log("second stage ok");
 
