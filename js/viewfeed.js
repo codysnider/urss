@@ -1094,7 +1094,7 @@ function unpackVisibleHeadlines() {
 	if (!isCombinedMode() || !getInitParam("cdm_expanded")) return;
 
 	const rows = $$("#headlines-frame div[id*=RROW][data-content]");
-	const threshold = $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight + 300;
+	const threshold = $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight + 600;
 
 	for (let i = 0; i < rows.length; i++) {
 		const row = rows[i];
@@ -1120,7 +1120,6 @@ function unpackVisibleHeadlines() {
 function headlinesScrollHandler(event) {
 	try {
 		unpackVisibleHeadlines();
-
 
 		if (isCombinedMode()) {
 			updateFloatingTitle();
