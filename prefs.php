@@ -104,7 +104,7 @@
 
 	<script type="text/javascript">
 		Event.observe(window, 'load', function() {
-			init();
+			App.init();
 		});
 	</script>
 

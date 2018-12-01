@@ -1,6 +1,94 @@
 /* global dijit, __ */
 
-let seq = "";
+const App = {
+	init: function() {
+		window.onerror = function (message, filename, lineno, colno, error) {
+			report_error(message, filename, lineno, colno, error);
+		};
+
+		require(["dojo/_base/kernel",
+			"dojo/ready",
+			"dojo/parser",
+			"dojo/_base/loader",
+			"dojo/_base/html",
+			"dijit/ColorPalette",
+			"dijit/Dialog",
+			"dijit/form/Button",
+			"dijit/form/CheckBox",
+			"dijit/form/DropDownButton",
+			"dijit/form/FilteringSelect",
+			"dijit/form/MultiSelect",
+			"dijit/form/Form",
+			"dijit/form/RadioButton",
+			"dijit/form/ComboButton",
+			"dijit/form/Select",
+			"dijit/form/SimpleTextarea",
+			"dijit/form/TextBox",
+			"dijit/form/ValidationTextBox",
+			"dijit/InlineEditBox",
+			"dijit/layout/AccordionContainer",
+			"dijit/layout/AccordionPane",
+			"dijit/layout/BorderContainer",
+			"dijit/layout/ContentPane",
+			"dijit/layout/TabContainer",
+			"dijit/Menu",
+			"dijit/ProgressBar",
+			"dijit/Toolbar",
+			"dijit/Tree",
+			"dijit/tree/dndSource",
+			"dojo/data/ItemFileWriteStore",
+			"lib/CheckBoxStoreModel",
+			"lib/CheckBoxTree",
+			"fox/PrefFeedStore",
+			"fox/PrefFilterStore",
+			"fox/PrefFeedTree",
+			"fox/PrefFilterTree",
+			"fox/PrefLabelTree"], function (dojo, ready, parser) {
+
+			ready(function () {
+				try {
+					parser.parse();
+
+					setLoadingProgress(50);
+
+					const clientTzOffset = new Date().getTimezoneOffset() * 60;
+					const params = {op: "rpc", method: "sanityCheck", clientTzOffset: clientTzOffset};
+
+					xhrPost("backend.php", params, (transport) => {
+						Utils.backendSanityCallback(transport);
+					});
+
+				} catch (e) {
+					exception_error(e);
+				}
+			});
+		});
+	},
+	initSecondStage: function() {
+		document.onkeydown = pref_hotkey_handler;
+		setLoadingProgress(50);
+		notify("");
+
+		let tab = getURLParam('tab');
+
+		if (tab) {
+			tab = dijit.byId(tab + "Tab");
+			if (tab) dijit.byId("pref-tabs").selectChild(tab);
+		}
+
+		const method = getURLParam('method');
+
+		if (method == 'editFeed') {
+			const param = getURLParam('methodparam');
+
+			window.setTimeout(function () {
+				editFeed(param)
+			}, 100);
+		}
+
+		setInterval(hotkeyPrefixTimeout, 5 * 1000);
+	}
+}
 
 function notify_callback2(transport, sticky) {
 	notify_info(transport.responseText, sticky);
@@ -644,94 +732,6 @@ function selectTab(id, noupdate) {
 
 	}
 }
-
-function init_second_stage() {
-	document.onkeydown = pref_hotkey_handler;
-	setLoadingProgress(50);
-	notify("");
-
-	let tab = getURLParam('tab');
-
-	if (tab) {
-		tab = dijit.byId(tab + "Tab");
-		if (tab) dijit.byId("pref-tabs").selectChild(tab);
-	}
-
-	const method = getURLParam('method');
-
-	if (method == 'editFeed') {
-		const param = getURLParam('methodparam');
-
-		window.setTimeout(function() { editFeed(param) }, 100);
-	}
-
-	setInterval(hotkeyPrefixTimeout, 5*1000);
-}
-
-function init() {
-	window.onerror = function (message, filename, lineno, colno, error) {
-		report_error(message, filename, lineno, colno, error);
-	};
-
-	require(["dojo/_base/kernel",
-		"dojo/ready",
-		"dojo/parser",
-		"dojo/_base/loader",
-		"dojo/_base/html",
-		"dijit/ColorPalette",
-		"dijit/Dialog",
-		"dijit/form/Button",
-		"dijit/form/CheckBox",
-		"dijit/form/DropDownButton",
-		"dijit/form/FilteringSelect",
-		"dijit/form/MultiSelect",
-		"dijit/form/Form",
-		"dijit/form/RadioButton",
-		"dijit/form/ComboButton",
-		"dijit/form/Select",
-		"dijit/form/SimpleTextarea",
-		"dijit/form/TextBox",
-		"dijit/form/ValidationTextBox",
-		"dijit/InlineEditBox",
-		"dijit/layout/AccordionContainer",
-		"dijit/layout/AccordionPane",
-		"dijit/layout/BorderContainer",
-		"dijit/layout/ContentPane",
-		"dijit/layout/TabContainer",
-		"dijit/Menu",
-		"dijit/ProgressBar",
-		"dijit/Toolbar",
-		"dijit/Tree",
-		"dijit/tree/dndSource",
-		"dojo/data/ItemFileWriteStore",
-		"lib/CheckBoxStoreModel",
-		"lib/CheckBoxTree",
-		"fox/PrefFeedStore",
-		"fox/PrefFilterStore",
-		"fox/PrefFeedTree",
-		"fox/PrefFilterTree",
-		"fox/PrefLabelTree"], function (dojo, ready, parser) {
-
-		ready(function () {
-			try {
-				parser.parse();
-
-				setLoadingProgress(50);
-
-				const clientTzOffset = new Date().getTimezoneOffset() * 60;
-				const params = { op: "rpc", method: "sanityCheck", clientTzOffset: clientTzOffset };
-
-				xhrPost("backend.php", params, (transport) => {
-					backend_sanity_check_callback(transport);
-				});
-
-			} catch (e) {
-				exception_error(e);
-			}
-		});
-	});
-}
-
 
 function validatePrefsReset() {
 	if (confirm(__("Reset to defaults?"))) {
