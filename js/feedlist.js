@@ -1,6 +1,5 @@
-let counters_last_request = 0;
-
 const Feeds = {
+	counters_last_request: 0,
 	_active_feed_id: 0,
 	_active_feed_is_cat: false,
 	infscroll_in_progress: 0,
@@ -121,10 +120,10 @@ const Feeds = {
 		const date = new Date();
 		const timestamp = Math.round(date.getTime() / 1000);
 
-		if (force || timestamp - counters_last_request > 5) {
+		if (force || timestamp - this.counters_last_request > 5) {
 			console.log("scheduling request of counters...");
 
-			counters_last_request = timestamp;
+			this.counters_last_request = timestamp;
 
 			let query = {op: "rpc", method: "getAllCounters", seq: Utils.next_seq()};
 
@@ -136,7 +135,7 @@ const Feeds = {
 			});
 
 		} else {
-			console.log("request_counters: rate limit reached: " + (timestamp - counters_last_request));
+			console.log("request_counters: rate limit reached: " + (timestamp - this.counters_last_request));
 		}
 	},
 	reload: function() {
