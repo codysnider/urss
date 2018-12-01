@@ -1,4 +1,4 @@
-/* global dijit, __ */
+/* global dijit, __, ngettext */
 
 let _active_article_id = 0;
 
