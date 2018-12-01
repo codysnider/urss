@@ -13,7 +13,29 @@ let loaded_article_ids = [];
 let current_first_id = 0;
 let last_search_query;
 
-let has_storage = 'sessionStorage' in window && window['sessionStorage'] !== null;
+const ArticleCache = {
+	has_storage: 'sessionStorage' in window && window['sessionStorage'] !== null,
+	set: function(id, obj) {
+		if (this.has_storage)
+			try {
+				sessionStorage["article:" + id] = obj;
+			} catch (e) {
+				sessionStorage.clear();
+			}
+	},
+	get: function(id) {
+		if (this.has_storage)
+			return sessionStorage["article:" + id];
+	},
+	clear: function() {
+		if (this.has_storage)
+			sessionStorage.clear();
+	},
+	del: function(id) {
+		if (this.has_storage)
+			sessionStorage.removeItem("article:" + id);
+	},
+};
 
 const Article = {
 	closeArticlePanel: function () {
@@ -57,6 +79,62 @@ const Article = {
 			c.focus();
 		} catch (e) {
 		}
+	},
+	view: function(id, noexpand) {
+		setActiveArticleId(id);
+
+		if (!noexpand) {
+			console.log("loading article", id);
+
+			const cids = [];
+
+			/* only request uncached articles */
+
+			getRelativePostIds(id).each((n) => {
+				if (!ArticleCache.get(n))
+					cids.push(n);
+			});
+
+			const cached_article = ArticleCache.get(id);
+
+			if (cached_article) {
+				console.log('rendering cached', id);
+				this.renderArticle(cached_article);
+				return false;
+			}
+
+			xhrPost("backend.php", {op: "article", method: "view", id: id, cids: cids.toString()}, (transport) => {
+				try {
+					const reply = Utils.handleRpcJson(transport);
+
+					if (reply) {
+
+						reply.each(function (article) {
+							if (getActiveArticleId() == article['id']) {
+								Article.renderArticle(article['content']);
+							}
+							ArticleCache.set(article['id'], article['content']);
+						});
+
+					} else {
+						console.error("Invalid object received: " + transport.responseText);
+
+						Article.renderArticle("<div class='whiteBox'>" +
+							__('Could not display article (invalid object received - see error console for details)') + "</div>");
+					}
+
+					//const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
+					//request_counters(unread_in_buffer == 0);
+
+					notify("");
+
+				} catch (e) {
+					exception_error(e);
+				}
+			})
+		}
+
+		return false;
 	},
 }
 
@@ -409,66 +487,22 @@ const Headlines = {
 
 		notify("");
 	},
+	reverseHeadlineOrder: function() {
+		const toolbar = document.forms["main_toolbar_form"];
+		const order_by = dijit.getEnclosingWidget(toolbar.order_by);
+
+		let value = order_by.attr('value');
+
+		if (value == "date_reverse")
+			value = "default";
+		else
+			value = "date_reverse";
+
+		order_by.attr('value', value);
+
+		Feeds.viewCurrentFeed();
+	},
 };
-
-function view(id, noexpand) {
-	setActiveArticleId(id);
-
-	if (!noexpand) {
-		console.log("loading article", id);
-
-		const cids = [];
-
-		/* only request uncached articles */
-
-		getRelativePostIds(id).each((n) => {
-			if (!cache_get("article:" + n))
-				cids.push(n);
-		});
-
-		const cached_article = cache_get("article:" + id);
-
-		if (cached_article) {
-			console.log('rendering cached', id);
-			Article.renderArticle(cached_article);
-			return false;
-		}
-
-		xhrPost("backend.php", {op: "article", method: "view", id: id, cids: cids.toString()}, (transport) => {
-			try {
-				const reply = Utils.handleRpcJson(transport);
-
-				if (reply) {
-
-					reply.each(function(article) {
-						if (getActiveArticleId() == article['id']) {
-							Article.renderArticle(article['content']);
-						}
-						//cids_requested.remove(article['id']);
-
-						cache_set("article:" + article['id'], article['content']);
-					});
-
-				} else {
-					console.error("Invalid object received: " + transport.responseText);
-
-					Article.renderArticle("<div class='whiteBox'>" +
-						__('Could not display article (invalid object received - see error console for details)') + "</div>");
-				}
-
-				//const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
-				//request_counters(unread_in_buffer == 0);
-
-				notify("");
-
-			} catch (e) {
-				exception_error(e);
-			}
-		})
-	}
-
-	return false;
-}
 
 function toggleMark(id, client_only) {
 	const query = { op: "rpc", id: id, method: "mark" };
@@ -576,7 +610,7 @@ function moveToPost(mode, noscroll, noexpand) {
 
 			} else if (next_id) {
 				correctHeadlinesOffset(next_id);
-				view(next_id, noexpand);
+				Article.view(next_id, noexpand);
 			}
 		}
 	}
@@ -601,7 +635,7 @@ function moveToPost(mode, noscroll, noexpand) {
 
 			} else if (prev_id) {
 				correctHeadlinesOffset(prev_id);
-				view(prev_id, noexpand);
+				Article.view(prev_id, noexpand);
 			}
 		}
 	}
@@ -918,7 +952,7 @@ function archiveSelection() {
 	}
 
 	for (let i = 0; i < rows.length; i++) {
-		cache_delete("article:" + rows[i]);
+		ArticleCache.del(rows[i]);
 	}
 
 	const query = {op: "rpc", method: op, ids: rows.toString()};
@@ -1224,7 +1258,7 @@ function hlClicked(event, id) {
 		Article.openArticleInNewWindow(id);
 		setActiveArticleId(id);
 	} else {
-		view(id);
+		Article.view(id);
 	}
 
 	return false;
@@ -1503,31 +1537,6 @@ function initHeadlinesMenu() {
 
 		menu.startup();
 	}
-}
-
-function cache_set(id, obj) {
-	//console.log("cache_set: " + id);
-	if (has_storage)
-		try {
-			sessionStorage[id] = obj;
-		} catch (e) {
-			sessionStorage.clear();
-		}
-}
-
-function cache_get(id) {
-	if (has_storage)
-		return sessionStorage[id];
-}
-
-function cache_clear() {
-	if (has_storage)
-		sessionStorage.clear();
-}
-
-function cache_delete(id) {
-	if (has_storage)
-		sessionStorage.removeItem(id);
 }
 
 // noinspection JSUnusedGlobalSymbols

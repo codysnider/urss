@@ -255,6 +255,60 @@ const Utils = {
 
 		PluginHost.run(PluginHost.HOOK_RUNTIME_INFO_LOADED, data);
 	},
+	backendSanityCallback: function (transport) {
+
+		const reply = JSON.parse(transport.responseText);
+
+		if (!reply) {
+			fatalError(3, "Sanity check: invalid RPC reply", transport.responseText);
+			return;
+		}
+
+		const error_code = reply['error']['code'];
+
+		if (error_code && error_code != 0) {
+			return fatalError(error_code, reply['error']['message']);
+		}
+
+		console.log("sanity check ok");
+
+		const params = reply['init-params'];
+
+		if (params) {
+			console.log('reading init-params...');
+
+			for (const k in params) {
+				if (params.hasOwnProperty(k)) {
+					switch (k) {
+						case "label_base_index":
+							_label_base_index = parseInt(params[k])
+							break;
+						case "hotkeys":
+							// filter mnemonic definitions (used for help panel) from hotkeys map
+							// i.e. *(191)|Ctrl-/ -> *(191)
+
+							const tmp = [];
+							for (const sequence in params[k][1]) {
+								const filtered = sequence.replace(/\|.*$/, "");
+								tmp[filtered] = params[k][1][sequence];
+							}
+
+							params[k][1] = tmp;
+							break;
+					}
+
+					console.log("IP:", k, "=>", params[k]);
+				}
+			}
+
+			init_params = params;
+
+			// PluginHost might not be available on non-index pages
+			window.PluginHost && PluginHost.run(PluginHost.HOOK_PARAMS_LOADED, init_params);
+		}
+
+		App.initSecondStage();
+	}
 };
 
 function report_error(message, filename, lineno, colno, error) {
@@ -1191,62 +1245,6 @@ function unsubscribeFeed(feed_id, title) {
 	}
 
 	return false;
-}
-
-
-function backend_sanity_check_callback(transport) {
-
-	const reply = JSON.parse(transport.responseText);
-
-	if (!reply) {
-		fatalError(3, "Sanity check: invalid RPC reply", transport.responseText);
-		return;
-	}
-
-	const error_code = reply['error']['code'];
-
-	if (error_code && error_code != 0) {
-		return fatalError(error_code, reply['error']['message']);
-	}
-
-	console.log("sanity check ok");
-
-	const params = reply['init-params'];
-
-	if (params) {
-		console.log('reading init-params...');
-
-		for (const k in params) {
-			if (params.hasOwnProperty(k)) {
-				switch (k) {
-					case "label_base_index":
-						_label_base_index = parseInt(params[k])
-						break;
-					case "hotkeys":
-						// filter mnemonic definitions (used for help panel) from hotkeys map
-						// i.e. *(191)|Ctrl-/ -> *(191)
-
-						const tmp = [];
-						for (const sequence in params[k][1]) {
-							const filtered = sequence.replace(/\|.*$/, "");
-							tmp[filtered] = params[k][1][sequence];
-						}
-
-						params[k][1] = tmp;
-						break;
-				}
-
-				console.log("IP:", k, "=>", params[k]);
-			}
-		}
-
-		init_params = params;
-
-		// PluginHost might not be available on non-index pages
-		window.PluginHost && PluginHost.run(PluginHost.HOOK_PARAMS_LOADED, init_params);
-	}
-
-	init_second_stage();
 }
 
 // noinspection JSUnusedGlobalSymbols

@@ -19,7 +19,7 @@ function editArticleNote(id) {
                         dialog.hide();
 
                         if (reply) {
-                            cache_delete("article:" + id);
+                            ArticleCache.del(id);
 
                             var elem = $("POSTNOTE-" + id);
 

@@ -139,7 +139,7 @@
 
 	<script type="text/javascript">
 		Event.observe(window, 'load', function() {
-			init();
+			App.init();
 		});
 	</script>
 </head>
@@ -187,7 +187,7 @@
 		<form id="main_toolbar_form" action="" onsubmit='return false'>
 
 		<select name="view_mode" title="<?php echo __('Show articles') ?>"
-			onchange="viewModeChanged()"
+			onchange="App.onViewModeChanged()"
 			dojoType="dijit.form.Select">
 			<option selected="selected" value="adaptive"><?php echo __('Adaptive') ?></option>
 			<option value="all_articles"><?php echo __('All Articles') ?></option>
@@ -199,7 +199,7 @@
 		</select>
 
 		<select title="<?php echo __('Sort articles') ?>"
-			onchange="viewModeChanged()"
+			onchange="App.onViewModeChanged()"
 			dojoType="dijit.form.Select" name="order_by">
 			<option selected="selected" value="default"><?php echo __('Default') ?></option>
 			<option value="feed_dates"><?php echo __('Newest first') ?></option>
