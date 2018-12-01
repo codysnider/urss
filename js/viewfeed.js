@@ -75,7 +75,7 @@ const Headlines = {
 		const view_mode = document.forms["main_toolbar_form"].view_mode.value;
 		const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
 		const num_all = $$("#headlines-frame > div[id*=RROW]").length;
-		const num_unread = getFeedUnread(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+		const num_unread = Feeds.getFeedUnread(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
 
 		// TODO implement marked & published
 
@@ -248,7 +248,7 @@ const Headlines = {
 		}
 	},
 	onLoaded: function(transport, offset) {
-		const reply = App.handleRpcJson(transport);
+		const reply = Utils.handleRpcJson(transport);
 
 		console.log("Headlines.onLoaded: offset=", offset);
 
@@ -436,7 +436,7 @@ function view(id, noexpand) {
 
 		xhrPost("backend.php", {op: "article", method: "view", id: id, cids: cids.toString()}, (transport) => {
 			try {
-				const reply = App.handleRpcJson(transport);
+				const reply = Utils.handleRpcJson(transport);
 
 				if (reply) {
 
@@ -491,7 +491,7 @@ function toggleMark(id, client_only) {
 
 		if (!client_only)
 			xhrPost("backend.php", query, (transport) => {
-				App.handleRpcJson(transport);
+				Utils.handleRpcJson(transport);
 			});
 	}
 }
@@ -518,7 +518,7 @@ function togglePub(id, client_only) {
 
 		if (!client_only)
 			xhrPost("backend.php", query, (transport) => {
-				App.handleRpcJson(transport);
+				Utils.handleRpcJson(transport);
 			});
 
 	}
@@ -642,7 +642,7 @@ function toggleUnread(id, cmode) {
 		if (row.className != origClassName)
 			xhrPost("backend.php",
 				{op: "rpc", method: "catchupSelected", cmode: cmode, ids: id},(transport) => {
-					App.handleRpcJson(transport);
+					Utils.handleRpcJson(transport);
 			});
 	}
 }
@@ -659,7 +659,7 @@ function selectionRemoveLabel(id, ids) {
 		ids: ids.toString(), lid: id };
 
 	xhrPost("backend.php", query, (transport) => {
-		App.handleRpcJson(transport);
+		Utils.handleRpcJson(transport);
 		updateHeadlineLabels(transport);
 	});
 }
@@ -676,7 +676,7 @@ function selectionAssignLabel(id, ids) {
 		ids: ids.toString(), lid: id };
 
 	xhrPost("backend.php", query, (transport) => {
-		App.handleRpcJson(transport);
+		Utils.handleRpcJson(transport);
 		updateHeadlineLabels(transport);
 	});
 }
@@ -719,7 +719,7 @@ function selectionToggleUnread(params) {
 	notify_progress("Loading, please wait...");
 
 	xhrPost("backend.php", query, (transport) => {
-		App.handleRpcJson(transport);
+		Utils.handleRpcJson(transport);
 		if (callback) callback(transport);
 	});
 }
@@ -740,7 +740,7 @@ function selectionToggleMarked(ids) {
 		ids:  rows.toString(), cmode: 2 };
 
 	xhrPost("backend.php", query, (transport) => {
-		App.handleRpcJson(transport);
+		Utils.handleRpcJson(transport);
 	});
 }
 
@@ -762,7 +762,7 @@ function selectionTogglePublished(ids) {
 			ids:  rows.toString(), cmode: 2 };
 
 		xhrPost("backend.php", query, (transport) => {
-			App.handleRpcJson(transport);
+			Utils.handleRpcJson(transport);
 		});
 	}
 }
@@ -862,7 +862,7 @@ function deleteSelection() {
 		return;
 	}
 
-	const fn = getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+	const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
 	let str;
 
 	if (Feeds.getActiveFeedId() != 0) {
@@ -881,7 +881,7 @@ function deleteSelection() {
 	const query = { op: "rpc", method: "delete", ids: rows.toString() };
 
 	xhrPost("backend.php", query, (transport) => {
-		App.handleRpcJson(transport);
+		Utils.handleRpcJson(transport);
 		Feeds.viewCurrentFeed();
 	});
 }
@@ -896,7 +896,7 @@ function archiveSelection() {
 		return;
 	}
 
-	const fn = getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+	const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
 	let str;
 	let op;
 
@@ -924,7 +924,7 @@ function archiveSelection() {
 	const query = {op: "rpc", method: op, ids: rows.toString()};
 
 	xhrPost("backend.php", query, (transport) => {
-		App.handleRpcJson(transport);
+		Utils.handleRpcJson(transport);
 		Feeds.viewCurrentFeed();
 	});
 }
@@ -938,7 +938,7 @@ function catchupSelection() {
 		return;
 	}
 
-	const fn = getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+	const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
 
 	let str = ngettext("Mark %d selected article in %s as read?", "Mark %d selected articles in %s as read?", rows.length);
 
@@ -1091,7 +1091,7 @@ function catchupBatchedArticles(callback) {
 			cmode: 0, ids: batch.toString() };
 
 		xhrPost("backend.php", query, (transport) => {
-			const reply = App.handleRpcJson(transport);
+			const reply = Utils.handleRpcJson(transport);
 
 			if (reply) {
 				const batch = reply.ids;
@@ -1167,7 +1167,7 @@ function catchupRelativeToArticle(below, id) {
 				cmode: 0, ids: ids_to_mark.toString() };
 
 			xhrPost("backend.php", query, (transport) => {
-				App.handleRpcJson(transport);
+				Utils.handleRpcJson(transport);
 			});
 		}
 	}
@@ -1489,7 +1489,7 @@ function initHeadlinesMenu() {
 		menu.addChild(new dijit.MenuItem({
 			label: __("Mark feed as read"),
 			onClick: function () {
-				catchupFeedInGroup(this.getParent().currentTarget.getAttribute("data-feed-id"));
+				Feeds.catchupFeedInGroup(this.getParent().currentTarget.getAttribute("data-feed-id"));
 			}
 		}));
 

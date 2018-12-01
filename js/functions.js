@@ -57,6 +57,14 @@ Array.prototype.remove = function(s) {
 };
 
 const Utils = {
+	_rpc_seq: 0,
+	next_seq: function() {
+		this._rpc_seq += 1;
+		return this._rpc_seq;
+	},
+	get_seq: function() {
+		return this._rpc_seq;
+	},
 	cleanupMemory: function(root) {
 		const dijits = dojo.query("[widgetid]", dijit.byId(root).domNode).map(dijit.byNode);
 
@@ -126,6 +134,126 @@ const Utils = {
 		});
 
 		return false;
+	},
+	handleRpcJson: function(transport) {
+
+		const netalert_dijit = dijit.byId("net-alert");
+		let netalert = false;
+
+		if (netalert_dijit) netalert = netalert_dijit.domNode;
+
+		try {
+			const reply = JSON.parse(transport.responseText);
+
+			if (reply) {
+
+				const error = reply['error'];
+
+				if (error) {
+					const code = error['code'];
+					const msg = error['msg'];
+
+					console.warn("[handleRpcJson] received fatal error " + code + "/" + msg);
+
+					if (code != 0) {
+						fatalError(code, msg);
+						return false;
+					}
+				}
+
+				const seq = reply['seq'];
+
+				if (seq && this.get_seq() != seq) {
+					console.log("[handleRpcJson] sequence mismatch: " + seq +
+						" (want: " + this.get_seq() + ")");
+					return true;
+				}
+
+				const message = reply['message'];
+
+				if (message == "UPDATE_COUNTERS") {
+					console.log("need to refresh counters...");
+					setInitParam("last_article_id", -1);
+					Feeds.requestCounters(true);
+				}
+
+				const counters = reply['counters'];
+
+				if (counters)
+					Feeds.parseCounters(counters);
+
+				const runtime_info = reply['runtime-info'];
+
+				if (runtime_info)
+					Utils.parseRuntimeInfo(runtime_info);
+
+				if (netalert) netalert.hide();
+
+				return reply;
+
+			} else {
+				if (netalert)
+					netalert.show();
+				else
+					notify_error("Communication problem with server.");
+			}
+
+		} catch (e) {
+			if (netalert)
+				netalert.show();
+			else
+				notify_error("Communication problem with server.");
+
+			console.error(e);
+		}
+
+		return false;
+	},
+	parseRuntimeInfo: function(data) {
+
+		//console.log("parsing runtime info...");
+
+		for (const k in data) {
+			const v = data[k];
+
+			if (k == "dep_ts" && parseInt(getInitParam("dep_ts")) > 0) {
+				if (parseInt(getInitParam("dep_ts")) < parseInt(v) && getInitParam("reload_on_ts_change")) {
+					window.location.reload();
+				}
+			}
+
+			if (k == "daemon_is_running" && v != 1) {
+				notify_error("<span onclick=\"explainError(1)\">Update daemon is not running.</span>", true);
+				return;
+			}
+
+			if (k == "update_result") {
+				const updatesIcon = dijit.byId("updatesIcon").domNode;
+
+				if (v) {
+					Element.show(updatesIcon);
+				} else {
+					Element.hide(updatesIcon);
+				}
+			}
+
+			if (k == "daemon_stamp_ok" && v != 1) {
+				notify_error("<span onclick=\"explainError(3)\">Update daemon is not updating feeds.</span>", true);
+				return;
+			}
+
+			if (k == "max_feed_id" || k == "num_feeds") {
+				if (init_params[k] != v) {
+					console.log("feed count changed, need to reload feedlist.");
+					Feeds.reload();
+				}
+			}
+
+			init_params[k] = v;
+			notify('');
+		}
+
+		PluginHost.run(PluginHost.HOOK_RUNTIME_INFO_LOADED, data);
 	},
 };
 

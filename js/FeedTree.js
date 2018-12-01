@@ -41,7 +41,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 				menu.addChild(new dijit.MenuItem({
 					label: __("Mark as read"),
 					onClick: function() {
-						catchupFeed(this.getParent().row_id);
+						Feeds.catchupFeed(this.getParent().row_id);
 					}}));
 
 				if (bare_id > 0) {
@@ -69,7 +69,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 				menu.addChild(new dijit.MenuItem({
 					label: __("Mark as read"),
 					onClick: function() {
-						catchupFeed(this.getParent().row_id, true);
+						Feeds.catchupFeed(this.getParent().row_id, true);
 					}}));
 
 				menu.addChild(new dijit.MenuItem({

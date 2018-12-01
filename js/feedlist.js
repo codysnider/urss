@@ -69,23 +69,23 @@ const Feeds = {
 				continue;
 			}
 
-			/*if (getFeedUnread(id, (kind == "cat")) != ctr ||
+			/*if (Feeds.getFeedUnread(id, (kind == "cat")) != ctr ||
 					(kind == "cat")) {
 			}*/
 
-			setFeedUnread(id, (kind == "cat"), ctr);
-			setFeedValue(id, (kind == "cat"), 'auxcounter', auxctr);
+			Feeds.setFeedUnread(id, (kind == "cat"), ctr);
+			Feeds.setFeedValue(id, (kind == "cat"), 'auxcounter', auxctr);
 
 			if (kind != "cat") {
-				setFeedValue(id, false, 'error', error);
-				setFeedValue(id, false, 'updated', updated);
+				Feeds.setFeedValue(id, false, 'error', error);
+				Feeds.setFeedValue(id, false, 'updated', updated);
 
 				if (id > 0) {
 					if (has_img) {
-						setFeedIcon(id, false,
+						Feeds.setFeedIcon(id, false,
 							getInitParam("icons_url") + "/" + id + ".ico?" + has_img);
 					} else {
-						setFeedIcon(id, false, 'images/blank_icon.gif');
+						Feeds.setFeedIcon(id, false, 'images/blank_icon.gif');
 					}
 				}
 			}
@@ -104,7 +104,7 @@ const Feeds = {
 	},
 	openNextUnreadFeed: function() {
 		const is_cat = Feeds.activeFeedIsCat();
-		const nuf = getNextUnreadFeed(Feeds.getActiveFeedId(), is_cat);
+		const nuf = Feeds.getNextUnreadFeed(Feeds.getActiveFeedId(), is_cat);
 		if (nuf) this.viewfeed({feed: nuf, is_cat: is_cat});
 	},
 	collapseFeedlist: function() {
@@ -129,13 +129,13 @@ const Feeds = {
 
 			counters_last_request = timestamp;
 
-			let query = {op: "rpc", method: "getAllCounters", seq: App.next_seq()};
+			let query = {op: "rpc", method: "getAllCounters", seq: Utils.next_seq()};
 
 			if (!force)
 				query.last_article_id = getInitParam("last_article_id");
 
 			xhrPost("backend.php", query, (transport) => {
-				App.handleRpcJson(transport);
+				Utils.handleRpcJson(transport);
 			});
 
 		} else {
@@ -357,7 +357,7 @@ const Feeds = {
 		Form.enable("main_toolbar_form");
 
 		if (!delayed)
-			if (!setFeedExpandoIcon(feed, is_cat,
+			if (!Feeds.setFeedExpandoIcon(feed, is_cat,
 				(is_cat) ? 'images/indicator_tiny.gif' : 'images/indicator_white.gif'))
 				notify_progress("Loading, please wait...", true);
 
@@ -377,7 +377,7 @@ const Feeds = {
 			catchupBatchedArticles(() => {
 				xhrPost("backend.php", query, (transport) => {
 					try {
-						setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
+						Feeds.setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
 						Headlines.onLoaded(transport, offset);
 						PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
 					} catch (e) {
@@ -404,221 +404,207 @@ const Feeds = {
 		}
 	},
 	decrementFeedCounter: function(feed, is_cat) {
-		let ctr = getFeedUnread(feed, is_cat);
+		let ctr = Feeds.getFeedUnread(feed, is_cat);
 
 		if (ctr > 0) {
-			setFeedUnread(feed, is_cat, ctr - 1);
+			Feeds.setFeedUnread(feed, is_cat, ctr - 1);
 			App.global_unread -= 1;
 			App.updateTitle();
 
 			if (!is_cat) {
-				const cat = parseInt(getFeedCategory(feed));
+				const cat = parseInt(Feeds.getFeedCategory(feed));
 
 				if (!isNaN(cat)) {
-					ctr = getFeedUnread(cat, true);
+					ctr = Feeds.getFeedUnread(cat, true);
 
 					if (ctr > 0) {
-						setFeedUnread(cat, true, ctr - 1);
+						Feeds.setFeedUnread(cat, true, ctr - 1);
 					}
 				}
 			}
 		}
-	}
-};
+	},
+	catchupFeed: function(feed, is_cat, mode) {
+		if (is_cat == undefined) is_cat = false;
 
-function getFeedUnread(feed, is_cat) {
-	try {
-		const tree = dijit.byId("feedTree");
+		let str = false;
 
-		if (tree && tree.model)
-			return tree.model.getFeedUnread(feed, is_cat);
-
-	} catch (e) {
-		//
-	}
-
-	return -1;
-}
-
-function getFeedCategory(feed) {
-	try {
-		const tree = dijit.byId("feedTree");
-
-		if (tree && tree.model)
-			return tree.getFeedCategory(feed);
-
-	} catch (e) {
-		//
-	}
-
-	return false;
-}
-
-function getFeedName(feed, is_cat) {
-
-	if (isNaN(feed)) return feed; // it's a tag
-
-	const tree = dijit.byId("feedTree");
-
-	if (tree && tree.model)
-		return tree.model.getFeedValue(feed, is_cat, 'name');
-}
-
-/* function getFeedValue(feed, is_cat, key) {
-	try {
-		const tree = dijit.byId("feedTree");
-
-		if (tree && tree.model)
-			return tree.model.getFeedValue(feed, is_cat, key);
-
-	} catch (e) {
-		//
-	}
-	return '';
-} */
-
-function setFeedUnread(feed, is_cat, unread) {
-	const tree = dijit.byId("feedTree");
-
-	if (tree && tree.model)
-		return tree.model.setFeedUnread(feed, is_cat, unread);
-}
-
-function setFeedValue(feed, is_cat, key, value) {
-	try {
-		const tree = dijit.byId("feedTree");
-
-		if (tree && tree.model)
-			return tree.model.setFeedValue(feed, is_cat, key, value);
-
-	} catch (e) {
-		//
-	}
-}
-
-function setFeedIcon(feed, is_cat, src) {
-	const tree = dijit.byId("feedTree");
-
-	if (tree) return tree.setFeedIcon(feed, is_cat, src);
-}
-
-function setFeedExpandoIcon(feed, is_cat, src) {
-	const tree = dijit.byId("feedTree");
-
-	if (tree) return tree.setFeedExpandoIcon(feed, is_cat, src);
-
-	return false;
-}
-
-function getNextUnreadFeed(feed, is_cat) {
-	const tree = dijit.byId("feedTree");
-	const nuf = tree.model.getNextUnreadFeed(feed, is_cat);
-
-	if (nuf)
-		return tree.model.store.getValue(nuf, 'bare_id');
-}
-
-function catchupCurrentFeed(mode) {
-	catchupFeed(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat(), mode);
-}
-
-function catchupFeedInGroup(id) {
-	const title = getFeedName(id);
-
-	const str = __("Mark all articles in %s as read?").replace("%s", title);
-
-	if (getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
-
-		const rows = $$("#headlines-frame > div[id*=RROW][data-orig-feed-id='"+id+"']");
-
-		if (rows.length > 0) {
-
-			rows.each(function (row) {
-				row.removeClassName("Unread");
-
-				if (row.getAttribute("data-article-id") != getActiveArticleId()) {
-					new Effect.Fade(row, {duration: 0.5});
-				}
-
-			});
-
-			const feedTitles = $$("#headlines-frame > div[class='feed-title']");
-
-			for (let i = 0; i < feedTitles.length; i++) {
-				if (feedTitles[i].getAttribute("data-feed-id") == id) {
-
-					if (i < feedTitles.length - 1) {
-						new Effect.Fade(feedTitles[i], {duration: 0.5});
-					}
-
-					break;
-				}
-			}
-
-			Headlines.updateFloatingTitle(true);
+		switch (mode) {
+			case "1day":
+				str = __("Mark %w in %s older than 1 day as read?");
+				break;
+			case "1week":
+				str = __("Mark %w in %s older than 1 week as read?");
+				break;
+			case "2week":
+				str = __("Mark %w in %s older than 2 weeks as read?");
+				break;
+			default:
+				str = __("Mark %w in %s as read?");
 		}
+
+		const mark_what = last_search_query && last_search_query[0] ? __("search results") : __("all articles");
+		const fn = Feeds.getFeedName(feed, is_cat);
+
+		str = str.replace("%s", fn)
+			.replace("%w", mark_what);
+
+		if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+			return;
+		}
+
+		const catchup_query = {
+			op: 'rpc', method: 'catchupFeed', feed_id: feed,
+			is_cat: is_cat, mode: mode, search_query: last_search_query[0],
+			search_lang: last_search_query[1]
+		};
 
 		notify_progress("Loading, please wait...", true);
 
-		xhrPost("backend.php", { op: "rpc", method: "catchupFeed", feed_id: id, is_cat: false}, (transport) => {
-			App.handleRpcJson(transport);
-		});
-	}
-}
+		xhrPost("backend.php", catchup_query, (transport) => {
+			Utils.handleRpcJson(transport);
 
-function catchupFeed(feed, is_cat, mode) {
-	if (is_cat == undefined) is_cat = false;
+			const show_next_feed = getInitParam("on_catchup_show_next_feed") == "1";
 
-	let str = false;
+			if (show_next_feed) {
+				const nuf = Feeds.getNextUnreadFeed(feed, is_cat);
 
-	switch (mode) {
-	case "1day":
-		str = __("Mark %w in %s older than 1 day as read?");
-		break;
-	case "1week":
-		str = __("Mark %w in %s older than 1 week as read?");
-		break;
-	case "2week":
-		str = __("Mark %w in %s older than 2 weeks as read?");
-		break;
-	default:
-		str = __("Mark %w in %s as read?");
-	}
-
-	const mark_what = last_search_query && last_search_query[0] ? __("search results") : __("all articles");
-	const fn = getFeedName(feed, is_cat);
-
-	str = str.replace("%s", fn)
-		.replace("%w", mark_what);
-
-	if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
-		return;
-	}
-
-	const catchup_query = {op: 'rpc', method: 'catchupFeed', feed_id: feed,
-		is_cat: is_cat, mode: mode, search_query: last_search_query[0],
-		search_lang: last_search_query[1]};
-
-	notify_progress("Loading, please wait...", true);
-
-	xhrPost("backend.php", catchup_query, (transport) => {
-		App.handleRpcJson(transport);
-
-		const show_next_feed = getInitParam("on_catchup_show_next_feed") == "1";
-
-		if (show_next_feed) {
-			const nuf = getNextUnreadFeed(feed, is_cat);
-
-			if (nuf) {
-				Feeds.viewfeed({feed: nuf, is_cat: is_cat});
+				if (nuf) {
+					this.viewfeed({feed: nuf, is_cat: is_cat});
+				}
+			} else if (feed == Feeds.getActiveFeedId() && is_cat == Feeds.activeFeedIsCat()) {
+				this.viewCurrentFeed();
 			}
-		} else if (feed == Feeds.getActiveFeedId() && is_cat == Feeds.activeFeedIsCat()) {
-			Feeds.viewCurrentFeed();
+
+			notify("");
+		});
+	},
+	catchupCurrentFeed: function(mode) {
+		Feeds.catchupFeed(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat(), mode);
+	},
+	catchupFeedInGroup: function(id) {
+		const title = Feeds.getFeedName(id);
+
+		const str = __("Mark all articles in %s as read?").replace("%s", title);
+
+		if (getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
+
+			const rows = $$("#headlines-frame > div[id*=RROW][data-orig-feed-id='" + id + "']");
+
+			if (rows.length > 0) {
+
+				rows.each(function (row) {
+					row.removeClassName("Unread");
+
+					if (row.getAttribute("data-article-id") != getActiveArticleId()) {
+						new Effect.Fade(row, {duration: 0.5});
+					}
+
+				});
+
+				const feedTitles = $$("#headlines-frame > div[class='feed-title']");
+
+				for (let i = 0; i < feedTitles.length; i++) {
+					if (feedTitles[i].getAttribute("data-feed-id") == id) {
+
+						if (i < feedTitles.length - 1) {
+							new Effect.Fade(feedTitles[i], {duration: 0.5});
+						}
+
+						break;
+					}
+				}
+
+				Headlines.updateFloatingTitle(true);
+			}
+
+			notify_progress("Loading, please wait...", true);
+
+			xhrPost("backend.php", {op: "rpc", method: "catchupFeed", feed_id: id, is_cat: false}, (transport) => {
+				Utils.handleRpcJson(transport);
+			});
+		}
+	},
+	getFeedUnread: function(feed, is_cat) {
+		try {
+			const tree = dijit.byId("feedTree");
+
+			if (tree && tree.model)
+				return tree.model.getFeedUnread(feed, is_cat);
+
+		} catch (e) {
+			//
 		}
 
-		notify("");
-	});
-}
+		return -1;
+	},
+	getFeedCategory: function(feed) {
+		try {
+			const tree = dijit.byId("feedTree");
 
+			if (tree && tree.model)
+				return tree.getFeedCategory(feed);
 
+		} catch (e) {
+			//
+		}
 
+		return false;
+	},
+	getFeedName: function(feed, is_cat) {
+		if (isNaN(feed)) return feed; // it's a tag
+
+		const tree = dijit.byId("feedTree");
+
+		if (tree && tree.model)
+			return tree.model.getFeedValue(feed, is_cat, 'name');
+	},
+	setFeedUnread: function(feed, is_cat, unread) {
+		const tree = dijit.byId("feedTree");
+
+		if (tree && tree.model)
+			return tree.model.setFeedUnread(feed, is_cat, unread);
+	},
+	setFeedValue: function(feed, is_cat, key, value) {
+		try {
+			const tree = dijit.byId("feedTree");
+
+			if (tree && tree.model)
+				return tree.model.setFeedValue(feed, is_cat, key, value);
+
+		} catch (e) {
+			//
+		}
+	},
+	getFeedValue: function(feed, is_cat, key) {
+		try {
+			const tree = dijit.byId("feedTree");
+
+			if (tree && tree.model)
+				return tree.model.getFeedValue(feed, is_cat, key);
+
+		} catch (e) {
+			//
+		}
+		return '';
+	},
+	setFeedIcon: function(feed, is_cat, src) {
+		const tree = dijit.byId("feedTree");
+
+		if (tree) return tree.setFeedIcon(feed, is_cat, src);
+	},
+	setFeedExpandoIcon: function(feed, is_cat, src) {
+		const tree = dijit.byId("feedTree");
+
+		if (tree) return tree.setFeedExpandoIcon(feed, is_cat, src);
+
+		return false;
+	},
+	getNextUnreadFeed: function(feed, is_cat) {
+		const tree = dijit.byId("feedTree");
+		const nuf = tree.model.getNextUnreadFeed(feed, is_cat);
+
+		if (nuf)
+			return tree.model.store.getValue(nuf, 'bare_id');
+	}
+};

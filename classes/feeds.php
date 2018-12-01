@@ -388,7 +388,7 @@ class Feeds extends Handler_Protected {
 
 							$vgroup_last_feed = $feed_id;
 
-							$vf_catchup_link = "<a class='catchup' onclick='catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
+							$vf_catchup_link = "<a class='catchup' onclick='Feeds.catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
 
 							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-titl'>".
 								"<div style='float : right'>$feed_icon_img</div>".
@@ -481,7 +481,7 @@ class Feeds extends Handler_Protected {
 
 							$vgroup_last_feed = $feed_id;
 
-							$vf_catchup_link = "<a class='catchup' onclick='catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
+							$vf_catchup_link = "<a class='catchup' onclick='Feeds.catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
 
 							$feed_icon_src = Feeds::getFeedIcon($feed_id);
 							$feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"$feed_icon_src\">";

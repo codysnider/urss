@@ -207,16 +207,16 @@
 			<option value="title"><?php echo __('Title') ?></option>
 		</select>
 
-		<div dojoType="dijit.form.ComboButton" onclick="catchupCurrentFeed()">
+		<div dojoType="dijit.form.ComboButton" onclick="Feeds.catchupCurrentFeed()">
 			<span><?php echo __('Mark as read') ?></span>
 			<div dojoType="dijit.DropDownMenu">
-				<div dojoType="dijit.MenuItem" onclick="catchupCurrentFeed('1day')">
+				<div dojoType="dijit.MenuItem" onclick="Feeds.catchupCurrentFeed('1day')">
 					<?php echo __('Older than one day') ?>
 				</div>
-				<div dojoType="dijit.MenuItem" onclick="catchupCurrentFeed('1week')">
+				<div dojoType="dijit.MenuItem" onclick="Feeds.catchupCurrentFeed('1week')">
 					<?php echo __('Older than one week') ?>
 				</div>
-				<div dojoType="dijit.MenuItem" onclick="catchupCurrentFeed('2week')">
+				<div dojoType="dijit.MenuItem" onclick="Feeds.catchupCurrentFeed('2week')">
 					<?php echo __('Older than two weeks') ?>
 				</div>
 			</div>
