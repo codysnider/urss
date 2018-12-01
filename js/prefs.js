@@ -85,8 +85,6 @@ const App = {
 				editFeed(param)
 			}, 100);
 		}
-
-		setInterval(() => { hotkeyPrefixTimeout() }, 5 * 1000);
 	},
 	hotkeyHandler: function (event) {
 		if (event.target.nodeName == "INPUT" || event.target.nodeName == "TEXTAREA") return;

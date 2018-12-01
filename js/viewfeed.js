@@ -1,4 +1,4 @@
-/* global dijit, __, ngettext */
+/* global dijit, __, ngettext, notify */
 
 const ArticleCache = {
 	has_storage: 'sessionStorage' in window && window['sessionStorage'] !== null,

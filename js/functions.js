@@ -5,9 +5,6 @@ let _label_base_index = -1024;
 let loading_progress = 0;
 let notify_hide_timerid = false;
 
-let hotkey_prefix = 0;
-let hotkey_prefix_pressed = false;
-
 Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(
 	function (callOriginal, options) {
 
@@ -58,6 +55,9 @@ Array.prototype.remove = function(s) {
 
 const Utils = {
 	_rpc_seq: 0,
+	hotkey_prefix: 0,
+	hotkey_prefix_pressed: false,
+	hotkey_prefix_timeout: 0,
 	next_seq: function() {
 		this._rpc_seq += 1;
 		return this._rpc_seq;
@@ -75,30 +75,34 @@ const Utils = {
 			Element.hide("overlay");
 
 	},
-	keyeventToAction: function(e) {
+	keyeventToAction: function(event) {
 
 		const hotkeys_map = getInitParam("hotkeys");
-		const keycode = e.which;
+		const keycode = event.which;
 		const keychar = String.fromCharCode(keycode).toLowerCase();
 
 		if (keycode == 27) { // escape and drop prefix
-			hotkey_prefix = false;
+			this.hotkey_prefix = false;
 		}
 
 		if (keycode == 16 || keycode == 17) return; // ignore lone shift / ctrl
 
-		if (!hotkey_prefix && hotkeys_map[0].indexOf(keychar) != -1) {
+		if (!this.hotkey_prefix && hotkeys_map[0].indexOf(keychar) != -1) {
 
 			const date = new Date();
 			const ts = Math.round(date.getTime() / 1000);
 
-			hotkey_prefix = keychar;
-			hotkey_prefix_pressed = ts;
-
+			this.hotkey_prefix = keychar;
 			$("cmdline").innerHTML = keychar;
 			Element.show("cmdline");
 
-			e.stopPropagation();
+			window.clearTimeout(this.hotkey_prefix_timeout);
+			this.hotkey_prefix_timeout = window.setTimeout(() => {
+				this.hotkey_prefix = false;
+				Element.hide("cmdline");
+			}, 3 * 1000);
+
+			event.stopPropagation();
 
 			return false;
 		}
@@ -108,13 +112,13 @@ const Utils = {
 		let hotkey_name = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
 
 		// ensure ^*char notation
-		if (e.shiftKey) hotkey_name = "*" + hotkey_name;
-		if (e.ctrlKey) hotkey_name = "^" + hotkey_name;
-		if (e.altKey) hotkey_name = "+" + hotkey_name;
-		if (e.metaKey) hotkey_name = "%" + hotkey_name;
+		if (event.shiftKey) hotkey_name = "*" + hotkey_name;
+		if (event.ctrlKey) hotkey_name = "^" + hotkey_name;
+		if (event.altKey) hotkey_name = "+" + hotkey_name;
+		if (event.metaKey) hotkey_name = "%" + hotkey_name;
 
-		const hotkey_full = hotkey_prefix ? hotkey_prefix + " " + hotkey_name : hotkey_name;
-		hotkey_prefix = false;
+		const hotkey_full = this.hotkey_prefix ? this.hotkey_prefix + " " + hotkey_name : hotkey_name;
+		this.hotkey_prefix = false;
 
 		let action_name = false;
 
@@ -1006,18 +1010,6 @@ function explainError(code) {
 
 function strip_tags(s) {
 	return s.replace(/<\/?[^>]+(>|$)/g, "");
-}
-
-function hotkeyPrefixTimeout() {
-	const date = new Date();
-	const ts = Math.round(date.getTime() / 1000);
-
-	if (hotkey_prefix_pressed && ts - hotkey_prefix_pressed >= 5) {
-		console.log("hotkey_prefix seems to be stuck, aborting");
-		hotkey_prefix_pressed = false;
-		hotkey_prefix = false;
-		Element.hide('cmdline');
-	}
 }
 
 // noinspection JSUnusedGlobalSymbols

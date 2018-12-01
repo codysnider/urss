@@ -1,3 +1,5 @@
+/* global notify,__,dijit */
+
 const Feeds = {
 	counters_last_request: 0,
 	_active_feed_id: 0,
@@ -208,7 +210,6 @@ const Feeds = {
 		Utils.setLoadingProgress(50);
 
 		document.onkeydown = () => { App.hotkeyHandler(event) };
-		window.setInterval(() => { hotkeyPrefixTimeout() }, 3 * 1000);
 		window.setInterval(() => { Headlines.catchupBatchedArticles() }, 10 * 1000);
 
 		if (!this.getActiveFeedId()) {
