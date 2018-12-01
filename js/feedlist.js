@@ -372,6 +372,7 @@ const Feeds = {
 			Headlines.catchupBatchedArticles(() => {
 				xhrPost("backend.php", query, (transport) => {
 					try {
+						window.clearTimeout(this._infscroll_timeout);
 						this.setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
 						Headlines.onLoaded(transport, offset);
 						PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
