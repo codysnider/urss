@@ -1100,6 +1100,7 @@ function updateHeadlineLabels(transport) {
 }
 
 function cdmClicked(event, id, in_body) {
+	in_body = in_body || false;
 
 	if (!in_body && (event.ctrlKey || id == getActiveArticleId() || getInitParam("cdm_expanded"))) {
 		openArticleInNewWindow(id);
@@ -1166,7 +1167,7 @@ function cdmClicked(event, id, in_body) {
 	const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length
 	request_counters(unread_in_buffer == 0); */
 
-	return false;
+	return in_body;
 }
 
 function hlClicked(event, id) {

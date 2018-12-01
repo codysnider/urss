@@ -64,6 +64,7 @@ function viewfeed(params) {
 
 	if (feed != getActiveFeedId() || activeFeedIsCat() != is_cat) {
 		_search_query = false;
+		setActiveArticleId(0);
 	}
 
 	if (offset != 0) {
