@@ -390,7 +390,7 @@ class Feeds extends Handler_Protected {
 
 							$vf_catchup_link = "<a class='catchup' onclick='Feeds.catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
 
-							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-titl'>".
+							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-title'>".
 								"<div style='float : right'>$feed_icon_img</div>".
 								"<a class='title' href=\"#\" onclick=\"Feeds.viewfeed({feed:$feed_id})\">".
 								$line["feed_title"]."</a>
