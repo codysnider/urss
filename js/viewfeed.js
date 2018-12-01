@@ -54,7 +54,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 		$("headlines-frame").removeClassName("cdm");
 		$("headlines-frame").removeClassName("normal");
 
-		$("headlines-frame").addClassName(isCdmMode() ? "cdm" : "normal");
+		$("headlines-frame").addClassName(isCombinedMode() ? "cdm" : "normal");
 
 		const headlines_count = reply['headlines-info']['count'];
 
@@ -524,7 +524,7 @@ function moveToPost(mode, noscroll, noexpand) {
 
 	if (mode == "next") {
 		if (next_id || getActiveArticleId()) {
-			if (isCdmMode()) {
+			if (isCombinedMode()) {
 
 				const article = $("RROW-" + getActiveArticleId());
 				const ctr = $("headlines-frame");
@@ -548,7 +548,7 @@ function moveToPost(mode, noscroll, noexpand) {
 
 	if (mode == "prev") {
 		if (prev_id || getActiveArticleId()) {
-			if (isCdmMode()) {
+			if (isCombinedMode()) {
 
 				const article = $("RROW-" + getActiveArticleId());
 				const prev_article = $("RROW-" + prev_id);
@@ -654,7 +654,7 @@ function selectionRemoveLabel(id, ids) {
 
 	xhrPost("backend.php", query, (transport) => {
 		handle_rpc_json(transport);
-		show_labels_in_headlines(transport);
+		updateHeadlineLabels(transport);
 	});
 }
 
@@ -671,7 +671,7 @@ function selectionAssignLabel(id, ids) {
 
 	xhrPost("backend.php", query, (transport) => {
 		handle_rpc_json(transport);
-		show_labels_in_headlines(transport);
+		updateHeadlineLabels(transport);
 	});
 }
 
@@ -1156,7 +1156,7 @@ function postMouseOut(id) {
 }
 
 function unpackVisibleHeadlines() {
-	if (!isCdmMode() || !getInitParam("cdm_expanded")) return;
+	if (!isCombinedMode() || !getInitParam("cdm_expanded")) return;
 
 	const rows = $$("#headlines-frame div[id*=RROW][data-content]");
 	const threshold = $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight + 300;
@@ -1195,7 +1195,7 @@ function headlines_scroll_handler(e) {
 		unpackVisibleHeadlines();
 
 		// set topmost child in the buffer as active
-		if (isCdmMode() && getInitParam("cdm_expanded") && getInitParam("cdm_auto_catchup") == 1) {
+		if (isCombinedMode() && getInitParam("cdm_expanded") && getInitParam("cdm_auto_catchup") == 1) {
 
 			const rows = $$("#headlines-frame > div[id*=RROW]");
 
@@ -1236,7 +1236,7 @@ function headlines_scroll_handler(e) {
 			}
 		}
 
-		if (isCdmMode()) {
+		if (isCombinedMode()) {
 			updateFloatingTitle();
 		}
 
@@ -1384,7 +1384,7 @@ function getArticleUnderPointer() {
 }
 
 function scrollArticle(offset) {
-	if (!isCdmMode()) {
+	if (!isCombinedMode()) {
 		const ci = $("content-insert");
 		if (ci) {
 			ci.scrollTop += offset;
@@ -1398,7 +1398,7 @@ function scrollArticle(offset) {
 	}
 }
 
-function show_labels_in_headlines(transport) {
+function updateHeadlineLabels(transport) {
 	const data = JSON.parse(transport.responseText);
 
 	if (data) {
@@ -1508,7 +1508,7 @@ function openArticleInNewWindow(id) {
 	w.location = "backend.php?op=article&method=redirect&id=" + id;
 }
 
-function isCdmMode() {
+function isCombinedMode() {
 	return getInitParam("combined_display_mode");
 }
 
@@ -1914,7 +1914,7 @@ function scrollToRowId(id) {
 }
 
 function updateFloatingTitle(unread_only) {
-	if (!isCdmMode() || !getInitParam("cdm_expanded")) return;
+	if (!isCombinedMode() || !getInitParam("cdm_expanded")) return;
 
 	const hf = $("headlines-frame");
 	const elems = $$("#headlines-frame > div[id*=RROW]");

@@ -335,7 +335,7 @@ function init_hotkey_actions() {
 		scrollArticle(-40);
 	};
 	hotkey_actions["close_article"] = function() {
-		if (isCdmMode()) {
+		if (isCombinedMode()) {
 			cdmCollapseActive();
 		} else {
 			closeArticlePanel();
@@ -477,7 +477,7 @@ function init_hotkey_actions() {
 		}
 	};
 	hotkey_actions["toggle_widescreen"] = function() {
-		if (!isCdmMode()) {
+		if (!isCombinedMode()) {
 			_widescreen_mode = !_widescreen_mode;
 
 			// reset stored sizes because geometry changed
@@ -495,7 +495,7 @@ function init_hotkey_actions() {
 	hotkey_actions["toggle_combined_mode"] = function() {
 		notify_progress("Loading, please wait...");
 
-		const value = isCdmMode() ? "false" : "true";
+		const value = isCombinedMode() ? "false" : "true";
 
 		xhrPost("backend.php", {op: "rpc", method: "setpref", key: "COMBINED_DISPLAY_MODE", value: value}, () => {
 			setInitParam("combined_display_mode",
@@ -643,7 +643,7 @@ function quickMenuGo(opid) {
 		toggleDispRead();
 		break;
 	case "qmcToggleWidescreen":
-		if (!isCdmMode()) {
+		if (!isCombinedMode()) {
 			_widescreen_mode = !_widescreen_mode;
 
 			// reset stored sizes because geometry changed
@@ -851,7 +851,7 @@ function handle_rpc_json(transport, scheduled_call) {
 }
 
 function switchPanelMode(wide) {
-	if (isCdmMode()) return;
+	if (isCombinedMode()) return;
 
 	const article_id = getActiveArticleId();
 
