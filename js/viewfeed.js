@@ -1205,6 +1205,7 @@ function updateHeadlineLabels(transport) {
 }
 
 function cdmClicked(event, id, in_body) {
+	in_body = in_body || false;
 
 	if (!in_body && (event.ctrlKey || id == getActiveArticleId() || getInitParam("cdm_expanded"))) {
 		Article.openArticleInNewWindow(id);
@@ -1215,7 +1216,7 @@ function cdmClicked(event, id, in_body) {
 	if (!getInitParam("cdm_expanded"))
 		cdmScrollToArticleId(id);
 
-	return false;
+	return in_body;
 }
 
 function hlClicked(event, id) {
