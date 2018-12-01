@@ -22,12 +22,12 @@ class Mark_Button extends Plugin {
 			if (sql_bool_to_bool($line["marked"])) {
 				$marked_pic = "<img
 					src=\"images/mark_set.png\"
-					class=\"markedPic\" alt=\"Unstar article\"
+					class=\"marked-pic marked-$id\" alt=\"Unstar article\"
 					onclick='toggleMark($id)'>";
 			} else {
 				$marked_pic = "<img
 					src=\"images/mark_unset.png\"
-					class=\"markedPic\" alt=\"Star article\"
+					class=\"marked-pic marked-$id\" alt=\"Star article\"
 					onclick='toggleMark($id)'>";
 			}
 		}

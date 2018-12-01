@@ -26,7 +26,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			if (this.model.store.getValue(args.item, 'id') != 'root') {
 				const img = dojo.doc.createElement('img');
 				img.src ='images/filter.png';
-				img.className = 'markedPic';
+				img.className = 'marked-pic';
 				tnode._filterIconNode = img;
 				domConstruct.place(tnode._filterIconNode, tnode.labelNode, 'before');
 			}

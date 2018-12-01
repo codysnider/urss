@@ -331,11 +331,11 @@ class Feeds extends Handler_Protected {
 
 				$marked_pic_src = $line["marked"] ? "mark_set.png" : "mark_unset.png";
 				$class .= $line["marked"] ? " marked" : "";
-				$marked_pic = "<img src=\"images/$marked_pic_src\" class=\"markedPic\" onclick='toggleMark($id)'>";
+				$marked_pic = "<img src=\"images/$marked_pic_src\" class=\"marked-pic marked-$id\" onclick='toggleMark($id)'>";
 
 				$published_pic_src = $line["published"] ? "pub_set.png" : "pub_unset.png";
 				$class .= $line["published"] ? " published" : "";
-                $published_pic = "<img src=\"images/$published_pic_src\" class=\"pubPic\" onclick='togglePub($id)'>";
+                $published_pic = "<img src=\"images/$published_pic_src\" class=\"pub-pic pub-$id\" onclick='togglePub($id)'>";
 
 				$updated_fmt = make_local_datetime($line["updated"], false, false, false, true);
 				$date_entered_fmt = T_sprintf("Imported at %s",

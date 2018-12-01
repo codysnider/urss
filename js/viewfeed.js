@@ -400,93 +400,64 @@ function toggleMark(id, client_only) {
 	const query = { op: "rpc", id: id, method: "mark" };
 
 	const row = $("RROW-" + id);
-	if (!row) return;
 
-	const imgs = [];
+	if (row) {
+		const imgs = $$("img[class*=marked-pic][class*=marked-" + id + "]");
 
-	const row_imgs = row.getElementsByClassName("markedPic");
-
-	for (let i = 0; i < row_imgs.length; i++)
-		imgs.push(row_imgs[i]);
-
-	const ft = $("floatingTitle");
-
-	if (ft && ft.getAttribute("data-article-id") == id) {
-		const fte = ft.getElementsByClassName("markedPic");
-
-		for (var i = 0; i < fte.length; i++)
-			imgs.push(fte[i]);
-	}
-
-	for (i = 0; i < imgs.length; i++) {
-		const img = imgs[i];
-
-		if (!row.hasClassName("marked")) {
-			img.src = img.src.replace("mark_unset", "mark_set");
-			query.mark = 1;
-		} else {
-			img.src = img.src.replace("mark_set", "mark_unset");
-			query.mark = 0;
-		}
-	}
-
-	row.toggleClassName("marked");
-
-	if (!client_only)
-		xhrPost("backend.php", query, (transport) => {
-			handle_rpc_json(transport);
+		imgs.each((img) => {
+			if (!row.hasClassName("marked")) {
+				img.src = img.src.replace("mark_unset", "mark_set");
+				query.mark = 1;
+			} else {
+				img.src = img.src.replace("mark_set", "mark_unset");
+				query.mark = 0;
+			}
 		});
+
+		row.toggleClassName("marked");
+
+		if (!client_only)
+			xhrPost("backend.php", query, (transport) => {
+				handle_rpc_json(transport);
+			});
 	}
+}
 
 function togglePub(id, client_only, no_effects, note) {
 	const query = { op: "rpc", id: id, method: "publ" };
 
-	if (note != undefined) {
-		query.note = note;
-	} else {
-		query.note = "undefined";
-	}
-
 	const row = $("RROW-" + id);
-	if (!row) return;
 
-	const imgs = [];
-
-	const row_imgs = row.getElementsByClassName("pubPic");
-
-	for (let i = 0; i < row_imgs.length; i++)
-		imgs.push(row_imgs[i]);
-
-	const ft = $("floatingTitle");
-
-	if (ft && ft.getAttribute("data-article-id") == id) {
-		const fte = ft.getElementsByClassName("pubPic");
-
-		for (let i = 0; i < fte.length; i++)
-			imgs.push(fte[i]);
-	}
-
-	for (let i = 0; i < imgs.length; i++) {
-		const img = imgs[i];
-
-		if (!row.hasClassName("published") || note != undefined) {
-			img.src = img.src.replace("pub_unset", "pub_set");
-			query.pub = 1;
+	if (row) {
+		if (note != undefined) {
+			query.note = note;
 		} else {
-			img.src = img.src.replace("pub_set", "pub_unset");
-			query.pub = 0;
+			query.note = "undefined";
 		}
-	}
 
-	if (note != undefined)
-		row.addClassName("published");
-	else
-		row.toggleClassName("published");
+		const imgs = $$("img[class*=pub-pic][class*=pub-" + id + "]");
 
-	if (!client_only)
-		xhrPost("backend.php", query, (transport) => {
-				handle_rpc_json(transport);
+		imgs.each((img) => {
+			if (!row.hasClassName("published") || note != undefined) {
+				img.src = img.src.replace("pub_unset", "pub_set");
+				query.pub = 1;
+			} else {
+				img.src = img.src.replace("pub_set", "pub_unset");
+				query.pub = 0;
+			}
 		});
+
+		if (note != undefined)
+			row.addClassName("published");
+		else
+			row.toggleClassName("published");
+
+		if (!client_only)
+			xhrPost("backend.php", query, (transport) => {
+				handle_rpc_json(transport);
+			});
+
+	}
 }
 
 function moveToPost(mode, noscroll, noexpand) {
@@ -1932,7 +1903,7 @@ function updateFloatingTitle(unread_only) {
 
 					$("floatingTitle").setAttribute("data-article-id", child.getAttribute("data-article-id"));
 					$("floatingTitle").innerHTML = header.innerHTML;
-					$("floatingTitle").firstChild.innerHTML = "<img class='anchor markedPic' src='images/page_white_go.png' onclick=\"scrollToRowId('" + child.id + "')\">" + $("floatingTitle").firstChild.innerHTML;
+					$("floatingTitle").firstChild.innerHTML = "<img class='anchor marked-pics' src='images/page_white_go.png' onclick=\"scrollToRowId('" + child.id + "')\">" + $("floatingTitle").firstChild.innerHTML;
 
 					initFloatingMenu();
 
