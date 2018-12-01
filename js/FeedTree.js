@@ -48,7 +48,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 					menu.addChild(new dijit.MenuItem({
 						label: __("Edit feed"),
 						onClick: function() {
-							editFeed(this.getParent().row_id, false);
+							CommonDialogs.editFeed(this.getParent().row_id, false);
 						}}));
 
 					/* menu.addChild(new dijit.MenuItem({

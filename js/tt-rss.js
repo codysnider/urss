@@ -360,7 +360,7 @@ const App = {
 			if (Feeds.activeFeedIsCat())
 				alert(__("You can't edit this kind of feed."));
 			else
-				editFeed(Feeds.getActiveFeedId());
+				CommonDialogs.editFeed(Feeds.getActiveFeedId());
 		};
 		this.hotkey_actions["feed_catchup"] = function () {
 			if (Feeds.getActiveFeedId() != undefined) {
@@ -424,7 +424,7 @@ const App = {
 			CommonDialogs.addLabel();
 		};
 		this.hotkey_actions["create_filter"] = function () {
-			quickAddFilter();
+			Filters.quickAddFilter();
 		};
 		this.hotkey_actions["collapse_sidebar"] = function () {
 			Feeds.viewCurrentFeed();
@@ -501,7 +501,7 @@ const App = {
 				if (Feeds.activeFeedIsCat())
 					alert(__("You can't edit this kind of feed."));
 				else
-					editFeed(Feeds.getActiveFeedId());
+					CommonDialogs.editFeed(Feeds.getActiveFeedId());
 				break;
 			case "qmcRemoveFeed":
 				var actid = Feeds.getActiveFeedId();
@@ -521,7 +521,7 @@ const App = {
 				var pr = __("Unsubscribe from %s?").replace("%s", fn);
 
 				if (confirm(pr)) {
-					unsubscribeFeed(actid);
+					CommonDialogs.unsubscribeFeed(actid);
 				}
 				break;
 			case "qmcCatchupAll":

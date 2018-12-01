@@ -291,7 +291,7 @@ const Utils = {
 			}
 
 			if (k == "daemon_is_running" && v != 1) {
-				notify_error("<span onclick=\"explainError(1)\">Update daemon is not running.</span>", true);
+				notify_error("<span onclick=\"Utils.explainError(1)\">Update daemon is not running.</span>", true);
 				return;
 			}
 
@@ -306,7 +306,7 @@ const Utils = {
 			}
 
 			if (k == "daemon_stamp_ok" && v != 1) {
-				notify_error("<span onclick=\"explainError(3)\">Update daemon is not updating feeds.</span>", true);
+				notify_error("<span onclick=\"Utils.explainError(3)\">Update daemon is not updating feeds.</span>", true);
 				return;
 			}
 
@@ -376,7 +376,10 @@ const Utils = {
 		}
 
 		App.initSecondStage();
-	}
+	},
+	explainError: function(code) {
+		return this.displayDlg(__("Error explained"), "explainError", code);
+	},
 };
 
 const CommonDialogs = {
@@ -674,6 +677,97 @@ const CommonDialogs = {
 				}
 			});
 		}
+	},
+	unsubscribeFeed: function(feed_id, title) {
+
+		const msg = __("Unsubscribe from %s?").replace("%s", title);
+
+		if (title == undefined || confirm(msg)) {
+			notify_progress("Removing feed...");
+
+			const query = {op: "pref-feeds", quiet: 1, method: "remove", ids: feed_id};
+
+			xhrPost("backend.php", query, (transport) => {
+				if (dijit.byId("feedEditDlg")) dijit.byId("feedEditDlg").hide();
+
+				if (App.isPrefs()) {
+					Feeds.reload();
+				} else {
+					if (feed_id == Feeds.getActiveFeedId())
+						setTimeout(() => {
+								Feeds.viewfeed({feed: -5})
+							},
+							100);
+
+					if (feed_id < 0) Feeds.reload();
+				}
+			});
+		}
+
+		return false;
+	},
+	editFeed: function (feed) {
+		if (feed <= 0)
+			return alert(__("You can't edit this kind of feed."));
+
+		const query = {op: "pref-feeds", method: "editfeed", id: feed};
+
+		console.log("editFeed", query);
+
+		if (dijit.byId("filterEditDlg"))
+			dijit.byId("filterEditDlg").destroyRecursive();
+
+		if (dijit.byId("feedEditDlg"))
+			dijit.byId("feedEditDlg").destroyRecursive();
+
+		const dialog = new dijit.Dialog({
+			id: "feedEditDlg",
+			title: __("Edit Feed"),
+			style: "width: 600px",
+			execute: function () {
+				if (this.validate()) {
+					notify_progress("Saving data...", true);
+
+					xhrPost("backend.php", dialog.attr('value'), () => {
+						dialog.hide();
+						notify('');
+						Feeds.reload();
+					});
+				}
+			},
+			href: "backend.php?" + dojo.objectToQuery(query)
+		});
+
+		dialog.show();
+	},
+	genUrlChangeKey: function(feed, is_cat) {
+		if (confirm(__("Generate new syndication address for this feed?"))) {
+
+			notify_progress("Trying to change address...", true);
+
+			const query = {op: "pref-feeds", method: "regenFeedKey", id: feed, is_cat: is_cat};
+
+			xhrJson("backend.php", query, (reply) => {
+				const new_link = reply.link;
+				const e = $('gen_feed_url');
+
+				if (new_link) {
+					e.innerHTML = e.innerHTML.replace(/\&amp;key=.*$/,
+						"&amp;key=" + new_link);
+
+					e.href = e.href.replace(/\&key=.*$/,
+						"&key=" + new_link);
+
+					new Effect.Highlight(e);
+
+					notify('');
+
+				} else {
+					notify_error("Could not change feed URL.");
+				}
+			});
+		}
+		return false;
 	}
 };
 
@@ -994,46 +1088,398 @@ function fatalError(code, msg, ext_info) {
 
 }
 
-// noinspection JSUnusedGlobalSymbols
-function filterDlgCheckAction(sender) {
-	const action = sender.value;
+const Filters = {
+	filterDlgCheckAction: function(sender) {
+		const action = sender.value;
 
-	const action_param = $("filterDlg_paramBox");
+		const action_param = $("filterDlg_paramBox");
 
-	if (!action_param) {
-		console.log("filterDlgCheckAction: can't find action param box!");
-		return;
-	}
-
-	// if selected action supports parameters, enable params field
-	if (action == 4 || action == 6 || action == 7 || action == 9) {
-		new Effect.Appear(action_param, {duration : 0.5});
-
-		Element.hide(dijit.byId("filterDlg_actionParam").domNode);
-		Element.hide(dijit.byId("filterDlg_actionParamLabel").domNode);
-		Element.hide(dijit.byId("filterDlg_actionParamPlugin").domNode);
-
-		if (action == 7) {
-			Element.show(dijit.byId("filterDlg_actionParamLabel").domNode);
-		} else if (action == 9) {
-			Element.show(dijit.byId("filterDlg_actionParamPlugin").domNode);
-		} else {
-			Element.show(dijit.byId("filterDlg_actionParam").domNode);
+		if (!action_param) {
+			console.log("filterDlgCheckAction: can't find action param box!");
+			return;
 		}
 
-	} else {
-		Element.hide(action_param);
-	}
-}
+		// if selected action supports parameters, enable params field
+		if (action == 4 || action == 6 || action == 7 || action == 9) {
+			new Effect.Appear(action_param, {duration: 0.5});
 
+			Element.hide(dijit.byId("filterDlg_actionParam").domNode);
+			Element.hide(dijit.byId("filterDlg_actionParamLabel").domNode);
+			Element.hide(dijit.byId("filterDlg_actionParamPlugin").domNode);
 
-function explainError(code) {
-	return Utils.displayDlg(__("Error explained"), "explainError", code);
-}
+			if (action == 7) {
+				Element.show(dijit.byId("filterDlg_actionParamLabel").domNode);
+			} else if (action == 9) {
+				Element.show(dijit.byId("filterDlg_actionParamPlugin").domNode);
+			} else {
+				Element.show(dijit.byId("filterDlg_actionParam").domNode);
+			}
 
-function strip_tags(s) {
+		} else {
+			Element.hide(action_param);
+		}
+	},
+	createNewRuleElement: function(parentNode, replaceNode) {
+		const form = document.forms["filter_new_rule_form"];
+		const query = {op: "pref-filters", method: "printrulename", rule: dojo.formToJson(form)};
+
+		xhrPost("backend.php", query, (transport) => {
+			try {
+				const li = dojo.create("li");
+
+				const cb = dojo.create("input", {type: "checkbox"}, li);
+
+				new dijit.form.CheckBox({
+					onChange: function () {
+						toggleSelectListRow2(this)
+					},
+				}, cb);
+
+				dojo.create("input", {
+					type: "hidden",
+					name: "rule[]",
+					value: dojo.formToJson(form)
+				}, li);
+
+				dojo.create("span", {
+					onclick: function () {
+						dijit.byId('filterEditDlg').editRule(this);
+					},
+					innerHTML: transport.responseText
+				}, li);
+
+				if (replaceNode) {
+					parentNode.replaceChild(li, replaceNode);
+				} else {
+					parentNode.appendChild(li);
+				}
+			} catch (e) {
+				exception_error(e);
+			}
+		});
+	},
+	createNewActionElement: function(parentNode, replaceNode) {
+		const form = document.forms["filter_new_action_form"];
+
+		if (form.action_id.value == 7) {
+			form.action_param.value = form.action_param_label.value;
+		} else if (form.action_id.value == 9) {
+			form.action_param.value = form.action_param_plugin.value;
+		}
+
+		const query = {
+			op: "pref-filters", method: "printactionname",
+			action: dojo.formToJson(form)
+		};
+
+		xhrPost("backend.php", query, (transport) => {
+			try {
+				const li = dojo.create("li");
+
+				const cb = dojo.create("input", {type: "checkbox"}, li);
+
+				new dijit.form.CheckBox({
+					onChange: function () {
+						toggleSelectListRow2(this)
+					},
+				}, cb);
+
+				dojo.create("input", {
+					type: "hidden",
+					name: "action[]",
+					value: dojo.formToJson(form)
+				}, li);
+
+				dojo.create("span", {
+					onclick: function () {
+						dijit.byId('filterEditDlg').editAction(this);
+					},
+					innerHTML: transport.responseText
+				}, li);
+
+				if (replaceNode) {
+					parentNode.replaceChild(li, replaceNode);
+				} else {
+					parentNode.appendChild(li);
+				}
+
+			} catch (e) {
+				exception_error(e);
+			}
+		});
+	},
+	addFilterRule: function(replaceNode, ruleStr) {
+		if (dijit.byId("filterNewRuleDlg"))
+			dijit.byId("filterNewRuleDlg").destroyRecursive();
+
+		const query = "backend.php?op=pref-filters&method=newrule&rule=" +
+			param_escape(ruleStr);
+
+		const rule_dlg = new dijit.Dialog({
+			id: "filterNewRuleDlg",
+			title: ruleStr ? __("Edit rule") : __("Add rule"),
+			style: "width: 600px",
+			execute: function () {
+				if (this.validate()) {
+					Filters.createNewRuleElement($("filterDlg_Matches"), replaceNode);
+					this.hide();
+				}
+			},
+			href: query
+		});
+
+		rule_dlg.show();
+	},
+	addFilterAction: function(replaceNode, actionStr) {
+		if (dijit.byId("filterNewActionDlg"))
+			dijit.byId("filterNewActionDlg").destroyRecursive();
+
+		const query = "backend.php?op=pref-filters&method=newaction&action=" +
+			param_escape(actionStr);
+
+		const rule_dlg = new dijit.Dialog({
+			id: "filterNewActionDlg",
+			title: actionStr ? __("Edit action") : __("Add action"),
+			style: "width: 600px",
+			execute: function () {
+				if (this.validate()) {
+					Filters.createNewActionElement($("filterDlg_Actions"), replaceNode);
+					this.hide();
+				}
+			},
+			href: query
+		});
+
+		rule_dlg.show();
+	},
+	editFilterTest: function(query) {
+
+		if (dijit.byId("filterTestDlg"))
+			dijit.byId("filterTestDlg").destroyRecursive();
+
+		const test_dlg = new dijit.Dialog({
+			id: "filterTestDlg",
+			title: "Test Filter",
+			style: "width: 600px",
+			results: 0,
+			limit: 100,
+			max_offset: 10000,
+			getTestResults: function (query, offset) {
+				const updquery = query + "&offset=" + offset + "&limit=" + test_dlg.limit;
+
+				console.log("getTestResults:" + offset);
+
+				xhrPost("backend.php", updquery, (transport) => {
+					try {
+						const result = JSON.parse(transport.responseText);
+
+						if (result && dijit.byId("filterTestDlg") && dijit.byId("filterTestDlg").open) {
+							test_dlg.results += result.length;
+
+							console.log("got results:" + result.length);
+
+							$("prefFilterProgressMsg").innerHTML = __("Looking for articles (%d processed, %f found)...")
+								.replace("%f", test_dlg.results)
+								.replace("%d", offset);
+
+							console.log(offset + " " + test_dlg.max_offset);
+
+							for (let i = 0; i < result.length; i++) {
+								const tmp = new Element("table");
+								tmp.innerHTML = result[i];
+								dojo.parser.parse(tmp);
+
+								$("prefFilterTestResultList").innerHTML += tmp.innerHTML;
+							}
+
+							if (test_dlg.results < 30 && offset < test_dlg.max_offset) {
+
+								// get the next batch
+								window.setTimeout(function () {
+									test_dlg.getTestResults(query, offset + test_dlg.limit);
+								}, 0);
+
+							} else {
+								// all done
+
+								Element.hide("prefFilterLoadingIndicator");
+
+								if (test_dlg.results == 0) {
+									$("prefFilterTestResultList").innerHTML = "<tr><td align='center'>No recent articles matching this filter have been found.</td></tr>";
+									$("prefFilterProgressMsg").innerHTML = "Articles matching this filter:";
+								} else {
+									$("prefFilterProgressMsg").innerHTML = __("Found %d articles matching this filter:")
+										.replace("%d", test_dlg.results);
+								}
+
+							}
+
+						} else if (!result) {
+							console.log("getTestResults: can't parse results object");
+
+							Element.hide("prefFilterLoadingIndicator");
+
+							notify_error("Error while trying to get filter test results.");
+
+						} else {
+							console.log("getTestResults: dialog closed, bailing out.");
+						}
+					} catch (e) {
+						exception_error(e);
+					}
+
+				});
+			},
+			href: query
+		});
+
+		dojo.connect(test_dlg, "onLoad", null, function (e) {
+			test_dlg.getTestResults(query, 0);
+		});
+
+		test_dlg.show();
+	},
+	quickAddFilter: function() {
+		let query;
+
+		if (!App.isPrefs()) {
+			query = {
+				op: "pref-filters", method: "newfilter",
+				feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat()
+			};
+		} else {
+			query = {op: "pref-filters", method: "newfilter"};
+		}
+
+		console.log('quickAddFilter', query);
+
+		if (dijit.byId("feedEditDlg"))
+			dijit.byId("feedEditDlg").destroyRecursive();
+
+		if (dijit.byId("filterEditDlg"))
+			dijit.byId("filterEditDlg").destroyRecursive();
+
+		const dialog = new dijit.Dialog({
+			id: "filterEditDlg",
+			title: __("Create Filter"),
+			style: "width: 600px",
+			test: function () {
+				const query = "backend.php?" + dojo.formToQuery("filter_new_form") + "&savemode=test";
+
+				Filters.editFilterTest(query);
+			},
+			selectRules: function (select) {
+				$$("#filterDlg_Matches input[type=checkbox]").each(function (e) {
+					e.checked = select;
+					if (select)
+						e.parentNode.addClassName("Selected");
+					else
+						e.parentNode.removeClassName("Selected");
+				});
+			},
+			selectActions: function (select) {
+				$$("#filterDlg_Actions input[type=checkbox]").each(function (e) {
+					e.checked = select;
+
+					if (select)
+						e.parentNode.addClassName("Selected");
+					else
+						e.parentNode.removeClassName("Selected");
+
+				});
+			},
+			editRule: function (e) {
+				const li = e.parentNode;
+				const rule = li.getElementsByTagName("INPUT")[1].value;
+				Filters.addFilterRule(li, rule);
+			},
+			editAction: function (e) {
+				const li = e.parentNode;
+				const action = li.getElementsByTagName("INPUT")[1].value;
+				Filters.addFilterAction(li, action);
+			},
+			addAction: function () {
+				Filters.addFilterAction();
+			},
+			addRule: function () {
+				Filters.addFilterRule();
+			},
+			deleteAction: function () {
+				$$("#filterDlg_Actions li[class*=Selected]").each(function (e) {
+					e.parentNode.removeChild(e)
+				});
+			},
+			deleteRule: function () {
+				$$("#filterDlg_Matches li[class*=Selected]").each(function (e) {
+					e.parentNode.removeChild(e)
+				});
+			},
+			execute: function () {
+				if (this.validate()) {
+
+					const query = dojo.formToQuery("filter_new_form");
+
+					xhrPost("backend.php", query, () => {
+						if (App.isPrefs()) {
+							updateFilterList();
+						}
+
+						dialog.hide();
+					});
+				}
+			},
+			href: "backend.php?" + dojo.objectToQuery(query)
+		});
+
+		if (!App.isPrefs()) {
+			const selectedText = getSelectionText();
+
+			const lh = dojo.connect(dialog, "onLoad", function () {
+				dojo.disconnect(lh);
+
+				if (selectedText != "") {
+
+					const feed_id = Feeds.activeFeedIsCat() ? 'CAT:' + parseInt(Feeds.getActiveFeedId()) :
+						Feeds.getActiveFeedId();
+
+					const rule = {reg_exp: selectedText, feed_id: [feed_id], filter_type: 1};
+
+					Filters.addFilterRule(null, dojo.toJson(rule));
+
+				} else {
+
+					const query = {op: "rpc", method: "getlinktitlebyid", id: Article.getActiveArticleId()};
+
+					xhrPost("backend.php", query, (transport) => {
+						const reply = JSON.parse(transport.responseText);
+
+						let title = false;
+
+						if (reply && reply.title) title = reply.title;
+
+						if (title || Feeds.getActiveFeedId() || Feeds.activeFeedIsCat()) {
+
+							console.log(title + " " + Feeds.getActiveFeedId());
+
+							const feed_id = Feeds.activeFeedIsCat() ? 'CAT:' + parseInt(Feeds.getActiveFeedId()) :
+								Feeds.getActiveFeedId();
+
+							const rule = {reg_exp: title, feed_id: [feed_id], filter_type: 1};
+
+							Filters.addFilterRule(null, dojo.toJson(rule));
+						}
+					});
+				}
+			});
+		}
+
+		dialog.show();
+	},
+};
+
+/* function strip_tags(s) {
 	return s.replace(/<\/?[^>]+(>|$)/g, "");
-}
+} */
 
 // noinspection JSUnusedGlobalSymbols
 function uploadIconHandler(rc) {
@@ -1090,405 +1536,6 @@ function uploadFeedIcon() {
 	return false;
 }
 
-function createNewRuleElement(parentNode, replaceNode) {
-	const form = document.forms["filter_new_rule_form"];
-	const query = { op: "pref-filters", method: "printrulename", rule: dojo.formToJson(form) };
-
-	xhrPost("backend.php", query, (transport) => {
-		try {
-			const li = dojo.create("li");
-
-			const cb = dojo.create("input", { type: "checkbox" }, li);
-
-			new dijit.form.CheckBox({
-				onChange: function() {
-					toggleSelectListRow2(this) },
-			}, cb);
-
-			dojo.create("input", { type: "hidden",
-				name: "rule[]",
-				value: dojo.formToJson(form) }, li);
-
-			dojo.create("span", {
-				onclick: function() {
-					dijit.byId('filterEditDlg').editRule(this);
-				},
-				innerHTML: transport.responseText }, li);
-
-			if (replaceNode) {
-				parentNode.replaceChild(li, replaceNode);
-			} else {
-				parentNode.appendChild(li);
-			}
-		} catch (e) {
-			exception_error(e);
-		}
-	});
-}
-
-function createNewActionElement(parentNode, replaceNode) {
-	const form = document.forms["filter_new_action_form"];
-
-	if (form.action_id.value == 7) {
-		form.action_param.value = form.action_param_label.value;
-	} else if (form.action_id.value == 9) {
-		form.action_param.value = form.action_param_plugin.value;
-	}
-
-	const query = { op: "pref-filters", method: "printactionname",
-		action: dojo.formToJson(form) };
-
-	xhrPost("backend.php", query, (transport) => {
-		try {
-			const li = dojo.create("li");
-
-			const cb = dojo.create("input", { type: "checkbox" }, li);
-
-			new dijit.form.CheckBox({
-				onChange: function() {
-					toggleSelectListRow2(this) },
-			}, cb);
-
-			dojo.create("input", { type: "hidden",
-				name: "action[]",
-				value: dojo.formToJson(form) }, li);
-
-			dojo.create("span", {
-				onclick: function() {
-					dijit.byId('filterEditDlg').editAction(this);
-				},
-				innerHTML: transport.responseText }, li);
-
-			if (replaceNode) {
-				parentNode.replaceChild(li, replaceNode);
-			} else {
-				parentNode.appendChild(li);
-			}
-
-		} catch (e) {
-			exception_error(e);
-		}
-	});
-}
-
-
-function addFilterRule(replaceNode, ruleStr) {
-	if (dijit.byId("filterNewRuleDlg"))
-		dijit.byId("filterNewRuleDlg").destroyRecursive();
-
-	const query = "backend.php?op=pref-filters&method=newrule&rule=" +
-		param_escape(ruleStr);
-
-	const rule_dlg = new dijit.Dialog({
-		id: "filterNewRuleDlg",
-		title: ruleStr ? __("Edit rule") : __("Add rule"),
-		style: "width: 600px",
-		execute: function() {
-			if (this.validate()) {
-				createNewRuleElement($("filterDlg_Matches"), replaceNode);
-				this.hide();
-			}
-		},
-		href: query});
-
-	rule_dlg.show();
-}
-
-function addFilterAction(replaceNode, actionStr) {
-	if (dijit.byId("filterNewActionDlg"))
-		dijit.byId("filterNewActionDlg").destroyRecursive();
-
-	const query = "backend.php?op=pref-filters&method=newaction&action=" +
-		param_escape(actionStr);
-
-	const rule_dlg = new dijit.Dialog({
-		id: "filterNewActionDlg",
-		title: actionStr ? __("Edit action") : __("Add action"),
-		style: "width: 600px",
-		execute: function() {
-			if (this.validate()) {
-				createNewActionElement($("filterDlg_Actions"), replaceNode);
-				this.hide();
-			}
-		},
-		href: query});
-
-	rule_dlg.show();
-}
-
-function editFilterTest(query) {
-
-	if (dijit.byId("filterTestDlg"))
-		dijit.byId("filterTestDlg").destroyRecursive();
-
-	const test_dlg = new dijit.Dialog({
-		id: "filterTestDlg",
-		title: "Test Filter",
-		style: "width: 600px",
-		results: 0,
-		limit: 100,
-		max_offset: 10000,
-		getTestResults: function(query, offset) {
-		const updquery = query + "&offset=" + offset + "&limit=" + test_dlg.limit;
-
-		console.log("getTestResults:" + offset);
-
-		xhrPost("backend.php", updquery, (transport) => {
-				try {
-					const result = JSON.parse(transport.responseText);
-
-					if (result && dijit.byId("filterTestDlg") && dijit.byId("filterTestDlg").open) {
-						test_dlg.results += result.length;
-
-						console.log("got results:" + result.length);
-
-						$("prefFilterProgressMsg").innerHTML = __("Looking for articles (%d processed, %f found)...")
-							.replace("%f", test_dlg.results)
-							.replace("%d", offset);
-
-						console.log(offset + " " + test_dlg.max_offset);
-
-						for (let i = 0; i < result.length; i++) {
-							const tmp = new Element("table");
-							tmp.innerHTML = result[i];
-							dojo.parser.parse(tmp);
-
-							$("prefFilterTestResultList").innerHTML += tmp.innerHTML;
-						}
-
-						if (test_dlg.results < 30 && offset < test_dlg.max_offset) {
-
-							// get the next batch
-							window.setTimeout(function () {
-								test_dlg.getTestResults(query, offset + test_dlg.limit);
-							}, 0);
-
-						} else {
-							// all done
-
-							Element.hide("prefFilterLoadingIndicator");
-
-							if (test_dlg.results == 0) {
-								$("prefFilterTestResultList").innerHTML = "<tr><td align='center'>No recent articles matching this filter have been found.</td></tr>";
-								$("prefFilterProgressMsg").innerHTML = "Articles matching this filter:";
-							} else {
-								$("prefFilterProgressMsg").innerHTML = __("Found %d articles matching this filter:")
-									.replace("%d", test_dlg.results);
-							}
-
-						}
-
-					} else if (!result) {
-						console.log("getTestResults: can't parse results object");
-
-						Element.hide("prefFilterLoadingIndicator");
-
-						notify_error("Error while trying to get filter test results.");
-
-					} else {
-						console.log("getTestResults: dialog closed, bailing out.");
-					}
-				} catch (e) {
-					exception_error(e);
-				}
-
-			});
-		},
-		href: query});
-
-	dojo.connect(test_dlg, "onLoad", null, function(e) {
-		test_dlg.getTestResults(query, 0);
-	});
-
-	test_dlg.show();
-
-}
-
-function quickAddFilter() {
-	let query;
-
-	if (!App.isPrefs()) {
-		query = { op: "pref-filters", method: "newfilter",
-			feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat() };
-	} else {
-		query = { op: "pref-filters", method: "newfilter" };
-	}
-
-	console.log('quickAddFilter', query);
-
-	if (dijit.byId("feedEditDlg"))
-		dijit.byId("feedEditDlg").destroyRecursive();
-
-	if (dijit.byId("filterEditDlg"))
-		dijit.byId("filterEditDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "filterEditDlg",
-		title: __("Create Filter"),
-		style: "width: 600px",
-		test: function() {
-			const query = "backend.php?" + dojo.formToQuery("filter_new_form") + "&savemode=test";
-
-			editFilterTest(query);
-		},
-		selectRules: function(select) {
-			$$("#filterDlg_Matches input[type=checkbox]").each(function(e) {
-				e.checked = select;
-				if (select)
-					e.parentNode.addClassName("Selected");
-				else
-					e.parentNode.removeClassName("Selected");
-			});
-		},
-		selectActions: function(select) {
-			$$("#filterDlg_Actions input[type=checkbox]").each(function(e) {
-				e.checked = select;
-
-				if (select)
-					e.parentNode.addClassName("Selected");
-				else
-					e.parentNode.removeClassName("Selected");
-
-			});
-		},
-		editRule: function(e) {
-			const li = e.parentNode;
-			const rule = li.getElementsByTagName("INPUT")[1].value;
-			addFilterRule(li, rule);
-		},
-		editAction: function(e) {
-			const li = e.parentNode;
-			const action = li.getElementsByTagName("INPUT")[1].value;
-			addFilterAction(li, action);
-		},
-		addAction: function() { addFilterAction(); },
-		addRule: function() { addFilterRule(); },
-		deleteAction: function() {
-			$$("#filterDlg_Actions li[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
-		},
-		deleteRule: function() {
-			$$("#filterDlg_Matches li[class*=Selected]").each(function(e) { e.parentNode.removeChild(e) });
-		},
-		execute: function() {
-			if (this.validate()) {
-
-				const query = dojo.formToQuery("filter_new_form");
-
-				xhrPost("backend.php", query, (transport) => {
-					if (App.isPrefs()) {
-						updateFilterList();
-					}
-
-					dialog.hide();
-				});
-			}
-		},
-		href: "backend.php?" + dojo.objectToQuery(query)});
-
-	if (!App.isPrefs()) {
-		const selectedText = getSelectionText();
-
-		const lh = dojo.connect(dialog, "onLoad", function(){
-			dojo.disconnect(lh);
-
-			if (selectedText != "") {
-
-				const feed_id = Feeds.activeFeedIsCat() ? 'CAT:' + parseInt(Feeds.getActiveFeedId()) :
-					Feeds.getActiveFeedId();
-
-				const rule = { reg_exp: selectedText, feed_id: [feed_id], filter_type: 1 };
-
-				addFilterRule(null, dojo.toJson(rule));
-
-			} else {
-
-				const query = { op: "rpc", method: "getlinktitlebyid", id: Article.getActiveArticleId() };
-
-				xhrPost("backend.php", query, (transport) => {
-					const reply = JSON.parse(transport.responseText);
-
-					let title = false;
-
-					if (reply && reply.title) title = reply.title;
-
-					if (title || Feeds.getActiveFeedId() || Feeds.activeFeedIsCat()) {
-
-						console.log(title + " " + Feeds.getActiveFeedId());
-
-						const feed_id = Feeds.activeFeedIsCat() ? 'CAT:' + parseInt(Feeds.getActiveFeedId()) :
-							Feeds.getActiveFeedId();
-
-						const rule = { reg_exp: title, feed_id: [feed_id], filter_type: 1 };
-
-						addFilterRule(null, dojo.toJson(rule));
-					}
-				});
-			}
-		});
-	}
-
-	dialog.show();
-
-}
-
-function unsubscribeFeed(feed_id, title) {
-
-	const msg = __("Unsubscribe from %s?").replace("%s", title);
-
-	if (title == undefined || confirm(msg)) {
-		notify_progress("Removing feed...");
-
-		const query = { op: "pref-feeds", quiet: 1, method: "remove", ids: feed_id };
-
-		xhrPost("backend.php", query, (transport) => {
-			if (dijit.byId("feedEditDlg")) dijit.byId("feedEditDlg").hide();
-
-			if (App.isPrefs()) {
-				Feeds.reload();
-			} else {
-				if (feed_id == Feeds.getActiveFeedId())
-					setTimeout(() => { Feeds.viewfeed({feed:-5}) },
-						100);
-
-				if (feed_id < 0) Feeds.reload();
-			}
-		});
-	}
-
-	return false;
-}
-
-// noinspection JSUnusedGlobalSymbols
-function genUrlChangeKey(feed, is_cat) {
-	if (confirm(__("Generate new syndication address for this feed?"))) {
-
-		notify_progress("Trying to change address...", true);
-
-		const query = { op: "pref-feeds", method: "regenFeedKey", id: feed, is_cat: is_cat };
-
-		xhrJson("backend.php", query, (reply) => {
-			const new_link = reply.link;
-			const e = $('gen_feed_url');
-
-			if (new_link) {
-				e.innerHTML = e.innerHTML.replace(/\&amp;key=.*$/,
-					"&amp;key=" + new_link);
-
-				e.href = e.href.replace(/\&key=.*$/,
-					"&key=" + new_link);
-
-				new Effect.Highlight(e);
-
-				notify('');
-
-			} else {
-				notify_error("Could not change feed URL.");
-			}
-		});
-	}
-	return false;
-}
-
 // mode = all, none, invert
 function selectTableRows(id, mode) {
 	const rows = $(id).rows;
@@ -1541,7 +1588,6 @@ function selectTableRows(id, mode) {
 			}
 		}
 	}
-
 }
 
 function getSelectedTableRowIds(id) {
@@ -1557,45 +1603,6 @@ function getSelectedTableRowIds(id) {
 	}
 
 	return rows;
-}
-
-function editFeed(feed) {
-	if (feed <= 0)
-		return alert(__("You can't edit this kind of feed."));
-
-	const query = { op: "pref-feeds", method: "editfeed", id: feed };
-
-	console.log("editFeed", query);
-
-	if (dijit.byId("filterEditDlg"))
-		dijit.byId("filterEditDlg").destroyRecursive();
-
-	if (dijit.byId("feedEditDlg"))
-		dijit.byId("feedEditDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "feedEditDlg",
-		title: __("Edit Feed"),
-		style: "width: 600px",
-		execute: function() {
-			if (this.validate()) {
-				notify_progress("Saving data...", true);
-
-				xhrPost("backend.php", dialog.attr('value'), () => {
-					dialog.hide();
-					notify('');
-					Feeds.reload();
-				});
-			}
-		},
-		href: "backend.php?" + dojo.objectToQuery(query)});
-
-	dialog.show();
-}
-
-function get_timestamp() {
-	const date = new Date();
-	return Math.round(date.getTime() / 1000);
 }
 
 // noinspection JSUnusedGlobalSymbols

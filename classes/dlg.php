@@ -174,7 +174,7 @@ class Dlg extends Handler_Protected {
 
 		print "<div align='center'>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return genUrlChangeKey('$feed_id', '$is_cat')\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.genUrlChangeKey('$feed_id', '$is_cat')\">".
 			__('Generate new URL')."</button> ";
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return closeInfoBox()\">".

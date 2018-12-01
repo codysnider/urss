@@ -797,7 +797,7 @@ class Pref_Filters extends Handler_Protected {
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return quickAddFilter()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Filters.quickAddFilter()\">".
 			__('Create filter')."</button> ";
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return joinSelectedFilters()\">".
@@ -1044,7 +1044,7 @@ class Pref_Filters extends Handler_Protected {
 		print "<div class=\"dlgSecCont\">";
 
 		print "<select name=\"action_id\" dojoType=\"dijit.form.Select\"
-			onchange=\"filterDlgCheckAction(this)\">";
+			onchange=\"Filters.filterDlgCheckAction(this)\">";
 
 		$res = $this->pdo->query("SELECT id,description FROM ttrss_filter_actions
 			ORDER BY name");

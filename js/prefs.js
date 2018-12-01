@@ -82,7 +82,7 @@ const App = {
 			const param = getURLParam('methodparam');
 
 			window.setTimeout(function () {
-				editFeed(param)
+				CommonDialogs.editFeed(param)
 			}, 100);
 		}
 	},
@@ -100,7 +100,7 @@ const App = {
 					CommonDialogs.addLabel();
 					return false;
 				case "create_filter":
-					quickAddFilter();
+					Filters.quickAddFilter();
 					return false;
 				case "help_dialog":
 					Utils.helpDialog("main");
@@ -575,7 +575,7 @@ function editSelectedFeed() {
 
 	notify("");
 
-	editFeed(rows[0], {});
+	CommonDialogs.editFeed(rows[0], {});
 
 }
 

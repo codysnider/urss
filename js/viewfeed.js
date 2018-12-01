@@ -1560,7 +1560,7 @@ const Headlines = {
 			menu.addChild(new dijit.MenuItem({
 				label: __("Edit feed"),
 				onClick: function () {
-					editFeed(this.getParent().currentTarget.getAttribute("data-feed-id"));
+					CommonDialogs.editFeed(this.getParent().currentTarget.getAttribute("data-feed-id"));
 				}
 			}));
 

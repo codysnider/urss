@@ -55,13 +55,13 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				menu.addChild(new dijit.MenuItem({
 					label: __("Edit feed"),
 					onClick: function() {
-						editFeed(this.getParent().row_id);
+						CommonDialogs.editFeed(this.getParent().row_id);
 					}}));
 
 				menu.addChild(new dijit.MenuItem({
 					label: __("Unsubscribe"),
 					onClick: function() {
-						unsubscribeFeed(this.getParent().row_id, this.getParent().item.name);
+						CommonDialogs.unsubscribeFeed(this.getParent().row_id, this.getParent().item.name);
 					}}));
 
 				menu.bindDomNode(tnode.domNode);

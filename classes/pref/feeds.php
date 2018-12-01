@@ -765,7 +765,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<div class='dlgButtons'>
 			<div style=\"float : left\">
-			<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick='return unsubscribeFeed($feed_id, \"$title\")'>".
+			<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick='return CommonDialogs.unsubscribeFeed($feed_id, \"$title\")'>".
 				__('Unsubscribe')."</button>";
 
 			print "</div>";
@@ -1247,7 +1247,7 @@ class Pref_Feeds extends Handler_Protected {
 			var bare_id = id.substr(id.indexOf(':')+1);
 
 			if (id.match('FEED:')) {
-				editFeed(bare_id);
+				CommonDialogs.editFeed(bare_id);
 			} else if (id.match('CAT:')) {
 				editCat(bare_id, item);
 			}
@@ -1441,7 +1441,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<a class=\"visibleLink\" href=\"#\" ".
 				"title=\"".__("Click to edit feed")."\" ".
-				"onclick=\"editFeed(".$line["id"].")\">".
+				"onclick=\"CommonDialogs.editFeed(".$line["id"].")\">".
 				htmlspecialchars($line["title"])."</a>";
 
 			print "</td><td class=\"insensitive\" align='right'>";
@@ -1506,7 +1506,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<a class=\"visibleLink\" href=\"#\" ".
 				"title=\"".__("Click to edit feed")."\" ".
-				"onclick=\"editFeed(".$line["id"].")\">".
+				"onclick=\"CommonDialogs.editFeed(".$line["id"].")\">".
 				htmlspecialchars($line["title"])."</a>: ";
 
 			print "<span class=\"insensitive\">";
