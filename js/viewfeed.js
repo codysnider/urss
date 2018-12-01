@@ -435,8 +435,10 @@ const Headlines = {
 			if (App.isCombinedMode()) {
 				Headlines.updateFloatingTitle();
 
-				// set topmost child in the buffer as active
-				if (getInitParam("cdm_expanded") && getInitParam("cdm_auto_catchup") == 1) {
+				// set topmost child in the buffer as active, but not if we're at the beginning (to prevent auto marking
+				// first article as read all the time)
+				if ($("headlines-frame").scrollTop != 0 &&
+					getInitParam("cdm_expanded") && getInitParam("cdm_auto_catchup") == 1) {
 
 					const rows = $$("#headlines-frame > div[id*=RROW]");
 
