@@ -98,6 +98,8 @@ const Article = {
 		const w = window.open("");
 		w.opener = null;
 		w.location = "backend.php?op=article&method=redirect&id=" + id;
+
+		Article.setActiveArticleId(id);
 	},
 	renderArticle: function (article) {
 		Utils.cleanupMemory("content-insert");
