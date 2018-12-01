@@ -1114,6 +1114,15 @@ function setActiveArticleId(id) {
 	const row = $("RROW-" + id);
 
 	if (row) {
+		if (row.hasAttribute("data-content")) {
+			console.log("unpacking: " + row.id);
+
+			row.select(".content-inner")[0].innerHTML = row.getAttribute("data-content");
+			row.removeAttribute("data-content");
+
+			PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
+		}
+
 		if (row.hasClassName("Unread")) {
 			toggleUnread(id, 0);
 
@@ -1147,7 +1156,7 @@ function postMouseOut(id) {
 }
 
 function unpackVisibleHeadlines() {
-	if (!isCdmMode()) return;
+	if (!isCdmMode() || !getInitParam("cdm_expanded")) return;
 
 	const rows = $$("#headlines-frame div[id*=RROW][data-content]");
 	const threshold = $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight + 300;
