@@ -651,6 +651,29 @@ const CommonDialogs = {
 		});
 
 		dialog.show();
+	},
+	addLabel: function(select, callback) {
+		const caption = prompt(__("Please enter label caption:"), "");
+
+		if (caption != undefined && caption.trim().length > 0) {
+
+			const query = {op: "pref-labels", method: "add", caption: caption.trim()};
+
+			if (select)
+				Object.extend(query, {output: "select"});
+
+			notify_progress("Loading, please wait...", true);
+
+			xhrPost("backend.php", query, (transport) => {
+				if (callback) {
+					callback(transport);
+				} else if (App.isPrefs()) {
+					updateLabelList();
+				} else {
+					Feeds.reload();
+				}
+			});
+		}
 	}
 };
 
@@ -1065,31 +1088,6 @@ function uploadFeedIcon() {
 		}
 
 	return false;
-}
-
-function addLabel(select, callback) {
-	const caption = prompt(__("Please enter label caption:"), "");
-
-	if (caption != undefined && caption.trim().length > 0) {
-
-		const query = { op: "pref-labels", method: "add", caption: caption.trim() };
-
-		if (select)
-			Object.extend(query, {output: "select"});
-
-		notify_progress("Loading, please wait...", true);
-
-		xhrPost("backend.php", query, (transport) => {
-			if (callback) {
-				callback(transport);
-			} else if (App.isPrefs()) {
-				updateLabelList();
-			} else {
-				Feeds.reload();
-			}
-		});
-	}
-
 }
 
 function createNewRuleElement(parentNode, replaceNode) {

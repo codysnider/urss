@@ -97,7 +97,7 @@ const App = {
 					CommonDialogs.quickAddFeed();
 					return false;
 				case "create_label":
-					addLabel();
+					CommonDialogs.addLabel();
 					return false;
 				case "create_filter":
 					quickAddFilter();

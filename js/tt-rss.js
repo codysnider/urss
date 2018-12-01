@@ -421,7 +421,7 @@ const App = {
 			}
 		};
 		this.hotkey_actions["create_label"] = function () {
-			addLabel();
+			CommonDialogs.addLabel();
 		};
 		this.hotkey_actions["create_filter"] = function () {
 			quickAddFilter();
@@ -480,7 +480,7 @@ const App = {
 	onActionSelected: function(opid) {
 		switch (opid) {
 			case "qmcPrefs":
-				gotoPreferences();
+				document.location.href = "prefs.php";
 				break;
 			case "qmcLogout":
 				document.location.href = "backend.php?op=logout";
