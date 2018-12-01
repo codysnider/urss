@@ -576,7 +576,7 @@ function init_second_stage() {
 		_headlines_scroll_timeout = window.setTimeout(function() {
 			//console.log('done scrolling', event);
 			headlinesScrollHandler(event);
-		}, 250);
+		}, 50);
 	}
 
 	console.log("second stage ok");
