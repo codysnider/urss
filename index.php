@@ -274,7 +274,7 @@
 
 	<div id="headlines-wrap-inner" dojoType="dijit.layout.BorderContainer" region="center">
 
-		<div id="floatingTitle" style=display : none"></div>
+		<div id="floatingTitle" style="display : none"></div>
 
 		<div id="headlines-frame" dojoType="dijit.layout.ContentPane" tabindex="0"
 				region="center">
