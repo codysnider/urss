@@ -643,7 +643,12 @@ const Headlines = {
 				}
 
 				let hsp = $("headlines-spacer");
-				if (!hsp) hsp = new Element("DIV", {"id": "headlines-spacer"});
+
+				if (!hsp) {
+					hsp = document.createElement("div");
+					hsp.id = "headlines-spacer";
+				}
+
 				dijit.byId('headlines-frame').domNode.appendChild(hsp);
 
 				this.initHeadlinesMenu();
@@ -681,7 +686,11 @@ const Headlines = {
 					}
 				}
 
-				if (!hsp) hsp = new Element("DIV", {"id": "headlines-spacer"});
+				if (!hsp) {
+					hsp = document.createElement("div");
+					hsp.id = "headlines-spacer";
+				}
+
 				c.domNode.appendChild(hsp);
 
 				/* console.log("restore selected ids: " + ids);
