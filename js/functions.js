@@ -342,48 +342,43 @@ function displayDlg(title, id, param, callback) {
 	const query = { op: "dlg", method: id, param: param };
 
 	xhrPost("backend.php", query, (transport) => {
-		infobox_callback2(transport, title);
-		if (callback) callback(transport);
+		try {
+			const content = transport.responseText;
+
+			let dialog = dijit.byId("infoBox");
+
+			if (!dialog) {
+				dialog = new dijit.Dialog({
+					title: title,
+					id: 'infoBox',
+					style: "width: 600px",
+					onCancel: function () {
+						return true;
+					},
+					onExecute: function () {
+						return true;
+					},
+					onClose: function () {
+						return true;
+					},
+					content: content
+				});
+			} else {
+				dialog.attr('title', title);
+				dialog.attr('content', content);
+			}
+
+			dialog.show();
+
+			notify("");
+
+			if (callback) callback(transport);
+		} catch (e) {
+			exception_error(e);
+		}
 	});
 
 	return false;
-}
-
-function infobox_callback2(transport, title) {
-	let dialog = false;
-
-	if (dijit.byId("infoBox")) {
-		dialog = dijit.byId("infoBox");
-	}
-
-	//console.log("infobox_callback2");
-	notify('');
-
-	const content = transport.responseText;
-
-	if (!dialog) {
-		dialog = new dijit.Dialog({
-			title: title,
-			id: 'infoBox',
-			style: "width: 600px",
-			onCancel: function() {
-				return true;
-			},
-			onExecute: function() {
-				return true;
-			},
-			onClose: function() {
-				return true;
-				},
-			content: content});
-	} else {
-		dialog.attr('title', title);
-		dialog.attr('content', content);
-	}
-
-	dialog.show();
-
-	notify("");
 }
 
 function getInitParam(key) {
