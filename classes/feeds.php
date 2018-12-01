@@ -1006,7 +1006,7 @@ class Feeds extends Handler_Protected {
 
 		print "<div style=\"clear : both\">
 			<input type=\"checkbox\" name=\"need_auth\" dojoType=\"dijit.form.CheckBox\" id=\"feedDlg_loginCheck\"
-					onclick='checkboxToggleElement(this, \"feedDlg_loginContainer\")'>
+					onclick='displayIfChecked(this, \"feedDlg_loginContainer\")'>
 				<label for=\"feedDlg_loginCheck\">".
 				__('This feed requires authentication.')."</div>";
 

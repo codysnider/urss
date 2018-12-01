@@ -153,7 +153,7 @@ class Pref_Filters extends Handler_Protected {
 
 				$id = $line['id'];
 				$tmp .= "<td width='5%' align='center'><img style='cursor : pointer' title='".__("Preview article")."'
-					src='images/information.png' onclick='openArticlePopup($id)'></td><td>";
+					src='images/information.png' onclick='popupOpenArticle($id)'></td><td>";
 
 				/*foreach ($filter['rules'] as $rule) {
 					$reg_exp = str_replace('/', '\/', $rule["reg_exp"]);

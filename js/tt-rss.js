@@ -94,7 +94,7 @@ function updateFeedList() {
 			try {
 				feedlist_init();
 
-				loading_set_progress(25);
+				setLoadingProgress(25);
 			} catch (e) {
 				exception_error(e);
 			}
@@ -235,7 +235,7 @@ function init() {
 					if (!genericSanityCheck())
 						return false;
 
-					loading_set_progress(30);
+					setLoadingProgress(30);
 					init_hotkey_actions();
 
 					const a = document.createElement('audio');
@@ -562,7 +562,7 @@ function init_second_stage() {
 		setActiveFeedId(hash_feed_id, hash_feed_is_cat);
 	}
 
-	loading_set_progress(50);
+	setLoadingProgress(50);
 
 	// can't use cache_clear() here because viewfeed might not have initialized yet
 	if ('sessionStorage' in window && window['sessionStorage'] !== null)
@@ -593,7 +593,7 @@ function quickMenuGo(opid) {
 		gotoPreferences();
 		break;
 	case "qmcLogout":
-		gotoLogout();
+		document.location.href = "backend.php?op=logout";
 		break;
 	case "qmcTagCloud":
 		displayDlg(__("Tag cloud"), "printTagCloud");
@@ -738,7 +738,7 @@ function viewModeChanged() {
 function hotkey_handler(e) {
 	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
 
-	const action_name = keyevent_to_action(e);
+	const action_name = keyeventToAction(e);
 
 	if (action_name) {
 		const action_func = hotkey_actions[action_name];
@@ -907,8 +907,13 @@ function hash_get(key) {
 	const kv = window.location.hash.substring(1).toQueryParams();
 	return kv[key];
 }
+
 function hash_set(key, value) {
 	const kv = window.location.hash.substring(1).toQueryParams();
 	kv[key] = value;
 	window.location.hash = $H(kv).toQueryString();
+}
+
+function gotoPreferences() {
+	document.location.href = "prefs.php";
 }

@@ -647,7 +647,7 @@ function selectTab(id, noupdate) {
 
 function init_second_stage() {
 	document.onkeydown = pref_hotkey_handler;
-	loading_set_progress(50);
+	setLoadingProgress(50);
 	notify("");
 
 	let tab = getURLParam('tab');
@@ -665,7 +665,7 @@ function init_second_stage() {
 		window.setTimeout(function() { editFeed(param) }, 100);
 	}
 
-	setInterval(hotkey_prefix_timeout, 5*1000);
+	setInterval(hotkeyPrefixTimeout, 5*1000);
 }
 
 function init() {
@@ -716,7 +716,7 @@ function init() {
 			try {
 				parser.parse();
 
-				loading_set_progress(50);
+				setLoadingProgress(50);
 
 				const clientTzOffset = new Date().getTimezoneOffset() * 60;
 				const params = { op: "rpc", method: "sanityCheck", clientTzOffset: clientTzOffset };
@@ -750,7 +750,7 @@ function validatePrefsReset() {
 function pref_hotkey_handler(e) {
 	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
 
-	const action_name = keyevent_to_action(e);
+	const action_name = keyeventToAction(e);
 
 	if (action_name) {
 		switch (action_name) {
@@ -1215,3 +1215,6 @@ function updateSelectedPrompt() {
 	// no-op shim for toggleSelectedRow()
 }
 
+function gotoMain() {
+	document.location.href = "index.php";
+}

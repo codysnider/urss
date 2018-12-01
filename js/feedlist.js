@@ -165,10 +165,10 @@ function viewfeed(params) {
 function feedlist_init() {
 	console.log("in feedlist init");
 
-	loading_set_progress(50);
+	setLoadingProgress(50);
 
 	document.onkeydown = hotkey_handler;
-	setInterval(hotkey_prefix_timeout, 5*1000);
+	setInterval(hotkeyPrefixTimeout, 5*1000);
 	setInterval(catchupBatchedArticles, 3*1000);
 
 	if (!getActiveFeedId()) {

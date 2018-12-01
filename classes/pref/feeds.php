@@ -640,7 +640,7 @@ class Pref_Feeds extends Handler_Protected {
 			$auth_checked = $auth_enabled ? 'checked' : '';
 			print "<div style=\"clear : both\">
 				<input type=\"checkbox\" $auth_checked name=\"need_auth\" dojoType=\"dijit.form.CheckBox\" id=\"feedEditDlg_loginCheck\"
-						onclick='checkboxToggleElement(this, \"feedEditDlg_loginContainer\")'>
+						onclick='displayIfChecked(this, \"feedEditDlg_loginContainer\")'>
 					<label for=\"feedEditDlg_loginCheck\">".
 				__('This feed requires authentication.')."</div>";
 
@@ -1656,7 +1656,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div style=\"clear : both\">
 			<input type=\"checkbox\" name=\"need_auth\" dojoType=\"dijit.form.CheckBox\" id=\"feedDlg_loginCheck\"
-					onclick='checkboxToggleElement(this, \"feedDlg_loginContainer\")'>
+					onclick='displayIfChecked(this, \"feedDlg_loginContainer\")'>
 				<label for=\"feedDlg_loginCheck\">".
 				__('Feeds require authentication.')."</div>";
 

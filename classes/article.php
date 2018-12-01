@@ -456,7 +456,7 @@ class Article extends Handler_Protected {
 #				$entry .= " <a target=\"_blank\" href=\"" . htmlspecialchars($url) . "\" rel=\"noopener noreferrer\">" .
 #					$filename . " (" . $ctype . ")" . "</a>";
 
-				$entry = "<div onclick=\"openUrlPopup('".htmlspecialchars($url)."')\"
+				$entry = "<div onclick=\"popupOpenUrl('".htmlspecialchars($url)."')\"
 					dojoType=\"dijit.MenuItem\">$filename ($ctype)</div>";
 
 				array_push($entries_html, $entry);
@@ -536,7 +536,7 @@ class Article extends Handler_Protected {
 				else
 					$filename = "";
 
-				$rv .= "<div onclick='openUrlPopup(\"".htmlspecialchars($entry["url"])."\")'
+				$rv .= "<div onclick='popupOpenUrl(\"".htmlspecialchars($entry["url"])."\")'
 					dojoType=\"dijit.MenuItem\">".$filename . $title."</div>";
 
 			};

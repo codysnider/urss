@@ -259,18 +259,6 @@ function getCookie(name) {
 	return unescape(dc.substring(begin + prefix.length, end));
 }
 
-function gotoPreferences() {
-	document.location.href = "prefs.php";
-}
-
-function gotoLogout() {
-	document.location.href = "backend.php?op=logout";
-}
-
-function gotoMain() {
-	document.location.href = "index.php";
-}
-
 function toggleSelectRowById(sender, id) {
 	const row = $(id);
 	return toggleSelectRow(sender, row);
@@ -314,11 +302,12 @@ function toggleSelectRow(sender, row) {
 		updateSelectedPrompt();
 }
 
-function checkboxToggleElement(elem, id) {
-	if (elem.checked) {
-		Effect.Appear(id, {duration : 0.5});
+// noinspection JSUnusedGlobalSymbols
+function displayIfChecked(checkbox, elemId) {
+	if (checkbox.checked) {
+		Effect.Appear(elemId, {duration : 0.5});
 	} else {
-		Effect.Fade(id, {duration : 0.5});
+		Effect.Fade(elemId, {duration : 0.5});
 	}
 }
 
@@ -326,6 +315,7 @@ function getURLParam(param){
 	return String(window.location.href).parseQuery()[param];
 }
 
+// noinspection JSUnusedGlobalSymbols
 function closeInfoBox() {
 	const dialog = dijit.byId("infoBox");
 
@@ -334,9 +324,7 @@ function closeInfoBox() {
 	return false;
 }
 
-
 function displayDlg(title, id, param, callback) {
-
 	notify_progress("Loading, please wait...", true);
 
 	const query = { op: "dlg", method: id, param: param };
@@ -404,6 +392,7 @@ function fatalError(code, msg, ext_info) {
 			}
 		}
 
+		/* global ERRORS */
 		if (ERRORS && ERRORS[code] && !msg) {
 			msg = ERRORS[code];
 		}
@@ -430,6 +419,7 @@ function fatalError(code, msg, ext_info) {
 
 }
 
+// noinspection JSUnusedGlobalSymbols
 function filterDlgCheckAction(sender) {
 	const action = sender.value;
 
@@ -466,7 +456,7 @@ function explainError(code) {
 	return displayDlg(__("Error explained"), "explainError", code);
 }
 
-function loading_set_progress(p) {
+function setLoadingProgress(p) {
 	loading_progress += p;
 
 	if (dijit.byId("loading_bar"))
@@ -481,8 +471,7 @@ function strip_tags(s) {
 	return s.replace(/<\/?[^>]+(>|$)/g, "");
 }
 
-function hotkey_prefix_timeout() {
-
+function hotkeyPrefixTimeout() {
 	const date = new Date();
 	const ts = Math.round(date.getTime() / 1000);
 
@@ -494,6 +483,7 @@ function hotkey_prefix_timeout() {
 	}
 }
 
+// noinspection JSUnusedGlobalSymbols
 function uploadIconHandler(rc) {
 	switch (rc) {
 		case 0:
@@ -513,6 +503,7 @@ function uploadIconHandler(rc) {
 	}
 }
 
+// noinspection JSUnusedGlobalSymbols
 function removeFeedIcon(id) {
 	if (confirm(__("Remove stored feed icon?"))) {
 
@@ -533,6 +524,7 @@ function removeFeedIcon(id) {
 	return false;
 }
 
+// noinspection JSUnusedGlobalSymbols
 function uploadFeedIcon() {
 	const file = $("icon_file");
 
@@ -547,17 +539,11 @@ function uploadFeedIcon() {
 }
 
 function addLabel(select, callback) {
-
 	const caption = prompt(__("Please enter label caption:"), "");
 
-	if (caption != undefined) {
+	if (caption != undefined && caption.trim().length > 0) {
 
-		if (caption == "") {
-			alert(__("Can't create label: missing caption."));
-			return false;
-		}
-
-		const query = { op: "pref-labels", method: "add", caption: caption };
+		const query = { op: "pref-labels", method: "add", caption: caption.trim() };
 
 		if (select)
 			Object.extend(query, {output: "select"});
@@ -686,9 +672,6 @@ function quickAddFeed() {
 
 function createNewRuleElement(parentNode, replaceNode) {
 	const form = document.forms["filter_new_rule_form"];
-
-	//form.reg_exp.value = form.reg_exp.value.replace(/(<([^>]+)>)/ig,"");
-
 	const query = { op: "pref-filters", method: "printrulename", rule: dojo.formToJson(form) };
 
 	xhrPost("backend.php", query, (transport) => {
@@ -818,7 +801,7 @@ function editFilterTest(query) {
 	if (dijit.byId("filterTestDlg"))
 		dijit.byId("filterTestDlg").destroyRecursive();
 
-	var test_dlg = new dijit.Dialog({
+	const test_dlg = new dijit.Dialog({
 		id: "filterTestDlg",
 		title: "Test Filter",
 		style: "width: 600px",
@@ -902,16 +885,16 @@ function editFilterTest(query) {
 }
 
 function quickAddFilter() {
-	let query = "";
+	let query;
+
 	if (!inPreferences()) {
-		query = "backend.php?op=pref-filters&method=newfilter&feed=" +
-			param_escape(getActiveFeedId()) + "&is_cat=" +
-			param_escape(activeFeedIsCat());
+		query = { op: "pref-filters", method: "newfilter",
+			feed: getActiveFeedId(), is_cat: activeFeedIsCat() };
 	} else {
-		query = "backend.php?op=pref-filters&method=newfilter";
+		query = { op: "pref-filters", method: "newfilter" };
 	}
 
-	console.log(query);
+	console.log('quickAddFilter', query);
 
 	if (dijit.byId("feedEditDlg"))
 		dijit.byId("feedEditDlg").destroyRecursive();
@@ -980,12 +963,12 @@ function quickAddFilter() {
 				});
 			}
 		},
-		href: query});
+		href: "backend.php?" + dojo.objectToQuery(query)});
 
 	if (!inPreferences()) {
 		const selectedText = getSelectionText();
 
-		var lh = dojo.connect(dialog, "onLoad", function(){
+		const lh = dojo.connect(dialog, "onLoad", function(){
 			dojo.disconnect(lh);
 
 			if (selectedText != "") {
@@ -1078,25 +1061,27 @@ function backend_sanity_check_callback(transport) {
 		console.log('reading init-params...');
 
 		for (const k in params) {
-			switch (k) {
-				case "label_base_index":
-					_label_base_index = parseInt(params[k])
-					break;
-				case "hotkeys":
-					// filter mnemonic definitions (used for help panel) from hotkeys map
-					// i.e. *(191)|Ctrl-/ -> *(191)
+			if (params.hasOwnProperty(k)) {
+				switch (k) {
+					case "label_base_index":
+						_label_base_index = parseInt(params[k])
+						break;
+					case "hotkeys":
+						// filter mnemonic definitions (used for help panel) from hotkeys map
+						// i.e. *(191)|Ctrl-/ -> *(191)
 
-					const tmp = [];
-					for (const sequence in params[k][1]) {
-						const filtered = sequence.replace(/\|.*$/, "");
-						tmp[filtered] = params[k][1][sequence];
-					}
+						const tmp = [];
+						for (const sequence in params[k][1]) {
+							const filtered = sequence.replace(/\|.*$/, "");
+							tmp[filtered] = params[k][1][sequence];
+						}
 
-					params[k][1] = tmp;
-					break;
+						params[k][1] = tmp;
+						break;
+				}
+
+				console.log("IP:", k, "=>", params[k]);
 			}
-
-			console.log("IP:", k, "=>", params[k]);
 		}
 
 		init_params = params;
@@ -1108,6 +1093,7 @@ function backend_sanity_check_callback(transport) {
 	init_second_stage();
 }
 
+// noinspection JSUnusedGlobalSymbols
 function genUrlChangeKey(feed, is_cat) {
 	if (confirm(__("Generate new syndication address for this feed?"))) {
 
@@ -1212,10 +1198,9 @@ function editFeed(feed) {
 	if (feed <= 0)
 		return alert(__("You can't edit this kind of feed."));
 
-	const query = "backend.php?op=pref-feeds&method=editfeed&id=" +
-		param_escape(feed);
+	const query = { op: "pref-feeds", method: "editfeed", id: feed };
 
-	console.log(query);
+	console.log("editFeed", query);
 
 	if (dijit.byId("filterEditDlg"))
 		dijit.byId("filterEditDlg").destroyRecursive();
@@ -1231,20 +1216,20 @@ function editFeed(feed) {
 			if (this.validate()) {
 				notify_progress("Saving data...", true);
 
-				xhrPost("backend.php", dialog.attr('value'), (transport) => {
+				xhrPost("backend.php", dialog.attr('value'), () => {
 					dialog.hide();
 					notify('');
 					updateFeedList();
 				});
 			}
 		},
-		href: query});
+		href: "backend.php?" + dojo.objectToQuery(query)});
 
 	dialog.show();
 }
 
 function feedBrowser() {
-	const query = "backend.php?op=feeds&method=feedBrowser";
+	const query = { op: "feeds", method: "feedBrowser" };
 
 	if (dijit.byId("feedAddDlg"))
 		dijit.byId("feedAddDlg").hide();
@@ -1252,6 +1237,7 @@ function feedBrowser() {
 	if (dijit.byId("feedBrowserDlg"))
 		dijit.byId("feedBrowserDlg").destroyRecursive();
 
+	// noinspection JSUnusedGlobalSymbols
 	const dialog = new dijit.Dialog({
 		id: "feedBrowserDlg",
 		title: __("More Feeds"),
@@ -1340,10 +1326,7 @@ function feedBrowser() {
 			const selected = this.getSelectedFeedIds();
 
 			if (selected.length > 0) {
-
-				const pr = __("Remove selected feeds from the archive? Feeds with stored articles will not be removed.");
-
-				if (confirm(pr)) {
+				if (confirm(__("Remove selected feeds from the archive? Feeds with stored articles will not be removed."))) {
 					Element.show('feed_browser_spinner');
 
 					const query = { op: "rpc", method: "remarchive", ids: selected.toString() };
@@ -1359,14 +1342,15 @@ function feedBrowser() {
 				this.subscribe();
 			}
 		},
-		href: query
+		href: "backend.php?" + dojo.objectToQuery(query)
 	});
 
 	dialog.show();
 }
 
+// noinspection JSUnusedGlobalSymbols
 function showFeedsWithErrors() {
-	const query = "backend.php?op=pref-feeds&method=feedsWithErrors";
+	const query = { op: "pref-feeds", method: "feedsWithErrors" };
 
 	if (dijit.byId("errorFeedsDlg"))
 		dijit.byId("errorFeedsDlg").destroyRecursive();
@@ -1404,7 +1388,8 @@ function showFeedsWithErrors() {
 				//
 			}
 		},
-		href: query});
+		href: "backend.php?" + dojo.objectToQuery(query)
+	});
 
 	dialog.show();
 }
@@ -1430,16 +1415,17 @@ function helpDialog(topic) {
 	dialog.show();
 }
 
+// noinspection JSUnusedGlobalSymbols
 function label_to_feed_id(label) {
 	return _label_base_index - 1 - Math.abs(label);
 }
 
+// noinspection JSUnusedGlobalSymbols
 function feed_to_label_id(feed) {
 	return _label_base_index - 1 + Math.abs(feed);
 }
 
 // http://stackoverflow.com/questions/6251937/how-to-get-selecteduser-highlighted-text-in-contenteditable-element-and-replac
-
 function getSelectionText() {
 	let text = "";
 
@@ -1461,13 +1447,16 @@ function getSelectionText() {
 	return text.stripTags();
 }
 
-function openUrlPopup(url) {
+// noinspection JSUnusedGlobalSymbols
+function popupOpenUrl(url) {
 	const w = window.open("");
 
 	w.opener = null;
 	w.location = url;
 }
-function openArticlePopup(id) {
+
+// noinspection JSUnusedGlobalSymbols
+function popupOpenArticle(id) {
 	const w = window.open("",
 		"ttrss_article_popup",
 		"height=900,width=900,resizable=yes,status=no,location=no,menubar=no,directories=no,scrollbars=yes,toolbar=no");
@@ -1476,7 +1465,7 @@ function openArticlePopup(id) {
 	w.location = "backend.php?op=article&method=view&mode=raw&html=1&zoom=1&id=" + id + "&csrf_token=" + getInitParam("csrf_token");
 }
 
-function keyevent_to_action(e) {
+function keyeventToAction(e) {
 
 	const hotkeys_map = getInitParam("hotkeys");
 	const keycode = e.which;
@@ -1526,7 +1515,7 @@ function keyevent_to_action(e) {
 		}
 	}
 
-	console.log('keyevent_to_action', hotkey_full, '=>', action_name);
+	console.log('keyeventToAction', hotkey_full, '=>', action_name);
 
 	return action_name;
 }
