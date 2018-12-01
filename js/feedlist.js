@@ -207,8 +207,8 @@ const Feeds = {
 		Utils.setLoadingProgress(50);
 
 		document.onkeydown = App.hotkeyHandler;
-		setInterval(hotkeyPrefixTimeout, 3 * 1000);
-		setInterval(catchupBatchedArticles, 10 * 1000);
+		window.setInterval(() => { hotkeyPrefixTimeout() }, 3 * 1000);
+		window.setInterval(() => { Headlines.catchupBatchedArticles() }, 10 * 1000);
 
 		if (!this.getActiveFeedId()) {
 			this.viewfeed({feed: -3});
@@ -246,10 +246,7 @@ const Feeds = {
 		} else {
 			setTimeout(() => {
 				this.requestCounters(true);
-
-				setInterval(() => {
-					this.requestCounters();
-				}, 60 * 1000)
+				setInterval(() => { this.requestCounters(); }, 60 * 1000)
 			}, 250);
 		}
 	},
@@ -271,7 +268,7 @@ const Feeds = {
 
 		this.selectFeed(id, is_cat);
 
-		PluginHost.run(PluginHost.HOOK_FEED_SET_ACTIVE, _active_article_id);
+		PluginHost.run(PluginHost.HOOK_FEED_SET_ACTIVE, [this._active_feed_id, this._active_feed_is_cat]);
 	},
 	selectFeed: function(feed, is_cat) {
 		const tree = dijit.byId("feedTree");
@@ -303,7 +300,7 @@ const Feeds = {
 
 		if (feed != this.getActiveFeedId() || this.activeFeedIsCat() != is_cat) {
 			this._search_query = false;
-			setActiveArticleId(0);
+			Article.setActiveArticleId(0);
 		}
 
 		if (offset != 0) {
@@ -330,8 +327,8 @@ const Feeds = {
 		if (method) query.m = method;
 
 		if (offset > 0) {
-			if (current_first_id) {
-				query.fid = current_first_id;
+			if (Headlines.current_first_id) {
+				query.fid = Headlines.current_first_id;
 			}
 		}
 
@@ -343,8 +340,8 @@ const Feeds = {
 			query.skip = offset;
 
 			// to prevent duplicate feed titles when showing grouped vfeeds
-			if (vgroup_last_feed) {
-				query.vgrlf = vgroup_last_feed;
+			if (Headlines.vgroup_last_feed != undefined) {
+				query.vgrlf = Headlines.vgroup_last_feed;
 			}
 		} else if (!is_cat && feed == this.getActiveFeedId() && !params.method) {
 			query.m = "ForceUpdate";
@@ -370,7 +367,7 @@ const Feeds = {
 
 		window.clearTimeout(this._viewfeed_wait_timeout);
 		this._viewfeed_wait_timeout = window.setTimeout(() => {
-			catchupBatchedArticles(() => {
+			Headlines.catchupBatchedArticles(() => {
 				xhrPost("backend.php", query, (transport) => {
 					try {
 						this.setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
@@ -492,7 +489,7 @@ const Feeds = {
 				rows.each(function (row) {
 					row.removeClassName("Unread");
 
-					if (row.getAttribute("data-article-id") != getActiveArticleId()) {
+					if (row.getAttribute("data-article-id") != Article.getActiveArticleId()) {
 						new Effect.Fade(row, {duration: 0.5});
 					}
 

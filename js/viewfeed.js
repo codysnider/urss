@@ -1,16 +1,6 @@
 /* global dijit, __, ngettext */
 
-let _active_article_id = 0;
-
-let vgroup_last_feed = false;
 let post_under_pointer = false;
-
-let catchup_id_batch = [];
-//let catchup_timeout_id = false;
-
-//let cids_requested = [];
-let loaded_article_ids = [];
-let current_first_id = 0;
 let last_search_query;
 
 const ArticleCache = {
@@ -38,8 +28,9 @@ const ArticleCache = {
 };
 
 const Article = {
+	_active_article_id: 0,
 	setSelectionScore: function() {
-		const ids = getSelectedArticleIds2();
+		const ids = Headlines.getSelectedArticleIds2();
 
 		if (ids.length > 0) {
 			console.log(ids);
@@ -127,7 +118,7 @@ const Article = {
 		c.attr('content', article);
 		PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED, c.domNode);
 
-		correctHeadlinesOffset(getActiveArticleId());
+		correctHeadlinesOffset(Article.getActiveArticleId());
 
 		try {
 			c.focus();
@@ -135,7 +126,7 @@ const Article = {
 		}
 	},
 	view: function(id, noexpand) {
-		setActiveArticleId(id);
+		Article.setActiveArticleId(id);
 
 		if (!noexpand) {
 			console.log("loading article", id);
@@ -164,7 +155,7 @@ const Article = {
 					if (reply) {
 
 						reply.each(function (article) {
-							if (getActiveArticleId() == article['id']) {
+							if (Article.getActiveArticleId() == article['id']) {
 								Article.renderArticle(article['content']);
 							}
 							ArticleCache.set(article['id'], article['content']);
@@ -191,7 +182,7 @@ const Article = {
 		return false;
 	},
 	cdmCollapseActive: function(event) {
-		const row = $("RROW-" + getActiveArticleId());
+		const row = $("RROW-" + Article.getActiveArticleId());
 
 		if (row) {
 			row.removeClassName("active");
@@ -200,38 +191,157 @@ const Article = {
 			if (cb && !row.hasClassName("Selected"))
 				cb.attr("checked", false);
 
-			setActiveArticleId(0);
+			Article.setActiveArticleId(0);
 
 			if (event)
 				event.stopPropagation();
 
 			return false;
 		}
+	},
+	editArticleTags: function(id) {
+		const query = "backend.php?op=article&method=editArticleTags&param=" + param_escape(id);
+
+		if (dijit.byId("editTagsDlg"))
+			dijit.byId("editTagsDlg").destroyRecursive();
+
+		const dialog = new dijit.Dialog({
+			id: "editTagsDlg",
+			title: __("Edit article Tags"),
+			style: "width: 600px",
+			execute: function () {
+				if (this.validate()) {
+					notify_progress("Saving article tags...", true);
+
+					xhrPost("backend.php", this.attr('value'), (transport) => {
+						try {
+							notify('');
+							dialog.hide();
+
+							const data = JSON.parse(transport.responseText);
+
+							if (data) {
+								const id = data.id;
+
+								const tags = $("ATSTR-" + id);
+								const tooltip = dijit.byId("ATSTRTIP-" + id);
+
+								if (tags) tags.innerHTML = data.content;
+								if (tooltip) tooltip.attr('label', data.content_full);
+							}
+						} catch (e) {
+							exception_error(e);
+						}
+					});
+				}
+			},
+			href: query
+		});
+
+		const tmph = dojo.connect(dialog, 'onLoad', function () {
+			dojo.disconnect(tmph);
+
+			new Ajax.Autocompleter('tags_str', 'tags_choices',
+				"backend.php?op=article&method=completeTags",
+				{tokens: ',', paramName: "search"});
+		});
+
+		dialog.show();
+	},
+	cdmScrollToArticleId: function(id, force) {
+		const ctr = $("headlines-frame");
+		const e = $("RROW-" + id);
+
+		if (!e || !ctr) return;
+
+		if (force || e.offsetTop + e.offsetHeight > (ctr.scrollTop + ctr.offsetHeight) ||
+			e.offsetTop < ctr.scrollTop) {
+
+			// expanded cdm has a 4px margin now
+			ctr.scrollTop = parseInt(e.offsetTop) - 4;
+
+			Element.hide("floatingTitle");
+		}
+	},
+	setActiveArticleId: function(id) {
+		console.log("setActiveArticleId", id);
+
+		$$("div[id*=RROW][class*=active]").each((e) => {
+			e.removeClassName("active");
+
+			if (!e.hasClassName("Selected")) {
+				const cb = dijit.getEnclosingWidget(e.select(".rchk")[0]);
+				if (cb) cb.attr("checked", false);
+			}
+		});
+
+		this._active_article_id = id;
+
+		const row = $("RROW-" + id);
+
+		if (row) {
+			if (row.hasAttribute("data-content")) {
+				console.log("unpacking: " + row.id);
+
+				row.select(".content-inner")[0].innerHTML = row.getAttribute("data-content");
+				row.removeAttribute("data-content");
+
+				PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
+			}
+
+			if (row.hasClassName("Unread")) {
+
+				Headlines.catchupBatchedArticles(() => {
+					Feeds.decrementFeedCounter(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+					Headlines.toggleUnread(id, 0);
+					Headlines.updateFloatingTitle(true);
+				});
+
+			}
+
+			row.addClassName("active");
+
+			if (!row.hasClassName("Selected")) {
+				const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
+				if (cb) cb.attr("checked", true);
+			}
+
+			PluginHost.run(PluginHost.HOOK_ARTICLE_SET_ACTIVE, this._active_article_id);
+		}
+
+		Headlines.updateSelectedPrompt();
+	},
+	getActiveArticleId: function() {
+		return this._active_article_id;
 	}
 };
 
 const Headlines = {
+	vgroup_last_feed: undefined,
 	_headlines_scroll_timeout: 0,
+	loaded_article_ids: [],
+	current_first_id: 0,
+	catchup_id_batch: [],
 	click: function(event, id, in_body) {
 		in_body = in_body || false;
 
 		if (App.isCombinedMode()) {
 
-			if (!in_body && (event.ctrlKey || id == getActiveArticleId() || getInitParam("cdm_expanded"))) {
+			if (!in_body && (event.ctrlKey || id == Article.getActiveArticleId() || getInitParam("cdm_expanded"))) {
 				Article.openArticleInNewWindow(id);
 			}
 
-			setActiveArticleId(id);
+			Article.setActiveArticleId(id);
 
 			if (!getInitParam("cdm_expanded"))
-				cdmScrollToArticleId(id);
+				Article.cdmScrollToArticleId(id);
 
 			return in_body;
 
 		} else {
 			if (event.ctrlKey) {
 				Article.openArticleInNewWindow(id);
-				setActiveArticleId(id);
+				Article.setActiveArticleId(id);
 			} else {
 				Article.view(id);
 			}
@@ -293,9 +403,9 @@ const Headlines = {
 
 						if ($("headlines-frame").scrollTop <= row.offsetTop &&
 							row.offsetTop - $("headlines-frame").scrollTop < 100 &&
-							row.getAttribute("data-article-id") != getActiveArticleId()) {
+							row.getAttribute("data-article-id") != Article.getActiveArticleId()) {
 
-							setActiveArticleId(row.getAttribute("data-article-id"));
+							Article.setActiveArticleId(row.getAttribute("data-article-id"));
 							break;
 						}
 					}
@@ -326,8 +436,8 @@ const Headlines = {
 					if ($("headlines-frame").scrollTop > (row.offsetTop + row.offsetHeight / 2)) {
 						const id = row.getAttribute("data-article-id")
 
-						if (catchup_id_batch.indexOf(id) == -1)
-							catchup_id_batch.push(id);
+						if (this.catchup_id_batch.indexOf(id) == -1)
+							this.catchup_id_batch.push(id);
 
 					} else {
 						break;
@@ -373,7 +483,7 @@ const Headlines = {
 						ft.setAttribute("data-article-id", id);
 						ft.innerHTML = header.innerHTML;
 						ft.firstChild.innerHTML = "<img class='anchor marked-pic' src='images/page_white_go.png' " +
-							"onclick=\"cdmScrollToArticleId(" + id + ", true)\">" + ft.firstChild.innerHTML;
+							"onclick=\"Article.cdmScrollToArticleId(" + id + ", true)\">" + ft.firstChild.innerHTML;
 
 						initFloatingMenu();
 
@@ -462,11 +572,11 @@ const Headlines = {
 
 			console.log('received', headlines_count, 'headlines, infscroll disabled=', Feeds.infscroll_disabled);
 
-			vgroup_last_feed = reply['headlines-info']['vgroup_last_feed'];
-			current_first_id = reply['headlines']['first_id'];
+			this.vgroup_last_feed = reply['headlines-info']['vgroup_last_feed'];
+			this.current_first_id = reply['headlines']['first_id'];
 
 			if (offset == 0) {
-				loaded_article_ids = [];
+				this.loaded_article_ids = [];
 
 				dojo.html.set($("headlines-toolbar"),
 					reply['headlines']['toolbar'],
@@ -481,10 +591,10 @@ const Headlines = {
 				while (tmp.hasChildNodes()) {
 					const row = tmp.removeChild(tmp.firstChild);
 
-					if (loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("feed-title")) {
+					if (this.loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("feed-title")) {
 						dijit.byId("headlines-frame").domNode.appendChild(row);
 
-						loaded_article_ids.push(row.id);
+						this.loaded_article_ids.push(row.id);
 					}
 				}
 
@@ -506,7 +616,7 @@ const Headlines = {
 
 			} else if (headlines_count > 0 && feed_id == Feeds.getActiveFeedId() && is_cat == Feeds.activeFeedIsCat()) {
 				const c = dijit.byId("headlines-frame");
-				//const ids = getSelectedArticleIds2();
+				//const ids = Headlines.getSelectedArticleIds2();
 
 				let hsp = $("headlines-spacer");
 
@@ -520,10 +630,10 @@ const Headlines = {
 				while (tmp.hasChildNodes()) {
 					let row = tmp.removeChild(tmp.firstChild);
 
-					if (loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("feed-title")) {
+					if (this.loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("feed-title")) {
 						dijit.byId("headlines-frame").domNode.appendChild(row);
 
-						loaded_article_ids.push(row.id);
+						this.loaded_article_ids.push(row.id);
 					}
 				}
 
@@ -601,238 +711,247 @@ const Headlines = {
 
 		Feeds.viewCurrentFeed();
 	},
-};
+	selectionToggleUnread: function(params) {
+		params = params || {};
 
-function toggleMark(id, client_only) {
-	const query = { op: "rpc", id: id, method: "mark" };
-	const row = $("RROW-" + id);
+		const cmode = params.cmode || 2;
+		const callback = params.callback;
+		const no_error = params.no_error || false;
+		const ids = params.ids || Headlines.getSelectedArticleIds2();
 
-	if (row) {
-		const imgs = $$("img[class*=marked-pic][class*=marked-" + id + "]");
+		if (ids.length == 0) {
+			if (!no_error)
+				alert(__("No articles are selected."));
 
-		imgs.each((img) => {
-			if (!row.hasClassName("marked")) {
-				img.src = img.src.replace("mark_unset", "mark_set");
-				query.mark = 1;
-			} else {
-				img.src = img.src.replace("mark_set", "mark_unset");
-				query.mark = 0;
-			}
-		});
+			return;
+		}
 
-		row.toggleClassName("marked");
+		ids.each((id) => {
+			const row = $("RROW-" + id);
 
-		if (!client_only)
-			xhrPost("backend.php", query, (transport) => {
-				Utils.handleRpcJson(transport);
-			});
-	}
-}
-
-function togglePub(id, client_only) {
-	const row = $("RROW-" + id);
-
-	if (row) {
-		const query = { op: "rpc", id: id, method: "publ" };
-
-		const imgs = $$("img[class*=pub-pic][class*=pub-" + id + "]");
-
-		imgs.each((img) => {
-			if (!row.hasClassName("published")) {
-				img.src = img.src.replace("pub_unset", "pub_set");
-				query.pub = 1;
-			} else {
-				img.src = img.src.replace("pub_set", "pub_unset");
-				query.pub = 0;
-			}
-		});
-
-		row.toggleClassName("published");
-
-		if (!client_only)
-			xhrPost("backend.php", query, (transport) => {
-				Utils.handleRpcJson(transport);
-			});
-
-	}
-}
-
-function moveToPost(mode, noscroll, noexpand) {
-	const rows = getLoadedArticleIds();
-
-	let prev_id = false;
-	let next_id = false;
-
-	if (!$('RROW-' + getActiveArticleId())) {
-		setActiveArticleId(0);
-	}
-
-	if (!getActiveArticleId()) {
-		next_id = rows[0];
-		prev_id = rows[rows.length-1]
-	} else {
-		for (let i = 0; i < rows.length; i++) {
-			if (rows[i] == getActiveArticleId()) {
-
-				// Account for adjacent identical article ids.
-				if (i > 0) prev_id = rows[i-1];
-
-				for (let j = i+1; j < rows.length; j++) {
-					if (rows[j] != getActiveArticleId()) {
-						next_id = rows[j];
+			if (row) {
+				switch (cmode) {
+					case 0:
+						row.removeClassName("Unread");
 						break;
-					}
+					case 1:
+						row.addClassName("Unread");
+						break;
+					case 2:
+						row.toggleClassName("Unread");
 				}
-				break;
 			}
-		}
-	}
+		});
 
-	console.log("cur: " + getActiveArticleId() + " next: " + next_id);
+		const query = {
+			op: "rpc", method: "catchupSelected",
+			cmode: cmode, ids: ids.toString()
+		};
 
-	if (mode == "next") {
-		if (next_id || getActiveArticleId()) {
-			if (App.isCombinedMode()) {
+		notify_progress("Loading, please wait...");
 
-				const article = $("RROW-" + getActiveArticleId());
-				const ctr = $("headlines-frame");
+		xhrPost("backend.php", query, (transport) => {
+			Utils.handleRpcJson(transport);
+			if (callback) callback(transport);
+		});
+	},
+	selectionToggleMarked: function(ids) {
+		const rows = ids || Headlines.getSelectedArticleIds2();
 
-				if (!noscroll && article && article.offsetTop + article.offsetHeight >
-						ctr.scrollTop + ctr.offsetHeight) {
-
-					scrollArticle(ctr.offsetHeight/4);
-
-				} else if (next_id) {
-					setActiveArticleId(next_id);
-					cdmScrollToArticleId(next_id, true);
-				}
-
-			} else if (next_id) {
-				correctHeadlinesOffset(next_id);
-				Article.view(next_id, noexpand);
-			}
-		}
-	}
-
-	if (mode == "prev") {
-		if (prev_id || getActiveArticleId()) {
-			if (App.isCombinedMode()) {
-
-				const article = $("RROW-" + getActiveArticleId());
-				const prev_article = $("RROW-" + prev_id);
-				const ctr = $("headlines-frame");
-
-				if (!noscroll && article && article.offsetTop < ctr.scrollTop) {
-					scrollArticle(-ctr.offsetHeight/3);
-				} else if (!noscroll && prev_article &&
-						prev_article.offsetTop < ctr.scrollTop) {
-					scrollArticle(-ctr.offsetHeight/4);
-				} else if (prev_id) {
-					setActiveArticleId(prev_id);
-					cdmScrollToArticleId(prev_id, noscroll);
-				}
-
-			} else if (prev_id) {
-				correctHeadlinesOffset(prev_id);
-				Article.view(prev_id, noexpand);
-			}
-		}
-	}
-}
-
-function updateSelectedPrompt() {
-	const count = getSelectedArticleIds2().length;
-	const elem = $("selected_prompt");
-
-	if (elem) {
-		elem.innerHTML = ngettext("%d article selected",
-				"%d articles selected", count).replace("%d", count);
-
-		count > 0 ? Element.show(elem) : Element.hide(elem);
-	}
-}
-
-function toggleUnread(id, cmode) {
-	const row = $("RROW-" + id);
-
-	if (row) {
-		const origClassName = row.className;
-
-		if (cmode == undefined) cmode = 2;
-
-		switch (cmode) {
-			case 0:
-				row.removeClassName("Unread");
-				break;
-			case 1:
-				row.addClassName("Unread");
-				break;
-			case 2:
-				row.toggleClassName("Unread");
-				break;
-		}
-
-		if (row.className != origClassName)
-			xhrPost("backend.php",
-				{op: "rpc", method: "catchupSelected", cmode: cmode, ids: id},(transport) => {
-					Utils.handleRpcJson(transport);
-			});
-	}
-}
-
-function selectionRemoveLabel(id, ids) {
-	if (!ids) ids = getSelectedArticleIds2();
-
-	if (ids.length == 0) {
-		alert(__("No articles are selected."));
-		return;
-	}
-
-	const query = { op: "article", method: "removeFromLabel",
-		ids: ids.toString(), lid: id };
-
-	xhrPost("backend.php", query, (transport) => {
-		Utils.handleRpcJson(transport);
-		updateHeadlineLabels(transport);
-	});
-}
-
-function selectionAssignLabel(id, ids) {
-	if (!ids) ids = getSelectedArticleIds2();
-
-	if (ids.length == 0) {
-		alert(__("No articles are selected."));
-		return;
-	}
-
-	const query = { op: "article", method: "assignToLabel",
-		ids: ids.toString(), lid: id };
-
-	xhrPost("backend.php", query, (transport) => {
-		Utils.handleRpcJson(transport);
-		updateHeadlineLabels(transport);
-	});
-}
-
-function selectionToggleUnread(params) {
-	params = params || {};
-
-	const cmode = params.cmode || 2;
-	const callback = params.callback;
-	const no_error = params.no_error || false;
-	const ids = params.ids || getSelectedArticleIds2();
-
-	if (ids.length == 0) {
-		if (!no_error)
+		if (rows.length == 0) {
 			alert(__("No articles are selected."));
+			return;
+		}
 
-		return;
-	}
+		for (let i = 0; i < rows.length; i++) {
+			this.toggleMark(rows[i], true, true);
+		}
 
-	ids.each((id) => {
+		const query = {
+			op: "rpc", method: "markSelected",
+			ids: rows.toString(), cmode: 2
+		};
+
+		xhrPost("backend.php", query, (transport) => {
+			Utils.handleRpcJson(transport);
+		});
+	},
+	selectionTogglePublished: function(ids) {
+		const rows = ids || Headlines.getSelectedArticleIds2();
+
+		if (rows.length == 0) {
+			alert(__("No articles are selected."));
+			return;
+		}
+
+		for (let i = 0; i < rows.length; i++) {
+			this.togglePub(rows[i], true);
+		}
+
+		if (rows.length > 0) {
+			const query = {
+				op: "rpc", method: "publishSelected",
+				ids: rows.toString(), cmode: 2
+			};
+
+			xhrPost("backend.php", query, (transport) => {
+				Utils.handleRpcJson(transport);
+			});
+		}
+	},
+	toggleMark: function(id, client_only) {
+		const query = {op: "rpc", id: id, method: "mark"};
 		const row = $("RROW-" + id);
 
 		if (row) {
+			const imgs = $$("img[class*=marked-pic][class*=marked-" + id + "]");
+
+			imgs.each((img) => {
+				if (!row.hasClassName("marked")) {
+					img.src = img.src.replace("mark_unset", "mark_set");
+					query.mark = 1;
+				} else {
+					img.src = img.src.replace("mark_set", "mark_unset");
+					query.mark = 0;
+				}
+			});
+
+			row.toggleClassName("marked");
+
+			if (!client_only)
+				xhrPost("backend.php", query, (transport) => {
+					Utils.handleRpcJson(transport);
+				});
+		}
+	},
+	togglePub: function(id, client_only) {
+		const row = $("RROW-" + id);
+
+		if (row) {
+			const query = {op: "rpc", id: id, method: "publ"};
+
+			const imgs = $$("img[class*=pub-pic][class*=pub-" + id + "]");
+
+			imgs.each((img) => {
+				if (!row.hasClassName("published")) {
+					img.src = img.src.replace("pub_unset", "pub_set");
+					query.pub = 1;
+				} else {
+					img.src = img.src.replace("pub_set", "pub_unset");
+					query.pub = 0;
+				}
+			});
+
+			row.toggleClassName("published");
+
+			if (!client_only)
+				xhrPost("backend.php", query, (transport) => {
+					Utils.handleRpcJson(transport);
+				});
+
+		}
+	},
+	moveToPost: function(mode, noscroll, noexpand) {
+		const rows = Headlines.getLoadedArticleIds();
+
+		let prev_id = false;
+		let next_id = false;
+
+		if (!$('RROW-' + Article.getActiveArticleId())) {
+			Article.setActiveArticleId(0);
+		}
+
+		if (!Article.getActiveArticleId()) {
+			next_id = rows[0];
+			prev_id = rows[rows.length - 1]
+		} else {
+			for (let i = 0; i < rows.length; i++) {
+				if (rows[i] == Article.getActiveArticleId()) {
+
+					// Account for adjacent identical article ids.
+					if (i > 0) prev_id = rows[i - 1];
+
+					for (let j = i + 1; j < rows.length; j++) {
+						if (rows[j] != Article.getActiveArticleId()) {
+							next_id = rows[j];
+							break;
+						}
+					}
+					break;
+				}
+			}
+		}
+
+		console.log("cur: " + Article.getActiveArticleId() + " next: " + next_id);
+
+		if (mode == "next") {
+			if (next_id || Article.getActiveArticleId()) {
+				if (App.isCombinedMode()) {
+
+					const article = $("RROW-" + Article.getActiveArticleId());
+					const ctr = $("headlines-frame");
+
+					if (!noscroll && article && article.offsetTop + article.offsetHeight >
+						ctr.scrollTop + ctr.offsetHeight) {
+
+						scrollArticle(ctr.offsetHeight / 4);
+
+					} else if (next_id) {
+						Article.setActiveArticleId(next_id);
+						Article.cdmScrollToArticleId(next_id, true);
+					}
+
+				} else if (next_id) {
+					correctHeadlinesOffset(next_id);
+					Article.view(next_id, noexpand);
+				}
+			}
+		}
+
+		if (mode == "prev") {
+			if (prev_id || Article.getActiveArticleId()) {
+				if (App.isCombinedMode()) {
+
+					const article = $("RROW-" + Article.getActiveArticleId());
+					const prev_article = $("RROW-" + prev_id);
+					const ctr = $("headlines-frame");
+
+					if (!noscroll && article && article.offsetTop < ctr.scrollTop) {
+						scrollArticle(-ctr.offsetHeight / 3);
+					} else if (!noscroll && prev_article &&
+						prev_article.offsetTop < ctr.scrollTop) {
+						scrollArticle(-ctr.offsetHeight / 4);
+					} else if (prev_id) {
+						Article.setActiveArticleId(prev_id);
+						Article.cdmScrollToArticleId(prev_id, noscroll);
+					}
+
+				} else if (prev_id) {
+					correctHeadlinesOffset(prev_id);
+					Article.view(prev_id, noexpand);
+				}
+			}
+		}
+	},
+	updateSelectedPrompt: function() {
+		const count = Headlines.getSelectedArticleIds2().length;
+		const elem = $("selected_prompt");
+
+		if (elem) {
+			elem.innerHTML = ngettext("%d article selected",
+				"%d articles selected", count).replace("%d", count);
+
+			count > 0 ? Element.show(elem) : Element.hide(elem);
+		}
+	},
+	toggleUnread: function(id, cmode) {
+		const row = $("RROW-" + id);
+
+		if (row) {
+			const origClassName = row.className;
+
+			if (cmode == undefined) cmode = 2;
+
 			switch (cmode) {
 				case 0:
 					row.removeClassName("Unread");
@@ -842,368 +961,259 @@ function selectionToggleUnread(params) {
 					break;
 				case 2:
 					row.toggleClassName("Unread");
+					break;
 			}
+
+			if (row.className != origClassName)
+				xhrPost("backend.php",
+					{op: "rpc", method: "catchupSelected", cmode: cmode, ids: id}, (transport) => {
+						Utils.handleRpcJson(transport);
+					});
 		}
-	});
+	},
+	selectionRemoveLabel: function(id, ids) {
+		if (!ids) ids = Headlines.getSelectedArticleIds2();
 
-	const query = {op: "rpc", method: "catchupSelected",
-		cmode: cmode, ids: ids.toString() };
+		if (ids.length == 0) {
+			alert(__("No articles are selected."));
+			return;
+		}
 
-	notify_progress("Loading, please wait...");
-
-	xhrPost("backend.php", query, (transport) => {
-		Utils.handleRpcJson(transport);
-		if (callback) callback(transport);
-	});
-}
-
-function selectionToggleMarked(ids) {
-	const rows = ids || getSelectedArticleIds2();
-
-	if (rows.length == 0) {
-		alert(__("No articles are selected."));
-		return;
-	}
-
-	for (let i = 0; i < rows.length; i++) {
-		toggleMark(rows[i], true, true);
-	}
-
-	const query = { op: "rpc", method: "markSelected",
-		ids:  rows.toString(), cmode: 2 };
-
-	xhrPost("backend.php", query, (transport) => {
-		Utils.handleRpcJson(transport);
-	});
-}
-
-// sel_state ignored
-function selectionTogglePublished(ids) {
-	const rows = ids || getSelectedArticleIds2();
-
-	if (rows.length == 0) {
-		alert(__("No articles are selected."));
-		return;
-	}
-
-	for (let i = 0; i < rows.length; i++) {
-		togglePub(rows[i], true);
-	}
-
-	if (rows.length > 0) {
-		const query = { op: "rpc", method: "publishSelected",
-			ids:  rows.toString(), cmode: 2 };
+		const query = {
+			op: "article", method: "removeFromLabel",
+			ids: ids.toString(), lid: id
+		};
 
 		xhrPost("backend.php", query, (transport) => {
 			Utils.handleRpcJson(transport);
+			updateHeadlineLabels(transport);
 		});
-	}
-}
+	},
+	selectionAssignLabel: function(id, ids) {
+		if (!ids) ids = Headlines.getSelectedArticleIds2();
 
-function getSelectedArticleIds2() {
-
-	const rv = [];
-
-	$$("#headlines-frame > div[id*=RROW][class*=Selected]").each(
-		function(child) {
-			rv.push(child.getAttribute("data-article-id"));
-		});
-
-	// consider active article a honorary member of selected articles
-	if (getActiveArticleId())
-		rv.push(getActiveArticleId());
-
-	return rv.uniq();
-}
-
-function getLoadedArticleIds() {
-	const rv = [];
-
-	const children = $$("#headlines-frame > div[id*=RROW-]");
-
-	children.each(function(child) {
-		if (Element.visible(child)) {
-			rv.push(child.getAttribute("data-article-id"));
+		if (ids.length == 0) {
+			alert(__("No articles are selected."));
+			return;
 		}
-	});
 
-	return rv;
-}
+		const query = {
+			op: "article", method: "assignToLabel",
+			ids: ids.toString(), lid: id
+		};
 
-// mode = all,none,unread,invert,marked,published
-function selectArticles(mode) {
-	let query = "#headlines-frame > div[id*=RROW]";
+		xhrPost("backend.php", query, (transport) => {
+			Utils.handleRpcJson(transport);
+			updateHeadlineLabels(transport);
+		});
+	},
+	deleteSelection: function() {
+		const rows = Headlines.getSelectedArticleIds2();
 
-	switch (mode) {
-		case "none":
-		case "all":
-		case "invert":
-			break;
-		case "marked":
-			query += "[class*=marked]";
-			break;
-		case "published":
-			query += "[class*=published]";
-			break;
-		case "unread":
-			query += "[class*=Unread]";
-			break;
-		default:
-			console.warn("selectArticles: unknown mode", mode);
-	}
+		if (rows.length == 0) {
+			alert(__("No articles are selected."));
+			return;
+		}
 
-	const rows = $$(query);
+		const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+		let str;
 
-	for (let i = 0; i < rows.length; i++) {
-		const row = rows[i];
-		const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
+		if (Feeds.getActiveFeedId() != 0) {
+			str = ngettext("Delete %d selected article in %s?", "Delete %d selected articles in %s?", rows.length);
+		} else {
+			str = ngettext("Delete %d selected article?", "Delete %d selected articles?", rows.length);
+		}
+
+		str = str.replace("%d", rows.length);
+		str = str.replace("%s", fn);
+
+		if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+			return;
+		}
+
+		const query = {op: "rpc", method: "delete", ids: rows.toString()};
+
+		xhrPost("backend.php", query, (transport) => {
+			Utils.handleRpcJson(transport);
+			Feeds.viewCurrentFeed();
+		});
+	},
+	getSelectedArticleIds2: function() {
+		const rv = [];
+
+		$$("#headlines-frame > div[id*=RROW][class*=Selected]").each(
+			function (child) {
+				rv.push(child.getAttribute("data-article-id"));
+			});
+
+		// consider active article a honorary member of selected articles
+		if (Article.getActiveArticleId())
+			rv.push(Article.getActiveArticleId());
+
+		return rv.uniq();
+	},
+	getLoadedArticleIds: function() {
+		const rv = [];
+
+		const children = $$("#headlines-frame > div[id*=RROW-]");
+
+		children.each(function (child) {
+			if (Element.visible(child)) {
+				rv.push(child.getAttribute("data-article-id"));
+			}
+		});
+
+		return rv;
+	},
+	selectArticles: function(mode) {
+		// mode = all,none,unread,invert,marked,published
+		let query = "#headlines-frame > div[id*=RROW]";
 
 		switch (mode) {
 			case "none":
-				row.removeClassName("Selected");
-
-				if (!row.hasClassName("active"))
-					cb.attr("checked", false);
-				break;
+			case "all":
 			case "invert":
-				if (row.hasClassName("Selected")) {
+				break;
+			case "marked":
+				query += "[class*=marked]";
+				break;
+			case "published":
+				query += "[class*=published]";
+				break;
+			case "unread":
+				query += "[class*=Unread]";
+				break;
+			default:
+				console.warn("selectArticles: unknown mode", mode);
+		}
+
+		const rows = $$(query);
+
+		for (let i = 0; i < rows.length; i++) {
+			const row = rows[i];
+			const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
+
+			switch (mode) {
+				case "none":
 					row.removeClassName("Selected");
 
 					if (!row.hasClassName("active"))
 						cb.attr("checked", false);
-				} else {
+					break;
+				case "invert":
+					if (row.hasClassName("Selected")) {
+						row.removeClassName("Selected");
+
+						if (!row.hasClassName("active"))
+							cb.attr("checked", false);
+					} else {
+						row.addClassName("Selected");
+						cb.attr("checked", true);
+					}
+					break;
+				default:
 					row.addClassName("Selected");
 					cb.attr("checked", true);
-				}
-				break;
-			default:
-				row.addClassName("Selected");
-				cb.attr("checked", true);
-		}
-
-		updateSelectedPrompt();
-	}
-}
-
-// noinspection JSUnusedGlobalSymbols
-function deleteSelection() {
-
-	const rows = getSelectedArticleIds2();
-
-	if (rows.length == 0) {
-		alert(__("No articles are selected."));
-		return;
-	}
-
-	const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
-	let str;
-
-	if (Feeds.getActiveFeedId() != 0) {
-		str = ngettext("Delete %d selected article in %s?", "Delete %d selected articles in %s?", rows.length);
-	} else {
-		str = ngettext("Delete %d selected article?", "Delete %d selected articles?", rows.length);
-	}
-
-	str = str.replace("%d", rows.length);
-	str = str.replace("%s", fn);
-
-	if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
-		return;
-	}
-
-	const query = { op: "rpc", method: "delete", ids: rows.toString() };
-
-	xhrPost("backend.php", query, (transport) => {
-		Utils.handleRpcJson(transport);
-		Feeds.viewCurrentFeed();
-	});
-}
-
-// noinspection JSUnusedGlobalSymbols
-function archiveSelection() {
-
-	const rows = getSelectedArticleIds2();
-
-	if (rows.length == 0) {
-		alert(__("No articles are selected."));
-		return;
-	}
-
-	const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
-	let str;
-	let op;
-
-	if (Feeds.getActiveFeedId() != 0) {
-		str = ngettext("Archive %d selected article in %s?", "Archive %d selected articles in %s?", rows.length);
-		op = "archive";
-	} else {
-		str = ngettext("Move %d archived article back?", "Move %d archived articles back?", rows.length);
-		str += " " + __("Please note that unstarred articles might get purged on next feed update.");
-
-		op = "unarchive";
-	}
-
-	str = str.replace("%d", rows.length);
-	str = str.replace("%s", fn);
-
-	if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
-		return;
-	}
-
-	for (let i = 0; i < rows.length; i++) {
-		ArticleCache.del(rows[i]);
-	}
-
-	const query = {op: "rpc", method: op, ids: rows.toString()};
-
-	xhrPost("backend.php", query, (transport) => {
-		Utils.handleRpcJson(transport);
-		Feeds.viewCurrentFeed();
-	});
-}
-
-function catchupSelection() {
-
-	const rows = getSelectedArticleIds2();
-
-	if (rows.length == 0) {
-		alert(__("No articles are selected."));
-		return;
-	}
-
-	const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
-
-	let str = ngettext("Mark %d selected article in %s as read?", "Mark %d selected articles in %s as read?", rows.length);
-
-	str = str.replace("%d", rows.length);
-	str = str.replace("%s", fn);
-
-	if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
-		return;
-	}
-
-	selectionToggleUnread({callback: viewCurrentFeed, no_error: 1});
-}
-
-function editArticleTags(id) {
-	const query = "backend.php?op=article&method=editArticleTags&param=" + param_escape(id);
-
-	if (dijit.byId("editTagsDlg"))
-		dijit.byId("editTagsDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "editTagsDlg",
-		title: __("Edit article Tags"),
-		style: "width: 600px",
-		execute: function() {
-			if (this.validate()) {
-				notify_progress("Saving article tags...", true);
-
-				xhrPost("backend.php", this.attr('value'), (transport) => {
-					try {
-						notify('');
-						dialog.hide();
-
-						const data = JSON.parse(transport.responseText);
-
-						if (data) {
-							const id = data.id;
-
-							const tags = $("ATSTR-" + id);
-							const tooltip = dijit.byId("ATSTRTIP-" + id);
-
-							if (tags) tags.innerHTML = data.content;
-							if (tooltip) tooltip.attr('label', data.content_full);
-						}
-					} catch (e) {
-						exception_error(e);
-					}
-				});
 			}
-		},
-		href: query
-	});
 
-	const tmph = dojo.connect(dialog, 'onLoad', function() {
-		dojo.disconnect(tmph);
-
-		new Ajax.Autocompleter('tags_str', 'tags_choices',
-		   "backend.php?op=article&method=completeTags",
-		   { tokens: ',', paramName: "search" });
-	});
-
-	dialog.show();
-
-}
-
-function cdmScrollToArticleId(id, force) {
-	const ctr = $("headlines-frame");
-	const e = $("RROW-" + id);
-
-	if (!e || !ctr) return;
-
-	if (force || e.offsetTop+e.offsetHeight > (ctr.scrollTop+ctr.offsetHeight) ||
-			e.offsetTop < ctr.scrollTop) {
-
-		// expanded cdm has a 4px margin now
-		ctr.scrollTop = parseInt(e.offsetTop) - 4;
-
-		Element.hide("floatingTitle");
-	}
-}
-
-function setActiveArticleId(id) {
-	console.log("setActiveArticleId", id);
-
-	$$("div[id*=RROW][class*=active]").each((e) => {
-		e.removeClassName("active");
-
-		if (!e.hasClassName("Selected")) {
-			const cb = dijit.getEnclosingWidget(e.select(".rchk")[0]);
-			if (cb) cb.attr("checked", false);
+			Headlines.updateSelectedPrompt();
 		}
-	});
+	},
+	archiveSelection: function() {
+		const rows = Headlines.getSelectedArticleIds2();
 
-	_active_article_id = id;
-
-	const row = $("RROW-" + id);
-
-	if (row) {
-		if (row.hasAttribute("data-content")) {
-			console.log("unpacking: " + row.id);
-
-			row.select(".content-inner")[0].innerHTML = row.getAttribute("data-content");
-			row.removeAttribute("data-content");
-
-			PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
+		if (rows.length == 0) {
+			alert(__("No articles are selected."));
+			return;
 		}
 
-		if (row.hasClassName("Unread")) {
+		const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+		let str;
+		let op;
 
-			catchupBatchedArticles(() => {
-				Feeds.decrementFeedCounter(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
-				toggleUnread(id, 0);
+		if (Feeds.getActiveFeedId() != 0) {
+			str = ngettext("Archive %d selected article in %s?", "Archive %d selected articles in %s?", rows.length);
+			op = "archive";
+		} else {
+			str = ngettext("Move %d archived article back?", "Move %d archived articles back?", rows.length);
+			str += " " + __("Please note that unstarred articles might get purged on next feed update.");
+
+			op = "unarchive";
+		}
+
+		str = str.replace("%d", rows.length);
+		str = str.replace("%s", fn);
+
+		if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+			return;
+		}
+
+		for (let i = 0; i < rows.length; i++) {
+			ArticleCache.del(rows[i]);
+		}
+
+		const query = {op: "rpc", method: op, ids: rows.toString()};
+
+		xhrPost("backend.php", query, (transport) => {
+			Utils.handleRpcJson(transport);
+			Feeds.viewCurrentFeed();
+		});
+	},
+	catchupSelection: function() {
+		const rows = Headlines.getSelectedArticleIds2();
+
+		if (rows.length == 0) {
+			alert(__("No articles are selected."));
+			return;
+		}
+
+		const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+
+		let str = ngettext("Mark %d selected article in %s as read?", "Mark %d selected articles in %s as read?", rows.length);
+
+		str = str.replace("%d", rows.length);
+		str = str.replace("%s", fn);
+
+		if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+			return;
+		}
+
+		Headlines.selectionToggleUnread({callback: Feeds.viewCurrentFeed, no_error: 1});
+	},
+	catchupBatchedArticles: function(callback) {
+		console.log("catchupBatchedArticles, size=", this.catchup_id_batch.length);
+
+		if (this.catchup_id_batch.length > 0) {
+
+			// make a copy of the array
+			const batch = this.catchup_id_batch.slice();
+			const query = {
+				op: "rpc", method: "catchupSelected",
+				cmode: 0, ids: batch.toString()
+			};
+
+			xhrPost("backend.php", query, (transport) => {
+				const reply = Utils.handleRpcJson(transport);
+
+				if (reply) {
+					const batch = reply.ids;
+
+					batch.each(function (id) {
+						const elem = $("RROW-" + id);
+						if (elem) elem.removeClassName("Unread");
+						Headlines.catchup_id_batch.remove(id);
+					});
+				}
+
 				Headlines.updateFloatingTitle(true);
+
+				if (callback) callback();
 			});
-
+		} else {
+			if (callback) callback();
 		}
-
-		row.addClassName("active");
-
-		if (!row.hasClassName("Selected")) {
-			const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
-			if (cb) cb.attr("checked", true);
-		}
-
-		PluginHost.run(PluginHost.HOOK_ARTICLE_SET_ACTIVE, _active_article_id);
 	}
-
-	updateSelectedPrompt();
-}
-
-function getActiveArticleId() {
-	return _active_article_id;
-}
+};
 
 function postMouseIn(e, id) {
 	post_under_pointer = id;
@@ -1213,48 +1223,16 @@ function postMouseOut(id) {
 	post_under_pointer = false;
 }
 
-function catchupBatchedArticles(callback) {
-	console.log("catchupBatchedArticles, size=", catchup_id_batch.length);
-
-	if (catchup_id_batch.length > 0) {
-
-		// make a copy of the array
-		const batch = catchup_id_batch.slice();
-		const query = { op: "rpc", method: "catchupSelected",
-			cmode: 0, ids: batch.toString() };
-
-		xhrPost("backend.php", query, (transport) => {
-			const reply = Utils.handleRpcJson(transport);
-
-			if (reply) {
-				const batch = reply.ids;
-
-				batch.each(function (id) {
-					const elem = $("RROW-" + id);
-					if (elem) elem.removeClassName("Unread");
-					catchup_id_batch.remove(id);
-				});
-			}
-
-			Headlines.updateFloatingTitle(true);
-
-			if (callback) callback();
-		});
-	} else {
-		if (callback) callback();
-	}
-}
-
 function catchupRelativeToArticle(below, id) {
 
-	if (!id) id = getActiveArticleId();
+	if (!id) id = Article.getActiveArticleId();
 
 	if (!id) {
 		alert(__("No article is selected."));
 		return;
 	}
 
-	const visible_ids = getLoadedArticleIds();
+	const visible_ids = Headlines.getLoadedArticleIds();
 
 	const ids_to_mark = [];
 
@@ -1343,7 +1321,7 @@ function getRelativePostIds(id, limit) {
 
 	if (!limit) limit = 6; //3
 
-	const ids = getLoadedArticleIds();
+	const ids = Headlines.getLoadedArticleIds();
 
 	for (let i = 0; i < ids.length; i++) {
 		if (ids[i] == id) {
@@ -1379,7 +1357,6 @@ function correctHeadlinesOffset(id) {
 	}
 }
 
-// noinspection JSUnusedGlobalSymbols
 function headlineActionsChange(elem) {
 	eval(elem.value);
 	elem.attr('value', 'false');
@@ -1421,36 +1398,36 @@ function headlinesMenuCommon(menu) {
 		label: __("Toggle unread"),
 		onClick: function () {
 
-			let ids = getSelectedArticleIds2();
+			let ids = Headlines.getSelectedArticleIds2();
 			// cast to string
 			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
-			selectionToggleUnread({ids: ids, no_error: 1});
+			Headlines.selectionToggleUnread({ids: ids, no_error: 1});
 		}
 	}));
 
 	menu.addChild(new dijit.MenuItem({
 		label: __("Toggle starred"),
 		onClick: function () {
-			let ids = getSelectedArticleIds2();
+			let ids = Headlines.getSelectedArticleIds2();
 			// cast to string
 			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
-			selectionToggleMarked(ids);
+			Headlines.selectionToggleMarked(ids);
 		}
 	}));
 
 	menu.addChild(new dijit.MenuItem({
 		label: __("Toggle published"),
 		onClick: function () {
-			let ids = getSelectedArticleIds2();
+			let ids = Headlines.getSelectedArticleIds2();
 			// cast to string
 			const id = (this.getParent().currentTarget.getAttribute("data-article-id")) + "";
 			ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
-			selectionTogglePublished(ids);
+			Headlines.selectionTogglePublished(ids);
 		}
 	}));
 
@@ -1489,13 +1466,13 @@ function headlinesMenuCommon(menu) {
 				labelId: bare_id,
 				onClick: function () {
 
-					let ids = getSelectedArticleIds2();
+					let ids = Headlines.getSelectedArticleIds2();
 					// cast to string
 					const id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
 
 					ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
-					selectionAssignLabel(this.labelId, ids);
+					Headlines.selectionAssignLabel(this.labelId, ids);
 				}
 			}));
 
@@ -1503,13 +1480,13 @@ function headlinesMenuCommon(menu) {
 				label: name,
 				labelId: bare_id,
 				onClick: function () {
-					let ids = getSelectedArticleIds2();
+					let ids = Headlines.getSelectedArticleIds2();
 					// cast to string
 					const id = (this.getParent().ownerMenu.currentTarget.getAttribute("data-article-id")) + "";
 
 					ids = ids.length != 0 && ids.indexOf(id) != -1 ? ids : [id];
 
-					selectionRemoveLabel(this.labelId, ids);
+					Headlines.selectionRemoveLabel(this.labelId, ids);
 				}
 			}));
 
@@ -1555,7 +1532,7 @@ function initHeadlinesMenu() {
 		menu.addChild(new dijit.MenuItem({
 			label: __("Select articles in group"),
 			onClick: function (event) {
-				selectArticles("all",
+				Headlines.selectArticles("all",
 					"#headlines-frame > div[id*=RROW]" +
 					"[data-orig-feed-id='" + this.getParent().currentTarget.getAttribute("data-feed-id") + "']");
 
@@ -1565,12 +1542,12 @@ function initHeadlinesMenu() {
 		menu.addChild(new dijit.MenuItem({
 			label: __("Mark group as read"),
 			onClick: function () {
-				selectArticles("none");
-				selectArticles("all",
+				Headlines.selectArticles("none");
+				Headlines.selectArticles("all",
 					"#headlines-frame > div[id*=RROW]" +
 					"[data-orig-feed-id='" + this.getParent().currentTarget.getAttribute("data-feed-id") + "']");
 
-				catchupSelection();
+				Headlines.catchupSelection();
 			}
 		}));
 

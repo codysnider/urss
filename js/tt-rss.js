@@ -143,7 +143,7 @@ const App = {
 
 		if (getInitParam("simple_update")) {
 			console.log("scheduling simple feed updater...");
-			window.setInterval(Feeds.updateRandomFeed, 30 * 1000);
+			window.setInterval(() => { Feeds.updateRandomFeed() }, 30 * 1000);
 		}
 
 		console.log("second stage ok");
@@ -191,7 +191,7 @@ const App = {
 	switchPanelMode: function(wide) {
 		if (App.isCombinedMode()) return;
 
-		const article_id = getActiveArticleId();
+		const article_id = Article.getActiveArticleId();
 
 		if (wide) {
 			dijit.byId("headlines-wrap-inner").attr("design", 'sidebar');
@@ -249,44 +249,44 @@ function init_hotkey_actions() {
 		if (rv) Feeds.viewfeed({feed: rv[0], is_cat: rv[1], delayed: true})
 	};
 	hotkey_actions["next_article"] = function () {
-		moveToPost('next');
+		Headlines.moveToPost('next');
 	};
 	hotkey_actions["prev_article"] = function () {
-		moveToPost('prev');
+		Headlines.moveToPost('prev');
 	};
 	hotkey_actions["next_article_noscroll"] = function () {
-		moveToPost('next', true);
+		Headlines.moveToPost('next', true);
 	};
 	hotkey_actions["prev_article_noscroll"] = function () {
-		moveToPost('prev', true);
+		Headlines.moveToPost('prev', true);
 	};
 	hotkey_actions["next_article_noexpand"] = function () {
-		moveToPost('next', true, true);
+		Headlines.moveToPost('next', true, true);
 	};
 	hotkey_actions["prev_article_noexpand"] = function () {
-		moveToPost('prev', true, true);
+		Headlines.moveToPost('prev', true, true);
 	};
 	hotkey_actions["search_dialog"] = function () {
 		Feeds.search();
 	};
 	hotkey_actions["toggle_mark"] = function () {
-		selectionToggleMarked();
+		Headlines.selectionToggleMarked();
 	};
 	hotkey_actions["toggle_publ"] = function () {
-		selectionTogglePublished();
+		Headlines.selectionTogglePublished();
 	};
 	hotkey_actions["toggle_unread"] = function () {
-		selectionToggleUnread({no_error: 1});
+		Headlines.selectionToggleUnread({no_error: 1});
 	};
 	hotkey_actions["edit_tags"] = function () {
-		const id = getActiveArticleId();
+		const id = Article.getActiveArticleId();
 		if (id) {
-			editArticleTags(id);
+			Article.editArticleTags(id);
 		}
 	}
 	hotkey_actions["open_in_new_window"] = function () {
-		if (getActiveArticleId()) {
-			Article.openArticleInNewWindow(getActiveArticleId());
+		if (Article.getActiveArticleId()) {
+			Article.openArticleInNewWindow(Article.getActiveArticleId());
 		}
 	};
 	hotkey_actions["catchup_below"] = function () {
@@ -318,22 +318,22 @@ function init_hotkey_actions() {
 		}
 	};
 	hotkey_actions["select_all"] = function () {
-		selectArticles('all');
+		Headlines.selectArticles('all');
 	};
 	hotkey_actions["select_unread"] = function () {
-		selectArticles('unread');
+		Headlines.selectArticles('unread');
 	};
 	hotkey_actions["select_marked"] = function () {
-		selectArticles('marked');
+		Headlines.selectArticles('marked');
 	};
 	hotkey_actions["select_published"] = function () {
-		selectArticles('published');
+		Headlines.selectArticles('published');
 	};
 	hotkey_actions["select_invert"] = function () {
-		selectArticles('invert');
+		Headlines.selectArticles('invert');
 	};
 	hotkey_actions["select_none"] = function () {
-		selectArticles('none');
+		Headlines.selectArticles('none');
 	};
 	hotkey_actions["feed_refresh"] = function () {
 		if (Feeds.getActiveFeedId() != undefined) {
@@ -434,8 +434,8 @@ function init_hotkey_actions() {
 	};
 	hotkey_actions["toggle_embed_original"] = function () {
 		if (typeof embedOriginalArticle != "undefined") {
-			if (getActiveArticleId())
-				embedOriginalArticle(getActiveArticleId());
+			if (Article.getActiveArticleId())
+				embedOriginalArticle(Article.getActiveArticleId());
 		} else {
 			alert(__("Please enable embed_original plugin first."));
 		}

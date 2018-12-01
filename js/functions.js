@@ -878,7 +878,7 @@ function toggleSelectRow2(sender, row, is_cdm) {
 		row.removeClassName('Selected');
 
 	if (typeof updateSelectedPrompt != undefined)
-		updateSelectedPrompt();
+		Headlines.updateSelectedPrompt();
 }
 
 
@@ -892,7 +892,7 @@ function toggleSelectRow(sender, row) {
 		row.removeClassName('Selected');
 
 	if (typeof updateSelectedPrompt != undefined)
-		updateSelectedPrompt();
+		Headlines.updateSelectedPrompt();
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -1412,7 +1412,7 @@ function quickAddFilter() {
 
 			} else {
 
-				const query = { op: "rpc", method: "getlinktitlebyid", id: getActiveArticleId() };
+				const query = { op: "rpc", method: "getlinktitlebyid", id: Article.getActiveArticleId() };
 
 				xhrPost("backend.php", query, (transport) => {
 					const reply = JSON.parse(transport.responseText);

@@ -11,7 +11,7 @@ function embedOriginalArticle(id) {
 
 		if (App.isCombinedMode()) {
 			c = $$("div#RROW-" + id + " div[class=content-inner]")[0];
-		} else if (id == getActiveArticleId()) {
+		} else if (id == Article.getActiveArticleId()) {
 			c = $$(".post .content")[0];
 		}
 
@@ -23,7 +23,7 @@ function embedOriginalArticle(id) {
 				c.parentNode.removeChild(iframe);
 
 				if (App.isCombinedMode()) {
-					cdmScrollToArticleId(id, true);
+					Article.cdmScrollToArticleId(id, true);
 				}
 
 				return;
@@ -48,7 +48,7 @@ function embedOriginalArticle(id) {
 					c.parentNode.insertBefore(iframe, c);
 
 					if (App.isCombinedMode()) {
-						cdmScrollToArticleId(id, true);
+						Article.cdmScrollToArticleId(id, true);
 					}
 				}
 			}

@@ -15,19 +15,19 @@ class Feeds extends Handler_Protected {
 			$feed_id, $is_cat, $search,
 			$error, $feed_last_updated) {
 
-		$catchup_sel_link = "catchupSelection()";
+		$catchup_sel_link = "Headlines.catchupSelection()";
 
-		$archive_sel_link = "archiveSelection()";
-		$delete_sel_link = "deleteSelection()";
+		$archive_sel_link = "Headlines.archiveSelection()";
+		$delete_sel_link = "Headlines.deleteSelection()";
 
-		$sel_all_link = "selectArticles('all')";
-		$sel_unread_link = "selectArticles('unread')";
-		$sel_none_link = "selectArticles('none')";
-		$sel_inv_link = "selectArticles('invert')";
+		$sel_all_link = "Headlines.selectArticles('all')";
+		$sel_unread_link = "Headlines.selectArticles('unread')";
+		$sel_none_link = "Headlines.selectArticles('none')";
+		$sel_inv_link = "Headlines.selectArticles('invert')";
 
-		$tog_unread_link = "selectionToggleUnread()";
-		$tog_marked_link = "selectionToggleMarked()";
-		$tog_published_link = "selectionTogglePublished()";
+		$tog_unread_link = "Headlines.selectionToggleUnread()";
+		$tog_marked_link = "Headlines.selectionToggleMarked()";
+		$tog_published_link = "Headlines.selectionTogglePublished()";
 
 		$set_score_link = "Article.setSelectionScore()";
 
@@ -331,11 +331,11 @@ class Feeds extends Handler_Protected {
 
 				$marked_pic_src = $line["marked"] ? "mark_set.png" : "mark_unset.png";
 				$class .= $line["marked"] ? " marked" : "";
-				$marked_pic = "<img src=\"images/$marked_pic_src\" class=\"marked-pic marked-$id\" onclick='toggleMark($id)'>";
+				$marked_pic = "<img src=\"images/$marked_pic_src\" class=\"marked-pic marked-$id\" onclick='Headlines.toggleMark($id)'>";
 
 				$published_pic_src = $line["published"] ? "pub_set.png" : "pub_unset.png";
 				$class .= $line["published"] ? " published" : "";
-                $published_pic = "<img src=\"images/$published_pic_src\" class=\"pub-pic pub-$id\" onclick='togglePub($id)'>";
+                $published_pic = "<img src=\"images/$published_pic_src\" class=\"pub-pic pub-$id\" onclick='Headlines.togglePub($id)'>";
 
 				$updated_fmt = make_local_datetime($line["updated"], false, false, false, true);
 				$date_entered_fmt = T_sprintf("Imported at %s",
@@ -628,7 +628,7 @@ class Feeds extends Handler_Protected {
 					$tmp_content .= "<img src='images/tag.png' alt='Tags' title='Tags'>
                     <span id=\"ATSTR-$id\">$tags_str</span>
                     <a title=\"".__('Edit tags for this article')."\"
-                    href=\"#\" onclick=\"editArticleTags($id)\">(+)</a>";
+                    href=\"#\" onclick=\"Article.editArticleTags($id)\">(+)</a>";
 
 					$num_comments = (int) $line["num_comments"];
 					$entry_comments = "";

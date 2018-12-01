@@ -1,7 +1,7 @@
 function mailtoArticle(id) {
 	try {
 		if (!id) {
-			const ids = getSelectedArticleIds2();
+			const ids = Headlines.getSelectedArticleIds2();
 
 			if (ids.length == 0) {
 				alert(__("No articles are selected."));

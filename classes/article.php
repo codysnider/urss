@@ -727,7 +727,7 @@ class Article extends Handler_Protected {
 			if (!$zoom_mode) {
 				$rv['content'] .= "<span id=\"ATSTR-$id\">$tags_str</span>
 					<a title=\"".__('Edit tags for this article')."\"
-					href=\"#\" onclick=\"editArticleTags($id, $feed_id)\">(+)</a>";
+					href=\"#\" onclick=\"Article.editArticleTags($id, $feed_id)\">(+)</a>";
 
 				$rv['content'] .= "<div dojoType=\"dijit.Tooltip\"
 					id=\"ATSTRTIP-$id\" connectId=\"ATSTR-$id\"
