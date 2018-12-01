@@ -1,8 +1,5 @@
 let counters_last_request = 0;
 
-const Counters = {
-};
-
 const Feeds = {
 	_active_feed_id: 0,
 	_active_feed_is_cat: false,
@@ -69,23 +66,23 @@ const Feeds = {
 				continue;
 			}
 
-			/*if (Feeds.getFeedUnread(id, (kind == "cat")) != ctr ||
+			/*if (this.getFeedUnread(id, (kind == "cat")) != ctr ||
 					(kind == "cat")) {
 			}*/
 
-			Feeds.setFeedUnread(id, (kind == "cat"), ctr);
-			Feeds.setFeedValue(id, (kind == "cat"), 'auxcounter', auxctr);
+			this.setFeedUnread(id, (kind == "cat"), ctr);
+			this.setFeedValue(id, (kind == "cat"), 'auxcounter', auxctr);
 
 			if (kind != "cat") {
-				Feeds.setFeedValue(id, false, 'error', error);
-				Feeds.setFeedValue(id, false, 'updated', updated);
+				this.setFeedValue(id, false, 'error', error);
+				this.setFeedValue(id, false, 'updated', updated);
 
 				if (id > 0) {
 					if (has_img) {
-						Feeds.setFeedIcon(id, false,
+						this.setFeedIcon(id, false,
 							getInitParam("icons_url") + "/" + id + ".ico?" + has_img);
 					} else {
-						Feeds.setFeedIcon(id, false, 'images/blank_icon.gif');
+						this.setFeedIcon(id, false, 'images/blank_icon.gif');
 					}
 				}
 			}
@@ -98,13 +95,13 @@ const Feeds = {
 		console.log("viewCurrentFeed: " + method);
 
 		if (this.getActiveFeedId() != undefined) {
-			this.viewfeed({feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat(), method: method});
+			this.viewfeed({feed: this.getActiveFeedId(), is_cat: this.activeFeedIsCat(), method: method});
 		}
 		return false; // block unneeded form submits
 	},
 	openNextUnreadFeed: function() {
-		const is_cat = Feeds.activeFeedIsCat();
-		const nuf = Feeds.getNextUnreadFeed(Feeds.getActiveFeedId(), is_cat);
+		const is_cat = this.activeFeedIsCat();
+		const nuf = this.getNextUnreadFeed(this.getActiveFeedId(), is_cat);
 		if (nuf) this.viewfeed({feed: nuf, is_cat: is_cat});
 	},
 	collapseFeedlist: function() {
@@ -118,7 +115,7 @@ const Feeds = {
 	},
 	cancelSearch: function() {
 		this._search_query = "";
-		Feeds.viewCurrentFeed();
+		this.viewCurrentFeed();
 	},
 	requestCounters: function(force) {
 		const date = new Date();
@@ -172,7 +169,7 @@ const Feeds = {
 					const id = String(item.id);
 					const is_cat = id.match("^CAT:");
 					const feed = id.substr(id.indexOf(":") + 1);
-					Feeds.viewfeed({feed: feed, is_cat: is_cat});
+					this.viewfeed({feed: feed, is_cat: is_cat});
 					return false;
 				},
 				openOnClick: false,
@@ -305,7 +302,7 @@ const Feeds = {
 		// this is used to quickly switch between feeds, sets active but xhr is on a timeout
 		const delayed = params.delayed || false;
 
-		if (feed != Feeds.getActiveFeedId() || Feeds.activeFeedIsCat() != is_cat) {
+		if (feed != this.getActiveFeedId() || this.activeFeedIsCat() != is_cat) {
 			this._search_query = false;
 			setActiveArticleId(0);
 		}
@@ -350,20 +347,20 @@ const Feeds = {
 			if (vgroup_last_feed) {
 				query.vgrlf = vgroup_last_feed;
 			}
-		} else if (!is_cat && feed == Feeds.getActiveFeedId() && !params.method) {
+		} else if (!is_cat && feed == this.getActiveFeedId() && !params.method) {
 			query.m = "ForceUpdate";
 		}
 
 		Form.enable("main_toolbar_form");
 
 		if (!delayed)
-			if (!Feeds.setFeedExpandoIcon(feed, is_cat,
+			if (!this.setFeedExpandoIcon(feed, is_cat,
 				(is_cat) ? 'images/indicator_tiny.gif' : 'images/indicator_white.gif'))
 				notify_progress("Loading, please wait...", true);
 
 		query.cat = is_cat;
 
-		Feeds.setActiveFeedId(feed, is_cat);
+		this.setActiveFeedId(feed, is_cat);
 
 		if (viewfeed_debug) {
 			window.open("backend.php?" +
@@ -377,7 +374,7 @@ const Feeds = {
 			catchupBatchedArticles(() => {
 				xhrPost("backend.php", query, (transport) => {
 					try {
-						Feeds.setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
+						this.setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
 						Headlines.onLoaded(transport, offset);
 						PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
 					} catch (e) {
@@ -404,21 +401,21 @@ const Feeds = {
 		}
 	},
 	decrementFeedCounter: function(feed, is_cat) {
-		let ctr = Feeds.getFeedUnread(feed, is_cat);
+		let ctr = this.getFeedUnread(feed, is_cat);
 
 		if (ctr > 0) {
-			Feeds.setFeedUnread(feed, is_cat, ctr - 1);
+			this.setFeedUnread(feed, is_cat, ctr - 1);
 			App.global_unread -= 1;
 			App.updateTitle();
 
 			if (!is_cat) {
-				const cat = parseInt(Feeds.getFeedCategory(feed));
+				const cat = parseInt(this.getFeedCategory(feed));
 
 				if (!isNaN(cat)) {
-					ctr = Feeds.getFeedUnread(cat, true);
+					ctr = this.getFeedUnread(cat, true);
 
 					if (ctr > 0) {
-						Feeds.setFeedUnread(cat, true, ctr - 1);
+						this.setFeedUnread(cat, true, ctr - 1);
 					}
 				}
 			}
@@ -444,7 +441,7 @@ const Feeds = {
 		}
 
 		const mark_what = last_search_query && last_search_query[0] ? __("search results") : __("all articles");
-		const fn = Feeds.getFeedName(feed, is_cat);
+		const fn = this.getFeedName(feed, is_cat);
 
 		str = str.replace("%s", fn)
 			.replace("%w", mark_what);
@@ -467,12 +464,12 @@ const Feeds = {
 			const show_next_feed = getInitParam("on_catchup_show_next_feed") == "1";
 
 			if (show_next_feed) {
-				const nuf = Feeds.getNextUnreadFeed(feed, is_cat);
+				const nuf = this.getNextUnreadFeed(feed, is_cat);
 
 				if (nuf) {
 					this.viewfeed({feed: nuf, is_cat: is_cat});
 				}
-			} else if (feed == Feeds.getActiveFeedId() && is_cat == Feeds.activeFeedIsCat()) {
+			} else if (feed == this.getActiveFeedId() && is_cat == this.activeFeedIsCat()) {
 				this.viewCurrentFeed();
 			}
 
@@ -480,10 +477,10 @@ const Feeds = {
 		});
 	},
 	catchupCurrentFeed: function(mode) {
-		Feeds.catchupFeed(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat(), mode);
+		this.catchupFeed(this.getActiveFeedId(), this.activeFeedIsCat(), mode);
 	},
 	catchupFeedInGroup: function(id) {
-		const title = Feeds.getFeedName(id);
+		const title = this.getFeedName(id);
 
 		const str = __("Mark all articles in %s as read?").replace("%s", title);
 
