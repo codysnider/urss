@@ -13,10 +13,6 @@ function resetCounterCache() {
 }
 
 function loadMoreHeadlines() {
-	console.log("loadMoreHeadlines");
-
-	let offset = 0;
-
 	const view_mode = document.forms["main_toolbar_form"].view_mode.value;
 	const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
 	const num_all = $$("#headlines-frame > div[id*=RROW]").length;
@@ -24,27 +20,25 @@ function loadMoreHeadlines() {
 
 	// TODO implement marked & published
 
-	if (view_mode == "marked") {
-		console.warn("loadMoreHeadlines: marked is not implemented, falling back.");
-		offset = num_all;
-	} else if (view_mode == "published") {
-		console.warn("loadMoreHeadlines: published is not implemented, falling back.");
-		offset = num_all;
-	} else if (view_mode == "unread") {
-		offset = unread_in_buffer;
-	} else if (_search_query) {
-		offset = num_all;
-	} else if (view_mode == "adaptive" && !(getActiveFeedId() == -1 && !activeFeedIsCat())) {
-		// ^ starred feed shows both unread & read articles in adaptive mode
-		offset = num_unread > 0 ? unread_in_buffer : num_all;
-	} else {
-		offset = num_all;
+	let offset = num_all;
+
+	switch (view_mode) {
+		case "marked":
+		case "published":
+			console.warn("loadMoreHeadlines: ", view_mode, "not implemented");
+			break;
+		case "unread":
+			offset = unread_in_buffer;
+			break;
+		case "adaptive":
+			if (!(getActiveFeedId() == -1 && !activeFeedIsCat()))
+				offset = num_unread > 0 ? unread_in_buffer : num_all;
+			break;
 	}
 
-	console.log("offset: " + offset);
+	console.log("loadMoreHeadlines, offset=", offset);
 
 	viewfeed({feed: getActiveFeedId(), is_cat: activeFeedIsCat(), offset: offset, infscroll_req: true});
-
 }
 
 function cleanup_memory(root) {

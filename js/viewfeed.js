@@ -1117,32 +1117,38 @@ function unpackVisibleHeadlines() {
 	}
 }
 
-function headlinesScrollHandler(e) {
+function headlinesScrollHandler(event) {
 	try {
 		unpackVisibleHeadlines();
 
-		// set topmost child in the buffer as active
-		if (isCombinedMode() && getInitParam("cdm_expanded") && getInitParam("cdm_auto_catchup") == 1) {
 
-			const rows = $$("#headlines-frame > div[id*=RROW]");
+		if (isCombinedMode()) {
+			updateFloatingTitle();
 
-			for (let i = 0; i < rows.length; i++) {
-				const row = rows[i];
+			// set topmost child in the buffer as active
+			if (getInitParam("cdm_expanded") && getInitParam("cdm_auto_catchup") == 1) {
 
-				if ($("headlines-frame").scrollTop <= row.offsetTop &&
-					row.offsetTop - $("headlines-frame").scrollTop < 100 &&
-					row.getAttribute("data-article-id") != getActiveArticleId()) {
+				const rows = $$("#headlines-frame > div[id*=RROW]");
 
-					setActiveArticleId(row.getAttribute("data-article-id"));
-					break;
+				for (let i = 0; i < rows.length; i++) {
+					const row = rows[i];
+
+					if ($("headlines-frame").scrollTop <= row.offsetTop &&
+						row.offsetTop - $("headlines-frame").scrollTop < 100 &&
+						row.getAttribute("data-article-id") != getActiveArticleId()) {
+
+						setActiveArticleId(row.getAttribute("data-article-id"));
+						break;
+					}
 				}
 			}
 		}
 
 		if (!_infscroll_disable) {
 			const hsp = $("headlines-spacer");
+			const container = $("headlines-frame");
 
-			if (hsp && hsp.offsetTop - 250 <= e.scrollTop + e.offsetHeight) {
+			if (hsp && hsp.offsetTop - 250 <= container.scrollTop + container.offsetHeight) {
 
 				hsp.innerHTML = "<span class='loading'><img src='images/indicator_tiny.gif'> " +
 					__("Loading, please wait...") + "</span>";
@@ -1151,10 +1157,6 @@ function headlinesScrollHandler(e) {
 				return;
 
 			}
-		}
-
-		if (isCombinedMode()) {
-			updateFloatingTitle();
 		}
 
 		if (getInitParam("cdm_auto_catchup") == 1) {
