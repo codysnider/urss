@@ -274,13 +274,13 @@ function init_hotkey_actions() {
 		const rv = dijit.byId("feedTree").getNextFeed(
 			getActiveFeedId(), activeFeedIsCat());
 
-		if (rv) viewfeed({feed: rv[0], is_cat: rv[1], can_wait: true})
+		if (rv) viewfeed({feed: rv[0], is_cat: rv[1], delayed: true})
 	};
 	hotkey_actions["prev_feed"] = function() {
 		const rv = dijit.byId("feedTree").getPreviousFeed(
 			getActiveFeedId(), activeFeedIsCat());
 
-		if (rv) viewfeed({feed: rv[0], is_cat: rv[1], can_wait: true})
+		if (rv) viewfeed({feed: rv[0], is_cat: rv[1], delayed: true})
 	};
 	hotkey_actions["next_article"] = function() {
 		moveToPost('next');

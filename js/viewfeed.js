@@ -5,28 +5,20 @@ let _active_article_id = 0;
 let vgroup_last_feed = false;
 let post_under_pointer = false;
 
-let last_requested_article = 0;
-
 let catchup_id_batch = [];
 //let catchup_timeout_id = false;
 
 //let cids_requested = [];
 let loaded_article_ids = [];
-let _last_headlines_update = 0;
 let current_first_id = 0;
 let last_search_query;
 
-let _catchup_request_sent = false;
-
 let has_storage = 'sessionStorage' in window && window['sessionStorage'] !== null;
 
-function headlines_callback2(transport, offset, background, infscroll_req) {
+function headlines_callback2(transport, offset) {
 	const reply = handle_rpc_json(transport);
 
-	console.log("headlines_callback2 [offset=" + offset + "] B:" + background + " I:" + infscroll_req);
-
-	if (background)
-		return;
+	console.log("headlines_callback2, offset=", offset);
 
 	let is_cat = false;
 	let feed_id = false;
@@ -41,7 +33,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 			return;
 
 		try {
-			if (infscroll_req == false) {
+			if (offset == 0) {
 				$("headlines-frame").scrollTop = 0;
 
 				Element.hide("floatingTitle");
@@ -56,18 +48,14 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 		$("headlines-frame").addClassName(isCombinedMode() ? "cdm" : "normal");
 
 		const headlines_count = reply['headlines-info']['count'];
+		infscroll_disabled = parseInt(headlines_count) != 30;
+
+		console.log('received', headlines_count, 'headlines, infscroll disabled=', infscroll_disabled);
 
 		vgroup_last_feed = reply['headlines-info']['vgroup_last_feed'];
-
-		if (parseInt(headlines_count) < 30) {
-			_infscroll_disable = 1;
-		} else {
-			_infscroll_disable = 0;
-		}
-
 		current_first_id = reply['headlines']['first_id'];
 
-		if (infscroll_req == false) {
+		if (offset == 0) {
 			loaded_article_ids = [];
 
 			dojo.html.set($("headlines-toolbar"),
@@ -96,7 +84,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 
 			initHeadlinesMenu();
 
-			if (_infscroll_disable)
+			if (infscroll_disabled)
 				hsp.innerHTML = "<a href='#' onclick='openNextUnreadFeed()'>" +
 					__("Click to open next unread feed.") + "</a>";
 
@@ -107,8 +95,6 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 			}
 
 		} else if (headlines_count > 0 && feed_id == getActiveFeedId() && is_cat == activeFeedIsCat()) {
-			console.log("adding some more headlines: " + headlines_count);
-
 			const c = dijit.byId("headlines-frame");
 			//const ids = getSelectedArticleIds2();
 
@@ -134,7 +120,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 			if (!hsp) hsp = new Element("DIV", {"id": "headlines-spacer"});
 			c.domNode.appendChild(hsp);
 
-			if (headlines_count < 30) _infscroll_disable = true;
+			if (headlines_count < 30) infscroll_disabled = true;
 
 			/* console.log("restore selected ids: " + ids);
 
@@ -144,7 +130,7 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 
 			initHeadlinesMenu();
 
-			if (_infscroll_disable) {
+			if (infscroll_disabled) {
 				hsp.innerHTML = "<a href='#' onclick='openNextUnreadFeed()'>" +
 				__("Click to open next unread feed.") + "</a>";
 			}
@@ -175,20 +161,19 @@ function headlines_callback2(transport, offset, background, infscroll_req) {
 				"</div>");
 	}
 
-	_infscroll_request_sent = 0;
-	_last_headlines_update = new Date().getTime();
+	infscroll_in_progress = 0;
 
 	// this is used to auto-catchup articles if needed after infscroll request has finished,
 	// unpack visible articles, etc
 	headlinesScrollHandler();
 
 	// if we have some more space in the buffer, why not try to fill it
-	if (!_infscroll_disable && $("headlines-spacer") &&
+	if (!infscroll_disabled && $("headlines-spacer") &&
 			$("headlines-spacer").offsetTop < $("headlines-frame").offsetHeight) {
 
 		window.setTimeout(function() {
 			loadMoreHeadlines();
-		}, 250);
+		}, 500);
 	}
 
 	notify("");
@@ -933,7 +918,7 @@ function headlinesScrollHandler(/* event */) {
 			}
 		}
 
-		if (!_infscroll_disable) {
+		if (!infscroll_disabled) {
 			const hsp = $("headlines-spacer");
 			const container = $("headlines-frame");
 
@@ -944,11 +929,10 @@ function headlinesScrollHandler(/* event */) {
 
 				loadMoreHeadlines();
 				return;
-
 			}
 		}
 
-		if (getInitParam("cdm_auto_catchup") == 1 && !_infscroll_request_sent) {
+		if (getInitParam("cdm_auto_catchup") == 1) {
 
 			let rows = $$("#headlines-frame > div[id*=RROW][class*=Unread]");
 
@@ -966,7 +950,7 @@ function headlinesScrollHandler(/* event */) {
 				}
 			}
 
-			if (_infscroll_disable) {
+			if (infscroll_disabled) {
 				const row = $$("#headlines-frame div[id*=RROW]").last();
 
 				if (row && $("headlines-frame").scrollTop >
@@ -994,19 +978,15 @@ function openNextUnreadFeed() {
 function catchupBatchedArticles(callback) {
 	console.log("catchupBatchedArticles, size=", catchup_id_batch.length);
 
-	if (catchup_id_batch.length > 0 /* && !_infscroll_request_sent */ && !_catchup_request_sent) {
+	if (catchup_id_batch.length > 0) {
 
 		// make a copy of the array
 		const batch = catchup_id_batch.slice();
 		const query = { op: "rpc", method: "catchupSelected",
 			cmode: 0, ids: batch.toString() };
 
-		_catchup_request_sent = true;
-
 		xhrPost("backend.php", query, (transport) => {
 			const reply = handle_rpc_json(transport);
-
-			_catchup_request_sent = false;
 
 			if (reply) {
 				const batch = reply.ids;

@@ -1,9 +1,9 @@
-let _infscroll_disable = 0;
-let _infscroll_request_sent = 0;
+let infscroll_in_progress = 0;
+let infscroll_disabled = 0;
 
+let _infscroll_timeout = false;
 let _search_query = false;
-let _viewfeed_last = 0;
-let _viewfeed_timeout = false;
+let _viewfeed_wait_timeout = false;
 
 let counters_last_request = 0;
 let _counters_prev = [];
@@ -55,42 +55,31 @@ function cleanup_memory(root) {
 
 function viewfeed(params) {
 	const feed = params.feed;
-	let is_cat = !!params.is_cat || false;
-	let offset = params.offset || 0;
-	let background = params.background || false;
-	let infscroll_req = params.infscroll_req || false;
-	const can_wait = params.can_wait;
+	const is_cat = !!params.is_cat || false;
+	const offset = params.offset || 0;
 	const viewfeed_debug = params.viewfeed_debug;
 	const method = params.method;
-
-	if (infscroll_req == undefined) infscroll_req = false;
-
-	last_requested_article = 0;
+	// this is used to quickly switch between feeds, sets active but xhr is on a timeout
+	const delayed = params.delayed || false;
 
 	if (feed != getActiveFeedId() || activeFeedIsCat() != is_cat) {
-		if (!background && _search_query) _search_query = false;
+		_search_query = false;
 	}
 
-	if (!background) {
-		_viewfeed_last = get_timestamp();
+	if (offset != 0) {
+		if (infscroll_in_progress)
+			return;
 
-		if (getActiveFeedId() != feed || !infscroll_req) {
-			setActiveArticleId(0);
-			_infscroll_disable = 0;
+		infscroll_in_progress = 1;
 
-			cleanup_memory("headlines-frame");
-		}
+		window.clearTimeout(_infscroll_timeout);
+		_infscroll_timeout = window.setTimeout(() => {
+			console.log('infscroll request timed out, aborting');
+			infscroll_in_progress = 0;
 
-		if (infscroll_req) {
-			const timestamp = get_timestamp();
-
-			if (_infscroll_request_sent && _infscroll_request_sent + 30 > timestamp) {
-				//console.log("infscroll request in progress, aborting");
-				return;
-			}
-
-			_infscroll_request_sent = timestamp;
-		}
+			// call scroll handler to maybe repeat infscroll request
+			headlinesScrollHandler();
+		}, 10 * 1000);
 	}
 
 	Form.enable("main_toolbar_form");
@@ -106,35 +95,29 @@ function viewfeed(params) {
 		}
 	}
 
-	if (!background) {
-		if (_search_query) {
-			query = Object.assign(query, _search_query);
+	if (_search_query) {
+		query = Object.assign(query, _search_query);
+	}
+
+	if (offset != 0) {
+		query.skip = offset;
+
+		// to prevent duplicate feed titles when showing grouped vfeeds
+		if (vgroup_last_feed) {
+			query.vgrlf = vgroup_last_feed;
+		}
+	} else if (!is_cat && feed == getActiveFeedId() && !params.method) {
+			query.m = "ForceUpdate";
 		}
 
-		if (offset != 0) {
-			query.skip = offset;
+	Form.enable("main_toolbar_form");
 
-			// to prevent duplicate feed titles when showing grouped vfeeds
-			if (vgroup_last_feed) {
-				query.vgrlf = vgroup_last_feed;
-			}
-		} else if (!is_cat && feed == getActiveFeedId() && !params.method) {
-				query.m = "ForceUpdate";
-			}
-
-		Form.enable("main_toolbar_form");
-
+	if (!delayed)
 		if (!setFeedExpandoIcon(feed, is_cat,
 			(is_cat) ? 'images/indicator_tiny.gif' : 'images/indicator_white.gif'))
 				notify_progress("Loading, please wait...", true);
-	}
 
 	query.cat = is_cat;
-
-	if (can_wait && _viewfeed_timeout) {
-		setFeedExpandoIcon(getActiveFeedId(), activeFeedIsCat(), 'images/blank_icon.gif');
-		clearTimeout(_viewfeed_timeout);
-	}
 
 	setActiveFeedId(feed, is_cat);
 
@@ -145,17 +128,20 @@ function viewfeed(params) {
 			));
 	}
 
-	catchupBatchedArticles(() => {
-		xhrPost("backend.php", query, (transport) => {
-			try {
-				setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
-				headlines_callback2(transport, offset, background, infscroll_req);
-				PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
-			} catch (e) {
-				exception_error(e);
-			}
+	window.clearTimeout(_viewfeed_wait_timeout);
+	_viewfeed_wait_timeout = window.setTimeout(() => {
+		catchupBatchedArticles(() => {
+			xhrPost("backend.php", query, (transport) => {
+				try {
+					setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
+					headlines_callback2(transport, offset);
+					PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
+				} catch (e) {
+					exception_error(e);
+				}
+			});
 		});
-	});
+	}, delayed ? 250 : 0);
 }
 
 function feedlist_init() {
@@ -164,8 +150,8 @@ function feedlist_init() {
 	setLoadingProgress(50);
 
 	document.onkeydown = hotkey_handler;
-	setInterval(hotkeyPrefixTimeout, 5*1000);
-	setInterval(catchupBatchedArticles, 3*1000);
+	setInterval(hotkeyPrefixTimeout, 3*1000);
+	setInterval(catchupBatchedArticles, 10*1000);
 
 	if (!getActiveFeedId()) {
 		viewfeed({feed: -3});
@@ -357,7 +343,7 @@ function getFeedName(feed, is_cat) {
 		return tree.model.getFeedValue(feed, is_cat, 'name');
 }
 
-function getFeedValue(feed, is_cat, key) {
+/* function getFeedValue(feed, is_cat, key) {
 	try {
 		const tree = dijit.byId("feedTree");
 
@@ -368,7 +354,7 @@ function getFeedValue(feed, is_cat, key) {
 		//
 	}
 	return '';
-}
+} */
 
 function setFeedUnread(feed, is_cat, unread) {
 	const tree = dijit.byId("feedTree");
