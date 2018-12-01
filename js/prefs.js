@@ -65,7 +65,7 @@ const App = {
 		});
 	},
 	initSecondStage: function() {
-		document.onkeydown = pref_hotkey_handler;
+		document.onkeydown = this.hotkeyHandler;
 		setLoadingProgress(50);
 		notify("");
 
@@ -87,6 +87,30 @@ const App = {
 		}
 
 		setInterval(hotkeyPrefixTimeout, 5 * 1000);
+	},
+	hotkeyHandler: function (event) {
+		if (event.target.nodeName == "INPUT" || event.target.nodeName == "TEXTAREA") return;
+
+		const action_name = keyeventToAction(event);
+
+		if (action_name) {
+			switch (action_name) {
+				case "feed_subscribe":
+					quickAddFeed();
+					return false;
+				case "create_label":
+					addLabel();
+					return false;
+				case "create_filter":
+					quickAddFilter();
+					return false;
+				case "help_dialog":
+					Utils.helpDialog("main");
+					return false;
+				default:
+					console.log("unhandled action: " + action_name + "; keycode: " + event.which);
+			}
+		}
 	}
 }
 
@@ -745,31 +769,6 @@ function validatePrefsReset() {
 	}
 
 	return false;
-}
-
-function pref_hotkey_handler(e) {
-	if (e.target.nodeName == "INPUT" || e.target.nodeName == "TEXTAREA") return;
-
-	const action_name = keyeventToAction(e);
-
-	if (action_name) {
-		switch (action_name) {
-			case "feed_subscribe":
-				quickAddFeed();
-				return false;
-			case "create_label":
-				addLabel();
-				return false;
-			case "create_filter":
-				quickAddFilter();
-				return false;
-			case "help_dialog":
-				Utils.helpDialog("main");
-				return false;
-			default:
-				console.log("unhandled action: " + action_name + "; keycode: " + e.which);
-		}
-	}
 }
 
 function removeCategory(id, item) {
