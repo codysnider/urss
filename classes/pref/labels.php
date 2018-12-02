@@ -275,7 +275,7 @@ class Pref_Labels extends Handler_Protected {
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 
-		print"<button dojoType=\"dijit.form.Button\" onclick=\"return addLabel()\">".
+		print"<button dojoType=\"dijit.form.Button\" onclick=\"CommonDialogs.addLabel()\">".
 			__('Create label')."</button dojoType=\"dijit.form.Button\"> ";
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('labelTree').removeSelected()\">".
