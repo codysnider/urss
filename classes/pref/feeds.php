@@ -1156,7 +1156,7 @@ class Pref_Feeds extends Handler_Protected {
 		$inactive_button = "<button dojoType=\"dijit.form.Button\"
 				id=\"pref_feeds_inactive_btn\"
 				style=\"display : none\"
-				onclick=\"showInactiveFeeds()\">" .
+				onclick=\"dijit.byId('feedTree').showInactiveFeeds()\">" .
 				__("Inactive feeds") . "</button>";
 
 		$feed_search = clean($_REQUEST["search"]);
@@ -1249,7 +1249,7 @@ class Pref_Feeds extends Handler_Protected {
 			if (id.match('FEED:')) {
 				CommonDialogs.editFeed(bare_id);
 			} else if (id.match('CAT:')) {
-				editCat(bare_id, item);
+				dijit.byId('feedTree').editCategory(bare_id, item);
 			}
 		</script>
 		<script type=\"dojo/method\" event=\"onLoad\" args=\"item\">

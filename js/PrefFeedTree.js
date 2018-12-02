@@ -35,14 +35,14 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				menu.addChild(new dijit.MenuItem({
 					label: __("Edit category"),
 					onClick: function() {
-						editCat(this.getParent().row_id, this.getParent().item, null);
+						dijit.byId("feedTree").editCategory(this.getParent().row_id, this.getParent().item, null);
 					}}));
 
 
 				menu.addChild(new dijit.MenuItem({
 					label: __("Remove category"),
 					onClick: function() {
-						removeCategory(this.getParent().row_id, this.getParent().item);
+						dijit.byId("feedTree").removeCategory(this.getParent().row_id, this.getParent().item);
 					}}));
 
 				menu.bindDomNode(tnode.domNode);
@@ -122,6 +122,16 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			xhrPost("backend.php", {op: "pref-feeds", method: "catsortreset"}, () => {
 				updateFeedList();
 			});
+		},
+		removeCategory: function(id, item) {
+			if (confirm(__("Remove category %s? Any nested feeds would be placed into Uncategorized.").replace("%s", item.name))) {
+				notify_progress("Removing category...");
+
+				xhrPost("backend.php", {op: "pref-feeds", method: "removeCat", ids: id}, () => {
+					notify('');
+					updateFeedList();
+				});
+			}
 		},
 		removeSelectedFeeds: function() {
 			const sel_rows = this.getSelectedFeeds();
@@ -284,6 +294,22 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				dialog.show();
 			});
 		},
+		editCategory: function(id, item) {
+			// uncategorized
+			if (String(item.id) == "CAT:0")
+				return;
+
+			const new_name = prompt(__('Rename category to:'), item.name);
+
+			if (new_name && new_name != item.name) {
+
+				notify_progress("Loading, please wait...");
+
+				xhrPost("backend.php", { op: 'pref-feeds', method: 'renamecat', id: id, title: new_name }, () => {
+					updateFeedList();
+				});
+			}
+		},
 		createCategory: function() {
 			const title = prompt(__("Category title:"));
 
@@ -316,6 +342,51 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 							updateFeedList();
 							dialog.hide();
 						});
+					}
+				},
+				href: query
+			});
+
+			dialog.show();
+		},
+		showInactiveFeeds: function() {
+			const query = "backend.php?op=pref-feeds&method=inactiveFeeds";
+
+			if (dijit.byId("inactiveFeedsDlg"))
+				dijit.byId("inactiveFeedsDlg").destroyRecursive();
+
+			const dialog = new dijit.Dialog({
+				id: "inactiveFeedsDlg",
+				title: __("Feeds without recent updates"),
+				style: "width: 600px",
+				getSelectedFeeds: function () {
+					return Tables.getSelected("prefInactiveFeedList");
+				},
+				removeSelected: function () {
+					const sel_rows = this.getSelectedFeeds();
+
+					if (sel_rows.length > 0) {
+						if (confirm(__("Remove selected feeds?"))) {
+							notify_progress("Removing selected feeds...", true);
+
+							const query = {
+								op: "pref-feeds", method: "remove",
+								ids: sel_rows.toString()
+							};
+
+							xhrPost("backend.php", query, () => {
+								notify('');
+								dialog.hide();
+								updateFeedList();
+							});
+						}
+
+					} else {
+						alert(__("No feeds are selected."));
+					}
+				},
+				execute: function () {
+					if (this.validate()) {
 					}
 				},
 				href: query

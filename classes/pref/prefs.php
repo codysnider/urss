@@ -542,7 +542,7 @@ class Pref_Prefs extends Handler_Protected {
 			} else if ($pref_name == "USER_STYLESHEET") {
 
 				print "<button dojoType=\"dijit.form.Button\"
-					onclick=\"customizeCSS()\">" . __('Customize') . "</button>";
+					onclick=\"Prefs.customizeCSS()\">" . __('Customize') . "</button>";
 
 			} else if ($pref_name == "USER_CSS_THEME") {
 
@@ -608,11 +608,11 @@ class Pref_Prefs extends Handler_Protected {
 				print "<br/>";
 
 				print " <button dojoType=\"dijit.form.Button\" disabled=\"$has_serial\"
-					onclick=\"insertSSLserial('$cert_serial')\">" .
+					onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '$cert_serial')\">" .
 					__('Register') . "</button>";
 
 				print " <button dojoType=\"dijit.form.Button\"
-					onclick=\"insertSSLserial('')\">" .
+					onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '')\">" .
 					__('Clear') . "</button>";
 
 			} else if ($pref_name == 'DIGEST_PREFERRED_TIME') {
@@ -659,10 +659,10 @@ class Pref_Prefs extends Handler_Protected {
 			</div>
 			</div>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return editProfiles()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Prefs.editProfiles()\">".
 			__('Manage profiles')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" class=\"btn-danger\" onclick=\"return validatePrefsReset()\">".
+		print "<button dojoType=\"dijit.form.Button\" class=\"btn-danger\" onclick=\"return Prefs.confirmReset()\">".
 			__('Reset to defaults')."</button>";
 
 		print "&nbsp;";
@@ -756,7 +756,7 @@ class Pref_Prefs extends Handler_Protected {
 
 				if (count($tmppluginhost->get_all($plugin)) > 0) {
 					if (in_array($name, $system_enabled)) {
-						print "<td><a href='#' onclick=\"clearPluginData('$name')\"
+						print "<td><a href='#' onclick=\"Prefs.clearPluginData('$name')\"
 							class='visibleLink'>".__("Clear data")."</a></td>";
 					}
 				}
@@ -816,7 +816,7 @@ class Pref_Prefs extends Handler_Protected {
 
 				if (count($tmppluginhost->get_all($plugin)) > 0) {
 					if (in_array($name, $system_enabled) || in_array($name, $user_enabled)) {
-						print "<td><a href='#' onclick=\"clearPluginData('$name')\" class='visibleLink'>".__("Clear data")."</a></td>";
+						print "<td><a href='#' onclick=\"Prefs.clearPluginData('$name')\" class='visibleLink'>".__("Clear data")."</a></td>";
 					}
 				}
 
