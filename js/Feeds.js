@@ -212,7 +212,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			Utils.setLoadingProgress(50);
 
-			document.onkeydown = () => { App.hotkeyHandler(event) };
+			document.onkeydown = (event) => { App.hotkeyHandler(event) };
 			window.setInterval(() => { Headlines.catchupBatched() }, 10 * 1000);
 
 			if (!this.getActive()) {
