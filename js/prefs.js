@@ -245,12 +245,12 @@ function editFilter(id) {
 		editRule: function (e) {
 			const li = e.parentNode;
 			const rule = li.getElementsByTagName("INPUT")[1].value;
-			addFilterRule(li, rule);
+			Filters.addFilterRule(li, rule);
 		},
 		editAction: function (e) {
 			const li = e.parentNode;
 			const action = li.getElementsByTagName("INPUT")[1].value;
-			addFilterAction(li, action);
+			Filters.addFilterAction(li, action);
 		},
 		removeFilter: function () {
 			const msg = __("Remove filter?");
@@ -268,10 +268,10 @@ function editFilter(id) {
 			}
 		},
 		addAction: function () {
-			addFilterAction();
+			Filters.addFilterAction();
 		},
 		addRule: function () {
-			addFilterRule();
+			Filters.addFilterRule();
 		},
 		deleteAction: function () {
 			$$("#filterDlg_Actions li[class*=Selected]").each(function (e) {
