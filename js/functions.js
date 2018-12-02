@@ -1137,7 +1137,7 @@ const Filters = {
 
 				new dijit.form.CheckBox({
 					onChange: function () {
-						toggleSelectListRow2(this)
+						$$(".rchk")[0].up("li").toggleClassName("Selected");
 					},
 				}, cb);
 
@@ -1186,7 +1186,7 @@ const Filters = {
 
 				new dijit.form.CheckBox({
 					onChange: function () {
-						toggleSelectListRow2(this)
+						$$(".rchk")[0].up("li").toggleClassName("Selected");
 					},
 				}, cb);
 
