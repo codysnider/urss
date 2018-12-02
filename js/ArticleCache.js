@@ -1,3 +1,5 @@
+'use strict'
+/* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
 	return declare("fox.ArticleCache", null, {
 		has_storage: 'sessionStorage' in window && window['sessionStorage'] !== null,

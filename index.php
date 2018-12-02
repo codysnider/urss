@@ -103,6 +103,9 @@
 				"lib/scriptaculous/scriptaculous.js?load=effects,controls",
 				"lib/dojo/dojo.js",
 				"lib/dojo/tt-rss-layer.js",
+				"js/tt-rss.js",
+				"js/common.js",
+				"js/PluginHost.js",
 				"errors.php?mode=js") as $jsfile) {
 
 		echo javascript_tag($jsfile);
@@ -110,13 +113,9 @@
 	} ?>
 
 	<script type="text/javascript">
-		'use strict';
 		require({cache:{}});
-	<?php
-		print get_minified_js(["tt-rss.js",
-			"functions.js", "PluginHost.js"]);
-	?>
 	</script>
+
 	<script type="text/javascript">
 	<?php
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {

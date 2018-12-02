@@ -1,3 +1,5 @@
+'use strict'
+/* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
 	return declare("fox.Utils", null, {
 		_rpc_seq: 0,
@@ -234,12 +236,6 @@ define(["dojo/_base/declare"], function (declare) {
 					const v = data[k];
 
 					console.log("RI:", k, "=>", v);
-
-					if (k == "dep_ts" && parseInt(getInitParam("dep_ts")) > 0) {
-						if (parseInt(getInitParam("dep_ts")) < parseInt(v) && getInitParam("reload_on_ts_change")) {
-							window.location.reload();
-						}
-					}
 
 					if (k == "daemon_is_running" && v != 1) {
 						notify_error("<span onclick=\"Utils.explainError(1)\">Update daemon is not running.</span>", true);

@@ -95,7 +95,7 @@
 <title>Create new account</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <?php echo stylesheet_tag("css/default.css") ?>
-<?php echo javascript_tag("js/functions.js") ?>
+<?php echo javascript_tag("js/common.js") ?>
 <?php echo javascript_tag("lib/prototype.js") ?>
 <?php echo javascript_tag("lib/scriptaculous/scriptaculous.js?load=effects,controls") ?>
 </head>

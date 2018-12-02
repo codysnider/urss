@@ -1310,9 +1310,6 @@
 		$data['last_article_id'] = Article::getLastArticleId();
 		$data['cdm_expanded'] = get_pref('CDM_EXPANDED');
 
-		$data['dep_ts'] = calculate_dep_timestamp();
-		$data['reload_on_ts_change'] = !defined('_NO_RELOAD_ON_TS_CHANGE');
-
 		$data["labels"] = Labels::get_all_labels($_SESSION["uid"]);
 
 		if (CHECK_FOR_UPDATES && !$disable_update_check && $_SESSION["last_version_check"] + 86400 + rand(-1000, 1000) < time()) {
@@ -2377,52 +2374,6 @@
 
 	function implements_interface($class, $interface) {
 		return in_array($interface, class_implements($class));
-	}
-
-	function get_minified_js($files) {
-
-		$rv = '';
-
-		foreach ($files as $js) {
-			if (!isset($_GET['debug'])) {
-				$cached_file = CACHE_DIR . "/js/".basename($js);
-
-				if (file_exists($cached_file) && is_readable($cached_file) && filemtime($cached_file) >= filemtime("js/$js")) {
-
-					list($header, $contents) = explode("\n", file_get_contents($cached_file), 2);
-
-					if ($header && $contents) {
-						list($htag, $hversion) = explode(":", $header);
-
-						if ($htag == "tt-rss" && $hversion == VERSION) {
-							$rv .= $contents;
-							continue;
-						}
-					}
-				}
-
-				$minified = JShrink\Minifier::minify(file_get_contents("js/$js"));
-				file_put_contents($cached_file, "tt-rss:" . VERSION . "\n" . $minified);
-				$rv .= $minified;
-
-			} else {
-				$rv .= file_get_contents("js/$js"); // no cache in debug mode
-			}
-		}
-
-		return $rv;
-	}
-
-	function calculate_dep_timestamp() {
-		$files = array_merge(glob("js/*.js"), glob("css/*.css"));
-
-		$max_ts = -1;
-
-		foreach ($files as $file) {
-			if (filemtime($file) > $max_ts) $max_ts = filemtime($file);
-		}
-
-		return $max_ts;
 	}
 
 	function T_js_decl($s1, $s2) {

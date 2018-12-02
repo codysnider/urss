@@ -1,3 +1,5 @@
+'use strict'
+/* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
 	return declare("fox.Feeds", null, {
 		counters_last_request: 0,

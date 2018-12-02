@@ -70,19 +70,18 @@
 				"lib/scriptaculous/scriptaculous.js?load=effects,controls",
 				"lib/dojo/dojo.js",
 				"lib/dojo/tt-rss-layer.js",
+				"js/common.js",
+				"js/prefs.js",
 				"errors.php?mode=js") as $jsfile) {
 
 		echo javascript_tag($jsfile);
 
 	} ?>
 
-	<script type="text/javascript">
-		'use strict';
+    <script type="text/javascript">
 		require({cache:{}});
-	<?php
-		print get_minified_js(["functions.js", "prefs.js"]);
-	?>
-	</script>
+    </script>
+
 	<script type="text/javascript">
 	<?php
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {

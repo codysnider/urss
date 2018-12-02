@@ -1,3 +1,4 @@
+'use strict'
 /* global dijit, __ */
 
 let init_params = {};

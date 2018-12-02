@@ -1,5 +1,5 @@
-/* global dijit, __, ngettext, notify */
-
+'use strict';
+/* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
 	return declare("fox.Headlines", null, {
 		vgroup_last_feed: undefined,

@@ -1,3 +1,5 @@
+'use strict'
+/* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
 	return declare("fox.Article", null, {
 		_active_article_id: 0,

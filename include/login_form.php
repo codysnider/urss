@@ -10,7 +10,7 @@
 	foreach (array("lib/prototype.js",
 				"lib/dojo/dojo.js",
 				"lib/dojo/tt-rss-layer.js",
-				"js/functions.js",
+				"js/common.js",
 				"errors.php?mode=js") as $jsfile) {
 
 		echo javascript_tag($jsfile);
