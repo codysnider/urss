@@ -320,32 +320,6 @@ function getSelectedUsers() {
 	return Tables.getSelected("prefUserList");
 }
 
-function getSelectedFeeds() {
-	const tree = dijit.byId("feedTree");
-	const items = tree.model.getCheckedItems();
-	const rv = [];
-
-	items.each(function(item) {
-		if (item.id[0].match("FEED:"))
-			rv.push(tree.model.store.getValue(item, 'bare_id'));
-	});
-
-	return rv;
-}
-
-function getSelectedCategories() {
-	const tree = dijit.byId("feedTree");
-	const items = tree.model.getCheckedItems();
-	const rv = [];
-
-	items.each(function(item) {
-		if (item.id[0].match("CAT:"))
-			rv.push(tree.model.store.getValue(item, 'bare_id'));
-	});
-
-	return rv;
-}
-
 function getSelectedFilters() {
 	const tree = dijit.byId("filterTree");
 	const items = tree.model.getCheckedItems();
@@ -400,30 +374,6 @@ function removeSelectedFilters() {
 		}
 	} else {
 		alert(__("No filters are selected."));
-	}
-
-	return false;
-}
-
-function removeSelectedFeeds() {
-
-	const sel_rows = getSelectedFeeds();
-
-	if (sel_rows.length > 0) {
-		if (confirm(__("Unsubscribe from selected feeds?"))) {
-
-			notify_progress("Unsubscribing from selected feeds...", true);
-
-			const query = { op: "pref-feeds", method: "remove",
-				ids: sel_rows.toString() };
-
-			xhrPost("backend.php", query, () => {
-				updateFeedList();
-			});
-		}
-
-	} else {
-		alert(__("No feeds are selected."));
 	}
 
 	return false;
@@ -540,93 +490,6 @@ function joinSelectedFilters() {
 			updateFilterList();
 		});
 	}
-}
-
-function editSelectedFeed() {
-	const rows = getSelectedFeeds();
-
-	if (rows.length == 0) {
-		alert(__("No feeds are selected."));
-		return;
-	}
-
-	if (rows.length > 1) {
-		return editSelectedFeeds();
-	}
-
-	notify("");
-
-	CommonDialogs.editFeed(rows[0], {});
-
-}
-
-function editSelectedFeeds() {
-	const rows = getSelectedFeeds();
-
-	if (rows.length == 0) {
-		alert(__("No feeds are selected."));
-		return;
-	}
-
-	notify_progress("Loading, please wait...");
-
-	if (dijit.byId("feedEditDlg"))
-		dijit.byId("feedEditDlg").destroyRecursive();
-
-	xhrPost("backend.php", { op: "pref-feeds", method: "editfeeds", ids: rows.toString() }, (transport) => {
-		notify("");
-
-		const dialog = new dijit.Dialog({
-			id: "feedEditDlg",
-			title: __("Edit Multiple Feeds"),
-			style: "width: 600px",
-			getChildByName: function (name) {
-				let rv = null;
-				this.getChildren().each(
-					function (child) {
-						if (child.name == name) {
-							rv = child;
-							return;
-						}
-					});
-				return rv;
-			},
-			toggleField: function (checkbox, elem, label) {
-				this.getChildByName(elem).attr('disabled', !checkbox.checked);
-
-				if ($(label))
-					if (checkbox.checked)
-						$(label).removeClassName('insensitive');
-					else
-						$(label).addClassName('insensitive');
-
-			},
-			execute: function () {
-				if (this.validate() && confirm(__("Save changes to selected feeds?"))) {
-					const query = this.attr('value');
-
-					/* normalize unchecked checkboxes because [] is not serialized */
-
-					Object.keys(query).each((key) => {
-						let val = query[key];
-
-						if (typeof val == "object" && val.length == 0)
-							query[key] = ["off"];
-					});
-
-					notify_progress("Saving data...", true);
-
-					xhrPost("backend.php", query, () => {
-						dialog.hide();
-						updateFeedList();
-					});
-				}
-			},
-			content: transport.responseText
-		});
-
-		dialog.show();
-	});
 }
 
 function opmlImportComplete(iframe) {
@@ -767,39 +630,6 @@ function removeCategory(id, item) {
 	}
 }
 
-function removeSelectedCategories() {
-	const sel_rows = getSelectedCategories();
-
-	if (sel_rows.length > 0) {
-		if (confirm(__("Remove selected categories?"))) {
-			notify_progress("Removing selected categories...");
-
-			const query = { op: "pref-feeds", method: "removeCat",
-				ids: sel_rows.toString() };
-
-			xhrPost("backend.php", query, () => {
-				updateFeedList();
-			});
-		}
-	} else {
-		alert(__("No categories are selected."));
-	}
-
-	return false;
-}
-
-function createCategory() {
-	const title = prompt(__("Category title:"));
-
-	if (title) {
-		notify_progress("Creating category...");
-
-		xhrPost("backend.php", { op: "pref-feeds", method: "addCat", cat: title }, () => {
-			notify('');
-			updateFeedList();
-		});
-	}
-}
 
 function showInactiveFeeds() {
 	const query = "backend.php?op=pref-feeds&method=inactiveFeeds";
@@ -989,23 +819,6 @@ function resetFilterOrder() {
 	});
 }
 
-
-function resetFeedOrder() {
-	notify_progress("Loading, please wait...");
-
-	xhrPost("backend.php", { op: "pref-feeds", method: "feedsortreset" }, () => {
-		updateFeedList();
-	});
-}
-
-function resetCatOrder() {
-	notify_progress("Loading, please wait...");
-
-	xhrPost("backend.php", { op: "pref-feeds", method: "catsortreset" }, () => {
-		updateFeedList();
-	});
-}
-
 function editCat(id, item) {
 	const new_name = prompt(__('Rename category to:'), item.name);
 
@@ -1113,35 +926,6 @@ function insertSSLserial(value) {
 function gotoExportOpml(filename, settings) {
 	const tmp = settings ? 1 : 0;
 	document.location.href = "backend.php?op=opml&method=export&filename=" + filename + "&settings=" + tmp;
-}
-
-
-function batchSubscribe() {
-	const query = "backend.php?op=pref-feeds&method=batchSubscribe";
-
-	// overlapping widgets
-	if (dijit.byId("batchSubDlg")) dijit.byId("batchSubDlg").destroyRecursive();
-	if (dijit.byId("feedAddDlg"))	dijit.byId("feedAddDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "batchSubDlg",
-		title: __("Batch subscribe"),
-		style: "width: 600px",
-		execute: function () {
-			if (this.validate()) {
-				notify_progress(__("Subscribing to feeds..."), true);
-
-				xhrPost("backend.php", this.attr('value'), () => {
-					notify("");
-					updateFeedList();
-					dialog.hide();
-				});
-			}
-		},
-		href: query
-	});
-
-	dialog.show();
 }
 
 function clearPluginData(name) {

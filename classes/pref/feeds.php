@@ -1192,13 +1192,13 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"CommonDialogs.quickAddFeed()\"
 			dojoType=\"dijit.MenuItem\">".__('Subscribe to feed')."</div>";
-		print "<div onclick=\"editSelectedFeed()\"
+		print "<div onclick=\"dijit.byId('feedTree').editSelectedFeed()\"
 			dojoType=\"dijit.MenuItem\">".__('Edit selected feeds')."</div>";
-		print "<div onclick=\"resetFeedOrder()\"
+		print "<div onclick=\"dijit.byId('feedTree').resetFeedOrder()\"
 			dojoType=\"dijit.MenuItem\">".__('Reset sort order')."</div>";
-		print "<div onclick=\"batchSubscribe()\"
+		print "<div onclick=\"dijit.byId('feedTree').batchSubscribe()\"
 			dojoType=\"dijit.MenuItem\">".__('Batch subscribe')."</div>";
-		print "<div dojoType=\"dijit.MenuItem\" onclick=\"removeSelectedFeeds()\">"
+		print "<div dojoType=\"dijit.MenuItem\" onclick=\"dijit.byId('feedTree').removeSelectedFeeds()\">"
 			.__('Unsubscribe')."</div> ";
 		print "</div></div>";
 
@@ -1206,11 +1206,11 @@ class Pref_Feeds extends Handler_Protected {
 			print "<div dojoType=\"dijit.form.DropDownButton\">".
 					"<span>" . __('Categories')."</span>";
 			print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-			print "<div onclick=\"createCategory()\"
+			print "<div onclick=\"dijit.byId('feedTree').createCategory()\"
 				dojoType=\"dijit.MenuItem\">".__('Add category')."</div>";
-			print "<div onclick=\"resetCatOrder()\"
+			print "<div onclick=\"dijit.byId('feedTree').resetCatOrder()\"
 				dojoType=\"dijit.MenuItem\">".__('Reset sort order')."</div>";
-			print "<div onclick=\"removeSelectedCategories()\"
+			print "<div onclick=\"dijit.byId('feedTree').removeSelectedCategories()\"
 				dojoType=\"dijit.MenuItem\">".__('Remove selected')."</div>";
 			print "</div></div>";
 

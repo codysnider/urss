@@ -38,7 +38,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 			return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "invisible";
 		},
 		getSelectedLabels: function() {
-			const tree = dijit.byId("labelTree");
+			const tree = this;
 			const items = tree.model.getCheckedItems();
 			const rv = [];
 
