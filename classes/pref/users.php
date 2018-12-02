@@ -354,9 +354,9 @@ class Pref_Users extends Handler_Protected {
 			print "<div dojoType=\"dijit.form.DropDownButton\">".
 					"<span>" . __('Select')."</span>";
 			print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-			print "<div onclick=\"selectTableRows('prefUserList', 'all')\"
+			print "<div onclick=\"Tables.select('prefUserList', true)\"
 				dojoType=\"dijit.MenuItem\">".__('All')."</div>";
-			print "<div onclick=\"selectTableRows('prefUserList', 'none')\"
+			print "<div onclick=\"Tables.select('prefUserList', false)\"
 				dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 			print "</div></div>";
 
@@ -412,7 +412,7 @@ class Pref_Users extends Handler_Protected {
 
 				$uid = $line["id"];
 
-				print "<tr id=\"UMRR-$uid\">";
+				print "<tr data-row-id=\"$uid\">";
 
 				$line["login"] = htmlspecialchars($line["login"]);
 
@@ -420,8 +420,7 @@ class Pref_Users extends Handler_Protected {
 				$line["last_login"] = make_local_datetime($line["last_login"], false);
 
 				print "<td align='center'><input onclick='Tables.onRowChecked(this);'
-					dojoType=\"dijit.form.CheckBox\" type=\"checkbox\"
-					id=\"UMCHK-$uid\"></td>";
+					dojoType=\"dijit.form.CheckBox\" type=\"checkbox\"></td>";
 
 				$onclick = "onclick='editUser($uid, event)' title='".__('Click to edit')."'";
 

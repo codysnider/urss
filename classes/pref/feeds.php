@@ -1412,9 +1412,9 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div dojoType=\"dijit.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-		print "<div onclick=\"selectTableRows('prefInactiveFeedList', 'all')\"
+		print "<div onclick=\"Tables.select('prefInactiveFeedList', true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
-		print "<div onclick=\"selectTableRows('prefInactiveFeedList', 'none')\"
+		print "<div onclick=\"Tables.select('prefInactiveFeedList', false)\"
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 		print "</div>"; #toolbar
@@ -1428,15 +1428,12 @@ class Pref_Feeds extends Handler_Protected {
 		while ($line = $sth->fetch()) {
 
 			$feed_id = $line["id"];
-			$this_row_id = "id=\"FUPDD-$feed_id\"";
 
-			# class needed for selectTableRows()
-			print "<tr class=\"placeholder\" $this_row_id>";
+			print "<tr class=\"placeholder\" data-row-id='$feed_id'>";
 
-			# id needed for selectTableRows()
 			print "<td width='5%' align='center'><input
 				onclick='Tables.onRowChecked(this);' dojoType=\"dijit.form.CheckBox\"
-				type=\"checkbox\" id=\"FUPDC-$feed_id\"></td>";
+				type=\"checkbox\"></td>";
 			print "<td>";
 
 			print "<a class=\"visibleLink\" href=\"#\" ".
@@ -1477,9 +1474,9 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div dojoType=\"dijit.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-		print "<div onclick=\"selectTableRows('prefErrorFeedList', 'all')\"
+		print "<div onclick=\"Tables.select('prefErrorFeedList', true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
-		print "<div onclick=\"selectTableRows('prefErrorFeedList', 'none')\"
+		print "<div onclick=\"Tables.select('prefErrorFeedList', false)\"
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 		print "</div>"; #toolbar
@@ -1493,15 +1490,12 @@ class Pref_Feeds extends Handler_Protected {
 		while ($line = $sth->fetch()) {
 
 			$feed_id = $line["id"];
-			$this_row_id = "id=\"FERDD-$feed_id\"";
 
-			# class needed for selectTableRows()
-			print "<tr class=\"placeholder\" $this_row_id>";
+			print "<tr class=\"placeholder\" data-row-id='$feed_id'>";
 
-			# id needed for selectTableRows()
 			print "<td width='5%' align='center'><input
 				onclick='Tables.onRowChecked(this);' dojoType=\"dijit.form.CheckBox\"
-				type=\"checkbox\" id=\"FERDC-$feed_id\"></td>";
+				type=\"checkbox\"></td>";
 			print "<td>";
 
 			print "<a class=\"visibleLink\" href=\"#\" ".

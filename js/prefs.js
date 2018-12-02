@@ -73,18 +73,34 @@ const App = {
 
 		if (tab) {
 			tab = dijit.byId(tab + "Tab");
-			if (tab) dijit.byId("pref-tabs").selectChild(tab);
+			if (tab) {
+				dijit.byId("pref-tabs").selectChild(tab);
+
+				switch (Utils.urlParam('method')) {
+					case "editfeed":
+						window.setTimeout(function () {
+							CommonDialogs.editFeed(Utils.urlParam('methodparam'))
+						}, 100);
+						break;
+					default:
+						console.warn("initSecondStage, unknown method:", Utils.urlParam("method"));
+				}
+			}
+		} else {
+			let tab = localStorage.getItem("ttrss:prefs-tab");
+
+			if (tab) {
+				tab = dijit.byId(tab);
+				if (tab) {
+					dijit.byId("pref-tabs").selectChild(tab);
+				}
+			}
 		}
 
-		const method = Utils.urlParam('method');
+		dojo.connect(dijit.byId("pref-tabs"), "selectChild", function (elem) {
+			localStorage.setItem("ttrss:prefs-tab", elem.id);
+		});
 
-		if (method == 'editFeed') {
-			const param = Utils.urlParam('methodparam');
-
-			window.setTimeout(function () {
-				CommonDialogs.editFeed(param)
-			}, 100);
-		}
 	},
 	hotkeyHandler: function (event) {
 		if (event.target.nodeName == "INPUT" || event.target.nodeName == "TEXTAREA") return;
@@ -725,8 +741,8 @@ function updateSystemList() {
 	});
 }
 
-function selectTab(id, noupdate) {
-	if (!noupdate) {
+function selectTab(id, selectOnly) {
+	if (!selectOnly) {
 		notify_progress("Loading, please wait...");
 
 		switch (id) {
@@ -754,7 +770,6 @@ function selectTab(id, noupdate) {
 
 		const tab = dijit.byId(id + "Tab");
 		dijit.byId("pref-tabs").selectChild(tab);
-
 	}
 }
 

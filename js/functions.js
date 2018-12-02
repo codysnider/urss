@@ -55,10 +55,14 @@ Array.prototype.remove = function(s) {
 
 const Lists = {
 	onRowChecked: function(elem) {
+		const checked = elem.domNode ? elem.attr("checked") : elem.checked;
 		// account for dojo checkboxes
 		elem = elem.domNode || elem;
 
-		elem.up("li").toggleClassName("Selected");
+		const row = elem.up("li");
+
+		if (row)
+			checked ? row.addClassName("Selected") : row.removeClassName("Selected");
 	}
 };
 
@@ -66,9 +70,30 @@ const Lists = {
 const Tables = {
 	onRowChecked: function(elem) {
 		// account for dojo checkboxes
+		const checked = elem.domNode ? elem.attr("checked") : elem.checked;
 		elem = elem.domNode || elem;
 
-		elem.up("tr").toggleClassName("Selected");
+		const row = elem.up("tr");
+
+		if (row)
+			checked ? row.addClassName("Selected") : row.removeClassName("Selected");
+
+	},
+	select: function(elemId, selected) {
+		$(elemId).select("tr").each((row) => {
+			const checkNode = row.select(".dijitCheckBox,input[type=checkbox]")[0];
+			if (checkNode) {
+				const widget = dijit.getEnclosingWidget(checkNode);
+
+				if (widget) {
+					widget.attr("checked", selected);
+				} else {
+					checkNode.checked = selected;
+				}
+
+				this.onRowChecked(widget);
+			}
+		});
 	},
 	getSelected: function(elemId) {
 		const rv = [];
@@ -1530,60 +1555,6 @@ function uploadFeedIcon() {
 		}
 
 	return false;
-}
-
-// mode = all, none, invert
-function selectTableRows(id, mode) {
-	const rows = $(id).rows;
-
-	for (let i = 0; i < rows.length; i++) {
-		const row = rows[i];
-		let cb = false;
-		let dcb = false;
-
-		if (row.id && row.className) {
-			const bare_id = row.id.replace(/^[A-Z]*?-/, "");
-			const inputs = rows[i].getElementsByTagName("input");
-
-			for (let j = 0; j < inputs.length; j++) {
-				const input = inputs[j];
-
-				if (input.getAttribute("type") == "checkbox" &&
-						input.id.match(bare_id)) {
-
-					cb = input;
-					dcb = dijit.getEnclosingWidget(cb);
-					break;
-				}
-			}
-
-			if (cb || dcb) {
-				const issel = row.hasClassName("Selected");
-
-				if (mode == "all" && !issel) {
-					row.addClassName("Selected");
-					cb.checked = true;
-					if (dcb) dcb.set("checked", true);
-				} else if (mode == "none" && issel) {
-					row.removeClassName("Selected");
-					cb.checked = false;
-					if (dcb) dcb.set("checked", false);
-
-				} else if (mode == "invert") {
-
-					if (issel) {
-						row.removeClassName("Selected");
-						cb.checked = false;
-						if (dcb) dcb.set("checked", false);
-					} else {
-						row.addClassName("Selected");
-						cb.checked = true;
-						if (dcb) dcb.set("checked", true);
-					}
-				}
-			}
-		}
-	}
 }
 
 // noinspection JSUnusedGlobalSymbols

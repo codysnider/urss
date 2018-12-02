@@ -992,9 +992,9 @@ class Pref_Prefs extends Handler_Protected {
 		print "<div dojoType=\"dijit.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-		print "<div onclick=\"selectTableRows('prefFeedProfileList', 'all')\"
+		print "<div onclick=\"Tables.select('prefFeedProfileList', true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
-		print "<div onclick=\"selectTableRows('prefFeedProfileList', 'none')\"
+		print "<div onclick=\"Tables.select('prefFeedProfileList', false)\"
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 
@@ -1019,10 +1019,9 @@ class Pref_Prefs extends Handler_Protected {
 		print "<table width=\"100%\" class=\"prefFeedProfileList\"
 			cellspacing=\"0\" id=\"prefFeedProfileList\">";
 
-		print "<tr class=\"placeholder\" id=\"FCATR-0\">"; #odd
+		print "<tr class=\"placeholder\">"; # data-row-id='0' <-- no point, shouldn't be removed
 
 		print "<td width='5%' align='center'><input
-			id='FCATC-0'
 			onclick='Tables.onRowChecked(this);'
 			dojoType=\"dijit.form.CheckBox\"
 			type=\"checkbox\"></td>";
@@ -1043,15 +1042,13 @@ class Pref_Prefs extends Handler_Protected {
 		while ($line = $sth->fetch()) {
 
 			$profile_id = $line["id"];
-			$this_row_id = "id=\"FCATR-$profile_id\"";
 
-			print "<tr class=\"placeholder\" $this_row_id>";
+			print "<tr class=\"placeholder\" data-row-id='$profile_id'>";
 
 			$edit_title = htmlspecialchars($line["title"]);
 
 			print "<td width='5%' align='center'><input
 				onclick='Tables.onRowChecked(this);'
-				id='FCATC-$profile_id'
 				dojoType=\"dijit.form.CheckBox\"
 				type=\"checkbox\"></td>";
 
