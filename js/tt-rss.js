@@ -1,4 +1,8 @@
-/* global dijit, __ */
+/* global dijit,__,fox */
+
+let Utils;
+let CommonDialogs;
+let Filters;
 
 const App = {
 	global_unread: -1,
@@ -44,12 +48,19 @@ const App = {
 			"dijit/tree/dndSource",
 			"dijit/tree/ForestStoreModel",
 			"dojo/data/ItemFileWriteStore",
+			"fox/Utils",
+			"fox/CommonDialogs",
+			"fox/CommonFilters",
 			"fox/FeedStoreModel",
 			"fox/FeedTree"], function (dojo, ready, parser) {
 
 			ready(function () {
 
 				try {
+					Utils = fox.Utils();
+					CommonDialogs = fox.CommonDialogs();
+					Filters = fox.CommonFilters();
+
 					parser.parse();
 
 					if (!App.genericSanityCheck())

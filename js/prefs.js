@@ -1,4 +1,10 @@
-/* global dijit, __ */
+/* global dijit, __,fox */
+
+let Utils;
+let CommonDialogs;
+let Filters;
+let Users;
+let Prefs;
 
 const App = {
 	init: function() {
@@ -39,6 +45,11 @@ const App = {
 			"dojo/data/ItemFileWriteStore",
 			"lib/CheckBoxStoreModel",
 			"lib/CheckBoxTree",
+			"fox/Utils",
+			"fox/CommonDialogs",
+			"fox/CommonFilters",
+			"fox/PrefUsers",
+			"fox/PrefHelpers",
 			"fox/PrefFeedStore",
 			"fox/PrefFilterStore",
 			"fox/PrefFeedTree",
@@ -47,6 +58,12 @@ const App = {
 
 			ready(function () {
 				try {
+					Utils = fox.Utils();
+					CommonDialogs = fox.CommonDialogs();
+					Filters = fox.CommonFilters();
+					Users = fox.PrefUsers();
+					Prefs = fox.PrefHelpers();
+
 					parser.parse();
 
 					Utils.setLoadingProgress(50);
@@ -128,274 +145,6 @@ const App = {
 	},
 	isPrefs: function() {
 		return true;
-	}
-};
-
-// noinspection JSUnusedGlobalSymbols
-const Prefs = {
-	clearFeedAccessKeys: function() {
-		if (confirm(__("This will invalidate all previously generated feed URLs. Continue?"))) {
-			notify_progress("Clearing URLs...");
-
-			xhrPost("backend.php", {op: "pref-feeds", method: "clearKeys"}, () => {
-				notify_info("Generated URLs cleared.");
-			});
-		}
-
-		return false;
-	},
-	updateEventLog: function() {
-		xhrPost("backend.php", { op: "pref-system" }, (transport) => {
-			dijit.byId('systemConfigTab').attr('content', transport.responseText);
-			notify("");
-		});
-	},
-	clearEventLog: function() {
-		if (confirm(__("Clear event log?"))) {
-
-			notify_progress("Loading, please wait...");
-
-			xhrPost("backend.php", {op: "pref-system", method: "clearLog"}, () => {
-				this.updateEventLog();
-			});
-		}
-	},
-	editProfiles: function() {
-
-		if (dijit.byId("profileEditDlg"))
-			dijit.byId("profileEditDlg").destroyRecursive();
-
-		const query = "backend.php?op=pref-prefs&method=editPrefProfiles";
-
-		// noinspection JSUnusedGlobalSymbols
-		const dialog = new dijit.Dialog({
-			id: "profileEditDlg",
-			title: __("Settings Profiles"),
-			style: "width: 600px",
-			getSelectedProfiles: function () {
-				return Tables.getSelected("prefFeedProfileList");
-			},
-			removeSelected: function () {
-				const sel_rows = this.getSelectedProfiles();
-
-				if (sel_rows.length > 0) {
-					if (confirm(__("Remove selected profiles? Active and default profiles will not be removed."))) {
-						notify_progress("Removing selected profiles...", true);
-
-						const query = {
-							op: "rpc", method: "remprofiles",
-							ids: sel_rows.toString()
-						};
-
-						xhrPost("backend.php", query, () => {
-							notify('');
-							Prefs.editProfiles();
-						});
-					}
-
-				} else {
-					alert(__("No profiles selected."));
-				}
-			},
-			activateProfile: function () {
-				const sel_rows = this.getSelectedProfiles();
-
-				if (sel_rows.length == 1) {
-					if (confirm(__("Activate selected profile?"))) {
-						notify_progress("Loading, please wait...");
-
-						xhrPost("backend.php", {op: "rpc", method: "setprofile", id: sel_rows.toString()}, () => {
-							window.location.reload();
-						});
-					}
-
-				} else {
-					alert(__("Please choose a profile to activate."));
-				}
-			},
-			addProfile: function () {
-				if (this.validate()) {
-					notify_progress("Creating profile...", true);
-
-					const query = {op: "rpc", method: "addprofile", title: dialog.attr('value').newprofile};
-
-					xhrPost("backend.php", query, () => {
-						notify('');
-						Prefs.editProfiles();
-					});
-
-				}
-			},
-			execute: function () {
-				if (this.validate()) {
-				}
-			},
-			href: query
-		});
-
-		dialog.show();
-	},
-	customizeCSS: function() {
-		const query = "backend.php?op=pref-prefs&method=customizeCSS";
-
-		if (dijit.byId("cssEditDlg"))
-			dijit.byId("cssEditDlg").destroyRecursive();
-
-		const dialog = new dijit.Dialog({
-			id: "cssEditDlg",
-			title: __("Customize stylesheet"),
-			style: "width: 600px",
-			execute: function () {
-				notify_progress('Saving data...', true);
-
-				xhrPost("backend.php", this.attr('value'), () => {
-					window.location.reload();
-				});
-
-			},
-			href: query
-		});
-
-		dialog.show();
-	},
-	confirmReset: function() {
-		if (confirm(__("Reset to defaults?"))) {
-			xhrPost("backend.php", {op: "pref-prefs", method: "resetconfig"}, (transport) => {
-				Prefs.refresh();
-				notify_info(transport.responseText);
-			});
-		}
-	},
-	clearPluginData: function(name) {
-		if (confirm(__("Clear stored data for this plugin?"))) {
-			notify_progress("Loading, please wait...");
-
-			xhrPost("backend.php", {op: "pref-prefs", method: "clearplugindata", name: name}, () => {
-				Prefs.refresh();
-			});
-		}
-	},
-	refresh: function() {
-		xhrPost("backend.php", { op: "pref-prefs" }, (transport) => {
-			dijit.byId('genConfigTab').attr('content', transport.responseText);
-			notify("");
-		});
-	}
-};
-
-// noinspection JSUnusedGlobalSymbols
-const Users = {
-	reload: function(sort) {
-		const user_search = $("user_search");
-		const search = user_search ? user_search.value : "";
-
-		xhrPost("backend.php", { op: "pref-users", sort: sort, search: search }, (transport) => {
-			dijit.byId('userConfigTab').attr('content', transport.responseText);
-			notify("");
-		});
-	},
-	add: function() {
-		const login = prompt(__("Please enter username:"), "");
-
-		if (login) {
-			notify_progress("Adding user...");
-
-			xhrPost("backend.php", {op: "pref-users", method: "add", login: login}, (transport) => {
-				alert(transport.responseText);
-				Users.reload();
-			});
-
-		}
-	},
-	edit: function(id) {
-		const query = "backend.php?op=pref-users&method=edit&id=" +
-			param_escape(id);
-
-		if (dijit.byId("userEditDlg"))
-			dijit.byId("userEditDlg").destroyRecursive();
-
-		const dialog = new dijit.Dialog({
-			id: "userEditDlg",
-			title: __("User Editor"),
-			style: "width: 600px",
-			execute: function () {
-				if (this.validate()) {
-					notify_progress("Saving data...", true);
-
-					xhrPost("backend.php", dojo.formToObject("user_edit_form"), (transport) => {
-						dialog.hide();
-						Users.reload();
-					});
-				}
-			},
-			href: query
-		});
-
-		dialog.show();
-	},
-	resetSelected: function() {
-		const rows = this.getSelection();
-
-		if (rows.length == 0) {
-			alert(__("No users selected."));
-			return;
-		}
-
-		if (rows.length > 1) {
-			alert(__("Please select one user."));
-			return;
-		}
-
-		if (confirm(__("Reset password of selected user?"))) {
-			notify_progress("Resetting password for selected user...");
-
-			const id = rows[0];
-
-			xhrPost("backend.php", {op: "pref-users", method: "resetPass", id: id}, (transport) => {
-				notify('');
-				alert(transport.responseText);
-			});
-
-		}
-	},
-	removeSelected: function() {
-		const sel_rows = this.getSelection();
-
-		if (sel_rows.length > 0) {
-			if (confirm(__("Remove selected users? Neither default admin nor your account will be removed."))) {
-				notify_progress("Removing selected users...");
-
-				const query = {
-					op: "pref-users", method: "remove",
-					ids: sel_rows.toString()
-				};
-
-				xhrPost("backend.php", query, () => {
-					this.reload();
-				});
-			}
-
-		} else {
-			alert(__("No users selected."));
-		}
-	},
-	editSelected: function() {
-		const rows = this.getSelection();
-
-		if (rows.length == 0) {
-			alert(__("No users selected."));
-			return;
-		}
-
-		if (rows.length > 1) {
-			alert(__("Please select one user."));
-			return;
-		}
-
-		this.edit(rows[0]);
-	},
-	getSelection :function() {
-		return Tables.getSelected("prefUserList");
 	}
 };
 
