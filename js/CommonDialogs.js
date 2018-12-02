@@ -8,12 +8,12 @@ define(["dojo/_base/declare"], function (declare) {
 		},
 		removeFeedIcon: function(id) {
 			if (confirm(__("Remove stored feed icon?"))) {
-				notify_progress("Removing feed icon...", true);
+				Notify.progress("Removing feed icon...", true);
 
 				const query = {op: "pref-feeds", method: "removeicon", feed_id: id};
 
 				xhrPost("backend.php", query, () => {
-					notify_info("Feed icon removed.");
+					Notify.info("Feed icon removed.");
 					if (App.isPrefs()) {
 						Feeds.reload();
 					} else {
@@ -30,7 +30,7 @@ define(["dojo/_base/declare"], function (declare) {
 			if (file.value.length == 0) {
 				alert(__("Please select an image file to upload."));
 			} else if (confirm(__("Upload new icon for this feed?"))) {
-				notify_progress("Uploading, please wait...", true);
+				Notify.progress("Uploading, please wait...", true);
 				return true;
 			}
 
@@ -79,7 +79,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 								const rc = reply['result'];
 
-								notify('');
+								Notify.close();
 								Element.hide("feed_add_spinner");
 
 								console.log(rc);
@@ -87,7 +87,7 @@ define(["dojo/_base/declare"], function (declare) {
 								switch (parseInt(rc['code'])) {
 									case 1:
 										dialog.hide();
-										notify_info(__("Subscribed to %s").replace("%s", feed_url));
+										Notify.info(__("Subscribed to %s").replace("%s", feed_url));
 
 										Feeds.reload();
 										break;
@@ -161,7 +161,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 					if (sel_rows.length > 0) {
 						if (confirm(__("Remove selected feeds?"))) {
-							notify_progress("Removing selected feeds...", true);
+							Notify.progress("Removing selected feeds...", true);
 
 							const query = {
 								op: "pref-feeds", method: "remove",
@@ -169,7 +169,7 @@ define(["dojo/_base/declare"], function (declare) {
 							};
 
 							xhrPost("backend.php", query, () => {
-								notify('');
+								Notify.close();
 								dialog.hide();
 								Feeds.reload();
 							});
@@ -244,7 +244,7 @@ define(["dojo/_base/declare"], function (declare) {
 					if (selected.length > 0) {
 						dijit.byId("feedBrowserDlg").hide();
 
-						notify_progress("Loading, please wait...", true);
+						Notify.progress("Loading, please wait...", true);
 
 						const query = {
 							op: "rpc", method: "massSubscribe",
@@ -252,7 +252,7 @@ define(["dojo/_base/declare"], function (declare) {
 						};
 
 						xhrPost("backend.php", query, () => {
-							notify('');
+							Notify.close();
 							Feeds.reload();
 						});
 
@@ -265,7 +265,7 @@ define(["dojo/_base/declare"], function (declare) {
 					Element.show('feed_browser_spinner');
 
 					xhrPost("backend.php", dialog.attr("value"), (transport) => {
-						notify('');
+						Notify.close();
 
 						Element.hide('feed_browser_spinner');
 
@@ -320,7 +320,7 @@ define(["dojo/_base/declare"], function (declare) {
 				if (select)
 					Object.extend(query, {output: "select"});
 
-				notify_progress("Loading, please wait...", true);
+				Notify.progress("Loading, please wait...", true);
 
 				xhrPost("backend.php", query, (transport) => {
 					if (callback) {
@@ -338,7 +338,7 @@ define(["dojo/_base/declare"], function (declare) {
 			const msg = __("Unsubscribe from %s?").replace("%s", title);
 
 			if (title == undefined || confirm(msg)) {
-				notify_progress("Removing feed...");
+				Notify.progress("Removing feed...");
 
 				const query = {op: "pref-feeds", quiet: 1, method: "remove", ids: feed_id};
 
@@ -381,11 +381,11 @@ define(["dojo/_base/declare"], function (declare) {
 				style: "width: 600px",
 				execute: function () {
 					if (this.validate()) {
-						notify_progress("Saving data...", true);
+						Notify.progress("Saving data...", true);
 
 						xhrPost("backend.php", dialog.attr('value'), () => {
 							dialog.hide();
-							notify('');
+							Notify.close();
 							Feeds.reload();
 						});
 					}
@@ -398,7 +398,7 @@ define(["dojo/_base/declare"], function (declare) {
 		genUrlChangeKey: function(feed, is_cat) {
 			if (confirm(__("Generate new syndication address for this feed?"))) {
 
-				notify_progress("Trying to change address...", true);
+				Notify.progress("Trying to change address...", true);
 
 				const query = {op: "pref-feeds", method: "regenFeedKey", id: feed, is_cat: is_cat};
 
@@ -415,10 +415,10 @@ define(["dojo/_base/declare"], function (declare) {
 
 						new Effect.Highlight(e);
 
-						notify('');
+						Notify.close();
 
 					} else {
-						notify_error("Could not change feed URL.");
+						Notify.error("Could not change feed URL.");
 					}
 				});
 			}

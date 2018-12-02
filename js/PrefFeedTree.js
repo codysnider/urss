@@ -88,7 +88,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 			xhrPost("backend.php", { op: "pref-feeds", search: search }, (transport) => {
 				dijit.byId('feedConfigTab').attr('content', transport.responseText);
-				notify("");
+				Notify.close();
 			});
 		},
 		checkItemAcceptance: function(target, source, position) {
@@ -119,14 +119,14 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			}
 		},
 		resetFeedOrder: function() {
-			notify_progress("Loading, please wait...");
+			Notify.progress("Loading, please wait...");
 
 			xhrPost("backend.php", {op: "pref-feeds", method: "feedsortreset"}, () => {
 				this.reload();
 			});
 		},
 		resetCatOrder: function() {
-			notify_progress("Loading, please wait...");
+			Notify.progress("Loading, please wait...");
 
 			xhrPost("backend.php", {op: "pref-feeds", method: "catsortreset"}, () => {
 				this.reload();
@@ -134,10 +134,10 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 		},
 		removeCategory: function(id, item) {
 			if (confirm(__("Remove category %s? Any nested feeds would be placed into Uncategorized.").replace("%s", item.name))) {
-				notify_progress("Removing category...");
+				Notify.progress("Removing category...");
 
 				xhrPost("backend.php", {op: "pref-feeds", method: "removeCat", ids: id}, () => {
-					notify('');
+					Notify.close();
 					this.reload();
 				});
 			}
@@ -148,7 +148,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			if (sel_rows.length > 0) {
 				if (confirm(__("Unsubscribe from selected feeds?"))) {
 
-					notify_progress("Unsubscribing from selected feeds...", true);
+					Notify.progress("Unsubscribing from selected feeds...", true);
 
 					const query = {
 						op: "pref-feeds", method: "remove",
@@ -190,7 +190,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 			if (sel_rows.length > 0) {
 				if (confirm(__("Remove selected categories?"))) {
-					notify_progress("Removing selected categories...");
+					Notify.progress("Removing selected categories...");
 
 					const query = {
 						op: "pref-feeds", method: "removeCat",
@@ -227,7 +227,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				return;
 			}
 
-			notify("");
+			Notify.close();
 
 			if (rows.length > 1) {
 				return this.editMultiple();
@@ -243,13 +243,13 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				return;
 			}
 
-			notify_progress("Loading, please wait...");
+			Notify.progress("Loading, please wait...");
 
 			if (dijit.byId("feedEditDlg"))
 				dijit.byId("feedEditDlg").destroyRecursive();
 
 			xhrPost("backend.php", {op: "pref-feeds", method: "editfeeds", ids: rows.toString()}, (transport) => {
-				notify("");
+				Notify.close();
 
 				const dialog = new dijit.Dialog({
 					id: "feedEditDlg",
@@ -289,7 +289,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 									query[key] = ["off"];
 							});
 
-							notify_progress("Saving data...", true);
+							Notify.progress("Saving data...", true);
 
 							xhrPost("backend.php", query, () => {
 								dialog.hide();
@@ -312,7 +312,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 			if (new_name && new_name != item.name) {
 
-				notify_progress("Loading, please wait...");
+				Notify.progress("Loading, please wait...");
 
 				xhrPost("backend.php", { op: 'pref-feeds', method: 'renamecat', id: id, title: new_name }, () => {
 					this.reload();
@@ -323,10 +323,10 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			const title = prompt(__("Category title:"));
 
 			if (title) {
-				notify_progress("Creating category...");
+				Notify.progress("Creating category...");
 
 				xhrPost("backend.php", {op: "pref-feeds", method: "addCat", cat: title}, () => {
-					notify('');
+					Notify.close();
 					this.reload();
 				});
 			}
@@ -344,10 +344,10 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				style: "width: 600px",
 				execute: function () {
 					if (this.validate()) {
-						notify_progress(__("Subscribing to feeds..."), true);
+						Notify.progress(__("Subscribing to feeds..."), true);
 
 						xhrPost("backend.php", this.attr('value'), () => {
-							notify("");
+							Notify.close();
 							dijit.byId("feedTree").reload();
 							dialog.hide();
 						});
@@ -376,7 +376,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 					if (sel_rows.length > 0) {
 						if (confirm(__("Remove selected feeds?"))) {
-							notify_progress("Removing selected feeds...", true);
+							Notify.progress("Removing selected feeds...", true);
 
 							const query = {
 								op: "pref-feeds", method: "remove",
@@ -384,7 +384,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 							};
 
 							xhrPost("backend.php", query, () => {
-								notify('');
+								Notify.close();
 								dijit.byId("feedTree").reload();
 								dialog.hide();
 							});

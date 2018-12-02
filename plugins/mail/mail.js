@@ -29,7 +29,7 @@ function emailArticle(id) {
 							if (error) {
 								alert(__('Error sending email:') + ' ' + error);
 							} else {
-								notify_info('Your message has been sent.');
+								Notify.info('Your message has been sent.');
 								dialog.hide();
 							}
 

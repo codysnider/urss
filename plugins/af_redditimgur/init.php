@@ -45,7 +45,7 @@ class Af_RedditImgur extends Plugin {
 				new Ajax.Request('backend.php', {
 					parameters: dojo.objectToQuery(this.getValues()),
 					onComplete: function(transport) {
-						notify_info(transport.responseText);
+						Notify.info(transport.responseText);
 					}
 				});
 				//this.reset();

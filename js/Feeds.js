@@ -357,7 +357,7 @@ define(["dojo/_base/declare"], function (declare) {
 			if (!delayed)
 				if (!this.setExpando(feed, is_cat,
 					(is_cat) ? 'images/indicator_tiny.gif' : 'images/indicator_white.gif'))
-					notify_progress("Loading, please wait...", true);
+					Notify.progress("Loading, please wait...", true);
 
 			query.cat = is_cat;
 
@@ -391,7 +391,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
 
-				notify_progress("Marking all feeds as read...");
+				Notify.progress("Marking all feeds as read...");
 
 				xhrPost("backend.php", {op: "feeds", method: "catchupAll"}, () => {
 					this.requestCounters(true);
@@ -458,7 +458,7 @@ define(["dojo/_base/declare"], function (declare) {
 				search_lang: this.last_search_query[1]
 			};
 
-			notify_progress("Loading, please wait...", true);
+			Notify.progress("Loading, please wait...", true);
 
 			xhrPost("backend.php", catchup_query, (transport) => {
 				Utils.handleRpcJson(transport);
@@ -475,7 +475,7 @@ define(["dojo/_base/declare"], function (declare) {
 					this.reloadCurrent();
 				}
 
-				notify("");
+				Notify.close();
 			});
 		},
 		catchupCurrent: function(mode) {
@@ -517,7 +517,7 @@ define(["dojo/_base/declare"], function (declare) {
 					Headlines.updateFloatingTitle(true);
 				}
 
-				notify_progress("Loading, please wait...", true);
+				Notify.progress("Loading, please wait...", true);
 
 				xhrPost("backend.php", {op: "rpc", method: "catchupFeed", feed_id: id, is_cat: false}, (transport) => {
 					Utils.handleRpcJson(transport);

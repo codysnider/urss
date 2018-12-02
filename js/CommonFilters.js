@@ -232,7 +232,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 								Element.hide("prefFilterLoadingIndicator");
 
-								notify_error("Error while trying to get filter test results.");
+								Notify.error("Error while trying to get filter test results.");
 
 							} else {
 								console.log("getTestResults: dialog closed, bailing out.");

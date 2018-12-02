@@ -12,7 +12,7 @@ function shareArticle(id) {
 			newurl: function() {
 				if (confirm(__("Generate new share URL for this article?"))) {
 
-					notify_progress("Trying to change URL...", true);
+					Notify.progress("Trying to change URL...", true);
 
 					const query = { op: "pluginhandler", plugin: "share", method: "newkey", id: id };
 
@@ -34,10 +34,10 @@ function shareArticle(id) {
 								const img = $("SHARE-IMG-" + id);
 								if (img) img.src = img.src.replace("notshared.png", "share.png");
 
-								notify('');
+								Notify.close();
 
 							} else {
-								notify_error("Could not change URL.");
+								Notify.error("Could not change URL.");
 							}
 						}
 					});
@@ -47,7 +47,7 @@ function shareArticle(id) {
 			unshare: function() {
 				if (confirm(__("Remove sharing for this article?"))) {
 
-					notify_progress("Trying to unshare...", true);
+					Notify.progress("Trying to unshare...", true);
 
 					const query = { op: "pluginhandler", plugin: "share", method: "unshare", id: id };
 

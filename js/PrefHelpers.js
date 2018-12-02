@@ -2,10 +2,10 @@ define(["dojo/_base/declare"], function (declare) {
 	return declare("fox.PrefHelpers", null, {
 		clearFeedAccessKeys: function() {
 			if (confirm(__("This will invalidate all previously generated feed URLs. Continue?"))) {
-				notify_progress("Clearing URLs...");
+				Notify.progress("Clearing URLs...");
 
 				xhrPost("backend.php", {op: "pref-feeds", method: "clearKeys"}, () => {
-					notify_info("Generated URLs cleared.");
+					Notify.info("Generated URLs cleared.");
 				});
 			}
 
@@ -14,13 +14,13 @@ define(["dojo/_base/declare"], function (declare) {
 		updateEventLog: function() {
 			xhrPost("backend.php", { op: "pref-system" }, (transport) => {
 				dijit.byId('systemConfigTab').attr('content', transport.responseText);
-				notify("");
+				Notify.close();
 			});
 		},
 		clearEventLog: function() {
 			if (confirm(__("Clear event log?"))) {
 
-				notify_progress("Loading, please wait...");
+				Notify.progress("Loading, please wait...");
 
 				xhrPost("backend.php", {op: "pref-system", method: "clearLog"}, () => {
 					this.updateEventLog();
@@ -47,7 +47,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 					if (sel_rows.length > 0) {
 						if (confirm(__("Remove selected profiles? Active and default profiles will not be removed."))) {
-							notify_progress("Removing selected profiles...", true);
+							Notify.progress("Removing selected profiles...", true);
 
 							const query = {
 								op: "rpc", method: "remprofiles",
@@ -55,7 +55,7 @@ define(["dojo/_base/declare"], function (declare) {
 							};
 
 							xhrPost("backend.php", query, () => {
-								notify('');
+								Notify.close();
 								Prefs.editProfiles();
 							});
 						}
@@ -69,7 +69,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 					if (sel_rows.length == 1) {
 						if (confirm(__("Activate selected profile?"))) {
-							notify_progress("Loading, please wait...");
+							Notify.progress("Loading, please wait...");
 
 							xhrPost("backend.php", {op: "rpc", method: "setprofile", id: sel_rows.toString()}, () => {
 								window.location.reload();
@@ -82,12 +82,12 @@ define(["dojo/_base/declare"], function (declare) {
 				},
 				addProfile: function () {
 					if (this.validate()) {
-						notify_progress("Creating profile...", true);
+						Notify.progress("Creating profile...", true);
 
 						const query = {op: "rpc", method: "addprofile", title: dialog.attr('value').newprofile};
 
 						xhrPost("backend.php", query, () => {
-							notify('');
+							Notify.close();
 							Prefs.editProfiles();
 						});
 
@@ -113,7 +113,7 @@ define(["dojo/_base/declare"], function (declare) {
 				title: __("Customize stylesheet"),
 				style: "width: 600px",
 				execute: function () {
-					notify_progress('Saving data...', true);
+					Notify.progress('Saving data...', true);
 
 					xhrPost("backend.php", this.attr('value'), () => {
 						window.location.reload();
@@ -129,13 +129,13 @@ define(["dojo/_base/declare"], function (declare) {
 			if (confirm(__("Reset to defaults?"))) {
 				xhrPost("backend.php", {op: "pref-prefs", method: "resetconfig"}, (transport) => {
 					Prefs.refresh();
-					notify_info(transport.responseText);
+					Notify.info(transport.responseText);
 				});
 			}
 		},
 		clearPluginData: function(name) {
 			if (confirm(__("Clear stored data for this plugin?"))) {
-				notify_progress("Loading, please wait...");
+				Notify.progress("Loading, please wait...");
 
 				xhrPost("backend.php", {op: "pref-prefs", method: "clearplugindata", name: name}, () => {
 					Prefs.refresh();
@@ -145,7 +145,7 @@ define(["dojo/_base/declare"], function (declare) {
 		refresh: function() {
 			xhrPost("backend.php", { op: "pref-prefs" }, (transport) => {
 				dijit.byId('genConfigTab').attr('content', transport.responseText);
-				notify("");
+				Notify.close();
 			});
 		}
 	});

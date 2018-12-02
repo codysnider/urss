@@ -110,7 +110,7 @@ define(["dojo/_base/declare"], function (declare) {
 			dialog.show();
 		},
 		displayDlg: function(title, id, param, callback) {
-			notify_progress("Loading, please wait...", true);
+			Notify.progress("Loading, please wait...", true);
 
 			const query = {op: "dlg", method: id, param: param};
 
@@ -143,7 +143,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 					dialog.show();
 
-					notify("");
+					Notify.close();
 
 					if (callback) callback(transport);
 				} catch (e) {
@@ -213,14 +213,14 @@ define(["dojo/_base/declare"], function (declare) {
 					if (netalert)
 						netalert.show();
 					else
-						notify_error("Communication problem with server.");
+						Notify.error("Communication problem with server.");
 				}
 
 			} catch (e) {
 				if (netalert)
 					netalert.show();
 				else
-					notify_error("Communication problem with server.");
+					Notify.error("Communication problem with server.");
 
 				console.error(e);
 			}
@@ -238,7 +238,7 @@ define(["dojo/_base/declare"], function (declare) {
 					console.log("RI:", k, "=>", v);
 
 					if (k == "daemon_is_running" && v != 1) {
-						notify_error("<span onclick=\"Utils.explainError(1)\">Update daemon is not running.</span>", true);
+						Notify.error("<span onclick=\"Utils.explainError(1)\">Update daemon is not running.</span>", true);
 						return;
 					}
 
@@ -253,7 +253,7 @@ define(["dojo/_base/declare"], function (declare) {
 					}
 
 					if (k == "daemon_stamp_ok" && v != 1) {
-						notify_error("<span onclick=\"Utils.explainError(3)\">Update daemon is not updating feeds.</span>", true);
+						Notify.error("<span onclick=\"Utils.explainError(3)\">Update daemon is not updating feeds.</span>", true);
 						return;
 					}
 

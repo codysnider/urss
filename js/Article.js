@@ -165,7 +165,7 @@ define(["dojo/_base/declare"], function (declare) {
 						//const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
 						//request_counters(unread_in_buffer == 0);
 
-						notify("");
+						Notify.close();
 
 					} catch (e) {
 						exception_error(e);
@@ -187,11 +187,11 @@ define(["dojo/_base/declare"], function (declare) {
 				style: "width: 600px",
 				execute: function () {
 					if (this.validate()) {
-						notify_progress("Saving article tags...", true);
+						Notify.progress("Saving article tags...", true);
 
 						xhrPost("backend.php", this.attr('value'), (transport) => {
 							try {
-								notify('');
+								Notify.close();
 								dialog.hide();
 
 								const data = JSON.parse(transport.responseText);

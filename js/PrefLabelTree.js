@@ -51,7 +51,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 		reload: function() {
 			xhrPost("backend.php", { op: "pref-labels" }, (transport) => {
 				dijit.byId('labelConfigTab').attr('content', transport.responseText);
-				notify("");
+				Notify.close();
 			});
 		},
 		editLabel: function(id) {
@@ -142,7 +142,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 
 			if (sel_rows.length > 0) {
 				if (confirm(__("Remove selected labels?"))) {
-					notify_progress("Removing selected labels...");
+					Notify.progress("Removing selected labels...");
 
 					const query = {
 						op: "pref-labels", method: "remove",

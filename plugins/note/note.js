@@ -12,10 +12,10 @@ function editArticleNote(id) {
 			style: "width: 600px",
 			execute: function() {
 				if (this.validate()) {
-					notify_progress("Saving article note...", true);
+					Notify.progress("Saving article note...", true);
 
 					xhrJson("backend.php", this.attr('value'), (reply) => {
-                        notify('');
+                        Notify.close();
                         dialog.hide();
 
                         if (reply) {

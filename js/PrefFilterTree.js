@@ -93,11 +93,11 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 			xhrPost("backend.php", { op: "pref-filters", search: search }, (transport) => {
 				dijit.byId('filterConfigTab').attr('content', transport.responseText);
-				notify("");
+				Notify.close();
 			});
 		},
 		resetFilterOrder: function() {
-			notify_progress("Loading, please wait...");
+			Notify.progress("Loading, please wait...");
 
 			xhrPost("backend.php", {op: "pref-filters", method: "filtersortreset"}, () => {
 				this.reload();
@@ -112,7 +112,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			}
 
 			if (confirm(__("Combine selected filters?"))) {
-				notify_progress("Joining filters...");
+				Notify.progress("Joining filters...");
 
 				xhrPost("backend.php", {op: "pref-filters", method: "join", ids: rows.toString()}, () => {
 					this.reload();
@@ -132,7 +132,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				return;
 			}
 
-			notify("");
+			Notify.close();
 
 			this.editFilter(rows[0]);
 		},
@@ -192,7 +192,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 					if (confirm(msg)) {
 						this.hide();
 
-						notify_progress("Removing filter...");
+						Notify.progress("Removing filter...");
 
 						const query = {op: "pref-filters", method: "remove", ids: this.attr('value').id};
 
@@ -220,7 +220,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				execute: function () {
 					if (this.validate()) {
 
-						notify_progress("Saving data...", true);
+						Notify.progress("Saving data...", true);
 
 						xhrPost("backend.php", dojo.formToObject("filter_edit_form"), () => {
 							dialog.hide();
@@ -238,7 +238,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 			if (sel_rows.length > 0) {
 				if (confirm(__("Remove selected filters?"))) {
-					notify_progress("Removing selected filters...");
+					Notify.progress("Removing selected filters...");
 
 					const query = {
 						op: "pref-filters", method: "remove",

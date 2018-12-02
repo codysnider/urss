@@ -217,6 +217,8 @@ const Notify = {
 	},
 	msg: function(msg, keep, kind) {
 		kind = kind || this.KIND_GENERIC;
+		keep = keep || false;
+
 		const notify = $("notify");
 
 		window.clearTimeout(this.timeout);
@@ -232,7 +234,7 @@ const Notify = {
 
 		notify.className = "notify";
 
-		console.log('notify', msg, kind);
+		console.warn('notify', msg, kind);
 
 		switch (kind) {
 			case this.KIND_INFO:
@@ -252,7 +254,7 @@ const Notify = {
 		if (icon) msgfmt = "<span><img src=\"%s\"></span>".replace("%s", icon) + msgfmt;
 
 		msgfmt += (" <span><img src=\"%s\" class='close' title=\"" +
-			__("Click to close") + "\" onclick=\"notify('')\"></span>")
+			__("Click to close") + "\" onclick=\"Notify.close()\"></span>")
 				.replace("%s", getInitParam("icon_cross"));
 
 		notify.innerHTML = msgfmt;
@@ -265,32 +267,18 @@ const Notify = {
 
 	},
 	info: function(msg, keep) {
+		keep = keep || false;
 		this.msg(msg, keep, this.KIND_INFO);
 	},
 	progress: function(msg, keep) {
+		keep = keep || true;
 		this.msg(msg, keep, this.KIND_PROGRESS);
 	},
-	error: function(msg) {
-		this.msg(msg, true, this.KIND_ERROR);
+	error: function(msg, keep) {
+		keep = keep || true;
+		this.msg(msg, keep, this.KIND_ERROR);
 	}
 };
-
-function notify(msg, no_hide) {
-	notify_real(msg, no_hide, 1);
-}
-
-function notify_progress(msg, no_hide) {
-	notify_real(msg, no_hide, 2);
-}
-
-function notify_error(msg, no_hide) {
-	notify_real(msg, no_hide, 3);
-
-}
-
-function notify_info(msg, no_hide) {
-	notify_real(msg, no_hide, 4);
-}
 
 // noinspection JSUnusedGlobalSymbols
 function displayIfChecked(checkbox, elemId) {
@@ -359,7 +347,7 @@ function fatalError(code, msg, ext_info) {
 function uploadIconHandler(rc) {
 	switch (rc) {
 		case 0:
-			notify_info("Upload complete.");
+			Notify.info("Upload complete.");
 			if (App.isPrefs()) {
 				Feeds.reload();
 			} else {
@@ -367,10 +355,10 @@ function uploadIconHandler(rc) {
 			}
 			break;
 		case 1:
-			notify_error("Upload failed: icon is too big.");
+			Notify.error("Upload failed: icon is too big.");
 			break;
 		case 2:
-			notify_error("Upload failed.");
+			Notify.error("Upload failed.");
 			break;
 	}
 }

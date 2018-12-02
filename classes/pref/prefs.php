@@ -183,7 +183,7 @@ class Pref_Prefs extends Handler_Protected {
 		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
 		evt.preventDefault();
 		if (this.validate()) {
-			notify_progress('Saving data...', true);
+			Notify.progress('Saving data...', true);
 
 			new Ajax.Request('backend.php', {
 				parameters: dojo.objectToQuery(this.getValues()),
@@ -249,12 +249,12 @@ class Pref_Prefs extends Handler_Protected {
 			print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
 			evt.preventDefault();
 			if (this.validate()) {
-				notify_progress('Changing password...', true);
+				Notify.progress('Changing password...', true);
 
 				new Ajax.Request('backend.php', {
 					parameters: dojo.objectToQuery(this.getValues()),
 					onComplete: function(transport) {
-						notify('');
+						Notify.close();
 						if (transport.responseText.indexOf('ERROR: ') == 0) {
 
 							$('pwd_change_infobox').innerHTML =
@@ -316,14 +316,14 @@ class Pref_Prefs extends Handler_Protected {
 				print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
 				evt.preventDefault();
 				if (this.validate()) {
-					notify_progress('Disabling OTP', true);
+					Notify.progress('Disabling OTP', true);
 
 					new Ajax.Request('backend.php', {
 						parameters: dojo.objectToQuery(this.getValues()),
 						onComplete: function(transport) {
-							notify('');
+							Notify.close();
 							if (transport.responseText.indexOf('ERROR: ') == 0) {
-								notify_error(transport.responseText.replace('ERROR: ', ''));
+								Notify.error(transport.responseText.replace('ERROR: ', ''));
 							} else {
 								window.location.reload();
 							}
@@ -367,14 +367,14 @@ class Pref_Prefs extends Handler_Protected {
 					print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
 					evt.preventDefault();
 					if (this.validate()) {
-						notify_progress('Saving data...', true);
+						Notify.progress('Saving data...', true);
 
 						new Ajax.Request('backend.php', {
 							parameters: dojo.objectToQuery(this.getValues()),
 							onComplete: function(transport) {
-								notify('');
+								Notify.close();
 								if (transport.responseText.indexOf('ERROR:') == 0) {
-									notify_error(transport.responseText.replace('ERROR:', ''));
+									Notify.error(transport.responseText.replace('ERROR:', ''));
 								} else {
 									window.location.reload();
 								}
@@ -441,7 +441,7 @@ class Pref_Prefs extends Handler_Protected {
 						if (msg == 'PREFS_NEED_RELOAD') {
 							window.location.reload();
 						} else {
-							notify_info(msg);
+							Notify.info(msg);
 						}
 					}
 			} });
@@ -689,12 +689,12 @@ class Pref_Prefs extends Handler_Protected {
 		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
 		evt.preventDefault();
 		if (this.validate()) {
-			notify_progress('Saving data...', true);
+			Notify.progress('Saving data...', true);
 
 			new Ajax.Request('backend.php', {
 				parameters: dojo.objectToQuery(this.getValues()),
 				onComplete: function(transport) {
-					notify('');
+					Notify.close();
 					if (confirm(__('Selected plugins have been enabled. Reload?'))) {
 						window.location.reload();
 					}

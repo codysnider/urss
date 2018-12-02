@@ -9,14 +9,14 @@ define(["dojo/_base/declare"], function (declare) {
 
 			xhrPost("backend.php", { op: "pref-users", sort: sort, search: search }, (transport) => {
 				dijit.byId('userConfigTab').attr('content', transport.responseText);
-				notify("");
+				Notify.close();
 			});
 		},
 		add: function() {
 			const login = prompt(__("Please enter username:"), "");
 
 			if (login) {
-				notify_progress("Adding user...");
+				Notify.progress("Adding user...");
 
 				xhrPost("backend.php", {op: "pref-users", method: "add", login: login}, (transport) => {
 					alert(transport.responseText);
@@ -38,7 +38,7 @@ define(["dojo/_base/declare"], function (declare) {
 				style: "width: 600px",
 				execute: function () {
 					if (this.validate()) {
-						notify_progress("Saving data...", true);
+						Notify.progress("Saving data...", true);
 
 						xhrPost("backend.php", dojo.formToObject("user_edit_form"), (transport) => {
 							dialog.hide();
@@ -65,12 +65,12 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 
 			if (confirm(__("Reset password of selected user?"))) {
-				notify_progress("Resetting password for selected user...");
+				Notify.progress("Resetting password for selected user...");
 
 				const id = rows[0];
 
 				xhrPost("backend.php", {op: "pref-users", method: "resetPass", id: id}, (transport) => {
-					notify('');
+					Notify.close();
 					alert(transport.responseText);
 				});
 
@@ -81,7 +81,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (sel_rows.length > 0) {
 				if (confirm(__("Remove selected users? Neither default admin nor your account will be removed."))) {
-					notify_progress("Removing selected users...");
+					Notify.progress("Removing selected users...");
 
 					const query = {
 						op: "pref-users", method: "remove",

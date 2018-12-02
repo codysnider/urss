@@ -381,7 +381,7 @@ define(["dojo/_base/declare"], function (declare) {
 			// unpack visible articles, fill buffer more, etc
 			this.scrollHandler();
 
-			notify("");
+			Notify.close();
 		},
 		reverse: function() {
 			const toolbar = document.forms["main_toolbar_form"];
@@ -435,7 +435,7 @@ define(["dojo/_base/declare"], function (declare) {
 				cmode: cmode, ids: ids.toString()
 			};
 
-			notify_progress("Loading, please wait...");
+			Notify.progress("Loading, please wait...");
 
 			xhrPost("backend.php", query, (transport) => {
 				Utils.handleRpcJson(transport);

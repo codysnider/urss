@@ -478,7 +478,7 @@ const App = {
 			Utils.helpDialog("main");
 		};
 		this.hotkey_actions["toggle_combined_mode"] = function () {
-			notify_progress("Loading, please wait...");
+			Notify.progress("Loading, please wait...");
 
 			const value = App.isCombinedMode() ? "false" : "true";
 
@@ -491,7 +491,7 @@ const App = {
 			})
 		};
 		this.hotkey_actions["toggle_cdm_expanded"] = function () {
-			notify_progress("Loading, please wait...");
+			Notify.progress("Loading, please wait...");
 
 			const value = getInitParam("cdm_expanded") ? "false" : "true";
 

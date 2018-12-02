@@ -85,7 +85,7 @@ const App = {
 	initSecondStage: function() {
 		document.onkeydown = () => { App.hotkeyHandler(event) };
 		Utils.setLoadingProgress(50);
-		notify("");
+		Notify.close();
 
 		let tab = Utils.urlParam('tab');
 
@@ -154,7 +154,7 @@ function opmlImportComplete(iframe) {
 
 	Element.show(iframe);
 
-	notify('');
+	Notify.close();
 
 	if (dijit.byId('opmlImportDlg'))
 		dijit.byId('opmlImportDlg').destroyRecursive();
@@ -185,7 +185,7 @@ function opmlImport() {
 		alert(__("Please choose an OPML file first."));
 		return false;
 	} else {
-		notify_progress("Importing, please wait...", true);
+		Notify.progress("Importing, please wait...", true);
 
 		Element.show("upload_iframe");
 
@@ -195,7 +195,7 @@ function opmlImport() {
 
 function opmlRegenKey() {
 	if (confirm(__("Replace current OPML publishing address with a new one?"))) {
-		notify_progress("Trying to change address...", true);
+		Notify.progress("Trying to change address...", true);
 
 		xhrJson("backend.php", { op: "pref-feeds", method: "regenOPMLKey" }, (reply) => {
 			if (reply) {
@@ -208,10 +208,10 @@ function opmlRegenKey() {
 
 					new Effect.Highlight(e);
 
-					notify('');
+					Notify.close();
 
 				} else {
-					notify_error("Could not change feed URL.");
+					Notify.error("Could not change feed URL.");
 				}
 			}
 		});
