@@ -536,9 +536,13 @@ class Feeds extends Handler_Protected {
 
 					$tmp_content .= $labels_str;
 
-					$tmp_content .= "<span class='collapse'>
-                        <img src=\"images/collapse.png\" onclick=\"return Article.cdmCollapseActive(event)\"
-                        title=\"".__("Collapse article")."\"/></span>";
+					if (!get_pref("CDM_EXPANDED")) {
+						$tmp_content .= "<span class='collapse'>
+                            <img src=\"images/collapse.png\" onclick=\"return Article.cdmUnsetActive(event)\"
+                            title=\"" . __("Collapse article") . "\"/></span>";
+
+						$tmp_content .= "<span class='excerpt'>" . $line["content_preview"] . "</span>";
+					}
 
 					$tmp_content .= "</span>";
 
