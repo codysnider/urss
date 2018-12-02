@@ -212,7 +212,7 @@ const Feeds = {
 		Utils.setLoadingProgress(50);
 
 		document.onkeydown = () => { App.hotkeyHandler(event) };
-		window.setInterval(() => { Headlines.catchupBatchedArticles() }, 10 * 1000);
+		window.setInterval(() => { Headlines.catchupBatched() }, 10 * 1000);
 
 		if (!this.getActiveFeedId()) {
 			this.viewfeed({feed: -3});
@@ -304,7 +304,7 @@ const Feeds = {
 
 		if (feed != this.getActiveFeedId() || this.activeFeedIsCat() != is_cat) {
 			this._search_query = false;
-			Article.setActiveArticleId(0);
+			Article.setActive(0);
 		}
 
 		if (offset != 0) {
@@ -371,7 +371,7 @@ const Feeds = {
 
 		window.clearTimeout(this._viewfeed_wait_timeout);
 		this._viewfeed_wait_timeout = window.setTimeout(() => {
-			Headlines.catchupBatchedArticles(() => {
+			Headlines.catchupBatched(() => {
 				xhrPost("backend.php", query, (transport) => {
 					try {
 						window.clearTimeout(this._infscroll_timeout);
@@ -494,7 +494,7 @@ const Feeds = {
 				rows.each(function (row) {
 					row.removeClassName("Unread");
 
-					if (row.getAttribute("data-article-id") != Article.getActiveArticleId()) {
+					if (row.getAttribute("data-article-id") != Article.getActive()) {
 						new Effect.Fade(row, {duration: 0.5});
 					}
 

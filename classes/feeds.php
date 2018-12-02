@@ -29,7 +29,7 @@ class Feeds extends Handler_Protected {
 		$tog_marked_link = "Headlines.selectionToggleMarked()";
 		$tog_published_link = "Headlines.selectionTogglePublished()";
 
-		$set_score_link = "Article.setSelectionScore()";
+		$set_score_link = "Article.selectionSetScore()";
 
 		if ($is_cat) $cat_q = "&is_cat=$is_cat";
 
@@ -345,7 +345,7 @@ class Feeds extends Handler_Protected {
 
 				$score_pic = "images/" . get_score_pic($score);
 
-				$score_pic = "<img class='score-pic' score='$score' onclick='Article.changeScore($id, this)' src=\"$score_pic\"
+				$score_pic = "<img class='score-pic' score='$score' onclick='Article.setScore($id, this)' src=\"$score_pic\"
                 title=\"$score\">";
 
 				if ($score > 500) {

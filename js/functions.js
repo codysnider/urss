@@ -1454,7 +1454,7 @@ const Filters = {
 
 				} else {
 
-					const query = {op: "rpc", method: "getlinktitlebyid", id: Article.getActiveArticleId()};
+					const query = {op: "rpc", method: "getlinktitlebyid", id: Article.getActive()};
 
 					xhrPost("backend.php", query, (transport) => {
 						const reply = JSON.parse(transport.responseText);

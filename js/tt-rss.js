@@ -90,7 +90,7 @@ const App = {
 	},
 	initSecondStage: function () {
 		Feeds.reload();
-		Article.closeArticlePanel();
+		Article.close();
 
 		if (parseInt(getCookie("ttrss_fh_width")) > 0) {
 			dijit.byId("feeds-holder").domNode.setStyle(
@@ -190,7 +190,7 @@ const App = {
 	switchPanelMode: function(wide) {
 		if (App.isCombinedMode()) return;
 
-		const article_id = Article.getActiveArticleId();
+		const article_id = Article.getActive();
 
 		if (wide) {
 			dijit.byId("headlines-wrap-inner").attr("design", 'sidebar');
@@ -226,7 +226,7 @@ const App = {
 
 		}
 
-		Article.closeArticlePanel();
+		Article.close();
 
 		if (article_id) Article.view(article_id);
 
@@ -246,22 +246,22 @@ const App = {
 			if (rv) Feeds.viewfeed({feed: rv[0], is_cat: rv[1], delayed: true})
 		};
 		this.hotkey_actions["next_article"] = function () {
-			Headlines.moveToPost('next');
+			Headlines.move('next');
 		};
 		this.hotkey_actions["prev_article"] = function () {
-			Headlines.moveToPost('prev');
+			Headlines.move('prev');
 		};
 		this.hotkey_actions["next_article_noscroll"] = function () {
-			Headlines.moveToPost('next', true);
+			Headlines.move('next', true);
 		};
 		this.hotkey_actions["prev_article_noscroll"] = function () {
-			Headlines.moveToPost('prev', true);
+			Headlines.move('prev', true);
 		};
 		this.hotkey_actions["next_article_noexpand"] = function () {
-			Headlines.moveToPost('next', true, true);
+			Headlines.move('next', true, true);
 		};
 		this.hotkey_actions["prev_article_noexpand"] = function () {
-			Headlines.moveToPost('prev', true, true);
+			Headlines.move('prev', true, true);
 		};
 		this.hotkey_actions["search_dialog"] = function () {
 			Feeds.search();
@@ -276,33 +276,33 @@ const App = {
 			Headlines.selectionToggleUnread({no_error: 1});
 		};
 		this.hotkey_actions["edit_tags"] = function () {
-			const id = Article.getActiveArticleId();
+			const id = Article.getActive();
 			if (id) {
-				Article.editArticleTags(id);
+				Article.editTags(id);
 			}
 		};
 		this.hotkey_actions["open_in_new_window"] = function () {
-			if (Article.getActiveArticleId()) {
-				Article.openArticleInNewWindow(Article.getActiveArticleId());
+			if (Article.getActive()) {
+				Article.openInNewWindow(Article.getActive());
 			}
 		};
 		this.hotkey_actions["catchup_below"] = function () {
-			Headlines.catchupRelativeToArticle(1);
+			Headlines.catchupRelativeTo(1);
 		};
 		this.hotkey_actions["catchup_above"] = function () {
-			Headlines.catchupRelativeToArticle(0);
+			Headlines.catchupRelativeTo(0);
 		};
 		this.hotkey_actions["article_scroll_down"] = function () {
-			Article.scrollArticle(40);
+			Article.scroll(40);
 		};
 		this.hotkey_actions["article_scroll_up"] = function () {
-			Article.scrollArticle(-40);
+			Article.scroll(-40);
 		};
 		this.hotkey_actions["close_article"] = function () {
 			if (App.isCombinedMode()) {
-				Article.cdmCollapseActive();
+				Article.cdmUnsetActive();
 			} else {
-				Article.closeArticlePanel();
+				Article.close();
 			}
 		};
 		this.hotkey_actions["email_article"] = function () {
@@ -368,7 +368,7 @@ const App = {
 			}
 		};
 		this.hotkey_actions["feed_reverse"] = function () {
-			Headlines.reverseHeadlineOrder();
+			Headlines.reverse();
 		};
 		this.hotkey_actions["feed_toggle_vgroup"] = function () {
 			xhrPost("backend.php", {op: "rpc", method: "togglepref", key: "VFEED_GROUP_BY_FEED"}, () => {
@@ -402,7 +402,7 @@ const App = {
 			document.location.href = "prefs.php";
 		};
 		this.hotkey_actions["select_article_cursor"] = function () {
-			const id = Article.getArticleUnderPointer();
+			const id = Article.getUnderPointer();
 			if (id) {
 				const row = $("RROW-" + id);
 
@@ -431,8 +431,8 @@ const App = {
 		};
 		this.hotkey_actions["toggle_embed_original"] = function () {
 			if (typeof embedOriginalArticle != "undefined") {
-				if (Article.getActiveArticleId())
-					embedOriginalArticle(Article.getActiveArticleId());
+				if (Article.getActive())
+					embedOriginalArticle(Article.getActive());
 			} else {
 				alert(__("Please enable embed_original plugin first."));
 			}
@@ -462,7 +462,7 @@ const App = {
 				setInitParam("combined_display_mode",
 					!getInitParam("combined_display_mode"));
 
-				Article.closeArticlePanel();
+				Article.close();
 				Feeds.viewCurrentFeed();
 			})
 		};

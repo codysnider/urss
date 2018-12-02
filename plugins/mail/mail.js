@@ -1,7 +1,7 @@
 function emailArticle(id) {
 	try {
 		if (!id) {
-			var ids = Headlines.getSelectedArticleIds2();
+			var ids = Headlines.getSelected();
 
 			if (ids.length == 0) {
 				alert(__("No articles are selected."));
