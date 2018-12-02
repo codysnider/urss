@@ -278,10 +278,10 @@ class Pref_Labels extends Handler_Protected {
 		print"<button dojoType=\"dijit.form.Button\" onclick=\"return addLabel()\">".
 			__('Create label')."</button dojoType=\"dijit.form.Button\"> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"removeSelectedLabels()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('labelTree').removeSelected()\">".
 			__('Remove')."</button dojoType=\"dijit.form.Button\"> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"labelColorReset()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('labelTree').resetColors()\">".
 			__('Clear colors')."</button dojoType=\"dijit.form.Button\">";
 
 

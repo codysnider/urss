@@ -37,7 +37,60 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 		getIconClass: function (item, opened) {
 			return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "invisible";
 		},
-	});
+		getSelectedLabels: function() {
+			const tree = dijit.byId("labelTree");
+			const items = tree.model.getCheckedItems();
+			const rv = [];
+
+			items.each(function(item) {
+				rv.push(tree.model.store.getValue(item, 'bare_id'));
+			});
+
+			return rv;
+		},
+		resetColors: function() {
+			const labels = this.getSelectedLabels();
+
+			if (labels.length > 0) {
+				if (confirm(__("Reset selected labels to default colors?"))) {
+
+					const query = {
+						op: "pref-labels", method: "colorreset",
+						ids: labels.toString()
+					};
+
+					xhrPost("backend.php", query, () => {
+						updateLabelList();
+					});
+				}
+
+			} else {
+				alert(__("No labels are selected."));
+			}
+		},
+		removeSelected: function() {
+			const sel_rows = this.getSelectedLabels();
+
+			if (sel_rows.length > 0) {
+				if (confirm(__("Remove selected labels?"))) {
+					notify_progress("Removing selected labels...");
+
+					const query = {
+						op: "pref-labels", method: "remove",
+						ids: sel_rows.toString()
+					};
+
+					xhrPost("backend.php", query, () => {
+						updateLabelList();
+					});
+				}
+			} else {
+				alert(__("No labels are selected."));
+			}
+
+			return false;
+		}
+});
 
 });
 
