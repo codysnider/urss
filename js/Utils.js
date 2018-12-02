@@ -28,7 +28,7 @@ define(["dojo/_base/declare"], function (declare) {
 		},
 		keyeventToAction: function(event) {
 
-			const hotkeys_map = getInitParam("hotkeys");
+			const hotkeys_map = App.getInitParam("hotkeys");
 			const keycode = event.which;
 			const keychar = String.fromCharCode(keycode).toLowerCase();
 
@@ -191,7 +191,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 					if (message == "UPDATE_COUNTERS") {
 						console.log("need to refresh counters...");
-						setInitParam("last_article_id", -1);
+						App.setInitParam("last_article_id", -1);
 						Feeds.requestCounters(true);
 					}
 
@@ -228,9 +228,6 @@ define(["dojo/_base/declare"], function (declare) {
 			return false;
 		},
 		parseRuntimeInfo: function(data) {
-
-			//console.log("parsing runtime info...");
-
 			for (const k in data) {
 				if (data.hasOwnProperty(k)) {
 					const v = data[k];
@@ -258,13 +255,13 @@ define(["dojo/_base/declare"], function (declare) {
 					}
 
 					if (k == "max_feed_id" || k == "num_feeds") {
-						if (init_params[k] != v) {
+						if (App.getInitParam(k) != v) {
 							console.log("feed count changed, need to reload feedlist.");
 							Feeds.reload();
 						}
 					}
 
-					init_params[k] = v;
+					App.setInitParam(k, v);
 				}
 			}
 
@@ -315,13 +312,12 @@ define(["dojo/_base/declare"], function (declare) {
 						}
 
 						console.log("IP:", k, "=>", params[k]);
+						App.setInitParam(k, params[k]);
 					}
 				}
 
-				init_params = params;
-
 				// PluginHost might not be available on non-index pages
-				window.PluginHost && PluginHost.run(PluginHost.HOOK_PARAMS_LOADED, init_params);
+				window.PluginHost && PluginHost.run(PluginHost.HOOK_PARAMS_LOADED, App._initParams);
 			}
 
 			App.initSecondStage();

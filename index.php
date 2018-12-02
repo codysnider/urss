@@ -135,12 +135,6 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta name="referrer" content="no-referrer"/>
-
-	<script type="text/javascript">
-		Event.observe(window, 'load', function() {
-			App.init();
-		});
-	</script>
 </head>
 
 <body class="claro ttrss_main">

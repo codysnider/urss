@@ -123,7 +123,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 		postCreate: function() {
 			this.connect(this.model, "onChange", "updateCounter");
 			this.connect(this, "_expandNode", function() {
-				this.hideRead(getInitParam("hide_read_feeds"), getInitParam("hide_read_shows_special"));
+				this.hideRead(App.getInitParam("hide_read_feeds"), App.getInitParam("hide_read_shows_special"));
 			});
 
 			this.inherited(arguments);

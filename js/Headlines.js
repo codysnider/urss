@@ -12,13 +12,13 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (App.isCombinedMode()) {
 
-				if (!in_body && (event.ctrlKey || id == Article.getActive() || getInitParam("cdm_expanded"))) {
+				if (!in_body && (event.ctrlKey || id == Article.getActive() || App.getInitParam("cdm_expanded"))) {
 					Article.openInNewWindow(id);
 				}
 
 				Article.setActive(id);
 
-				if (!getInitParam("cdm_expanded"))
+				if (!App.getInitParam("cdm_expanded"))
 					Article.cdmScrollToId(id);
 
 				return in_body;
@@ -81,7 +81,7 @@ define(["dojo/_base/declare"], function (declare) {
 					// set topmost child in the buffer as active, but not if we're at the beginning (to prevent auto marking
 					// first article as read all the time)
 					if ($("headlines-frame").scrollTop != 0 &&
-						getInitParam("cdm_expanded") && getInitParam("cdm_auto_catchup") == 1) {
+						App.getInitParam("cdm_expanded") && App.getInitParam("cdm_auto_catchup") == 1) {
 
 						const rows = $$("#headlines-frame > div[id*=RROW]");
 
@@ -113,7 +113,7 @@ define(["dojo/_base/declare"], function (declare) {
 					}
 				}
 
-				if (getInitParam("cdm_auto_catchup") == 1) {
+				if (App.getInitParam("cdm_auto_catchup") == 1) {
 
 					let rows = $$("#headlines-frame > div[id*=RROW][class*=Unread]");
 
@@ -139,7 +139,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 							console.log("we seem to be at an end");
 
-							if (getInitParam("on_catchup_show_next_feed") == "1") {
+							if (App.getInitParam("on_catchup_show_next_feed") == "1") {
 								Feeds.openNextUnread();
 							}
 						}
@@ -150,7 +150,7 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 		},
 		updateFloatingTitle: function(unread_only) {
-			if (!App.isCombinedMode()/* || !getInitParam("cdm_expanded")*/) return;
+			if (!App.isCombinedMode()/* || !App.getInitParam("cdm_expanded")*/) return;
 
 			const hf = $("headlines-frame");
 			const elems = $$("#headlines-frame > div[id*=RROW]");
@@ -201,7 +201,7 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 		},
 		unpackVisible: function() {
-			if (!App.isCombinedMode() || !getInitParam("cdm_expanded")) return;
+			if (!App.isCombinedMode() || !App.getInitParam("cdm_expanded")) return;
 
 			const rows = $$("#headlines-frame div[id*=RROW][data-content]");
 			const threshold = $("headlines-frame").scrollTop + $("headlines-frame").offsetHeight + 600;
@@ -714,7 +714,7 @@ define(["dojo/_base/declare"], function (declare) {
 			str = str.replace("%d", rows.length);
 			str = str.replace("%s", fn);
 
-			if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+			if (App.getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
 				return;
 			}
 
@@ -839,7 +839,7 @@ define(["dojo/_base/declare"], function (declare) {
 			str = str.replace("%d", rows.length);
 			str = str.replace("%s", fn);
 
-			if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+			if (App.getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
 				return;
 			}
 
@@ -869,7 +869,7 @@ define(["dojo/_base/declare"], function (declare) {
 			str = str.replace("%d", rows.length);
 			str = str.replace("%s", fn);
 
-			if (getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+			if (App.getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
 				return;
 			}
 
@@ -952,7 +952,7 @@ define(["dojo/_base/declare"], function (declare) {
 			} else {
 				const msg = ngettext("Mark %d article as read?", "Mark %d articles as read?", ids_to_mark.length).replace("%d", ids_to_mark.length);
 
-				if (getInitParam("confirm_feed_catchup") != 1 || confirm(msg)) {
+				if (App.getInitParam("confirm_feed_catchup") != 1 || confirm(msg)) {
 
 					for (var i = 0; i < ids_to_mark.length; i++) {
 						var e = $("RROW-" + ids_to_mark[i]);
@@ -1090,7 +1090,7 @@ define(["dojo/_base/declare"], function (declare) {
 			}));
 
 
-			const labels = getInitParam("labels");
+			const labels = App.getInitParam("labels");
 
 			if (labels && labels.length) {
 

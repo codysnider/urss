@@ -100,13 +100,6 @@
 	</script>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-	<script type="text/javascript">
-		Event.observe(window, 'load', function() {
-			App.init();
-		});
-	</script>
-
 </head>
 
 <body class="claro ttrss_main ttrss_prefs">

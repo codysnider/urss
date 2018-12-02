@@ -1,28 +1,8 @@
 'use strict'
 /* global dijit, __ */
 
-let init_params = {};
 let _label_base_index = -1024;
 let loading_progress = 0;
-let notify_hide_timerid = false;
-
-Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(
-	function (callOriginal, options) {
-
-		if (getInitParam("csrf_token") != undefined) {
-			Object.extend(options, options || { });
-
-			if (Object.isString(options.parameters))
-				options.parameters = options.parameters.toQueryParams();
-			else if (Object.isHash(options.parameters))
-				options.parameters = options.parameters.toObject();
-
-			options.parameters["csrf_token"] = getInitParam("csrf_token");
-		}
-
-		return callOriginal(options);
-	}
-);
 
 /* xhr shorthand helpers */
 
@@ -239,15 +219,15 @@ const Notify = {
 		switch (kind) {
 			case this.KIND_INFO:
 				notify.addClassName("notify_info")
-				icon = getInitParam("icon_information");
+				icon = App.getInitParam("icon_information");
 				break;
 			case this.KIND_ERROR:
 				notify.addClassName("notify_error");
-				icon = getInitParam("icon_alert");
+				icon = App.getInitParam("icon_alert");
 				break;
 			case this.KIND_PROGRESS:
 				notify.addClassName("notify_progress");
-				icon = getInitParam("icon_indicator_white")
+				icon = App.getInitParam("icon_indicator_white")
 				break;
 		}
 
@@ -255,7 +235,7 @@ const Notify = {
 
 		msgfmt += (" <span><img src=\"%s\" class='close' title=\"" +
 			__("Click to close") + "\" onclick=\"Notify.close()\"></span>")
-				.replace("%s", getInitParam("icon_cross"));
+				.replace("%s", App.getInitParam("icon_cross"));
 
 		notify.innerHTML = msgfmt;
 		notify.addClassName("visible");
@@ -287,14 +267,6 @@ function displayIfChecked(checkbox, elemId) {
 	} else {
 		Effect.Fade(elemId, {duration : 0.5});
 	}
-}
-
-function getInitParam(key) {
-	return init_params[key];
-}
-
-function setInitParam(key, value) {
-	init_params[key] = value;
 }
 
 function fatalError(code, msg, ext_info) {
@@ -390,5 +362,5 @@ function popupOpenArticle(id) {
 		"height=900,width=900,resizable=yes,status=no,location=no,menubar=no,directories=no,scrollbars=yes,toolbar=no");
 
 	w.opener = null;
-	w.location = "backend.php?op=article&method=view&mode=raw&html=1&zoom=1&id=" + id + "&csrf_token=" + getInitParam("csrf_token");
+	w.location = "backend.php?op=article&method=view&mode=raw&html=1&zoom=1&id=" + id + "&csrf_token=" + App.getInitParam("csrf_token");
 }
