@@ -1004,7 +1004,7 @@ function toggleSelectRow2(sender, row, is_cdm) {
 	else
 		row.removeClassName('Selected');
 
-	if (typeof updateSelectedPrompt != undefined)
+	if (typeof Headlines != "undefined")
 		Headlines.updateSelectedPrompt();
 }
 
@@ -1018,7 +1018,7 @@ function toggleSelectRow(sender, row) {
 	else
 		row.removeClassName('Selected');
 
-	if (typeof updateSelectedPrompt != undefined)
+	if (typeof Headlines != "undefined")
 		Headlines.updateSelectedPrompt();
 }
 
