@@ -1,4 +1,4 @@
-/* global notify,__,dijit */
+/* global notify,__,dijit,fox */
 
 const Feeds = {
 	counters_last_request: 0,
@@ -155,6 +155,7 @@ const Feeds = {
 				url: "backend.php?op=pref_feeds&method=getfeedtree&mode=2"
 			});
 
+			// noinspection JSUnresolvedFunction
 			const treeModel = new fox.FeedStoreModel({
 				store: store,
 				query: {
@@ -165,9 +166,10 @@ const Feeds = {
 				childrenAttrs: ["items"]
 			});
 
+			// noinspection JSUnresolvedFunction
 			const tree = new fox.FeedTree({
 				model: treeModel,
-				onClick: function (item, node) {
+				onClick: function (item/*, node*/) {
 					const id = String(item.id);
 					const is_cat = id.match("^CAT:");
 					const feed = id.substr(id.indexOf(":") + 1);

@@ -89,9 +89,6 @@ const Utils = {
 
 		if (!this.hotkey_prefix && hotkeys_map[0].indexOf(keychar) != -1) {
 
-			const date = new Date();
-			const ts = Math.round(date.getTime() / 1000);
-
 			this.hotkey_prefix = keychar;
 			$("cmdline").innerHTML = keychar;
 			Element.show("cmdline");
@@ -123,9 +120,11 @@ const Utils = {
 		let action_name = false;
 
 		for (const sequence in hotkeys_map[1]) {
-			if (sequence == hotkey_full) {
-				action_name = hotkeys_map[1][sequence];
-				break;
+			if (hotkeys_map[1].hasOwnProperty(sequence)) {
+				if (sequence == hotkey_full) {
+					action_name = hotkeys_map[1][sequence];
+					break;
+				}
 			}
 		}
 
@@ -282,43 +281,46 @@ const Utils = {
 		//console.log("parsing runtime info...");
 
 		for (const k in data) {
-			const v = data[k];
+			if (data.hasOwnProperty(k)) {
+				const v = data[k];
 
-			if (k == "dep_ts" && parseInt(getInitParam("dep_ts")) > 0) {
-				if (parseInt(getInitParam("dep_ts")) < parseInt(v) && getInitParam("reload_on_ts_change")) {
-					window.location.reload();
+				console.log("RI:", k, "=>", v);
+
+				if (k == "dep_ts" && parseInt(getInitParam("dep_ts")) > 0) {
+					if (parseInt(getInitParam("dep_ts")) < parseInt(v) && getInitParam("reload_on_ts_change")) {
+						window.location.reload();
+					}
 				}
-			}
 
-			if (k == "daemon_is_running" && v != 1) {
-				notify_error("<span onclick=\"Utils.explainError(1)\">Update daemon is not running.</span>", true);
-				return;
-			}
-
-			if (k == "update_result") {
-				const updatesIcon = dijit.byId("updatesIcon").domNode;
-
-				if (v) {
-					Element.show(updatesIcon);
-				} else {
-					Element.hide(updatesIcon);
+				if (k == "daemon_is_running" && v != 1) {
+					notify_error("<span onclick=\"Utils.explainError(1)\">Update daemon is not running.</span>", true);
+					return;
 				}
-			}
 
-			if (k == "daemon_stamp_ok" && v != 1) {
-				notify_error("<span onclick=\"Utils.explainError(3)\">Update daemon is not updating feeds.</span>", true);
-				return;
-			}
+				if (k == "update_result") {
+					const updatesIcon = dijit.byId("updatesIcon").domNode;
 
-			if (k == "max_feed_id" || k == "num_feeds") {
-				if (init_params[k] != v) {
-					console.log("feed count changed, need to reload feedlist.");
-					Feeds.reload();
+					if (v) {
+						Element.show(updatesIcon);
+					} else {
+						Element.hide(updatesIcon);
+					}
 				}
-			}
 
-			init_params[k] = v;
-			notify('');
+				if (k == "daemon_stamp_ok" && v != 1) {
+					notify_error("<span onclick=\"Utils.explainError(3)\">Update daemon is not updating feeds.</span>", true);
+					return;
+				}
+
+				if (k == "max_feed_id" || k == "num_feeds") {
+					if (init_params[k] != v) {
+						console.log("feed count changed, need to reload feedlist.");
+						Feeds.reload();
+					}
+				}
+
+				init_params[k] = v;
+			}
 		}
 
 		PluginHost.run(PluginHost.HOOK_RUNTIME_INFO_LOADED, data);
@@ -349,7 +351,7 @@ const Utils = {
 				if (params.hasOwnProperty(k)) {
 					switch (k) {
 						case "label_base_index":
-							_label_base_index = parseInt(params[k])
+							_label_base_index = parseInt(params[k]);
 							break;
 						case "hotkeys":
 							// filter mnemonic definitions (used for help panel) from hotkeys map
@@ -357,8 +359,10 @@ const Utils = {
 
 							const tmp = [];
 							for (const sequence in params[k][1]) {
-								const filtered = sequence.replace(/\|.*$/, "");
-								tmp[filtered] = params[k][1][sequence];
+								if (params[k][1].hasOwnProperty(sequence)) {
+									const filtered = sequence.replace(/\|.*$/, "");
+									tmp[filtered] = params[k][1][sequence];
+								}
 							}
 
 							params[k][1] = tmp;
@@ -458,8 +462,10 @@ const CommonDialogs = {
 
 									let count = 0;
 									for (const feedUrl in feeds) {
-										select.addOption({value: feedUrl, label: feeds[feedUrl]});
-										count++;
+										if (feeds.hasOwnProperty(feedUrl)) {
+											select.addOption({value: feedUrl, label: feeds[feedUrl]});
+											count++;
+										}
 									}
 
 									Effect.Appear('feedDlg_feedsContainer', {duration: 0.5});
@@ -687,7 +693,7 @@ const CommonDialogs = {
 
 			const query = {op: "pref-feeds", quiet: 1, method: "remove", ids: feed_id};
 
-			xhrPost("backend.php", query, (transport) => {
+			xhrPost("backend.php", query, () => {
 				if (dijit.byId("feedEditDlg")) dijit.byId("feedEditDlg").hide();
 
 				if (App.isPrefs()) {
@@ -752,10 +758,10 @@ const CommonDialogs = {
 				const e = $('gen_feed_url');
 
 				if (new_link) {
-					e.innerHTML = e.innerHTML.replace(/\&amp;key=.*$/,
+					e.innerHTML = e.innerHTML.replace(/&amp;key=.*$/,
 						"&amp;key=" + new_link);
 
-					e.href = e.href.replace(/\&key=.*$/,
+					e.href = e.href.replace(/&key=.*$/,
 						"&key=" + new_link);
 
 					new Effect.Highlight(e);
@@ -1509,7 +1515,7 @@ function removeFeedIcon(id) {
 
 		const query = { op: "pref-feeds", method: "removeicon", feed_id: id };
 
-		xhrPost("backend.php", query, (transport) => {
+		xhrPost("backend.php", query, () => {
 			notify_info("Feed icon removed.");
 			if (App.isPrefs()) {
 				Feeds.reload();

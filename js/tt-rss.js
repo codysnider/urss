@@ -280,7 +280,7 @@ const App = {
 			if (id) {
 				Article.editArticleTags(id);
 			}
-		}
+		};
 		this.hotkey_actions["open_in_new_window"] = function () {
 			if (Article.getActiveArticleId()) {
 				Article.openArticleInNewWindow(Article.getActiveArticleId());
@@ -504,23 +504,21 @@ const App = {
 					CommonDialogs.editFeed(Feeds.getActiveFeedId());
 				break;
 			case "qmcRemoveFeed":
-				var actid = Feeds.getActiveFeedId();
-
-				if (Feeds.activeFeedIsCat()) {
-					alert(__("You can't unsubscribe from the category."));
-					return;
-				}
+				const actid = Feeds.getActiveFeedId();
 
 				if (!actid) {
 					alert(__("Please select some feed first."));
 					return;
 				}
 
-				var fn = Feeds.getFeedName(actid);
+				if (Feeds.activeFeedIsCat()) {
+					alert(__("You can't unsubscribe from the category."));
+					return;
+				}
 
-				var pr = __("Unsubscribe from %s?").replace("%s", fn);
+				const fn = Feeds.getFeedName(actid);
 
-				if (confirm(pr)) {
+				if (confirm(__("Unsubscribe from %s?").replace("%s", fn))) {
 					CommonDialogs.unsubscribeFeed(actid);
 				}
 				break;
