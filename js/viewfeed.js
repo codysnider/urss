@@ -735,17 +735,8 @@ const Headlines = {
 		Feeds.infscroll_in_progress = 0;
 
 		// this is used to auto-catchup articles if needed after infscroll request has finished,
-		// unpack visible articles, etc
+		// unpack visible articles, fill buffer more, etc
 		this.scrollHandler();
-
-		// if we have some more space in the buffer, why not try to fill it
-		if (!Feeds.infscroll_disabled && $("headlines-spacer") &&
-			$("headlines-spacer").offsetTop < $("headlines-frame").offsetHeight) {
-
-			window.setTimeout(function () {
-				this.loadMoreHeadlines();
-			}, 500);
-		}
 
 		notify("");
 	},
