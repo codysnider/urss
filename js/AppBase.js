@@ -346,7 +346,8 @@ define(["dojo/_base/declare"], function (declare) {
 				}
 
 				// PluginHost might not be available on non-index pages
-				window.PluginHost && PluginHost.run(PluginHost.HOOK_PARAMS_LOADED, App._initParams);
+				if (typeof PluginHost !== 'undefined')
+					PluginHost.run(PluginHost.HOOK_PARAMS_LOADED, App._initParams);
 			}
 
 			this.initSecondStage();
