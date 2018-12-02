@@ -62,14 +62,30 @@ const Lists = {
 	}
 };
 
+// noinspection JSUnusedGlobalSymbols
 const Tables = {
 	onRowChecked: function(elem) {
 		// account for dojo checkboxes
 		elem = elem.domNode || elem;
 
 		elem.up("tr").toggleClassName("Selected");
+	},
+	getSelected: function(elemId) {
+		const rv = [];
+
+		$(elemId).select("tr").each((row) => {
+			if (row.hasClassName("Selected")) {
+				// either older prefix-XXX notation or separate attribute
+				const rowId = row.getAttribute("data-row-id") || row.id.replace(/^[A-Z]*?-/, "");
+
+				if (!isNaN(rowId))
+					rv.push(parseInt(rowId));
+			}
+		});
+
+		return rv;
 	}
-}
+};
 
 const Utils = {
 	_rpc_seq: 0,
@@ -526,7 +542,7 @@ const CommonDialogs = {
 			title: __("Feeds with update errors"),
 			style: "width: 600px",
 			getSelectedFeeds: function () {
-				return getSelectedTableRowIds("prefErrorFeedList");
+				return Tables.getSelected("prefErrorFeedList");
 			},
 			removeSelected: function () {
 				const sel_rows = this.getSelectedFeeds();
@@ -1568,21 +1584,6 @@ function selectTableRows(id, mode) {
 			}
 		}
 	}
-}
-
-function getSelectedTableRowIds(id) {
-	const rows = [];
-
-	const elem_rows = $(id).rows;
-
-	for (let i = 0; i < elem_rows.length; i++) {
-		if (elem_rows[i].hasClassName("Selected")) {
-			const bare_id = elem_rows[i].id.replace(/^[A-Z]*?-/, "");
-			rows.push(bare_id);
-		}
-	}
-
-	return rows;
 }
 
 // noinspection JSUnusedGlobalSymbols

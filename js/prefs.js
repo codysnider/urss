@@ -314,7 +314,7 @@ function getSelectedLabels() {
 }
 
 function getSelectedUsers() {
-	return getSelectedTableRowIds("prefUserList");
+	return Tables.getSelected("prefUserList");
 }
 
 function getSelectedFeeds() {
@@ -832,7 +832,7 @@ function showInactiveFeeds() {
 		title: __("Feeds without recent updates"),
 		style: "width: 600px",
 		getSelectedFeeds: function () {
-			return getSelectedTableRowIds("prefInactiveFeedList");
+			return Tables.getSelected("prefInactiveFeedList");
 		},
 		removeSelected: function () {
 			const sel_rows = this.getSelectedFeeds();
@@ -922,7 +922,7 @@ function editProfiles() {
 		title: __("Settings Profiles"),
 		style: "width: 600px",
 		getSelectedProfiles: function () {
-			return getSelectedTableRowIds("prefFeedProfileList");
+			return Tables.getSelected("prefFeedProfileList");
 		},
 		removeSelected: function () {
 			const sel_rows = this.getSelectedProfiles();
