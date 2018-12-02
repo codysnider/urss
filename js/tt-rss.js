@@ -1,8 +1,12 @@
-/* global dijit,__,fox */
+/* global dijit,__ */
 
 let Utils;
 let CommonDialogs;
 let Filters;
+let Feeds;
+let Headlines;
+let Article;
+let ArticleCache;
 
 const App = {
 	global_unread: -1,
@@ -51,6 +55,10 @@ const App = {
 			"fox/Utils",
 			"fox/CommonDialogs",
 			"fox/CommonFilters",
+			"fox/Feeds",
+			"fox/Headlines",
+			"fox/Article",
+			"fox/ArticleCache",
 			"fox/FeedStoreModel",
 			"fox/FeedTree"], function (dojo, ready, parser) {
 
@@ -60,6 +68,10 @@ const App = {
 					Utils = fox.Utils();
 					CommonDialogs = fox.CommonDialogs();
 					Filters = fox.CommonFilters();
+					Feeds = fox.Feeds();
+					Headlines = fox.Headlines();
+					Article = fox.Article();
+					ArticleCache = fox.ArticleCache();
 
 					parser.parse();
 

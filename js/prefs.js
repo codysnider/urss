@@ -1,4 +1,4 @@
-/* global dijit, __,fox */
+/* global dijit, __ */
 
 let Utils;
 let CommonDialogs;

@@ -114,7 +114,7 @@
 		require({cache:{}});
 	<?php
 		print get_minified_js(["tt-rss.js",
-			"functions.js", "feedlist.js", "viewfeed.js", "PluginHost.js"]);
+			"functions.js", "PluginHost.js"]);
 	?>
 	</script>
 	<script type="text/javascript">
