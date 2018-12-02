@@ -1435,7 +1435,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			# id needed for selectTableRows()
 			print "<td width='5%' align='center'><input
-				onclick='toggleSelectRow2(this);' dojoType=\"dijit.form.CheckBox\"
+				onclick='Tables.onRowChecked(this);' dojoType=\"dijit.form.CheckBox\"
 				type=\"checkbox\" id=\"FUPDC-$feed_id\"></td>";
 			print "<td>";
 
@@ -1500,7 +1500,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			# id needed for selectTableRows()
 			print "<td width='5%' align='center'><input
-				onclick='toggleSelectRow2(this);' dojoType=\"dijit.form.CheckBox\"
+				onclick='Tables.onRowChecked(this);' dojoType=\"dijit.form.CheckBox\"
 				type=\"checkbox\" id=\"FERDC-$feed_id\"></td>";
 			print "<td>";
 

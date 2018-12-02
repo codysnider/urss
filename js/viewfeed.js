@@ -1109,6 +1109,14 @@ const Headlines = {
 
 		return rv;
 	},
+	onRowChecked: function(elem) {
+		// account for dojo checkboxes
+		elem = elem.domNode || elem;
+
+		elem.up("div[id*=RROW]").toggleClassName("Selected");
+
+		this.updateSelectedPrompt();
+	},
 	select: function(mode) {
 		// mode = all,none,unread,invert,marked,published
 		let query = "#headlines-frame > div[id*=RROW]";

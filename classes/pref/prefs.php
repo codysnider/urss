@@ -799,7 +799,7 @@ class Pref_Prefs extends Handler_Protected {
 
 				$plugin_icon = $checked ? "plugin.png" : "plugin_disabled.png";
 
-				print "<td align='center'><input id='FPCHK-$name' name='plugins[]' value='$name' onclick='toggleSelectRow2(this);'
+				print "<td align='center'><input id='FPCHK-$name' name='plugins[]' value='$name' onclick='Tables.onRowChecked(this);'
 					dojoType=\"dijit.form.CheckBox\" $checked $disabled
 					type=\"checkbox\"></td>";
 
@@ -1023,7 +1023,7 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "<td width='5%' align='center'><input
 			id='FCATC-0'
-			onclick='toggleSelectRow2(this);'
+			onclick='Tables.onRowChecked(this);'
 			dojoType=\"dijit.form.CheckBox\"
 			type=\"checkbox\"></td>";
 
@@ -1050,7 +1050,7 @@ class Pref_Prefs extends Handler_Protected {
 			$edit_title = htmlspecialchars($line["title"]);
 
 			print "<td width='5%' align='center'><input
-				onclick='toggleSelectRow2(this);'
+				onclick='Tables.onRowChecked(this);'
 				id='FCATC-$profile_id'
 				dojoType=\"dijit.form.CheckBox\"
 				type=\"checkbox\"></td>";

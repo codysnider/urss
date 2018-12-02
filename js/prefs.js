@@ -69,17 +69,17 @@ const App = {
 		Utils.setLoadingProgress(50);
 		notify("");
 
-		let tab = getURLParam('tab');
+		let tab = Utils.urlParam('tab');
 
 		if (tab) {
 			tab = dijit.byId(tab + "Tab");
 			if (tab) dijit.byId("pref-tabs").selectChild(tab);
 		}
 
-		const method = getURLParam('method');
+		const method = Utils.urlParam('method');
 
 		if (method == 'editFeed') {
-			const param = getURLParam('methodparam');
+			const param = Utils.urlParam('methodparam');
 
 			window.setTimeout(function () {
 				CommonDialogs.editFeed(param)

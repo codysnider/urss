@@ -53,8 +53,8 @@ Array.prototype.remove = function(s) {
 	}
 };
 
-const ListUtils = {
-	onChecked: function(elem) {
+const Lists = {
+	onRowChecked: function(elem) {
 		// account for dojo checkboxes
 		elem = elem.domNode || elem;
 
@@ -62,11 +62,23 @@ const ListUtils = {
 	}
 };
 
+const Tables = {
+	onRowChecked: function(elem) {
+		// account for dojo checkboxes
+		elem = elem.domNode || elem;
+
+		elem.up("tr").toggleClassName("Selected");
+	}
+}
+
 const Utils = {
 	_rpc_seq: 0,
 	hotkey_prefix: 0,
 	hotkey_prefix_pressed: false,
 	hotkey_prefix_timeout: 0,
+	urlParam: function(param) {
+		return String(window.location.href).parseQuery()[param];
+	},
 	next_seq: function() {
 		this._rpc_seq += 1;
 		return this._rpc_seq;
@@ -988,43 +1000,6 @@ function getCookie(name) {
 	return unescape(dc.substring(begin + prefix.length, end));
 }
 
-function toggleSelectRowById(sender, id) {
-	const row = $(id);
-	return toggleSelectRow(sender, row);
-}
-
-/* this is for dijit Checkbox */
-function toggleSelectRow2(sender, row, is_cdm) {
-
-	if (!row)
-		if (!is_cdm)
-			row = sender.domNode.parentNode.parentNode;
-		else
-			row = sender.domNode.parentNode.parentNode.parentNode; // oh ffs
-
-	if (sender.checked && !row.hasClassName('Selected'))
-		row.addClassName('Selected');
-	else
-		row.removeClassName('Selected');
-
-	if (typeof Headlines != "undefined")
-		Headlines.updateSelectedPrompt();
-}
-
-
-function toggleSelectRow(sender, row) {
-
-	if (!row) row = sender.parentNode.parentNode;
-
-	if (sender.checked && !row.hasClassName('Selected'))
-		row.addClassName('Selected');
-	else
-		row.removeClassName('Selected');
-
-	if (typeof Headlines != "undefined")
-		Headlines.updateSelectedPrompt();
-}
-
 // noinspection JSUnusedGlobalSymbols
 function displayIfChecked(checkbox, elemId) {
 	if (checkbox.checked) {
@@ -1032,10 +1007,6 @@ function displayIfChecked(checkbox, elemId) {
 	} else {
 		Effect.Fade(elemId, {duration : 0.5});
 	}
-}
-
-function getURLParam(param){
-	return String(window.location.href).parseQuery()[param];
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -1140,7 +1111,7 @@ const Filters = {
 
 				new dijit.form.CheckBox({
 					onChange: function () {
-						ListUtils.onChecked(this);
+						Lists.onRowChecked(this);
 					},
 				}, cb);
 
@@ -1189,7 +1160,7 @@ const Filters = {
 
 				new dijit.form.CheckBox({
 					onChange: function () {
-						ListUtils.onChecked(this);
+						Lists.onRowChecked(this);
 					},
 				}, cb);
 

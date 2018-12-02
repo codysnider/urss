@@ -414,7 +414,7 @@ const App = {
 						if (!row.hasClassName("active"))
 							cb.attr("checked", !cb.attr("checked"));
 
-						toggleSelectRowById(cb, "RROW-" + id);
+						Headlines.onRowChecked(cb);
 						return false;
 					}
 				}

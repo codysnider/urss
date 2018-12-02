@@ -1244,7 +1244,7 @@
 			"g t" => "goto_tagcloud",
 			"g *p" => "goto_prefs",
 	//			"other" => array(
-			"(9)|Tab" => "select_article_cursor", // tab
+			"r" => "select_article_cursor",
 			"c l" => "create_label",
 			"c f" => "create_filter",
 			"c s" => "collapse_sidebar",

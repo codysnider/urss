@@ -419,7 +419,7 @@ class Pref_Users extends Handler_Protected {
 				$line["created"] = make_local_datetime($line["created"], false);
 				$line["last_login"] = make_local_datetime($line["last_login"], false);
 
-				print "<td align='center'><input onclick='toggleSelectRow2(this);'
+				print "<td align='center'><input onclick='Tables.onRowChecked(this);'
 					dojoType=\"dijit.form.CheckBox\" type=\"checkbox\"
 					id=\"UMCHK-$uid\"></td>";
 

@@ -53,7 +53,7 @@
 				$site_url = htmlspecialchars($line["site_url"]);
 				$subscribers = $line["subscribers"];
 
-				$check_box = "<input onclick='ListUtils.onChecked(this)'
+				$check_box = "<input onclick='Lists.onRowChecked(this)'
 							dojoType=\"dijit.form.CheckBox\"
 							type=\"checkbox\" \">";
 
@@ -73,7 +73,7 @@
 				$feed_url = htmlspecialchars($line["feed_url"]);
 				$site_url = htmlspecialchars($line["site_url"]);
 
-				$check_box = "<input onclick='ListUtils.onChecked(this)' dojoType=\"dijit.form.CheckBox\"
+				$check_box = "<input onclick='Lists.onRowChecked(this)' dojoType=\"dijit.form.CheckBox\"
 							type=\"checkbox\">";
 
 				if ($line['articles_archived'] > 0) {
