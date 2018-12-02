@@ -800,17 +800,17 @@ class Pref_Filters extends Handler_Protected {
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Filters.quickAddFilter()\">".
 			__('Create filter')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return joinSelectedFilters()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterTree').joinSelectedFilters()\">".
 			__('Combine')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return editSelectedFilter()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterTree').editSelectedFilter()\">".
 			__('Edit')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return resetFilterOrder()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterTree').resetFilterOrder()\">".
 			__('Reset sort order')."</button> ";
 
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return removeSelectedFilters()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterTree').removeSelectedFilters()\">".
 			__('Remove')."</button> ";
 
 		print "</div>"; # toolbar
@@ -840,7 +840,7 @@ class Pref_Filters extends Handler_Protected {
 			var bare_id = id.substr(id.indexOf(':')+1);
 
 			if (id.match('FILTER:')) {
-				editFilter(bare_id);
+				dijit.byId('filterTree').editFilter(bare_id);
 			}
 		</script>
 

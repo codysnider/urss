@@ -310,7 +310,7 @@ class Pref_Labels extends Handler_Protected {
 			var bare_id = id.substr(id.indexOf(':')+1);
 
 			if (id.match('LABEL:')) {
-				editLabel(bare_id);
+				dijit.byId('labelTree').editLabel(bare_id);
 			}
 		</script>
 		</div>";

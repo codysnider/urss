@@ -48,6 +48,69 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 
 			return rv;
 		},
+		editLabel: function(id) {
+			const query = "backend.php?op=pref-labels&method=edit&id=" +
+				param_escape(id);
+
+			if (dijit.byId("labelEditDlg"))
+				dijit.byId("labelEditDlg").destroyRecursive();
+
+			const dialog = new dijit.Dialog({
+				id: "labelEditDlg",
+				title: __("Label Editor"),
+				style: "width: 600px",
+				setLabelColor: function (id, fg, bg) {
+
+					let kind = '';
+					let color = '';
+
+					if (fg && bg) {
+						kind = 'both';
+					} else if (fg) {
+						kind = 'fg';
+						color = fg;
+					} else if (bg) {
+						kind = 'bg';
+						color = bg;
+					}
+
+					const e = $("LICID-" + id);
+
+					if (e) {
+						if (fg) e.style.color = fg;
+						if (bg) e.style.backgroundColor = bg;
+					}
+
+					const query = {
+						op: "pref-labels", method: "colorset", kind: kind,
+						ids: id, fg: fg, bg: bg, color: color
+					};
+
+					xhrPost("backend.php", query, () => {
+						updateFilterList(); // maybe there's labels in there
+					});
+
+				},
+				execute: function () {
+					if (this.validate()) {
+						const caption = this.attr('value').caption;
+						const fg_color = this.attr('value').fg_color;
+						const bg_color = this.attr('value').bg_color;
+
+						dijit.byId('labelTree').setNameById(id, caption);
+						this.setLabelColor(id, fg_color, bg_color);
+						this.hide();
+
+						xhrPost("backend.php", this.attr('value'), () => {
+							updateFilterList(); // maybe there's labels in there
+						});
+					}
+				},
+				href: query
+			});
+
+			dialog.show();
+		},
 		resetColors: function() {
 			const labels = this.getSelectedLabels();
 

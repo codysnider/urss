@@ -148,14 +148,6 @@ function updateFeedList() {
 	});
 }
 
-function checkInactiveFeeds() {
-	xhrPost("backend.php", { op: "pref-feeds", method: "getinactivefeeds" }, (transport) => {
-		if (parseInt(transport.responseText) > 0) {
-			Element.show(dijit.byId("pref_feeds_inactive_btn").domNode);
-		}
-	});
-}
-
 function updateUsersList(sort_key) {
 	const user_search = $("user_search");
 	const search = user_search ? user_search.value : "";
@@ -218,120 +210,10 @@ function editUser(id) {
 	dialog.show();
 }
 
-function editFilter(id) {
-
-	const query = "backend.php?op=pref-filters&method=edit&id=" + param_escape(id);
-
-	if (dijit.byId("feedEditDlg"))
-		dijit.byId("feedEditDlg").destroyRecursive();
-
-	if (dijit.byId("filterEditDlg"))
-		dijit.byId("filterEditDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "filterEditDlg",
-		title: __("Edit Filter"),
-		style: "width: 600px",
-
-		test: function () {
-			const query = "backend.php?" + dojo.formToQuery("filter_edit_form") + "&savemode=test";
-
-			editFilterTest(query);
-		},
-		selectRules: function (select) {
-			$$("#filterDlg_Matches input[type=checkbox]").each(function (e) {
-				e.checked = select;
-				if (select)
-					e.parentNode.addClassName("Selected");
-				else
-					e.parentNode.removeClassName("Selected");
-			});
-		},
-		selectActions: function (select) {
-			$$("#filterDlg_Actions input[type=checkbox]").each(function (e) {
-				e.checked = select;
-
-				if (select)
-					e.parentNode.addClassName("Selected");
-				else
-					e.parentNode.removeClassName("Selected");
-
-			});
-		},
-		editRule: function (e) {
-			const li = e.parentNode;
-			const rule = li.getElementsByTagName("INPUT")[1].value;
-			Filters.addFilterRule(li, rule);
-		},
-		editAction: function (e) {
-			const li = e.parentNode;
-			const action = li.getElementsByTagName("INPUT")[1].value;
-			Filters.addFilterAction(li, action);
-		},
-		removeFilter: function () {
-			const msg = __("Remove filter?");
-
-			if (confirm(msg)) {
-				this.hide();
-
-				notify_progress("Removing filter...");
-
-				const query = { op: "pref-filters", method: "remove", ids: this.attr('value').id };
-
-				xhrPost("backend.php", query, () => {
-					updateFilterList();
-				});
-			}
-		},
-		addAction: function () {
-			Filters.addFilterAction();
-		},
-		addRule: function () {
-			Filters.addFilterRule();
-		},
-		deleteAction: function () {
-			$$("#filterDlg_Actions li[class*=Selected]").each(function (e) {
-				e.parentNode.removeChild(e)
-			});
-		},
-		deleteRule: function () {
-			$$("#filterDlg_Matches li[class*=Selected]").each(function (e) {
-				e.parentNode.removeChild(e)
-			});
-		},
-		execute: function () {
-			if (this.validate()) {
-
-				notify_progress("Saving data...", true);
-
-				xhrPost("backend.php", dojo.formToObject("filter_edit_form"), () => {
-					dialog.hide();
-					updateFilterList();
-				});
-			}
-		},
-		href: query
-	});
-
-	dialog.show();
-}
-
 function getSelectedUsers() {
 	return Tables.getSelected("prefUserList");
 }
 
-function getSelectedFilters() {
-	const tree = dijit.byId("filterTree");
-	const items = tree.model.getCheckedItems();
-	const rv = [];
-
-	items.each(function(item) {
-		rv.push(tree.model.store.getValue(item, 'bare_id'));
-	});
-
-	return rv;
-
-}
 
 function removeSelectedUsers() {
 
@@ -352,28 +234,6 @@ function removeSelectedUsers() {
 
 	} else {
 		alert(__("No users are selected."));
-	}
-
-	return false;
-}
-
-function removeSelectedFilters() {
-
-	const sel_rows = getSelectedFilters();
-
-	if (sel_rows.length > 0) {
-		if (confirm(__("Remove selected filters?"))) {
-			notify_progress("Removing selected filters...");
-
-			const query = { op: "pref-filters", method: "remove",
-				ids:  sel_rows.toString() };
-
-			xhrPost("backend.php", query, () => {
-				updateFilterList();
-			});
-		}
-	} else {
-		alert(__("No filters are selected."));
 	}
 
 	return false;
@@ -453,43 +313,6 @@ function selectedUserDetails() {
 	});
 
 	dialog.show();
-}
-
-
-function editSelectedFilter() {
-	const rows = getSelectedFilters();
-
-	if (rows.length == 0) {
-		alert(__("No filters are selected."));
-		return;
-	}
-
-	if (rows.length > 1) {
-		alert(__("Please select only one filter."));
-		return;
-	}
-
-	notify("");
-
-	editFilter(rows[0]);
-
-}
-
-function joinSelectedFilters() {
-	const rows = getSelectedFilters();
-
-	if (rows.length == 0) {
-		alert(__("No filters are selected."));
-		return;
-	}
-
-	if (confirm(__("Combine selected filters?"))) {
-		notify_progress("Joining filters...");
-
-		xhrPost("backend.php", { op: "pref-filters", method: "join", ids: rows.toString() }, () => {
-			updateFilterList();
-		});
-	}
 }
 
 function opmlImportComplete(iframe) {
@@ -774,30 +597,6 @@ function editProfiles() {
 	dialog.show();
 }
 
-/*
-function activatePrefProfile() {
-
-	const sel_rows = getSelectedFeedCats();
-
-	if (sel_rows.length == 1) {
-
-		const ok = confirm(__("Activate selected profile?"));
-
-		if (ok) {
-			notify_progress("Loading, please wait...");
-
-			xhrPost("backend.php", { op: "rpc", method: "setprofile", id: sel_rows.toString() },  () => {
-				window.location.reload();
-			});
-		}
-
-	} else {
-		alert(__("Please choose a profile to activate."));
-	}
-
-	return false;
-} */
-
 function clearFeedAccessKeys() {
 
 	if (confirm(__("This will invalidate all previously generated feed URLs. Continue?"))) {
@@ -809,14 +608,6 @@ function clearFeedAccessKeys() {
 	}
 
 	return false;
-}
-
-function resetFilterOrder() {
-	notify_progress("Loading, please wait...");
-
-	xhrPost("backend.php", { op: "pref-filters", method: "filtersortreset" }, () => {
-		updateFilterList();
-	});
 }
 
 function editCat(id, item) {
@@ -831,69 +622,6 @@ function editCat(id, item) {
 		});
 	}
 }
-
-function editLabel(id) {
-	const query = "backend.php?op=pref-labels&method=edit&id=" +
-		param_escape(id);
-
-	if (dijit.byId("labelEditDlg"))
-		dijit.byId("labelEditDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "labelEditDlg",
-		title: __("Label Editor"),
-		style: "width: 600px",
-		setLabelColor: function (id, fg, bg) {
-
-			let kind = '';
-			let color = '';
-
-			if (fg && bg) {
-				kind = 'both';
-			} else if (fg) {
-				kind = 'fg';
-				color = fg;
-			} else if (bg) {
-				kind = 'bg';
-				color = bg;
-			}
-
-			const e = $("LICID-" + id);
-
-			if (e) {
-				if (fg) e.style.color = fg;
-				if (bg) e.style.backgroundColor = bg;
-			}
-
-			const query = { op: "pref-labels", method: "colorset", kind: kind,
-				ids: id, fg: fg, bg: bg, color: color };
-
-			xhrPost("backend.php", query, () => {
-				updateFilterList(); // maybe there's labels in there
-			});
-
-		},
-		execute: function () {
-			if (this.validate()) {
-				const caption = this.attr('value').caption;
-				const fg_color = this.attr('value').fg_color;
-				const bg_color = this.attr('value').bg_color;
-
-				dijit.byId('labelTree').setNameById(id, caption);
-				this.setLabelColor(id, fg_color, bg_color);
-				this.hide();
-
-				xhrPost("backend.php", this.attr('value'), () => {
-					updateFilterList(); // maybe there's labels in there
-				});
-			}
-		},
-		href: query
-	});
-
-	dialog.show();
-}
-
 
 function customizeCSS() {
 	const query = "backend.php?op=pref-prefs&method=customizeCSS";
@@ -950,12 +678,4 @@ function clearSqlLog() {
 		});
 
 	}
-}
-
-function updateSelectedPrompt() {
-	// no-op shim for toggleSelectedRow()
-}
-
-function gotoMain() {
-	document.location.href = "index.php";
 }

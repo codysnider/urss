@@ -436,7 +436,7 @@ class Pref_Prefs extends Handler_Protected {
 				onComplete: function(transport) {
 					var msg = transport.responseText;
 					if (quit) {
-						gotoMain();
+						document.location.href = 'index.php';
 					} else {
 						if (msg == 'PREFS_NEED_RELOAD') {
 							window.location.reload();

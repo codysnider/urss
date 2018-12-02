@@ -127,7 +127,7 @@
 
 <div id="header" dojoType="dijit.layout.ContentPane" region="top">
 	<!-- <a href='#' onclick="showHelp()"><?php echo __("Keyboard shortcuts") ?></a> | -->
-	<a href="#" onclick="gotoMain()"><?php echo __('Exit preferences') ?></a>
+	<a href="#" onclick="document.location.href = 'index.php'"><?php echo __('Exit preferences') ?></a>
 </div>
 
 <div id="main" dojoType="dijit.layout.BorderContainer">

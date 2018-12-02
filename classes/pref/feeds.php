@@ -1255,7 +1255,7 @@ class Pref_Feeds extends Handler_Protected {
 		<script type=\"dojo/method\" event=\"onLoad\" args=\"item\">
 			Element.hide(\"feedlistLoading\");
 
-			checkInactiveFeeds();
+			dijit.byId('feedTree').checkInactiveFeeds();
 		</script>
 		</div>";
 

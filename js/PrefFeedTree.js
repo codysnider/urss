@@ -147,6 +147,13 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 			return false;
 		},
+		checkInactiveFeeds: function() {
+			xhrPost("backend.php", {op: "pref-feeds", method: "getinactivefeeds"}, (transport) => {
+				if (parseInt(transport.responseText) > 0) {
+					Element.show(dijit.byId("pref_feeds_inactive_btn").domNode);
+				}
+			});
+		},
 		getSelectedCategories: function() {
 			const tree = this;
 			const items = tree.model.getCheckedItems();
