@@ -492,7 +492,7 @@ class Pref_Feeds extends Handler_Protected {
 		@unlink($icon_file);
 
 		print "<script type=\"text/javascript\">";
-		print "parent.uploadIconHandler($rc);";
+		print "parent.CommonDialogs.uploadIconHandler($rc);";
 		print "</script>";
 		return;
 	}

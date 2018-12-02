@@ -344,27 +344,6 @@ function fatalError(code, msg, ext_info) {
 } */
 
 // noinspection JSUnusedGlobalSymbols
-function uploadIconHandler(rc) {
-	switch (rc) {
-		case 0:
-			Notify.info("Upload complete.");
-			if (App.isPrefs()) {
-				Feeds.reload();
-			} else {
-				setTimeout('Feeds.reload(false, false)', 50);
-			}
-			break;
-		case 1:
-			Notify.error("Upload failed: icon is too big.");
-			break;
-		case 2:
-			Notify.error("Upload failed.");
-			break;
-	}
-}
-
-
-// noinspection JSUnusedGlobalSymbols
 function label_to_feed_id(label) {
 	return _label_base_index - 1 - Math.abs(label);
 }

@@ -1,10 +1,29 @@
 'use strict'
 /* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
+	// noinspection JSUnusedGlobalSymbols
 	return declare("fox.CommonDialogs", null, {
 		closeInfoBox: function() {
 			const dialog = dijit.byId("infoBox");
 			if (dialog)	dialog.hide();
+		},
+		uploadIconHandler: function(rc) {
+			switch (rc) {
+				case 0:
+					Notify.info("Upload complete.");
+					if (App.isPrefs()) {
+						Feeds.reload();
+					} else {
+						setTimeout('Feeds.reload(false, false)', 50);
+					}
+					break;
+				case 1:
+					Notify.error("Upload failed: icon is too big.");
+					break;
+				case 2:
+					Notify.error("Upload failed.");
+					break;
+			}
 		},
 		removeFeedIcon: function(id) {
 			if (confirm(__("Remove stored feed icon?"))) {
