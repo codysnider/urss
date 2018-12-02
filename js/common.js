@@ -201,73 +201,79 @@ function exception_error(e, e_compat, filename, lineno, colno) {
 		alert("Exception occured while trying to report an exception.\n" +
 			ei.stack + "\n\nOriginal exception:\n" + e.stack);
 	}
-
 }
 
-function notify_real(msg, no_hide, n_type) {
+/* runtime notifications */
 
-	const n = $("notify");
+const Notify = {
+	KIND_GENERIC: 0,
+	KIND_INFO: 1,
+	KIND_ERROR: 2,
+	KIND_PROGRESS: 3,
+	timeout: 0,
+	default_timeout: 5 * 1000,
+	close: function() {
+		this.msg("");
+	},
+	msg: function(msg, keep, kind) {
+		kind = kind || this.KIND_GENERIC;
+		const notify = $("notify");
 
-	if (!n) return;
+		window.clearTimeout(this.timeout);
 
-	if (notify_hide_timerid) {
-		window.clearTimeout(notify_hide_timerid);
-	}
-
-	if (msg == "") {
-		if (n.hasClassName("visible")) {
-			notify_hide_timerid = window.setTimeout(function() {
-				n.removeClassName("visible") }, 0);
-		}
-		return;
-	}
-
-	/* types:
-
-		1 - generic
-		2 - progress
-		3 - error
-		4 - info
-
-	*/
-
-	msg = "<span class=\"msg\"> " + __(msg) + "</span>";
-
-	if (n_type == 2) {
-		msg = "<span><img src=\""+getInitParam("icon_indicator_white")+"\"></span>" + msg;
-		no_hide = true;
-	} else if (n_type == 3) {
-		msg = "<span><img src=\""+getInitParam("icon_alert")+"\"></span>" + msg;
-	} else if (n_type == 4) {
-		msg = "<span><img src=\""+getInitParam("icon_information")+"\"></span>" + msg;
-	}
-
-	msg += " <span><img src=\""+getInitParam("icon_cross")+"\" class=\"close\" title=\"" +
-		__("Click to close") + "\" onclick=\"notify('')\"></span>";
-
-	n.innerHTML = msg;
-
-	window.setTimeout(function() {
-		// goddamnit firefox
-		if (n_type == 2) {
-		n.className = "notify notify_progress visible";
-			} else if (n_type == 3) {
-			n.className = "notify notify_error visible";
-			msg = "<span><img src='images/alert.png'></span>" + msg;
-		} else if (n_type == 4) {
-			n.className = "notify notify_info visible";
-		} else {
-			n.className = "notify visible";
+		if (!msg) {
+			notify.removeClassName("visible");
+			return;
 		}
 
-		if (!no_hide) {
-			notify_hide_timerid = window.setTimeout(function() {
-				n.removeClassName("visible") }, 5*1000);
+		let msgfmt = "<span class=\"msg\">%s</span>".replace("%s", __(msg));
+		let icon = false;
+
+
+		notify.className = "notify";
+
+		console.log('notify', msg, kind);
+
+		switch (kind) {
+			case this.KIND_INFO:
+				notify.addClassName("notify_info")
+				icon = getInitParam("icon_information");
+				break;
+			case this.KIND_ERROR:
+				notify.addClassName("notify_error");
+				icon = getInitParam("icon_alert");
+				break;
+			case this.KIND_PROGRESS:
+				notify.addClassName("notify_progress");
+				icon = getInitParam("icon_indicator_white")
+				break;
 		}
 
-	}, 10);
+		if (icon) msgfmt = "<span><img src=\"%s\"></span>".replace("%s", icon) + msgfmt;
 
-}
+		msgfmt += (" <span><img src=\"%s\" class='close' title=\"" +
+			__("Click to close") + "\" onclick=\"notify('')\"></span>")
+				.replace("%s", getInitParam("icon_cross"));
+
+		notify.innerHTML = msgfmt;
+		notify.addClassName("visible");
+
+		if (!keep)
+			this.timeout = window.setTimeout(() => {
+				notify.removeClassName("visible");
+			}, this.default_timeout);
+
+	},
+	info: function(msg, keep) {
+		this.msg(msg, keep, this.KIND_INFO);
+	},
+	progress: function(msg, keep) {
+		this.msg(msg, keep, this.KIND_PROGRESS);
+	},
+	error: function(msg) {
+		this.msg(msg, true, this.KIND_ERROR);
+	}
+};
 
 function notify(msg, no_hide) {
 	notify_real(msg, no_hide, 1);
