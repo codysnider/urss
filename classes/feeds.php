@@ -50,8 +50,8 @@ class Feeds extends Handler_Protected {
 
 		$reply .= "<span class='r'>
 			<a href=\"#\"
-				title=\"".__("View as RSS feed")."\"
-				onclick=\"Utils.displayDlg('".__("View as RSS")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">
+				title=\"".__("Show as feed")."\"
+				onclick=\"Utils.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">
 				<img class=\"noborder\" src=\"images/pub_set.png\"></a>";
 
 
@@ -137,7 +137,8 @@ class Feeds extends Handler_Protected {
 
 		//$reply .= "<option value=\"catchupPage()\">".__('Mark as read')."</option>";
 
-		$reply .= "<option value=\"Utils.displayDlg('".__("View as RSS")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">".__('View as RSS')."</option>";
+		$reply .= "<option value=\"Utils.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">".
+            __('Show as feed')."</option>";
 
 		$reply .= "</select>";
 
@@ -392,7 +393,7 @@ class Feeds extends Handler_Protected {
 
 							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-title'>".
 								"<div style='float : right'>$feed_icon_img</div>".
-								"<a class='title' href=\"#\" onclick=\"Feeds.viewfeed({feed:$feed_id})\">".
+								"<a class='title' href=\"#\" onclick=\"Feeds.open({feed:$feed_id})\">".
 								$line["feed_title"]."</a>
                             $vf_catchup_link</div>";
 
@@ -434,7 +435,7 @@ class Feeds extends Handler_Protected {
 						if (@$line["feed_title"]) {
 							$rgba = @$rgba_cache[$feed_id];
 
-							$reply['content'] .= "<span class=\"feed\"><a style=\"background : rgba($rgba, 0.3)\" href=\"#\" onclick=\"Feeds.viewfeed({feed:$feed_id})\">".
+							$reply['content'] .= "<span class=\"feed\"><a style=\"background : rgba($rgba, 0.3)\" href=\"#\" onclick=\"Feeds.open({feed:$feed_id})\">".
 								truncate_string($line["feed_title"],30)."</a></span>";
 						}
 					}
@@ -451,7 +452,7 @@ class Feeds extends Handler_Protected {
 
 					if ($line["feed_title"] && !$vfeed_group_enabled) {
 
-						$reply['content'] .= "<span onclick=\"Feeds.viewfeed({feed:$feed_id})\"
+						$reply['content'] .= "<span onclick=\"Feeds.open({feed:$feed_id})\"
                         style=\"cursor : pointer\"
                         title=\"".htmlspecialchars($line['feed_title'])."\">
                         $feed_icon_img</span>";
@@ -488,7 +489,7 @@ class Feeds extends Handler_Protected {
 
 							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-title'>".
 								"<div style=\"float : right\">$feed_icon_img</div>".
-								"<a href=\"#\" class='title' onclick=\"Feeds.viewfeed({feed:$feed_id})\">".
+								"<a href=\"#\" class='title' onclick=\"Feeds.open({feed:$feed_id})\">".
 								$line["feed_title"]."</a> $vf_catchup_link</div>";
 
 						}
@@ -547,7 +548,7 @@ class Feeds extends Handler_Protected {
 
 							$tmp_content .= "<div class=\"feed\">
                             <a href=\"#\" style=\"background-color: rgba($rgba,0.3)\"
-                            onclick=\"Feeds.viewfeed({feed:$feed_id})\">".
+                            onclick=\"Feeds.open({feed:$feed_id})\">".
 								truncate_string($line["feed_title"],30)."</a>
                         </div>";
 						}
@@ -561,7 +562,7 @@ class Feeds extends Handler_Protected {
 					if (!get_pref("VFEED_GROUP_BY_FEED") && $line["feed_title"]) {
 						$tmp_content .= "<span style=\"cursor : pointer\"
                         title=\"".htmlspecialchars($line["feed_title"])."\"
-                        onclick=\"Feeds.viewfeed({feed:$feed_id})\">$feed_icon_img</span>";
+                        onclick=\"Feeds.open({feed:$feed_id})\">$feed_icon_img</span>";
 					}
 					$tmp_content .= "</div>"; //score wrapper2
 

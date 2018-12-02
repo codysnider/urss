@@ -1323,7 +1323,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<p>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Utils.displayDlg('".__("View as RSS")."','generatedFeed', '$rss_url')\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Utils.displayDlg('".__("Show as feed")."','generatedFeed', '$rss_url')\">".
 			__('Display URL')."</button> ";
 
 		print "<button class=\"warning\" dojoType=\"dijit.form.Button\" onclick=\"return clearFeedAccessKeys()\">".

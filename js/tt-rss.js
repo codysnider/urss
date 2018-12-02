@@ -128,7 +128,7 @@ const App = {
 		const hash_feed_is_cat = hash_get('c') == "1";
 
 		if (hash_feed_id != undefined) {
-			Feeds.setActiveFeedId(hash_feed_id, hash_feed_is_cat);
+			Feeds.setActive(hash_feed_id, hash_feed_is_cat);
 		}
 
 		Utils.setLoadingProgress(50);
@@ -142,7 +142,7 @@ const App = {
 
 		if (getInitParam("simple_update")) {
 			console.log("scheduling simple feed updater...");
-			window.setInterval(() => { Feeds.updateRandomFeed() }, 30 * 1000);
+			window.setInterval(() => { Feeds.updateRandom() }, 30 * 1000);
 		}
 
 		console.log("second stage ok");
@@ -167,7 +167,7 @@ const App = {
 	},
 	onViewModeChanged: function() {
 		ArticleCache.clear();
-		return Feeds.viewCurrentFeed('');
+		return Feeds.reloadCurrent('');
 		},
 	isCombinedMode: function() {
 		return getInitParam("combined_display_mode");
@@ -235,15 +235,15 @@ const App = {
 	initHotkeyActions: function() {
 		this.hotkey_actions["next_feed"] = function () {
 			const rv = dijit.byId("feedTree").getNextFeed(
-				Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+				Feeds.getActive(), Feeds.activeIsCat());
 
-			if (rv) Feeds.viewfeed({feed: rv[0], is_cat: rv[1], delayed: true})
+			if (rv) Feeds.open({feed: rv[0], is_cat: rv[1], delayed: true})
 		};
 		this.hotkey_actions["prev_feed"] = function () {
 			const rv = dijit.byId("feedTree").getPreviousFeed(
-				Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+				Feeds.getActive(), Feeds.activeIsCat());
 
-			if (rv) Feeds.viewfeed({feed: rv[0], is_cat: rv[1], delayed: true})
+			if (rv) Feeds.open({feed: rv[0], is_cat: rv[1], delayed: true})
 		};
 		this.hotkey_actions["next_article"] = function () {
 			Headlines.move('next');
@@ -333,19 +333,19 @@ const App = {
 			Headlines.select('none');
 		};
 		this.hotkey_actions["feed_refresh"] = function () {
-			if (Feeds.getActiveFeedId() != undefined) {
-				Feeds.viewfeed({feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat()});
+			if (Feeds.getActive() != undefined) {
+				Feeds.open({feed: Feeds.getActive(), is_cat: Feeds.activeIsCat()});
 			}
 		};
 		this.hotkey_actions["feed_unhide_read"] = function () {
-			Feeds.toggleDispRead();
+			Feeds.toggleUnread();
 		};
 		this.hotkey_actions["feed_subscribe"] = function () {
 			CommonDialogs.quickAddFeed();
 		};
 		this.hotkey_actions["feed_debug_update"] = function () {
-			if (!Feeds.activeFeedIsCat() && parseInt(Feeds.getActiveFeedId()) > 0) {
-				window.open("backend.php?op=feeds&method=update_debugger&feed_id=" + Feeds.getActiveFeedId() +
+			if (!Feeds.activeIsCat() && parseInt(Feeds.getActive()) > 0) {
+				window.open("backend.php?op=feeds&method=update_debugger&feed_id=" + Feeds.getActive() +
 					"&csrf_token=" + getInitParam("csrf_token"));
 			} else {
 				alert("You can't debug this kind of feed.");
@@ -353,18 +353,18 @@ const App = {
 		};
 
 		this.hotkey_actions["feed_debug_viewfeed"] = function () {
-			Feeds.viewfeed({feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat(), viewfeed_debug: true});
+			Feeds.open({feed: Feeds.getActive(), is_cat: Feeds.activeIsCat(), viewfeed_debug: true});
 		};
 
 		this.hotkey_actions["feed_edit"] = function () {
-			if (Feeds.activeFeedIsCat())
+			if (Feeds.activeIsCat())
 				alert(__("You can't edit this kind of feed."));
 			else
-				CommonDialogs.editFeed(Feeds.getActiveFeedId());
+				CommonDialogs.editFeed(Feeds.getActive());
 		};
 		this.hotkey_actions["feed_catchup"] = function () {
-			if (Feeds.getActiveFeedId() != undefined) {
-				Feeds.catchupCurrentFeed();
+			if (Feeds.getActive() != undefined) {
+				Feeds.catchupCurrent();
 			}
 		};
 		this.hotkey_actions["feed_reverse"] = function () {
@@ -372,28 +372,28 @@ const App = {
 		};
 		this.hotkey_actions["feed_toggle_vgroup"] = function () {
 			xhrPost("backend.php", {op: "rpc", method: "togglepref", key: "VFEED_GROUP_BY_FEED"}, () => {
-				Feeds.viewCurrentFeed();
+				Feeds.reloadCurrent();
 			})
 		};
 		this.hotkey_actions["catchup_all"] = function () {
-			Feeds.catchupAllFeeds();
+			Feeds.catchupAll();
 		};
 		this.hotkey_actions["cat_toggle_collapse"] = function () {
-			if (Feeds.activeFeedIsCat()) {
-				dijit.byId("feedTree").collapseCat(Feeds.getActiveFeedId());
+			if (Feeds.activeIsCat()) {
+				dijit.byId("feedTree").collapseCat(Feeds.getActive());
 			}
 		};
 		this.hotkey_actions["goto_all"] = function () {
-			Feeds.viewfeed({feed: -4});
+			Feeds.open({feed: -4});
 		};
 		this.hotkey_actions["goto_fresh"] = function () {
-			Feeds.viewfeed({feed: -3});
+			Feeds.open({feed: -3});
 		};
 		this.hotkey_actions["goto_marked"] = function () {
-			Feeds.viewfeed({feed: -1});
+			Feeds.open({feed: -1});
 		};
 		this.hotkey_actions["goto_published"] = function () {
-			Feeds.viewfeed({feed: -2});
+			Feeds.open({feed: -2});
 		};
 		this.hotkey_actions["goto_tagcloud"] = function () {
 			Utils.displayDlg(__("Tag cloud"), "printTagCloud");
@@ -427,7 +427,7 @@ const App = {
 			Filters.quickAddFilter();
 		};
 		this.hotkey_actions["collapse_sidebar"] = function () {
-			Feeds.viewCurrentFeed();
+			Feeds.reloadCurrent();
 		};
 		this.hotkey_actions["toggle_embed_original"] = function () {
 			if (typeof embedOriginalArticle != "undefined") {
@@ -463,7 +463,7 @@ const App = {
 					!getInitParam("combined_display_mode"));
 
 				Article.close();
-				Feeds.viewCurrentFeed();
+				Feeds.reloadCurrent();
 			})
 		};
 		this.hotkey_actions["toggle_cdm_expanded"] = function () {
@@ -473,7 +473,7 @@ const App = {
 
 			xhrPost("backend.php", {op: "rpc", method: "setpref", key: "CDM_EXPANDED", value: value}, () => {
 				setInitParam("cdm_expanded", !getInitParam("cdm_expanded"));
-				Feeds.viewCurrentFeed();
+				Feeds.reloadCurrent();
 			});
 		};
 	},
@@ -498,35 +498,35 @@ const App = {
 				window.location.href = "backend.php?op=digest";
 				break;
 			case "qmcEditFeed":
-				if (Feeds.activeFeedIsCat())
+				if (Feeds.activeIsCat())
 					alert(__("You can't edit this kind of feed."));
 				else
-					CommonDialogs.editFeed(Feeds.getActiveFeedId());
+					CommonDialogs.editFeed(Feeds.getActive());
 				break;
 			case "qmcRemoveFeed":
-				const actid = Feeds.getActiveFeedId();
+				const actid = Feeds.getActive();
 
 				if (!actid) {
 					alert(__("Please select some feed first."));
 					return;
 				}
 
-				if (Feeds.activeFeedIsCat()) {
+				if (Feeds.activeIsCat()) {
 					alert(__("You can't unsubscribe from the category."));
 					return;
 				}
 
-				const fn = Feeds.getFeedName(actid);
+				const fn = Feeds.getName(actid);
 
 				if (confirm(__("Unsubscribe from %s?").replace("%s", fn))) {
 					CommonDialogs.unsubscribeFeed(actid);
 				}
 				break;
 			case "qmcCatchupAll":
-				Feeds.catchupAllFeeds();
+				Feeds.catchupAll();
 				break;
 			case "qmcShowOnlyUnread":
-				Feeds.toggleDispRead();
+				Feeds.toggleUnread();
 				break;
 			case "qmcToggleWidescreen":
 				if (!App.isCombinedMode()) {

@@ -18,7 +18,7 @@ class Toggle_Sidebar extends Plugin {
 	function hook_main_toolbar_button() {
 		?>
 
-		<button dojoType="dijit.form.Button" onclick="Feeds.collapseFeedlist()">
+		<button dojoType="dijit.form.Button" onclick="Feeds.toggle()">
 			<img src="plugins/toggle_sidebar/application_side_list.png"
 				 title="<?php echo __('Collapse feedlist') ?>">
 		</button>

@@ -291,7 +291,7 @@ const Article = {
 			if (row.hasClassName("Unread")) {
 
 				Headlines.catchupBatched(() => {
-					Feeds.decrementFeedCounter(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+					Feeds.decrementFeedCounter(Feeds.getActive(), Feeds.activeIsCat());
 					Headlines.toggleUnread(id, 0);
 					Headlines.updateFloatingTitle(true);
 				});
@@ -404,7 +404,7 @@ const Headlines = {
 		const view_mode = document.forms["main_toolbar_form"].view_mode.value;
 		const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
 		const num_all = $$("#headlines-frame > div[id*=RROW]").length;
-		const num_unread = Feeds.getFeedUnread(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+		const num_unread = Feeds.getUnread(Feeds.getActive(), Feeds.activeIsCat());
 
 		// TODO implement marked & published
 
@@ -419,14 +419,14 @@ const Headlines = {
 				offset = unread_in_buffer;
 				break;
 			case "adaptive":
-				if (!(Feeds.getActiveFeedId() == -1 && !Feeds.activeFeedIsCat()))
+				if (!(Feeds.getActive() == -1 && !Feeds.activeIsCat()))
 					offset = num_unread > 0 ? unread_in_buffer : num_all;
 				break;
 		}
 
 		console.log("loadMore, offset=", offset);
 
-		Feeds.viewfeed({feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat(), offset: offset});
+		Feeds.open({feed: Feeds.getActive(), is_cat: Feeds.activeIsCat(), offset: offset});
 	},
 	scrollHandler: function() {
 		try {
@@ -497,7 +497,7 @@ const Headlines = {
 						console.log("we seem to be at an end");
 
 						if (getInitParam("on_catchup_show_next_feed") == "1") {
-							Feeds.openNextUnreadFeed();
+							Feeds.openNextUnread();
 						}
 					}
 				}
@@ -592,7 +592,7 @@ const Headlines = {
 			feed_id = reply['headlines']['id'];
 			Feeds.last_search_query = reply['headlines']['search_query'];
 
-			if (feed_id != -7 && (feed_id != Feeds.getActiveFeedId() || is_cat != Feeds.activeFeedIsCat()))
+			if (feed_id != -7 && (feed_id != Feeds.getActive() || is_cat != Feeds.activeIsCat()))
 				return;
 
 			try {
@@ -654,7 +654,7 @@ const Headlines = {
 				this.initHeadlinesMenu();
 
 				if (Feeds.infscroll_disabled)
-					hsp.innerHTML = "<a href='#' onclick='Feeds.openNextUnreadFeed()'>" +
+					hsp.innerHTML = "<a href='#' onclick='Feeds.openNextUnread()'>" +
 						__("Click to open next unread feed.") + "</a>";
 
 				if (Feeds._search_query) {
@@ -663,7 +663,7 @@ const Headlines = {
 						"</span>";
 				}
 
-			} else if (headlines_count > 0 && feed_id == Feeds.getActiveFeedId() && is_cat == Feeds.activeFeedIsCat()) {
+			} else if (headlines_count > 0 && feed_id == Feeds.getActive() && is_cat == Feeds.activeIsCat()) {
 				const c = dijit.byId("headlines-frame");
 				//const ids = Headlines.getSelected();
 
@@ -702,7 +702,7 @@ const Headlines = {
 				this.initHeadlinesMenu();
 
 				if (Feeds.infscroll_disabled) {
-					hsp.innerHTML = "<a href='#' onclick='Feeds.openNextUnreadFeed()'>" +
+					hsp.innerHTML = "<a href='#' onclick='Feeds.openNextUnread()'>" +
 						__("Click to open next unread feed.") + "</a>";
 				}
 
@@ -716,10 +716,10 @@ const Headlines = {
 
 				if (hsp) {
 					if (first_id_changed) {
-						hsp.innerHTML = "<a href='#' onclick='Feeds.viewCurrentFeed()'>" +
+						hsp.innerHTML = "<a href='#' onclick='Feeds.reloadCurrent()'>" +
 							__("New articles found, reload feed to continue.") + "</a>";
 					} else {
-						hsp.innerHTML = "<a href='#' onclick='Feeds.openNextUnreadFeed()'>" +
+						hsp.innerHTML = "<a href='#' onclick='Feeds.openNextUnread()'>" +
 							__("Click to open next unread feed.") + "</a>";
 					}
 				}
@@ -753,7 +753,7 @@ const Headlines = {
 
 		order_by.attr('value', value);
 
-		Feeds.viewCurrentFeed();
+		Feeds.reloadCurrent();
 	},
 	selectionToggleUnread: function(params) {
 		params = params || {};
@@ -1059,10 +1059,10 @@ const Headlines = {
 			return;
 		}
 
-		const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+		const fn = Feeds.getName(Feeds.getActive(), Feeds.activeIsCat());
 		let str;
 
-		if (Feeds.getActiveFeedId() != 0) {
+		if (Feeds.getActive() != 0) {
 			str = ngettext("Delete %d selected article in %s?", "Delete %d selected articles in %s?", rows.length);
 		} else {
 			str = ngettext("Delete %d selected article?", "Delete %d selected articles?", rows.length);
@@ -1079,7 +1079,7 @@ const Headlines = {
 
 		xhrPost("backend.php", query, (transport) => {
 			Utils.handleRpcJson(transport);
-			Feeds.viewCurrentFeed();
+			Feeds.reloadCurrent();
 		});
 	},
 	getSelected: function() {
@@ -1171,11 +1171,11 @@ const Headlines = {
 			return;
 		}
 
-		const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+		const fn = Feeds.getName(Feeds.getActive(), Feeds.activeIsCat());
 		let str;
 		let op;
 
-		if (Feeds.getActiveFeedId() != 0) {
+		if (Feeds.getActive() != 0) {
 			str = ngettext("Archive %d selected article in %s?", "Archive %d selected articles in %s?", rows.length);
 			op = "archive";
 		} else {
@@ -1200,7 +1200,7 @@ const Headlines = {
 
 		xhrPost("backend.php", query, (transport) => {
 			Utils.handleRpcJson(transport);
-			Feeds.viewCurrentFeed();
+			Feeds.reloadCurrent();
 		});
 	},
 	catchupSelection: function() {
@@ -1211,7 +1211,7 @@ const Headlines = {
 			return;
 		}
 
-		const fn = Feeds.getFeedName(Feeds.getActiveFeedId(), Feeds.activeFeedIsCat());
+		const fn = Feeds.getName(Feeds.getActive(), Feeds.activeIsCat());
 
 		let str = ngettext("Mark %d selected article in %s as read?", "Mark %d selected articles in %s as read?", rows.length);
 
@@ -1222,7 +1222,7 @@ const Headlines = {
 			return;
 		}
 
-		Headlines.selectionToggleUnread({callback: Feeds.viewCurrentFeed, no_error: 1});
+		Headlines.selectionToggleUnread({callback: Feeds.reloadCurrent, no_error: 1});
 	},
 	catchupBatched: function(callback) {
 		console.log("catchupBatched, size=", this.catchup_id_batch.length);

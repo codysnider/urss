@@ -68,23 +68,23 @@ const Feeds = {
 				continue;
 			}
 
-			/*if (this.getFeedUnread(id, (kind == "cat")) != ctr ||
+			/*if (this.getUnread(id, (kind == "cat")) != ctr ||
 					(kind == "cat")) {
 			}*/
 
-			this.setFeedUnread(id, (kind == "cat"), ctr);
-			this.setFeedValue(id, (kind == "cat"), 'auxcounter', auxctr);
+			this.setUnread(id, (kind == "cat"), ctr);
+			this.setValue(id, (kind == "cat"), 'auxcounter', auxctr);
 
 			if (kind != "cat") {
-				this.setFeedValue(id, false, 'error', error);
-				this.setFeedValue(id, false, 'updated', updated);
+				this.setValue(id, false, 'error', error);
+				this.setValue(id, false, 'updated', updated);
 
 				if (id > 0) {
 					if (has_img) {
-						this.setFeedIcon(id, false,
+						this.setIcon(id, false,
 							getInitParam("icons_url") + "/" + id + ".ico?" + has_img);
 					} else {
-						this.setFeedIcon(id, false, 'images/blank_icon.gif');
+						this.setIcon(id, false, 'images/blank_icon.gif');
 					}
 				}
 			}
@@ -93,20 +93,20 @@ const Feeds = {
 		this.hideOrShowFeeds(getInitParam("hide_read_feeds") == 1);
 		this._counters_prev = elems;
 	},
-	viewCurrentFeed: function(method) {
-		console.log("viewCurrentFeed: " + method);
+	reloadCurrent: function(method) {
+		console.log("reloadCurrent: " + method);
 
-		if (this.getActiveFeedId() != undefined) {
-			this.viewfeed({feed: this.getActiveFeedId(), is_cat: this.activeFeedIsCat(), method: method});
+		if (this.getActive() != undefined) {
+			this.open({feed: this.getActive(), is_cat: this.activeIsCat(), method: method});
 		}
 		return false; // block unneeded form submits
 	},
-	openNextUnreadFeed: function() {
-		const is_cat = this.activeFeedIsCat();
-		const nuf = this.getNextUnreadFeed(this.getActiveFeedId(), is_cat);
-		if (nuf) this.viewfeed({feed: nuf, is_cat: is_cat});
+	openNextUnread: function() {
+		const is_cat = this.activeIsCat();
+		const nuf = this.getNextUnread(this.getActive(), is_cat);
+		if (nuf) this.open({feed: nuf, is_cat: is_cat});
 	},
-	collapseFeedlist: function() {
+	toggle: function() {
 		Element.toggle("feeds-holder");
 
 		const splitter = $("feeds-holder_splitter");
@@ -117,7 +117,7 @@ const Feeds = {
 	},
 	cancelSearch: function() {
 		this._search_query = "";
-		this.viewCurrentFeed();
+		this.reloadCurrent();
 	},
 	requestCounters: function(force) {
 		const date = new Date();
@@ -173,7 +173,7 @@ const Feeds = {
 					const id = String(item.id);
 					const is_cat = id.match("^CAT:");
 					const feed = id.substr(id.indexOf(":") + 1);
-					Feeds.viewfeed({feed: feed, is_cat: is_cat});
+					Feeds.open({feed: feed, is_cat: is_cat});
 					return false;
 				},
 				openOnClick: false,
@@ -214,10 +214,10 @@ const Feeds = {
 		document.onkeydown = () => { App.hotkeyHandler(event) };
 		window.setInterval(() => { Headlines.catchupBatched() }, 10 * 1000);
 
-		if (!this.getActiveFeedId()) {
-			this.viewfeed({feed: -3});
+		if (!this.getActive()) {
+			this.open({feed: -3});
 		} else {
-			this.viewfeed({feed: this.getActiveFeedId(), is_cat: this.activeFeedIsCat()});
+			this.open({feed: this.getActive(), is_cat: this.activeIsCat()});
 		}
 
 		this.hideOrShowFeeds(getInitParam("hide_read_feeds") == 1);
@@ -254,13 +254,13 @@ const Feeds = {
 			}, 250);
 		}
 	},
-	activeFeedIsCat: function() {
+	activeIsCat: function() {
 		return !!this._active_feed_is_cat;
 	},
-	getActiveFeedId: function() {
+	getActive: function() {
 		return this._active_feed_id;
 	},
-	setActiveFeedId: function(id, is_cat) {
+	setActive: function(id, is_cat) {
 		hash_set('f', id);
 		hash_set('c', is_cat ? 1 : 0);
 
@@ -270,16 +270,16 @@ const Feeds = {
 		$("headlines-frame").setAttribute("feed-id", id);
 		$("headlines-frame").setAttribute("is-cat", is_cat ? 1 : 0);
 
-		this.selectFeed(id, is_cat);
+		this.select(id, is_cat);
 
 		PluginHost.run(PluginHost.HOOK_FEED_SET_ACTIVE, [this._active_feed_id, this._active_feed_is_cat]);
 	},
-	selectFeed: function(feed, is_cat) {
+	select: function(feed, is_cat) {
 		const tree = dijit.byId("feedTree");
 
 		if (tree) return tree.selectFeed(feed, is_cat);
 	},
-	toggleDispRead: function() {
+	toggleUnread: function() {
 		const hide = !(getInitParam("hide_read_feeds") == "1");
 
 		xhrPost("backend.php", {op: "rpc", method: "setpref", key: "HIDE_READ_FEEDS", value: hide}, () => {
@@ -293,7 +293,7 @@ const Feeds = {
 		if (tree)
 			return tree.hideRead(hide, getInitParam("hide_read_shows_special"));
 	},
-	viewfeed: function(params) {
+	open: function(params) {
 		const feed = params.feed;
 		const is_cat = !!params.is_cat || false;
 		const offset = params.offset || 0;
@@ -302,7 +302,7 @@ const Feeds = {
 		// this is used to quickly switch between feeds, sets active but xhr is on a timeout
 		const delayed = params.delayed || false;
 
-		if (feed != this.getActiveFeedId() || this.activeFeedIsCat() != is_cat) {
+		if (feed != this.getActive() || this.activeIsCat() != is_cat) {
 			this._search_query = false;
 			Article.setActive(0);
 		}
@@ -347,20 +347,20 @@ const Feeds = {
 			if (Headlines.vgroup_last_feed != undefined) {
 				query.vgrlf = Headlines.vgroup_last_feed;
 			}
-		} else if (!is_cat && feed == this.getActiveFeedId() && !params.method) {
+		} else if (!is_cat && feed == this.getActive() && !params.method) {
 			query.m = "ForceUpdate";
 		}
 
 		Form.enable("main_toolbar_form");
 
 		if (!delayed)
-			if (!this.setFeedExpandoIcon(feed, is_cat,
+			if (!this.setExpando(feed, is_cat,
 				(is_cat) ? 'images/indicator_tiny.gif' : 'images/indicator_white.gif'))
 				notify_progress("Loading, please wait...", true);
 
 		query.cat = is_cat;
 
-		this.setActiveFeedId(feed, is_cat);
+		this.setActive(feed, is_cat);
 
 		if (viewfeed_debug) {
 			window.open("backend.php?" +
@@ -375,7 +375,7 @@ const Feeds = {
 				xhrPost("backend.php", query, (transport) => {
 					try {
 						window.clearTimeout(this._infscroll_timeout);
-						this.setFeedExpandoIcon(feed, is_cat, 'images/blank_icon.gif');
+						this.setExpando(feed, is_cat, 'images/blank_icon.gif');
 						Headlines.onLoaded(transport, offset);
 						PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
 					} catch (e) {
@@ -385,7 +385,7 @@ const Feeds = {
 			});
 		}, delayed ? 250 : 0);
 	},
-	catchupAllFeeds: function() {
+	catchupAll: function() {
 		const str = __("Mark all articles as read?");
 
 		if (getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
@@ -394,7 +394,7 @@ const Feeds = {
 
 			xhrPost("backend.php", {op: "feeds", method: "catchupAll"}, () => {
 				this.requestCounters(true);
-				this.viewCurrentFeed();
+				this.reloadCurrent();
 			});
 
 			App.global_unread = 0;
@@ -402,21 +402,21 @@ const Feeds = {
 		}
 	},
 	decrementFeedCounter: function(feed, is_cat) {
-		let ctr = this.getFeedUnread(feed, is_cat);
+		let ctr = this.getUnread(feed, is_cat);
 
 		if (ctr > 0) {
-			this.setFeedUnread(feed, is_cat, ctr - 1);
+			this.setUnread(feed, is_cat, ctr - 1);
 			App.global_unread -= 1;
 			App.updateTitle();
 
 			if (!is_cat) {
-				const cat = parseInt(this.getFeedCategory(feed));
+				const cat = parseInt(this.getCategory(feed));
 
 				if (!isNaN(cat)) {
-					ctr = this.getFeedUnread(cat, true);
+					ctr = this.getUnread(cat, true);
 
 					if (ctr > 0) {
-						this.setFeedUnread(cat, true, ctr - 1);
+						this.setUnread(cat, true, ctr - 1);
 					}
 				}
 			}
@@ -442,7 +442,7 @@ const Feeds = {
 		}
 
 		const mark_what = this.last_search_query && this.last_search_query[0] ? __("search results") : __("all articles");
-		const fn = this.getFeedName(feed, is_cat);
+		const fn = this.getName(feed, is_cat);
 
 		str = str.replace("%s", fn)
 			.replace("%w", mark_what);
@@ -465,23 +465,23 @@ const Feeds = {
 			const show_next_feed = getInitParam("on_catchup_show_next_feed") == "1";
 
 			if (show_next_feed) {
-				const nuf = this.getNextUnreadFeed(feed, is_cat);
+				const nuf = this.getNextUnread(feed, is_cat);
 
 				if (nuf) {
-					this.viewfeed({feed: nuf, is_cat: is_cat});
+					this.open({feed: nuf, is_cat: is_cat});
 				}
-			} else if (feed == this.getActiveFeedId() && is_cat == this.activeFeedIsCat()) {
-				this.viewCurrentFeed();
+			} else if (feed == this.getActive() && is_cat == this.activeIsCat()) {
+				this.reloadCurrent();
 			}
 
 			notify("");
 		});
 	},
-	catchupCurrentFeed: function(mode) {
-		this.catchupFeed(this.getActiveFeedId(), this.activeFeedIsCat(), mode);
+	catchupCurrent: function(mode) {
+		this.catchupFeed(this.getActive(), this.activeIsCat(), mode);
 	},
 	catchupFeedInGroup: function(id) {
-		const title = this.getFeedName(id);
+		const title = this.getName(id);
 
 		const str = __("Mark all articles in %s as read?").replace("%s", title);
 
@@ -523,7 +523,7 @@ const Feeds = {
 			});
 		}
 	},
-	getFeedUnread: function(feed, is_cat) {
+	getUnread: function(feed, is_cat) {
 		try {
 			const tree = dijit.byId("feedTree");
 
@@ -536,7 +536,7 @@ const Feeds = {
 
 		return -1;
 	},
-	getFeedCategory: function(feed) {
+	getCategory: function(feed) {
 		try {
 			const tree = dijit.byId("feedTree");
 
@@ -549,7 +549,7 @@ const Feeds = {
 
 		return false;
 	},
-	getFeedName: function(feed, is_cat) {
+	getName: function(feed, is_cat) {
 		if (isNaN(feed)) return feed; // it's a tag
 
 		const tree = dijit.byId("feedTree");
@@ -557,13 +557,13 @@ const Feeds = {
 		if (tree && tree.model)
 			return tree.model.getFeedValue(feed, is_cat, 'name');
 	},
-	setFeedUnread: function(feed, is_cat, unread) {
+	setUnread: function(feed, is_cat, unread) {
 		const tree = dijit.byId("feedTree");
 
 		if (tree && tree.model)
 			return tree.model.setFeedUnread(feed, is_cat, unread);
 	},
-	setFeedValue: function(feed, is_cat, key, value) {
+	setValue: function(feed, is_cat, key, value) {
 		try {
 			const tree = dijit.byId("feedTree");
 
@@ -574,7 +574,7 @@ const Feeds = {
 			//
 		}
 	},
-	getFeedValue: function(feed, is_cat, key) {
+	getValue: function(feed, is_cat, key) {
 		try {
 			const tree = dijit.byId("feedTree");
 
@@ -586,19 +586,19 @@ const Feeds = {
 		}
 		return '';
 	},
-	setFeedIcon: function(feed, is_cat, src) {
+	setIcon: function(feed, is_cat, src) {
 		const tree = dijit.byId("feedTree");
 
 		if (tree) return tree.setFeedIcon(feed, is_cat, src);
 	},
-	setFeedExpandoIcon: function(feed, is_cat, src) {
+	setExpando: function(feed, is_cat, src) {
 		const tree = dijit.byId("feedTree");
 
 		if (tree) return tree.setFeedExpandoIcon(feed, is_cat, src);
 
 		return false;
 	},
-	getNextUnreadFeed: function(feed, is_cat) {
+	getNextUnread: function(feed, is_cat) {
 		const tree = dijit.byId("feedTree");
 		const nuf = tree.model.getNextUnreadFeed(feed, is_cat);
 
@@ -607,7 +607,7 @@ const Feeds = {
 	},
 	search: function() {
 		const query = "backend.php?op=feeds&method=search&param=" +
-			param_escape(Feeds.getActiveFeedId() + ":" + Feeds.activeFeedIsCat());
+			param_escape(Feeds.getActive() + ":" + Feeds.activeIsCat());
 
 		if (dijit.byId("searchDlg"))
 			dijit.byId("searchDlg").destroyRecursive();
@@ -620,7 +620,7 @@ const Feeds = {
 				if (this.validate()) {
 					Feeds._search_query = this.attr('value');
 					this.hide();
-					Feeds.viewCurrentFeed();
+					Feeds.reloadCurrent();
 				}
 			},
 			href: query
@@ -628,10 +628,10 @@ const Feeds = {
 
 		dialog.show();
 	},
-	updateRandomFeed: function() {
+	updateRandom: function() {
 		console.log("in update_random_feed");
 
-		xhrPost("backend.php", {op: "rpc", method: "updateRandomFeed"}, (transport) => {
+		xhrPost("backend.php", {op: "rpc", method: "updateRandom"}, (transport) => {
 			Utils.handleRpcJson(transport, true);
 		});
 	},

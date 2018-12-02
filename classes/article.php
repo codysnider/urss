@@ -877,7 +877,7 @@ class Article extends Handler_Protected {
 			$tags_str = "";
 
 			for ($i = 0; $i < $maxtags; $i++) {
-				$tags_str .= "<a class=\"tag\" href=\"#\" onclick=\"Feeds.viewfeed({feed:'".$tags[$i]."'})\">" . $tags[$i] . "</a>, ";
+				$tags_str .= "<a class=\"tag\" href=\"#\" onclick=\"Feeds.open({feed:'".$tags[$i]."'})\">" . $tags[$i] . "</a>, ";
 			}
 
 			$tags_str = mb_substr($tags_str, 0, mb_strlen($tags_str)-2);

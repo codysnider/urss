@@ -699,9 +699,9 @@ const CommonDialogs = {
 				if (App.isPrefs()) {
 					Feeds.reload();
 				} else {
-					if (feed_id == Feeds.getActiveFeedId())
+					if (feed_id == Feeds.getActive())
 						setTimeout(() => {
-								Feeds.viewfeed({feed: -5})
+								Feeds.open({feed: -5})
 							},
 							100);
 
@@ -1351,7 +1351,7 @@ const Filters = {
 		if (!App.isPrefs()) {
 			query = {
 				op: "pref-filters", method: "newfilter",
-				feed: Feeds.getActiveFeedId(), is_cat: Feeds.activeFeedIsCat()
+				feed: Feeds.getActive(), is_cat: Feeds.activeIsCat()
 			};
 		} else {
 			query = {op: "pref-filters", method: "newfilter"};
@@ -1445,8 +1445,8 @@ const Filters = {
 
 				if (selectedText != "") {
 
-					const feed_id = Feeds.activeFeedIsCat() ? 'CAT:' + parseInt(Feeds.getActiveFeedId()) :
-						Feeds.getActiveFeedId();
+					const feed_id = Feeds.activeIsCat() ? 'CAT:' + parseInt(Feeds.getActive()) :
+						Feeds.getActive();
 
 					const rule = {reg_exp: selectedText, feed_id: [feed_id], filter_type: 1};
 
@@ -1463,12 +1463,12 @@ const Filters = {
 
 						if (reply && reply.title) title = reply.title;
 
-						if (title || Feeds.getActiveFeedId() || Feeds.activeFeedIsCat()) {
+						if (title || Feeds.getActive() || Feeds.activeIsCat()) {
 
-							console.log(title + " " + Feeds.getActiveFeedId());
+							console.log(title + " " + Feeds.getActive());
 
-							const feed_id = Feeds.activeFeedIsCat() ? 'CAT:' + parseInt(Feeds.getActiveFeedId()) :
-								Feeds.getActiveFeedId();
+							const feed_id = Feeds.activeIsCat() ? 'CAT:' + parseInt(Feeds.getActive()) :
+								Feeds.getActive();
 
 							const rule = {reg_exp: title, feed_id: [feed_id], filter_type: 1};
 
