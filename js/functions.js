@@ -53,6 +53,15 @@ Array.prototype.remove = function(s) {
 	}
 };
 
+const ListUtils = {
+	onChecked: function(elem) {
+		// account for dojo checkboxes
+		elem = elem.domNode || elem;
+
+		elem.up("li").toggleClassName("Selected");
+	}
+};
+
 const Utils = {
 	_rpc_seq: 0,
 	hotkey_prefix: 0,
@@ -985,12 +994,6 @@ function toggleSelectRowById(sender, id) {
 }
 
 /* this is for dijit Checkbox */
-function toggleSelectListRow2(sender) {
-	const row = sender.domNode.parentNode;
-	return toggleSelectRow(sender, row);
-}
-
-/* this is for dijit Checkbox */
 function toggleSelectRow2(sender, row, is_cdm) {
 
 	if (!row)
@@ -1137,7 +1140,7 @@ const Filters = {
 
 				new dijit.form.CheckBox({
 					onChange: function () {
-						this.domNode.up("li").toggleClassName("Selected");
+						ListUtils.onChecked(this);
 					},
 				}, cb);
 
@@ -1186,7 +1189,7 @@ const Filters = {
 
 				new dijit.form.CheckBox({
 					onChange: function () {
-						this.domNode.up("li").toggleClassName("Selected");
+						ListUtils.onChecked(this);
 					},
 				}, cb);
 
