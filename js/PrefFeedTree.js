@@ -82,6 +82,15 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 		getIconClass: function (item, opened) {
 			return (!item || this.model.store.getValue(item, 'type') == 'category') ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "feedIcon";
 		},
+		reload: function() {
+			const searchElem = $("feed_search");
+			let search = (searchElem) ? searchElem.value : "";
+
+			xhrPost("backend.php", { op: "pref-feeds", search: search }, (transport) => {
+				dijit.byId('feedConfigTab').attr('content', transport.responseText);
+				notify("");
+			});
+		},
 		checkItemAcceptance: function(target, source, position) {
 			const item = dijit.getEnclosingWidget(target).item;
 
@@ -113,14 +122,14 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			notify_progress("Loading, please wait...");
 
 			xhrPost("backend.php", {op: "pref-feeds", method: "feedsortreset"}, () => {
-				updateFeedList();
+				this.reload();
 			});
 		},
 		resetCatOrder: function() {
 			notify_progress("Loading, please wait...");
 
 			xhrPost("backend.php", {op: "pref-feeds", method: "catsortreset"}, () => {
-				updateFeedList();
+				this.reload();
 			});
 		},
 		removeCategory: function(id, item) {
@@ -129,7 +138,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 				xhrPost("backend.php", {op: "pref-feeds", method: "removeCat", ids: id}, () => {
 					notify('');
-					updateFeedList();
+					this.reload();
 				});
 			}
 		},
@@ -147,7 +156,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 					};
 
 					xhrPost("backend.php", query, () => {
-						updateFeedList();
+						this.reload();
 					});
 				}
 
@@ -189,7 +198,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 					};
 
 					xhrPost("backend.php", query, () => {
-						updateFeedList();
+						this.reload();
 					});
 				}
 			} else {
@@ -284,7 +293,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 							xhrPost("backend.php", query, () => {
 								dialog.hide();
-								updateFeedList();
+								dijit.byId("feedTree").reload();
 							});
 						}
 					},
@@ -306,7 +315,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				notify_progress("Loading, please wait...");
 
 				xhrPost("backend.php", { op: 'pref-feeds', method: 'renamecat', id: id, title: new_name }, () => {
-					updateFeedList();
+					this.reload();
 				});
 			}
 		},
@@ -318,7 +327,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 				xhrPost("backend.php", {op: "pref-feeds", method: "addCat", cat: title}, () => {
 					notify('');
-					updateFeedList();
+					this.reload();
 				});
 			}
 		},
@@ -339,7 +348,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 						xhrPost("backend.php", this.attr('value'), () => {
 							notify("");
-							updateFeedList();
+							dijit.byId("feedTree").reload();
 							dialog.hide();
 						});
 					}
@@ -376,8 +385,8 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 							xhrPost("backend.php", query, () => {
 								notify('');
+								dijit.byId("feedTree").reload();
 								dialog.hide();
-								updateFeedList();
 							});
 						}
 

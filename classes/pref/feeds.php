@@ -1174,7 +1174,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div style='float : right; padding-right : 4px;'>
 			<input dojoType=\"dijit.form.TextBox\" id=\"feed_search\" size=\"20\" type=\"search\"
 				value=\"$feed_search\">
-			<button dojoType=\"dijit.form.Button\" onclick=\"Feeds.reload()\">".
+			<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('feedTree').reload()\">".
 				__('Search')."</button>
 			</div>";
 
@@ -1326,7 +1326,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Utils.displayDlg('".__("Show as feed")."','generatedFeed', '$rss_url')\">".
 			__('Display URL')."</button> ";
 
-		print "<button class=\"warning\" dojoType=\"dijit.form.Button\" onclick=\"return clearFeedAccessKeys()\">".
+		print "<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Prefs.clearFeedAccessKeys()\">".
 			__('Clear all generated URLs')."</button> ";
 
 		print "</p>";

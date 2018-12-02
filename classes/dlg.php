@@ -166,7 +166,9 @@ class Dlg extends Handler_Protected {
 
 		$url_path = htmlspecialchars($this->params[2]) . "&key=" . $key;
 
-		print "<h2>".__("You can view this feed as RSS using the following URL:")."</h2>";
+		$feed_title = Feeds::getFeedTitle($feed_id, $is_cat);
+
+		print "<div>".T_sprintf("%s can be accessed via the following secret URL:", $feed_title)."</div>";
 
 		print "<div class=\"tagCloudContainer\">";
 		print "<a id='gen_feed_url' href='$url_path' target='_blank'>$url_path</a>";

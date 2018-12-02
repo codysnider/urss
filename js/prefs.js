@@ -132,6 +132,17 @@ const App = {
 };
 
 const Prefs = {
+	clearFeedAccessKeys: function() {
+		if (confirm(__("This will invalidate all previously generated feed URLs. Continue?"))) {
+			notify_progress("Clearing URLs...");
+
+			xhrPost("backend.php", {op: "pref-feeds", method: "clearKeys"}, () => {
+				notify_info("Generated URLs cleared.");
+			});
+		}
+
+		return false;
+	},
 	clearEventLog: function() {
 		if (confirm(__("Clear event log?"))) {
 
@@ -264,187 +275,120 @@ const Prefs = {
 	}
 };
 
-function notify_callback2(transport, sticky) {
-	notify_info(transport.responseText, sticky);
-}
+const Users = {
+	reload: function(sort) {
+		const user_search = $("user_search");
+		const search = user_search ? user_search.value : "";
 
-function updateFeedList() {
+		xhrPost("backend.php", { op: "pref-users", sort: sort, search: search }, (transport) => {
+			dijit.byId('userConfigTab').attr('content', transport.responseText);
+			notify("");
+		});
+	},
+	add: function() {
+		const login = prompt(__("Please enter username:"), "");
 
-	const user_search = $("feed_search");
-	let search = "";
-	if (user_search) { search = user_search.value; }
+		if (login) {
+			notify_progress("Adding user...");
 
-	xhrPost("backend.php", { op: "pref-feeds", search: search }, (transport) => {
-		dijit.byId('feedConfigTab').attr('content', transport.responseText);
-		notify("");
-	});
-}
-
-function updateUsersList(sort_key) {
-	const user_search = $("user_search");
-	const search = user_search ? user_search.value : "";
-
-	const query = { op: "pref-users", sort:  sort_key, search: search };
-
-	xhrPost("backend.php", query, (transport) => {
-		dijit.byId('userConfigTab').attr('content', transport.responseText);
-		notify("");
-	});
-}
-
-function addUser() {
-	const login = prompt(__("Please enter login:"), "");
-
-	if (login == null) {
-		return false;
-	}
-
-	if (login == "") {
-		alert(__("Can't create user: no login specified."));
-		return false;
-	}
-
-	notify_progress("Adding user...");
-
-	xhrPost("backend.php", { op: "pref-users", method: "add", login: login }, (transport) => {
-		notify_callback2(transport);
-		updateUsersList();
-	});
-
-}
-
-function editUser(id) {
-
-	const query = "backend.php?op=pref-users&method=edit&id=" +
-		param_escape(id);
-
-	if (dijit.byId("userEditDlg"))
-		dijit.byId("userEditDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "userEditDlg",
-		title: __("User Editor"),
-		style: "width: 600px",
-		execute: function () {
-			if (this.validate()) {
-				notify_progress("Saving data...", true);
-
-				xhrPost("backend.php", dojo.formToObject("user_edit_form"), (transport) => {
-					dialog.hide();
-					updateUsersList();
-				});
-			}
-		},
-		href: query
-	});
-
-	dialog.show();
-}
-
-function getSelectedUsers() {
-	return Tables.getSelected("prefUserList");
-}
-
-
-function removeSelectedUsers() {
-
-	const sel_rows = getSelectedUsers();
-
-	if (sel_rows.length > 0) {
-
-		if (confirm(__("Remove selected users? Neither default admin nor your account will be removed."))) {
-			notify_progress("Removing selected users...");
-
-			const query = { op: "pref-users", method: "remove",
-				ids: sel_rows.toString() };
-
-			xhrPost("backend.php", query, () => {
-				updateUsersList();
+			xhrPost("backend.php", {op: "pref-users", method: "add", login: login}, (transport) => {
+				alert(transport.responseText);
+				Users.reload();
 			});
+
 		}
+	},
+	edit: function(id) {
+		const query = "backend.php?op=pref-users&method=edit&id=" +
+			param_escape(id);
 
-	} else {
-		alert(__("No users are selected."));
-	}
+		if (dijit.byId("userEditDlg"))
+			dijit.byId("userEditDlg").destroyRecursive();
 
-	return false;
-}
+		const dialog = new dijit.Dialog({
+			id: "userEditDlg",
+			title: __("User Editor"),
+			style: "width: 600px",
+			execute: function () {
+				if (this.validate()) {
+					notify_progress("Saving data...", true);
 
-function editSelectedUser() {
-	const rows = getSelectedUsers();
-
-	if (rows.length == 0) {
-		alert(__("No users are selected."));
-		return;
-	}
-
-	if (rows.length > 1) {
-		alert(__("Please select only one user."));
-		return;
-	}
-
-	notify("");
-
-	editUser(rows[0]);
-}
-
-function resetSelectedUserPass() {
-
-	const rows = getSelectedUsers();
-
-	if (rows.length == 0) {
-		alert(__("No users are selected."));
-		return;
-	}
-
-	if (rows.length > 1) {
-		alert(__("Please select only one user."));
-		return;
-	}
-
-	if (confirm(__("Reset password of selected user?"))) {
-		notify_progress("Resetting password for selected user...");
-
-		const id = rows[0];
-
-		xhrPost("backend.php", { op: "pref-users", method: "resetPass", id: id }, (transport) => {
-			notify_info(transport.responseText, true);
+					xhrPost("backend.php", dojo.formToObject("user_edit_form"), (transport) => {
+						dialog.hide();
+						Users.reload();
+					});
+				}
+			},
+			href: query
 		});
 
+		dialog.show();
+	},
+	resetSelected: function() {
+		const rows = this.getSelection();
+
+		if (rows.length == 0) {
+			alert(__("No users are selected."));
+			return;
+		}
+
+		if (rows.length > 1) {
+			alert(__("Please select one user."));
+			return;
+		}
+
+		if (confirm(__("Reset password of selected user?"))) {
+			notify_progress("Resetting password for selected user...");
+
+			const id = rows[0];
+
+			xhrPost("backend.php", {op: "pref-users", method: "resetPass", id: id}, (transport) => {
+				notify('');
+				alert(transport.responseText);
+			});
+
+		}
+	},
+	removeSelected: function() {
+		const sel_rows = this.getSelection();
+
+		if (sel_rows.length > 0) {
+			if (confirm(__("Remove selected users? Neither default admin nor your account will be removed."))) {
+				notify_progress("Removing selected users...");
+
+				const query = {
+					op: "pref-users", method: "remove",
+					ids: sel_rows.toString()
+				};
+
+				xhrPost("backend.php", query, () => {
+					this.reload();
+				});
+			}
+
+		} else {
+			alert(__("No users are selected."));
+		}
+	},
+	editSelected: function() {
+		const rows = this.getSelection();
+
+		if (rows.length == 0) {
+			alert(__("No users are selected."));
+			return;
+		}
+
+		if (rows.length > 1) {
+			alert(__("Please select one user."));
+			return;
+		}
+
+		this.edit(rows[0]);
+	},
+	getSelection :function() {
+		return Tables.getSelected("prefUserList");
 	}
-}
-
-function selectedUserDetails() {
-
-	const rows = getSelectedUsers();
-
-	if (rows.length == 0) {
-		alert(__("No users are selected."));
-		return;
-	}
-
-	if (rows.length > 1) {
-		alert(__("Please select only one user."));
-		return;
-	}
-
-	const query = "backend.php?op=pref-users&method=userdetails&id=" + param_escape(rows[0]);
-
-	if (dijit.byId("userDetailsDlg"))
-		dijit.byId("userDetailsDlg").destroyRecursive();
-
-	const dialog = new dijit.Dialog({
-		id: "userDetailsDlg",
-		title: __("User details"),
-		style: "width: 600px",
-		execute: function () {
-			dialog.hide();
-		},
-		href: query
-	});
-
-	dialog.show();
-}
+};
 
 function opmlImportComplete(iframe) {
 	if (!iframe.contentDocument.body.innerHTML) return false;
@@ -538,19 +482,6 @@ function opmlRegenKey() {
 			}
 		});
 	}
-	return false;
-}
-
-function clearFeedAccessKeys() {
-
-	if (confirm(__("This will invalidate all previously generated feed URLs. Continue?"))) {
-		notify_progress("Clearing URLs...");
-
-		xhrPost("backend.php", { op: "pref-feeds", method: "clearKeys" }, () => {
-			notify_info("Generated URLs cleared.");
-		});
-	}
-
 	return false;
 }
 
