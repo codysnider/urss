@@ -1109,7 +1109,7 @@ const Headlines = {
 
 		return rv;
 	},
-	selectArticles: function(mode) {
+	select: function(mode) {
 		// mode = all,none,unread,invert,marked,published
 		let query = "#headlines-frame > div[id*=RROW]";
 
@@ -1128,7 +1128,7 @@ const Headlines = {
 				query += "[class*=Unread]";
 				break;
 			default:
-				console.warn("selectArticles: unknown mode", mode);
+				console.warn("select: unknown mode", mode);
 		}
 
 		const rows = $$(query);
@@ -1522,7 +1522,7 @@ const Headlines = {
 			menu.addChild(new dijit.MenuItem({
 				label: __("Select articles in group"),
 				onClick: function (event) {
-					Headlines.selectArticles("all",
+					Headlines.select("all",
 						"#headlines-frame > div[id*=RROW]" +
 						"[data-orig-feed-id='" + this.getParent().currentTarget.getAttribute("data-feed-id") + "']");
 
@@ -1532,8 +1532,8 @@ const Headlines = {
 			menu.addChild(new dijit.MenuItem({
 				label: __("Mark group as read"),
 				onClick: function () {
-					Headlines.selectArticles("none");
-					Headlines.selectArticles("all",
+					Headlines.select("none");
+					Headlines.select("all",
 						"#headlines-frame > div[id*=RROW]" +
 						"[data-orig-feed-id='" + this.getParent().currentTarget.getAttribute("data-feed-id") + "']");
 

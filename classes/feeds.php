@@ -20,10 +20,10 @@ class Feeds extends Handler_Protected {
 		$archive_sel_link = "Headlines.archiveSelection()";
 		$delete_sel_link = "Headlines.deleteSelection()";
 
-		$sel_all_link = "Headlines.selectArticles('all')";
-		$sel_unread_link = "Headlines.selectArticles('unread')";
-		$sel_none_link = "Headlines.selectArticles('none')";
-		$sel_inv_link = "Headlines.selectArticles('invert')";
+		$sel_all_link = "Headlines.select('all')";
+		$sel_unread_link = "Headlines.select('unread')";
+		$sel_none_link = "Headlines.select('none')";
+		$sel_inv_link = "Headlines.select('invert')";
 
 		$tog_unread_link = "Headlines.selectionToggleUnread()";
 		$tog_marked_link = "Headlines.selectionToggleMarked()";

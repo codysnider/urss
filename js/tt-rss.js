@@ -315,22 +315,22 @@ const App = {
 			}
 		};
 		this.hotkey_actions["select_all"] = function () {
-			Headlines.selectArticles('all');
+			Headlines.select('all');
 		};
 		this.hotkey_actions["select_unread"] = function () {
-			Headlines.selectArticles('unread');
+			Headlines.select('unread');
 		};
 		this.hotkey_actions["select_marked"] = function () {
-			Headlines.selectArticles('marked');
+			Headlines.select('marked');
 		};
 		this.hotkey_actions["select_published"] = function () {
-			Headlines.selectArticles('published');
+			Headlines.select('published');
 		};
 		this.hotkey_actions["select_invert"] = function () {
-			Headlines.selectArticles('invert');
+			Headlines.select('invert');
 		};
 		this.hotkey_actions["select_none"] = function () {
-			Headlines.selectArticles('none');
+			Headlines.select('none');
 		};
 		this.hotkey_actions["feed_refresh"] = function () {
 			if (Feeds.getActiveFeedId() != undefined) {
