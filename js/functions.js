@@ -589,7 +589,7 @@ const CommonDialogs = {
 					}
 
 				} else {
-					alert(__("No feeds are selected."));
+					alert(__("No feeds selected."));
 				}
 			},
 			execute: function () {
@@ -670,7 +670,7 @@ const CommonDialogs = {
 					});
 
 				} else {
-					alert(__("No feeds are selected."));
+					alert(__("No feeds selected."));
 				}
 
 			},

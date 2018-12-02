@@ -194,7 +194,7 @@ const Prefs = {
 					}
 
 				} else {
-					alert(__("No profiles are selected."));
+					alert(__("No profiles selected."));
 				}
 			},
 			activateProfile: function () {
@@ -337,7 +337,7 @@ const Users = {
 		const rows = this.getSelection();
 
 		if (rows.length == 0) {
-			alert(__("No users are selected."));
+			alert(__("No users selected."));
 			return;
 		}
 
@@ -376,14 +376,14 @@ const Users = {
 			}
 
 		} else {
-			alert(__("No users are selected."));
+			alert(__("No users selected."));
 		}
 	},
 	editSelected: function() {
 		const rows = this.getSelection();
 
 		if (rows.length == 0) {
-			alert(__("No users are selected."));
+			alert(__("No users selected."));
 			return;
 		}
 

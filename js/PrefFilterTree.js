@@ -107,7 +107,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			const rows = getSelectedFilters();
 
 			if (rows.length == 0) {
-				alert(__("No filters are selected."));
+				alert(__("No filters selected."));
 				return;
 			}
 
@@ -123,7 +123,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			const rows = this.getSelectedFilters();
 
 			if (rows.length == 0) {
-				alert(__("No filters are selected."));
+				alert(__("No filters selected."));
 				return;
 			}
 
@@ -250,7 +250,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 					});
 				}
 			} else {
-				alert(__("No filters are selected."));
+				alert(__("No filters selected."));
 			}
 
 			return false;

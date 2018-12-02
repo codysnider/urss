@@ -134,7 +134,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 				}
 
 			} else {
-				alert(__("No labels are selected."));
+				alert(__("No labels selected."));
 			}
 		},
 		removeSelected: function() {
@@ -154,7 +154,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 					});
 				}
 			} else {
-				alert(__("No labels are selected."));
+				alert(__("No labels selected."));
 			}
 
 			return false;

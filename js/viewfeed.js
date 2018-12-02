@@ -60,7 +60,7 @@ const Article = {
 			}
 
 		} else {
-			alert(__("No articles are selected."));
+			alert(__("No articles selected."));
 		}
 	},
 	setScore: function(id, pic) {
@@ -765,7 +765,7 @@ const Headlines = {
 
 		if (ids.length == 0) {
 			if (!no_error)
-				alert(__("No articles are selected."));
+				alert(__("No articles selected."));
 
 			return;
 		}
@@ -803,7 +803,7 @@ const Headlines = {
 		const rows = ids || Headlines.getSelected();
 
 		if (rows.length == 0) {
-			alert(__("No articles are selected."));
+			alert(__("No articles selected."));
 			return;
 		}
 
@@ -824,7 +824,7 @@ const Headlines = {
 		const rows = ids || Headlines.getSelected();
 
 		if (rows.length == 0) {
-			alert(__("No articles are selected."));
+			alert(__("No articles selected."));
 			return;
 		}
 
@@ -1019,7 +1019,7 @@ const Headlines = {
 		if (!ids) ids = Headlines.getSelected();
 
 		if (ids.length == 0) {
-			alert(__("No articles are selected."));
+			alert(__("No articles selected."));
 			return;
 		}
 
@@ -1037,7 +1037,7 @@ const Headlines = {
 		if (!ids) ids = Headlines.getSelected();
 
 		if (ids.length == 0) {
-			alert(__("No articles are selected."));
+			alert(__("No articles selected."));
 			return;
 		}
 
@@ -1055,7 +1055,7 @@ const Headlines = {
 		const rows = Headlines.getSelected();
 
 		if (rows.length == 0) {
-			alert(__("No articles are selected."));
+			alert(__("No articles selected."));
 			return;
 		}
 
@@ -1175,7 +1175,7 @@ const Headlines = {
 		const rows = Headlines.getSelected();
 
 		if (rows.length == 0) {
-			alert(__("No articles are selected."));
+			alert(__("No articles selected."));
 			return;
 		}
 
@@ -1215,7 +1215,7 @@ const Headlines = {
 		const rows = Headlines.getSelected();
 
 		if (rows.length == 0) {
-			alert(__("No articles are selected."));
+			alert(__("No articles selected."));
 			return;
 		}
 

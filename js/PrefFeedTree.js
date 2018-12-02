@@ -161,7 +161,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				}
 
 			} else {
-				alert(__("No feeds are selected."));
+				alert(__("No feeds selected."));
 			}
 
 			return false;
@@ -202,7 +202,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 					});
 				}
 			} else {
-				alert(__("No categories are selected."));
+				alert(__("No categories selected."));
 			}
 
 			return false;
@@ -223,7 +223,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			const rows = this.getSelectedFeeds();
 
 			if (rows.length == 0) {
-				alert(__("No feeds are selected."));
+				alert(__("No feeds selected."));
 				return;
 			}
 
@@ -239,7 +239,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			const rows = this.getSelectedFeeds();
 
 			if (rows.length == 0) {
-				alert(__("No feeds are selected."));
+				alert(__("No feeds selected."));
 				return;
 			}
 
@@ -391,7 +391,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 						}
 
 					} else {
-						alert(__("No feeds are selected."));
+						alert(__("No feeds selected."));
 					}
 				},
 				execute: function () {
