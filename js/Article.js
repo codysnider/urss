@@ -176,7 +176,7 @@ define(["dojo/_base/declare"], function (declare) {
 			return false;
 		},
 		editTags: function(id) {
-			const query = "backend.php?op=article&method=editArticleTags&param=" + param_escape(id);
+			const query = "backend.php?op=article&method=editArticleTags&param=" + encodeURIComponent(id);
 
 			if (dijit.byId("editTagsDlg"))
 				dijit.byId("editTagsDlg").destroyRecursive();

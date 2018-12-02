@@ -52,7 +52,7 @@ class Dlg extends Handler_Protected {
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return opmlRegenKey()\">".
 			__('Generate new URL')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return closeInfoBox()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.closeInfoBox()\">".
 			__('Close this window')."</button>";
 
 		print "</div>";
@@ -85,7 +85,7 @@ class Dlg extends Handler_Protected {
 
 		print "<div align='center'>";
 
-		print "<button onclick=\"return closeInfoBox()\">".
+		print "<button onclick=\"return CommonDialogs.closeInfoBox()\">".
 			__('Close this window')."</button>";
 
 		print "</div>";
@@ -150,7 +150,7 @@ class Dlg extends Handler_Protected {
 
 		print "<div align='center'>";
 		print "<button dojoType=\"dijit.form.Button\"
-			onclick=\"return closeInfoBox()\">".
+			onclick=\"return CommonDialogs.closeInfoBox()\">".
 			__('Close this window')."</button>";
 		print "</div>";
 
@@ -179,7 +179,7 @@ class Dlg extends Handler_Protected {
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.genUrlChangeKey('$feed_id', '$is_cat')\">".
 			__('Generate new URL')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return closeInfoBox()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.closeInfoBox()\">".
 			__('Close this window')."</button>";
 
 		print "</div>";
@@ -195,7 +195,7 @@ class Dlg extends Handler_Protected {
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"document.location.href = 'prefs.php'\">".
 			__('Open Preferences')."</button> ";
 		print "<button dojoType=\"dijit.form.Button\"
-			onclick=\"return closeInfoBox()\">".
+			onclick=\"return CommonDialogs.closeInfoBox()\">".
 			__('Close this window')."</button>";
 		print "</div>";
 	}

@@ -608,7 +608,7 @@ define(["dojo/_base/declare"], function (declare) {
 		},
 		search: function() {
 			const query = "backend.php?op=feeds&method=search&param=" +
-				param_escape(Feeds.getActive() + ":" + Feeds.activeIsCat());
+				encodeURIComponent(Feeds.getActive() + ":" + Feeds.activeIsCat());
 
 			if (dijit.byId("searchDlg"))
 				dijit.byId("searchDlg").destroyRecursive();

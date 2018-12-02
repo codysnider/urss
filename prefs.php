@@ -57,7 +57,7 @@
 	<script>
 		dojoConfig = {
 			async: true,
-			cacheBust: new Date(),
+			cacheBust: "<?php echo get_scripts_timestamp(); ?>",
 			packages: [
 				{ name: "lib", location: "../" },
 				{ name: "fox", location: "../../js" },

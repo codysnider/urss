@@ -745,9 +745,9 @@ class Pref_Feeds extends Handler_Protected {
 			<input type=\"hidden\" name=\"op\" value=\"pref-feeds\">
 			<input type=\"hidden\" name=\"feed_id\" value=\"$feed_id\">
 			<input type=\"hidden\" name=\"method\" value=\"uploadicon\">
-			<button class=\"\" dojoType=\"dijit.form.Button\" onclick=\"return uploadFeedIcon();\"
+			<button class=\"\" dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.uploadFeedIcon();\"
 				type=\"submit\">".__('Replace')."</button>
-			<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"return removeFeedIcon($feed_id);\"
+			<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.removeFeedIcon($feed_id);\"
 				type=\"submit\">".__('Remove')."</button>
 			</form>";
 

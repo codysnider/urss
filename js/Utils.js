@@ -95,7 +95,7 @@ define(["dojo/_base/declare"], function (declare) {
 			});
 		},
 		helpDialog: function(topic) {
-			const query = "backend.php?op=backend&method=help&topic=" + param_escape(topic);
+			const query = "backend.php?op=backend&method=help&topic=" + encodeURIComponent(topic);
 
 			if (dijit.byId("helpDlg"))
 				dijit.byId("helpDlg").destroyRecursive();

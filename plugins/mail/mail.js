@@ -14,7 +14,7 @@ function emailArticle(id) {
 		if (dijit.byId("emailArticleDlg"))
 			dijit.byId("emailArticleDlg").destroyRecursive();
 
-		var query = "backend.php?op=pluginhandler&plugin=mail&method=emailArticle&param=" + param_escape(id);
+		var query = "backend.php?op=pluginhandler&plugin=mail&method=emailArticle&param=" + encodeURIComponent(id);
 
 		dialog = new dijit.Dialog({
 			id: "emailArticleDlg",

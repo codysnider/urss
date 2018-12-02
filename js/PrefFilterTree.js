@@ -138,7 +138,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 		},
 		editFilter: function(id) {
 
-			const query = "backend.php?op=pref-filters&method=edit&id=" + param_escape(id);
+			const query = "backend.php?op=pref-filters&method=edit&id=" + encodeURIComponent(id);
 
 			if (dijit.byId("feedEditDlg"))
 				dijit.byId("feedEditDlg").destroyRecursive();

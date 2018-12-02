@@ -126,7 +126,7 @@ define(["dojo/_base/declare"], function (declare) {
 				dijit.byId("filterNewRuleDlg").destroyRecursive();
 
 			const query = "backend.php?op=pref-filters&method=newrule&rule=" +
-				param_escape(ruleStr);
+				encodeURIComponent(ruleStr);
 
 			const rule_dlg = new dijit.Dialog({
 				id: "filterNewRuleDlg",
@@ -148,7 +148,7 @@ define(["dojo/_base/declare"], function (declare) {
 				dijit.byId("filterNewActionDlg").destroyRecursive();
 
 			const query = "backend.php?op=pref-filters&method=newaction&action=" +
-				param_escape(actionStr);
+				encodeURIComponent(actionStr);
 
 			const rule_dlg = new dijit.Dialog({
 				id: "filterNewActionDlg",

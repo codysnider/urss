@@ -2566,3 +2566,15 @@
 	function arr_qmarks($arr) {
 		return str_repeat('?,', count($arr) - 1) . '?';
 	}
+
+	function get_scripts_timestamp() {
+		$files = glob("js/*.js");
+		$ts = 0;
+
+		foreach ($files as $file) {
+			$file_ts = filemtime($file);
+			if ($file_ts > $ts) $ts = $file_ts;
+		}
+
+		return $ts;
+	}

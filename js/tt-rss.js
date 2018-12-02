@@ -116,9 +116,9 @@ const App = {
 		Feeds.reload();
 		Article.close();
 
-		if (parseInt(getCookie("ttrss_fh_width")) > 0) {
+		if (parseInt(Cookie.get("ttrss_fh_width")) > 0) {
 			dijit.byId("feeds-holder").domNode.setStyle(
-				{width: getCookie("ttrss_fh_width") + "px"});
+				{width: Cookie.get("ttrss_fh_width") + "px"});
 		}
 
 		dijit.byId("main").resize();
@@ -126,19 +126,19 @@ const App = {
 		dojo.connect(dijit.byId('feeds-holder'), 'resize',
 			function (args) {
 				if (args && args.w >= 0) {
-					setCookie("ttrss_fh_width", args.w, getInitParam("cookie_lifetime"));
+					Cookie.set("ttrss_fh_width", args.w, getInitParam("cookie_lifetime"));
 				}
 			});
 
 		dojo.connect(dijit.byId('content-insert'), 'resize',
 			function (args) {
 				if (args && args.w >= 0 && args.h >= 0) {
-					setCookie("ttrss_ci_width", args.w, getInitParam("cookie_lifetime"));
-					setCookie("ttrss_ci_height", args.h, getInitParam("cookie_lifetime"));
+					Cookie.set("ttrss_ci_width", args.w, getInitParam("cookie_lifetime"));
+					Cookie.set("ttrss_ci_height", args.h, getInitParam("cookie_lifetime"));
 				}
 			});
 
-		delCookie("ttrss_test");
+		Cookie.delete("ttrss_test");
 
 		const toolbar = document.forms["main_toolbar_form"];
 
@@ -172,9 +172,9 @@ const App = {
 		console.log("second stage ok");
 	},
 	genericSanityCheck: function() {
-		setCookie("ttrss_test", "TEST");
+		Cookie.set("ttrss_test", "TEST");
 
-		if (getCookie("ttrss_test") != "TEST") {
+		if (Cookie.get("ttrss_test") != "TEST") {
 			return fatalError(2);
 		}
 
@@ -224,9 +224,9 @@ const App = {
 				height: 'auto',
 				borderTopWidth: '0px' });
 
-			if (parseInt(getCookie("ttrss_ci_width")) > 0) {
+			if (parseInt(Cookie.get("ttrss_ci_width")) > 0) {
 				dijit.byId("content-insert").domNode.setStyle(
-					{width: getCookie("ttrss_ci_width") + "px" });
+					{width: Cookie.get("ttrss_ci_width") + "px" });
 			}
 
 			$("headlines-frame").setStyle({ borderBottomWidth: '0px' });
@@ -240,9 +240,9 @@ const App = {
 				height: '50%',
 				borderTopWidth: '0px'});
 
-			if (parseInt(getCookie("ttrss_ci_height")) > 0) {
+			if (parseInt(Cookie.get("ttrss_ci_height")) > 0) {
 				dijit.byId("content-insert").domNode.setStyle(
-					{height: getCookie("ttrss_ci_height") + "px" });
+					{height: Cookie.get("ttrss_ci_height") + "px" });
 			}
 
 			$("headlines-frame").setStyle({ borderBottomWidth: '1px' });
@@ -466,8 +466,8 @@ const App = {
 				App._widescreen_mode = !App._widescreen_mode;
 
 				// reset stored sizes because geometry changed
-				setCookie("ttrss_ci_width", 0);
-				setCookie("ttrss_ci_height", 0);
+				Cookie.set("ttrss_ci_width", 0);
+				Cookie.set("ttrss_ci_height", 0);
 
 				App.switchPanelMode(App._widescreen_mode);
 			} else {
@@ -557,8 +557,8 @@ const App = {
 					App._widescreen_mode = !App._widescreen_mode;
 
 					// reset stored sizes because geometry changed
-					setCookie("ttrss_ci_width", 0);
-					setCookie("ttrss_ci_height", 0);
+					Cookie.set("ttrss_ci_width", 0);
+					Cookie.set("ttrss_ci_height", 0);
 
 					App.switchPanelMode(App._widescreen_mode);
 				} else {

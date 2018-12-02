@@ -56,7 +56,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 		},
 		editLabel: function(id) {
 			const query = "backend.php?op=pref-labels&method=edit&id=" +
-				param_escape(id);
+				encodeURIComponent(id);
 
 			if (dijit.byId("labelEditDlg"))
 				dijit.byId("labelEditDlg").destroyRecursive();

@@ -27,7 +27,7 @@ define(["dojo/_base/declare"], function (declare) {
 		},
 		edit: function(id) {
 			const query = "backend.php?op=pref-users&method=edit&id=" +
-				param_escape(id);
+				encodeURIComponent(id);
 
 			if (dijit.byId("userEditDlg"))
 				dijit.byId("userEditDlg").destroyRecursive();

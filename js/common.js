@@ -54,6 +54,8 @@ Array.prototype.remove = function(s) {
 	}
 };
 
+/* common helpers not worthy of separate Dojo modules */
+
 const Lists = {
 	onRowChecked: function(elem) {
 		const checked = elem.domNode ? elem.attr("checked") : elem.checked;
@@ -112,6 +114,31 @@ const Tables = {
 		return rv;
 	}
 };
+
+const Cookie = {
+	set: function (name, value, lifetime) {
+		const d = new Date();
+		d.setTime(d.getTime() + lifetime * 1000);
+		const expires = "expires=" + d.toUTCString();
+		document.cookie = name + "=" + encodeURIComponent(value) + "; " + expires;
+	},
+	get: function (name) {
+		name = name + "=";
+		const ca = document.cookie.split(';');
+		for (let i=0; i < ca.length; i++) {
+			let c = ca[i];
+			while (c.charAt(0) == ' ') c = c.substring(1);
+			if (c.indexOf(name) == 0) return decodeURIComponent(c.substring(name.length, c.length));
+		}
+		return "";
+	},
+	delete: function(name) {
+		const expires = "expires=Thu, 01-Jan-1970 00:00:01 GMT";
+		document.cookie = name + "=" + "" + "; " + expires;
+	}
+};
+
+/* error reporting */
 
 function report_error(message, filename, lineno, colno, error) {
 	exception_error(error, null, filename, lineno);
@@ -175,10 +202,6 @@ function exception_error(e, e_compat, filename, lineno, colno) {
 			ei.stack + "\n\nOriginal exception:\n" + e.stack);
 	}
 
-}
-
-function param_escape(arg) {
-	return encodeURIComponent(arg);
 }
 
 function notify_real(msg, no_hide, n_type) {
@@ -263,58 +286,6 @@ function notify_info(msg, no_hide) {
 	notify_real(msg, no_hide, 4);
 }
 
-function setCookie(name, value, lifetime, path, domain, secure) {
-
-	let d = false;
-
-	if (lifetime) {
-		d = new Date();
-		d.setTime(d.getTime() + (lifetime * 1000));
-	}
-
-	console.log("setCookie: " + name + " => " + value + ": " + d);
-
-	int_setCookie(name, value, d, path, domain, secure);
-
-}
-
-function int_setCookie(name, value, expires, path, domain, secure) {
-	document.cookie= name + "=" + escape(value) +
-		((expires) ? "; expires=" + expires.toGMTString() : "") +
-		((path) ? "; path=" + path : "") +
-		((domain) ? "; domain=" + domain : "") +
-		((secure) ? "; secure" : "");
-}
-
-function delCookie(name, path, domain) {
-	if (getCookie(name)) {
-		document.cookie = name + "=" +
-		((path) ? ";path=" + path : "") +
-		((domain) ? ";domain=" + domain : "" ) +
-		";expires=Thu, 01-Jan-1970 00:00:01 GMT";
-	}
-}
-
-
-function getCookie(name) {
-
-	const dc = document.cookie;
-	const prefix = name + "=";
-	let begin = dc.indexOf("; " + prefix);
-	if (begin == -1) {
-		begin = dc.indexOf(prefix);
-		if (begin != 0) return null;
-	}
-	else {
-		begin += 2;
-	}
-	let end = document.cookie.indexOf(";", begin);
-	if (end == -1) {
-		end = dc.length;
-	}
-	return unescape(dc.substring(begin + prefix.length, end));
-}
-
 // noinspection JSUnusedGlobalSymbols
 function displayIfChecked(checkbox, elemId) {
 	if (checkbox.checked) {
@@ -322,15 +293,6 @@ function displayIfChecked(checkbox, elemId) {
 	} else {
 		Effect.Fade(elemId, {duration : 0.5});
 	}
-}
-
-// noinspection JSUnusedGlobalSymbols
-function closeInfoBox() {
-	const dialog = dijit.byId("infoBox");
-
-	if (dialog)	dialog.hide();
-
-	return false;
 }
 
 function getInitParam(key) {
@@ -407,40 +369,6 @@ function uploadIconHandler(rc) {
 	}
 }
 
-// noinspection JSUnusedGlobalSymbols
-function removeFeedIcon(id) {
-	if (confirm(__("Remove stored feed icon?"))) {
-
-		notify_progress("Removing feed icon...", true);
-
-		const query = { op: "pref-feeds", method: "removeicon", feed_id: id };
-
-		xhrPost("backend.php", query, () => {
-			notify_info("Feed icon removed.");
-			if (App.isPrefs()) {
-				Feeds.reload();
-			} else {
-				setTimeout('Feeds.reload(false, false)', 50);
-			}
-		});
-	}
-
-	return false;
-}
-
-// noinspection JSUnusedGlobalSymbols
-function uploadFeedIcon() {
-	const file = $("icon_file");
-
-	if (file.value.length == 0) {
-		alert(__("Please select an image file to upload."));
-	} else if (confirm(__("Upload new icon for this feed?"))) {
-			notify_progress("Uploading, please wait...", true);
-			return true;
-		}
-
-	return false;
-}
 
 // noinspection JSUnusedGlobalSymbols
 function label_to_feed_id(label) {

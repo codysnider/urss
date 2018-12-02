@@ -2,6 +2,40 @@
 /* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
 	return declare("fox.CommonDialogs", null, {
+		closeInfoBox: function() {
+			const dialog = dijit.byId("infoBox");
+			if (dialog)	dialog.hide();
+		},
+		removeFeedIcon: function(id) {
+			if (confirm(__("Remove stored feed icon?"))) {
+				notify_progress("Removing feed icon...", true);
+
+				const query = {op: "pref-feeds", method: "removeicon", feed_id: id};
+
+				xhrPost("backend.php", query, () => {
+					notify_info("Feed icon removed.");
+					if (App.isPrefs()) {
+						Feeds.reload();
+					} else {
+						setTimeout('Feeds.reload(false, false)', 50);
+					}
+				});
+			}
+
+			return false;
+		},
+		uploadFeedIcon: function() {
+			const file = $("icon_file");
+
+			if (file.value.length == 0) {
+				alert(__("Please select an image file to upload."));
+			} else if (confirm(__("Upload new icon for this feed?"))) {
+				notify_progress("Uploading, please wait...", true);
+				return true;
+			}
+
+			return false;
+		},
 		quickAddFeed: function() {
 			const query = "backend.php?op=feeds&method=quickAddFeed";
 
