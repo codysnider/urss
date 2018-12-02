@@ -48,6 +48,12 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 
 			return rv;
 		},
+		reload: function() {
+			xhrPost("backend.php", { op: "pref-labels" }, (transport) => {
+				dijit.byId('labelConfigTab').attr('content', transport.responseText);
+				notify("");
+			});
+		},
 		editLabel: function(id) {
 			const query = "backend.php?op=pref-labels&method=edit&id=" +
 				param_escape(id);
@@ -87,7 +93,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 					};
 
 					xhrPost("backend.php", query, () => {
-						updateFilterList(); // maybe there's labels in there
+						dijit.byId("filterTree").reload(); // maybe there's labels in there
 					});
 
 				},
@@ -102,7 +108,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 						this.hide();
 
 						xhrPost("backend.php", this.attr('value'), () => {
-							updateFilterList(); // maybe there's labels in there
+							dijit.byId("filterTree").reload(); // maybe there's labels in there
 						});
 					}
 				},
@@ -123,7 +129,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 					};
 
 					xhrPost("backend.php", query, () => {
-						updateLabelList();
+						this.reload();
 					});
 				}
 
@@ -144,7 +150,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 					};
 
 					xhrPost("backend.php", query, () => {
-						updateLabelList();
+						this.reload();
 					});
 				}
 			} else {

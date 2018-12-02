@@ -131,6 +131,7 @@ const App = {
 	}
 };
 
+// noinspection JSUnusedGlobalSymbols
 const Prefs = {
 	clearFeedAccessKeys: function() {
 		if (confirm(__("This will invalidate all previously generated feed URLs. Continue?"))) {
@@ -143,13 +144,19 @@ const Prefs = {
 
 		return false;
 	},
+	updateEventLog: function() {
+		xhrPost("backend.php", { op: "pref-system" }, (transport) => {
+			dijit.byId('systemConfigTab').attr('content', transport.responseText);
+			notify("");
+		});
+	},
 	clearEventLog: function() {
 		if (confirm(__("Clear event log?"))) {
 
 			notify_progress("Loading, please wait...");
 
 			xhrPost("backend.php", {op: "pref-system", method: "clearLog"}, () => {
-				updateSystemList();
+				this.updateEventLog();
 			});
 		}
 	},
@@ -160,6 +167,7 @@ const Prefs = {
 
 		const query = "backend.php?op=pref-prefs&method=editPrefProfiles";
 
+		// noinspection JSUnusedGlobalSymbols
 		const dialog = new dijit.Dialog({
 			id: "profileEditDlg",
 			title: __("Settings Profiles"),
@@ -275,6 +283,7 @@ const Prefs = {
 	}
 };
 
+// noinspection JSUnusedGlobalSymbols
 const Users = {
 	reload: function(sort) {
 		const user_search = $("user_search");
@@ -432,31 +441,6 @@ function opmlImport() {
 
 		return true;
 	}
-}
-
-function updateFilterList() {
-	const user_search = $("filter_search");
-	let search = "";
-	if (user_search) { search = user_search.value; }
-
-	xhrPost("backend.php", { op: "pref-filters", search: search }, (transport) => {
-		dijit.byId('filterConfigTab').attr('content', transport.responseText);
-		notify("");
-	});
-}
-
-function updateLabelList() {
-	xhrPost("backend.php", { op: "pref-labels" }, (transport) => {
-		dijit.byId('labelConfigTab').attr('content', transport.responseText);
-		notify("");
-	});
-}
-
-function updateSystemList() {
-	xhrPost("backend.php", { op: "pref-system" }, (transport) => {
-		dijit.byId('systemConfigTab').attr('content', transport.responseText);
-		notify("");
-	});
 }
 
 function opmlRegenKey() {

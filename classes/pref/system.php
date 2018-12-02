@@ -37,7 +37,7 @@ class Pref_System extends Handler_Protected {
 				LIMIT 100");
 
 			print "<button dojoType=\"dijit.form.Button\"
-				onclick=\"updateSystemList()\">".__('Refresh')."</button> ";
+				onclick=\"Prefs.updateEventLog()\">".__('Refresh')."</button> ";
 
 			print "&nbsp;<button dojoType=\"dijit.form.Button\"
 				class=\"btn-danger\" onclick=\"Prefs.clearEventLog()\">".__('Clear')."</button> ";

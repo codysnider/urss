@@ -739,7 +739,7 @@ const CommonDialogs = {
 				if (callback) {
 					callback(transport);
 				} else if (App.isPrefs()) {
-					updateLabelList();
+					dijit.byId("labelTree").reload();
 				} else {
 					Feeds.reload();
 				}
@@ -1442,7 +1442,7 @@ const Filters = {
 
 					xhrPost("backend.php", query, () => {
 						if (App.isPrefs()) {
-							updateFilterList();
+							dijit.byId("filterTree").reload();
 						}
 
 						dialog.hide();
