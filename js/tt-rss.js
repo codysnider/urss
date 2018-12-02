@@ -2,7 +2,6 @@
 /* global dijit,__ */
 
 let App;
-let Utils;
 let CommonDialogs;
 let Filters;
 let Feeds;
@@ -46,7 +45,6 @@ require(["dojo/_base/kernel",
 	"dijit/tree/dndSource",
 	"dijit/tree/ForestStoreModel",
 	"dojo/data/ItemFileWriteStore",
-	"fox/Utils",
 	"fox/CommonDialogs",
 	"fox/CommonFilters",
 	"fox/Feeds",
@@ -67,7 +65,6 @@ require(["dojo/_base/kernel",
 						report_error(message, filename, lineno, colno, error);
 					};
 
-					Utils = fox.Utils();
 					CommonDialogs = fox.CommonDialogs();
 					Filters = fox.CommonFilters();
 					Feeds = fox.Feeds();
@@ -80,7 +77,7 @@ require(["dojo/_base/kernel",
 					if (!this.genericSanityCheck())
 						return;
 
-					Utils.setLoadingProgress(30);
+					this.setLoadingProgress(30);
 					this.initHotkeyActions();
 
 					const a = document.createElement('audio');
@@ -98,7 +95,7 @@ require(["dojo/_base/kernel",
 
 					xhrPost("backend.php", params, (transport) => {
 						try {
-							Utils.backendSanityCallback(transport);
+							App.backendSanityCallback(transport);
 						} catch (e) {
 							exception_error(e);
 						}
@@ -149,7 +146,7 @@ require(["dojo/_base/kernel",
 						Feeds.setActive(hash_feed_id, hash_feed_is_cat);
 					}
 
-					Utils.setLoadingProgress(50);
+					App.setLoadingProgress(50);
 
 					ArticleCache.clear();
 
@@ -193,7 +190,7 @@ require(["dojo/_base/kernel",
 				hotkeyHandler(event) {
 					if (event.target.nodeName == "INPUT" || event.target.nodeName == "TEXTAREA") return;
 
-					const action_name = Utils.keyeventToAction(event);
+					const action_name = App.keyeventToAction(event);
 
 					if (action_name) {
 						const action_func = this.hotkey_actions[action_name];
@@ -414,7 +411,7 @@ require(["dojo/_base/kernel",
 						Feeds.open({feed: -2});
 					};
 					this.hotkey_actions["goto_tagcloud"] = function () {
-						Utils.displayDlg(__("Tag cloud"), "printTagCloud");
+						App.displayDlg(__("Tag cloud"), "printTagCloud");
 					};
 					this.hotkey_actions["goto_prefs"] = function () {
 						document.location.href = "prefs.php";
@@ -469,7 +466,7 @@ require(["dojo/_base/kernel",
 						}
 					};
 					this.hotkey_actions["help_dialog"] = function () {
-						Utils.helpDialog("main");
+						App.helpDialog("main");
 					};
 					this.hotkey_actions["toggle_combined_mode"] = function () {
 						Notify.progress("Loading, please wait...");
@@ -504,7 +501,7 @@ require(["dojo/_base/kernel",
 							document.location.href = "backend.php?op=logout";
 							break;
 						case "qmcTagCloud":
-							Utils.displayDlg(__("Tag cloud"), "printTagCloud");
+							App.displayDlg(__("Tag cloud"), "printTagCloud");
 							break;
 						case "qmcSearch":
 							Feeds.search();
@@ -560,7 +557,7 @@ require(["dojo/_base/kernel",
 							}
 							break;
 						case "qmcHKhelp":
-							Utils.helpDialog("main");
+							App.helpDialog("main");
 							break;
 						default:
 							console.log("quickMenuGo: unknown action: " + opid);

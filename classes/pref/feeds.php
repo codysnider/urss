@@ -1306,7 +1306,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print_warning("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.");
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Utils.displayDlg('".__("Public OPML URL")."','pubOPMLUrl')\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return App.displayDlg('".__("Public OPML URL")."','pubOPMLUrl')\">".
 			__('Display published OPML URL')."</button> ";
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB_SECTION,
@@ -1323,7 +1323,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<p>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Utils.displayDlg('".__("Show as feed")."','generatedFeed', '$rss_url')\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return App.displayDlg('".__("Show as feed")."','generatedFeed', '$rss_url')\">".
 			__('Display URL')."</button> ";
 
 		print "<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Prefs.clearFeedAccessKeys()\">".

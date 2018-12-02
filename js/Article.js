@@ -97,7 +97,7 @@ define(["dojo/_base/declare"], function (declare) {
 			Article.setActive(id);
 		},
 		render: function (article) {
-			Utils.cleanupMemory("content-insert");
+			App.cleanupMemory("content-insert");
 
 			dijit.byId("headlines-wrap-inner").addChild(
 				dijit.byId("content-insert"));
@@ -144,7 +144,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 				xhrPost("backend.php", {op: "article", method: "view", id: id, cids: cids.toString()}, (transport) => {
 					try {
-						const reply = Utils.handleRpcJson(transport);
+						const reply = App.handleRpcJson(transport);
 
 						if (reply) {
 

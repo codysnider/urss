@@ -222,7 +222,7 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 		},
 		onLoaded: function(transport, offset) {
-			const reply = Utils.handleRpcJson(transport);
+			const reply = App.handleRpcJson(transport);
 
 			console.log("Headlines.onLoaded: offset=", offset);
 
@@ -438,7 +438,7 @@ define(["dojo/_base/declare"], function (declare) {
 			Notify.progress("Loading, please wait...");
 
 			xhrPost("backend.php", query, (transport) => {
-				Utils.handleRpcJson(transport);
+				App.handleRpcJson(transport);
 				if (callback) callback(transport);
 			});
 		},
@@ -460,7 +460,7 @@ define(["dojo/_base/declare"], function (declare) {
 			};
 
 			xhrPost("backend.php", query, (transport) => {
-				Utils.handleRpcJson(transport);
+				App.handleRpcJson(transport);
 			});
 		},
 		selectionTogglePublished: function(ids) {
@@ -482,7 +482,7 @@ define(["dojo/_base/declare"], function (declare) {
 				};
 
 				xhrPost("backend.php", query, (transport) => {
-					Utils.handleRpcJson(transport);
+					App.handleRpcJson(transport);
 				});
 			}
 		},
@@ -507,7 +507,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 				if (!client_only)
 					xhrPost("backend.php", query, (transport) => {
-						Utils.handleRpcJson(transport);
+						App.handleRpcJson(transport);
 					});
 			}
 		},
@@ -533,7 +533,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 				if (!client_only)
 					xhrPost("backend.php", query, (transport) => {
-						Utils.handleRpcJson(transport);
+						App.handleRpcJson(transport);
 					});
 
 			}
@@ -654,7 +654,7 @@ define(["dojo/_base/declare"], function (declare) {
 				if (row.className != origClassName)
 					xhrPost("backend.php",
 						{op: "rpc", method: "catchupSelected", cmode: cmode, ids: id}, (transport) => {
-							Utils.handleRpcJson(transport);
+							App.handleRpcJson(transport);
 						});
 			}
 		},
@@ -672,7 +672,7 @@ define(["dojo/_base/declare"], function (declare) {
 			};
 
 			xhrPost("backend.php", query, (transport) => {
-				Utils.handleRpcJson(transport);
+				App.handleRpcJson(transport);
 				this.onLabelsUpdated(transport);
 			});
 		},
@@ -690,7 +690,7 @@ define(["dojo/_base/declare"], function (declare) {
 			};
 
 			xhrPost("backend.php", query, (transport) => {
-				Utils.handleRpcJson(transport);
+				App.handleRpcJson(transport);
 				this.onLabelsUpdated(transport);
 			});
 		},
@@ -721,7 +721,7 @@ define(["dojo/_base/declare"], function (declare) {
 			const query = {op: "rpc", method: "delete", ids: rows.toString()};
 
 			xhrPost("backend.php", query, (transport) => {
-				Utils.handleRpcJson(transport);
+				App.handleRpcJson(transport);
 				Feeds.reloadCurrent();
 			});
 		},
@@ -850,7 +850,7 @@ define(["dojo/_base/declare"], function (declare) {
 			const query = {op: "rpc", method: op, ids: rows.toString()};
 
 			xhrPost("backend.php", query, (transport) => {
-				Utils.handleRpcJson(transport);
+				App.handleRpcJson(transport);
 				Feeds.reloadCurrent();
 			});
 		},
@@ -888,7 +888,7 @@ define(["dojo/_base/declare"], function (declare) {
 				};
 
 				xhrPost("backend.php", query, (transport) => {
-					const reply = Utils.handleRpcJson(transport);
+					const reply = App.handleRpcJson(transport);
 
 					if (reply) {
 						const batch = reply.ids;
@@ -965,7 +965,7 @@ define(["dojo/_base/declare"], function (declare) {
 					};
 
 					xhrPost("backend.php", query, (transport) => {
-						Utils.handleRpcJson(transport);
+						App.handleRpcJson(transport);
 					});
 				}
 			}

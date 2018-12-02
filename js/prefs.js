@@ -2,7 +2,6 @@
 /* global dijit, __ */
 
 let App;
-let Utils;
 let CommonDialogs;
 let Filters;
 let Users;
@@ -43,7 +42,6 @@ require(["dojo/_base/kernel",
 	"dojo/data/ItemFileWriteStore",
 	"lib/CheckBoxStoreModel",
 	"lib/CheckBoxTree",
-	"fox/Utils",
 	"fox/CommonDialogs",
 	"fox/CommonFilters",
 	"fox/PrefUsers",
@@ -62,7 +60,6 @@ require(["dojo/_base/kernel",
 						report_error(message, filename, lineno, colno, error);
 					};
 
-					Utils = fox.Utils();
 					CommonDialogs = fox.CommonDialogs();
 					Filters = fox.CommonFilters();
 					Users = fox.PrefUsers();
@@ -70,39 +67,41 @@ require(["dojo/_base/kernel",
 
 					parser.parse();
 
-					Utils.setLoadingProgress(50);
+					this.setLoadingProgress(50);
 
 					const clientTzOffset = new Date().getTimezoneOffset() * 60;
 					const params = {op: "rpc", method: "sanityCheck", clientTzOffset: clientTzOffset};
 
 					xhrPost("backend.php", params, (transport) => {
 						try {
-							Utils.backendSanityCallback(transport);
+							this.backendSanityCallback(transport);
 						} catch (e) {
 							exception_error(e);
 						}
 					});
 				},
 				initSecondStage: function() {
-					document.onkeydown = () => { App.hotkeyHandler(event) };
-					Utils.setLoadingProgress(50);
+					this.enableCsrfSupport();
+
+					document.onkeydown = (event) => { App.hotkeyHandler(event) };
+					App.setLoadingProgress(50);
 					Notify.close();
 
-					let tab = Utils.urlParam('tab');
+					let tab = App.urlParam('tab');
 
 					if (tab) {
 						tab = dijit.byId(tab + "Tab");
 						if (tab) {
 							dijit.byId("pref-tabs").selectChild(tab);
 
-							switch (Utils.urlParam('method')) {
+							switch (App.urlParam('method')) {
 								case "editfeed":
 									window.setTimeout(function () {
-										CommonDialogs.editFeed(Utils.urlParam('methodparam'))
+										CommonDialogs.editFeed(App.urlParam('methodparam'))
 									}, 100);
 									break;
 								default:
-									console.warn("initSecondStage, unknown method:", Utils.urlParam("method"));
+									console.warn("initSecondStage, unknown method:", App.urlParam("method"));
 							}
 						}
 					} else {
@@ -124,7 +123,7 @@ require(["dojo/_base/kernel",
 				hotkeyHandler: function (event) {
 					if (event.target.nodeName == "INPUT" || event.target.nodeName == "TEXTAREA") return;
 
-					const action_name = Utils.keyeventToAction(event);
+					const action_name = App.keyeventToAction(event);
 
 					if (action_name) {
 						switch (action_name) {
@@ -138,7 +137,7 @@ require(["dojo/_base/kernel",
 								Filters.quickAddFilter();
 								return false;
 							case "help_dialog":
-								Utils.helpDialog("main");
+								App.helpDialog("main");
 								return false;
 							default:
 								console.log("unhandled action: " + action_name + "; keycode: " + event.which);

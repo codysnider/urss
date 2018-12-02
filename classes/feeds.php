@@ -51,7 +51,7 @@ class Feeds extends Handler_Protected {
 		$reply .= "<span class='r'>
 			<a href=\"#\"
 				title=\"".__("Show as feed")."\"
-				onclick=\"Utils.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">
+				onclick=\"App.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">
 				<img class=\"noborder\" src=\"images/pub_set.png\"></a>";
 
 
@@ -137,7 +137,7 @@ class Feeds extends Handler_Protected {
 
 		//$reply .= "<option value=\"catchupPage()\">".__('Mark as read')."</option>";
 
-		$reply .= "<option value=\"Utils.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">".
+		$reply .= "<option value=\"App.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">".
             __('Show as feed')."</option>";
 
 		$reply .= "</select>";

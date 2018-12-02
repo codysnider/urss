@@ -129,13 +129,13 @@ define(["dojo/_base/declare"], function (declare) {
 
 				this.counters_last_request = timestamp;
 
-				let query = {op: "rpc", method: "getAllCounters", seq: Utils.next_seq()};
+				let query = {op: "rpc", method: "getAllCounters", seq: App.next_seq()};
 
 				if (!force)
 					query.last_article_id = App.getInitParam("last_article_id");
 
 				xhrPost("backend.php", query, (transport) => {
-					Utils.handleRpcJson(transport);
+					App.handleRpcJson(transport);
 				});
 
 			} else {
@@ -196,7 +196,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 					try {
 						Feeds.init();
-						Utils.setLoadingProgress(25);
+						App.setLoadingProgress(25);
 					} catch (e) {
 						exception_error(e);
 					}
@@ -210,7 +210,7 @@ define(["dojo/_base/declare"], function (declare) {
 		init: function() {
 			console.log("in feedlist init");
 
-			Utils.setLoadingProgress(50);
+			App.setLoadingProgress(50);
 
 			document.onkeydown = (event) => { App.hotkeyHandler(event) };
 			window.setInterval(() => { Headlines.catchupBatched() }, 10 * 1000);
@@ -461,7 +461,7 @@ define(["dojo/_base/declare"], function (declare) {
 			Notify.progress("Loading, please wait...", true);
 
 			xhrPost("backend.php", catchup_query, (transport) => {
-				Utils.handleRpcJson(transport);
+				App.handleRpcJson(transport);
 
 				const show_next_feed = App.getInitParam("on_catchup_show_next_feed") == "1";
 
@@ -520,7 +520,7 @@ define(["dojo/_base/declare"], function (declare) {
 				Notify.progress("Loading, please wait...", true);
 
 				xhrPost("backend.php", {op: "rpc", method: "catchupFeed", feed_id: id, is_cat: false}, (transport) => {
-					Utils.handleRpcJson(transport);
+					App.handleRpcJson(transport);
 				});
 			}
 		},
@@ -633,7 +633,7 @@ define(["dojo/_base/declare"], function (declare) {
 			console.log("in update_random_feed");
 
 			xhrPost("backend.php", {op: "rpc", method: "updateRandom"}, (transport) => {
-				Utils.handleRpcJson(transport, true);
+				App.handleRpcJson(transport, true);
 			});
 		},
 	});
