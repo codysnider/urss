@@ -421,7 +421,7 @@ require(["dojo/_base/kernel",
 						Filters.quickAddFilter();
 					};
 					this.hotkey_actions["collapse_sidebar"] = function () {
-						Feeds.reloadCurrent();
+						Feeds.toggle();
 					};
 					this.hotkey_actions["toggle_embed_original"] = function () {
 						if (typeof embedOriginalArticle != "undefined") {
