@@ -147,84 +147,83 @@ define(["dojo/_base/declare"], function (declare) {
 				dijit.byId('genConfigTab').attr('content', transport.responseText);
 				Notify.close();
 			});
-		}
-	};
-
-	Helpers.OPML = {
-		import: function() {
-			const opml_file = $("opml_file");
-
-			if (opml_file.value.length == 0) {
-				alert(__("Please choose an OPML file first."));
-				return false;
-			} else {
-				Notify.progress("Importing, please wait...", true);
-
-				Element.show("upload_iframe");
-
-				return true;
-			}
 		},
-		onImportComplete: function(iframe) {
-			if (!iframe.contentDocument.body.innerHTML) return false;
+		OPML: {
+			import: function() {
+				const opml_file = $("opml_file");
 
-			Element.show(iframe);
+				if (opml_file.value.length == 0) {
+					alert(__("Please choose an OPML file first."));
+					return false;
+				} else {
+					Notify.progress("Importing, please wait...", true);
 
-			Notify.close();
+					Element.show("upload_iframe");
 
-			if (dijit.byId('opmlImportDlg'))
-				dijit.byId('opmlImportDlg').destroyRecursive();
+					return true;
+				}
+			},
+			onImportComplete: function(iframe) {
+				if (!iframe.contentDocument.body.innerHTML) return false;
 
-			const content = iframe.contentDocument.body.innerHTML;
+				Element.show(iframe);
 
-			const dialog = new dijit.Dialog({
-				id: "opmlImportDlg",
-				title: __("OPML Import"),
-				style: "width: 600px",
-				onCancel: function () {
-					window.location.reload();
-				},
-				execute: function () {
-					window.location.reload();
-				},
-				content: content
-			});
+				Notify.close();
 
-			dojo.connect(dialog, "onShow", function () {
-				Element.hide(iframe);
-			});
+				if (dijit.byId('opmlImportDlg'))
+					dijit.byId('opmlImportDlg').destroyRecursive();
 
-			dialog.show();
-		},
-		export: function() {
-			console.log("export");
-			window.open("backend.php?op=opml&method=export&" + dojo.formToQuery("opmlExportForm"));
-		},
-		changeKey: function() {
-			if (confirm(__("Replace current OPML publishing address with a new one?"))) {
-				Notify.progress("Trying to change address...", true);
+				const content = iframe.contentDocument.body.innerHTML;
 
-				xhrJson("backend.php", {op: "pref-feeds", method: "regenOPMLKey"}, (reply) => {
-					if (reply) {
-						const new_link = reply.link;
-						const e = $('pub_opml_url');
-
-						if (new_link) {
-							e.href = new_link;
-							e.innerHTML = new_link;
-
-							new Effect.Highlight(e);
-
-							Notify.close();
-
-						} else {
-							Notify.error("Could not change feed URL.");
-						}
-					}
+				const dialog = new dijit.Dialog({
+					id: "opmlImportDlg",
+					title: __("OPML Import"),
+					style: "width: 600px",
+					onCancel: function () {
+						window.location.reload();
+					},
+					execute: function () {
+						window.location.reload();
+					},
+					content: content
 				});
-			}
-			return false;
-		},
+
+				dojo.connect(dialog, "onShow", function () {
+					Element.hide(iframe);
+				});
+
+				dialog.show();
+			},
+			export: function() {
+				console.log("export");
+				window.open("backend.php?op=opml&method=export&" + dojo.formToQuery("opmlExportForm"));
+			},
+			changeKey: function() {
+				if (confirm(__("Replace current OPML publishing address with a new one?"))) {
+					Notify.progress("Trying to change address...", true);
+
+					xhrJson("backend.php", {op: "pref-feeds", method: "regenOPMLKey"}, (reply) => {
+						if (reply) {
+							const new_link = reply.link;
+							const e = $('pub_opml_url');
+
+							if (new_link) {
+								e.href = new_link;
+								e.innerHTML = new_link;
+
+								new Effect.Highlight(e);
+
+								Notify.close();
+
+							} else {
+								Notify.error("Could not change feed URL.");
+							}
+						}
+					});
+				}
+				return false;
+			},
+		}
 	};
 
 	return Helpers;
