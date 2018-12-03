@@ -11,11 +11,12 @@ define(["dojo/_base/declare"], function (declare) {
 			switch (rc) {
 				case 0:
 					Notify.info("Upload complete.");
-					if (App.isPrefs()) {
+
+					if (App.isPrefs())
+						dijit.byId("feedTree").reload();
+					else
 						Feeds.reload();
-					} else {
-						setTimeout('Feeds.reload(false, false)', 50);
-					}
+
 					break;
 				case 1:
 					Notify.error("Upload failed: icon is too big.");
@@ -33,11 +34,12 @@ define(["dojo/_base/declare"], function (declare) {
 
 				xhrPost("backend.php", query, () => {
 					Notify.info("Feed icon removed.");
-					if (App.isPrefs()) {
+
+					if (App.isPrefs())
+						dijit.byId("feedTree").reload();
+					else
 						Feeds.reload();
-					} else {
-						setTimeout('Feeds.reload(false, false)', 50);
-					}
+
 				});
 			}
 
@@ -108,7 +110,11 @@ define(["dojo/_base/declare"], function (declare) {
 										dialog.hide();
 										Notify.info(__("Subscribed to %s").replace("%s", feed_url));
 
-										Feeds.reload();
+										if (App.isPrefs())
+											dijit.byId("feedTree").reload();
+										else
+											Feeds.reload();
+
 										break;
 									case 2:
 										dialog.show_error(__("Specified URL seems to be invalid."));
@@ -190,7 +196,12 @@ define(["dojo/_base/declare"], function (declare) {
 							xhrPost("backend.php", query, () => {
 								Notify.close();
 								dialog.hide();
-								Feeds.reload();
+
+								if (App.isPrefs())
+									dijit.byId("feedTree").reload();
+								else
+									Feeds.reload();
+
 							});
 						}
 
@@ -272,7 +283,11 @@ define(["dojo/_base/declare"], function (declare) {
 
 						xhrPost("backend.php", query, () => {
 							Notify.close();
-							Feeds.reload();
+
+							if (App.isPrefs())
+								dijit.byId("feedTree").reload();
+							else
+								Feeds.reload();
 						});
 
 					} else {
@@ -365,7 +380,7 @@ define(["dojo/_base/declare"], function (declare) {
 					if (dijit.byId("feedEditDlg")) dijit.byId("feedEditDlg").hide();
 
 					if (App.isPrefs()) {
-						Feeds.reload();
+						dijit.byId("feedTree").reload();
 					} else {
 						if (feed_id == Feeds.getActive())
 							setTimeout(() => {
@@ -405,7 +420,12 @@ define(["dojo/_base/declare"], function (declare) {
 						xhrPost("backend.php", dialog.attr('value'), () => {
 							dialog.hide();
 							Notify.close();
-							Feeds.reload();
+
+							if (App.isPrefs())
+								dijit.byId("feedTree").reload();
+							else
+								Feeds.reload();
+
 						});
 					}
 				},
