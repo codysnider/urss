@@ -1,7 +1,7 @@
 'use strict'
 /* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
-	return declare("fox.Feeds", null, {
+	Feeds = {
 		counters_last_request: 0,
 		_active_feed_id: 0,
 		_active_feed_is_cat: false,
@@ -636,5 +636,7 @@ define(["dojo/_base/declare"], function (declare) {
 				App.handleRpcJson(transport, true);
 			});
 		},
-	});
+	};
+
+	return Feeds;
 });

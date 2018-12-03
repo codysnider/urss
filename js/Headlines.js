@@ -1,13 +1,13 @@
 'use strict';
 /* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
-	return declare("fox.Headlines", null, {
+	Headlines = {
 		vgroup_last_feed: undefined,
 		_headlines_scroll_timeout: 0,
 		loaded_article_ids: [],
 		current_first_id: 0,
 		catchup_id_batch: [],
-		click: function(event, id, in_body) {
+		click: function (event, id, in_body) {
 			in_body = in_body || false;
 
 			if (App.isCombinedMode()) {
@@ -34,16 +34,16 @@ define(["dojo/_base/declare"], function (declare) {
 				return false;
 			}
 		},
-		initScrollHandler: function() {
+		initScrollHandler: function () {
 			$("headlines-frame").onscroll = (event) => {
 				clearTimeout(this._headlines_scroll_timeout);
-				this._headlines_scroll_timeout = window.setTimeout(function() {
+				this._headlines_scroll_timeout = window.setTimeout(function () {
 					//console.log('done scrolling', event);
 					Headlines.scrollHandler();
 				}, 50);
 			}
 		},
-		loadMore: function() {
+		loadMore: function () {
 			const view_mode = document.forms["main_toolbar_form"].view_mode.value;
 			const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
 			const num_all = $$("#headlines-frame > div[id*=RROW]").length;
@@ -71,7 +71,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			Feeds.open({feed: Feeds.getActive(), is_cat: Feeds.activeIsCat(), offset: offset});
 		},
-		scrollHandler: function() {
+		scrollHandler: function () {
 			try {
 				Headlines.unpackVisible();
 
@@ -149,7 +149,7 @@ define(["dojo/_base/declare"], function (declare) {
 				console.warn("scrollHandler", e);
 			}
 		},
-		updateFloatingTitle: function(unread_only) {
+		updateFloatingTitle: function (unread_only) {
 			if (!App.isCombinedMode()/* || !App.getInitParam("cdm_expanded")*/) return;
 
 			const hf = $("headlines-frame");
@@ -200,7 +200,7 @@ define(["dojo/_base/declare"], function (declare) {
 				}
 			}
 		},
-		unpackVisible: function() {
+		unpackVisible: function () {
 			if (!App.isCombinedMode() || !App.getInitParam("cdm_expanded")) return;
 
 			const rows = $$("#headlines-frame div[id*=RROW][data-content]");
@@ -221,7 +221,7 @@ define(["dojo/_base/declare"], function (declare) {
 				}
 			}
 		},
-		onLoaded: function(transport, offset) {
+		onLoaded: function (transport, offset) {
 			const reply = App.handleRpcJson(transport);
 
 			console.log("Headlines.onLoaded: offset=", offset);
@@ -383,7 +383,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			Notify.close();
 		},
-		reverse: function() {
+		reverse: function () {
 			const toolbar = document.forms["main_toolbar_form"];
 			const order_by = dijit.getEnclosingWidget(toolbar.order_by);
 
@@ -398,7 +398,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			Feeds.reloadCurrent();
 		},
-		selectionToggleUnread: function(params) {
+		selectionToggleUnread: function (params) {
 			params = params || {};
 
 			const cmode = params.cmode || 2;
@@ -442,7 +442,7 @@ define(["dojo/_base/declare"], function (declare) {
 				if (callback) callback(transport);
 			});
 		},
-		selectionToggleMarked: function(ids) {
+		selectionToggleMarked: function (ids) {
 			const rows = ids || Headlines.getSelected();
 
 			if (rows.length == 0) {
@@ -463,7 +463,7 @@ define(["dojo/_base/declare"], function (declare) {
 				App.handleRpcJson(transport);
 			});
 		},
-		selectionTogglePublished: function(ids) {
+		selectionTogglePublished: function (ids) {
 			const rows = ids || Headlines.getSelected();
 
 			if (rows.length == 0) {
@@ -486,7 +486,7 @@ define(["dojo/_base/declare"], function (declare) {
 				});
 			}
 		},
-		toggleMark: function(id, client_only) {
+		toggleMark: function (id, client_only) {
 			const query = {op: "rpc", id: id, method: "mark"};
 			const row = $("RROW-" + id);
 
@@ -511,7 +511,7 @@ define(["dojo/_base/declare"], function (declare) {
 					});
 			}
 		},
-		togglePub: function(id, client_only) {
+		togglePub: function (id, client_only) {
 			const row = $("RROW-" + id);
 
 			if (row) {
@@ -538,7 +538,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			}
 		},
-		move: function(mode, noscroll, noexpand) {
+		move: function (mode, noscroll, noexpand) {
 			const rows = Headlines.getLoaded();
 
 			let prev_id = false;
@@ -620,7 +620,7 @@ define(["dojo/_base/declare"], function (declare) {
 				}
 			}
 		},
-		updateSelectedPrompt: function() {
+		updateSelectedPrompt: function () {
 			const count = Headlines.getSelected().length;
 			const elem = $("selected_prompt");
 
@@ -631,7 +631,7 @@ define(["dojo/_base/declare"], function (declare) {
 				count > 0 ? Element.show(elem) : Element.hide(elem);
 			}
 		},
-		toggleUnread: function(id, cmode) {
+		toggleUnread: function (id, cmode) {
 			const row = $("RROW-" + id);
 
 			if (row) {
@@ -658,7 +658,7 @@ define(["dojo/_base/declare"], function (declare) {
 						});
 			}
 		},
-		selectionRemoveLabel: function(id, ids) {
+		selectionRemoveLabel: function (id, ids) {
 			if (!ids) ids = Headlines.getSelected();
 
 			if (ids.length == 0) {
@@ -676,7 +676,7 @@ define(["dojo/_base/declare"], function (declare) {
 				this.onLabelsUpdated(transport);
 			});
 		},
-		selectionAssignLabel: function(id, ids) {
+		selectionAssignLabel: function (id, ids) {
 			if (!ids) ids = Headlines.getSelected();
 
 			if (ids.length == 0) {
@@ -694,7 +694,7 @@ define(["dojo/_base/declare"], function (declare) {
 				this.onLabelsUpdated(transport);
 			});
 		},
-		deleteSelection: function() {
+		deleteSelection: function () {
 			const rows = Headlines.getSelected();
 
 			if (rows.length == 0) {
@@ -725,7 +725,7 @@ define(["dojo/_base/declare"], function (declare) {
 				Feeds.reloadCurrent();
 			});
 		},
-		getSelected: function() {
+		getSelected: function () {
 			const rv = [];
 
 			$$("#headlines-frame > div[id*=RROW][class*=Selected]").each(
@@ -739,7 +739,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			return rv.uniq();
 		},
-		getLoaded: function() {
+		getLoaded: function () {
 			const rv = [];
 
 			const children = $$("#headlines-frame > div[id*=RROW-]");
@@ -752,7 +752,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			return rv;
 		},
-		onRowChecked: function(elem) {
+		onRowChecked: function (elem) {
 			// account for dojo checkboxes
 			elem = elem.domNode || elem;
 
@@ -760,7 +760,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			this.updateSelectedPrompt();
 		},
-		select: function(mode) {
+		select: function (mode) {
 			// mode = all,none,unread,invert,marked,published
 			let query = "#headlines-frame > div[id*=RROW]";
 
@@ -814,7 +814,7 @@ define(["dojo/_base/declare"], function (declare) {
 				Headlines.updateSelectedPrompt();
 			}
 		},
-		archiveSelection: function() {
+		archiveSelection: function () {
 			const rows = Headlines.getSelected();
 
 			if (rows.length == 0) {
@@ -854,7 +854,7 @@ define(["dojo/_base/declare"], function (declare) {
 				Feeds.reloadCurrent();
 			});
 		},
-		catchupSelection: function() {
+		catchupSelection: function () {
 			const rows = Headlines.getSelected();
 
 			if (rows.length == 0) {
@@ -875,7 +875,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			Headlines.selectionToggleUnread({callback: Feeds.reloadCurrent, no_error: 1});
 		},
-		catchupBatched: function(callback) {
+		catchupBatched: function (callback) {
 			console.log("catchupBatched, size=", this.catchup_id_batch.length);
 
 			if (this.catchup_id_batch.length > 0) {
@@ -908,7 +908,7 @@ define(["dojo/_base/declare"], function (declare) {
 				if (callback) callback();
 			}
 		},
-		catchupRelativeTo: function(below, id) {
+		catchupRelativeTo: function (below, id) {
 
 			if (!id) id = Article.getActive();
 
@@ -970,7 +970,7 @@ define(["dojo/_base/declare"], function (declare) {
 				}
 			}
 		},
-		onLabelsUpdated: function(transport) {
+		onLabelsUpdated: function (transport) {
 			const data = JSON.parse(transport.responseText);
 
 			if (data) {
@@ -981,11 +981,11 @@ define(["dojo/_base/declare"], function (declare) {
 				});
 			}
 		},
-		onActionChanged: function(elem) {
+		onActionChanged: function (elem) {
 			eval(elem.value);
 			elem.attr('value', 'false');
 		},
-		correctHeadlinesOffset: function(id) {
+		correctHeadlinesOffset: function (id) {
 			const container = $("headlines-frame");
 			const row = $("RROW-" + id);
 
@@ -1005,7 +1005,7 @@ define(["dojo/_base/declare"], function (declare) {
 				container.scrollTop = row.offsetTop + row.offsetHeight - viewport;
 			}
 		},
-		initFloatingMenu: function() {
+		initFloatingMenu: function () {
 			if (!dijit.byId("floatingMenu")) {
 
 				const menu = new dijit.Menu({
@@ -1018,7 +1018,7 @@ define(["dojo/_base/declare"], function (declare) {
 				menu.startup();
 			}
 		},
-		headlinesMenuCommon: function(menu) {
+		headlinesMenuCommon: function (menu) {
 
 			menu.addChild(new dijit.MenuItem({
 				label: __("Open original article"),
@@ -1146,7 +1146,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			}
 		},
-		initHeadlinesMenu: function() {
+		initHeadlinesMenu: function () {
 			if (!dijit.byId("headlinesMenu")) {
 
 				const menu = new dijit.Menu({
@@ -1209,5 +1209,7 @@ define(["dojo/_base/declare"], function (declare) {
 				menu.startup();
 			}
 		}
-	});
+	}
+
+	return Headlines;
 });

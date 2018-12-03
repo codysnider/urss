@@ -1,9 +1,9 @@
 'use strict'
 /* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
-	return declare("fox.Article", null, {
+	Article = {
 		_active_article_id: 0,
-		selectionSetScore: function() {
+		selectionSetScore: function () {
 			const ids = Headlines.getSelected();
 
 			if (ids.length > 0) {
@@ -40,7 +40,7 @@ define(["dojo/_base/declare"], function (declare) {
 				alert(__("No articles selected."));
 			}
 		},
-		setScore: function(id, pic) {
+		setScore: function (id, pic) {
 			const score = pic.getAttribute("score");
 
 			const new_score = prompt(__("Please enter new score for this article:"), score);
@@ -57,7 +57,7 @@ define(["dojo/_base/declare"], function (declare) {
 				});
 			}
 		},
-		cdmUnsetActive: function(event) {
+		cdmUnsetActive: function (event) {
 			const row = $("RROW-" + Article.getActive());
 
 			if (row) {
@@ -119,7 +119,7 @@ define(["dojo/_base/declare"], function (declare) {
 			} catch (e) {
 			}
 		},
-		view: function(id, noexpand) {
+		view: function (id, noexpand) {
 			this.setActive(id);
 
 			if (!noexpand) {
@@ -175,7 +175,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			return false;
 		},
-		editTags: function(id) {
+		editTags: function (id) {
 			const query = "backend.php?op=article&method=editArticleTags&param=" + encodeURIComponent(id);
 
 			if (dijit.byId("editTagsDlg"))
@@ -224,7 +224,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			dialog.show();
 		},
-		cdmScrollToId: function(id, force) {
+		cdmScrollToId: function (id, force) {
 			const ctr = $("headlines-frame");
 			const e = $("RROW-" + id);
 
@@ -239,7 +239,7 @@ define(["dojo/_base/declare"], function (declare) {
 				Element.hide("floatingTitle");
 			}
 		},
-		setActive: function(id) {
+		setActive: function (id) {
 			console.log("setActive", id);
 
 			$$("div[id*=RROW][class*=active]").each((e) => {
@@ -287,10 +287,10 @@ define(["dojo/_base/declare"], function (declare) {
 
 			Headlines.updateSelectedPrompt();
 		},
-		getActive: function() {
+		getActive: function () {
 			return this._active_article_id;
 		},
-		scroll: function(offset) {
+		scroll: function (offset) {
 			if (!App.isCombinedMode()) {
 				const ci = $("content-insert");
 				if (ci) {
@@ -304,7 +304,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			}
 		},
-		getRelativeIds: function(id, limit) {
+		getRelativeIds: function (id, limit) {
 
 			const tmp = [];
 
@@ -324,14 +324,16 @@ define(["dojo/_base/declare"], function (declare) {
 
 			return tmp;
 		},
-		mouseIn: function(id) {
+		mouseIn: function (id) {
 			this.post_under_pointer = id;
 		},
-		mouseOut: function(id) {
+		mouseOut: function (id) {
 			this.post_under_pointer = false;
 		},
-		getUnderPointer: function() {
+		getUnderPointer: function () {
 			return this.post_under_pointer;
 		}
-	});
+	}
+
+	return Article;
 });

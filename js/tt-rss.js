@@ -8,6 +8,7 @@ let Feeds;
 let Headlines;
 let Article;
 let ArticleCache;
+let PluginHost;
 
 require(["dojo/_base/kernel",
 	"dojo/_base/declare",
@@ -45,8 +46,9 @@ require(["dojo/_base/kernel",
 	"dijit/tree/dndSource",
 	"dijit/tree/ForestStoreModel",
 	"dojo/data/ItemFileWriteStore",
-	"fox/CommonDialogs",
+	"fox/PluginHost",
 	"fox/CommonFilters",
+	"fox/CommonDialogs",
 	"fox/Feeds",
 	"fox/Headlines",
 	"fox/Article",
@@ -64,13 +66,6 @@ require(["dojo/_base/kernel",
 					window.onerror = function (message, filename, lineno, colno, error) {
 						report_error(message, filename, lineno, colno, error);
 					};
-
-					CommonDialogs = fox.CommonDialogs();
-					Filters = fox.CommonFilters();
-					Feeds = fox.Feeds();
-					Headlines = fox.Headlines();
-					Article = fox.Article();
-					ArticleCache = fox.ArticleCache();
 
 					parser.parse();
 

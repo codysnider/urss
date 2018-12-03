@@ -60,11 +60,6 @@ require(["dojo/_base/kernel",
 						report_error(message, filename, lineno, colno, error);
 					};
 
-					CommonDialogs = fox.CommonDialogs();
-					Filters = fox.CommonFilters();
-					Users = fox.PrefUsers();
-					Prefs = fox.PrefHelpers();
-
 					parser.parse();
 
 					this.setLoadingProgress(50);

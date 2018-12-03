@@ -1,8 +1,7 @@
 'use strict'
 /* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
-
-	return declare("fox.PrefUsers", null, {
+	Users = {
 		reload: function(sort) {
 			const user_search = $("user_search");
 			const search = user_search ? user_search.value : "";
@@ -115,7 +114,9 @@ define(["dojo/_base/declare"], function (declare) {
 		getSelection :function() {
 			return Tables.getSelected("prefUserList");
 		}
-	});
+	}
+
+	return Users;
 });
 
 

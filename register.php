@@ -115,7 +115,7 @@
 			}
 
 			var query = "register.php?action=check&login=" +
-					param_escape(login);
+					encodeURIComponent(login);
 
 			new Ajax.Request(query, {
 				onComplete: function(transport) {

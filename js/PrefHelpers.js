@@ -1,5 +1,5 @@
 define(["dojo/_base/declare"], function (declare) {
-	return declare("fox.PrefHelpers", null, {
+	Prefs = {
 		clearFeedAccessKeys: function() {
 			if (confirm(__("This will invalidate all previously generated feed URLs. Continue?"))) {
 				Notify.progress("Clearing URLs...");
@@ -148,5 +148,7 @@ define(["dojo/_base/declare"], function (declare) {
 				Notify.close();
 			});
 		}
-	});
+	}
+
+	return Prefs;
 });

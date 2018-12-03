@@ -105,7 +105,6 @@
 				"lib/dojo/tt-rss-layer.js",
 				"js/tt-rss.js",
 				"js/common.js",
-				"js/PluginHost.js",
 				"errors.php?mode=js") as $jsfile) {
 
 		echo javascript_tag($jsfile);
