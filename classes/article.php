@@ -907,8 +907,8 @@ class Article extends Handler_Protected {
 
 	static function format_article_note($id, $note, $allow_edit = true) {
 
-		$str = "<div class='articleNote'	onclick=\"editArticleNote($id)\">
-			<div class='noteEdit' onclick=\"editArticleNote($id)\">".
+		$str = "<div class='articleNote'	onclick=\"Plugins.Note.edit($id)\">
+			<div class='noteEdit' onclick=\"Plugins.Note.edit($id)\">".
 			($allow_edit ? __('(edit note)') : "")."</div>$note</div>";
 
 		return $str;

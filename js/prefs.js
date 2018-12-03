@@ -7,6 +7,8 @@ let Filters;
 let Users;
 let Prefs;
 
+const Plugins = {};
+
 require(["dojo/_base/kernel",
 	"dojo/_base/declare",
 	"dojo/ready",

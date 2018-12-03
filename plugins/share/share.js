@@ -1,20 +1,20 @@
-function shareArticle(id) {
-	try {
+Plugins.Share = {
+	shareArticle: function(id) {
 		if (dijit.byId("shareArticleDlg"))
 			dijit.byId("shareArticleDlg").destroyRecursive();
 
-		var query = "backend.php?op=pluginhandler&plugin=share&method=shareArticle&param=" + encodeURIComponent(id);
+		const query = "backend.php?op=pluginhandler&plugin=share&method=shareArticle&param=" + encodeURIComponent(id);
 
-		dialog = new dijit.Dialog({
+		const dialog = new dijit.Dialog({
 			id: "shareArticleDlg",
 			title: __("Share article by URL"),
 			style: "width: 600px",
-			newurl: function() {
+			newurl: function () {
 				if (confirm(__("Generate new share URL for this article?"))) {
 
 					Notify.progress("Trying to change URL...", true);
 
-					const query = { op: "pluginhandler", plugin: "share", method: "newkey", id: id };
+					const query = {op: "pluginhandler", plugin: "share", method: "newkey", id: id};
 
 					xhrJson("backend.php", query, (reply) => {
 						if (reply) {
@@ -44,12 +44,12 @@ function shareArticle(id) {
 				}
 
 			},
-			unshare: function() {
+			unshare: function () {
 				if (confirm(__("Remove sharing for this article?"))) {
 
 					Notify.progress("Trying to unshare...", true);
 
-					const query = { op: "pluginhandler", plugin: "share", method: "unshare", id: id };
+					const query = {op: "pluginhandler", plugin: "share", method: "unshare", id: id};
 
 					xhrPost("backend.php", query, () => {
 						notify("Article unshared.");
@@ -62,16 +62,15 @@ function shareArticle(id) {
 				}
 
 			},
-			href: query});
+			href: query
+		});
 
 		dialog.show();
 
 		const img = $("SHARE-IMG-" + id);
 		if (img) img.src = img.src.replace("notshared.png", "share.png");
-
-	} catch (e) {
-		exception_error("shareArticle", e);
 	}
-}
+};
+
 
 

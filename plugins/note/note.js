@@ -1,46 +1,41 @@
-function editArticleNote(id) {
-	try {
-
-		var query = "backend.php?op=pluginhandler&plugin=note&method=edit&param=" + encodeURIComponent(id);
+Plugins.Note = {
+	edit: function(id) {
+		const query = "backend.php?op=pluginhandler&plugin=note&method=edit&param=" + encodeURIComponent(id);
 
 		if (dijit.byId("editNoteDlg"))
 			dijit.byId("editNoteDlg").destroyRecursive();
 
-		dialog = new dijit.Dialog({
+		const dialog = new dijit.Dialog({
 			id: "editNoteDlg",
 			title: __("Edit article note"),
 			style: "width: 600px",
-			execute: function() {
+			execute: function () {
 				if (this.validate()) {
 					Notify.progress("Saving article note...", true);
 
 					xhrJson("backend.php", this.attr('value'), (reply) => {
-                        Notify.close();
-                        dialog.hide();
+						Notify.close();
+						dialog.hide();
 
-                        if (reply) {
-                            ArticleCache.del(id);
+						if (reply) {
+							ArticleCache.del(id);
 
-                            var elem = $("POSTNOTE-" + id);
+							var elem = $("POSTNOTE-" + id);
 
-                            if (elem) {
-                                Element.hide(elem);
-                                elem.innerHTML = reply.note;
+							if (elem) {
+								Element.hide(elem);
+								elem.innerHTML = reply.note;
 
-                                if (reply.raw_length != 0)
-                                    new Effect.Appear(elem);
-                            }
-                        }
-                    });
+								if (reply.raw_length != 0)
+									new Effect.Appear(elem);
+							}
+						}
+					});
 				}
 			},
 			href: query,
 		});
 
 		dialog.show();
-
-	} catch (e) {
-		exception_error("editArticleNote", e);
 	}
-}
-
+};
