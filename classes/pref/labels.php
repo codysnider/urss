@@ -275,13 +275,13 @@ class Pref_Labels extends Handler_Protected {
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 
-		print"<button dojoType=\"dijit.form.Button\" onclick=\"return addLabel()\">".
+		print"<button dojoType=\"dijit.form.Button\" onclick=\"CommonDialogs.addLabel()\">".
 			__('Create label')."</button dojoType=\"dijit.form.Button\"> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"removeSelectedLabels()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('labelTree').removeSelected()\">".
 			__('Remove')."</button dojoType=\"dijit.form.Button\"> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"labelColorReset()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('labelTree').resetColors()\">".
 			__('Clear colors')."</button dojoType=\"dijit.form.Button\">";
 
 
@@ -310,7 +310,7 @@ class Pref_Labels extends Handler_Protected {
 			var bare_id = id.substr(id.indexOf(':')+1);
 
 			if (id.match('LABEL:')) {
-				editLabel(bare_id);
+				dijit.byId('labelTree').editLabel(bare_id);
 			}
 		</script>
 		</div>";

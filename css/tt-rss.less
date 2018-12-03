@@ -910,6 +910,25 @@ body.ttrss_main {
 		-webkit-overflow-scrolling : touch;
 		-webkit-transform: translateZ(0);
 		-webkit-backface-visibility: hidden;
+
+		div.feed-title {
+			border: 0px solid @color-link;
+			border-bottom-width: 1px;
+			padding: 5px 3px 5px 5px;
+		}
+
+		div.feed-title a.title {
+			color: @default-text;
+			font-weight: bold;
+		}
+
+		div.feed-title a {
+			color: @default-text;
+		}
+
+		div.feed-title a:hover {
+			color: @color-link;
+		}
 	}
 
 	#headlines-toolbar_splitter, #toolbar_splitter {

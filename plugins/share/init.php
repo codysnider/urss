@@ -40,7 +40,7 @@ class Share extends Plugin {
 
 			print "<p>" . __("You can disable all articles shared by unique URLs here.") . "</p>";
 
-			print "<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"return clearArticleAccessKeys()\">".
+			print "<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Plugins.Share.clearKeys()\">".
 				__('Unshare all articles')."</button> ";
 
 			print "</p>";
@@ -74,7 +74,7 @@ class Share extends Plugin {
 
 		return "<img id='SHARE-IMG-".$line['int_id']."' src=\"plugins/share/$img\"
 			class='tagsPic' style=\"cursor : pointer\"
-			onclick=\"shareArticle(".$line['int_id'].")\"
+			onclick=\"Plugins.Share.shareArticle(".$line['int_id'].")\"
 			title='".__('Share by URL')."'>";
 	}
 

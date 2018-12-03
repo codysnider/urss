@@ -1244,7 +1244,7 @@
 			"g t" => "goto_tagcloud",
 			"g *p" => "goto_prefs",
 	//			"other" => array(
-			"(9)|Tab" => "select_article_cursor", // tab
+			"r" => "select_article_cursor",
 			"c l" => "create_label",
 			"c f" => "create_filter",
 			"c s" => "collapse_sidebar",
@@ -1309,9 +1309,6 @@
 
 		$data['last_article_id'] = Article::getLastArticleId();
 		$data['cdm_expanded'] = get_pref('CDM_EXPANDED');
-
-		$data['dep_ts'] = calculate_dep_timestamp();
-		$data['reload_on_ts_change'] = !defined('_NO_RELOAD_ON_TS_CHANGE');
 
 		$data["labels"] = Labels::get_all_labels($_SESSION["uid"]);
 
@@ -2379,52 +2376,6 @@
 		return in_array($interface, class_implements($class));
 	}
 
-	function get_minified_js($files) {
-
-		$rv = '';
-
-		foreach ($files as $js) {
-			if (!isset($_GET['debug'])) {
-				$cached_file = CACHE_DIR . "/js/".basename($js);
-
-				if (file_exists($cached_file) && is_readable($cached_file) && filemtime($cached_file) >= filemtime("js/$js")) {
-
-					list($header, $contents) = explode("\n", file_get_contents($cached_file), 2);
-
-					if ($header && $contents) {
-						list($htag, $hversion) = explode(":", $header);
-
-						if ($htag == "tt-rss" && $hversion == VERSION) {
-							$rv .= $contents;
-							continue;
-						}
-					}
-				}
-
-				$minified = JShrink\Minifier::minify(file_get_contents("js/$js"));
-				file_put_contents($cached_file, "tt-rss:" . VERSION . "\n" . $minified);
-				$rv .= $minified;
-
-			} else {
-				$rv .= file_get_contents("js/$js"); // no cache in debug mode
-			}
-		}
-
-		return $rv;
-	}
-
-	function calculate_dep_timestamp() {
-		$files = array_merge(glob("js/*.js"), glob("css/*.css"));
-
-		$max_ts = -1;
-
-		foreach ($files as $file) {
-			if (filemtime($file) > $max_ts) $max_ts = filemtime($file);
-		}
-
-		return $max_ts;
-	}
-
 	function T_js_decl($s1, $s2) {
 		if ($s1 && $s2) {
 			$s1 = preg_replace("/\n/", "", $s1);
@@ -2614,4 +2565,16 @@
 
 	function arr_qmarks($arr) {
 		return str_repeat('?,', count($arr) - 1) . '?';
+	}
+
+	function get_scripts_timestamp() {
+		$files = glob("js/*.js");
+		$ts = 0;
+
+		foreach ($files as $file) {
+			$file_ts = filemtime($file);
+			if ($file_ts > $ts) $ts = $file_ts;
+		}
+
+		return $ts;
 	}

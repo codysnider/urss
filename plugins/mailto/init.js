@@ -1,10 +1,10 @@
-function mailtoArticle(id) {
-	try {
+Plugins.Mailto = {
+	send: function (id) {
 		if (!id) {
-			const ids = getSelectedArticleIds2();
+			const ids = Headlines.getSelected();
 
 			if (ids.length == 0) {
-				alert(__("No articles are selected."));
+				alert(__("No articles selected."));
 				return;
 			}
 
@@ -14,19 +14,21 @@ function mailtoArticle(id) {
 		if (dijit.byId("emailArticleDlg"))
 			dijit.byId("emailArticleDlg").destroyRecursive();
 
-		const query = "backend.php?op=pluginhandler&plugin=mailto&method=emailArticle&param=" + param_escape(id);
+		const query = "backend.php?op=pluginhandler&plugin=mailto&method=emailArticle&param=" + encodeURIComponent(id);
 
-		dialog = new dijit.Dialog({
+		const dialog = new dijit.Dialog({
 			id: "emailArticleDlg",
 			title: __("Forward article by email"),
 			style: "width: 600px",
 			href: query});
 
 		dialog.show();
-
-	} catch (e) {
-		exception_error("emailArticle", e);
 	}
-}
+};
 
+// override default hotkey action if enabled
+Plugins.Mail = Plugins.Mail || {};
 
+Plugins.Mail.onHotkey = function(id) {
+	Plugins.Mailto.send(id);
+};

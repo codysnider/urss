@@ -61,7 +61,7 @@ class Af_Readability extends Plugin {
 				new Ajax.Request('backend.php', {
 					parameters: dojo.objectToQuery(this.getValues()),
 					onComplete: function(transport) {
-						notify_info(transport.responseText);
+						Notify.info(transport.responseText);
 					}
 				});
 				//this.reset();
@@ -94,7 +94,7 @@ class Af_Readability extends Plugin {
 				print "<li>" .
 					"<img src='images/pub_set.png'
 						style='vertical-align : middle'> <a href='#'
-						onclick='editFeed($f)'>".
+						onclick='CommonDialogs.editFeed($f)'>".
 					Feeds::getFeedTitle($f) . "</a></li>";
 			}
 			print "</ul>";

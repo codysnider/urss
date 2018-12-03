@@ -41,14 +41,14 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 				menu.addChild(new dijit.MenuItem({
 					label: __("Mark as read"),
 					onClick: function() {
-						catchupFeed(this.getParent().row_id);
+						Feeds.catchupFeed(this.getParent().row_id);
 					}}));
 
 				if (bare_id > 0) {
 					menu.addChild(new dijit.MenuItem({
 						label: __("Edit feed"),
 						onClick: function() {
-							editFeed(this.getParent().row_id, false);
+							CommonDialogs.editFeed(this.getParent().row_id, false);
 						}}));
 
 					/* menu.addChild(new dijit.MenuItem({
@@ -69,7 +69,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 				menu.addChild(new dijit.MenuItem({
 					label: __("Mark as read"),
 					onClick: function() {
-						catchupFeed(this.getParent().row_id, true);
+						Feeds.catchupFeed(this.getParent().row_id, true);
 					}}));
 
 				menu.addChild(new dijit.MenuItem({
@@ -97,7 +97,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 				menu.addChild(new dijit.MenuItem({
 					label: __("Mark all feeds as read"),
 					onClick: function() {
-						catchupAllFeeds();
+						Feeds.catchupAllFeeds();
 					}}));
 
 				menu.bindDomNode(tnode.domNode);
@@ -123,7 +123,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 		postCreate: function() {
 			this.connect(this.model, "onChange", "updateCounter");
 			this.connect(this, "_expandNode", function() {
-				this.hideRead(getInitParam("hide_read_feeds"), getInitParam("hide_read_shows_special"));
+				this.hideRead(App.getInitParam("hide_read_feeds"), App.getInitParam("hide_read_shows_special"));
 			});
 
 			this.inherited(arguments);
@@ -207,7 +207,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 					}
 				}
 			} catch (e) {
-				exception_error(e);
+				App.Error.report(e);
 			}
 		},
 		findNodeParentsAndExpandThem: function(feed, is_cat, root, parents) {
@@ -242,7 +242,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 							this.expandParentNodes(feed, is_cat, parents.slice(0));
 						}
 			} catch (e) {
-				exception_error(e);
+				App.Error.report(e);
 			}
 		},
 		selectFeed: function(feed, is_cat) {

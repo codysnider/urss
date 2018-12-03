@@ -429,7 +429,7 @@ class Pref_Filters extends Handler_Protected {
 
 				$data = htmlspecialchars(json_encode($line));
 
-				print "<li><input dojoType='dijit.form.CheckBox' type='checkbox' onclick='toggleSelectListRow2(this)'>".
+				print "<li><input dojoType='dijit.form.CheckBox' type='checkbox' onclick='Lists.onRowChecked(this)'>".
 					"<span onclick=\"dijit.byId('filterEditDlg').editRule(this)\">".$this->getRuleName($line)."</span>".
 					"<input type='hidden' name='rule[]' value=\"$data\"/></li>";
 			}
@@ -473,7 +473,7 @@ class Pref_Filters extends Handler_Protected {
 
 				$data = htmlspecialchars(json_encode($line));
 
-				print "<li><input dojoType='dijit.form.CheckBox' type='checkbox' onclick='toggleSelectListRow2(this)'>".
+				print "<li><input dojoType='dijit.form.CheckBox' type='checkbox' onclick='Lists.onRowChecked(this)'>".
 					"<span onclick=\"dijit.byId('filterEditDlg').editAction(this)\">".$this->getActionName($line)."</span>".
 					"<input type='hidden' name='action[]' value=\"$data\"/></li>";
 			}
@@ -797,20 +797,20 @@ class Pref_Filters extends Handler_Protected {
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return quickAddFilter()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Filters.quickAddFilter()\">".
 			__('Create filter')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return joinSelectedFilters()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterTree').joinSelectedFilters()\">".
 			__('Combine')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return editSelectedFilter()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterTree').editSelectedFilter()\">".
 			__('Edit')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return resetFilterOrder()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterTree').resetFilterOrder()\">".
 			__('Reset sort order')."</button> ";
 
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return removeSelectedFilters()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterTree').removeSelectedFilters()\">".
 			__('Remove')."</button> ";
 
 		print "</div>"; # toolbar
@@ -840,7 +840,7 @@ class Pref_Filters extends Handler_Protected {
 			var bare_id = id.substr(id.indexOf(':')+1);
 
 			if (id.match('FILTER:')) {
-				editFilter(bare_id);
+				dijit.byId('filterTree').editFilter(bare_id);
 			}
 		</script>
 
@@ -1044,7 +1044,7 @@ class Pref_Filters extends Handler_Protected {
 		print "<div class=\"dlgSecCont\">";
 
 		print "<select name=\"action_id\" dojoType=\"dijit.form.Select\"
-			onchange=\"filterDlgCheckAction(this)\">";
+			onchange=\"Filters.filterDlgCheckAction(this)\">";
 
 		$res = $this->pdo->query("SELECT id,description FROM ttrss_filter_actions
 			ORDER BY name");

@@ -103,7 +103,7 @@
 	margin-top : 4px;
 	margin-bottom : 4px;
 
-	.collapse {
+	.collapse, .excerpt {
 		display : none;
 	}
 
@@ -290,7 +290,7 @@ div#floatingTitle {
 		color : @default-text;
 	}
 
-	.collapse {
+	.collapse, .excerpt {
 		display : none;
 	}
 
@@ -373,6 +373,15 @@ div#floatingTitle.Unread a.title {
 		overflow : hidden;
 		max-width : 500px;
 	}
+
+	.excerpt {
+		white-space : nowrap;
+		font-size : 11px;
+		color : #999;
+		font-weight : normal;
+		cursor : pointer;
+	}
+
 }
 
 .cdm.expandable.Unread {
@@ -410,12 +419,18 @@ div.cdm.expandable.Unread div.header a.title {
 	color : black;
 }
 
-div.cdm.expandable.active div.header a.title {
-	color: @color-link;
-	font-size: 16px;
-	font-weight: 600;
-	text-rendering: optimizelegibility;
-	font-family: @fonts-ui-bold;
+div.cdm.expandable.active {
+	.excerpt {
+		display: none;
+	}
+
+	div.header a.title {
+		color: @color-link;
+		font-size: 16px;
+		font-weight: 600;
+		text-rendering: optimizelegibility;
+		font-family: @fonts-ui-bold;
+	}
 }
 
 div.cdm.expandable:not(.active) {

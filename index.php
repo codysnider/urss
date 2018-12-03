@@ -91,7 +91,7 @@
 	<script>
 		dojoConfig = {
 			async: true,
-			cacheBust: new Date(),
+			cacheBust: "<?php echo get_scripts_timestamp(); ?>",
 			packages: [
 				{ name: "fox", location: "../../js" },
 			]
@@ -103,6 +103,8 @@
 				"lib/scriptaculous/scriptaculous.js?load=effects,controls",
 				"lib/dojo/dojo.js",
 				"lib/dojo/tt-rss-layer.js",
+				"js/tt-rss.js",
+				"js/common.js",
 				"errors.php?mode=js") as $jsfile) {
 
 		echo javascript_tag($jsfile);
@@ -110,13 +112,9 @@
 	} ?>
 
 	<script type="text/javascript">
-		'use strict';
 		require({cache:{}});
-	<?php
-		print get_minified_js(["tt-rss.js",
-			"functions.js", "feedlist.js", "viewfeed.js", "PluginHost.js"]);
-	?>
 	</script>
+
 	<script type="text/javascript">
 	<?php
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
@@ -136,12 +134,6 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta name="referrer" content="no-referrer"/>
-
-	<script type="text/javascript">
-		Event.observe(window, 'load', function() {
-			init();
-		});
-	</script>
 </head>
 
 <body class="claro ttrss_main">
@@ -187,7 +179,7 @@
 		<form id="main_toolbar_form" action="" onsubmit='return false'>
 
 		<select name="view_mode" title="<?php echo __('Show articles') ?>"
-			onchange="viewModeChanged()"
+			onchange="App.onViewModeChanged()"
 			dojoType="dijit.form.Select">
 			<option selected="selected" value="adaptive"><?php echo __('Adaptive') ?></option>
 			<option value="all_articles"><?php echo __('All Articles') ?></option>
@@ -199,7 +191,7 @@
 		</select>
 
 		<select title="<?php echo __('Sort articles') ?>"
-			onchange="viewModeChanged()"
+			onchange="App.onViewModeChanged()"
 			dojoType="dijit.form.Select" name="order_by">
 			<option selected="selected" value="default"><?php echo __('Default') ?></option>
 			<option value="feed_dates"><?php echo __('Newest first') ?></option>
@@ -207,16 +199,16 @@
 			<option value="title"><?php echo __('Title') ?></option>
 		</select>
 
-		<div dojoType="dijit.form.ComboButton" onclick="catchupCurrentFeed()">
+		<div dojoType="dijit.form.ComboButton" onclick="Feeds.catchupCurrent()">
 			<span><?php echo __('Mark as read') ?></span>
 			<div dojoType="dijit.DropDownMenu">
-				<div dojoType="dijit.MenuItem" onclick="catchupCurrentFeed('1day')">
+				<div dojoType="dijit.MenuItem" onclick="Feeds.catchupCurrent('1day')">
 					<?php echo __('Older than one day') ?>
 				</div>
-				<div dojoType="dijit.MenuItem" onclick="catchupCurrentFeed('1week')">
+				<div dojoType="dijit.MenuItem" onclick="Feeds.catchupCurrent('1week')">
 					<?php echo __('Older than one week') ?>
 				</div>
-				<div dojoType="dijit.MenuItem" onclick="catchupCurrentFeed('2week')">
+				<div dojoType="dijit.MenuItem" onclick="Feeds.catchupCurrent('2week')">
 					<?php echo __('Older than two weeks') ?>
 				</div>
 			</div>
@@ -240,18 +232,18 @@
 			<div dojoType="dijit.form.DropDownButton">
 				<span><?php echo __('Actions...') ?></span>
 				<div dojoType="dijit.Menu" style="display: none">
-					<div dojoType="dijit.MenuItem" onclick="quickMenuGo('qmcPrefs')"><?php echo __('Preferences...') ?></div>
-					<div dojoType="dijit.MenuItem" onclick="quickMenuGo('qmcSearch')"><?php echo __('Search...') ?></div>
+					<div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcPrefs')"><?php echo __('Preferences...') ?></div>
+					<div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcSearch')"><?php echo __('Search...') ?></div>
 					<div dojoType="dijit.MenuItem" disabled="1"><?php echo __('Feed actions:') ?></div>
-					<div dojoType="dijit.MenuItem" onclick="quickMenuGo('qmcAddFeed')"><?php echo __('Subscribe to feed...') ?></div>
-					<div dojoType="dijit.MenuItem" onclick="quickMenuGo('qmcEditFeed')"><?php echo __('Edit this feed...') ?></div>
-					<div dojoType="dijit.MenuItem" onclick="quickMenuGo('qmcRemoveFeed')"><?php echo __('Unsubscribe') ?></div>
+					<div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcAddFeed')"><?php echo __('Subscribe to feed...') ?></div>
+					<div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcEditFeed')"><?php echo __('Edit this feed...') ?></div>
+					<div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcRemoveFeed')"><?php echo __('Unsubscribe') ?></div>
 					<div dojoType="dijit.MenuItem" disabled="1"><?php echo __('All feeds:') ?></div>
-					<div dojoType="dijit.MenuItem" onclick="quickMenuGo('qmcCatchupAll')"><?php echo __('Mark as read') ?></div>
-					<div dojoType="dijit.MenuItem" onclick="quickMenuGo('qmcShowOnlyUnread')"><?php echo __('(Un)hide read feeds') ?></div>
+					<div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcCatchupAll')"><?php echo __('Mark as read') ?></div>
+					<div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcShowOnlyUnread')"><?php echo __('(Un)hide read feeds') ?></div>
 					<div dojoType="dijit.MenuItem" disabled="1"><?php echo __('Other actions:') ?></div>
-					<div dojoType="dijit.MenuItem" onclick="quickMenuGo('qmcToggleWidescreen')"><?php echo __('Toggle widescreen mode') ?></div>
-					<div dojoType="dijit.MenuItem" onclick="quickMenuGo('qmcHKhelp')"><?php echo __('Keyboard shortcuts help') ?></div>
+					<div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcToggleWidescreen')"><?php echo __('Toggle widescreen mode') ?></div>
+					<div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcHKhelp')"><?php echo __('Keyboard shortcuts help') ?></div>
 
 					<?php
 						foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ACTION_ITEM) as $p) {
@@ -260,7 +252,7 @@
 					?>
 
 					<?php if (!$_SESSION["hide_logout"]) { ?>
-						<div dojoType="dijit.MenuItem" onclick="quickMenuGo('qmcLogout')"><?php echo __('Logout') ?></div>
+						<div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcLogout')"><?php echo __('Logout') ?></div>
 					<?php } ?>
 				</div>
 			</div>

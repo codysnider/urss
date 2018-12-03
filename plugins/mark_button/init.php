@@ -23,12 +23,12 @@ class Mark_Button extends Plugin {
 				$marked_pic = "<img
 					src=\"images/mark_set.png\"
 					class=\"marked-pic marked-$id\" alt=\"Unstar article\"
-					onclick='toggleMark($id)'>";
+					onclick='Headlines.toggleMark($id)'>";
 			} else {
 				$marked_pic = "<img
 					src=\"images/mark_unset.png\"
 					class=\"marked-pic marked-$id\" alt=\"Star article\"
-					onclick='toggleMark($id)'>";
+					onclick='Headlines.toggleMark($id)'>";
 			}
 		}
 

@@ -95,7 +95,7 @@
 <title>Create new account</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <?php echo stylesheet_tag("css/default.css") ?>
-<?php echo javascript_tag("js/functions.js") ?>
+<?php echo javascript_tag("js/common.js") ?>
 <?php echo javascript_tag("lib/prototype.js") ?>
 <?php echo javascript_tag("lib/scriptaculous/scriptaculous.js?load=effects,controls") ?>
 </head>
@@ -115,7 +115,7 @@
 			}
 
 			var query = "register.php?action=check&login=" +
-					param_escape(login);
+					encodeURIComponent(login);
 
 			new Ajax.Request(query, {
 				onComplete: function(transport) {
@@ -135,13 +135,13 @@
 							f.sub_btn.disabled = true;
 						}
 					} catch (e) {
-						exception_error("checkUsername_callback", e);
+						App.Error.report(e);
 					}
 
 				} });
 
 		} catch (e) {
-			exception_error("checkUsername", e);
+			App.Error.report(e);
 		}
 
 		return false;
@@ -171,7 +171,7 @@
 			return true;
 
 		} catch (e) {
-			exception_error("validateRegForm", e);
+			alert(e.stack);
 			return false;
 		}
 	}

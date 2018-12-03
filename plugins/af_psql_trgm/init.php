@@ -93,7 +93,7 @@ class Af_Psql_Trgm extends Plugin {
 				print " <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"$article_link\">".
 					$line["title"]."</a>";
 
-				print " (<a href=\"#\" onclick=\"viewfeed({feed:".$line["feed_id"]."})\">".
+				print " (<a href=\"#\" onclick=\"Feeds.open({feed:".$line["feed_id"]."})\">".
 					htmlspecialchars($line["feed_title"])."</a>)";
 
 				print " <span class='insensitive'>($sm)</span>";
@@ -115,7 +115,7 @@ class Af_Psql_Trgm extends Plugin {
 	function hook_article_button($line) {
 		return "<img src=\"plugins/af_psql_trgm/button.png\"
 			style=\"cursor : pointer\" style=\"cursor : pointer\"
-			onclick=\"showTrgmRelated(".$line["id"].")\"
+			onclick=\"Plugins.Psql_Trgm.showRelated(".$line["id"].")\"
 			class='tagsPic' title='".__('Show related articles')."'>";
 	}
 
@@ -150,7 +150,7 @@ class Af_Psql_Trgm extends Plugin {
 					new Ajax.Request('backend.php', {
 						parameters: dojo.objectToQuery(this.getValues()),
 						onComplete: function(transport) {
-							notify_info(transport.responseText);
+							Notify.info(transport.responseText);
 						}
 					});
 					//this.reset();
@@ -202,7 +202,7 @@ class Af_Psql_Trgm extends Plugin {
 					print "<li>" .
 						"<img src='images/pub_set.png'
 							style='vertical-align : middle'> <a href='#'
-							onclick='editFeed($f)'>" .
+							onclick='CommonDialogs.editFeed($f)'>" .
 						Feeds::getFeedTitle($f) . "</a></li>";
 				}
 				print "</ul>";

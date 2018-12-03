@@ -727,7 +727,7 @@ class Article extends Handler_Protected {
 			if (!$zoom_mode) {
 				$rv['content'] .= "<span id=\"ATSTR-$id\">$tags_str</span>
 					<a title=\"".__('Edit tags for this article')."\"
-					href=\"#\" onclick=\"editArticleTags($id, $feed_id)\">(+)</a>";
+					href=\"#\" onclick=\"Article.editTags($id)\">(+)</a>";
 
 				$rv['content'] .= "<div dojoType=\"dijit.Tooltip\"
 					id=\"ATSTRTIP-$id\" connectId=\"ATSTR-$id\"
@@ -877,7 +877,7 @@ class Article extends Handler_Protected {
 			$tags_str = "";
 
 			for ($i = 0; $i < $maxtags; $i++) {
-				$tags_str .= "<a class=\"tag\" href=\"#\" onclick=\"viewfeed({feed:'".$tags[$i]."'})\">" . $tags[$i] . "</a>, ";
+				$tags_str .= "<a class=\"tag\" href=\"#\" onclick=\"Feeds.open({feed:'".$tags[$i]."'})\">" . $tags[$i] . "</a>, ";
 			}
 
 			$tags_str = mb_substr($tags_str, 0, mb_strlen($tags_str)-2);
@@ -907,8 +907,8 @@ class Article extends Handler_Protected {
 
 	static function format_article_note($id, $note, $allow_edit = true) {
 
-		$str = "<div class='articleNote'	onclick=\"editArticleNote($id)\">
-			<div class='noteEdit' onclick=\"editArticleNote($id)\">".
+		$str = "<div class='articleNote'	onclick=\"Plugins.Note.edit($id)\">
+			<div class='noteEdit' onclick=\"Plugins.Note.edit($id)\">".
 			($allow_edit ? __('(edit note)') : "")."</div>$note</div>";
 
 		return $str;

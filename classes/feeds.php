@@ -15,21 +15,21 @@ class Feeds extends Handler_Protected {
 			$feed_id, $is_cat, $search,
 			$error, $feed_last_updated) {
 
-		$catchup_sel_link = "catchupSelection()";
+		$catchup_sel_link = "Headlines.catchupSelection()";
 
-		$archive_sel_link = "archiveSelection()";
-		$delete_sel_link = "deleteSelection()";
+		$archive_sel_link = "Headlines.archiveSelection()";
+		$delete_sel_link = "Headlines.deleteSelection()";
 
-		$sel_all_link = "selectArticles('all')";
-		$sel_unread_link = "selectArticles('unread')";
-		$sel_none_link = "selectArticles('none')";
-		$sel_inv_link = "selectArticles('invert')";
+		$sel_all_link = "Headlines.select('all')";
+		$sel_unread_link = "Headlines.select('unread')";
+		$sel_none_link = "Headlines.select('none')";
+		$sel_inv_link = "Headlines.select('invert')";
 
-		$tog_unread_link = "selectionToggleUnread()";
-		$tog_marked_link = "selectionToggleMarked()";
-		$tog_published_link = "selectionTogglePublished()";
+		$tog_unread_link = "Headlines.selectionToggleUnread()";
+		$tog_marked_link = "Headlines.selectionToggleMarked()";
+		$tog_published_link = "Headlines.selectionTogglePublished()";
 
-		$set_score_link = "setSelectionScore()";
+		$set_score_link = "Article.selectionSetScore()";
 
 		if ($is_cat) $cat_q = "&is_cat=$is_cat";
 
@@ -50,8 +50,8 @@ class Feeds extends Handler_Protected {
 
 		$reply .= "<span class='r'>
 			<a href=\"#\"
-				title=\"".__("View as RSS feed")."\"
-				onclick=\"displayDlg('".__("View as RSS")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">
+				title=\"".__("Show as feed")."\"
+				onclick=\"App.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">
 				<img class=\"noborder\" src=\"images/pub_set.png\"></a>";
 
 
@@ -95,7 +95,7 @@ class Feeds extends Handler_Protected {
 		$reply .= "</span> "; */
 
 		$reply .= "<select dojoType=\"dijit.form.Select\"
-			onchange=\"headlineActionsChange(this)\">";
+			onchange=\"Headlines.onActionChanged(this)\">";
 
 		$reply .= "<option value=\"0\" disabled='1'>".__('Select...')."</option>";
 
@@ -124,12 +124,12 @@ class Feeds extends Handler_Protected {
 		}
 
 		if (PluginHost::getInstance()->get_plugin("mail")) {
-			$reply .= "<option value=\"emailArticle(false)\">".__('Forward by email').
+			$reply .= "<option value=\"Plugins.Mail.send()\">".__('Forward by email').
 				"</option>";
 		}
 
 		if (PluginHost::getInstance()->get_plugin("mailto")) {
-			$reply .= "<option value=\"mailtoArticle(false)\">".__('Forward by email').
+			$reply .= "<option value=\"Plugins.Mailto.send()\">".__('Forward by email').
 				"</option>";
 		}
 
@@ -137,7 +137,8 @@ class Feeds extends Handler_Protected {
 
 		//$reply .= "<option value=\"catchupPage()\">".__('Mark as read')."</option>";
 
-		$reply .= "<option value=\"displayDlg('".__("View as RSS")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">".__('View as RSS')."</option>";
+		$reply .= "<option value=\"App.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">".
+            __('Show as feed')."</option>";
 
 		$reply .= "</select>";
 
@@ -299,7 +300,7 @@ class Feeds extends Handler_Protected {
 				$label_cache = $line["label_cache"];
 				$labels = false;
 
-				$mouseover_attrs = "onmouseover='postMouseIn(event, $id)' onmouseout='postMouseOut($id)'";
+				$mouseover_attrs = "onmouseover='Article.mouseIn($id)' onmouseout='Article.mouseOut($id)'";
 
 				if ($label_cache) {
 					$label_cache = json_decode($label_cache, true);
@@ -331,11 +332,11 @@ class Feeds extends Handler_Protected {
 
 				$marked_pic_src = $line["marked"] ? "mark_set.png" : "mark_unset.png";
 				$class .= $line["marked"] ? " marked" : "";
-				$marked_pic = "<img src=\"images/$marked_pic_src\" class=\"marked-pic marked-$id\" onclick='toggleMark($id)'>";
+				$marked_pic = "<img src=\"images/$marked_pic_src\" class=\"marked-pic marked-$id\" onclick='Headlines.toggleMark($id)'>";
 
 				$published_pic_src = $line["published"] ? "pub_set.png" : "pub_unset.png";
 				$class .= $line["published"] ? " published" : "";
-                $published_pic = "<img src=\"images/$published_pic_src\" class=\"pub-pic pub-$id\" onclick='togglePub($id)'>";
+                $published_pic = "<img src=\"images/$published_pic_src\" class=\"pub-pic pub-$id\" onclick='Headlines.togglePub($id)'>";
 
 				$updated_fmt = make_local_datetime($line["updated"], false, false, false, true);
 				$date_entered_fmt = T_sprintf("Imported at %s",
@@ -345,7 +346,7 @@ class Feeds extends Handler_Protected {
 
 				$score_pic = "images/" . get_score_pic($score);
 
-				$score_pic = "<img class='score-pic' score='$score' onclick='changeScore($id, this)' src=\"$score_pic\"
+				$score_pic = "<img class='score-pic' score='$score' onclick='Article.setScore($id, this)' src=\"$score_pic\"
                 title=\"$score\">";
 
 				if ($score > 500) {
@@ -388,11 +389,11 @@ class Feeds extends Handler_Protected {
 
 							$vgroup_last_feed = $feed_id;
 
-							$vf_catchup_link = "<a class='catchup' onclick='catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
+							$vf_catchup_link = "<a class='catchup' onclick='Feeds.catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
 
-							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-titl'>".
+							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-title'>".
 								"<div style='float : right'>$feed_icon_img</div>".
-								"<a class='title' href=\"#\" onclick=\"viewfeed({feed:$feed_id})\">".
+								"<a class='title' href=\"#\" onclick=\"Feeds.open({feed:$feed_id})\">".
 								$line["feed_title"]."</a>
                             $vf_catchup_link</div>";
 
@@ -405,7 +406,7 @@ class Feeds extends Handler_Protected {
 					$reply['content'] .= "<div class='left'>";
 
 					$reply['content'] .= "<input dojoType=\"dijit.form.CheckBox\"
-                        type=\"checkbox\" onclick=\"toggleSelectRow2(this)\"
+                        type=\"checkbox\" onclick=\"Headlines.onRowChecked(this)\"
                         class='rchk'>";
 
 					$reply['content'] .= "$marked_pic";
@@ -413,7 +414,7 @@ class Feeds extends Handler_Protected {
 
 					$reply['content'] .= "</div>";
 
-					$reply['content'] .= "<div onclick='return hlClicked(event, $id)'
+					$reply['content'] .= "<div onclick='return Headlines.click(event, $id)'
                     class=\"title\"><span class='hl-content $hlc_suffix'>";
 					$reply['content'] .= "<a class=\"title $hlc_suffix\"
                     href=\"" . htmlspecialchars($line["link"]) . "\"
@@ -434,7 +435,7 @@ class Feeds extends Handler_Protected {
 						if (@$line["feed_title"]) {
 							$rgba = @$rgba_cache[$feed_id];
 
-							$reply['content'] .= "<span class=\"feed\"><a style=\"background : rgba($rgba, 0.3)\" href=\"#\" onclick=\"viewfeed({feed:$feed_id})\">".
+							$reply['content'] .= "<span class=\"feed\"><a style=\"background : rgba($rgba, 0.3)\" href=\"#\" onclick=\"Feeds.open({feed:$feed_id})\">".
 								truncate_string($line["feed_title"],30)."</a></span>";
 						}
 					}
@@ -451,7 +452,7 @@ class Feeds extends Handler_Protected {
 
 					if ($line["feed_title"] && !$vfeed_group_enabled) {
 
-						$reply['content'] .= "<span onclick=\"viewfeed({feed:$feed_id})\"
+						$reply['content'] .= "<span onclick=\"Feeds.open({feed:$feed_id})\"
                         style=\"cursor : pointer\"
                         title=\"".htmlspecialchars($line['feed_title'])."\">
                         $feed_icon_img</span>";
@@ -481,14 +482,14 @@ class Feeds extends Handler_Protected {
 
 							$vgroup_last_feed = $feed_id;
 
-							$vf_catchup_link = "<a class='catchup' onclick='catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
+							$vf_catchup_link = "<a class='catchup' onclick='Feeds.catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
 
 							$feed_icon_src = Feeds::getFeedIcon($feed_id);
 							$feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"$feed_icon_src\">";
 
 							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-title'>".
 								"<div style=\"float : right\">$feed_icon_img</div>".
-								"<a href=\"#\" class='title' onclick=\"viewfeed({feed:$feed_id})\">".
+								"<a href=\"#\" class='title' onclick=\"Feeds.open({feed:$feed_id})\">".
 								$line["feed_title"]."</a> $vf_catchup_link</div>";
 
 						}
@@ -504,7 +505,7 @@ class Feeds extends Handler_Protected {
 					$tmp_content .= "<div style=\"vertical-align : middle\">";
 
 					$tmp_content .= "<input dojoType=\"dijit.form.CheckBox\"
-                        type=\"checkbox\" onclick=\"toggleSelectRow2(this, false, true)\"
+                        type=\"checkbox\" onclick=\"Headlines.onRowChecked(this)\"
                         class='rchk'>";
 
 					$tmp_content .= "$marked_pic";
@@ -523,7 +524,7 @@ class Feeds extends Handler_Protected {
 
 					// data-article-id included for context menu
 					$tmp_content .= "<span
-                    onclick=\"return cdmClicked(event, $id);\"
+                    onclick=\"return Headlines.click(event, $id);\"
                     data-article-id=\"$id\"
                     class=\"titleWrap hlMenuAttach $hlc_suffix\">
                     <a class=\"title $hlc_suffix\"
@@ -535,9 +536,13 @@ class Feeds extends Handler_Protected {
 
 					$tmp_content .= $labels_str;
 
-					$tmp_content .= "<span class='collapse'>
-                        <img src=\"images/collapse.png\" onclick=\"return cdmCollapseActive(event)\"
-                        title=\"".__("Collapse article")."\"/></span>";
+					if (!get_pref("CDM_EXPANDED")) {
+						$tmp_content .= "<span class='collapse'>
+                            <img src=\"images/collapse.png\" onclick=\"return Article.cdmUnsetActive(event)\"
+                            title=\"" . __("Collapse article") . "\"/></span>";
+
+						$tmp_content .= "<span class='excerpt'>" . $line["content_preview"] . "</span>";
+					}
 
 					$tmp_content .= "</span>";
 
@@ -547,7 +552,7 @@ class Feeds extends Handler_Protected {
 
 							$tmp_content .= "<div class=\"feed\">
                             <a href=\"#\" style=\"background-color: rgba($rgba,0.3)\"
-                            onclick=\"viewfeed({feed:$feed_id})\">".
+                            onclick=\"Feeds.open({feed:$feed_id})\">".
 								truncate_string($line["feed_title"],30)."</a>
                         </div>";
 						}
@@ -561,13 +566,13 @@ class Feeds extends Handler_Protected {
 					if (!get_pref("VFEED_GROUP_BY_FEED") && $line["feed_title"]) {
 						$tmp_content .= "<span style=\"cursor : pointer\"
                         title=\"".htmlspecialchars($line["feed_title"])."\"
-                        onclick=\"viewfeed({feed:$feed_id})\">$feed_icon_img</span>";
+                        onclick=\"Feeds.open({feed:$feed_id})\">$feed_icon_img</span>";
 					}
 					$tmp_content .= "</div>"; //score wrapper2
 
 					$tmp_content .= "</div>"; //header
 
-					$tmp_content .= "<div class=\"content\" onclick=\"return cdmClicked(event, $id, true);\">";
+					$tmp_content .= "<div class=\"content\" onclick=\"return Headlines.click(event, $id, true);\">";
 
 					$tmp_content .= "<div id=\"POSTNOTE-$id\">";
 					if ($line['note']) {
@@ -628,7 +633,7 @@ class Feeds extends Handler_Protected {
 					$tmp_content .= "<img src='images/tag.png' alt='Tags' title='Tags'>
                     <span id=\"ATSTR-$id\">$tags_str</span>
                     <a title=\"".__('Edit tags for this article')."\"
-                    href=\"#\" onclick=\"editArticleTags($id)\">(+)</a>";
+                    href=\"#\" onclick=\"Article.editTags($id)\">(+)</a>";
 
 					$num_comments = (int) $line["num_comments"];
 					$entry_comments = "";
@@ -722,7 +727,7 @@ class Feeds extends Handler_Protected {
 
 					if ($num_errors > 0) {
 						$reply['content'] .= "<br/>";
-						$reply['content'] .= "<a class=\"insensitive\" href=\"#\" onclick=\"showFeedsWithErrors()\">" .
+						$reply['content'] .= "<a class=\"insensitive\" href=\"#\" onclick=\"CommonDialogs.showFeedsWithErrors()\">" .
 							__('Some feeds have update errors (click for details)') . "</a>";
 					}
 					$reply['content'] .= "</span></p></div>";
@@ -913,7 +918,7 @@ class Feeds extends Handler_Protected {
 
 		if ($num_errors > 0) {
 			$reply['headlines']['content'] .= "<br/>";
-			$reply['headlines']['content'] .= "<a class=\"insensitive\" href=\"#\" onclick=\"showFeedsWithErrors()\">".
+			$reply['headlines']['content'] .= "<a class=\"insensitive\" href=\"#\" onclick=\"CommonDialogs.showFeedsWithErrors()\">".
 				__('Some feeds have update errors (click for details)')."</a>";
 		}
 		$reply['headlines']['content'] .= "</span></p>";
@@ -1014,7 +1019,7 @@ class Feeds extends Handler_Protected {
 			<button dojoType=\"dijit.form.Button\" class=\"btn-primary\" type=\"submit\" onclick=\"return dijit.byId('feedAddDlg').execute()\">".__('Subscribe')."</button>";
 
 		if (!(defined('_DISABLE_FEED_BROWSER') && _DISABLE_FEED_BROWSER)) {
-			print "<button dojoType=\"dijit.form.Button\" onclick=\"return feedBrowser()\">".__('More feeds')."</button>";
+			print "<button dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.feedBrowser()\">".__('More feeds')."</button>";
 		}
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('feedAddDlg').hide()\">".__('Cancel')."</button>

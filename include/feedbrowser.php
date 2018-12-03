@@ -53,11 +53,9 @@
 				$site_url = htmlspecialchars($line["site_url"]);
 				$subscribers = $line["subscribers"];
 
-				$check_box = "<input onclick='toggleSelectListRow2(this)'
+				$check_box = "<input onclick='Lists.onRowChecked(this)'
 							dojoType=\"dijit.form.CheckBox\"
 							type=\"checkbox\" \">";
-
-				$class = ($feedctr % 2) ? "even" : "odd";
 
 				$site_url = "<a target=\"_blank\" rel=\"noopener noreferrer\"
 							href=\"$site_url\">
@@ -75,10 +73,8 @@
 				$feed_url = htmlspecialchars($line["feed_url"]);
 				$site_url = htmlspecialchars($line["site_url"]);
 
-				$check_box = "<input onclick='toggleSelectListRow2(this)' dojoType=\"dijit.form.CheckBox\"
+				$check_box = "<input onclick='Lists.onRowChecked(this)' dojoType=\"dijit.form.CheckBox\"
 							type=\"checkbox\">";
-
-				$class = ($feedctr % 2) ? "even" : "odd";
 
 				if ($line['articles_archived'] > 0) {
 					$archived = sprintf(_ngettext("%d archived article", "%d archived articles", (int) $line['articles_archived']), $line['articles_archived']);

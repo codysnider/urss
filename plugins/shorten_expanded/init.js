@@ -1,29 +1,20 @@
 var _shorten_expanded_threshold = 1.5; //window heights
 
 function expandSizeWrapper(id) {
-	try {
-		const row = $(id);
+	const row = $(id);
 
-		console.log(row);
+	if (row) {
+		const content = row.select(".contentSizeWrapper")[0];
+		const link = row.select(".expandPrompt")[0];
 
-		if (row) {
-			const content = row.select(".contentSizeWrapper")[0];
-			const link = row.select(".expandPrompt")[0];
-
-			if (content) content.removeClassName("contentSizeWrapper");
-			if (link) Element.hide(link);
-
-		}
-	} catch (e) {
-		exception_error("expandSizeWrapper", e);
+		if (content) content.removeClassName("contentSizeWrapper");
+		if (link) Element.hide(link);
 	}
 
 	return false;
-
 }
 
 require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
-
 	ready(function() {
 		PluginHost.register(PluginHost.HOOK_ARTICLE_RENDERED_CDM, function(row) {
 			window.setTimeout(function() {
@@ -48,5 +39,4 @@ require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 			return true;
 		});
 	});
-
 });

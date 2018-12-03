@@ -57,7 +57,7 @@
 	<script>
 		dojoConfig = {
 			async: true,
-			cacheBust: new Date(),
+			cacheBust: "<?php echo get_scripts_timestamp(); ?>",
 			packages: [
 				{ name: "lib", location: "../" },
 				{ name: "fox", location: "../../js" },
@@ -70,19 +70,18 @@
 				"lib/scriptaculous/scriptaculous.js?load=effects,controls",
 				"lib/dojo/dojo.js",
 				"lib/dojo/tt-rss-layer.js",
+				"js/common.js",
+				"js/prefs.js",
 				"errors.php?mode=js") as $jsfile) {
 
 		echo javascript_tag($jsfile);
 
 	} ?>
 
-	<script type="text/javascript">
-		'use strict';
+    <script type="text/javascript">
 		require({cache:{}});
-	<?php
-		print get_minified_js(["functions.js", "prefs.js"]);
-	?>
-	</script>
+    </script>
+
 	<script type="text/javascript">
 	<?php
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
@@ -101,13 +100,6 @@
 	</script>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-	<script type="text/javascript">
-		Event.observe(window, 'load', function() {
-			init();
-		});
-	</script>
-
 </head>
 
 <body class="claro ttrss_main ttrss_prefs">
@@ -127,7 +119,7 @@
 
 <div id="header" dojoType="dijit.layout.ContentPane" region="top">
 	<!-- <a href='#' onclick="showHelp()"><?php echo __("Keyboard shortcuts") ?></a> | -->
-	<a href="#" onclick="gotoMain()"><?php echo __('Exit preferences') ?></a>
+	<a href="#" onclick="document.location.href = 'index.php'"><?php echo __('Exit preferences') ?></a>
 </div>
 
 <div id="main" dojoType="dijit.layout.BorderContainer">

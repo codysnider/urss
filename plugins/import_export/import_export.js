@@ -14,7 +14,7 @@ function exportData() {
 			style: "width: 600px",
 			prepare: function() {
 
-				notify_progress("Loading, please wait...");
+				Notify.progress("Loading, please wait...");
 
 				new Ajax.Request("backend.php", {
 					parameters: "op=pluginhandler&plugin=import_export&method=exportrun&offset=" + exported,
@@ -50,10 +50,10 @@ function exportData() {
 									"Error occured, could not export data.";
 							}
 						} catch (e) {
-							exception_error("exportData", e, transport.responseText);
+							App.Error.report(e);
 						}
 
-						notify('');
+						Notify.close();
 
 					} });
 
@@ -71,7 +71,7 @@ function exportData() {
 
 
 	} catch (e) {
-		exception_error("exportData", e);
+		App.Error.report(e);
 	}
 }
 
@@ -81,7 +81,7 @@ function dataImportComplete(iframe) {
 
 		Element.hide(iframe);
 
-		notify('');
+		Notify.close();
 
 		if (dijit.byId('dataImportDlg'))
 			dijit.byId('dataImportDlg').destroyRecursive();
@@ -100,7 +100,7 @@ function dataImportComplete(iframe) {
 		dialog.show();
 
 	} catch (e) {
-		exception_error("dataImportComplete", e);
+		App.Error.report(e);
 	}
 }
 
@@ -112,7 +112,7 @@ function importData() {
 		alert(__("Please choose the file first."));
 		return false;
 	} else {
-		notify_progress("Importing, please wait...", true);
+		Notify.progress("Importing, please wait...", true);
 
 		Element.show("data_upload_iframe");
 

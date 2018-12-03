@@ -26,7 +26,7 @@ class Pref_System extends Handler_Protected {
 	function index() {
 
 		print "<div dojoType=\"dijit.layout.AccordionContainer\" region=\"center\">";
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Error Log')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Event Log')."\">";
 
 		if (LOG_DESTINATION == "sql") {
 
@@ -37,10 +37,10 @@ class Pref_System extends Handler_Protected {
 				LIMIT 100");
 
 			print "<button dojoType=\"dijit.form.Button\"
-				onclick=\"updateSystemList()\">".__('Refresh')."</button> ";
+				onclick=\"Helpers.updateEventLog()\">".__('Refresh')."</button> ";
 
 			print "&nbsp;<button dojoType=\"dijit.form.Button\"
-				onclick=\"clearSqlLog()\">".__('Clear log')."</button> ";
+				class=\"btn-danger\" onclick=\"Helpers.clearEventLog()\">".__('Clear')."</button> ";
 
 			print "<p><table width=\"100%\" cellspacing=\"10\" class=\"prefErrorLog\">";
 

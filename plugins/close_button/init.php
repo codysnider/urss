@@ -21,7 +21,7 @@ class Close_Button extends Plugin {
 		if (!get_pref("COMBINED_DISPLAY_MODE")) {
 			$rv = "<img src=\"plugins/close_button/button.png\"
 				class='tagsPic' style=\"cursor : pointer\"
-				onclick=\"closeArticlePanel()\"
+				onclick=\"Article.close()\"
 				title='".__('Close article')."'>";
 		}
 

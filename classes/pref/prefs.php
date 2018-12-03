@@ -183,7 +183,7 @@ class Pref_Prefs extends Handler_Protected {
 		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
 		evt.preventDefault();
 		if (this.validate()) {
-			notify_progress('Saving data...', true);
+			Notify.progress('Saving data...', true);
 
 			new Ajax.Request('backend.php', {
 				parameters: dojo.objectToQuery(this.getValues()),
@@ -249,12 +249,12 @@ class Pref_Prefs extends Handler_Protected {
 			print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
 			evt.preventDefault();
 			if (this.validate()) {
-				notify_progress('Changing password...', true);
+				Notify.progress('Changing password...', true);
 
 				new Ajax.Request('backend.php', {
 					parameters: dojo.objectToQuery(this.getValues()),
 					onComplete: function(transport) {
-						notify('');
+						Notify.close();
 						if (transport.responseText.indexOf('ERROR: ') == 0) {
 
 							$('pwd_change_infobox').innerHTML =
@@ -316,14 +316,14 @@ class Pref_Prefs extends Handler_Protected {
 				print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
 				evt.preventDefault();
 				if (this.validate()) {
-					notify_progress('Disabling OTP', true);
+					Notify.progress('Disabling OTP', true);
 
 					new Ajax.Request('backend.php', {
 						parameters: dojo.objectToQuery(this.getValues()),
 						onComplete: function(transport) {
-							notify('');
+							Notify.close();
 							if (transport.responseText.indexOf('ERROR: ') == 0) {
-								notify_error(transport.responseText.replace('ERROR: ', ''));
+								Notify.error(transport.responseText.replace('ERROR: ', ''));
 							} else {
 								window.location.reload();
 							}
@@ -367,14 +367,14 @@ class Pref_Prefs extends Handler_Protected {
 					print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
 					evt.preventDefault();
 					if (this.validate()) {
-						notify_progress('Saving data...', true);
+						Notify.progress('Saving data...', true);
 
 						new Ajax.Request('backend.php', {
 							parameters: dojo.objectToQuery(this.getValues()),
 							onComplete: function(transport) {
-								notify('');
+								Notify.close();
 								if (transport.responseText.indexOf('ERROR:') == 0) {
-									notify_error(transport.responseText.replace('ERROR:', ''));
+									Notify.error(transport.responseText.replace('ERROR:', ''));
 								} else {
 									window.location.reload();
 								}
@@ -436,12 +436,12 @@ class Pref_Prefs extends Handler_Protected {
 				onComplete: function(transport) {
 					var msg = transport.responseText;
 					if (quit) {
-						gotoMain();
+						document.location.href = 'index.php';
 					} else {
 						if (msg == 'PREFS_NEED_RELOAD') {
 							window.location.reload();
 						} else {
-							notify_info(msg);
+							Notify.info(msg);
 						}
 					}
 			} });
@@ -542,7 +542,7 @@ class Pref_Prefs extends Handler_Protected {
 			} else if ($pref_name == "USER_STYLESHEET") {
 
 				print "<button dojoType=\"dijit.form.Button\"
-					onclick=\"customizeCSS()\">" . __('Customize') . "</button>";
+					onclick=\"Helpers.customizeCSS()\">" . __('Customize') . "</button>";
 
 			} else if ($pref_name == "USER_CSS_THEME") {
 
@@ -608,11 +608,11 @@ class Pref_Prefs extends Handler_Protected {
 				print "<br/>";
 
 				print " <button dojoType=\"dijit.form.Button\" disabled=\"$has_serial\"
-					onclick=\"insertSSLserial('$cert_serial')\">" .
+					onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '$cert_serial')\">" .
 					__('Register') . "</button>";
 
 				print " <button dojoType=\"dijit.form.Button\"
-					onclick=\"insertSSLserial('')\">" .
+					onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '')\">" .
 					__('Clear') . "</button>";
 
 			} else if ($pref_name == 'DIGEST_PREFERRED_TIME') {
@@ -659,10 +659,10 @@ class Pref_Prefs extends Handler_Protected {
 			</div>
 			</div>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return editProfiles()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Helpers.editProfiles()\">".
 			__('Manage profiles')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" class=\"btn-danger\" onclick=\"return validatePrefsReset()\">".
+		print "<button dojoType=\"dijit.form.Button\" class=\"btn-danger\" onclick=\"return Helpers.confirmReset()\">".
 			__('Reset to defaults')."</button>";
 
 		print "&nbsp;";
@@ -689,12 +689,12 @@ class Pref_Prefs extends Handler_Protected {
 		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
 		evt.preventDefault();
 		if (this.validate()) {
-			notify_progress('Saving data...', true);
+			Notify.progress('Saving data...', true);
 
 			new Ajax.Request('backend.php', {
 				parameters: dojo.objectToQuery(this.getValues()),
 				onComplete: function(transport) {
-					notify('');
+					Notify.close();
 					if (confirm(__('Selected plugins have been enabled. Reload?'))) {
 						window.location.reload();
 					}
@@ -756,7 +756,7 @@ class Pref_Prefs extends Handler_Protected {
 
 				if (count($tmppluginhost->get_all($plugin)) > 0) {
 					if (in_array($name, $system_enabled)) {
-						print "<td><a href='#' onclick=\"clearPluginData('$name')\"
+						print "<td><a href='#' onclick=\"Helpers.clearPluginData('$name')\"
 							class='visibleLink'>".__("Clear data")."</a></td>";
 					}
 				}
@@ -799,7 +799,7 @@ class Pref_Prefs extends Handler_Protected {
 
 				$plugin_icon = $checked ? "plugin.png" : "plugin_disabled.png";
 
-				print "<td align='center'><input id='FPCHK-$name' name='plugins[]' value='$name' onclick='toggleSelectRow2(this);'
+				print "<td align='center'><input id='FPCHK-$name' name='plugins[]' value='$name' onclick='Tables.onRowChecked(this);'
 					dojoType=\"dijit.form.CheckBox\" $checked $disabled
 					type=\"checkbox\"></td>";
 
@@ -816,7 +816,7 @@ class Pref_Prefs extends Handler_Protected {
 
 				if (count($tmppluginhost->get_all($plugin)) > 0) {
 					if (in_array($name, $system_enabled) || in_array($name, $user_enabled)) {
-						print "<td><a href='#' onclick=\"clearPluginData('$name')\" class='visibleLink'>".__("Clear data")."</a></td>";
+						print "<td><a href='#' onclick=\"Helpers.clearPluginData('$name')\" class='visibleLink'>".__("Clear data")."</a></td>";
 					}
 				}
 
@@ -992,9 +992,9 @@ class Pref_Prefs extends Handler_Protected {
 		print "<div dojoType=\"dijit.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-		print "<div onclick=\"selectTableRows('prefFeedProfileList', 'all')\"
+		print "<div onclick=\"Tables.select('prefFeedProfileList', true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
-		print "<div onclick=\"selectTableRows('prefFeedProfileList', 'none')\"
+		print "<div onclick=\"Tables.select('prefFeedProfileList', false)\"
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 
@@ -1019,11 +1019,10 @@ class Pref_Prefs extends Handler_Protected {
 		print "<table width=\"100%\" class=\"prefFeedProfileList\"
 			cellspacing=\"0\" id=\"prefFeedProfileList\">";
 
-		print "<tr class=\"placeholder\" id=\"FCATR-0\">"; #odd
+		print "<tr class=\"placeholder\">"; # data-row-id='0' <-- no point, shouldn't be removed
 
 		print "<td width='5%' align='center'><input
-			id='FCATC-0'
-			onclick='toggleSelectRow2(this);'
+			onclick='Tables.onRowChecked(this);'
 			dojoType=\"dijit.form.CheckBox\"
 			type=\"checkbox\"></td>";
 
@@ -1043,15 +1042,13 @@ class Pref_Prefs extends Handler_Protected {
 		while ($line = $sth->fetch()) {
 
 			$profile_id = $line["id"];
-			$this_row_id = "id=\"FCATR-$profile_id\"";
 
-			print "<tr class=\"placeholder\" $this_row_id>";
+			print "<tr class=\"placeholder\" data-row-id='$profile_id'>";
 
 			$edit_title = htmlspecialchars($line["title"]);
 
 			print "<td width='5%' align='center'><input
-				onclick='toggleSelectRow2(this);'
-				id='FCATC-$profile_id'
+				onclick='Tables.onRowChecked(this);'
 				dojoType=\"dijit.form.CheckBox\"
 				type=\"checkbox\"></td>";
 
