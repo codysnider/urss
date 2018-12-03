@@ -8,15 +8,17 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-03 14:24+0300\n"
-"PO-Revision-Date: 2013-07-16 23:45+0400\n"
-"Last-Translator: cyberbat <cyberbat83@gmail.com>\n"
-"Language-Team: Russian <>\n"
+"PO-Revision-Date: 2018-12-03 13:36+0000\n"
+"Last-Translator: swa <waltersullivan.11121@gmail.com>\n"
+"Language-Team: Russian <http://weblate.tt-rss.org/projects/tt-rss/messages/"
+"ru/>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -342,7 +344,7 @@ msgstr "Выход"
 
 #: index.php:261
 msgid "Updates are available from Git."
-msgstr ""
+msgstr "Апдейты доступны из Гита."
 
 #: prefs.php:33
 #: prefs.php:130
@@ -493,7 +495,7 @@ msgstr "Каналы не найдены."
 #: include/functions.php:928
 #, php-format
 msgid "%d min"
-msgstr ""
+msgstr "%d мин"
 
 #: include/functions.php:1122
 msgid "Navigation"
