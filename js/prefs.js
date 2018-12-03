@@ -5,7 +5,7 @@ let App;
 let CommonDialogs;
 let Filters;
 let Users;
-let Prefs;
+let Helpers;
 
 const Plugins = {};
 

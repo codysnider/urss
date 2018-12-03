@@ -37,10 +37,10 @@ class Pref_System extends Handler_Protected {
 				LIMIT 100");
 
 			print "<button dojoType=\"dijit.form.Button\"
-				onclick=\"Prefs.updateEventLog()\">".__('Refresh')."</button> ";
+				onclick=\"Helpers.updateEventLog()\">".__('Refresh')."</button> ";
 
 			print "&nbsp;<button dojoType=\"dijit.form.Button\"
-				class=\"btn-danger\" onclick=\"Prefs.clearEventLog()\">".__('Clear')."</button> ";
+				class=\"btn-danger\" onclick=\"Helpers.clearEventLog()\">".__('Clear')."</button> ";
 
 			print "<p><table width=\"100%\" cellspacing=\"10\" class=\"prefErrorLog\">";
 

@@ -1274,7 +1274,7 @@ class Pref_Feeds extends Handler_Protected {
 			__("Only main settings profile can be migrated using OPML."));
 
 		print "<iframe id=\"upload_iframe\"
-			name=\"upload_iframe\" onload=\"Prefs.OPML.onImportComplete(this)\"
+			name=\"upload_iframe\" onload=\"Helpers.OPML.onImportComplete(this)\"
 			style=\"width: 400px; height: 100px; display: none;\"></iframe>";
 
 		print "<form  name=\"opml_form\" style='display : block' target=\"upload_iframe\"
@@ -1285,7 +1285,7 @@ class Pref_Feeds extends Handler_Protected {
 			</label>
 			<input type=\"hidden\" name=\"op\" value=\"dlg\">
 			<input type=\"hidden\" name=\"method\" value=\"importOpml\">
-			<button dojoType=\"dijit.form.Button\" onclick=\"return Prefs.OPML.import();\" type=\"submit\">" .
+			<button dojoType=\"dijit.form.Button\" onclick=\"return Helpers.OPML.import();\" type=\"submit\">" .
 			__('Import OPML') . "</button>";
 
 		print "</form>";
@@ -1295,7 +1295,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "<form dojoType=\"dijit.form.Form\" id=\"opmlExportForm\">";
 
 		print "<button dojoType=\"dijit.form.Button\"
-			onclick=\"Prefs.OPML.export()\" >" .
+			onclick=\"Helpers.OPML.export()\" >" .
 			__('Export OPML') . "</button>";
 
 		print "<label>";
@@ -1331,7 +1331,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return App.displayDlg('".__("Show as feed")."','generatedFeed', '$rss_url')\">".
 			__('Display URL')."</button> ";
 
-		print "<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Prefs.clearFeedAccessKeys()\">".
+		print "<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Helpers.clearFeedAccessKeys()\">".
 			__('Clear all generated URLs')."</button> ";
 
 		print "</p>";

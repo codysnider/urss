@@ -1,5 +1,5 @@
 define(["dojo/_base/declare"], function (declare) {
-	Prefs = {
+	Helpers = {
 		clearFeedAccessKeys: function() {
 			if (confirm(__("This will invalidate all previously generated feed URLs. Continue?"))) {
 				Notify.progress("Clearing URLs...");
@@ -56,7 +56,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 							xhrPost("backend.php", query, () => {
 								Notify.close();
-								Prefs.editProfiles();
+								Helpers.editProfiles();
 							});
 						}
 
@@ -88,7 +88,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 						xhrPost("backend.php", query, () => {
 							Notify.close();
-							Prefs.editProfiles();
+							Helpers.editProfiles();
 						});
 
 					}
@@ -128,7 +128,7 @@ define(["dojo/_base/declare"], function (declare) {
 		confirmReset: function() {
 			if (confirm(__("Reset to defaults?"))) {
 				xhrPost("backend.php", {op: "pref-prefs", method: "resetconfig"}, (transport) => {
-					Prefs.refresh();
+					Helpers.refresh();
 					Notify.info(transport.responseText);
 				});
 			}
@@ -138,7 +138,7 @@ define(["dojo/_base/declare"], function (declare) {
 				Notify.progress("Loading, please wait...");
 
 				xhrPost("backend.php", {op: "pref-prefs", method: "clearplugindata", name: name}, () => {
-					Prefs.refresh();
+					Helpers.refresh();
 				});
 			}
 		},
@@ -150,7 +150,7 @@ define(["dojo/_base/declare"], function (declare) {
 		}
 	};
 
-	Prefs.OPML = {
+	Helpers.OPML = {
 		import: function() {
 			const opml_file = $("opml_file");
 
@@ -225,8 +225,7 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 			return false;
 		},
+	};
 
-};
-
-	return Prefs;
+	return Helpers;
 });
