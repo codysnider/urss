@@ -38,7 +38,7 @@ function init() {
     			display:''
     		});
 		fetchProfiles();
-		dijit.byId("bw_limit").attr("checked", getCookie("ttrss_bwlimit") == 'true');
+		dijit.byId("bw_limit").attr("checked", Cookie.get("ttrss_bwlimit") == 'true');
 		document.forms.loginForm.login.focus();
     	});
 
@@ -46,7 +46,7 @@ function init() {
 
 function fetchProfiles() {
 	try {
-		var query = "op=getProfiles&login=" + param_escape(document.forms["loginForm"].login.value);
+		var query = "op=getProfiles&login=" + encodeURIComponent(document.forms["loginForm"].login.value);
 
 		if (query) {
 			new Ajax.Request("public.php",	{
