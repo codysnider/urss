@@ -1270,11 +1270,11 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('OPML')."\">";
 
-		print "<p>" . __("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.") .
-			__("Only main settings profile can be migrated using OPML.") . "</p>";
+		print_notice(__("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.") .
+			__("Only main settings profile can be migrated using OPML."));
 
 		print "<iframe id=\"upload_iframe\"
-			name=\"upload_iframe\" onload=\"opmlImportComplete(this)\"
+			name=\"upload_iframe\" onload=\"Prefs.OPML.onImportComplete(this)\"
 			style=\"width: 400px; height: 100px; display: none;\"></iframe>";
 
 		print "<form  name=\"opml_form\" style='display : block' target=\"upload_iframe\"
@@ -1285,24 +1285,29 @@ class Pref_Feeds extends Handler_Protected {
 			</label>
 			<input type=\"hidden\" name=\"op\" value=\"dlg\">
 			<input type=\"hidden\" name=\"method\" value=\"importOpml\">
-			<button dojoType=\"dijit.form.Button\" onclick=\"return opmlImport();\" type=\"submit\">" .
-			__('Import my OPML') . "</button>";
+			<button dojoType=\"dijit.form.Button\" onclick=\"return Prefs.OPML.import();\" type=\"submit\">" .
+			__('Import OPML') . "</button>";
+
+		print "</form>";
+
+		print "<p/>";
+
+		print "<form dojoType=\"dijit.form.Form\" id=\"opmlExportForm\">";
+
+		print "<button dojoType=\"dijit.form.Button\"
+			onclick=\"Prefs.OPML.export()\" >" .
+			__('Export OPML') . "</button>";
+
+		print "<label>";
+		print_checkbox("include_settings", true, "1", "");
+		print "&nbsp;" . __("Include settings");
+		print "</label>";
+
+		print "</form>";
 
 		print "<hr>";
 
-		$opml_export_filename = "TinyTinyRSS_".date("Y-m-d").".opml";
-
-		print "<p>" . __('Filename:') .
-            " <input class=\"input input-text\" type=\"text\" id=\"filename\" value=\"$opml_export_filename\" />&nbsp;" .
-				__('Include settings') . "<input type=\"checkbox\" id=\"settings\" checked=\"1\"/>";
-
-		print "</p><button dojoType=\"dijit.form.Button\"
-			onclick=\"gotoExportOpml(document.opml_form.filename.value, document.opml_form.settings.checked)\" >" .
-              __('Export OPML') . "</button></p></form>";
-
-		print "<hr>";
-
-		print "<p>" . __('Your OPML can be published publicly and can be subscribed by anyone who knows the URL below.') . "</p>";
+		print_notice(__('Your OPML can be published publicly and can be subscribed by anyone who knows the URL below.'));
 
 		print_warning("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.");
 

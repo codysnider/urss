@@ -49,7 +49,7 @@ class Dlg extends Handler_Protected {
 
 		print "<div align='center'>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return opmlRegenKey()\">".
+		print "<button dojoType=\"dijit.form.Button\" onclick=\"return Prefs.OPML.changeKey()\">".
 			__('Generate new URL')."</button> ";
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.closeInfoBox()\">".

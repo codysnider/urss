@@ -148,7 +148,85 @@ define(["dojo/_base/declare"], function (declare) {
 				Notify.close();
 			});
 		}
-	}
+	};
+
+	Prefs.OPML = {
+		import: function() {
+			const opml_file = $("opml_file");
+
+			if (opml_file.value.length == 0) {
+				alert(__("Please choose an OPML file first."));
+				return false;
+			} else {
+				Notify.progress("Importing, please wait...", true);
+
+				Element.show("upload_iframe");
+
+				return true;
+			}
+		},
+		onImportComplete: function(iframe) {
+			if (!iframe.contentDocument.body.innerHTML) return false;
+
+			Element.show(iframe);
+
+			Notify.close();
+
+			if (dijit.byId('opmlImportDlg'))
+				dijit.byId('opmlImportDlg').destroyRecursive();
+
+			const content = iframe.contentDocument.body.innerHTML;
+
+			const dialog = new dijit.Dialog({
+				id: "opmlImportDlg",
+				title: __("OPML Import"),
+				style: "width: 600px",
+				onCancel: function () {
+					window.location.reload();
+				},
+				execute: function () {
+					window.location.reload();
+				},
+				content: content
+			});
+
+			dojo.connect(dialog, "onShow", function () {
+				Element.hide(iframe);
+			});
+
+			dialog.show();
+		},
+		export: function() {
+			console.log("export");
+			window.open("backend.php?op=opml&method=export&" + dojo.formToQuery("opmlExportForm"));
+		},
+		changeKey: function() {
+			if (confirm(__("Replace current OPML publishing address with a new one?"))) {
+				Notify.progress("Trying to change address...", true);
+
+				xhrJson("backend.php", {op: "pref-feeds", method: "regenOPMLKey"}, (reply) => {
+					if (reply) {
+						const new_link = reply.link;
+						const e = $('pub_opml_url');
+
+						if (new_link) {
+							e.href = new_link;
+							e.innerHTML = new_link;
+
+							new Effect.Highlight(e);
+
+							Notify.close();
+
+						} else {
+							Notify.error("Could not change feed URL.");
+						}
+					}
+				});
+			}
+			return false;
+		},
+
+};
 
 	return Prefs;
 });
