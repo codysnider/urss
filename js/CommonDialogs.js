@@ -152,7 +152,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 							} catch (e) {
 								console.error(transport.responseText);
-								exception_error(e);
+								App.Error.report(e);
 							}
 						});
 					}

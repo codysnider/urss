@@ -168,7 +168,7 @@ define(["dojo/_base/declare"], function (declare) {
 						Notify.close();
 
 					} catch (e) {
-						exception_error(e);
+						App.Error.report(e);
 					}
 				})
 			}
@@ -206,7 +206,7 @@ define(["dojo/_base/declare"], function (declare) {
 									if (tooltip) tooltip.attr('label', data.content_full);
 								}
 							} catch (e) {
-								exception_error(e);
+								App.Error.report(e);
 							}
 						});
 					}

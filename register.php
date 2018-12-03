@@ -135,13 +135,13 @@
 							f.sub_btn.disabled = true;
 						}
 					} catch (e) {
-						exception_error("checkUsername_callback", e);
+						App.Error.report(e);
 					}
 
 				} });
 
 		} catch (e) {
-			exception_error("checkUsername", e);
+			App.Error.report(e);
 		}
 
 		return false;
@@ -171,7 +171,7 @@
 			return true;
 
 		} catch (e) {
-			exception_error("validateRegForm", e);
+			alert(e.stack);
 			return false;
 		}
 	}

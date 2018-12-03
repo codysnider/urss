@@ -42,25 +42,17 @@ require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox',
 });
 
 function fetchProfiles() {
-	try {
-		var query = "op=getProfiles&login=" + encodeURIComponent(document.forms["loginForm"].login.value);
+    const query = "op=getProfiles&login=" + encodeURIComponent(document.forms["loginForm"].login.value);
 
-		if (query) {
-			new Ajax.Request("public.php",	{
-				parameters: query,
-				onComplete: function(transport) {
-					if (transport.responseText.match("select")) {
-						$('profile_box').innerHTML = transport.responseText;
-						//dojo.parser.parse('profile_box');
-					}
-			} });
-		}
-
-	} catch (e) {
-		exception_error("fetchProfiles", e);
-	}
+    new Ajax.Request("public.php",	{
+        parameters: query,
+        onComplete: function(transport) {
+            if (transport.responseText.match("select")) {
+                $('profile_box').innerHTML = transport.responseText;
+                //dojo.parser.parse('profile_box');
+            }
+    } });
 }
-
 
 function gotoRegForm() {
 	window.location.href = "register.php";
@@ -68,15 +60,8 @@ function gotoRegForm() {
 }
 
 function bwLimitChange(elem) {
-	try {
-		var limit_set = elem.checked;
-
-		setCookie("ttrss_bwlimit", limit_set,
-			<?php print SESSION_COOKIE_LIFETIME ?>);
-
-	} catch (e) {
-		exception_error("bwLimitChange", e);
-	}
+    Cookie.set("ttrss_bwlimit", elem.checked,
+        <?php print SESSION_COOKIE_LIFETIME ?>);
 }
 </script>
 
@@ -139,7 +124,7 @@ function bwLimitChange(elem) {
 		</div>
 
 		<div dojoType="dijit.Tooltip" connectId="bw_limit_label" position="below" style="display:none">
-<?php echo __("Does not display images in articles, reduces automatic refreshes."); ?>
+        <?php echo __("Does not display images in articles, reduces automatic refreshes."); ?>
 		</div>
 
 		<?php if (SESSION_COOKIE_LIFETIME > 0) { ?>

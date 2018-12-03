@@ -7,14 +7,14 @@ define(["dojo/_base/declare"], function (declare) {
 		hotkey_prefix: 0,
 		hotkey_prefix_pressed: false,
 		hotkey_prefix_timeout: 0,
+		constructor: function() {
+			window.onerror = this.Error.onWindowError;
+		},
 		getInitParam: function(k) {
 			return this._initParams[k];
 		},
 		setInitParam: function(k, v) {
 			this._initParams[k] = v;
-		},
-		constructor: function(args) {
-			//
 		},
 		enableCsrfSupport: function() {
 			Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(
@@ -176,7 +176,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 					if (callback) callback(transport);
 				} catch (e) {
-					exception_error(e);
+					this.Error.report(e);
 				}
 			});
 
@@ -355,5 +355,67 @@ define(["dojo/_base/declare"], function (declare) {
 		explainError: function(code) {
 			return this.displayDlg(__("Error explained"), "explainError", code);
 		},
+		Error: {
+			report: function(error, params) {
+				params = params || {};
+
+				if (!error) return;
+
+				console.error("[Error.report]", error, params);
+
+				const message = params.message ? params.message : error.toString();
+
+				try {
+					xhrPost("backend.php",
+						{op: "rpc", method: "log",
+							file: params.filename ? params.filename : error.fileName,
+							line: params.lineno ? params.lineno : error.lineNumber,
+							msg: message,
+							context: error.stack},
+						(transport) => {
+							console.warn("[Error.report] log response", transport.responseText);
+						});
+				} catch (re) {
+					console.error("[Error.report] exception while saving logging error on server", re);
+				}
+
+				try {
+					if (dijit.byId("exceptionDlg"))
+						dijit.byId("exceptionDlg").destroyRecursive();
+
+					let content = "<div class='fatalError'><p>" + message + "</p>";
+
+					if (error.stack)
+						content += "<div><b>Stack trace:</b></div>" +
+							"<textarea name=\"stack\" readonly=\"1\">" + error.stack + "</textarea>";
+
+					content += "<div style='text-align : center'>";
+
+					content += "<button dojoType=\"dijit.form.Button\" " +
+						"onclick=\"dijit.byId('exceptionDlg').hide()\">" +
+						__('Close this window') + "</button>";
+					content += "</div>";
+
+					const dialog = new dijit.Dialog({
+						id: "exceptionDlg",
+						title: "Unhandled exception",
+						style: "width: 600px",
+						content: content
+					});
+
+					dialog.show();
+				} catch (de) {
+					console.error("[Error.report] exception while showing error dialog", de);
+
+					alert(error.stack ? error.stack : message);
+				}
+
+			},
+			onWindowError: function (message, filename, lineno, colno, error) {
+				// called without context (this) from window.onerror
+				App.Error.report(error,
+					{message: message, filename: filename, lineno: lineno, colno: colno});
+			},
+		}
 	});
 });

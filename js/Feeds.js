@@ -198,13 +198,13 @@ define(["dojo/_base/declare"], function (declare) {
 						Feeds.init();
 						App.setLoadingProgress(25);
 					} catch (e) {
-						exception_error(e);
+						App.Error.report(e);
 					}
 				});
 
 				tree.startup();
 			} catch (e) {
-				exception_error(e);
+				App.Error.report(e);
 			}
 		},
 		init: function() {
@@ -380,7 +380,7 @@ define(["dojo/_base/declare"], function (declare) {
 							Headlines.onLoaded(transport, offset);
 							PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
 						} catch (e) {
-							exception_error(e);
+							App.Error.report(e);
 						}
 					});
 				});

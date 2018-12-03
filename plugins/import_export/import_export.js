@@ -50,7 +50,7 @@ function exportData() {
 									"Error occured, could not export data.";
 							}
 						} catch (e) {
-							exception_error("exportData", e, transport.responseText);
+							App.Error.report(e);
 						}
 
 						Notify.close();
@@ -71,7 +71,7 @@ function exportData() {
 
 
 	} catch (e) {
-		exception_error("exportData", e);
+		App.Error.report(e);
 	}
 }
 
@@ -100,7 +100,7 @@ function dataImportComplete(iframe) {
 		dialog.show();
 
 	} catch (e) {
-		exception_error("dataImportComplete", e);
+		App.Error.report(e);
 	}
 }
 

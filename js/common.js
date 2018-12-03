@@ -4,6 +4,16 @@
 let _label_base_index = -1024;
 let loading_progress = 0;
 
+/* error reporting shim */
+
+// TODO: deprecated; remove
+function exception_error(e, e_compat, filename, lineno, colno) {
+	if (typeof e == "string")
+		e = e_compat;
+
+	App.Error.report(e, {filename: filename, lineno: lineno, colno: colno});
+}
+
 /* xhr shorthand helpers */
 
 function xhrPost(url, params, complete) {
@@ -117,71 +127,6 @@ const Cookie = {
 		document.cookie = name + "=" + "" + "; " + expires;
 	}
 };
-
-/* error reporting */
-
-function report_error(message, filename, lineno, colno, error) {
-	exception_error(error, null, filename, lineno);
-}
-
-function exception_error(e, e_compat, filename, lineno, colno) {
-	if (typeof e == "string") e = e_compat;
-
-	if (!e) return; // no exception object, nothing to report.
-
-	try {
-		console.error(e);
-		const msg = e.toString();
-
-		try {
-			xhrPost("backend.php",
-				{op: "rpc", method: "log",
-					file: e.fileName ? e.fileName : filename,
-					line: e.lineNumber ? e.lineNumber : lineno,
-					msg: msg, context: e.stack},
-				(transport) => {
-					console.warn(transport.responseText);
-				});
-
-		} catch (e) {
-			console.error("Exception while trying to log the error.", e);
-		}
-
-		let content = "<div class='fatalError'><p>" + msg + "</p>";
-
-		if (e.stack) {
-			content += "<div><b>Stack trace:</b></div>" +
-				"<textarea name=\"stack\" readonly=\"1\">" + e.stack + "</textarea>";
-		}
-
-		content += "</div>";
-
-		content += "<div class='dlgButtons'>";
-
-		content += "<button dojoType=\"dijit.form.Button\" "+
-				"onclick=\"dijit.byId('exceptionDlg').hide()\">" +
-				__('Close') + "</button>";
-		content += "</div>";
-
-		if (dijit.byId("exceptionDlg"))
-			dijit.byId("exceptionDlg").destroyRecursive();
-
-		const dialog = new dijit.Dialog({
-			id: "exceptionDlg",
-			title: "Unhandled exception",
-			style: "width: 600px",
-			content: content});
-
-		dialog.show();
-
-	} catch (ei) {
-		console.error("Exception while trying to report an exception:", ei);
-		console.error("Original exception:", e);
-
-		alert("Exception occured while trying to report an exception.\n" +
-			ei.stack + "\n\nOriginal exception:\n" + e.stack);
-	}
-}
 
 /* runtime notifications */
 

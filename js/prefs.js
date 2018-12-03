@@ -58,10 +58,6 @@ require(["dojo/_base/kernel",
 		try {
 			const _App = declare("fox.App", AppBase, {
 				constructor: function() {
-					window.onerror = function (message, filename, lineno, colno, error) {
-						report_error(message, filename, lineno, colno, error);
-					};
-
 					parser.parse();
 
 					this.setLoadingProgress(50);
@@ -73,7 +69,7 @@ require(["dojo/_base/kernel",
 						try {
 							this.backendSanityCallback(transport);
 						} catch (e) {
-							exception_error(e);
+							this.Error.report(e);
 						}
 					});
 				},
@@ -149,7 +145,7 @@ require(["dojo/_base/kernel",
 			App = new _App();
 
 		} catch (e) {
-			exception_error(e);
+			this.Error.report(e);
 		}
 	});
 });

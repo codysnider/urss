@@ -67,7 +67,7 @@ define(["dojo/_base/declare"], function (declare) {
 						parentNode.appendChild(li);
 					}
 				} catch (e) {
-					exception_error(e);
+					App.Error.report(e);
 				}
 			});
 		},
@@ -117,7 +117,7 @@ define(["dojo/_base/declare"], function (declare) {
 					}
 
 				} catch (e) {
-					exception_error(e);
+					App.Error.report(e);
 				}
 			});
 		},
@@ -238,7 +238,7 @@ define(["dojo/_base/declare"], function (declare) {
 								console.log("getTestResults: dialog closed, bailing out.");
 							}
 						} catch (e) {
-							exception_error(e);
+							App.Error.report(e);
 						}
 
 					});

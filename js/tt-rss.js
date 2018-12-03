@@ -65,10 +65,6 @@ require(["dojo/_base/kernel",
 				_widescreen_mode: false,
 				hotkey_actions: {},
 				constructor: function () {
-					window.onerror = function (message, filename, lineno, colno, error) {
-						report_error(message, filename, lineno, colno, error);
-					};
-
 					parser.parse();
 
 					this.setLoadingProgress(30);
@@ -91,7 +87,7 @@ require(["dojo/_base/kernel",
 						try {
 							App.backendSanityCallback(transport);
 						} catch (e) {
-							exception_error(e);
+							App.Error.report(e);
 						}
 					});
 				},
@@ -555,7 +551,7 @@ require(["dojo/_base/kernel",
 
 			App = new _App();
 		} catch (e) {
-			exception_error(e);
+			App.Error.report(e);
 		}
 	});
 });

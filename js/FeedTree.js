@@ -207,7 +207,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 					}
 				}
 			} catch (e) {
-				exception_error(e);
+				App.Error.report(e);
 			}
 		},
 		findNodeParentsAndExpandThem: function(feed, is_cat, root, parents) {
@@ -242,7 +242,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 							this.expandParentNodes(feed, is_cat, parents.slice(0));
 						}
 			} catch (e) {
-				exception_error(e);
+				App.Error.report(e);
 			}
 		},
 		selectFeed: function(feed, is_cat) {
