@@ -8,16 +8,17 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-03 14:24+0300\n"
-"PO-Revision-Date: 2013-05-02 13:55+0100\n"
-"Last-Translator: ArmyOfPirates\n"
-"Language-Team: translations <LL@li.org>\n"
+"PO-Revision-Date: 2018-12-03 16:51+0000\n"
+"Last-Translator: Patrick Ahles <p.ahles@gmail.com>\n"
+"Language-Team: Dutch <http://weblate.tt-rss.org/projects/tt-rss/messages/nl/>"
+"\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: _\n"
 "X-Poedit-Basepath: .\n"
 
@@ -60,13 +61,11 @@ msgstr "updates uitschakelen"
 
 #: backend.php:84
 #: backend.php:94
-#, fuzzy
 msgid "15 minutes"
 msgstr "Elke 15 minuten"
 
 #: backend.php:85
 #: backend.php:95
-#, fuzzy
 msgid "30 minutes"
 msgstr "Elke 30 minuten"
 
@@ -77,15 +76,13 @@ msgstr "Ieder uur"
 
 #: backend.php:87
 #: backend.php:97
-#, fuzzy
 msgid "4 hours"
-msgstr "Om de 4 uur"
+msgstr "Elke 4 uur"
 
 #: backend.php:88
 #: backend.php:98
-#, fuzzy
 msgid "12 hours"
-msgstr "Om de 12 uur"
+msgstr "Elke 12 uur"
 
 #: backend.php:89
 #: backend.php:99
@@ -141,7 +138,9 @@ msgstr "Geen uit te voeren opdracht."
 
 #: errors.php:25
 msgid "Could not display feed: query failed. Please check label match syntax or local configuration."
-msgstr "Kon feed niet weergeven: de zoekopdracht is mislukt. Controleer aub de syntax van de labelzoektekst of de lokale configuratie. "
+msgstr ""
+"Kon feed niet weergeven: de zoekopdracht is mislukt. Controleer aub de "
+"syntax van de labelzoektekst of de lokale configuratie."
 
 #: errors.php:27
 msgid "Denied. Your access level is insufficient to access this page."
@@ -160,14 +159,12 @@ msgid "SQL escaping test failed, check your database and PHP configuration"
 msgstr "SQL escaping test mislukt. Controleer uw database en de PHP configuratie"
 
 #: errors.php:37
-#, fuzzy
 msgid "Method not found"
-msgstr "Feed niet gevonden."
+msgstr "Methode niet gevonden"
 
 #: errors.php:39
-#, fuzzy
 msgid "Plugin not found"
-msgstr "Gebruiker niet gevonden"
+msgstr "Plugin niet gevonden"
 
 #: index.php:143
 #: index.php:159
@@ -343,7 +340,7 @@ msgstr "Afmelden"
 
 #: index.php:261
 msgid "Updates are available from Git."
-msgstr ""
+msgstr "Er zijn updates beschikbaar via Git."
 
 #: prefs.php:33
 #: prefs.php:130
@@ -493,7 +490,7 @@ msgstr "Geen feeds gevonden."
 #: include/functions.php:928
 #, php-format
 msgid "%d min"
-msgstr ""
+msgstr "%d min"
 
 #: include/functions.php:1122
 msgid "Navigation"
@@ -661,16 +658,15 @@ msgstr "Draai kopteksten om"
 
 #: include/functions.php:1162
 msgid "Toggle headline grouping"
-msgstr ""
+msgstr "Schakel groepering op kopje aan/uit"
 
 #: include/functions.php:1163
 msgid "Debug feed update"
 msgstr "Debug feed update"
 
 #: include/functions.php:1164
-#, fuzzy
 msgid "Debug viewfeed()"
-msgstr "Debug feed update"
+msgstr "Debug viewfeed()"
 
 #: include/functions.php:1165
 #: js/FeedTree.js:98
@@ -732,36 +728,39 @@ msgstr "Toon helpdialoogvenster"
 
 #: include/functions.php:2480
 msgid "There is no error, the file uploaded with success"
-msgstr ""
+msgstr "Er is geen fout, het bestand is met success geüpload"
 
 #: include/functions.php:2481
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
+"Het geüploade bestand is groter dan de upload_max_filesize instelling in "
+"php.ini"
 
 #: include/functions.php:2482
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
+"Het geüploade bestand is groter dan de MAX_FILE_SIZE instelling die is "
+"aangegeven in het HTML-formulier"
 
 #: include/functions.php:2483
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Het geüploade bestand was slechts gedeeltelijk geüpload"
 
 #: include/functions.php:2484
-#, fuzzy
 msgid "No file was uploaded"
-msgstr "Geen bestand geupload."
+msgstr "Geen bestand geupload"
 
 #: include/functions.php:2485
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "Een tijdelijke map ontbreekt"
 
 #: include/functions.php:2486
 msgid "Failed to write file to disk."
-msgstr ""
+msgstr "Er kon geen bestand naar de harde schijf worden geschreven."
 
 #: include/functions.php:2487
 msgid "A PHP extension stopped the file upload."
-msgstr ""
+msgstr "Een PHP-extensie heeft de bestandsupload gestopt."
 
 #: include/login_form.php:89
 #: classes/handler/public.php:466
@@ -807,24 +806,20 @@ msgid "Log in"
 msgstr "Aanmelden"
 
 #: include/sessions.php:45
-#, fuzzy
 msgid "Session failed to validate (schema version changed)"
-msgstr "De sessie kon niet worden gevalideerd (onjuist IP)"
+msgstr "De sessie kon niet worden gevalideerd (schema-versie is veranderd)"
 
 #: include/sessions.php:53
-#, fuzzy
 msgid "Session failed to validate (UA changed)."
-msgstr "De sessie kon niet worden gevalideerd (onjuist IP)"
+msgstr "De sessie kon niet worden gevalideerd (UA is veranderd)."
 
 #: include/sessions.php:67
-#, fuzzy
 msgid "Session failed to validate (password changed)"
-msgstr "De sessie kon niet worden gevalideerd (onjuist IP)"
+msgstr "De sessie kon niet worden gevalideerd (wachtwoord veranderd)"
 
 #: include/sessions.php:74
-#, fuzzy
 msgid "Session failed to validate (user not found)"
-msgstr "De sessie kon niet worden gevalideerd (onjuist IP)"
+msgstr "De sessie kon niet worden gevalideerd (gebruiker niet gevonden)"
 
 #: classes/dlg.php:17
 msgid "If you have imported labels and/or filters, you might need to reload preferences to see your new data."
@@ -873,9 +868,9 @@ msgid "Update daemon is taking too long to perform a feed update. This could ind
 msgstr "De update daemon neemt te veel tijd om een feed bij te werken. Dit kan betekenen dat het proces is gescrashed of hangt. Controleer het achtergrondproces of contacteer de eigenaar van deze instantie."
 
 #: classes/dlg.php:171
-#, fuzzy, php-format
+#, php-format
 msgid "%s can be accessed via the following secret URL:"
-msgstr "U kunt dit artikel delen via de volgende unieke URL:"
+msgstr "%s kan worden bekeken via de volgende geheime URL:"
 
 #: classes/dlg.php:192
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
@@ -1486,7 +1481,7 @@ msgstr "Bewerk regel"
 
 #: classes/pref/users.php:64
 msgid "Access level: "
-msgstr "Toegangsniveau:"
+msgstr "Toegangsniveau: "
 
 #: classes/pref/users.php:82
 #: classes/pref/feeds.php:647
@@ -1827,7 +1822,7 @@ msgstr "Bevestig feed markeren als gelezen"
 
 #: classes/pref/prefs.php:31
 msgid "Amount of articles to display at once"
-msgstr "Aantal tegelijkertijd weer te geven artikelen "
+msgstr "Aantal tegelijkertijd weer te geven artikelen"
 
 #: classes/pref/prefs.php:32
 msgid "Default feed update interval"
@@ -1875,7 +1870,7 @@ msgstr "Sorteer feeds op aantal ongelezen artikelen"
 
 #: classes/pref/prefs.php:39
 msgid "Maximum age of fresh articles (in hours)"
-msgstr "Maximum leeftijd van nieuwe artikelen (uren) "
+msgstr "Maximum leeftijd van nieuwe artikelen (uren)"
 
 #: classes/pref/prefs.php:40
 msgid "Hide feeds with no unread articles"
@@ -2711,7 +2706,7 @@ msgstr "Kon niet importeren: onbekend documentindeling."
 
 #: plugins/import_export/init.php:422
 msgid "Finished: "
-msgstr "Klaar:"
+msgstr "Klaar: "
 
 #: plugins/import_export/init.php:423
 #, php-format
