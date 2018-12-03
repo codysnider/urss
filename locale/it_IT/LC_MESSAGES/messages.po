@@ -10,15 +10,16 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-03 14:24+0300\n"
-"PO-Revision-Date: 2017-03-29 22:05+0200\n"
-"Last-Translator: dedioste <dedioste@gmail.com>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2018-12-03 16:51+0000\n"
+"Last-Translator: Dario Di Ludovico <dario@diludovico.it>\n"
+"Language-Team: Italian <http://weblate.tt-rss.org/projects/tt-rss/messages/"
+"it/>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.9\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -802,9 +803,8 @@ msgid "Session failed to validate (schema version changed)"
 msgstr "La validazione della sessione è fallita (schema del database cambiato)"
 
 #: include/sessions.php:53
-#, fuzzy
 msgid "Session failed to validate (UA changed)."
-msgstr "La validazione della sessione è fallita (password cambiata)"
+msgstr "La validazione della sessione è fallita (utente cambiato)."
 
 #: include/sessions.php:67
 msgid "Session failed to validate (password changed)"
@@ -861,16 +861,17 @@ msgid "Update daemon is taking too long to perform a feed update. This could ind
 msgstr "Il demone di aggiornamento sta impiegando troppo tempo a eseguire l'aggiornamento del notiziario. Questo potrebbe indicare un problema come un crash o uno stallo. Controllare il processo del demone o contattare il proprietario dell'istanza."
 
 #: classes/dlg.php:171
-#, fuzzy, php-format
+#, php-format
 msgid "%s can be accessed via the following secret URL:"
-msgstr "Puoi condividere questo articolo usando il seguente URL unico:"
+msgstr "%s è raggiungibile usando il seguente URL unico:"
 
 #: classes/dlg.php:192
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
 msgstr ""
+"Stai usando la password di default. Per favore modificala nella Preferenze ("
+"Dati Personali / Autenticazione)."
 
 #: classes/dlg.php:196
-#, fuzzy
 msgid "Open Preferences"
 msgstr "Preferenze"
 
@@ -1182,9 +1183,8 @@ msgstr "Errore durante l'analisi del documento."
 #: classes/feeds.php:140
 #: classes/feeds.php:141
 #: classes/pref/feeds.php:1331
-#, fuzzy
 msgid "Show as feed"
-msgstr "Questo notiziario"
+msgstr "Mostra come notiziario"
 
 #: classes/feeds.php:62
 #, php-format
@@ -1506,29 +1506,29 @@ msgid "User not found"
 msgstr "Utente non trovato"
 
 #: classes/pref/users.php:247
-#, fuzzy, php-format
+#, php-format
 msgid "Added user %s with password %s"
-msgstr "Aggiunto l'utente <b>%s</b> con password <b>%s</b>"
+msgstr "Aggiunto l'utente %s con password %s"
 
 #: classes/pref/users.php:254
-#, fuzzy, php-format
+#, php-format
 msgid "Could not create user %s"
-msgstr "Impossibile creare l'utente <b>%s<b>"
+msgstr "Impossibile creare l'utente %s"
 
 #: classes/pref/users.php:258
-#, fuzzy, php-format
+#, php-format
 msgid "User %s already exists."
-msgstr "L'utente <b>%s</b> esiste già."
+msgstr "L'utente %s esiste già."
 
 #: classes/pref/users.php:286
-#, fuzzy, php-format
+#, php-format
 msgid "Changed password of user %s to %s"
-msgstr "Modificata password dell'utente <b>%s</b> a <b>%s</b>"
+msgstr "Modificata password dell'utente %s in %s"
 
 #: classes/pref/users.php:288
-#, fuzzy, php-format
+#, php-format
 msgid "Sending new password of user %s to %s"
-msgstr "Inviata nuova password dell'utente <b>%s</b> a <b>%s</b> "
+msgstr "Inviata nuova password dell'utente %s a %s"
 
 #: classes/pref/users.php:311
 msgid "[tt-rss] Password change notification"
@@ -1579,7 +1579,7 @@ msgstr "Nessun utente corrispondente trovato."
 
 #: classes/pref/system.php:29
 msgid "Event Log"
-msgstr ""
+msgstr "Log degli eventi"
 
 #: classes/pref/system.php:40
 msgid "Refresh"
@@ -1680,8 +1680,9 @@ msgid "Create"
 msgstr "Crea"
 
 #: classes/pref/filters.php:987
+#, fuzzy
 msgid "Regular expression, without outer delimiters (i.e. slashes)"
-msgstr ""
+msgstr "Espressione regolare, senza delimitatori esterni (ad esempio barre)"
 
 #: classes/pref/filters.php:993
 msgid "Inverse regular expression matching"
@@ -1763,7 +1764,7 @@ msgstr "Avanzate"
 
 #: classes/pref/prefs.php:21
 msgid "Digest"
-msgstr "Digest"
+msgstr "Sommario"
 
 #: classes/pref/prefs.php:25
 msgid "Allow duplicate articles"
@@ -1914,9 +1915,8 @@ msgid "Click to register your SSL client certificate with tt-rss"
 msgstr "Fare clic per registrare il certificato SSL client su tt-rss"
 
 #: classes/pref/prefs.php:51
-#, fuzzy
 msgid "Do not embed media in articles"
-msgstr "Non mostrare le immagini negli articoli"
+msgstr "Non includere i media negli articoli"
 
 #: classes/pref/prefs.php:52
 msgid "Strip unsafe tags from articles"
@@ -2099,8 +2099,11 @@ msgid "System plugins"
 msgstr "Plugin di sistema"
 
 #: classes/pref/prefs.php:712
+#, fuzzy
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr ""
+"I plugin di sistema sono attivati in <strong>config.php</strong> per tutti "
+"gli utenti."
 
 #: classes/pref/prefs.php:717
 #: classes/pref/prefs.php:773
@@ -2212,14 +2215,12 @@ msgid "Feed Title"
 msgstr "Titolo del notiziario"
 
 #: classes/pref/feeds.php:571
-#, fuzzy
 msgid "Site URL:"
-msgstr "URL dell'articolo:"
+msgstr "URL del sito:"
 
 #: classes/pref/feeds.php:573
-#, fuzzy
 msgid "Site URL"
-msgstr "URL del notiziario"
+msgstr "URL del sito"
 
 #: classes/pref/feeds.php:584
 #: classes/pref/feeds.php:814
@@ -2257,9 +2258,8 @@ msgstr "Mostrare sempre le immagini allegate"
 
 #: classes/pref/feeds.php:699
 #: classes/pref/feeds.php:890
-#, fuzzy
 msgid "Do not embed media"
-msgstr "Non includere le immagini"
+msgstr "Non includere i media"
 
 #: classes/pref/feeds.php:712
 #: classes/pref/feeds.php:898
@@ -2278,9 +2278,8 @@ msgstr "Icona"
 #: classes/pref/feeds.php:742
 #: classes/pref/feeds.php:1283
 #: plugins/import_export/init.php:71
-#, fuzzy
 msgid "Choose file..."
-msgstr "Crea filtro..."
+msgstr "Scegli un file..."
 
 #: classes/pref/feeds.php:749
 msgid "Replace"
@@ -2328,9 +2327,8 @@ msgid "Only main settings profile can be migrated using OPML."
 msgstr "Puoi migrare con OPML solamente il profilo principale e le sue impostazioni."
 
 #: classes/pref/feeds.php:1289
-#, fuzzy
 msgid "Import OPML"
-msgstr "Importa il mio OPML"
+msgstr "Importa OPML"
 
 #: classes/pref/feeds.php:1299
 msgid "Export OPML"
@@ -2358,7 +2356,9 @@ msgstr "Articoli pubblicati e condivisi / Notiziari generati"
 
 #: classes/pref/feeds.php:1324
 msgid "Published articles are exported as a public RSS feed and can be subscribed by anyone who knows the URL specified below."
-msgstr " Gli articoli pubblicati vengono esportati come un notiziario RSS pubblico e possono essere sottoscritti da chiunque conosca l'URL specificato qui sotto."
+msgstr ""
+"Gli articoli pubblicati vengono esportati come un notiziario RSS pubblico e "
+"possono essere sottoscritti da chiunque conosca l'URL specificato qui sotto."
 
 #: classes/pref/feeds.php:1332
 msgid "Display URL"
@@ -2501,12 +2501,19 @@ msgid "The following comics are currently supported:"
 msgstr "I seguenti fumetti sono attualmente supportati:"
 
 #: plugins/af_comics/init.php:69
+#, fuzzy
 msgid "To subscribe to GoComics use the comic's regular web page as the feed URL (e.g. for the <em>Garfield</em> comic use <code>http://www.gocomics.com/garfield</code>)."
 msgstr ""
+"Per sottoscrivere GoComics utilizza l'indirizzo della pagina del fumetto "
+"come URL del notiziario (ad esempio per <em>Garfield</em> usa "
+"<code>http://www.gocomics.com/garfield</code>)."
 
 #: plugins/af_comics/init.php:71
+#, fuzzy
 msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
 msgstr ""
+"Inserisci un filtro aggiornato all'interno di <code>filters.local</code> "
+"nella cartella dei plugin."
 
 #: plugins/note/init.php:28
 #: plugins/note/note.js:10
@@ -2519,7 +2526,7 @@ msgstr "Puoi cancellare tutti gli articoli condivisi per Url unico qui."
 
 #: plugins/share/init.php:44
 msgid "Unshare all articles"
-msgstr "Togli la condivisione a tutti gli articoli."
+msgstr "Togli la condivisione a tutti gli articoli"
 
 #: plugins/share/init.php:78
 msgid "Share by URL"
@@ -2599,9 +2606,8 @@ msgid "Enable proxy for all remote images."
 msgstr "Attiva il proxy delle immagini per tutte le immagini remote."
 
 #: plugins/af_zz_imgproxy/init.php:236
-#, fuzzy
 msgid "Don't cache files locally."
-msgstr "Memorizzare le immagini localmente"
+msgstr "Non salvare le immagini localmente."
 
 #: plugins/auth_internal/init.php:67
 msgid "Please enter your one time password:"
@@ -2641,7 +2647,7 @@ msgstr "Readability"
 
 #: plugins/af_readability/init.php:118
 msgid "Inline article content"
-msgstr "Contenuto completo dell'articolo."
+msgstr "Contenuto completo dell'articolo"
 
 #: plugins/toggle_sidebar/init.php:23
 msgid "Collapse feedlist"
@@ -2736,7 +2742,6 @@ msgstr "Inserire il nuovo punteggio per gli articoli selezionati:"
 #: js/Headlines.js:411
 #: js/Headlines.js:449
 #: js/Headlines.js:470
-#, fuzzy
 msgid "No articles selected."
 msgstr "Nessun articolo selezionato."
 
@@ -2794,9 +2799,9 @@ msgid "Expand to select feed"
 msgstr "Espandi per selezionare i notiziari"
 
 #: js/CommonDialogs.js:143
-#, fuzzy, perl-format
+#, perl-format
 msgid "Couldn't download the specified URL: %s"
-msgstr "Impossibile scaricare l'URL: $s"
+msgstr "Impossibile scaricare l'URL: %s"
 
 #: js/CommonDialogs.js:146
 #, perl-format
@@ -2822,7 +2827,6 @@ msgstr "Rimuovere i notiziari selezionati?"
 #: js/PrefFeedTree.js:226
 #: js/PrefFeedTree.js:242
 #: js/PrefFeedTree.js:394
-#, fuzzy
 msgid "No feeds selected."
 msgstr "Nessun notiziario selezionato."
 
@@ -2863,9 +2867,8 @@ msgid "(Un)collapse"
 msgstr "Espandi/Riduci la barra laterale"
 
 #: js/Feeds.js:230
-#, fuzzy
 msgid "Your password is at default value"
-msgstr "La password è impostata al valore predefinito, cambiala, per favore."
+msgstr "La password è impostata al valore predefinito"
 
 #: js/Headlines.js:709
 #, perl-format
@@ -2971,30 +2974,28 @@ msgid "Remove selected categories?"
 msgstr "Rimuovere le categorie selezionate?"
 
 #: js/PrefFeedTree.js:205
-#, fuzzy
 msgid "No categories selected."
 msgstr "Nessuna categoria selezionata."
 
 #: js/PrefFeedTree.js:256
 msgid "Edit Multiple Feeds"
-msgstr "Modifica notiziari multipli"
+msgstr "Modifica  più notiziari"
 
 #: js/PrefFeedTree.js:280
 msgid "Save changes to selected feeds?"
 msgstr "Salvare i cambiamenti ai notiziari selezionati?"
 
 #: js/PrefFeedTree.js:311
-#, fuzzy
 msgid "Rename category to:"
-msgstr "Rimuovi la categoria"
+msgstr "Rinomina la categoria in:"
 
 #: js/PrefFeedTree.js:323
 msgid "Category title:"
-msgstr "Titolo categoria: "
+msgstr "Titolo della categoria:"
 
 #: js/PrefFeedTree.js:347
 msgid "Subscribing to feeds..."
-msgstr "Sottoscrivendo i notiziari..."
+msgstr "Sottoscrivo i notiziari..."
 
 #: js/PrefFeedTree.js:369
 msgid "Feeds without recent updates"
@@ -3011,7 +3012,6 @@ msgstr "Rimuovere i filtri selezionati?"
 #: js/PrefFilterTree.js:253
 #: js/PrefFilterTree.js:110
 #: js/PrefFilterTree.js:126
-#, fuzzy
 msgid "No filters selected."
 msgstr "Nessun filtro selezionato."
 
@@ -3020,9 +3020,8 @@ msgid "This will invalidate all previously generated feed URLs. Continue?"
 msgstr "Questo renderà non più accessibili tutti gli URL dei notiziari generati. Procedere?"
 
 #: js/PrefHelpers.js:21
-#, fuzzy
 msgid "Clear event log?"
-msgstr "Cancella log"
+msgstr "Pulire log degli eventi?"
 
 #: js/PrefHelpers.js:40
 msgid "Settings Profiles"
@@ -3033,7 +3032,6 @@ msgid "Remove selected profiles? Active and default profiles will not be removed
 msgstr "Rimuovere i profili selezionati? Il profilo attivo e quello predefinito non saranno rimossi."
 
 #: js/PrefHelpers.js:64
-#, fuzzy
 msgid "No profiles selected."
 msgstr "Nessun profilo selezionato."
 
@@ -3104,7 +3102,7 @@ msgstr "Errore nell'invio email:"
 
 #: plugins/shorten_expanded/init.js:34
 msgid "Click to expand article"
-msgstr "Fare clic per espandere l'articolo."
+msgstr "Fare clic per espandere l'articolo"
 
 #: plugins/import_export/import_export.js:13
 msgid "Export Data"
@@ -3142,14 +3140,12 @@ msgid "Upload complete."
 msgstr "Caricamento completato."
 
 #: js/CommonDialogs.js:21
-#, fuzzy
 msgid "Upload failed: icon is too big."
-msgstr "Caricamento fallito con codice errore %d"
+msgstr "Caricamento fallito: l'icona è troppo grande."
 
 #: js/CommonDialogs.js:24
-#, fuzzy
 msgid "Upload failed."
-msgstr "Caricamento completato."
+msgstr "Caricamento fallito."
 
 #: js/CommonDialogs.js:30
 msgid "Removing feed icon..."
@@ -3186,9 +3182,8 @@ msgstr "Provo a cambiare indirizzo..."
 
 #: js/CommonDialogs.js:440
 #: js/PrefHelpers.js:219
-#, fuzzy
 msgid "Could not change feed URL."
-msgstr "Impossibile creare l'utente <b>%s<b>"
+msgstr "Impossibile modificare l'URL del notiziario."
 
 #: js/CommonFilters.js:133
 msgid "Edit rule"
@@ -3223,34 +3218,28 @@ msgid "Marking all feeds as read..."
 msgstr "Segnando tutti i notiziari come letti..."
 
 #: js/Feeds.js:433
-#, fuzzy
 msgid "Mark %w in %s older than 1 day as read?"
-msgstr "Segnare tutti gli articoli in %s più vecchi di un giorno come letti?"
+msgstr "Segnare %w in %s più vecchi di un giorno come letti?"
 
 #: js/Feeds.js:436
-#, fuzzy
 msgid "Mark %w in %s older than 1 week as read?"
-msgstr "Segnare tutti gli articoli in %s più vecchi di una settimana come letti?"
+msgstr "Segnare %w in %s più vecchi di una settimana come letti?"
 
 #: js/Feeds.js:439
-#, fuzzy
 msgid "Mark %w in %s older than 2 weeks as read?"
-msgstr "Segnare tutti gli articoli in %s più vecchi di due settimane come letti?"
+msgstr "Segnare %w in %s più vecchi di due settimane come letti?"
 
 #: js/Feeds.js:442
-#, fuzzy
 msgid "Mark %w in %s as read?"
-msgstr "Segnare tutti gli articoli in %s come letti?"
+msgstr "Segnare %w in %s come letti?"
 
 #: js/Feeds.js:445
-#, fuzzy
 msgid "search results"
-msgstr "Risultati di ricerca: %s"
+msgstr "risultati della ricerca"
 
 #: js/Feeds.js:445
-#, fuzzy
 msgid "all articles"
-msgstr "Tutti gli articoli"
+msgstr "tutti gli articoli"
 
 #: js/Feeds.js:487
 msgid "Mark all articles in %s as read?"
@@ -3352,7 +3341,6 @@ msgstr "Reimpostare le etichette selezionate ai colori predefiniti?"
 
 #: js/PrefLabelTree.js:137
 #: js/PrefLabelTree.js:157
-#, fuzzy
 msgid "No labels selected."
 msgstr "Nessuna etichetta selezionata."
 
@@ -3365,7 +3353,6 @@ msgid "Removing selected labels..."
 msgstr "Rimuovendo le etichette selezionate..."
 
 #: js/PrefUsers.js:15
-#, fuzzy
 msgid "Please enter username:"
 msgstr "Inserire il nome utente:"
 
@@ -3380,15 +3367,13 @@ msgstr "Editor utente"
 #: js/PrefUsers.js:57
 #: js/PrefUsers.js:96
 #: js/PrefUsers.js:103
-#, fuzzy
 msgid "No users selected."
 msgstr "Nessun utente selezionato."
 
 #: js/PrefUsers.js:62
 #: js/PrefUsers.js:108
-#, fuzzy
 msgid "Please select one user."
-msgstr "Selezionare un solo utente."
+msgstr "Selezionare un utente."
 
 #: js/PrefUsers.js:66
 msgid "Reset password of selected user?"
@@ -3407,7 +3392,6 @@ msgid "Removing selected users..."
 msgstr "Rimuovendo gli utenti selezionati..."
 
 #: js/tt-rss.js:308
-#, fuzzy
 msgid "Please enable mail or mailto plugin first."
 msgstr "Per favore, prima attiva il plugin email."
 
@@ -3441,9 +3425,8 @@ msgid "Trying to change URL..."
 msgstr "Provo a cambiare URL..."
 
 #: plugins/share/share.js:40
-#, fuzzy
 msgid "Could not change URL."
-msgstr "Provo a cambiare URL..."
+msgstr "Impossibile cambiare URL..."
 
 #: plugins/share/share.js:50
 msgid "Trying to unshare..."
