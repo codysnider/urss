@@ -72,7 +72,7 @@ class Mail extends Plugin {
 	function hook_article_button($line) {
 		return "<img src=\"plugins/mail/mail.png\"
 					class='tagsPic' style=\"cursor : pointer\"
-					onclick=\"emailArticle(".$line["id"].")\"
+					onclick=\"Plugins.Mail.send(".$line["id"].")\"
 					alt='Zoom' title='".__('Forward by email')."'>";
 	}
 

@@ -302,12 +302,10 @@ require(["dojo/_base/kernel",
 						}
 					};
 					this.hotkey_actions["email_article"] = function () {
-						if (typeof emailArticle != "undefined") {
-							emailArticle();
-						} else if (typeof mailtoArticle != "undefined") {
-							mailtoArticle();
+						if (typeof Plugins.Mail != "undefined") {
+							Plugins.Mail.onHotkey(Headlines.getSelected());
 						} else {
-							alert(__("Please enable mail plugin first."));
+							alert(__("Please enable mail or mailto plugin first."));
 						}
 					};
 					this.hotkey_actions["select_all"] = function () {

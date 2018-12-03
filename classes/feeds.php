@@ -124,12 +124,12 @@ class Feeds extends Handler_Protected {
 		}
 
 		if (PluginHost::getInstance()->get_plugin("mail")) {
-			$reply .= "<option value=\"emailArticle(false)\">".__('Forward by email').
+			$reply .= "<option value=\"Plugins.Mail.send()\">".__('Forward by email').
 				"</option>";
 		}
 
 		if (PluginHost::getInstance()->get_plugin("mailto")) {
-			$reply .= "<option value=\"mailtoArticle(false)\">".__('Forward by email').
+			$reply .= "<option value=\"Plugins.Mailto.send()\">".__('Forward by email').
 				"</option>";
 		}
 
