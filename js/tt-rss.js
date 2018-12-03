@@ -71,9 +71,6 @@ require(["dojo/_base/kernel",
 
 					parser.parse();
 
-					if (!this.genericSanityCheck())
-						return;
-
 					this.setLoadingProgress(30);
 					this.initHotkeyActions();
 
@@ -158,15 +155,6 @@ require(["dojo/_base/kernel",
 					}
 
 					console.log("second stage ok");
-				},
-				genericSanityCheck: function() {
-					Cookie.set("ttrss_test", "TEST");
-
-					if (Cookie.get("ttrss_test") != "TEST") {
-						return fatalError(2);
-					}
-
-					return true;
 				},
 				updateTitle: function() {
 					let tmp = "Tiny Tiny RSS";
