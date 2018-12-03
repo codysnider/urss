@@ -583,7 +583,10 @@ class Feeds extends Handler_Protected {
 					if (!$line['lang']) $line['lang'] = 'en';
 
 					// this is filled from RROW data-content
-					$tmp_content .= "<div class=\"content-inner\" lang=\"".$line['lang']."\">";
+					$tmp_content .= "<div class=\"content-inner\" lang=\"".$line['lang']."\">
+                        <img src='images/indicator_white.gif'>
+                    </div>";
+					$tmp_content .= "<div class=\"intermediate\">";
 
 					if ($line["orig_feed_id"]) {
 
@@ -611,8 +614,6 @@ class Feeds extends Handler_Protected {
 						}
 					}
 
-					$tmp_content .= "</div>"; //content-inner
-					$tmp_content .= "<div class=\"intermediate\">";
 
 					$always_display_enclosures = $line["always_display_enclosures"];
 					$tmp_content .= Article::format_article_enclosures($id, $always_display_enclosures,
