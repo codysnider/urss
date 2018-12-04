@@ -13,15 +13,16 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-03 14:24+0300\n"
-"PO-Revision-Date: 2015-11-30 09:29+0100\n"
-"Last-Translator: Raphael Rochet <raphael@rri.fr>\n"
-"Language-Team: French\n"
+"PO-Revision-Date: 2018-12-04 13:27+0000\n"
+"Last-Translator: Glandos <bugs-ttrss@antipoul.fr>\n"
+"Language-Team: French <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"fr/>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.8.6\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -727,42 +728,45 @@ msgstr "Afficher la fenêtre d'aide"
 
 #: include/functions.php:2480
 msgid "There is no error, the file uploaded with success"
-msgstr ""
+msgstr "Aucune erreur, le fichier a été téléversé avec succès"
 
 #: include/functions.php:2481
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
+"La taille du fichier téléversé dépasse la valeur de la directive "
+"upload_max_filesize dans php.ini"
 
 #: include/functions.php:2482
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
+"La taille du fichier téléversé dépasse la valeur de la directive "
+"MAX_FILE_SIZE du formulaire HTML"
 
 #: include/functions.php:2483
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Le fichier a seulement été partiellement téléversé"
 
 #: include/functions.php:2484
-#, fuzzy
 msgid "No file was uploaded"
-msgstr "Aucun fichier envoyé."
+msgstr "Aucun fichier n'a été téléversé"
 
 #: include/functions.php:2485
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "Un répertoire temporaire est manquant"
 
 #: include/functions.php:2486
 msgid "Failed to write file to disk."
-msgstr ""
+msgstr "Impossible d’écrire le fichier sur le disque."
 
 #: include/functions.php:2487
 msgid "A PHP extension stopped the file upload."
-msgstr ""
+msgstr "Une extension PHP a arrêté le téléversement du fichier."
 
 #: include/login_form.php:89
 #: classes/handler/public.php:466
 #: classes/handler/public.php:732
 msgid "Login:"
-msgstr "Identifiant :"
+msgstr "Identifiant :"
 
 #: include/login_form.php:99
 #: classes/handler/public.php:469
@@ -806,9 +810,8 @@ msgid "Session failed to validate (schema version changed)"
 msgstr "Échec de la validation de la session (la base a changé)"
 
 #: include/sessions.php:53
-#, fuzzy
 msgid "Session failed to validate (UA changed)."
-msgstr "Échec de la validation de la session (mot de passe changé)"
+msgstr "Impossible de valider la session (changement d'agent utilisateur)."
 
 #: include/sessions.php:67
 msgid "Session failed to validate (password changed)"
@@ -865,18 +868,17 @@ msgid "Update daemon is taking too long to perform a feed update. This could ind
 msgstr "Le démon de mise à jour prend trop de temps pour effectuer une mise à jour de flux. Cela peut indiquer un problème comme un crash ou une suspension du processus. Veuillez vérifier son état ou bien contacter l'administrateur."
 
 #: classes/dlg.php:171
-#, fuzzy, php-format
+#, php-format
 msgid "%s can be accessed via the following secret URL:"
-msgstr "Vous pouvez partager cet article avec l'URL unique suivante :"
+msgstr "%s est disponible avec l’URL secrète suivante :"
 
 #: classes/dlg.php:192
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
 msgstr ""
 
 #: classes/dlg.php:196
-#, fuzzy
 msgid "Open Preferences"
-msgstr "Configuration"
+msgstr "Ouvrir la configuration"
 
 #: classes/article.php:26
 msgid "Article not found."
@@ -1186,9 +1188,8 @@ msgstr "Erreur lors de l'analyse du document."
 #: classes/feeds.php:140
 #: classes/feeds.php:141
 #: classes/pref/feeds.php:1331
-#, fuzzy
 msgid "Show as feed"
-msgstr "Ce flux"
+msgstr "Voir comme flux"
 
 #: classes/feeds.php:62
 #, php-format
@@ -1196,9 +1197,8 @@ msgid "Last updated: %s"
 msgstr "Dernière mise à jour : %s"
 
 #: classes/feeds.php:100
-#, fuzzy
 msgid "Select..."
-msgstr "Sélectionner"
+msgstr "Sélectionner…"
 
 #: classes/feeds.php:102
 #: classes/pref/users.php:359
@@ -1511,29 +1511,29 @@ msgid "User not found"
 msgstr "Utilisateur non trouvé"
 
 #: classes/pref/users.php:247
-#, fuzzy, php-format
+#, php-format
 msgid "Added user %s with password %s"
-msgstr "Utilisateur <b>%s</b> ajouté avec le mot de passe <b>%s</b>"
+msgstr "Utilisateur %s ajouté avec le mot de passe %s"
 
 #: classes/pref/users.php:254
-#, fuzzy, php-format
+#, php-format
 msgid "Could not create user %s"
-msgstr "Impossible de créer l'utilisateur <b>%s</b>"
+msgstr "Impossible de créer l’utilisateur %s"
 
 #: classes/pref/users.php:258
-#, fuzzy, php-format
+#, php-format
 msgid "User %s already exists."
-msgstr "L'utilisateur <b>%s</b> existe déjà."
+msgstr "L’utilisateur %s existe déjà."
 
 #: classes/pref/users.php:286
-#, fuzzy, php-format
+#, php-format
 msgid "Changed password of user %s to %s"
-msgstr "Mot de passe de l'utilisateur <b>%s</b> changé en <b>%s</b>"
+msgstr "Mot de passe de l’utilisateur %s changé en %s"
 
 #: classes/pref/users.php:288
-#, fuzzy, php-format
+#, php-format
 msgid "Sending new password of user %s to %s"
-msgstr "Envoi du mot de passe de <b>%s</b> à <b>%s</b>"
+msgstr "Envoi du nouveau mot de passe de %s à %s"
 
 #: classes/pref/users.php:311
 msgid "[tt-rss] Password change notification"
@@ -1919,9 +1919,8 @@ msgid "Click to register your SSL client certificate with tt-rss"
 msgstr "Cliquez pour enregistrer votre certificat client SSL dans tt-rss"
 
 #: classes/pref/prefs.php:51
-#, fuzzy
 msgid "Do not embed media in articles"
-msgstr "Ne pas intégrer les images"
+msgstr "Ne pas intégrer les médias dans les articles"
 
 #: classes/pref/prefs.php:52
 msgid "Strip unsafe tags from articles"
@@ -2217,14 +2216,12 @@ msgid "Feed Title"
 msgstr "Titre du flux"
 
 #: classes/pref/feeds.php:571
-#, fuzzy
 msgid "Site URL:"
-msgstr "URL de l'article :"
+msgstr "URL du site :"
 
 #: classes/pref/feeds.php:573
-#, fuzzy
 msgid "Site URL"
-msgstr "URL du flux"
+msgstr "URL du site"
 
 #: classes/pref/feeds.php:584
 #: classes/pref/feeds.php:814
@@ -2262,9 +2259,8 @@ msgstr "Toujours afficher les images jointes"
 
 #: classes/pref/feeds.php:699
 #: classes/pref/feeds.php:890
-#, fuzzy
 msgid "Do not embed media"
-msgstr "Ne pas intégrer les images"
+msgstr "Ne pas intégrer les médias"
 
 #: classes/pref/feeds.php:712
 #: classes/pref/feeds.php:898
@@ -2283,9 +2279,8 @@ msgstr "Icône"
 #: classes/pref/feeds.php:742
 #: classes/pref/feeds.php:1283
 #: plugins/import_export/init.php:71
-#, fuzzy
 msgid "Choose file..."
-msgstr "Créer un filtre..."
+msgstr "Choisir un fichier…"
 
 #: classes/pref/feeds.php:749
 msgid "Replace"
@@ -2333,9 +2328,8 @@ msgid "Only main settings profile can be migrated using OPML."
 msgstr "Seul le profil de réglages principal peut être migré en utilisant OPML."
 
 #: classes/pref/feeds.php:1289
-#, fuzzy
 msgid "Import OPML"
-msgstr "Importer mon OPML"
+msgstr "Importer un OPML"
 
 #: classes/pref/feeds.php:1299
 msgid "Export OPML"
@@ -2600,14 +2594,12 @@ msgid "Image proxy settings (af_zz_imgproxy)"
 msgstr ""
 
 #: plugins/af_zz_imgproxy/init.php:232
-#, fuzzy
 msgid "Enable proxy for all remote images."
-msgstr "Activer pour tous les flux:"
+msgstr "Activer le mandataire pour toutes les images distantes."
 
 #: plugins/af_zz_imgproxy/init.php:236
-#, fuzzy
 msgid "Don't cache files locally."
-msgstr "Enregistrer localement les images"
+msgstr "Ne pas mettre les fichier en cache localement."
 
 #: plugins/auth_internal/init.php:67
 msgid "Please enter your one time password:"
@@ -2626,18 +2618,16 @@ msgid "Close article"
 msgstr "Fermer l'article"
 
 #: plugins/af_readability/init.php:25
-#, fuzzy
 msgid "Data saved."
-msgstr "Donnée enregistrée (%s, %d)"
+msgstr "Données enregistrées."
 
 #: plugins/af_readability/init.php:41
 msgid "Inline content"
 msgstr "Contenu intégré"
 
 #: plugins/af_readability/init.php:47
-#, fuzzy
 msgid "Readability settings (af_readability)"
-msgstr "Réglages af_readability"
+msgstr "Réglages de lisibilité (af_readability)"
 
 #: plugins/af_readability/init.php:78
 msgid "Use Readability for pages shared via bookmarklet."
@@ -2713,9 +2703,9 @@ msgid "Prepare data"
 msgstr "Préparer les données"
 
 #: plugins/import_export/init.php:459
-#, fuzzy, php-format
+#, php-format
 msgid "Upload failed with error code %d (%s)"
-msgstr "Échec de l'envoi, code d'erreur %d"
+msgstr "Échec du téléversement avec le code d’erreur %d (%s)"
 
 #: plugins/import_export/init.php:483
 msgid "No file uploaded."
@@ -2744,7 +2734,6 @@ msgstr "Nouveau score des articles sélectionnés :"
 #: js/Headlines.js:411
 #: js/Headlines.js:449
 #: js/Headlines.js:470
-#, fuzzy
 msgid "No articles selected."
 msgstr "Aucun article sélectionné."
 
@@ -2830,7 +2819,6 @@ msgstr "Supprimer les flux sélectionnés ?"
 #: js/PrefFeedTree.js:226
 #: js/PrefFeedTree.js:242
 #: js/PrefFeedTree.js:394
-#, fuzzy
 msgid "No feeds selected."
 msgstr "Aucun flux sélectionné."
 
@@ -2867,14 +2855,12 @@ msgid "Generate new syndication address for this feed?"
 msgstr "Générer une nouvelle adresse d'abonnement pour ce flux ?"
 
 #: js/FeedTree.js:76
-#, fuzzy
 msgid "(Un)collapse"
-msgstr "Ouvrir/fermer la barre latérale"
+msgstr "Développer/réduire"
 
 #: js/Feeds.js:230
-#, fuzzy
 msgid "Your password is at default value"
-msgstr "Votre mot de passe est celui par défaut, veuillez le modifier."
+msgstr "Votre mot de passe est celui par défaut"
 
 #: js/Headlines.js:709
 #, perl-format
@@ -2980,7 +2966,6 @@ msgid "Remove selected categories?"
 msgstr "Supprimer les catégories sélectionnées ?"
 
 #: js/PrefFeedTree.js:205
-#, fuzzy
 msgid "No categories selected."
 msgstr "Aucune catégorie sélectionnée."
 
@@ -2993,9 +2978,8 @@ msgid "Save changes to selected feeds?"
 msgstr "Enregistrer les modifications aux flux sélectionnés ?"
 
 #: js/PrefFeedTree.js:311
-#, fuzzy
 msgid "Rename category to:"
-msgstr "Supprimer la catégorie"
+msgstr "Renommer la catégorie en :"
 
 #: js/PrefFeedTree.js:323
 msgid "Category title:"
@@ -3029,9 +3013,8 @@ msgid "This will invalidate all previously generated feed URLs. Continue?"
 msgstr "Ceci va invalider toutes les URL de flux générées auparavant. Souhaitez-vous continuer ?"
 
 #: js/PrefHelpers.js:21
-#, fuzzy
 msgid "Clear event log?"
-msgstr "Vider le journal"
+msgstr "Vider le journal des évènements ?"
 
 #: js/PrefHelpers.js:40
 msgid "Settings Profiles"
@@ -3151,14 +3134,12 @@ msgid "Upload complete."
 msgstr "Envoi terminé."
 
 #: js/CommonDialogs.js:21
-#, fuzzy
 msgid "Upload failed: icon is too big."
-msgstr "Échec de l'envoi, code d'erreur %d"
+msgstr "Échec du téléversement : l’icône est trop grosse."
 
 #: js/CommonDialogs.js:24
-#, fuzzy
 msgid "Upload failed."
-msgstr "Envoi terminé."
+msgstr "Échec du téléversement."
 
 #: js/CommonDialogs.js:30
 msgid "Removing feed icon..."
@@ -3195,9 +3176,8 @@ msgstr "Changement de l'adresse..."
 
 #: js/CommonDialogs.js:440
 #: js/PrefHelpers.js:219
-#, fuzzy
 msgid "Could not change feed URL."
-msgstr "Impossible de créer l'utilisateur <b>%s</b>"
+msgstr "Impossible de changer l'URL du flux."
 
 #: js/CommonFilters.js:133
 msgid "Edit rule"
@@ -3232,24 +3212,20 @@ msgid "Marking all feeds as read..."
 msgstr "Marquage de tous les flux comme lus..."
 
 #: js/Feeds.js:433
-#, fuzzy
 msgid "Mark %w in %s older than 1 day as read?"
-msgstr "Marquer tous les articles de %s âgés d'au moins 1 jour comme lus ?"
+msgstr "Marquer %w de %s âgés d’au moins 1 jour comme lus ?"
 
 #: js/Feeds.js:436
-#, fuzzy
 msgid "Mark %w in %s older than 1 week as read?"
-msgstr "Marquer tous les articles de %s âgés d'au moins 1 semaine comme lus ?"
+msgstr "Marquer %w de %s âgés d’au moins 1 semaine comme lus ?"
 
 #: js/Feeds.js:439
-#, fuzzy
 msgid "Mark %w in %s older than 2 weeks as read?"
-msgstr "Marquer tous les articles de %s âgés d'au moins 2 semaines comme lus ?"
+msgstr "Marquer %w de %s âgés d’au moins 2 semaines comme lus ?"
 
 #: js/Feeds.js:442
-#, fuzzy
 msgid "Mark %w in %s as read?"
-msgstr "Marquer tous les articles de %s comme lus ?"
+msgstr "Marquer %w de %s comme lus ?"
 
 #: js/Feeds.js:445
 #, fuzzy
