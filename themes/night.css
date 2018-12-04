@@ -3,6 +3,7 @@
 :root {
 	--bg-main : #333;
 	--border-main : #666;
+	--border-dark : #222;
 	--bg-panel : #222;
 	--fg-main: #999;
 	--fg-light : #ccc;
@@ -11,8 +12,7 @@
 
 body.claro.ttrss_index #feeds-holder {
 	background : var(--bg-panel);
-  	border-color : var(--border-main);
-	border-left-width : 1px;
+	box-shadow : inset -1px 0px 2px -1px var(--border-main);
 }
 
 body.claro.ttrss_index #headlines-frame,
@@ -29,13 +29,13 @@ body.claro.ttrss_index #feedTree .dijitTreeRow {
 }
 
 body.claro.ttrss_index .dijitTree .dijitTreeRowHover {
-	background : #444;
-	border-color : var(--border-main);
+	background : var(--bg-panel);
+	border-color : var(--border-main) transparent;
 }
 
-body.claro.ttrss_index .dijitTree .dijitTreeRowSelected {
-	background : #555;
-	border-color : var(--border-main) ! important;
+body.claro.ttrss_index #feeds-holder .dijitTree#feedTree .dijitTreeRowSelected {
+	background : var(--bg-main);
+	border-color : var(--bg-main) transparent;
 }
 
 body.claro.ttrss_index .dijitTreeRowSelected .dijitTreeLabel {
@@ -54,12 +54,12 @@ body.claro.ttrss_index #headlines-frame {
 }
 
 body.claro.ttrss_index #main-toolbar {
-	background : var(--bg-main);
-	border-color : var(--border-main);
+	background : var(--bg-panel);
+	border-color : var(--border-dark);
 }
 
 body.claro.ttrss_index #main-toolbar .dijitButtonText {
-	color : #ddd;
+	color : var(--fg-light);
 }
 
 body.claro.ttrss_index #main-toolbar .dijitSelect,
@@ -79,14 +79,15 @@ body.claro.ttrss_index .cdm .feed a {
 }
 
 body.claro.ttrss_index div.cdm div.footer {
-	border-color : var(--border-main);
+	border-color : var(--border-dark);
 	color : var(--fg-light);
 }
 
-body.claro.ttrss_index div.cdm.expanded.Unread .header a.title,
-body.claro.ttrss_index div.cdm.expandable.Unread a.title,
-body.claro.ttrss_index div.cdm.expanded .header a.title,
-body.claro.ttrss_index div.cdm.expandable a.title {
+body.claro.ttrss_index div.cdm .header a.title {
+	color : var(--fg-main);
+}
+
+body.claro.ttrss_index div.cdm.Unread .header a.title {
 	color : var(--fg-light);
 }
 
@@ -95,9 +96,12 @@ body.claro.ttrss_index .cdm.expanded.active .header a.title {
 	color : #2a89bc;
 }
 
-
 body.claro.ttrss_index #headlines-frame .cdm {
-	border-color : var(--border-main);
+	border-color : var(--border-dark);
+}
+
+body.claro.ttrss_index #headlines-frame .cdm .header .author {
+	color : var(--fg-main);
 }
 
 body.claro.ttrss_index #headlines-frame .cdm.expandable {
@@ -145,11 +149,11 @@ body.claro.ttrss_index .cdm .footer img {
 }
 
 body.claro.ttrss_index #floatingTitle {
-	background : var(--bg-main);
+	background : var(--bg-panel);
 	border-color : var(--border-main);
 }
 
-body.claro.ttrss_index #floatingTitle a.title {
+body.claro.ttrss_index #floatingTitle * {
 	color : var(--fg-light);
 }
 
@@ -167,11 +171,15 @@ body.claro.ttrss_index .dijitMenu .dijitMenuItemSelected td {
 }
 
 body.claro.ttrss_index #headlines-frame .hl {
-	border-color : var(--border-main);
+	border-color : var(--border-dark);
 }
 
-body.claro.ttrss_index #headlines-frame .hl .title a {
+body.claro.ttrss_index #headlines-frame .hl:not(.Selected):not(.active) .title a {
 	color : var(--fg-main);
+}
+
+body.claro.ttrss_index #headlines-frame .hl.Unread:not(.Selected):not(.active) .title a {
+	color : var(--fg-light);
 }
 
 body.claro.ttrss_index .post .header {
@@ -204,10 +212,14 @@ body.claro.ttrss_index .cdm .content-inner video:not(:hover) {
 	filter: grayscale(80%);
 }
 
-body.claro.ttrss_index #content-insert_splitter,
-body.claro.ttrss_index #feeds-holder_splitter {
+body.claro.ttrss_index #content-insert_splitter {
 	border-color : var(--border-main);
 	background : var(--bg-panel);
+}
+
+body.claro.ttrss_index #feeds-holder_splitter {
+	border-color : var(--border-main);
+	background : var(--bg-main);
 }
 
 body.claro.ttrss_index .insensitive {
@@ -218,7 +230,7 @@ body.claro.ttrss_index hr,
 body.claro.ttrss_index h1,
 body.claro.ttrss_index h2,
 body.claro.ttrss_index h3 {
-	border-color : var(--border-main);
+	border-color : var(--border-dark);
 }
 
 ::-webkit-scrollbar {
