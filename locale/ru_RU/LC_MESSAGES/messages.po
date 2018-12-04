@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-03 14:24+0300\n"
-"PO-Revision-Date: 2018-12-03 18:03+0000\n"
+"PO-Revision-Date: 2018-12-04 03:52+0000\n"
 "Last-Translator: Andrew Dolgov <fox@fakecake.org>\n"
 "Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
 "ru/>\n"
@@ -120,7 +120,7 @@ msgstr "Произошла ошибка проверки бэкэнда."
 
 #: errors.php:17
 msgid "Frontend sanity check failed."
-msgstr "Произошла ошибка проверки фронтэнда"
+msgstr "Произошла ошибка проверки фронтэнда."
 
 #: errors.php:19
 msgid "Incorrect database schema version. &lt;a href='db-updater.php'&gt;Please update&lt;/a&gt;."
@@ -277,7 +277,7 @@ msgstr "Старше двух недель"
 #: js/AppBase.js:245
 #: js/AppBase.js:252
 msgid "Communication problem with server."
-msgstr "Проблема соединения с сервером"
+msgstr "Проблема соединения с сервером."
 
 #: index.php:233
 msgid "Actions..."
@@ -285,7 +285,7 @@ msgstr "Действия..."
 
 #: index.php:235
 msgid "Preferences..."
-msgstr "Настройки"
+msgstr "Настройки..."
 
 #: index.php:236
 msgid "Search..."
@@ -456,7 +456,7 @@ msgstr "Регистрация новых пользователей време�
 
 #: update.php:67
 msgid "Tiny Tiny RSS data update script."
-msgstr "Скрипт обновления данных Tiny Tiny RSS"
+msgstr "Скрипт обновления данных Tiny Tiny RSS."
 
 #: include/controls.php:85
 #: classes/pref/filters.php:245
@@ -686,7 +686,7 @@ msgstr "Переключить комбинированный режим"
 
 #: include/functions.php:1169
 msgid "Go to"
-msgstr "Перейти к.."
+msgstr "Перейти к"
 
 #: include/functions.php:1170
 #: classes/feeds.php:1574
@@ -882,7 +882,7 @@ msgstr "Настройки"
 
 #: classes/article.php:26
 msgid "Article not found."
-msgstr "Статья не найдена"
+msgstr "Статья не найдена."
 
 #: classes/article.php:211
 msgid "Tags for this article (separated by commas):"
@@ -1361,7 +1361,7 @@ msgstr "Авторизация"
 #: classes/pref/feeds.php:852
 #: classes/pref/feeds.php:1645
 msgid "Login"
-msgstr "Пользователь:"
+msgstr "Пользователь"
 
 #: classes/feeds.php:1005
 #: classes/pref/prefs.php:243
@@ -1473,17 +1473,17 @@ msgstr "Редактировать пользователя"
 
 #: classes/pref/users.php:64
 msgid "Access level: "
-msgstr "Уровень доступа:"
+msgstr "Уровень доступа: "
 
 #: classes/pref/users.php:82
 #: classes/pref/feeds.php:647
 #: classes/pref/feeds.php:866
 msgid "Options"
-msgstr "Опции:"
+msgstr "Опции"
 
 #: classes/pref/users.php:96
 msgid "User details"
-msgstr "Подробнее..."
+msgstr "Подробнее"
 
 #: classes/pref/users.php:136
 #: classes/pref/users.php:407
@@ -1565,7 +1565,7 @@ msgstr "Редактировать"
 
 #: classes/pref/users.php:405
 msgid "Access Level"
-msgstr "Уровень доступа:"
+msgstr "Уровень доступа"
 
 #: classes/pref/users.php:408
 msgid "Last login"
@@ -1695,7 +1695,7 @@ msgstr "Инвертировать совпадение с регулярным 
 
 #: classes/pref/filters.php:995
 msgid "on field"
-msgstr "по полю:"
+msgstr "по полю"
 
 #: classes/pref/filters.php:1001
 #: js/PrefFilterTree.js:44
@@ -1713,7 +1713,7 @@ msgstr "Сохранить правило"
 #: classes/pref/filters.php:1019
 #: js/CommonFilters.js:133
 msgid "Add rule"
-msgstr "Добавить правило..."
+msgstr "Добавить правило"
 
 #: classes/pref/filters.php:1042
 msgid "Perform Action"
@@ -1823,7 +1823,7 @@ msgstr "Кратчайший интервал, за который канал б
 
 #: classes/pref/prefs.php:33
 msgid "Mark articles in e-mail digest as read"
-msgstr "Отметить все статьи в e-mail дайджесте как прочитанные?"
+msgstr "Отмечать все статьи в e-mail дайджесте как прочитанные"
 
 #: classes/pref/prefs.php:34
 msgid "Enable e-mail digest"
@@ -1883,7 +1883,9 @@ msgstr "Показывать следующий канал при отметке
 
 #: classes/pref/prefs.php:43
 msgid "Automatically open next feed with unread articles after marking one as read"
-msgstr "Автоматически открывать следующий канал с непрочитанными статьями, когда текущий помечается как прочитанный "
+msgstr ""
+"Автоматически открывать следующий канал с непрочитанными статьями, когда "
+"текущий помечается как прочитанный"
 
 #: classes/pref/prefs.php:44
 msgid "Purge articles after this number of days (0 - disables)"
@@ -1911,7 +1913,9 @@ msgstr "Сортировать каналы по дате, указанной в
 
 #: classes/pref/prefs.php:49
 msgid "Use feed-specified date to sort headlines instead of local import date."
-msgstr "Использовать заданную для канала дату для сортировки заголовков вместо даты импорта"
+msgstr ""
+"Использовать заданную для канала дату для сортировки заголовков вместо даты "
+"импорта."
 
 #: classes/pref/prefs.php:50
 msgid "Login with an SSL certificate"
@@ -1996,7 +2000,7 @@ msgstr "E-mail"
 
 #: classes/pref/prefs.php:221
 msgid "Access level"
-msgstr "Уровень доступа:"
+msgstr "Уровень доступа"
 
 #: classes/pref/prefs.php:231
 msgid "Save data"
@@ -2057,7 +2061,7 @@ msgstr "Включить одноразовые пароли"
 
 #: classes/pref/prefs.php:413
 msgid "PHP GD functions are required for OTP support."
-msgstr "Для одноразовых паролей требуется включение функций GD в PHP"
+msgstr "Для одноразовых паролей требуется включение функций GD в PHP."
 
 #: classes/pref/prefs.php:456
 msgid "Some preferences are only available in default profile."
@@ -2172,7 +2176,7 @@ msgstr "(активно)"
 
 #: classes/pref/prefs.php:1090
 msgid "Remove selected profiles"
-msgstr "Удалить выбранные профили?"
+msgstr "Удалить выбранные профили"
 
 #: classes/pref/prefs.php:1092
 msgid "Activate profile"
@@ -2383,7 +2387,7 @@ msgstr "Щёлкните для редактирования"
 #: classes/pref/feeds.php:1463
 #: classes/pref/feeds.php:1527
 msgid "Unsubscribe from selected feeds"
-msgstr "Отписаться от выбранных каналов?"
+msgstr "Отписаться от выбранных каналов"
 
 #: classes/pref/feeds.php:1628
 msgid "Add one valid RSS feed per line (no feed detection is done)"
@@ -2430,7 +2434,7 @@ msgstr "Показать похожие статьи"
 #: plugins/af_psql_trgm/init.php:125
 #: plugins/af_psql_trgm/init.php:227
 msgid "Mark similar articles as read"
-msgstr "Пометить похожие статьи как прочитанные?"
+msgstr "Пометить похожие статьи как прочитанные"
 
 #: plugins/af_psql_trgm/init.php:164
 msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
@@ -2586,7 +2590,7 @@ msgstr "Кликните по следующей ссылке, чтоб запу
 
 #: plugins/mailto/init.php:78
 msgid "Forward selected article(s) by email."
-msgstr "Переслать выбранные статьи по электронной почте"
+msgstr "Переслать выбранные статьи по электронной почте."
 
 #: plugins/mailto/init.php:81
 msgid "You should be able to edit the message before sending in your mail client."
@@ -2679,7 +2683,7 @@ msgstr "Не могу импортировать данные: неизвест�
 
 #: plugins/import_export/init.php:422
 msgid "Finished: "
-msgstr "Завершено:"
+msgstr "Завершено: "
 
 #: plugins/import_export/init.php:423
 #, php-format
@@ -2919,11 +2923,11 @@ msgstr[2] "Отметить %d выбранных(ые) статьи(ей) в %s
 
 #: js/Headlines.js:916
 msgid "No article is selected."
-msgstr "Статья не выбрана"
+msgstr "Нет выбранных статей."
 
 #: js/Headlines.js:951
 msgid "No articles found to mark"
-msgstr "Статей для отметки не найдено."
+msgstr "Статей для отметки не найдено"
 
 #: js/Headlines.js:953
 #, perl-format
@@ -3147,7 +3151,7 @@ msgstr "Сохранить теги статьи..."
 
 #: js/CommonDialogs.js:13
 msgid "Upload complete."
-msgstr "Загрузка завершена"
+msgstr "Загрузка завершена."
 
 #: js/CommonDialogs.js:21
 msgid "Upload failed: icon is too big."
