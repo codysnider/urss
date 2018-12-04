@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-03 14:24+0300\n"
-"PO-Revision-Date: 2018-12-03 16:51+0000\n"
-"Last-Translator: Patrick Ahles <p.ahles@gmail.com>\n"
-"Language-Team: Dutch <http://weblate.tt-rss.org/projects/tt-rss/messages/nl/>"
-"\n"
+"PO-Revision-Date: 2018-12-04 10:03+0000\n"
+"Last-Translator: Patrick Ahles <p.ahles+weblate@gmail.com>\n"
+"Language-Team: Dutch <https://weblate.tt-rss.org/projects/tt-rss/messages/nl/"
+">\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -877,7 +877,6 @@ msgid "You are using default tt-rss password. Please change it in the Preference
 msgstr ""
 
 #: classes/dlg.php:196
-#, fuzzy
 msgid "Open Preferences"
 msgstr "Voorkeuren"
 
@@ -950,9 +949,8 @@ msgstr[1] ""
 
 #: classes/article.php:629
 #: classes/feeds.php:653
-#, fuzzy
 msgid "comments"
-msgstr "Bijlagen"
+msgstr "commentaren"
 
 #: classes/article.php:688
 msgid " - "
@@ -1078,9 +1076,10 @@ msgid "Password recovery"
 msgstr "Wachtwoordherstel"
 
 #: classes/handler/public.php:725
-#, fuzzy
 msgid "You will need to provide valid account name and email. A password reset link will be sent to your email address."
-msgstr "Je moet een geldige naam en emailadres opgeven. Het nieuwe wachtwoord wordt naar je emailadres verzonden."
+msgstr ""
+"Je moet een geldige naam en emailadres opgeven. Een link om je wachtwoord "
+"aan te passen wordt naar je emailadres verzonden."
 
 #: classes/handler/public.php:747
 #: classes/pref/users.php:372
@@ -1097,9 +1096,8 @@ msgid "Go back"
 msgstr "Ga terug"
 
 #: classes/handler/public.php:799
-#, fuzzy
 msgid "[tt-rss] Password reset request"
-msgstr "[tt-rss] Melding verandering van wachtwoord"
+msgstr "[tt-rss] Aanvraag verandering van wachtwoord"
 
 #: classes/handler/public.php:826
 msgid "Sorry, login and email combination not found."
@@ -1192,9 +1190,8 @@ msgstr "Fout bij het parsen van het document."
 #: classes/feeds.php:140
 #: classes/feeds.php:141
 #: classes/pref/feeds.php:1331
-#, fuzzy
 msgid "Show as feed"
-msgstr "Deze feed"
+msgstr "Weergeven als feed"
 
 #: classes/feeds.php:62
 #, php-format
@@ -1202,9 +1199,8 @@ msgid "Last updated: %s"
 msgstr "Laatst geüpdatet: %s"
 
 #: classes/feeds.php:100
-#, fuzzy
 msgid "Select..."
-msgstr "Selecteer"
+msgstr "Selecteer..."
 
 #: classes/feeds.php:102
 #: classes/pref/users.php:359
@@ -1295,9 +1291,8 @@ msgstr "Geïmporteerd op %s"
 
 #: classes/feeds.php:392
 #: classes/feeds.php:485
-#, fuzzy
 msgid "mark feed as read"
-msgstr "Markeer alle feeds als gelezen"
+msgstr "markeer feed als gelezen"
 
 #: classes/feeds.php:542
 msgid "Collapse article"
@@ -1436,9 +1431,8 @@ msgid "Used for word stemming"
 msgstr ""
 
 #: classes/feeds.php:1111
-#, fuzzy
 msgid "Search syntax"
-msgstr "Zoeken"
+msgstr "Zoeksyntax"
 
 #: classes/feeds.php:1568
 msgid "Starred articles"
@@ -1475,9 +1469,8 @@ msgid "Your access level is insufficient to open this tab."
 msgstr "Uw toegangsniveau is niet toereikend om deze tab te openen."
 
 #: classes/pref/users.php:26
-#, fuzzy
 msgid "Edit user"
-msgstr "Bewerk regel"
+msgstr "Bewerk gebruiker"
 
 #: classes/pref/users.php:64
 msgid "Access level: "
@@ -1507,9 +1500,8 @@ msgid "Subscribed feeds count"
 msgstr "Aantal geabonneerde feeds"
 
 #: classes/pref/users.php:146
-#, fuzzy
 msgid "Stored articles"
-msgstr "Artikelen met ster"
+msgstr "Opgeslagen artikelen"
 
 #: classes/pref/users.php:150
 #: classes/pref/users.php:406
@@ -1521,29 +1513,29 @@ msgid "User not found"
 msgstr "Gebruiker niet gevonden"
 
 #: classes/pref/users.php:247
-#, fuzzy, php-format
+#, php-format
 msgid "Added user %s with password %s"
-msgstr "Gebruiker <b>%s</b> toegevoegd met wachtwoord <b>%s</b>"
+msgstr "Gebruiker %s toegevoegd met wachtwoord %s"
 
 #: classes/pref/users.php:254
-#, fuzzy, php-format
+#, php-format
 msgid "Could not create user %s"
-msgstr "Kon gebruiker <b>%s</b> niet aanmaken"
+msgstr "Kon gebruiker %s niet aanmaken"
 
 #: classes/pref/users.php:258
-#, fuzzy, php-format
+#, php-format
 msgid "User %s already exists."
-msgstr "Gebruiker <b>%s</b> bestaat al."
+msgstr "Gebruiker %s bestaat al."
 
 #: classes/pref/users.php:286
-#, fuzzy, php-format
+#, php-format
 msgid "Changed password of user %s to %s"
-msgstr "Wachtwoord van gebruiker<b>%s</b> naar <b>%s</b> gewijzigd"
+msgstr "Wachtwoord van gebruiker %s gewijzigd in %s"
 
 #: classes/pref/users.php:288
-#, fuzzy, php-format
+#, php-format
 msgid "Sending new password of user %s to %s"
-msgstr "Wachtwoord van gebruiker<b>%s</b>naar <b>%s</b> versturen"
+msgstr "Nieuw wachtwoord van gebruiker %s naar %s versturen"
 
 #: classes/pref/users.php:311
 msgid "[tt-rss] Password change notification"
@@ -1622,9 +1614,8 @@ msgid "Date"
 msgstr "Datum"
 
 #: classes/pref/filters.php:155
-#, fuzzy
 msgid "Preview article"
-msgstr "Nieuwe artikelen"
+msgstr "Artikel voorvertonen"
 
 #: classes/pref/filters.php:267
 #: classes/pref/filters.php:573
@@ -1713,9 +1704,8 @@ msgid "in"
 msgstr "in"
 
 #: classes/pref/filters.php:1014
-#, fuzzy
 msgid "Wiki: Filters"
-msgstr "Filters"
+msgstr "Wiki:Filters"
 
 #: classes/pref/filters.php:1019
 msgid "Save rule"
@@ -1731,9 +1721,8 @@ msgid "Perform Action"
 msgstr "Actie uitvoeren"
 
 #: classes/pref/filters.php:1093
-#, fuzzy
 msgid "No actions available"
-msgstr "Nieuwe versie beschikbaar!"
+msgstr "Geen acties beschikbaar"
 
 #: classes/pref/filters.php:1112
 msgid "Save action"
@@ -1756,9 +1745,8 @@ msgstr[0] "Regel toevoegen"
 msgstr[1] "Regel toevoegen"
 
 #: classes/pref/filters.php:1155
-#, fuzzy
 msgid "matches any rule"
-msgstr "Match elke regel"
+msgstr "match elke regel"
 
 #: classes/pref/filters.php:1158
 #, fuzzy, php-format
@@ -1933,7 +1921,6 @@ msgid "Click to register your SSL client certificate with tt-rss"
 msgstr "Klik om uw SSL cliëntcertificaat te registreren bij tt-rss"
 
 #: classes/pref/prefs.php:51
-#, fuzzy
 msgid "Do not embed media in articles"
 msgstr "Afbeeldingen niet insluiten in artikelen"
 
@@ -2231,20 +2218,17 @@ msgid "Feed Title"
 msgstr "Feed titel"
 
 #: classes/pref/feeds.php:571
-#, fuzzy
 msgid "Site URL:"
-msgstr "Artikel URL:"
+msgstr "Site URL:"
 
 #: classes/pref/feeds.php:573
-#, fuzzy
 msgid "Site URL"
-msgstr "Feed URL"
+msgstr "Site URL"
 
 #: classes/pref/feeds.php:584
 #: classes/pref/feeds.php:814
-#, fuzzy
 msgid "Language:"
-msgstr "Taal"
+msgstr "Taal:"
 
 #: classes/pref/feeds.php:591
 #: classes/pref/feeds.php:823
@@ -2277,9 +2261,8 @@ msgstr "Altijd afbeeldingsbijlagen weergeven"
 
 #: classes/pref/feeds.php:699
 #: classes/pref/feeds.php:890
-#, fuzzy
 msgid "Do not embed media"
-msgstr "Afbeeldingen niet insluiten."
+msgstr "Afbeeldingen niet insluiten"
 
 #: classes/pref/feeds.php:712
 #: classes/pref/feeds.php:898
@@ -2298,9 +2281,8 @@ msgstr "Pictogram"
 #: classes/pref/feeds.php:742
 #: classes/pref/feeds.php:1283
 #: plugins/import_export/init.php:71
-#, fuzzy
 msgid "Choose file..."
-msgstr "Filter aanmaken…"
+msgstr "Bestand kiezen…"
 
 #: classes/pref/feeds.php:749
 msgid "Replace"
@@ -2348,9 +2330,8 @@ msgid "Only main settings profile can be migrated using OPML."
 msgstr "Alleen instellingen van het hoofdprofiel kunnen worden overgebracht met OPML."
 
 #: classes/pref/feeds.php:1289
-#, fuzzy
 msgid "Import OPML"
-msgstr "Importeer mijn OPML"
+msgstr "Importeer OPML"
 
 #: classes/pref/feeds.php:1299
 msgid "Export OPML"
@@ -2441,24 +2422,21 @@ msgid "Data saved (%s, %d)"
 msgstr ""
 
 #: plugins/af_psql_trgm/init.php:119
-#, fuzzy
 msgid "Show related articles"
-msgstr "Artikelen met ster"
+msgstr "Toon verwante artikelen"
 
 #: plugins/af_psql_trgm/init.php:125
 #: plugins/af_psql_trgm/init.php:227
-#, fuzzy
 msgid "Mark similar articles as read"
-msgstr "Markeer alle artikelen als gelezen?"
+msgstr "Markeer gelijksoortige artikelen als gelezen"
 
 #: plugins/af_psql_trgm/init.php:164
 msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
 msgstr ""
 
 #: plugins/af_psql_trgm/init.php:167
-#, fuzzy
 msgid "Global settings"
-msgstr "Toevoegingsinstellingen"
+msgstr "Algemene instellingen"
 
 #: plugins/af_psql_trgm/init.php:171
 msgid "Minimum similarity:"
@@ -2469,9 +2447,8 @@ msgid "Minimum title length:"
 msgstr ""
 
 #: plugins/af_psql_trgm/init.php:181
-#, fuzzy
 msgid "Enable for all feeds:"
-msgstr "Inschakelen feed categorieën"
+msgstr "Inschakelen voor alle feeds:"
 
 #: plugins/af_psql_trgm/init.php:198
 #: plugins/af_readability/init.php:90
@@ -2496,9 +2473,8 @@ msgstr ""
 
 #: plugins/af_redditimgur/init.php:79
 #: plugins/af_zz_imgproxy/init.php:252
-#, fuzzy
 msgid "Configuration saved"
-msgstr "Configuratie opgeslagen."
+msgstr "Configuratie opgeslagen"
 
 #: plugins/nsfw/init.php:30
 #: plugins/nsfw/init.php:42
@@ -2555,18 +2531,16 @@ msgid "You can share this article by the following unique URL:"
 msgstr "U kunt dit artikel delen via de volgende unieke URL:"
 
 #: plugins/share/init.php:122
-#, fuzzy
 msgid "Unshare article"
-msgstr "Ster weghalen bij artikel"
+msgstr "Artikel niet meer delen"
 
 #: plugins/mail/init.php:29
 msgid "Mail addresses saved."
 msgstr ""
 
 #: plugins/mail/init.php:35
-#, fuzzy
 msgid "Mail plugin"
-msgstr "Gebruiker's plug-ins"
+msgstr "Mail plug-in"
 
 #: plugins/mail/init.php:37
 msgid "You can set predefined email addressed here (comma-separated list):"
@@ -2598,9 +2572,8 @@ msgstr "Verzend e-mail"
 
 #: plugins/vf_shared/init.php:17
 #: plugins/vf_shared/init.php:73
-#, fuzzy
 msgid "Shared articles"
-msgstr "Artikelen met ster"
+msgstr "Gedeelde artikelen"
 
 #: plugins/mailto/init.php:74
 msgid "Clicking the following link to invoke your mail client:"
@@ -2623,14 +2596,12 @@ msgid "Image proxy settings (af_zz_imgproxy)"
 msgstr ""
 
 #: plugins/af_zz_imgproxy/init.php:232
-#, fuzzy
 msgid "Enable proxy for all remote images."
-msgstr "Inschakelen feed categorieën"
+msgstr "Zet proxy voor alle externe afbeeldingen aan."
 
 #: plugins/af_zz_imgproxy/init.php:236
-#, fuzzy
 msgid "Don't cache files locally."
-msgstr "Afbeelding lokaal in cache plaatsen"
+msgstr "Bestanden niet lokaal in cache plaatsen."
 
 #: plugins/auth_internal/init.php:67
 msgid "Please enter your one time password:"
@@ -2666,9 +2637,8 @@ msgid "Use Readability for pages shared via bookmarklet."
 msgstr ""
 
 #: plugins/af_readability/init.php:107
-#, fuzzy
 msgid "Readability"
-msgstr "Controleer beschikbaarheid"
+msgstr "Readability"
 
 #: plugins/af_readability/init.php:118
 #, fuzzy
@@ -2684,9 +2654,11 @@ msgid "Import and export"
 msgstr "Import en export"
 
 #: plugins/import_export/init.php:55
-#, fuzzy
 msgid "You can export and import your Starred and Archived articles for safekeeping or when migrating between tt-rss instances of same version."
-msgstr "U kunt uw gearchiveerde of artikelen met ster exporteren en importeren om veilig te bewaren wanneer u migreert tussen tt-rss instanties."
+msgstr ""
+"U kunt uw gearchiveerde artikelen of artikelen met ster exporteren en "
+"importeren om veilig te bewaren wanneer u migreert tussen tt-rss instanties "
+"met dezelfde versie."
 
 #: plugins/import_export/init.php:60
 msgid "Export my data"
@@ -2738,9 +2710,9 @@ msgid "Prepare data"
 msgstr "Voorbereiden data"
 
 #: plugins/import_export/init.php:459
-#, fuzzy, php-format
+#, php-format
 msgid "Upload failed with error code %d (%s)"
-msgstr "Upload mislukt met fout nummer %d"
+msgstr "Upload mislukt met foutcode %d (%s)"
 
 #: plugins/import_export/init.php:483
 msgid "No file uploaded."
@@ -2769,7 +2741,6 @@ msgstr "Geef aub een nieuwe score voor de geselecteerde artikelen:"
 #: js/Headlines.js:411
 #: js/Headlines.js:449
 #: js/Headlines.js:470
-#, fuzzy
 msgid "No articles selected."
 msgstr "Geen artikel geselecteerd."
 
@@ -2855,7 +2826,6 @@ msgstr "Geselecteerde feeds verwijderen?"
 #: js/PrefFeedTree.js:226
 #: js/PrefFeedTree.js:242
 #: js/PrefFeedTree.js:394
-#, fuzzy
 msgid "No feeds selected."
 msgstr "Geen feeds geselecteerd."
 
@@ -2892,14 +2862,12 @@ msgid "Generate new syndication address for this feed?"
 msgstr "Nieuw syndicatie-adres voor deze feed genereren?"
 
 #: js/FeedTree.js:76
-#, fuzzy
 msgid "(Un)collapse"
-msgstr "Uit/Inklappen zijbalk"
+msgstr "Uit/Inklappen"
 
 #: js/Feeds.js:230
-#, fuzzy
 msgid "Your password is at default value"
-msgstr "Uw wachtwoord staat op de standaard waarde. Verander het aub."
+msgstr "Uw wachtwoord staat op de standaardwaarde"
 
 #: js/Headlines.js:709
 #, perl-format
@@ -2972,19 +2940,16 @@ msgid "Remove label"
 msgstr "Label verwijderen"
 
 #: js/Headlines.js:1174
-#, fuzzy
 msgid "Select articles in group"
-msgstr "Selecteer artikel onder de cursor"
+msgstr "Selecteer artikelen in de groep"
 
 #: js/Headlines.js:1184
-#, fuzzy
 msgid "Mark group as read"
-msgstr "Markeren als gelezen"
+msgstr "Markeren groep als gelezen"
 
 #: js/Headlines.js:1196
-#, fuzzy
 msgid "Mark feed as read"
-msgstr "Markeer alle feeds als gelezen"
+msgstr "Markeer feed als gelezen"
 
 #: js/PrefFeedTree.js:36
 msgid "Edit category"
@@ -3008,7 +2973,6 @@ msgid "Remove selected categories?"
 msgstr "Geselecteerde categorieën verwijderen?"
 
 #: js/PrefFeedTree.js:205
-#, fuzzy
 msgid "No categories selected."
 msgstr "Geen categorieën geselecteerd."
 
@@ -3021,9 +2985,8 @@ msgid "Save changes to selected feeds?"
 msgstr "Veranderingen aan geselecteerde feeds opslaan?"
 
 #: js/PrefFeedTree.js:311
-#, fuzzy
 msgid "Rename category to:"
-msgstr "Categorie verwijderen"
+msgstr "Categorie hernoemen in:"
 
 #: js/PrefFeedTree.js:323
 msgid "Category title:"
@@ -3048,7 +3011,6 @@ msgstr "Geselecteerde filters verwijderen?"
 #: js/PrefFilterTree.js:253
 #: js/PrefFilterTree.js:110
 #: js/PrefFilterTree.js:126
-#, fuzzy
 msgid "No filters selected."
 msgstr "Er zijn geen filters geselecteerd."
 
@@ -3057,9 +3019,8 @@ msgid "This will invalidate all previously generated feed URLs. Continue?"
 msgstr "Dit zal alle eerder gegenereerde feed-URL's ongeldig maken. Doorgaan?"
 
 #: js/PrefHelpers.js:21
-#, fuzzy
 msgid "Clear event log?"
-msgstr "Wis kleuren"
+msgstr "Wis gebeurtenissenlogboek?"
 
 #: js/PrefHelpers.js:40
 msgid "Settings Profiles"
@@ -3070,7 +3031,6 @@ msgid "Remove selected profiles? Active and default profiles will not be removed
 msgstr "Geselecteerde profielen verwijderen? Actieve en standaard profielen zullen niet worden verwijderd."
 
 #: js/PrefHelpers.js:64
-#, fuzzy
 msgid "No profiles selected."
 msgstr "Er zijn geen profielen geselecteerd."
 
@@ -3107,9 +3067,8 @@ msgid "Click to close"
 msgstr "Klik om te sluiten"
 
 #: plugins/af_psql_trgm/init.js:10
-#, fuzzy
 msgid "Related articles"
-msgstr "Verwijder artikel"
+msgstr "Verwante artikelen"
 
 #: plugins/share/share_prefs.js:3
 msgid "This will invalidate all previously shared article URLs. Continue?"
@@ -3120,14 +3079,12 @@ msgid "Share article by URL"
 msgstr "Deel artikel via URL"
 
 #: plugins/share/share.js:13
-#, fuzzy
 msgid "Generate new share URL for this article?"
-msgstr "Geef aub een nieuwe score voor dit artikel:"
+msgstr "Genereer een nieuwe \"deel\"-URL voor dit artikel?"
 
 #: plugins/share/share.js:48
-#, fuzzy
 msgid "Remove sharing for this article?"
-msgstr "Bewerk tags voor dit artikel"
+msgstr "Verwijder \"delen\" voor dit artikel?"
 
 #: plugins/embed_original/init.js:5
 msgid "Sorry, your browser does not support sandboxed iframes."
@@ -3143,9 +3100,8 @@ msgid "Error sending email:"
 msgstr ""
 
 #: plugins/shorten_expanded/init.js:34
-#, fuzzy
 msgid "Click to expand article"
-msgstr "Klik om artikel uit te klappen."
+msgstr "Klik om artikel uit te klappen"
 
 #: plugins/import_export/import_export.js:13
 msgid "Export Data"
@@ -3183,14 +3139,12 @@ msgid "Upload complete."
 msgstr "Upload voltooid."
 
 #: js/CommonDialogs.js:21
-#, fuzzy
 msgid "Upload failed: icon is too big."
-msgstr "Upload mislukt met fout nummer %d"
+msgstr "Upload mislukt: icoon is te groot."
 
 #: js/CommonDialogs.js:24
-#, fuzzy
 msgid "Upload failed."
-msgstr "Upload voltooid."
+msgstr "Upload mislukt."
 
 #: js/CommonDialogs.js:30
 msgid "Removing feed icon..."
@@ -3227,9 +3181,8 @@ msgstr "Adres aan het aanpassen..."
 
 #: js/CommonDialogs.js:440
 #: js/PrefHelpers.js:219
-#, fuzzy
 msgid "Could not change feed URL."
-msgstr "Kon gebruiker <b>%s</b> niet aanmaken"
+msgstr "Kon feed URL niet aanpassen."
 
 #: js/CommonFilters.js:133
 msgid "Edit rule"
@@ -3244,9 +3197,8 @@ msgid "Looking for articles (%d processed, %f found)..."
 msgstr ""
 
 #: js/CommonFilters.js:224
-#, fuzzy
 msgid "Found %d articles matching this filter:"
-msgstr "Artikelen volgens dit filter:"
+msgstr "%d artikelen gevonden volgens dit filter:"
 
 #: js/CommonFilters.js:235
 msgid "Error while trying to get filter test results."
@@ -3265,34 +3217,28 @@ msgid "Marking all feeds as read..."
 msgstr "Alle feeds als gelezen markeren..."
 
 #: js/Feeds.js:433
-#, fuzzy
 msgid "Mark %w in %s older than 1 day as read?"
-msgstr "Markeer alle artikelen in %s ouder dan 1 dag als gelezen?"
+msgstr "Markeer %w in %s ouder dan 1 dag als gelezen?"
 
 #: js/Feeds.js:436
-#, fuzzy
 msgid "Mark %w in %s older than 1 week as read?"
-msgstr "Markeer alle artikelen in %s ouder dan 1 week als gelezen?"
+msgstr "Markeer %w in %s ouder dan 1 week als gelezen?"
 
 #: js/Feeds.js:439
-#, fuzzy
 msgid "Mark %w in %s older than 2 weeks as read?"
-msgstr "Markeer alle artikelen in %s ouder dan 2 weken als gelezen?"
+msgstr "Markeer %w in %s ouder dan 2 weken als gelezen?"
 
 #: js/Feeds.js:442
-#, fuzzy
 msgid "Mark %w in %s as read?"
-msgstr "Markeer alle artikelen in %s als gelezen?"
+msgstr "Markeer %s in %s als gelezen?"
 
 #: js/Feeds.js:445
-#, fuzzy
 msgid "search results"
-msgstr "Zoekresultaten: %s"
+msgstr "zoekresultaten"
 
 #: js/Feeds.js:445
-#, fuzzy
 msgid "all articles"
-msgstr "Alle artikelen"
+msgstr "alle artikelen"
 
 #: js/Feeds.js:487
 msgid "Mark all articles in %s as read?"
@@ -3301,18 +3247,16 @@ msgstr "Markeer alle artikelen in %s als gelezen?"
 #: js/Headlines.js:301
 #: js/Headlines.js:349
 #: js/Headlines.js:366
-#, fuzzy
 msgid "Click to open next unread feed."
-msgstr "Klik om feed te bewerken"
+msgstr "Klik om volgende ongelezen feed te openen."
 
 #: js/Headlines.js:305
 msgid "Cancel search"
 msgstr "Zoeken annuleren"
 
 #: js/Headlines.js:363
-#, fuzzy
 msgid "New articles found, reload feed to continue."
-msgstr "Geen artikelen gevonden om weer te geven."
+msgstr "Nieuwe artikelen gevonden, herlaad feed om verder te gaan."
 
 #: js/Headlines.js:628
 msgid "%d article selected"
@@ -3396,7 +3340,6 @@ msgstr "Geselecteerd label naar de standaard kleur terugzetten?"
 
 #: js/PrefLabelTree.js:137
 #: js/PrefLabelTree.js:157
-#, fuzzy
 msgid "No labels selected."
 msgstr "Er zijn geen labels geselecteerd."
 
@@ -3409,9 +3352,8 @@ msgid "Removing selected labels..."
 msgstr "Geselecteerde labels verwijderen..."
 
 #: js/PrefUsers.js:15
-#, fuzzy
 msgid "Please enter username:"
-msgstr "Geef loginID aub:"
+msgstr "Geef gebruikersnaam aub:"
 
 #: js/PrefUsers.js:18
 msgid "Adding user..."
@@ -3424,15 +3366,13 @@ msgstr "Gebruikers bewerken"
 #: js/PrefUsers.js:57
 #: js/PrefUsers.js:96
 #: js/PrefUsers.js:103
-#, fuzzy
 msgid "No users selected."
 msgstr "Er zijn geen gebruikers geselecteerd."
 
 #: js/PrefUsers.js:62
 #: js/PrefUsers.js:108
-#, fuzzy
 msgid "Please select one user."
-msgstr "Selecteer aub slechts één gebruiker."
+msgstr "Selecteer aub één gebruiker."
 
 #: js/PrefUsers.js:66
 msgid "Reset password of selected user?"
@@ -3451,7 +3391,6 @@ msgid "Removing selected users..."
 msgstr "Geselecteerde gebruikers verwijderen..."
 
 #: js/tt-rss.js:308
-#, fuzzy
 msgid "Please enable mail or mailto plugin first."
 msgstr "Eerst de e-mail plug-in inschakelen aub."
 
@@ -3481,19 +3420,16 @@ msgid "Shared URLs cleared."
 msgstr "Gedeelde URLs opgeruimd."
 
 #: plugins/share/share.js:15
-#, fuzzy
 msgid "Trying to change URL..."
-msgstr "Adres aan het aanpassen..."
+msgstr "URL aan het aanpassen..."
 
 #: plugins/share/share.js:40
-#, fuzzy
 msgid "Could not change URL."
-msgstr "Adres aan het aanpassen..."
+msgstr "Kon URL niet aanpassen."
 
 #: plugins/share/share.js:50
-#, fuzzy
 msgid "Trying to unshare..."
-msgstr "Adres aan het aanpassen..."
+msgstr "Delen uitzetten..."
 
 #~ msgid "Filename:"
 #~ msgstr "Bestandsnaam:"
