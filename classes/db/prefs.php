@@ -26,7 +26,7 @@ class Db_Prefs {
 		$user_id = $_SESSION["uid"];
 		@$profile = $_SESSION["profile"];
 
-		if (!$profile || get_schema_version() < 63) $profile = null;
+		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) $profile = null;
 
 		$sth = $this->pdo->prepare("SELECT
 			value,ttrss_prefs_types.type_name as type_name,ttrss_prefs.pref_name AS pref_name
@@ -65,7 +65,7 @@ class Db_Prefs {
 			return $this->convert($tuple["value"], $tuple["type"]);
 		}
 
-		if (!$profile || get_schema_version() < 63) $profile = null;
+		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) $profile = null;
 
 		$sth = $this->pdo->prepare("SELECT
 			value,ttrss_prefs_types.type_name as type_name
@@ -112,9 +112,11 @@ class Db_Prefs {
 		if (!$user_id) {
 			$user_id = $_SESSION["uid"];
 			@$profile = $_SESSION["profile"];
+		} else {
+			$profile = null;
 		}
 
-		if (!$profile || get_schema_version() < 63) $profile = null;
+		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) $profile = null;
 
 		$type_name = "";
 		$current_value = "";

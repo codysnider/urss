@@ -584,7 +584,7 @@
 
 		$sth = $pdo->query("SELECT pref_name,def_value FROM ttrss_prefs");
 
-		$profile = $profile ? $profile : null;
+		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) $profile = null;
 
 		$u_sth = $pdo->prepare("SELECT pref_name
 			FROM ttrss_user_prefs WHERE owner_uid = :uid AND

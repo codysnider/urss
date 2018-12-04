@@ -452,12 +452,16 @@ class Pref_Prefs extends Handler_Protected {
 
 		print '<div dojoType="dijit.layout.ContentPane" region="center" style="overflow-y : auto">';
 
-		if ($_SESSION["profile"]) {
+		$profile = $_SESSION["profile"];
+
+		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) $profile = null;
+
+		if ($profile) {
 			print_notice(__("Some preferences are only available in default profile."));
 		}
 
 		if ($_SESSION["profile"]) {
-			initialize_user_prefs($_SESSION["uid"], $_SESSION["profile"]);
+			initialize_user_prefs($_SESSION["uid"], $profile);
 		} else {
 			initialize_user_prefs($_SESSION["uid"]);
 		}
@@ -473,7 +477,7 @@ class Pref_Prefs extends Handler_Protected {
 				ttrss_user_prefs.pref_name = ttrss_prefs.pref_name AND
 				owner_uid = :uid
 			ORDER BY ttrss_prefs_sections.order_id,pref_name");
-		$sth->execute([":uid" => $_SESSION['uid'], ":profile" => $_SESSION['profile']]);
+		$sth->execute([":uid" => $_SESSION['uid'], ":profile" => $profile]);
 
 		$lnum = 0;
 
@@ -497,8 +501,7 @@ class Pref_Prefs extends Handler_Protected {
 
 			if (!$short_desc) continue;
 
-			if ($_SESSION["profile"] && in_array($line["pref_name"],
-					$profile_blacklist)) {
+			if ($profile && in_array($line["pref_name"], $profile_blacklist)) {
 				continue;
 			}
 
