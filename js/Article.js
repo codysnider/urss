@@ -94,7 +94,7 @@ define(["dojo/_base/declare"], function (declare) {
 			w.opener = null;
 			w.location = "backend.php?op=article&method=redirect&id=" + id;
 
-			Article.setActive(id);
+			Headlines.toggleUnread(id, 0);
 		},
 		render: function (article) {
 			App.cleanupMemory("content-insert");
