@@ -2,7 +2,6 @@
 <html>
 <head>
 	<title>Tiny Tiny RSS : Login</title>
-	<?php echo stylesheet_tag("lib/dijit/themes/claro/claro.css") ?>
 	<?php echo stylesheet_tag("css/default.css") ?>
 	<link rel="shortcut icon" type="image/png" href="images/favicon.png">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -22,36 +21,32 @@
 	</script>
 </head>
 
-<body class="claro ttrss_main ttrss_login">
+<body class="flat ttrss_main ttrss_login">
 
 <script type="text/javascript">
-require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox','dijit/form/Form',
+require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox', 'dijit/form/Form',
     'dijit/form/Select','dijit/form/TextBox','dijit/form/ValidationTextBox'],function(parser, ready){
         ready(function() {
             parser.parse();
 
-            //show tooltip node only after this widget is instaniated.
-            dojo.query('div[dojoType="dijit.Tooltip"]').style({
-                display:''
-            });
-
-            fetchProfiles();
             dijit.byId("bw_limit").attr("checked", Cookie.get("ttrss_bwlimit") == 'true');
-            document.forms.loginForm.login.focus();
+            dijit.byId("login").focus();
         });
 });
 
 function fetchProfiles() {
-    const query = "op=getProfiles&login=" + encodeURIComponent(document.forms["loginForm"].login.value);
+    xhrJson("public.php", { op: "getprofiles", login: dijit.byId("login").attr('value') },
+        (reply) => {
+			const profile = dijit.byId('profile');
 
-    new Ajax.Request("public.php",	{
-        parameters: query,
-        onComplete: function(transport) {
-            if (transport.responseText.match("select")) {
-                $('profile_box').innerHTML = transport.responseText;
-                //dojo.parser.parse('profile_box');
-            }
-    } });
+			profile.removeOption(profile.getOptions());
+
+			reply.each((p) => {
+				profile
+        			.attr("disabled", false)
+					.addOption(p);
+			});
+		});
 }
 
 function gotoRegForm() {
@@ -87,7 +82,7 @@ function bwLimitChange(elem) {
 		<?php } ?>
 		<div class="row">
 			<label><?php echo __("Login:") ?></label>
-			<input name="login" class="input input-text" type="text"
+			<input name="login" id="login" dojoType="dijit.form.TextBox" type="text"
 				onchange="fetchProfiles()" onfocus="fetchProfiles()" onblur="fetchProfiles()"
 				style="width : 220px"
 				required="1"
@@ -98,6 +93,7 @@ function bwLimitChange(elem) {
 		<div class="row">
 			<label><?php echo __("Password:") ?></label>
 			<input type="password" name="password" required="1"
+                    dojoType="dijit.form.TextBox"
 					style="width : 220px" class="input input-text"
 					value="<?php echo $_SESSION["fake_password"] ?>"/>
 			<label></label>
@@ -110,9 +106,9 @@ function bwLimitChange(elem) {
 		<div class="row">
 			<label><?php echo __("Profile:") ?></label>
 
-			<span id='profile_box'><select disabled='disabled' dojoType='dijit.form.Select'
+			<select disabled='disabled' name="profile" id="profile" dojoType='dijit.form.Select'
 				style='width : 220px; margin : 0px'>
-				<option><?php echo __("Default profile") ?></option></select></span>
+				<option><?php echo __("Default profile") ?></option></select>
 
 		</div>
 

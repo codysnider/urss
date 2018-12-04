@@ -262,23 +262,24 @@ class Handler_Public extends Handler {
 
 	function getProfiles() {
 		$login = clean($_REQUEST["login"]);
+		$rv = [];
 
-		$sth = $this->pdo->prepare("SELECT ttrss_settings_profiles.* FROM ttrss_settings_profiles,ttrss_users
+		if ($login) {
+			$sth = $this->pdo->prepare("SELECT ttrss_settings_profiles.* FROM ttrss_settings_profiles,ttrss_users
 			WHERE ttrss_users.id = ttrss_settings_profiles.owner_uid AND login = ? ORDER BY title");
-		$sth->execute([$login]);
+			$sth->execute([$login]);
 
-		print "<select dojoType='dijit.form.Select' style='width : 220px; margin : 0px' name='profile'>";
+			$rv = [ [ "value" => 0, "label" => __("Default profile") ] ];
 
-		print "<option value='0'>" . __("Default profile") . "</option>";
+			while ($line = $sth->fetch()) {
+				$id = $line["id"];
+				$title = $line["title"];
 
-		while ($line = $sth->fetch()) {
-			$id = $line["id"];
-			$title = $line["title"];
+				array_push($rv, [ "label" => $title, "value" => $id ]);
+			}
+	    }
 
-			print "<option value='$id'>$title</option>";
-		}
-
-		print "</select>";
+		print json_encode($rv);
 	}
 
 	function logout() {
