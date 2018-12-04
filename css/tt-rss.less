@@ -473,14 +473,14 @@ body.ttrss_main {
 		table *,
 		.actionChooser * {
 			text-rendering: optimizelegibility;
-			font-family : @fonts-ui;
+			//font-family : @fonts-ui;
 			font-size : 12px;
 
 		}
 
 		#headlines-toolbar {
 			padding-right : 4px;
-			width : 100%;
+			width : 80%;
 
 			span.holder {
 				display : table;
@@ -813,48 +813,11 @@ body.ttrss_main {
 		box-shadow : inset -1px 0px 2px -1px rgba(0,0,0,0.1);
 		-webkit-overflow-scrolling : touch;
 
-		/* #feedTree .dijitTreeRow .dijitTreeLabel.Unread {
-			font-weight : bold;
-		}
-
-		#feedTree .dijitTreeRow.Error .dijitTreeLabel {
-			color : red;
-		}
-
-		#feedTree .dijitTreeRow.UpdatesDisabled .dijitTreeLabel {
-			color : #909090;
-		}
-
-		#feedTree.dijitTree .dijitTreeNode .dijitTreeRowSelected {
-			box-shadow : -1px 0px 2px -1px rgba(0,0,0,0.1);
-			border-right-color : white;
-		}
-
-		#feedTree.dijitTree .dijitTreeContainer {
-			max-width : 100%;
-		}
-
-		#feedTree.dijitTree .dijitTreeRow {
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-
-		#feedTree.dijitTree .dijitTreeNode .dijitTreeRow {
-			padding : 4px 0px 4px;
-			border-width : 1px;
-			color : #333;
-		}
-
-		#feedTree.dijitTree img.tinyFeedIcon {
-			position : relative;
-			top : -2px;
-		} */
-
 		#feedTree {
 			height : 100%;
 			overflow-x : hidden;
 			text-rendering: optimizelegibility;
-			//font-family : @fonts-ui;
+			font-family : @fonts-ui;
 
 			.counterNode.aux {
 				background : #f0f0f0;
@@ -885,7 +848,34 @@ body.ttrss_main {
 				left : -3px;
 				height : 22px;
 				position : relative;
-				top : -3px;
+				top : -6px;
+			}
+
+			.dijitTreeRow .dijitTreeLabel.Unread {
+				font-weight : bold;
+			}
+
+			.dijitTreeRow.Error .dijitTreeLabel {
+				color : red;
+			}
+
+			.dijitTreeRow.UpdatesDisabled .dijitTreeLabel {
+				color : #909090;
+			}
+
+			.dijitTreeNode .dijitTreeRow {
+				border : 1px solid transparent;
+			}
+
+			.dijitTreeNode .dijitTreeRowSelected {
+				box-shadow : -1px 0px 2px -1px rgba(0,0,0,0.1);
+				border-color : #ccc transparent;
+				background : white;
+			}
+
+			img.tinyFeedIcon {
+				position : relative;
+				top : -2px;
 			}
 
 		}
@@ -1045,7 +1035,10 @@ body.ttrss_main {
 
 	ul#filterDlg_Matches li, ul#filterDlg_Actions li {
 		cursor : pointer;
-		padding : 0px 0px 0px 5px;
+	}
+
+	ul#filterDlg_Matches li .dijitCheckBox, ul#filterDlg_Actions li .dijitCheckBox {
+		margin-right: 4px;
 	}
 
 	ul.helpKbList {
@@ -1085,10 +1078,6 @@ body.ttrss_main {
 		width : 410px;
 	}
 
-	/* ul#filterDlg_Matches li div.dijitCheckBox, ul#filterDlg_Actions li div.dijitCheckBox {
-		margin-right : 5px;
-	} */
-
 	span.highlight {
 		background-color : #ffff00;
 		color : #cc90cc;
@@ -1098,11 +1087,11 @@ body.ttrss_main {
 
 	}
 
-	/* #headlines-frame .dijitCheckBox {
-		border-width : 0px;
-		opacity : 0.5;
+	#headlines-frame .dijitCheckBox {
+		margin-right : 4px;
 	}
 
+	/*
 	#headlines-frame .dijitCheckBoxHover,
 	#headlines-frame .dijitCheckBoxChecked {
 		opacity : 1;

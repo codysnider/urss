@@ -1,11 +1,66 @@
 .flat {
-	.dijitTree .filterRules span.inverse,
+
+	li {
+		padding : 2px;
+	}
+
+	.filterRules span.inverse,
 	#filterDlg_Matches span.filterRule.inverse {
 		color: red;
 	}
 
+	.filterRules span {
+		display: block;
+		color: green;
+	}
+
+	#filterDlg_Matches span.filterRule {
+		color: green;
+	}
+
 	.dijitToolbar {
 		font-size : 13px;
+		padding : 0px;
+	}
+
+	.dijitTab:not(.dijitTabChecked) {
+		background : #f5f5f5;
+	}
+
+	/* .dijitCheckBox {
+		background-image: url("../images/untick.png");
+		background-color: transparent;
+		width: 15px;
+		height: 15px;
+		margin: 1px;
+		opacity: 0.7;
+		background-position: center center;
+		transition: opacity 0.25s;
+		-webkit-transition: opacity 0.25s;
+		padding: 1px;
+		border-width : 0px;
+		content : "";
+	}
+
+	.dijitCheckBox.dijitCheckBoxChecked {
+		border-color: #69C671;
+		background-image: url("../images/tick.png");
+		opacity: 1;
+	} */
+
+	.dijitCheckBox {
+		border : 0px;
+		background : #ccc;
+	}
+
+	.dijitCheckBox:before {
+		font-family: "flat-icon";
+		content : "\f00c";
+		color : white;
+	}
+
+	.dijitCheckBox.dijitCheckBoxChecked {
+		background-color : #69C671;
 	}
 
 	.dijitTree {
@@ -14,13 +69,17 @@
 			display: none;
 		}
 
-		.filterRules span {
-			display: block;
-			color: green;
+		.dijitTreeRow .dijitTreeExpando {
+			position : relative;
+			top : -2px;
 		}
 
-		#filterDlg_Matches span.filterRule {
-			color: green;
+		.dijitTreeRowSelected .dijitTreeExpando {
+			color : @color-accent;
+		}
+
+		.dijitTreeNode .dijitTreeRowSelected {
+			background : white;
 		}
 
 		.labelParam {
@@ -40,6 +99,21 @@
 			font-size: 12px;
 			margin-left: 100px;
 			line-height : normal;
+		}
+
+		.dijitTreeContainer {
+			max-width : 100%;
+		}
+
+		.dijitTreeRow {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.dijitTreeNode .dijitTreeRow {
+			padding : 4px 0px 4px;
+			border-width : 1px;
+			color : #333;
 		}
 
 	}
