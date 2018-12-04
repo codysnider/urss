@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-03 14:24+0300\n"
-"PO-Revision-Date: 2018-12-04 03:09+0000\n"
+"PO-Revision-Date: 2018-12-04 03:52+0000\n"
 "Last-Translator: Ptsa Daniel <ptsa1987@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/"
 "tt-rss/messages/zh_Hans/>\n"
@@ -1179,19 +1179,17 @@ msgstr "解析文档时发生错误。"
 #: classes/feeds.php:140
 #: classes/feeds.php:141
 #: classes/pref/feeds.php:1331
-#, fuzzy
 msgid "Show as feed"
-msgstr "本信息源"
+msgstr "以信息源显示"
 
 #: classes/feeds.php:62
-#, fuzzy, php-format
+#, php-format
 msgid "Last updated: %s"
-msgstr "上次更新："
+msgstr "上次更新:%s"
 
 #: classes/feeds.php:100
-#, fuzzy
 msgid "Select..."
-msgstr "选择"
+msgstr "选择..."
 
 #: classes/feeds.php:102
 #: classes/pref/users.php:359
@@ -1236,7 +1234,6 @@ msgid "Selection:"
 msgstr "选择："
 
 #: classes/feeds.php:116
-#, fuzzy
 msgid "Set score"
 msgstr "评分"
 
@@ -1273,23 +1270,20 @@ msgid "Feed not found."
 msgstr "找不到信息源。"
 
 #: classes/feeds.php:256
-#, fuzzy
 msgid "Never"
-msgstr "从不清理"
+msgstr "从不"
 
 #: classes/feeds.php:342
-#, fuzzy, php-format
+#, php-format
 msgid "Imported at %s"
-msgstr "导入"
+msgstr "从%s导入"
 
 #: classes/feeds.php:392
 #: classes/feeds.php:485
-#, fuzzy
 msgid "mark feed as read"
 msgstr "标记信息源为已读"
 
 #: classes/feeds.php:542
-#, fuzzy
 msgid "Collapse article"
 msgstr "折叠文章"
 
@@ -1306,9 +1300,8 @@ msgid "No starred articles found to display."
 msgstr "没有加星标的文章。"
 
 #: classes/feeds.php:701
-#, fuzzy
 msgid "No articles found to display. You can assign articles to labels manually from article header context menu (applies to all selected articles) or use a filter."
-msgstr "本标签下没有文章。你可以通过手动或过滤器的方式为文章添加预定义标签（参考上方动作菜单）。"
+msgstr "本标签下没有文章。你可以通过手动或过滤器的方式为文章添加预定义标签。"
 
 #: classes/feeds.php:703
 msgid "No articles found to display."
@@ -1331,9 +1324,8 @@ msgstr "没有选中的信息源。"
 
 #: classes/feeds.php:963
 #: classes/feeds.php:971
-#, fuzzy
 msgid "Feed or site URL"
-msgstr "信息源 URL"
+msgstr "信息源或网站 URL"
 
 #: classes/feeds.php:977
 #: classes/pref/feeds.php:559
@@ -1428,7 +1420,6 @@ msgid "Used for word stemming"
 msgstr "词干提取"
 
 #: classes/feeds.php:1111
-#, fuzzy
 msgid "Search syntax"
 msgstr "搜索语法"
 
@@ -1467,9 +1458,8 @@ msgid "Your access level is insufficient to open this tab."
 msgstr "您的访问级别不够，无法打开这个舌签。"
 
 #: classes/pref/users.php:26
-#, fuzzy
 msgid "Edit user"
-msgstr "编辑过滤器"
+msgstr "编辑用户"
 
 #: classes/pref/users.php:64
 msgid "Access level: "
@@ -1499,9 +1489,8 @@ msgid "Subscribed feeds count"
 msgstr "订阅的信息源数量"
 
 #: classes/pref/users.php:146
-#, fuzzy
 msgid "Stored articles"
-msgstr "加星标文章"
+msgstr "存储的文章"
 
 #: classes/pref/users.php:150
 #: classes/pref/users.php:406
@@ -1513,29 +1502,29 @@ msgid "User not found"
 msgstr "未找到用户"
 
 #: classes/pref/users.php:247
-#, fuzzy, php-format
+#, php-format
 msgid "Added user %s with password %s"
-msgstr "已添加用户 <b>%s</b> ，密码为<b>%s</b>"
+msgstr "已添加用户%s ，密码为%s"
 
 #: classes/pref/users.php:254
-#, fuzzy, php-format
+#, php-format
 msgid "Could not create user %s"
-msgstr "无法创建用户 <b>%s</b> "
+msgstr "无法创建用户 %s"
 
 #: classes/pref/users.php:258
-#, fuzzy, php-format
+#, php-format
 msgid "User %s already exists."
-msgstr "用户 <b>%s</b> 已存在。"
+msgstr "用户%s已存在。"
 
 #: classes/pref/users.php:286
-#, fuzzy, php-format
+#, php-format
 msgid "Changed password of user %s to %s"
-msgstr "用户 <b>%s</b> ，密码修改为<b>%s</b>"
+msgstr "用户%s ，密码修改为%s"
 
 #: classes/pref/users.php:288
-#, fuzzy, php-format
+#, php-format
 msgid "Sending new password of user %s to %s"
-msgstr "用户 <b>%s</b> ，新密码发送至<b>%s</b>"
+msgstr "用户%s，新密码发送至%s"
 
 #: classes/pref/users.php:311
 msgid "[tt-rss] Password change notification"
@@ -1602,9 +1591,8 @@ msgid "Error"
 msgstr "错误"
 
 #: classes/pref/system.php:49
-#, fuzzy
 msgid "Filename"
-msgstr "文件名："
+msgstr "文件名"
 
 #: classes/pref/system.php:50
 msgid "Message"
@@ -1615,15 +1603,13 @@ msgid "Date"
 msgstr "日期"
 
 #: classes/pref/filters.php:155
-#, fuzzy
 msgid "Preview article"
-msgstr "最新更新的文章"
+msgstr "预览文章"
 
 #: classes/pref/filters.php:267
 #: classes/pref/filters.php:573
-#, fuzzy
 msgid "(inverse)"
-msgstr "反选"
+msgstr "(反选)"
 
 #: classes/pref/filters.php:263
 #: classes/pref/filters.php:572
@@ -1652,7 +1638,6 @@ msgstr "添加"
 
 #: classes/pref/filters.php:441
 #: classes/pref/filters.php:897
-#, fuzzy
 msgid "Apply actions"
 msgstr "应用操作"
 
@@ -1668,7 +1653,6 @@ msgstr "匹配任意规则"
 
 #: classes/pref/filters.php:510
 #: classes/pref/filters.php:932
-#, fuzzy
 msgid "Inverse matching"
 msgstr "反向匹配"
 
@@ -1709,12 +1693,10 @@ msgid "in"
 msgstr "在"
 
 #: classes/pref/filters.php:1014
-#, fuzzy
 msgid "Wiki: Filters"
 msgstr "Wiki: 过滤器"
 
 #: classes/pref/filters.php:1019
-#, fuzzy
 msgid "Save rule"
 msgstr "保存规则"
 
@@ -1728,25 +1710,21 @@ msgid "Perform Action"
 msgstr "执行操作"
 
 #: classes/pref/filters.php:1093
-#, fuzzy
 msgid "No actions available"
 msgstr "无操作可用"
 
 #: classes/pref/filters.php:1112
-#, fuzzy
 msgid "Save action"
 msgstr "保存操作"
 
 #: classes/pref/filters.php:1112
 #: js/CommonFilters.js:155
-#, fuzzy
 msgid "Add action"
 msgstr "添加操作"
 
 #: classes/pref/filters.php:1139
-#, fuzzy
 msgid "[No caption]"
-msgstr "[无题注]"
+msgstr "[无标题]"
 
 #: classes/pref/filters.php:1141
 #, php-format
@@ -1755,7 +1733,6 @@ msgid_plural "%s (%d rules)"
 msgstr[0] "%s (%d 规则)"
 
 #: classes/pref/filters.php:1155
-#, fuzzy
 msgid "matches any rule"
 msgstr "匹配任意规则"
 
@@ -1783,7 +1760,6 @@ msgid "Digest"
 msgstr "摘要"
 
 #: classes/pref/prefs.php:25
-#, fuzzy
 msgid "Allow duplicate articles"
 msgstr "允许重复的文章"
 
@@ -1792,7 +1768,6 @@ msgid "Blacklisted tags"
 msgstr "被列入黑名单的标签"
 
 #: classes/pref/prefs.php:26
-#, fuzzy
 msgid "When auto-detecting tags in articles these tags will not be applied (comma-separated list)."
 msgstr "自动检测文章标签时，忽略这些标签（多个标签以半角逗号分隔）。"
 
@@ -1801,7 +1776,6 @@ msgid "Automatically mark articles as read"
 msgstr "自动标记文章为已读"
 
 #: classes/pref/prefs.php:27
-#, fuzzy
 msgid "This option enables marking articles as read automatically while you scroll article list."
 msgstr "在滚动页面的同时自动将文章标记为已读。"
 
@@ -1826,7 +1800,6 @@ msgid "Amount of articles to display at once"
 msgstr "同时显示的文章数量"
 
 #: classes/pref/prefs.php:32
-#, fuzzy
 msgid "Default feed update interval"
 msgstr "默认更新间隔"
 
@@ -1839,7 +1812,6 @@ msgid "Mark articles in e-mail digest as read"
 msgstr "将邮件摘要中的文章标记为已读"
 
 #: classes/pref/prefs.php:34
-#, fuzzy
 msgid "Enable e-mail digest"
 msgstr "启用电子邮件摘要"
 
@@ -1852,9 +1824,8 @@ msgid "Try to send digests around specified time"
 msgstr "在特定时间发送摘要"
 
 #: classes/pref/prefs.php:35
-#, fuzzy
 msgid "Uses UTC timezone"
-msgstr "用户所在时区"
+msgstr "使用UTC时区"
 
 #: classes/pref/prefs.php:36
 msgid "Enable API access"
@@ -1877,12 +1848,10 @@ msgid "Maximum age of fresh articles (in hours)"
 msgstr "最新更新文章的保鲜期（以小时为单位）"
 
 #: classes/pref/prefs.php:40
-#, fuzzy
 msgid "Hide feeds with no unread articles"
 msgstr "隐藏没有未读文章的信息源"
 
 #: classes/pref/prefs.php:41
-#, fuzzy
 msgid "Show special feeds when hiding read feeds"
 msgstr "隐藏已读信息之后显示特殊区域的内容"
 
@@ -1903,7 +1872,6 @@ msgid "Automatically open next feed with unread articles after marking one as re
 msgstr "标记未读文章为已读后，自动显示下一个信息源的文章"
 
 #: classes/pref/prefs.php:44
-#, fuzzy
 msgid "Purge articles after this number of days (0 - disables)"
 msgstr "清除多少天之前的文章？（0为不启用）"
 
@@ -1962,9 +1930,8 @@ msgid "Customize CSS stylesheet to your liking"
 msgstr "自定义 CSS 样式"
 
 #: classes/pref/prefs.php:54
-#, fuzzy
 msgid "Time zone"
-msgstr "用户所在时区"
+msgstr "时区"
 
 #: classes/pref/prefs.php:55
 msgid "Group headlines in virtual feeds"
@@ -1975,9 +1942,8 @@ msgid "Special feeds, labels, and categories are grouped by originating feeds"
 msgstr "将特殊信息源、预定义标签和分类按照信息源分组"
 
 #: classes/pref/prefs.php:56
-#, fuzzy
 msgid "Language"
-msgstr "语言："
+msgstr "语言"
 
 #: classes/pref/prefs.php:57
 msgid "Theme"
@@ -2000,7 +1966,6 @@ msgid "Your preferences are now set to default values."
 msgstr "你的偏好设置已经重置为默认值。"
 
 #: classes/pref/prefs.php:179
-#, fuzzy
 msgid "Personal data / Authentication"
 msgstr "个人数据 / 用户认证"
 
@@ -2054,12 +2019,10 @@ msgstr "动态口令已经启用。输入你当前的密码来禁用。"
 
 #: classes/pref/prefs.php:337
 #: classes/pref/prefs.php:388
-#, fuzzy
 msgid "Enter your password"
-msgstr "用户名或密码错误"
+msgstr "输入您的密码"
 
 #: classes/pref/prefs.php:348
-#, fuzzy
 msgid "Disable OTP"
 msgstr "禁用 OTP 动态口令"
 
@@ -2072,14 +2035,12 @@ msgid "Scan the following code by the Authenticator application:"
 msgstr "使用认证应用扫描下面编码:"
 
 #: classes/pref/prefs.php:393
-#, fuzzy
 msgid "Enter the generated one time password"
-msgstr "请填写生成的 OTP 动态口令："
+msgstr "请填写生成的 OTP 动态口令"
 
 #: classes/pref/prefs.php:407
-#, fuzzy
 msgid "Enable OTP"
-msgstr "已启用 OTP 动态口令"
+msgstr "启用 OTP 动态口令"
 
 #: classes/pref/prefs.php:413
 msgid "PHP GD functions are required for OTP support."
@@ -2107,9 +2068,8 @@ msgid "Save configuration"
 msgstr "保存设置"
 
 #: classes/pref/prefs.php:658
-#, fuzzy
 msgid "Save and exit preferences"
-msgstr "退出偏好设置"
+msgstr "保存并退出设置"
 
 #: classes/pref/prefs.php:663
 msgid "Manage profiles"
@@ -2163,29 +2123,25 @@ msgstr "更多信息"
 
 #: classes/pref/prefs.php:760
 #: classes/pref/prefs.php:819
-#, fuzzy
 msgid "Clear data"
-msgstr "清空信息源数据"
+msgstr "清空数据"
 
 #: classes/pref/prefs.php:769
 msgid "User plugins"
 msgstr "用户插件"
 
 #: classes/pref/prefs.php:834
-#, fuzzy
 msgid "Enable selected plugins"
-msgstr "启用信息源分类"
+msgstr "启用选择的插件"
 
 #: classes/pref/prefs.php:906
-#, fuzzy
 msgid "Incorrect one time password"
-msgstr "用户名或密码错误"
+msgstr "一次性密码不正确"
 
 #: classes/pref/prefs.php:911
 #: classes/pref/prefs.php:942
-#, fuzzy
 msgid "Incorrect password"
-msgstr "用户名或密码错误"
+msgstr "密码错误"
 
 #: classes/pref/prefs.php:967
 #, php-format
@@ -2249,18 +2205,15 @@ msgid "Feed Title"
 msgstr "信息源标题"
 
 #: classes/pref/feeds.php:571
-#, fuzzy
 msgid "Site URL:"
-msgstr "全部文章"
+msgstr "网址:"
 
 #: classes/pref/feeds.php:573
-#, fuzzy
 msgid "Site URL"
-msgstr "信息源 URL"
+msgstr "网址"
 
 #: classes/pref/feeds.php:584
 #: classes/pref/feeds.php:814
-#, fuzzy
 msgid "Language:"
 msgstr "语言："
 
@@ -2295,7 +2248,6 @@ msgstr "始终显示图片附件"
 
 #: classes/pref/feeds.php:699
 #: classes/pref/feeds.php:890
-#, fuzzy
 msgid "Do not embed media"
 msgstr "不要嵌入图片"
 
@@ -2316,9 +2268,8 @@ msgstr "图标"
 #: classes/pref/feeds.php:742
 #: classes/pref/feeds.php:1283
 #: plugins/import_export/init.php:71
-#, fuzzy
 msgid "Choose file..."
-msgstr "创建过滤器"
+msgstr "选择文件..."
 
 #: classes/pref/feeds.php:749
 msgid "Replace"
@@ -2329,9 +2280,8 @@ msgid "Feeds with errors"
 msgstr "有错误的信息源"
 
 #: classes/pref/feeds.php:1160
-#, fuzzy
 msgid "Inactive feeds"
-msgstr "刷新活动的信息源"
+msgstr "未活动的信息源"
 
 #: classes/pref/feeds.php:1196
 msgid "Edit selected feeds"
@@ -2343,19 +2293,16 @@ msgid "Batch subscribe"
 msgstr "批量订阅"
 
 #: classes/pref/feeds.php:1207
-#, fuzzy
 msgid "Categories"
-msgstr "信息源类别"
+msgstr "分类"
 
 #: classes/pref/feeds.php:1210
-#, fuzzy
 msgid "Add category"
-msgstr "编辑类别"
+msgstr "增加分类"
 
 #: classes/pref/feeds.php:1214
-#, fuzzy
 msgid "Remove selected"
-msgstr "移除选中的信息源"
+msgstr "移除选中"
 
 #: classes/pref/feeds.php:1271
 msgid "OPML"
@@ -2370,14 +2317,12 @@ msgid "Only main settings profile can be migrated using OPML."
 msgstr "只有主要设置能够通过OPML文件来进行迁移。"
 
 #: classes/pref/feeds.php:1289
-#, fuzzy
 msgid "Import OPML"
-msgstr "正在导入 OPML ……"
+msgstr "导入 OPML"
 
 #: classes/pref/feeds.php:1299
-#, fuzzy
 msgid "Export OPML"
-msgstr "正在导入 OPML ……"
+msgstr "导出 OPML"
 
 #: classes/pref/feeds.php:1303
 msgid "Include settings"
@@ -2392,12 +2337,10 @@ msgid "Public OPML URL"
 msgstr "公开的 OPML URL"
 
 #: classes/pref/feeds.php:1315
-#, fuzzy
 msgid "Display published OPML URL"
-msgstr "公开的 OPML URL"
+msgstr "公开的 OPML 地址"
 
 #: classes/pref/feeds.php:1322
-#, fuzzy
 msgid "Published & shared articles / Generated feeds"
 msgstr "已发布的文章和生成的信息源"
 
@@ -2466,22 +2409,19 @@ msgid "Data saved (%s, %d)"
 msgstr "数据已保存 (%s, %d)"
 
 #: plugins/af_psql_trgm/init.php:119
-#, fuzzy
 msgid "Show related articles"
-msgstr "加星标文章"
+msgstr "显示相关文章"
 
 #: plugins/af_psql_trgm/init.php:125
 #: plugins/af_psql_trgm/init.php:227
-#, fuzzy
 msgid "Mark similar articles as read"
-msgstr "将所有文章标记为已读？"
+msgstr "将类似的文章标记为已读"
 
 #: plugins/af_psql_trgm/init.php:164
 msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
 msgstr "PostgreSQL trigram 扩展将返回一个文本相似度的浮点数（0-1）。设置过低的阈值可能导致错误的结果，0 为关闭相似度检查。"
 
 #: plugins/af_psql_trgm/init.php:167
-#, fuzzy
 msgid "Global settings"
 msgstr "全局设置"
 
@@ -2494,9 +2434,8 @@ msgid "Minimum title length:"
 msgstr "最短标题长度："
 
 #: plugins/af_psql_trgm/init.php:181
-#, fuzzy
 msgid "Enable for all feeds:"
-msgstr "启用信息源分类"
+msgstr "启用所有信息源:"
 
 #: plugins/af_psql_trgm/init.php:198
 #: plugins/af_readability/init.php:90
@@ -2521,9 +2460,8 @@ msgstr "开启额外的重复检查"
 
 #: plugins/af_redditimgur/init.php:79
 #: plugins/af_zz_imgproxy/init.php:252
-#, fuzzy
 msgid "Configuration saved"
-msgstr "设置已保存。"
+msgstr "设置已保存"
 
 #: plugins/nsfw/init.php:30
 #: plugins/nsfw/init.php:42
@@ -2539,9 +2477,8 @@ msgid "Tags to consider NSFW (comma-separated)"
 msgstr "不宜在工作场所观看的标签（多个标签以逗号分隔）"
 
 #: plugins/nsfw/init.php:100
-#, fuzzy
 msgid "Configuration saved."
-msgstr "设置已保存。"
+msgstr "设置已保存."
 
 #: plugins/af_comics/init.php:49
 msgid "Feeds supported by af_comics"
@@ -2581,16 +2518,14 @@ msgid "You can share this article by the following unique URL:"
 msgstr "您可以通过以下唯一 URL 分享本文："
 
 #: plugins/share/init.php:122
-#, fuzzy
 msgid "Unshare article"
-msgstr "取消星标"
+msgstr "取消文章共享"
 
 #: plugins/mail/init.php:29
 msgid "Mail addresses saved."
 msgstr "邮件地址已保存."
 
 #: plugins/mail/init.php:35
-#, fuzzy
 msgid "Mail plugin"
 msgstr "邮件插件"
 
@@ -2624,46 +2559,40 @@ msgstr "发送邮件"
 
 #: plugins/vf_shared/init.php:17
 #: plugins/vf_shared/init.php:73
-#, fuzzy
 msgid "Shared articles"
-msgstr "加星标文章"
+msgstr "共享文章"
 
 #: plugins/mailto/init.php:74
 msgid "Clicking the following link to invoke your mail client:"
 msgstr "点击下面链接来启动你的邮件客户端："
 
 #: plugins/mailto/init.php:78
-#, fuzzy
 msgid "Forward selected article(s) by email."
-msgstr "用邮件转发文章"
+msgstr "用邮件转发选择的文章."
 
 #: plugins/mailto/init.php:81
 msgid "You should be able to edit the message before sending in your mail client."
 msgstr "在邮件发送前，你能够编辑消息。"
 
 #: plugins/mailto/init.php:86
-#, fuzzy
 msgid "Close this dialog"
-msgstr "关闭本界面"
+msgstr "关闭此对话框"
 
 #: plugins/af_zz_imgproxy/init.php:208
 msgid "Image proxy settings (af_zz_imgproxy)"
 msgstr "图片代理设置 (af_zz_imgproxy)"
 
 #: plugins/af_zz_imgproxy/init.php:232
-#, fuzzy
 msgid "Enable proxy for all remote images."
-msgstr "启用信息源分类"
+msgstr "为远程图像启用代理."
 
 #: plugins/af_zz_imgproxy/init.php:236
-#, fuzzy
 msgid "Don't cache files locally."
-msgstr "本地缓存图片"
+msgstr "不要在本地缓存文件."
 
 #: plugins/auth_internal/init.php:67
-#, fuzzy
 msgid "Please enter your one time password:"
-msgstr "请填写类别名称："
+msgstr "请输入您的一次性密码:"
 
 #: plugins/auth_internal/init.php:208
 msgid "Password has been changed."
@@ -2682,9 +2611,8 @@ msgid "Data saved."
 msgstr "数据已保存."
 
 #: plugins/af_readability/init.php:41
-#, fuzzy
 msgid "Inline content"
-msgstr "滚动文章内容"
+msgstr "Inline 内容"
 
 #: plugins/af_readability/init.php:47
 msgid "Readability settings (af_readability)"
@@ -2700,9 +2628,8 @@ msgid "Readability"
 msgstr "检查可用性"
 
 #: plugins/af_readability/init.php:118
-#, fuzzy
 msgid "Inline article content"
-msgstr "滚动文章内容"
+msgstr "Inline 文章内容"
 
 #: plugins/toggle_sidebar/init.php:23
 msgid "Collapse feedlist"
@@ -2763,9 +2690,9 @@ msgid "Prepare data"
 msgstr "准备数据"
 
 #: plugins/import_export/init.php:459
-#, fuzzy, php-format
+#, php-format
 msgid "Upload failed with error code %d (%s)"
-msgstr "上传错误，错误代码：%d"
+msgstr "上传错误，错误代码%d(%s)"
 
 #: plugins/import_export/init.php:483
 msgid "No file uploaded."
@@ -2780,9 +2707,8 @@ msgid "Error explained"
 msgstr "Error释义"
 
 #: js/Article.js:12
-#, fuzzy
 msgid "Please enter new score for selected articles:"
-msgstr "删除选中的 %d 篇文章？"
+msgstr "请输入所选文章的新分数："
 
 #: js/Article.js:40
 #: js/Headlines.js:665
@@ -2795,19 +2721,16 @@ msgstr "删除选中的 %d 篇文章？"
 #: js/Headlines.js:411
 #: js/Headlines.js:449
 #: js/Headlines.js:470
-#, fuzzy
 msgid "No articles selected."
 msgstr "未选中任何文章。"
 
 #: js/Article.js:46
-#, fuzzy
 msgid "Please enter new score for this article:"
-msgstr "请填写类别名称："
+msgstr "请输入本文的新分数："
 
 #: js/Article.js:88
-#, fuzzy
 msgid "Article URL:"
-msgstr "全部文章"
+msgstr "文章网址："
 
 #: js/Article.js:162
 msgid "Could not display article (invalid object received - see error console for details)"
@@ -2851,19 +2774,18 @@ msgid "Specified URL doesn't seem to contain any feeds."
 msgstr "指定的 URL 没有包含任何信息源。"
 
 #: js/CommonDialogs.js:129
-#, fuzzy
 msgid "Expand to select feed"
-msgstr "编辑选定的信息源"
+msgstr "展开选择的信息源"
 
 #: js/CommonDialogs.js:143
-#, fuzzy, perl-format
+#, perl-format
 msgid "Couldn't download the specified URL: %s"
-msgstr "无法下载指定的 URL 。"
+msgstr "无法从指定的网址下载:%s"
 
 #: js/CommonDialogs.js:146
-#, fuzzy, perl-format
+#, perl-format
 msgid "XML validation failed: %s"
-msgstr "XML 验证失败："
+msgstr "XML 验证失败：%s"
 
 #: js/CommonDialogs.js:149
 msgid "You are already subscribed to this feed."
@@ -2884,9 +2806,8 @@ msgstr "移除选中的信息源？"
 #: js/PrefFeedTree.js:226
 #: js/PrefFeedTree.js:242
 #: js/PrefFeedTree.js:394
-#, fuzzy
 msgid "No feeds selected."
-msgstr "没有选中的信息源。"
+msgstr "没有选中信息源。"
 
 #: js/CommonDialogs.js:223
 msgid "More Feeds"
@@ -2921,14 +2842,12 @@ msgid "Generate new syndication address for this feed?"
 msgstr "为本信息源生成新的群地址？"
 
 #: js/FeedTree.js:76
-#, fuzzy
 msgid "(Un)collapse"
-msgstr "收起侧边栏"
+msgstr "收起和展开"
 
 #: js/Feeds.js:230
-#, fuzzy
 msgid "Your password is at default value"
-msgstr "您还在使用系统默认的密码，请修改。"
+msgstr "您还在使用系统默认的密码，请修改"
 
 #: js/Headlines.js:709
 #, fuzzy, perl-format
@@ -2983,9 +2902,8 @@ msgid "Open original article"
 msgstr "打开原文"
 
 #: js/Headlines.js:1031
-#, fuzzy
 msgid "Display article URL"
-msgstr "显示 URL"
+msgstr "显示网址"
 
 #: js/Headlines.js:1138
 msgid "Assign label"
@@ -2996,28 +2914,24 @@ msgid "Remove label"
 msgstr "移除预定义标签"
 
 #: js/Headlines.js:1174
-#, fuzzy
 msgid "Select articles in group"
-msgstr "选择鼠标指向的文章"
+msgstr "选择分类中的文章"
 
 #: js/Headlines.js:1184
-#, fuzzy
 msgid "Mark group as read"
-msgstr "标记为已读"
+msgstr "将分类标记为已读"
 
 #: js/Headlines.js:1196
 msgid "Mark feed as read"
 msgstr "标记信息源为已读"
 
 #: js/PrefFeedTree.js:36
-#, fuzzy
 msgid "Edit category"
-msgstr "编辑类别"
+msgstr "编辑分类"
 
 #: js/PrefFeedTree.js:43
-#, fuzzy
 msgid "Remove category"
-msgstr "创建类别"
+msgstr "删除分类"
 
 #: js/PrefFeedTree.js:136
 #, perl-format
@@ -3033,9 +2947,8 @@ msgid "Remove selected categories?"
 msgstr "移除选中的类别？"
 
 #: js/PrefFeedTree.js:205
-#, fuzzy
 msgid "No categories selected."
-msgstr "没有选中任何类别。"
+msgstr "没有选中分类。"
 
 #: js/PrefFeedTree.js:256
 msgid "Edit Multiple Feeds"
@@ -3046,14 +2959,12 @@ msgid "Save changes to selected feeds?"
 msgstr "保存对信息源的更改？"
 
 #: js/PrefFeedTree.js:311
-#, fuzzy
 msgid "Rename category to:"
-msgstr "创建类别"
+msgstr "更名分类到:"
 
 #: js/PrefFeedTree.js:323
-#, fuzzy
 msgid "Category title:"
-msgstr "类别"
+msgstr "分类标题:"
 
 #: js/PrefFeedTree.js:347
 msgid "Subscribing to feeds..."
@@ -3074,7 +2985,6 @@ msgstr "移除选定的过滤器？"
 #: js/PrefFilterTree.js:253
 #: js/PrefFilterTree.js:110
 #: js/PrefFilterTree.js:126
-#, fuzzy
 msgid "No filters selected."
 msgstr "没有选中的过滤器。"
 
