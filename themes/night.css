@@ -112,6 +112,10 @@ body.claro.ttrss_main #headlines-frame .cdm.expandable.active {
 	background : var(--bg-main);
 }
 
+body.claro.ttrss_main #headlines-frame .cdm.expanded.active {
+	background : var(--bg-main);
+}
+
 body.claro.ttrss_main #content-insert blockquote,
 body.claro.ttrss_main #headlines-frame blockquote,
 body.claro.ttrss_main .dijitContentPane blockquote {
@@ -185,6 +189,21 @@ body.claro.ttrss_main .articleNote {
 	border-color : #9a8c59;
 }
 
+body.claro.ttrss_main .post .content img,
+body.claro.ttrss_main .cdm .content-inner img,
+body.claro.ttrss_main .post .content video,
+body.claro.ttrss_main .cdm .content-inner video {
+	transition : opacity 0.5s linear, filter 0.5s linear;
+}
+
+body.claro.ttrss_main .post .content img:not(:hover),
+body.claro.ttrss_main .cdm .content-inner img:not(:hover),
+body.claro.ttrss_main .post .content video:not(:hover),
+body.claro.ttrss_main .cdm .content-inner video:not(:hover) {
+	opacity : 0.5;
+	filter: grayscale(80%);
+}
+
 body.claro.ttrss_main #content-insert_splitter,
 body.claro.ttrss_main #feeds-holder_splitter {
 	border-color : var(--border-main);
@@ -193,6 +212,13 @@ body.claro.ttrss_main #feeds-holder_splitter {
 
 body.claro.ttrss_main .insensitive {
 	color : var(--fg-light);
+}
+
+body.claro.ttrss_main hr,
+body.claro.ttrss_main h1,
+body.claro.ttrss_main h2,
+body.claro.ttrss_main h3 {
+	border-color : var(--border-main);
 }
 
 ::-webkit-scrollbar {
