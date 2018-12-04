@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-03 14:24+0300\n"
-"PO-Revision-Date: 2018-12-04 03:52+0000\n"
+"PO-Revision-Date: 2018-12-04 10:04+0000\n"
 "Last-Translator: Ptsa Daniel <ptsa1987@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/"
 "tt-rss/messages/zh_Hans/>\n"
@@ -1908,7 +1908,6 @@ msgid "Click to register your SSL client certificate with tt-rss"
 msgstr "在 tt-rss 处注册您的 SSL 证书"
 
 #: classes/pref/prefs.php:51
-#, fuzzy
 msgid "Do not embed media in articles"
 msgstr "不要显示文章中的图片"
 
@@ -2993,9 +2992,8 @@ msgid "This will invalidate all previously generated feed URLs. Continue?"
 msgstr "之前生成的信息源 URL 将会回到未认证状态。是否继续？"
 
 #: js/PrefHelpers.js:21
-#, fuzzy
 msgid "Clear event log?"
-msgstr "清空日志"
+msgstr "清空事件日志?"
 
 #: js/PrefHelpers.js:40
 msgid "Settings Profiles"
@@ -3006,7 +3004,6 @@ msgid "Remove selected profiles? Active and default profiles will not be removed
 msgstr "移除选中的偏好文件？当前偏好与默认偏好不会被移除。"
 
 #: js/PrefHelpers.js:64
-#, fuzzy
 msgid "No profiles selected."
 msgstr "未选择偏好文件。"
 
@@ -3039,14 +3036,12 @@ msgid "Replace current OPML publishing address with a new one?"
 msgstr "将当前的 OPML 发布地址更改替换为新地址？"
 
 #: js/common.js:182
-#, fuzzy
 msgid "Click to close"
-msgstr "点击暂停"
+msgstr "点击关闭"
 
 #: plugins/af_psql_trgm/init.js:10
-#, fuzzy
 msgid "Related articles"
-msgstr "删除文章"
+msgstr "相关文章"
 
 #: plugins/share/share_prefs.js:3
 msgid "This will invalidate all previously shared article URLs. Continue?"
@@ -3057,12 +3052,10 @@ msgid "Share article by URL"
 msgstr "通过 URL 分享文章"
 
 #: plugins/share/share.js:13
-#, fuzzy
 msgid "Generate new share URL for this article?"
-msgstr "请填写类别名称："
+msgstr "为此文章生成新的共享网址？"
 
 #: plugins/share/share.js:48
-#, fuzzy
 msgid "Remove sharing for this article?"
 msgstr "不再分享此文章？"
 
@@ -3080,9 +3073,8 @@ msgid "Error sending email:"
 msgstr "邮件发送错误："
 
 #: plugins/shorten_expanded/init.js:34
-#, fuzzy
 msgid "Click to expand article"
-msgstr "点击以展开文章。"
+msgstr "点击展开文章"
 
 #: plugins/import_export/import_export.js:13
 msgid "Export Data"
@@ -3111,44 +3103,37 @@ msgid "<span onclick=\"App.explainError(3)\">Update daemon is not updating feeds
 msgstr "<span onclick=\"App.explainError(3)\">更新程序未更新订阅源.</span>"
 
 #: js/Article.js:190
-#, fuzzy
 msgid "Saving article tags..."
-msgstr "编辑文章的自定义标签"
+msgstr "保存文章标签..."
 
 #: js/CommonDialogs.js:13
 msgid "Upload complete."
 msgstr "上传完成。"
 
 #: js/CommonDialogs.js:21
-#, fuzzy
 msgid "Upload failed: icon is too big."
-msgstr "上传错误，错误代码：%d"
+msgstr "上传失败：图标太大了。"
 
 #: js/CommonDialogs.js:24
-#, fuzzy
 msgid "Upload failed."
-msgstr "上传完成。"
+msgstr "上传失败。"
 
 #: js/CommonDialogs.js:30
-#, fuzzy
 msgid "Removing feed icon..."
-msgstr "移除已保存的信息源图标？"
+msgstr "移除信息源图标..."
 
 #: js/CommonDialogs.js:35
-#, fuzzy
 msgid "Feed icon removed."
-msgstr "找不到信息源。"
+msgstr "信息源图标已删除."
 
 #: js/CommonDialogs.js:52
-#, fuzzy
 msgid "Uploading, please wait..."
-msgstr "读取中，请稍候……"
+msgstr "上传中，请稍候…"
 
 #: js/CommonDialogs.js:183
 #: js/PrefFeedTree.js:379
-#, fuzzy
 msgid "Removing selected feeds..."
-msgstr "移除选中的信息源？"
+msgstr "正在移除选中的信息源..."
 
 #: js/CommonDialogs.js:360
 msgid "Removing feed..."
@@ -3158,9 +3143,8 @@ msgstr "删除 feed..."
 #: js/PrefFeedTree.js:292
 #: js/PrefFilterTree.js:223
 #: js/PrefUsers.js:40
-#, fuzzy
 msgid "Saving data..."
-msgstr "保存信息"
+msgstr "正在保存数据.."
 
 #: js/CommonDialogs.js:420
 #: js/PrefHelpers.js:203
@@ -3169,28 +3153,24 @@ msgstr "尝试更改地址..."
 
 #: js/CommonDialogs.js:440
 #: js/PrefHelpers.js:219
-#, fuzzy
 msgid "Could not change feed URL."
-msgstr "无法创建用户 <b>%s</b> "
+msgstr "无法更改信息源网址。"
 
 #: js/CommonFilters.js:133
-#, fuzzy
 msgid "Edit rule"
-msgstr "编辑过滤器"
+msgstr "编辑规则"
 
 #: js/CommonFilters.js:155
-#, fuzzy
 msgid "Edit action"
-msgstr "信息源动作"
+msgstr "编辑动作"
 
 #: js/CommonFilters.js:194
 msgid "Looking for articles (%d processed, %f found)..."
 msgstr "搜索文章中 (%d 已处理, %f 已发现)..."
 
 #: js/CommonFilters.js:224
-#, fuzzy
 msgid "Found %d articles matching this filter:"
-msgstr "符合本过滤器条件的文章："
+msgstr "找到过滤器匹配的％d篇文章："
 
 #: js/CommonFilters.js:235
 msgid "Error while trying to get filter test results."
@@ -3205,37 +3185,30 @@ msgid "Mark all articles as read?"
 msgstr "将所有文章标记为已读？"
 
 #: js/Feeds.js:394
-#, fuzzy
 msgid "Marking all feeds as read..."
-msgstr "标记所有信息源为已读"
+msgstr "标记所有信息源为已读..."
 
 #: js/Feeds.js:433
-#, fuzzy
 msgid "Mark %w in %s older than 1 day as read?"
-msgstr "将 %s 中的一天前的全部文章标记为已读？"
+msgstr "将 %s 中 %w 1天前的文章标记为已读?"
 
 #: js/Feeds.js:436
-#, fuzzy
 msgid "Mark %w in %s older than 1 week as read?"
-msgstr "将 %s 中的一周前的全部文章标记为已读？"
+msgstr "将 %s 中 %w 1周前的文章标记为已读?"
 
 #: js/Feeds.js:439
-#, fuzzy
 msgid "Mark %w in %s older than 2 weeks as read?"
-msgstr "将 %s 中的两周前的全部文章标记为已读？"
+msgstr "将 %s 中 %w 2周前的文章标记为已读?"
 
 #: js/Feeds.js:442
-#, fuzzy
 msgid "Mark %w in %s as read?"
-msgstr "将 %s 中的全部文章标记为已读？"
+msgstr "将 %s 中 %w 的文章标记为已读?"
 
 #: js/Feeds.js:445
-#, fuzzy
 msgid "search results"
-msgstr "搜索结果：%s"
+msgstr "搜索结果"
 
 #: js/Feeds.js:445
-#, fuzzy
 msgid "all articles"
 msgstr "全部文章"
 
@@ -3246,19 +3219,16 @@ msgstr "将 %s 中的全部文章标记为已读？"
 #: js/Headlines.js:301
 #: js/Headlines.js:349
 #: js/Headlines.js:366
-#, fuzzy
 msgid "Click to open next unread feed."
-msgstr "点击以编辑信息源"
+msgstr "点击打开下一个未读信息源。"
 
 #: js/Headlines.js:305
-#, fuzzy
 msgid "Cancel search"
-msgstr "取消"
+msgstr "取消搜索"
 
 #: js/Headlines.js:363
-#, fuzzy
 msgid "New articles found, reload feed to continue."
-msgstr "暂时没有文章。"
+msgstr "找到新文章，点击重新加载。"
 
 #: js/Headlines.js:628
 #, fuzzy
@@ -3267,34 +3237,28 @@ msgid_plural "%d articles selected"
 msgstr[0] "未选中任何文章。"
 
 #: js/PrefFeedTree.js:137
-#, fuzzy
 msgid "Removing category..."
-msgstr "创建类别"
+msgstr "删除分类..."
 
 #: js/PrefFeedTree.js:151
-#, fuzzy
 msgid "Unsubscribing from selected feeds..."
-msgstr "取消订阅选中的信息源"
+msgstr "取消订阅选中的信息源..."
 
 #: js/PrefFeedTree.js:193
-#, fuzzy
 msgid "Removing selected categories..."
-msgstr "移除选定的类别"
+msgstr "移除选定的分类..."
 
 #: js/PrefFeedTree.js:326
-#, fuzzy
 msgid "Creating category..."
-msgstr "创建过滤器"
+msgstr "创建分类..."
 
 #: js/PrefFilterTree.js:114
-#, fuzzy
 msgid "Combine selected filters?"
-msgstr "移除选定的过滤器？"
+msgstr "合并选定的过滤器？"
 
 #: js/PrefFilterTree.js:115
-#, fuzzy
 msgid "Joining filters..."
-msgstr "创建过滤器"
+msgstr "加入过滤器..."
 
 #: js/PrefFilterTree.js:131
 msgid "Please select only one filter."
@@ -3305,19 +3269,16 @@ msgid "Edit Filter"
 msgstr "编辑过滤器"
 
 #: js/PrefFilterTree.js:190
-#, fuzzy
 msgid "Remove filter?"
-msgstr "移除这个过滤器： %s ？"
+msgstr "移除过滤器?"
 
 #: js/PrefFilterTree.js:195
-#, fuzzy
 msgid "Removing filter..."
-msgstr "创建过滤器"
+msgstr "移除过滤器..."
 
 #: js/PrefFilterTree.js:241
-#, fuzzy
 msgid "Removing selected filters..."
-msgstr "移除选定的过滤器？"
+msgstr "移除选定的过滤器..."
 
 #: js/PrefHelpers.js:5
 #: plugins/share/share_prefs.js:4
@@ -3325,25 +3286,21 @@ msgid "Clearing URLs..."
 msgstr "清理 URLs..."
 
 #: js/PrefHelpers.js:8
-#, fuzzy
 msgid "Generated URLs cleared."
-msgstr "生成一个新的 URL"
+msgstr "生成的网址已清除."
 
 #: js/PrefHelpers.js:50
-#, fuzzy
 msgid "Removing selected profiles..."
-msgstr "移除选中的偏好文件"
+msgstr "删除所选配置文件..."
 
 #: js/PrefHelpers.js:85
-#, fuzzy
 msgid "Creating profile..."
-msgstr "创建偏好文件"
+msgstr "创建偏好文件..."
 
 #: js/PrefHelpers.js:159
 #: plugins/import_export/import_export.js:115
-#, fuzzy
 msgid "Importing, please wait..."
-msgstr "读取中，请稍候……"
+msgstr "导入中，请稍候……"
 
 #: js/PrefLabelTree.js:66
 msgid "Label Editor"
@@ -3355,28 +3312,24 @@ msgstr "将选中的可选标签重置为默认颜色？"
 
 #: js/PrefLabelTree.js:137
 #: js/PrefLabelTree.js:157
-#, fuzzy
 msgid "No labels selected."
-msgstr "没有选择任何预定义标签。"
+msgstr "没有选择标签。"
 
 #: js/PrefLabelTree.js:144
 msgid "Remove selected labels?"
 msgstr "移除选中的预定义标签？"
 
 #: js/PrefLabelTree.js:145
-#, fuzzy
 msgid "Removing selected labels..."
-msgstr "移除选中的预定义标签？"
+msgstr "删除所选标签......"
 
 #: js/PrefUsers.js:15
-#, fuzzy
 msgid "Please enter username:"
 msgstr "请输入登录名："
 
 #: js/PrefUsers.js:18
-#, fuzzy
 msgid "Adding user..."
-msgstr "创建过滤器"
+msgstr "添加用户..."
 
 #: js/PrefUsers.js:36
 msgid "User Editor"
@@ -3385,13 +3338,11 @@ msgstr "编辑用户信息"
 #: js/PrefUsers.js:57
 #: js/PrefUsers.js:96
 #: js/PrefUsers.js:103
-#, fuzzy
 msgid "No users selected."
 msgstr "没有选中任何用户。"
 
 #: js/PrefUsers.js:62
 #: js/PrefUsers.js:108
-#, fuzzy
 msgid "Please select one user."
 msgstr "请仅选择一个用户。"
 
@@ -3400,28 +3351,24 @@ msgid "Reset password of selected user?"
 msgstr "重置选定用户的密码？"
 
 #: js/PrefUsers.js:67
-#, fuzzy
 msgid "Resetting password for selected user..."
-msgstr "重置选定用户的密码？"
+msgstr "重置选定用户的密码..."
 
 #: js/PrefUsers.js:82
 msgid "Remove selected users? Neither default admin nor your account will be removed."
 msgstr "移除选中的用户？默认管理员和您的帐户不会被移除。"
 
 #: js/PrefUsers.js:83
-#, fuzzy
 msgid "Removing selected users..."
-msgstr "移除选定的过滤器？"
+msgstr "删除所选用户..."
 
 #: js/tt-rss.js:308
-#, fuzzy
 msgid "Please enable mail or mailto plugin first."
-msgstr "请先选几个信息源吧。"
+msgstr "请先启用邮件或邮件插件。"
 
 #: js/tt-rss.js:431
-#, fuzzy
 msgid "Please enable embed_original plugin first."
-msgstr "请先选几个信息源吧。"
+msgstr "请先启用embed_original插件。"
 
 #: js/tt-rss.js:444
 #: js/tt-rss.js:535
@@ -3437,9 +3384,8 @@ msgid "You can't unsubscribe from the category."
 msgstr "您不能取消订阅一个类别。"
 
 #: plugins/note/note.js:14
-#, fuzzy
 msgid "Saving article note..."
-msgstr "编辑文章注记"
+msgstr "保存文章笔记......"
 
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
@@ -3450,9 +3396,8 @@ msgid "Trying to change URL..."
 msgstr "尝试更改 URL..."
 
 #: plugins/share/share.js:40
-#, fuzzy
 msgid "Could not change URL."
-msgstr "尝试更改 URL..."
+msgstr "无法更改网址。"
 
 #: plugins/share/share.js:50
 msgid "Trying to unshare..."
