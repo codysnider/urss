@@ -238,9 +238,9 @@ body.claro.ttrss_index h3 {
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: rgba(255,255,255,0.5);
+	background-color: var(--border-main);
 }
 
 ::-webkit-scrollbar-track {
-	background-color:rgba(255,255,255,0.2);
+	background-color: var(--bg-panel);
 }
