@@ -424,43 +424,39 @@ body.ttrss_main .insensitive {
 body.ttrss_main .small {
   font-size: 11px;
 }
-body.ttrss_main #main-toolbar > * {
-  white-space: nowrap;
-  display: table-cell;
-  color: #999;
-  overflow: hidden;
-}
-body.ttrss_main #main-toolbar > *,
-body.ttrss_main #main-toolbar table *,
-body.ttrss_main #main-toolbar .actionChooser * {
-  text-rendering: optimizelegibility;
+body.ttrss_main #main-toolbar {
+  background: white;
+  border: 0px solid #ddd;
+  border-bottom-width: 1px;
+  height: 32px;
+  line-height: 32px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  color: #555555;
   font-size: 12px;
+}
+body.ttrss_main #main-toolbar > * {
+  align-self: center;
+}
+body.ttrss_main #main-toolbar .dijitSelect,
+body.ttrss_main #main-toolbar .dijitDropDownButton .dijitButtonNode,
+body.ttrss_main #main-toolbar .dijitComboButton .dijitButtonNode {
+  border: 0px;
 }
 body.ttrss_main #main-toolbar #headlines-toolbar {
   padding-right: 4px;
-  width: 80%;
+  flex-grow: 2;
+  display: flex;
 }
-body.ttrss_main #main-toolbar #headlines-toolbar span.holder {
-  display: table;
-  width: 100%;
+body.ttrss_main #main-toolbar #headlines-toolbar .left {
+  flex-grow: 2;
 }
-body.ttrss_main #main-toolbar #headlines-toolbar span.holder > * {
-  display: table-cell;
-}
-body.ttrss_main #main-toolbar #headlines-toolbar .main {
-  text-align: right;
-}
-body.ttrss_main #main-toolbar #headlines-toolbar .main,
-body.ttrss_main #main-toolbar #headlines-toolbar .r {
-  line-height: 24px;
-}
-body.ttrss_main #main-toolbar #headlines-toolbar span.r img {
-  margin-right: 4px;
+body.ttrss_main #main-toolbar #headlines-toolbar .left img {
+  vertical-align: middle;
+  margin-right: 8px;
   position: relative;
-  top: 3px;
-}
-body.ttrss_main #main-toolbar #headlines-toolbar span.r .error a {
-  color: red;
+  top: -2px;
 }
 body.ttrss_main #main-toolbar #selected_prompt {
   font-style: italic;
@@ -506,6 +502,7 @@ body.ttrss_main img[src*='mark_set.png'] {
   opacity: 1;
 }
 body.ttrss_main div.tagCloudContainer {
+  background: white;
   border: 1px solid #ddd;
   margin: 5px 0px 5px 0px;
   padding: 5px;
@@ -529,6 +526,7 @@ body.ttrss_main ul.feedErrorsList em {
 }
 body.ttrss_main ul.browseFeedList {
   height: 300px;
+  width: 100%;
   overflow: auto;
   border-width: 0px 1px 1px 1px;
   border-color: #ddd;
@@ -657,7 +655,8 @@ body.ttrss_main div.dlgSecSimple hr {
   border: 0px solid transparent;
   margin: 2px;
 }
-body.ttrss_main div.dlgButtons {
+body.ttrss_main .dijitDialog .dlgButtons {
+  margin-top: 4px;
   text-align: right;
   clear: both;
 }
@@ -669,7 +668,6 @@ body.ttrss_main span.labelColorIndicator {
   vertical-align: middle;
   font-size: 9px;
   display: inline-block;
-  border: 1px solid #ccc;
   background-color: #fff7d5;
   color: #063064;
   text-align: center;
@@ -768,7 +766,7 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRow {
 }
 body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRowSelected {
   box-shadow: -1px 0px 2px -1px rgba(0, 0, 0, 0.1);
-  border-color: #ccc transparent;
+  border-color: #ddd transparent;
   background: white;
 }
 body.ttrss_main #feeds-holder #feedTree img.tinyFeedIcon {
@@ -813,13 +811,6 @@ body.ttrss_main #toolbar {
   border-width: 0px;
   white-space: nowrap;
   font-size: 12px;
-}
-body.ttrss_main #main-toolbar {
-  background: white;
-  border: 0px solid #ddd;
-  border-bottom-width: 1px;
-  padding-left: 4px;
-  height: 26px;
 }
 body.ttrss_main #header {
   border-width: 0px;
@@ -898,10 +889,11 @@ body.ttrss_main ul#filterDlg_Actions {
   list-style-type: none;
   border-style: solid;
   border-color: #ddd;
-  border-width: 0px 1px 1px 1px;
+  border-width: 1px 1px 1px 1px;
   background-color: white;
   margin: 0px 0px 5px 0px;
-  padding: 0px;
+  padding: 4px;
+  min-height: 16px;
 }
 body.ttrss_main ul#filterDlg_Matches li,
 body.ttrss_main ul#filterDlg_Actions li {
@@ -1466,9 +1458,9 @@ body.ttrss_prefs div.inactiveFeedHolder {
   height: 300px;
   overflow: auto;
   border: 1px solid #ddd;
-  border-top-width: 0px;
   margin: 0px 0px 5px 0px;
   background-color: white;
+  padding: 4px;
 }
 body.ttrss_prefs div.filterTestHolder,
 body.ttrss_prefs div.prefFeedOPMLHolder {
@@ -1524,34 +1516,18 @@ body.ttrss_prefs hr {
   border-color: #ecf4ff;
   max-width: 100%;
 }
-.flat {
-  /* .dijitCheckBox {
-		background-image: url("../images/untick.png");
-		background-color: transparent;
-		width: 15px;
-		height: 15px;
-		margin: 1px;
-		opacity: 0.7;
-		background-position: center center;
-		transition: opacity 0.25s;
-		-webkit-transition: opacity 0.25s;
-		padding: 1px;
-		border-width : 0px;
-		content : "";
-	}
-
-	.dijitCheckBox.dijitCheckBoxChecked {
-		border-color: #69C671;
-		background-image: url("../images/tick.png");
-		opacity: 1;
-	} */
-}
 .flat li {
   padding: 2px;
 }
 .flat .filterRules span.inverse,
 .flat #filterDlg_Matches span.filterRule.inverse {
   color: red;
+}
+.flat .dijitDialog .dijitDialogPaneContent {
+  background: #f5f5f5;
+}
+.flat .dijitAccordionContainer {
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
 .flat .filterRules span {
   display: block;
@@ -1566,6 +1542,13 @@ body.ttrss_prefs hr {
 }
 .flat .dijitTab:not(.dijitTabChecked) {
   background: #f5f5f5;
+}
+.flat .dijitMenu .dijitMenuItem .dijitMenuItemLabel {
+  padding: 4px 8px;
+  font-size: 13px;
+}
+.flat .dijitMenu .dijitMenuItem td {
+  padding: 0px;
 }
 .flat .dijitCheckBox {
   border: 0px;

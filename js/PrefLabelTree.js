@@ -64,7 +64,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 			const dialog = new dijit.Dialog({
 				id: "labelEditDlg",
 				title: __("Label Editor"),
-				style: "width: 600px",
+				style: "width: 650px",
 				setLabelColor: function (id, fg, bg) {
 
 					let kind = '';

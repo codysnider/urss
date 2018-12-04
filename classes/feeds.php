@@ -15,22 +15,6 @@ class Feeds extends Handler_Protected {
 			$feed_id, $is_cat, $search,
 			$error, $feed_last_updated) {
 
-		$catchup_sel_link = "Headlines.catchupSelection()";
-
-		$archive_sel_link = "Headlines.archiveSelection()";
-		$delete_sel_link = "Headlines.deleteSelection()";
-
-		$sel_all_link = "Headlines.select('all')";
-		$sel_unread_link = "Headlines.select('unread')";
-		$sel_none_link = "Headlines.select('none')";
-		$sel_inv_link = "Headlines.select('invert')";
-
-		$tog_unread_link = "Headlines.selectionToggleUnread()";
-		$tog_marked_link = "Headlines.selectionToggleMarked()";
-		$tog_published_link = "Headlines.selectionTogglePublished()";
-
-		$set_score_link = "Article.selectionSetScore()";
-
 		if ($is_cat) $cat_q = "&is_cat=$is_cat";
 
 		if ($search) {
@@ -39,23 +23,20 @@ class Feeds extends Handler_Protected {
 			$search_q = "";
 		}
 
-		$reply = "<span class=\"holder\">";
+		$reply = "";
 
 		$rss_link = htmlspecialchars(get_self_url_prefix() .
 			"/public.php?op=rss&id=$feed_id$cat_q$search_q");
 
-		// right part
-
 		$error_class = $error ? "error" : "";
 
-		$reply .= "<span class='r'>
-			<a href=\"#\"
+		$reply .= "<span class='left'>";
+
+		$reply .= "<a href=\"#\"
 				title=\"".__("Show as feed")."\"
 				onclick=\"App.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">
-				<img class=\"noborder\" src=\"images/pub_set.png\"></a>";
+				<img src=\"images/pub_set.png\"></a>";
 
-
-#		$reply .= "<span>";
 		$reply .= "<span id='feed_title' class='$error_class'>";
 
 		if ($feed_site_url) {
@@ -75,52 +56,37 @@ class Feeds extends Handler_Protected {
 			$reply .= strip_tags($feed_title);
 		}
 
-		$reply .= "</span>";
+		$reply .= "</span></span>";
 
-		$reply .= "</span>";
-
-#		$reply .= "</span>";
-
-		// left part
-
-		$reply .= "<span class=\"main\">";
+		$reply .= "<span class=\"right\">";
 		$reply .= "<span id='selected_prompt'></span>";
-
-		/*$reply .= "<span class=\"sel_links\">
-			<a href=\"#\" onclick=\"$sel_all_link\">".__('All')."</a>,
-			<a href=\"#\" onclick=\"$sel_unread_link\">".__('Unread')."</a>,
-			<a href=\"#\" onclick=\"$sel_inv_link\">".__('Invert')."</a>,
-			<a href=\"#\" onclick=\"$sel_none_link\">".__('None')."</a></li>";
-
-		$reply .= "</span> "; */
-
+		$reply .= "&nbsp;";
 		$reply .= "<select dojoType=\"dijit.form.Select\"
 			onchange=\"Headlines.onActionChanged(this)\">";
 
 		$reply .= "<option value=\"0\" disabled='1'>".__('Select...')."</option>";
 
-		$reply .= "<option value=\"$sel_all_link\">".__('All')."</option>";
-		$reply .= "<option value=\"$sel_unread_link\">".__('Unread')."</option>";
-		$reply .= "<option value=\"$sel_inv_link\">".__('Invert')."</option>";
-		$reply .= "<option value=\"$sel_none_link\">".__('None')."</option>";
+		$reply .= "<option value=\"Headlines.select('all')\">".__('All')."</option>";
+		$reply .= "<option value=\"Headlines.select('unread')\">".__('Unread')."</option>";
+		$reply .= "<option value=\"Headlines.select('invert')\">".__('Invert')."</option>";
+		$reply .= "<option value=\"Headlines.select('none')\">".__('None')."</option>";
 
 		$reply .= "<option value=\"0\" disabled=\"1\">".__('Selection toggle:')."</option>";
 
-		$reply .= "<option value=\"$tog_unread_link\">".__('Unread')."</option>
-			<option value=\"$tog_marked_link\">".__('Starred')."</option>
-			<option value=\"$tog_published_link\">".__('Published')."</option>";
+		$reply .= "<option value=\"Headlines.selectionToggleUnread()\">".__('Unread')."</option>
+			<option value=\"Headlines.selectionToggleMarked()\">".__('Starred')."</option>
+			<option value=\"Headlines.selectionTogglePublished()\">".__('Published')."</option>";
 
 		$reply .= "<option value=\"0\" disabled=\"1\">".__('Selection:')."</option>";
 
-		$reply .= "<option value=\"$catchup_sel_link\">".__('Mark as read')."</option>";
-		$reply .= "<option value=\"$set_score_link\">".__('Set score')."</option>";
+		$reply .= "<option value=\"Headlines.catchupSelection()\">".__('Mark as read')."</option>";
+		$reply .= "<option value=\"Article.selectionSetScore()\">".__('Set score')."</option>";
 
-		if ($feed_id != "0") {
-			$reply .= "<option value=\"$archive_sel_link\">".__('Archive')."</option>";
+		if ($feed_id == 0 && !$is_cat) {
+			$reply .= "<option value=\"Headlines.archiveSelection()\">".__('Move back')."</option>";
+			$reply .= "<option value=\"Headlines.deleteSelection()\">".__('Delete')."</option>";
 		} else {
-			$reply .= "<option value=\"$archive_sel_link\">".__('Move back')."</option>";
-			$reply .= "<option value=\"$delete_sel_link\">".__('Delete')."</option>";
-
+			$reply .= "<option value=\"Headlines.archiveSelection()\">".__('Archive')."</option>";
 		}
 
 		if (PluginHost::getInstance()->get_plugin("mail")) {
@@ -148,7 +114,7 @@ class Feeds extends Handler_Protected {
 			 $reply .= $p->hook_headline_toolbar_button($feed_id, $is_cat);
 		}
 
-		$reply .= "</span></span>";
+		$reply .= "</span>";
 
 		return $reply;
 	}

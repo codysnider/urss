@@ -461,61 +461,56 @@ body.ttrss_main {
 	}
 
 	#main-toolbar {
+		background : white;
+		border: 0px solid #ddd;
+		border-bottom-width: 1px;
+		height : 32px;
+		line-height : 32px;
+		display : flex;
+		flex-direction : row;
+		flex-wrap : nowrap;
+		color : @default-text;
+		font-size : 12px;
 
 		> * {
-			white-space : nowrap;
-			display : table-cell;
-			color : #999;
-			overflow : hidden;
+			align-self : center;
 		}
 
-		> *,
-		table *,
-		.actionChooser * {
-			text-rendering: optimizelegibility;
-			//font-family : @fonts-ui;
-			font-size : 12px;
+		.dijitSelect,
+		.dijitDropDownButton .dijitButtonNode,
+		.dijitComboButton .dijitButtonNode {
+			border : 0px;
+		}
+
+		#main_toolbar_form {
 
 		}
 
 		#headlines-toolbar {
 			padding-right : 4px;
-			width : 80%;
+			flex-grow : 2;
+			display : flex;
 
-			span.holder {
-				display : table;
-				width : 100%;
+			.left {
+				flex-grow: 2;
+
+				img {
+					vertical-align : middle;
+					margin-right : 8px;
+					position : relative;
+					top : -2px;
+				}
 			}
-
-			span.holder > * {
-				display : table-cell;
-			}
-
-			.main {
-				text-align : right;
-			}
-
-			.main,
-			.r {
-				line-height : 24px;
-			}
-
-			span.r img {
-				margin-right : 4px;
-				position : relative;
-				top : 3px;
-			}
-
-			span.r .error a {
-				color : red;
-			}
-
 		}
 
 		#selected_prompt {
 			font-style : italic;
 			text-align : right;
 			margin-right : 4px;
+		}
+
+		.actionChooser {
+
 		}
 
 		@media (max-width: 992px) {
@@ -562,6 +557,7 @@ body.ttrss_main {
 	}
 
 	div.tagCloudContainer {
+		background : white;
 		border : 1px solid #ddd;
 		margin : 5px 0px 5px 0px;
 		padding : 5px;
@@ -590,6 +586,7 @@ body.ttrss_main {
 
 	ul.browseFeedList {
 		height : 300px;
+		width : 100%;
 		overflow : auto;
 		border-width : 0px 1px 1px 1px;
 		border-color : #ddd;
@@ -742,9 +739,12 @@ body.ttrss_main {
 		margin : 2px;
 	}
 
-	div.dlgButtons {
-		text-align : right;
-		clear : both;
+	.dijitDialog {
+		.dlgButtons {
+			margin-top : 4px;
+			text-align: right;
+			clear: both;
+		}
 	}
 
 	span.labelColorIndicator {
@@ -755,7 +755,6 @@ body.ttrss_main {
 		vertical-align : middle;
 		font-size : 9px;
 		display : inline-block;
-		border : 1px solid #ccc;
 		background-color : #fff7d5;
 		color : #063064;
 		text-align : center;
@@ -869,7 +868,7 @@ body.ttrss_main {
 
 			.dijitTreeNode .dijitTreeRowSelected {
 				box-shadow : -1px 0px 2px -1px rgba(0,0,0,0.1);
-				border-color : #ccc transparent;
+				border-color : #ddd transparent;
 				background : white;
 			}
 
@@ -932,15 +931,6 @@ body.ttrss_main {
 		border-width : 0px;
 		white-space: nowrap;
 		font-size : 12px;
-	}
-
-	#main-toolbar {
-		background : white;
-		border: 0px solid #ddd;
-		border-bottom-width: 1px;
-		padding-left : 4px;
-		height : 26px;
-
 	}
 
 	#header {
@@ -1027,10 +1017,11 @@ body.ttrss_main {
 		list-style-type : none;
 		border-style : solid;
 		border-color : #ddd;
-		border-width : 0px 1px 1px 1px;
+		border-width : 1px 1px 1px 1px;
 		background-color : white;
 		margin : 0px 0px 5px 0px;
-		padding : 0px;
+		padding : 4px;
+		min-height : 16px;
 	}
 
 	ul#filterDlg_Matches li, ul#filterDlg_Actions li {
