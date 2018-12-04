@@ -15,10 +15,7 @@ body.claro.ttrss_main #feeds-holder {
 	border-left-width : 1px;
 }
 
-body.claro.ttrss_main #headlines-frame {
-	border-color : #ddd;
-}
-
+body.claro.ttrss_main #headlines-frame,
 body.claro.ttrss_main div.whiteBox {
 	border-color : var(--border-main);
 }
@@ -81,8 +78,7 @@ body.claro.ttrss_main .cdm .feed a {
 	color : white;
 }
 
-body.claro.ttrss_main div.cdm.expanded div.footer,
-body.claro.ttrss_main div.cdm.expandable div.footer {
+body.claro.ttrss_main div.cdm div.footer {
 	border-color : var(--border-main);
 	color : var(--fg-light);
 }
@@ -99,14 +95,21 @@ body.claro.ttrss_main .cdm.expanded.active .header a.title {
 	color : #2a89bc;
 }
 
-body.claro.ttrss_main .cdm.expandable.active,
-body.claro.ttrss_main .cdm.expandable {
+
+body.claro.ttrss_main #headlines-frame .cdm {
 	border-color : var(--border-main);
-	background : transparent;
 }
 
-body.claro.ttrss_main .cdm.active {
-	background : transparent ! important;
+body.claro.ttrss_main #headlines-frame .cdm.expandable {
+	background : var(--bg-main) ! important;
+}
+
+body.claro.ttrss_main #headlines-frame .cdm.expandable.Selected {
+	background : var(--bg-active) ! important;
+}
+
+body.claro.ttrss_main #headlines-frame .cdm.expandable.active {
+	background : var(--bg-main);
 }
 
 body.claro.ttrss_main #content-insert blockquote,
@@ -159,11 +162,11 @@ body.claro.ttrss_main .dijitMenu .dijitMenuItemSelected td {
 	color : white;
 }
 
-body.claro.ttrss_main .hl {
+body.claro.ttrss_main #headlines-frame .hl {
 	border-color : var(--border-main);
 }
 
-body.claro.ttrss_main .hl .title a {
+body.claro.ttrss_main #headlines-frame .hl .title a {
 	color : var(--fg-main);
 }
 
