@@ -35,7 +35,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 		},
 
 		getLabel: function(item) {
-			let label = item.name;
+			let label = String(item.name);
 
 			const feed = this.model.store.getValue(item, 'feed');
 			const inverse = this.model.store.getValue(item, 'inverse');
@@ -45,10 +45,6 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 			if (inverse)
 				label += " (" + __("Inverse") + ")";
-
-			/*		if (item.param)
-			 label = "<span class=\"labelFixedLength\">" + label +
-			 "</span>" + item.param[0]; */
 
 			return label;
 		},
