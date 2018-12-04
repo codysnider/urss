@@ -753,10 +753,19 @@ define(["dojo/_base/declare"], function (declare) {
 			return rv;
 		},
 		onRowChecked: function (elem) {
-			// account for dojo checkboxes
-			elem = elem.domNode || elem;
+			// do not allow unchecking active article checkbox
+			if (row.hasClassName("active")) {
+				elem.attr("checked", 1);
+				return;
+			}
 
-			elem.up("div[id*=RROW]").toggleClassName("Selected");
+			const row = elem.domNode.up("div[id*=RROW]");
+
+			if (elem.attr("checked")) {
+				row.addClassName("Selected");
+			} else {
+				row.removeClassName("Selected");
+			}
 
 			this.updateSelectedPrompt();
 		},
