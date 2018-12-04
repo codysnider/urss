@@ -87,7 +87,7 @@ body.claro.ttrss_index div.cdm.expanded.Unread .header a.title,
 body.claro.ttrss_index div.cdm.expandable.Unread a.title,
 body.claro.ttrss_index div.cdm.expanded .header a.title,
 body.claro.ttrss_index div.cdm.expandable a.title {
-	color : var(--fg-main);
+	color : var(--fg-light);
 }
 
 body.claro.ttrss_index .cdm.expandable.active .header a.title,
