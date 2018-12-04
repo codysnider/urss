@@ -37,7 +37,7 @@
 		var __ttrss_version = "<?php echo VERSION ?>"
 	</script>
 
-	<?php echo stylesheet_tag("lib/dijit/themes/claro/claro.css"); ?>
+	<?php echo stylesheet_tag("lib/flat/flat.css"); ?>
 
 	<?php if ($_SESSION["uid"]) {
 		$theme = get_pref("USER_CSS_THEME", false, false);
@@ -102,7 +102,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 
-<body class="claro ttrss_main ttrss_prefs">
+<body class="flat ttrss_main ttrss_prefs">
 
 <div id="notify" class="notify"></div>
 <div id="cmdline" style="display : none"></div>

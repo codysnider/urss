@@ -61,7 +61,7 @@
 		var __ttrss_version = "<?php echo VERSION ?>"
 	</script>
 
-	<?php echo stylesheet_tag("lib/dijit/themes/claro/claro.css"); ?>
+	<?php echo stylesheet_tag("lib/flat/flat.css"); ?>
 
 	<?php if ($_SESSION["uid"]) {
 		$theme = get_pref("USER_CSS_THEME", false, false);
@@ -136,7 +136,7 @@
 	<meta name="referrer" content="no-referrer"/>
 </head>
 
-<body class="claro ttrss_main ttrss_index">
+<body class="flat ttrss_main ttrss_index">
 
 <div id="overlay" style="display : block">
 	<div id="overlay_inner">
