@@ -154,7 +154,7 @@ body.claro.ttrss_index #floatingTitle {
 }
 
 body.claro.ttrss_index #floatingTitle * {
-	color : var(--fg-light);
+	color : var(--fg-light) ! important;
 }
 
 body.claro.ttrss_index .dijitMenu,
