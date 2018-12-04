@@ -1,0 +1,262 @@
+@import "../css/default.less";
+
+:root {
+  --bg-main : #333;
+  --border-main : #666;
+  --border-dark : #222;
+  --bg-panel : #222;
+  --fg-main: #999;
+  --fg-light : #ccc;
+  --bg-active: #2a89bc;
+}
+
+/* main layout overrides */
+
+body.flat.ttrss_main.ttrss_index {
+
+  #feeds-holder {
+    background : var(--bg-panel);
+    box-shadow : inset -1px 0px 2px -1px var(--border-main);
+  }
+
+  #headlines-frame,
+  div.whiteBox {
+    border-color : var(--border-main);
+  }
+
+  #main,
+  #overlay {
+    background : var(--bg-main);
+    color : var(--fg-main);
+  }
+
+  #content-insert {
+    background : var(--bg-main);
+  }
+
+  #content-insert_splitter {
+    border-color : var(--border-main);
+    background : var(--bg-panel);
+  }
+
+  #feeds-holder_splitter {
+    border-color : var(--border-main);
+    background : var(--bg-main);
+  }
+
+  /* misc */
+
+  .insensitive {
+    color : var(--fg-light);
+  }
+
+  hr,
+  h1,
+  h2,
+  h3 {
+    border-color : var(--border-dark);
+  }
+
+  code {
+    color : #c90 ! important;
+  }
+
+  pre {
+    color : var(--fg-main);
+    background : var(--bg-panel) ! important;
+  }
+
+  /* feeds */
+
+  #feeds-holder #feedTree .dijitTreeRow {
+    color : var(--fg-light) ! important;
+  }
+
+  #feeds-holder #feedTree.dijitTree .dijitTreeRowHover {
+    background : var(--bg-panel);
+    border-color : var(--border-main) transparent;
+  }
+
+  #feeds-holder #feedTree.dijitTree .dijitTreeRowSelected {
+    background : var(--bg-main);
+    border-color : var(--bg-main) transparent;
+  }
+
+  #feeds-holder #feedTree .dijitTreeRowSelected .dijitTreeLabel {
+    text-shadow : none;
+  }
+
+  #feeds-holder #feedTree .counterNode.aux {
+    background : var(--bg-panel);
+    color : var(--fg-main);
+    border-color : var(--bg-main);
+  }
+
+  /* headlines */
+
+  #headlines-frame {
+    background : var(--bg-main);
+    color : var(--fg-light);
+  }
+
+  #main-toolbar {
+    background : var(--bg-panel);
+    border-color : var(--border-dark);
+  }
+
+  #main-toolbar .dijitButtonText {
+    color : var(--fg-light);
+  }
+
+  #main-toolbar .dijitSelect,
+  #main-toolbar .dijitSelect .dijitButtonText {
+    background : var(--bg-panel);
+  }
+
+  .hl .feed a,
+  .cdm .feed a {
+    color : white;
+  }
+
+  #headlines-frame .hl {
+    border-color : var(--border-dark);
+  }
+
+  #headlines-frame .hl:not(.Selected):not(.active) .title a {
+    color : var(--fg-main);
+  }
+
+  #headlines-frame .hl.Unread:not(.Selected):not(.active) .title a {
+    color : var(--fg-light);
+  }
+
+  .post .header {
+    background : var(--bg-panel);
+    border-color : var(--border-main);
+  }
+
+  .post .content,
+  .cdm .content-inner {
+    color : var(--fg-main);
+  }
+
+  .post .content img,
+  .cdm .content-inner img,
+  .post .content video,
+  .cdm .content-inner video {
+    transition : opacity 0.5s linear, filter 0.5s linear;
+  }
+
+  .post .content img:not(:hover),
+  .cdm .content-inner img:not(:hover),
+  .post .content video:not(:hover),
+  .cdm .content-inner video:not(:hover) {
+    opacity : 0.5;
+    filter: grayscale(80%);
+  }
+
+  div.cdm div.footer {
+    border-color : var(--border-dark);
+    color : var(--fg-light);
+  }
+
+  div.cdm .header a.title {
+    color : var(--fg-main);
+  }
+
+  div.cdm.Unread .header a.title {
+    color : var(--fg-light);
+  }
+
+  .cdm.expandable.active .header a.title,
+  .cdm.expanded.active .header a.title {
+    color : #2a89bc;
+  }
+
+  #headlines-frame .cdm {
+    border-color : var(--border-dark);
+  }
+
+  #headlines-frame .cdm .header .author {
+    color : var(--fg-main);
+  }
+
+  #headlines-frame .cdm.expandable {
+    background : var(--bg-main) ! important;
+  }
+
+  #headlines-frame .cdm.expandable.Selected {
+    background : var(--bg-active) ! important;
+  }
+
+  #headlines-frame .cdm.expandable.active {
+    background : var(--bg-main);
+  }
+
+  #headlines-frame .cdm.expanded.active {
+    background : var(--bg-main);
+  }
+
+  #content-insert blockquote,
+  #headlines-frame blockquote,
+  .dijitContentPane blockquote {
+    color : var(--fg-main);
+    border-color : var(--border-main);
+  }
+
+  .dijitInputField.dijitButtonText {
+    background : var(--bg-main);
+  }
+
+  .cdm .footer img {
+    opacity : 0.6;
+  }
+
+  #floatingTitle {
+    background : var(--bg-panel);
+    border-color : var(--border-main);
+  }
+
+  #floatingTitle * {
+    color : var(--fg-light) ! important;
+  }
+
+  /* other dijits */
+
+  .dijitMenu,
+  .dijitMenuTable,
+  .dijitMenu .dijitMenuItem td {
+    border-color : var(--bg-panel);
+    background : var(--bg-panel);
+    color : var(--fg-main);
+  }
+
+  .dijitMenu .dijitMenuItemSelected,
+  .dijitMenu .dijitMenuItemSelected td {
+    background : black;
+    color : white;
+  }
+
+  .dijitMenu .dijitMenuSeparator * {
+    border-bottom-color : var(--border-dark) ! important;
+  }
+
+  .articleNote {
+    background : var(--bg-panel);
+    border-color : #9a8c59;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border-main);
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--bg-panel);
+  }
+
+}
+

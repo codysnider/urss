@@ -37,8 +37,6 @@
 		var __ttrss_version = "<?php echo VERSION ?>"
 	</script>
 
-	<?php echo stylesheet_tag("lib/flat-ttrss/flat.css"); ?>
-
 	<?php if ($_SESSION["uid"]) {
 		$theme = get_pref("USER_CSS_THEME", false, false);
 		if ($theme && theme_valid("$theme")) {
