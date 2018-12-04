@@ -680,6 +680,8 @@ class Pref_Prefs extends Handler_Protected {
 		print "</div>"; #pane
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Plugins')."\">";
+		print '<div dojoType="dijit.layout.BorderContainer" gutters="false">';
+		print '<div dojoType="dijit.layout.ContentPane" region="center" style="overflow-y : auto">';
 
 		if (ini_get("open_basedir") && function_exists("curl_init") && !defined("NO_CURL")) {
 			print_warning("Your PHP configuration has open_basedir restrictions enabled. Some plugins relying on CURL for functionality may not work correctly.");
@@ -833,12 +835,16 @@ class Pref_Prefs extends Handler_Protected {
 
 		//print "<p>" . __("You will need to reload Tiny Tiny RSS for plugin changes to take effect.") . "</p>";
 
-		print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".
-			__("Enable selected plugins")."</button></p>";
-
 		print "</form>";
 
+		print "</div>"; #content-pane
+		print '<div dojoType="dijit.layout.ContentPane" region="bottom">';
+		print "<button dojoType=\"dijit.form.Button\" type=\"submit\">".
+			__("Enable selected plugins")."</button>";
 		print "</div>"; #pane
+
+		print "</div>"; #pane
+		print "</doiv>"; #border-container
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB,
 			"hook_prefs_tab", "prefPrefs");
