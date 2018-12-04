@@ -1019,7 +1019,7 @@ class Feeds extends Handler_Protected {
 				__('This feed requires authentication.')."</div>";
 
 		print "<div class=\"dlgButtons\">
-			<button dojoType=\"dijit.form.Button\" class=\"btn-primary\" type=\"submit\" onclick=\"return dijit.byId('feedAddDlg').execute()\">".__('Subscribe')."</button>";
+			<button dojoType=\"dijit.form.Button\" class=\"alt-primary\" type=\"submit\" onclick=\"return dijit.byId('feedAddDlg').execute()\">".__('Subscribe')."</button>";
 
 		if (!(defined('_DISABLE_FEED_BROWSER') && _DISABLE_FEED_BROWSER)) {
 			print "<button dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.feedBrowser()\">".__('More feeds')."</button>";
@@ -1115,7 +1115,7 @@ class Feeds extends Handler_Protected {
 				</div>";
 		}
 
-		print "<button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"btn-primary\" onclick=\"dijit.byId('searchDlg').execute()\">".__('Search')."</button>
+		print "<button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"alt-primary\" onclick=\"dijit.byId('searchDlg').execute()\">".__('Search')."</button>
 		<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('searchDlg').hide()\">".__('Cancel')."</button>
 		</div>";
 

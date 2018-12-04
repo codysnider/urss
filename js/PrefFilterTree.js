@@ -183,7 +183,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 					Filters.addFilterAction(li, action);
 				},
 				removeFilter: function () {
-					const msg = __("Remove filter?");
+					const msg = __("FRemove filter?");
 
 					if (confirm(msg)) {
 						this.hide();

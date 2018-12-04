@@ -514,14 +514,14 @@ class Pref_Filters extends Handler_Protected {
 			print "<div class=\"dlgButtons\">";
 
 			print "<div style=\"float : left\">";
-			print "<button dojoType=\"dijit.form.Button\" class=\"btn-danger\" onclick=\"return dijit.byId('filterEditDlg').removeFilter()\">".
+			print "<button dojoType=\"dijit.form.Button\" class=\"alt-danger\" onclick=\"return dijit.byId('filterEditDlg').removeFilter()\">".
 				__('Remove')."</button>";
 			print "</div>";
 
 			print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterEditDlg').test()\">".
 				__('Test')."</button> ";
 
-			print "<button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"btn-primary\" onclick=\"return dijit.byId('filterEditDlg').execute()\">".
+			print "<button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"alt-primary\" onclick=\"return dijit.byId('filterEditDlg').execute()\">".
 				__('Save')."</button> ";
 
 			print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterEditDlg').hide()\">".
@@ -1015,7 +1015,7 @@ class Pref_Filters extends Handler_Protected {
 		</div>";
 
 
-		print "<button dojoType=\"dijit.form.Button\" class=\"btn-primary \" type=\"submit\" onclick=\"return dijit.byId('filterNewRuleDlg').execute()\">".
+		print "<button dojoType=\"dijit.form.Button\" class=\"alt-primary \" type=\"submit\" onclick=\"return dijit.byId('filterNewRuleDlg').execute()\">".
 			($rule ? __("Save rule") : __('Add rule'))."</button> ";
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterNewRuleDlg').hide()\">".
@@ -1108,7 +1108,7 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<div class=\"dlgButtons\">";
 
-		print "<button dojoType=\"dijit.form.Button\" class=\"btn-primary\" type=\"submit\" onclick=\"return dijit.byId('filterNewActionDlg').execute()\">".
+		print "<button dojoType=\"dijit.form.Button\" class=\"alt-primary\" type=\"submit\" onclick=\"return dijit.byId('filterNewActionDlg').execute()\">".
 			($action ? __("Save action") : __('Add action'))."</button> ";
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterNewActionDlg').hide()\">".

@@ -40,7 +40,7 @@ class Pref_System extends Handler_Protected {
 				onclick=\"Helpers.updateEventLog()\">".__('Refresh')."</button> ";
 
 			print "&nbsp;<button dojoType=\"dijit.form.Button\"
-				class=\"btn-danger\" onclick=\"Helpers.clearEventLog()\">".__('Clear')."</button> ";
+				class=\"alt-danger\" onclick=\"Helpers.clearEventLog()\">".__('Clear')."</button> ";
 
 			print "<p><table width=\"100%\" cellspacing=\"10\" class=\"prefErrorLog\">";
 

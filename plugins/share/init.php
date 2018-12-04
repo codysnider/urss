@@ -42,7 +42,7 @@ class Share extends Plugin {
 
 			print "<p>" . __("You can disable all articles shared by unique URLs here.") . "</p>";
 
-			print "<button class=\"btn-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Plugins.Share.clearKeys()\">".
+			print "<button class=\"alt-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Plugins.Share.clearKeys()\">".
 				__('Unshare all articles')."</button> ";
 
 			print "</p>";
