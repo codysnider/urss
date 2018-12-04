@@ -7,7 +7,7 @@
 # Dojo requires Java runtime to build. Further information on rebuilding Dojo
 # is available here: http://dojotoolkit.org/reference-guide/build/index.html
 
-VERSION=1.12.1
+VERSION=1.14.2
 
 # Download and extract dojo src code if it doesn't already exist
 if [ ! -d "dojo" ]; then
