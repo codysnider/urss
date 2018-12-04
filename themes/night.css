@@ -1,8 +1,17 @@
 @import "default.php";
 
+:root {
+	--bg-main : #333;
+	--border-main : #666;
+	--bg-panel : #222;
+	--fg-main: #999;
+	--fg-light : #ccc;
+	--bg-active: #2a89bc;
+}
+
 body.claro.ttrss_main #feeds-holder {
-	background : #222;
-  	border-color : #666;
+	background : var(--bg-panel);
+  	border-color : var(--border-main);
 	border-left-width : 1px;
 }
 
@@ -11,66 +20,60 @@ body.claro.ttrss_main #headlines-frame {
 }
 
 body.claro.ttrss_main div.whiteBox {
-	border-color : #666;
+	border-color : var(--border-main);
 }
 
 body.claro.ttrss_main #content-insert {
-	background : #333;
+	background : var(--bg-main);
 }
 
 body.claro.ttrss_main #feedTree .dijitTreeRow {
-	color : #ccc ! important;
+	color : var(--fg-light) ! important;
 }
 
 body.claro.ttrss_main .dijitTree .dijitTreeRowHover {
 	background : #444;
-	border-color : #666;
+	border-color : var(--border-main);
 }
 
 body.claro.ttrss_main .dijitTree .dijitTreeRowSelected {
 	background : #555;
-	border-color : #666 ! important;
+	border-color : var(--border-main) ! important;
 }
 
 body.claro.ttrss_main .dijitTreeRowSelected .dijitTreeLabel {
 	text-shadow : none;
 }
 
-body.claro.ttrss_main #feedTree .counterNode.aux {
-	background : #555;
-	color : #999;
-	border-color : #333;
-}
-
-body.claro.ttrss_main #feedTree .counterNode {
-	border : 1px solid #6280AD;
-	color : white;
-	background : #6280AD;
+body.claro.ttrss_main #feeds-holder #feedTree .counterNode.aux {
+	background : var(--bg-panel);
+	color : var(--fg-main);
+	border-color : var(--bg-main);
 }
 
 body.claro.ttrss_main #headlines-frame {
-	background : #333;
-	color : #ccc;
+	background : var(--bg-main);
+	color : var(--fg-light);
 }
 
 body.claro.ttrss_main #main-toolbar {
-	background : #333;
-	border-color : #666;
+	background : var(--bg-main);
+	border-color : var(--border-main);
 }
 
 body.claro.ttrss_main #main-toolbar .dijitButtonText {
 	color : #ddd;
 }
 
-body.claro.ttrss_main #main-toolbar .dijitSelect {
-	border-color : #666;
+body.claro.ttrss_main #main-toolbar .dijitSelect,
+body.claro.ttrss_main #main-toolbar .dijitSelect .dijitButtonText {
+	background : black;
 }
-
 
 body.claro.ttrss_main #main,
 body.claro.ttrss_main #overlay {
-	background : #333;
-	color : #ccc;
+	background : var(--bg-main);
+	color : var(--fg-main);
 }
 
 body.claro.ttrss_main .hl .feed a,
@@ -80,27 +83,25 @@ body.claro.ttrss_main .cdm .feed a {
 
 body.claro.ttrss_main div.cdm.expanded div.footer,
 body.claro.ttrss_main div.cdm.expandable div.footer {
-	border-color : #666;
-	color : #ccc;
-}
-
-body.claro.ttrss_main div.cdm.expandable.Selected {
-	background : #6280AD;
+	border-color : var(--border-main);
+	color : var(--fg-light);
 }
 
 body.claro.ttrss_main div.cdm.expanded.Unread .header a.title,
-body.claro.ttrss_main div.cdm.expandable.Unread a.title {
-	color : #ccc;
-}
-
+body.claro.ttrss_main div.cdm.expandable.Unread a.title,
 body.claro.ttrss_main div.cdm.expanded .header a.title,
 body.claro.ttrss_main div.cdm.expandable a.title {
-	color : #aaa;
+	color : var(--fg-main);
+}
+
+body.claro.ttrss_main .cdm.expandable.active .header a.title,
+body.claro.ttrss_main .cdm.expanded.active .header a.title {
+	color : #2a89bc;
 }
 
 body.claro.ttrss_main .cdm.expandable.active,
 body.claro.ttrss_main .cdm.expandable {
-	border-color : #666;
+	border-color : var(--border-main);
 	background : transparent;
 }
 
@@ -108,16 +109,11 @@ body.claro.ttrss_main .cdm.active {
 	background : transparent ! important;
 }
 
-body.claro.ttrss_main .cdm .content-inner,
-body.claro.ttrss_main .cdm .titleWrap {
-	color : #bbb;
-}
-
 body.claro.ttrss_main #content-insert blockquote,
 body.claro.ttrss_main #headlines-frame blockquote,
 body.claro.ttrss_main .dijitContentPane blockquote {
-	color : #999;
-	border-color : #666;
+	color : var(--fg-main);
+	border-color : var(--border-main);
 }
 
 body.claro.ttrss_main #content-insert code,
@@ -129,26 +125,12 @@ body.claro.ttrss_main .dijitContentPane code {
 body.claro.ttrss_main #content-insert pre,
 body.claro.ttrss_main #headlines-frame pre,
 body.claro.ttrss_main.dijitContentPane pre {
-	color : #999;
+	color : var(--fg-main);
 	background : black;
 }
 
 body.claro.ttrss_main .dijitInputField.dijitButtonText {
-	background : #333;
-}
-
-/*body.claro.ttrss_main .cdm .content-inner img,
-body.claro.ttrss_main .cdm img.tinyFeedIcon,
-body.claro.ttrss_main .cdm .footer img,
-body.claro.ttrss_main #feedTree img,
-body.claro.ttrss_main .post .content img {
-	filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); // firefox lol
-	filter: grayscale(1);
-	-webkit-filter: grayscale(1);
-}*/
-
-body.claro.ttrss_main .hl img.hlScorePic {
-	opacity : 0.5;
+	background : var(--bg-main);
 }
 
 body.claro.ttrss_main .cdm .footer img {
@@ -156,19 +138,19 @@ body.claro.ttrss_main .cdm .footer img {
 }
 
 body.claro.ttrss_main #floatingTitle {
-	background : #333;
-	border-color : #666;
+	background : var(--bg-main);
+	border-color : var(--border-main);
 }
 
 body.claro.ttrss_main #floatingTitle a.title {
-	color : #ccc;
+	color : var(--fg-light);
 }
 
 body.claro.ttrss_main .dijitMenu,
 body.claro.ttrss_main .dijitMenuTable,
 body.claro.ttrss_main .dijitMenu .dijitMenuItem td {
-	border-color : #666;
-	background : #666;
+	border-color : var(--border-main);
+	background : var(--border-main);
 }
 
 body.claro.ttrss_main .dijitMenu .dijitMenuItemSelected,
@@ -178,24 +160,46 @@ body.claro.ttrss_main .dijitMenu .dijitMenuItemSelected td {
 }
 
 body.claro.ttrss_main .hl {
-	border-color : #666;
+	border-color : var(--border-main);
 }
 
-body.claro.ttrss_main .hl .hl-title a {
-	color : #ccc;
-}
-
-body.claro.ttrss_main .hl.Selected,
-body.claro.ttrss_main .hl.active {
-	background : #6280AD ! important;
+body.claro.ttrss_main .hl .title a {
+	color : var(--fg-main);
 }
 
 body.claro.ttrss_main .post .header {
-	background : #333;
-	border-color : #666;
+	background : var(--bg-panel);
+	border-color : var(--border-main);
 }
 
-body.claro.ttrss_main .hl.Unread div.title a {
-    color: #bbb;
+body.claro.ttrss_main .post .content,
+body.claro.ttrss_main .cdm .content-inner {
+	color : var(--fg-main);
 }
 
+body.claro.ttrss_main .articleNote {
+	background : var(--bg-panel);
+	border-color : #9a8c59;
+}
+
+body.claro.ttrss_main #content-insert_splitter,
+body.claro.ttrss_main #feeds-holder_splitter {
+	border-color : var(--border-main);
+	background : var(--bg-panel);
+}
+
+body.claro.ttrss_main .insensitive {
+	color : var(--fg-light);
+}
+
+::-webkit-scrollbar {
+	width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: rgba(255,255,255,0.5);
+}
+
+::-webkit-scrollbar-track {
+	background-color:rgba(255,255,255,0.2);
+}
