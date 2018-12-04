@@ -753,13 +753,13 @@ define(["dojo/_base/declare"], function (declare) {
 			return rv;
 		},
 		onRowChecked: function (elem) {
+			const row = elem.domNode.up("div[id*=RROW]");
+
 			// do not allow unchecking active article checkbox
 			if (row.hasClassName("active")) {
 				elem.attr("checked", 1);
 				return;
 			}
-
-			const row = elem.domNode.up("div[id*=RROW]");
 
 			if (elem.attr("checked")) {
 				row.addClassName("Selected");
