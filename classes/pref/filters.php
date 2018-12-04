@@ -374,13 +374,13 @@ class Pref_Filters extends Handler_Protected {
 			print_hidden("method", "editSave");
 			print_hidden("csrf_token", $_SESSION['csrf_token']);
 
-			print "<div class=\"dlgSec\">".__("Caption")."</div>";
+			print "<div class=\"dlgSecHoriz\">".__("Caption")."</div>";
 
 			print "<input required=\"true\" dojoType=\"dijit.form.ValidationTextBox\" style=\"width : 20em;\" name=\"title\" value=\"$title\">";
 
 			print "</div>";
 
-			print "<div class=\"dlgSec\">".__("Match")."</div>";
+			print "<div class=\"dlgSecHoriz\">".__("Match")."</div>";
 
 			print "<div dojoType=\"dijit.Toolbar\">";
 
@@ -438,7 +438,7 @@ class Pref_Filters extends Handler_Protected {
 
 			print "</div>";
 
-			print "<div class=\"dlgSec\">".__("Apply actions")."</div>";
+			print "<div class=\"dlgSecHoriz\">".__("Apply actions")."</div>";
 
 			print "<div dojoType=\"dijit.Toolbar\">";
 
@@ -863,11 +863,11 @@ class Pref_Filters extends Handler_Protected {
 		print_hidden("method", "add");
 		print_hidden("csrf_token", $_SESSION['csrf_token']);
 
-		print "<div class=\"dlgSec\">".__("Caption")."</div>";
+		print "<div class=\"dlgSecHoriz\">".__("Caption")."</div>";
 
 		print "<input required=\"true\" dojoType=\"dijit.form.ValidationTextBox\" style=\"width : 20em;\" name=\"title\" value=\"\">";
 
-		print "<div class=\"dlgSec\">".__("Match")."</div>";
+		print "<div class=\"dlgSecHoriz\">".__("Match")."</div>";
 
 		print "<div dojoType=\"dijit.Toolbar\">";
 
@@ -894,7 +894,7 @@ class Pref_Filters extends Handler_Protected {
 
 		print "</div>";
 
-		print "<div class=\"dlgSec\">".__("Apply actions")."</div>";
+		print "<div class=\"dlgSecHoriz\">".__("Apply actions")."</div>";
 
 		print "<div dojoType=\"dijit.Toolbar\">";
 

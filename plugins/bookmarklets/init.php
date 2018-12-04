@@ -19,7 +19,7 @@ class Bookmarklets extends Plugin {
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Bookmarklets')."\">";
 
-		print "<p>" . __("Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it.") . "</p>";
+		print __("Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it.");
 
 		$bm_subscribe_url = str_replace('%s', '', Pref_Feeds::subscribe_to_feed_url());
 

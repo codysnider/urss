@@ -100,24 +100,31 @@ body.ttrss_main {
 	}
 
 	h1 {
-		font-size : 20px;
-		font-weight : 600;
-		text-rendering: optimizelegibility;
-		font-family : @fonts-ui;
-	}
-
-	h2 {
 		font-size : 18px;
 		font-weight : 600;
 		text-rendering: optimizelegibility;
-		font-family : @fonts-ui;
+		//font-family : @fonts-ui;
 	}
 
-	h3, h4 {
+	h2 {
 		font-size : 16px;
 		font-weight : 600;
 		text-rendering: optimizelegibility;
-		font-family : @fonts-ui;
+		//font-family : @fonts-ui;
+	}
+
+	h3 {
+		font-size : 16px;
+		font-weight : 600;
+		text-rendering: optimizelegibility;
+		//font-family : @fonts-ui;
+	}
+
+	h4 {
+		font-size : 14px;
+		font-weight : 600;
+		text-rendering: optimizelegibility;
+		//font-family : @fonts-ui;
 	}
 
 	hr {
@@ -699,11 +706,20 @@ body.ttrss_main {
 	}
 
 	div.dlgSec {
-		font-size : 12px;
-		color : @default-text;
+		font-size : 14px;
 		font-weight : bold;
 		clear : both;
-		height : 20px;
+		margin : 8px;
+		position : relative;
+		top : 8px;
+	}
+
+	div.dlgSecHoriz {
+		font-size : 14px;
+		font-weight : bold;
+		clear : both;
+		margin-bottom : 8px;
+		margin-top : 8px;
 	}
 
 	div.dlgSecCont {
@@ -711,7 +727,6 @@ body.ttrss_main {
 		left : 150px;
 		top : -20px;
 		float : left;
-		font-size : 12px;
 		font-weight : normal;
 
 		> * {
@@ -1193,6 +1208,15 @@ body.ttrss_login {
 		color : red;
 		text-align : center;
 		padding : 0px 0px 5px 0px;
+	}
+}
+
+body.ttrss_main .dijitDialog {
+	h1:first-of-type,
+	h2:first-of-type,
+	h3:first-of-type,
+	h4:first-of-type {
+		margin-top: 0px;
 	}
 }
 

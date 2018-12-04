@@ -1270,8 +1270,10 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('OPML')."\">";
 
-		print_notice(__("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.") .
-			__("Only main settings profile can be migrated using OPML."));
+		print __("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.") .
+			__("Only main settings profile can be migrated using OPML.");
+
+		print "<p/>";
 
 		print "<iframe id=\"upload_iframe\"
 			name=\"upload_iframe\" onload=\"Helpers.OPML.onImportComplete(this)\"
@@ -1290,7 +1292,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "</form>";
 
-		print "<p/>";
+		print "<hr>";
 
 		print "<form dojoType=\"dijit.form.Form\" id=\"opmlExportForm\">";
 
@@ -1305,11 +1307,13 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "</form>";
 
-		print "<hr>";
+		print "<p/>";
 
-		print_notice(__('Your OPML can be published publicly and can be subscribed by anyone who knows the URL below.'));
+		print "<h2>" . __("Published OPML") . "</h2>";
 
-		print_warning("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.");
+		print "<p>" . __('Your OPML can be published publicly and can be subscribed by anyone who knows the URL below.') .
+			" " .
+			__("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.") . "</p>";
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return App.displayDlg('".__("Public OPML URL")."','pubOPMLUrl')\">".
 			__('Display published OPML URL')."</button> ";
@@ -1321,7 +1325,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Published & shared articles / Generated feeds')."\">";
 
-		print "<p>" . __('Published articles are exported as a public RSS feed and can be subscribed by anyone who knows the URL specified below.') . "</p>";
+		print __('Published articles can be subscribed by anyone who knows the following URL:');
 
 		$rss_url = '-2::' . htmlspecialchars(get_self_url_prefix() .
 				"/public.php?op=rss&id=-2&view-mode=all_articles");;
