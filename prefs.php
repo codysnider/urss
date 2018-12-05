@@ -115,51 +115,48 @@
 	</div>
 </div>
 
-<div id="header" dojoType="dijit.layout.ContentPane" region="top">
+<div id="header">
 	<!-- <a href='#' onclick="showHelp()"><?php echo __("Keyboard shortcuts") ?></a> | -->
 	<a href="#" onclick="document.location.href = 'index.php'"><?php echo __('Exit preferences') ?></a>
 </div>
 
 <div id="main" dojoType="dijit.layout.BorderContainer">
-
-<div dojoType="dijit.layout.TabContainer" region="center" id="pref-tabs">
-<div id="genConfigTab" dojoType="dijit.layout.ContentPane"
-	href="backend.php?op=pref-prefs"
-	title="<?php echo __('Preferences') ?>"></div>
-<div id="feedConfigTab" dojoType="dijit.layout.ContentPane"
-	href="backend.php?op=pref-feeds"
-	title="<?php echo __('Feeds') ?>"></div>
-<div id="filterConfigTab" dojoType="dijit.layout.ContentPane"
-	href="backend.php?op=pref-filters"
-	title="<?php echo __('Filters') ?>"></div>
-<div id="labelConfigTab" dojoType="dijit.layout.ContentPane"
-	href="backend.php?op=pref-labels"
-	title="<?php echo __('Labels') ?>"></div>
-<?php if ($_SESSION["access_level"] >= 10) { ?>
-	<div id="userConfigTab" dojoType="dijit.layout.ContentPane"
-		href="backend.php?op=pref-users"
-		title="<?php echo __('Users') ?>"></div>
-	<div id="systemConfigTab" dojoType="dijit.layout.ContentPane"
-		href="backend.php?op=pref-system"
-		title="<?php echo __('System') ?>"></div>
-<?php } ?>
-<?php
-	PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TABS,
-		"hook_prefs_tabs", false);
-?>
-</div>
-
-<div id="footer" dojoType="dijit.layout.ContentPane" region="bottom">
-	<a class="insensitive" target="_blank" href="http://tt-rss.org/">
-	Tiny Tiny RSS</a>
-	<?php if (!defined('HIDE_VERSION')) { ?>
-		 v<?php echo VERSION ?>
-	<?php } ?>
-	&copy; 2005-<?php echo date('Y') ?>
-	<a class="insensitive" target="_blank"
-	href="http://fakecake.org/">Andrew Dolgov</a>
-</div> <!-- footer -->
-
+    <div dojoType="dijit.layout.TabContainer" region="center" id="pref-tabs">
+        <div id="genConfigTab" dojoType="dijit.layout.ContentPane"
+            href="backend.php?op=pref-prefs"
+            title="<?php echo __('Preferences') ?>"></div>
+        <div id="feedConfigTab" dojoType="dijit.layout.ContentPane"
+            href="backend.php?op=pref-feeds"
+            title="<?php echo __('Feeds') ?>"></div>
+        <div id="filterConfigTab" dojoType="dijit.layout.ContentPane"
+            href="backend.php?op=pref-filters"
+            title="<?php echo __('Filters') ?>"></div>
+        <div id="labelConfigTab" dojoType="dijit.layout.ContentPane"
+            href="backend.php?op=pref-labels"
+            title="<?php echo __('Labels') ?>"></div>
+        <?php if ($_SESSION["access_level"] >= 10) { ?>
+            <div id="userConfigTab" dojoType="dijit.layout.ContentPane"
+                href="backend.php?op=pref-users"
+                title="<?php echo __('Users') ?>"></div>
+            <div id="systemConfigTab" dojoType="dijit.layout.ContentPane"
+                href="backend.php?op=pref-system"
+                title="<?php echo __('System') ?>"></div>
+        <?php } ?>
+        <?php
+            PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TABS,
+                "hook_prefs_tabs", false);
+        ?>
+        </div>
+    <div id="footer" dojoType="dijit.layout.ContentPane" region="bottom">
+        <a class="insensitive" target="_blank" href="http://tt-rss.org/">
+        Tiny Tiny RSS</a>
+        <?php if (!defined('HIDE_VERSION')) { ?>
+             v<?php echo VERSION ?>
+        <?php } ?>
+        &copy; 2005-<?php echo date('Y') ?>
+        <a class="insensitive" target="_blank"
+        href="http://fakecake.org/">Andrew Dolgov</a>
+    </div> <!-- footer -->
 </div>
 
 </body>

@@ -605,11 +605,6 @@ body.ttrss_main div.fatalError textarea {
   width: 565px;
   height: 200px;
 }
-body.ttrss_main #header-wrap {
-  border-width: 0px;
-  margin: 0px;
-  padding: 0px;
-}
 body.ttrss_main #content-wrap {
   padding: 0px;
   border-width: 0px;
@@ -778,12 +773,6 @@ body.ttrss_main #header {
   right: 0px;
   top: 0px;
   z-index: 5;
-}
-body.ttrss_main #footer {
-  text-align: center;
-  color: #555555;
-  padding: 4px 4px 8px 4px;
-  border-width: 0px;
 }
 body.ttrss_main #content-insert {
   padding: 0px;
@@ -1342,9 +1331,20 @@ body.ttrss_prefs {
 }
 body.ttrss_prefs #footer,
 body.ttrss_prefs #header {
+  padding: 8px;
+  font-size: 13px;
+}
+body.ttrss_prefs #header {
+  float: right;
+}
+body.ttrss_prefs #footer_splitter {
+  display: none;
+}
+body.ttrss_prefs #footer {
   background-color: #f5f5f5;
-  padding-left: 8px;
-  padding-right: 8px;
+  font-size: 13px;
+  border: 0px;
+  text-align: center;
 }
 body.ttrss_prefs #header a:hover {
   color: black;
