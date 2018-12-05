@@ -466,7 +466,7 @@ class Feeds extends Handler_Protected {
                         id=\"RROW-$id\" data-content=\"$content_encoded\" data-article-id='$id' data-orig-feed-id='$feed_id' $mouseover_attrs>";
 
 					$tmp_content .= "<div class=\"header\">";
-					$tmp_content .= "<div class=\"buttons\">";
+					$tmp_content .= "<div class=\"left\">";
 
 					$tmp_content .= "<input dojoType=\"dijit.form.CheckBox\"
                         type=\"checkbox\" onclick=\"Headlines.onRowChecked(this)\"

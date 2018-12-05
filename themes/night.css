@@ -184,17 +184,27 @@ body.ttrss_main .hl {
 body.ttrss_main .hl > * {
   align-self: center;
   white-space: nowrap;
-  padding: 5px;
+  padding: 4px;
 }
 body.ttrss_main .hl img {
   vertical-align: middle;
+}
+body.ttrss_main .hl .left {
+  display: flex;
+}
+body.ttrss_main .hl .left > * {
+  align-self: center;
+}
+body.ttrss_main .hl .left i.material-icons {
+  margin-left: 2px;
+  font-size: 18px;
+  padding: 2px;
 }
 body.ttrss_main .hl div.title {
   cursor: pointer;
   flex-grow: 2;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-left: 5px;
 }
 body.ttrss_main .hl div.right {
   text-align: right;
@@ -398,20 +408,10 @@ body.ttrss_main span.hlLabelRef {
   white-space: nowrap;
   border-radius: 4px;
 }
-body.ttrss_main img.marked-pic,
-body.ttrss_main img.pub-pic {
+body.ttrss_main i.marked-pic,
+body.ttrss_main i.pub-pic {
   cursor: pointer;
-  vertical-align: middle;
-  opacity: 0.5;
-  transition: opacity 0.25s;
-}
-body.ttrss_main img.marked-pic:hover,
-body.ttrss_main img.pub-pic:hover {
-  opacity: 1;
-}
-body.ttrss_main img[src*='pub_set.png'],
-body.ttrss_main img[src*='mark_set.png'] {
-  opacity: 1;
+  color: #ccc;
 }
 body.ttrss_main div.tagCloudContainer {
   background: white;
@@ -961,6 +961,12 @@ body.ttrss_main .dijitDialog h3:first-of-type,
 body.ttrss_main .dijitDialog h4:first-of-type {
   margin-top: 0px;
 }
+.hl.marked .left i.marked-pic {
+  color: #ffc069;
+}
+.hl.published .left i.pub-pic {
+  color: #ff5718;
+}
 ::selection {
   background: #257aa7;
   color: white;
@@ -987,8 +993,19 @@ body.ttrss_main .dijitDialog h4:first-of-type {
 }
 .cdm .header > * {
   align-self: center;
-  padding: 5px;
+  padding: 4px;
   white-space: nowrap;
+}
+.cdm .header .left {
+  display: flex;
+}
+.cdm .header .left > * {
+  align-self: center;
+}
+.cdm .header .left i.material-icons {
+  margin-left: 2px;
+  font-size: 18px;
+  padding: 2px;
 }
 .cdm .header .titleWrap {
   flex-grow: 2;

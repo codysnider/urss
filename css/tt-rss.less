@@ -212,11 +212,25 @@ body.ttrss_main {
 		> * {
 			align-self : center;
 			white-space : nowrap;
-			padding : 5px;
+			padding : 4px;
 		}
 
 		img {
 			vertical-align : middle;
+		}
+
+		.left {
+			display : flex;
+
+			> * {
+				align-self : center;
+			}
+
+			i.material-icons {
+				margin-left : 2px;
+				font-size : 18px;
+				padding : 2px;
+			}
 		}
 
 		div.title {
@@ -224,7 +238,6 @@ body.ttrss_main {
 			flex-grow : 2;
 			overflow : hidden;
 			text-overflow : ellipsis;
-			padding-left : 5px;
 		}
 
 		div.right {
@@ -459,19 +472,9 @@ body.ttrss_main {
 		border-radius : 4px;
 	}
 
-	img.marked-pic, img.pub-pic {
+	i.marked-pic, i.pub-pic {
 		cursor : pointer;
-		vertical-align : middle;
-		opacity : 0.5;
-		transition : opacity 0.25s;
-	}
-
-	img.marked-pic:hover, img.pub-pic:hover {
-		opacity : 1;
-	}
-
-	img[src*='pub_set.png'], img[src*='mark_set.png'] {
-		opacity : 1;
+		color : #ccc;
 	}
 
 	div.tagCloudContainer {
@@ -1131,6 +1134,14 @@ body.ttrss_main .dijitDialog {
 	h4:first-of-type {
 		margin-top: 0px;
 	}
+}
+
+.hl.marked .left i.marked-pic {
+	color : #ffc069;
+}
+
+.hl.published .left i.pub-pic {
+	color : #ff5718;
 }
 
 ::selection {

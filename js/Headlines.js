@@ -498,19 +498,9 @@ define(["dojo/_base/declare"], function (declare) {
 			const row = $("RROW-" + id);
 
 			if (row) {
-				const imgs = $$("img[class*=marked-pic][class*=marked-" + id + "]");
-
-				imgs.each((img) => {
-					if (!row.hasClassName("marked")) {
-						img.src = img.src.replace("mark_unset", "mark_set");
-						query.mark = 1;
-					} else {
-						img.src = img.src.replace("mark_set", "mark_unset");
-						query.mark = 0;
-					}
-				});
 
 				row.toggleClassName("marked");
+				query.mark = row.hasClassName("marked") ? 1 : 0;
 
 				if (!client_only)
 					xhrPost("backend.php", query, (transport) => {
@@ -524,19 +514,8 @@ define(["dojo/_base/declare"], function (declare) {
 			if (row) {
 				const query = {op: "rpc", id: id, method: "publ"};
 
-				const imgs = $$("img[class*=pub-pic][class*=pub-" + id + "]");
-
-				imgs.each((img) => {
-					if (!row.hasClassName("published")) {
-						img.src = img.src.replace("pub_unset", "pub_set");
-						query.pub = 1;
-					} else {
-						img.src = img.src.replace("pub_set", "pub_unset");
-						query.pub = 0;
-					}
-				});
-
 				row.toggleClassName("published");
+				query.pub = row.hasClassName("published") ? 1 : 0;
 
 				if (!client_only)
 					xhrPost("backend.php", query, (transport) => {
