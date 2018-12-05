@@ -228,8 +228,10 @@ body.ttrss_main {
 
 			i.material-icons {
 				margin-left : 2px;
-				font-size : 18px;
+				font-size : 20px;
 				padding : 2px;
+				transition : color 0.2s linear;
+				user-select: none;
 			}
 		}
 
@@ -869,6 +871,12 @@ body.ttrss_main {
 					flex-grow: 2;
 					display : flex;
 
+					i.icon-syndicate {
+						font-size : 19px;
+						color : #ff5718;
+						margin-right : 2px;
+					}
+
 					img {
 						vertical-align : middle;
 						margin-right : 8px;
@@ -1136,13 +1144,17 @@ body.ttrss_main .dijitDialog {
 	}
 }
 
+
+.cdm.marked .left i.marked-pic,
 .hl.marked .left i.marked-pic {
 	color : #ffc069;
 }
 
+.cdm.published .left i.pub-pic,
 .hl.published .left i.pub-pic {
 	color : #ff5718;
 }
+
 
 ::selection {
 	background : @color-accent;

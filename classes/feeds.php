@@ -35,7 +35,7 @@ class Feeds extends Handler_Protected {
 		$reply .= "<a href=\"#\"
 				title=\"".__("Show as feed")."\"
 				onclick=\"App.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">
-				<img src=\"images/pub_set.png\"></a>";
+				<i class='icon-syndicate material-icons'>rss_feed</i></a>";
 
 		$reply .= "<span id='feed_title' class='$error_class'>";
 
