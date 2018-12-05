@@ -475,6 +475,10 @@ body.ttrss_main span.preview {
   font-size: 12px;
   padding-left: 4px;
 }
+body.ttrss_main .hl.Selected .hlLabelRef,
+body.ttrss_main .hl.active .hlLabelRef {
+  color: #063064;
+}
 body.ttrss_main span.hlLabelRef {
   background-color: #fff7d5;
   font-size: 8px;
