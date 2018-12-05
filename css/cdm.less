@@ -1,30 +1,24 @@
 .cdm {
-	//margin-right : 4px;
-
 	.header, .footer {
-		display : table;
-	}
-
-	.header img, .header input, .footer img {
-		vertical-align : middle;
-	}
-
-	.header > div, .footer > div {
-		white-space : nowrap;
-	}
-
-	.header > span, .footer > span.left {
-		width : 100%;
+		display : flex;
+		flex-direction : row;
+		flex-wrap : nowrap;
 	}
 
 	.header img, .footer img {
 		margin : 0px 4px;
+		vertical-align: middle;
 	}
 
 	.header {
 		> * {
-			display : table-cell;
+			align-self : center;
 			padding : 5px;
+			white-space : nowrap;
+		}
+
+		.titleWrap {
+			flex-grow : 2;
 		}
 
 		span.updated {
@@ -32,21 +26,6 @@
 			font-weight : normal;
 			font-size : 11px;
 			white-space : nowrap;
-			vertical-align : middle;
-		}
-
-		input {
-			margin-right : 5px;
-		}
-
-		div.updPic {
-			width : 25px;
-			display : inline-block;
-			text-align : center;
-		}
-
-		div.updPic img {
-			vertical-align : middle;
 		}
 
 		input {
@@ -63,8 +42,11 @@
 		clear : both;
 
 		> * {
-			display : table-cell;
-			vertical-align : middle;
+			align-self : center;
+		}
+
+		.left {
+			flex-grow : 2;
 		}
 	}
 
@@ -360,7 +342,6 @@ div#floatingTitle.Unread a.title {
 		white-space : nowrap;
 		text-overflow : ellipsis;
 		overflow : hidden;
-		max-width : 500px;
 	}
 
 	.excerpt {

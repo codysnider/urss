@@ -468,7 +468,7 @@ class Feeds extends Handler_Protected {
                         id=\"RROW-$id\" data-content=\"$content_encoded\" data-article-id='$id' data-orig-feed-id='$feed_id' $mouseover_attrs>";
 
 					$tmp_content .= "<div class=\"header\">";
-					$tmp_content .= "<div style=\"vertical-align : middle\">";
+					$tmp_content .= "<div class=\"buttons\">";
 
 					$tmp_content .= "<input dojoType=\"dijit.form.CheckBox\"
                         type=\"checkbox\" onclick=\"Headlines.onRowChecked(this)\"
@@ -597,7 +597,7 @@ class Feeds extends Handler_Protected {
 
 					$tags_str = Article::format_tags_string($tags, $id);
 
-					$tmp_content .= "<span class='left'>";
+					$tmp_content .= "<div class='left'>";
 
 					$tmp_content .= "<img src='images/tag.png' alt='Tags' title='Tags'>
                     <span id=\"ATSTR-$id\">$tags_str</span>
@@ -625,8 +625,8 @@ class Feeds extends Handler_Protected {
 
 					if ($entry_comments) $tmp_content .= "&nbsp;($entry_comments)";
 
-					$tmp_content .= "</span>";
-					$tmp_content .= "<div>";
+					$tmp_content .= "</div>";
+					$tmp_content .= "<div class='right'>";
 
 					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_BUTTON) as $p) {
 						$tmp_content .= $p->hook_article_button($line);
