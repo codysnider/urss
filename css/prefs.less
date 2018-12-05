@@ -122,8 +122,18 @@ body.ttrss_prefs {
 		cursor : pointer;
 	}
 
-	table.prefPluginsList label {
-		white-space : nowrap;
+	table.prefPluginsList{
+		label {
+			white-space : nowrap;
+		}
+
+		i.plugin-enabled {
+			color : #69C671;
+		}
+
+		i.plugin-disabled {
+			color : #999;
+		}
 	}
 
 	table.prefPluginsList label img {

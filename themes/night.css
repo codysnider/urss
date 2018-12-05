@@ -1484,6 +1484,12 @@ body.ttrss_prefs table.prefUserList td {
 body.ttrss_prefs table.prefPluginsList label {
   white-space: nowrap;
 }
+body.ttrss_prefs table.prefPluginsList i.plugin-enabled {
+  color: #69C671;
+}
+body.ttrss_prefs table.prefPluginsList i.plugin-disabled {
+  color: #999;
+}
 body.ttrss_prefs table.prefPluginsList label img {
   vertical-align: middle;
 }
@@ -1934,7 +1940,7 @@ body.ttrss_zoom div.post div.content pre {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;
+  font-size: 18px;
   /* Preferred icon size */
   display: inline-block;
   line-height: 1;
@@ -1943,6 +1949,7 @@ body.ttrss_zoom div.post div.content pre {
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
+  vertical-align: middle;
   /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;
   /* Support for Safari and Chrome. */
