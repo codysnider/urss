@@ -173,15 +173,11 @@ define(["dojo/_base/declare"], function (declare) {
 
 							ft.setAttribute("data-article-id", id);
 							ft.innerHTML = header.innerHTML;
-							ft.firstChild.innerHTML = "<img class='anchor marked-pic' src='images/page_white_go.png' " +
-								"onclick=\"Article.cdmScrollToId(" + id + ", true)\">" + ft.firstChild.innerHTML;
+
+							ft.select(".dijitCheckBox")[0].outerHTML = "<i class=\"material-icons anchor\" onclick=\"Article.cdmScrollToId(" + id + ", true)\">expand_more</i>";
 
 							this.initFloatingMenu();
 
-							const cb = ft.select(".rchk")[0];
-
-							if (cb)
-								cb.parentNode.removeChild(cb);
 						}
 
 						if (row.hasClassName("Unread"))
@@ -1005,6 +1001,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 				const menu = new dijit.Menu({
 					id: "floatingMenu",
+					selector: ".hlMenuAttach",
 					targetNodeIds: ["floatingTitle"]
 				});
 

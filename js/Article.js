@@ -233,7 +233,6 @@ define(["dojo/_base/declare"], function (declare) {
 			if (force || e.offsetTop + e.offsetHeight > (ctr.scrollTop + ctr.offsetHeight) ||
 				e.offsetTop < ctr.scrollTop) {
 
-				// expanded cdm has a 4px margin now
 				ctr.scrollTop = e.offsetTop;
 
 				Element.hide("floatingTitle");

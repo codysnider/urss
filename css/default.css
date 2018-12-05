@@ -1175,17 +1175,36 @@ div#floatingTitle {
   border-bottom-width: 1px;
   background: white;
   color: #555555;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.1);
 }
 div#floatingTitle > * {
-  display: table-cell;
+  align-self: center;
   white-space: nowrap;
-  vertical-align: middle;
-  padding: 9px 5px;
+  padding: 4px;
 }
-div#floatingTitle img {
-  margin-right: 4px;
-  margin-left: 4px;
+div#floatingTitle .left,
+div#floatingTitle .right {
+  display: flex;
+}
+div#floatingTitle .left > *,
+div#floatingTitle .right > * {
+  align-self: center;
+}
+div#floatingTitle .left i.material-icons,
+div#floatingTitle .right i.material-icons {
+  margin-left: 2px;
+  font-size: 20px;
+  padding: 2px;
+  user-select: none;
+}
+div#floatingTitle .left i.anchor,
+div#floatingTitle .right i.anchor {
+  margin-left: 0px;
+  padding: 0px;
+  color: #ccc;
 }
 div#floatingTitle span.author {
   color: #555555;
@@ -1233,7 +1252,6 @@ div#floatingTitle span.titleWrap {
   width: 100%;
   white-space: normal;
 }
-div#floatingTitle .dijit,
 div#floatingTitle img.score-pic {
   display: none;
 }
