@@ -230,6 +230,7 @@ body.ttrss_main {
 				padding : 2px;
 				transition : color 0.2s linear;
 				user-select: none;
+				font-size : 21px;
 			}
 		}
 
@@ -765,7 +766,7 @@ body.ttrss_main {
 				left : -3px;
 				height : 22px;
 				position : relative;
-				top : -6px;
+				top : -3px;
 			}
 
 			.dijitTreeRow .dijitTreeLabel.Unread {
@@ -790,9 +791,46 @@ body.ttrss_main {
 				background : white;
 			}
 
-			img.tinyFeedIcon {
+			.icon {
 				position : relative;
 				top : -2px;
+			}
+
+			i.icon {
+				left : -2px;
+			}
+
+			i.icon.icon-inbox {
+				color : #555;
+			}
+
+			i.icon.icon-archive {
+				color : #c77b2e;
+			}
+
+			i.icon.icon-star {
+				color : @color-marked;
+				font-size : 21px;
+				top : -4px;
+				left : -4px;
+			}
+
+			i.icon.icon-rss_feed {
+				color : @color-published;
+				border : 1px solid @color-published;
+				border-radius : 4px;
+				left : -4px;
+				top: -4px;
+			}
+
+			i.icon.icon-new_releases {
+				color : @color-enabled;
+			}
+
+			i.icon.icon-cached {
+				font-weight : bold;
+				left : -3px;
+				color : @color-accent;
 			}
 
 		}
@@ -927,7 +965,7 @@ body.ttrss_main {
 		-webkit-overflow-scrolling : touch;
 	}
 
-	img.feedIcon, img.tinyFeedIcon {
+	img.feed-icon, img.icon {
 		width : 16px;
 		height : 16px;
 		line-height : 16px;
@@ -1142,18 +1180,20 @@ body.ttrss_main .dijitDialog {
 
 body.ttrss_main {
 	i.icon-syndicate {
-		color : #ff5718;
-		margin-right : 2px;
+		color : @color-published;
+		margin-right : 8px;
+		border : 1px solid @color-published;
+		border-radius : 4px;
 	}
 
 	.cdm.marked .left i.marked-pic,
 	.hl.marked .left i.marked-pic {
-		color : #ffc069;
+		color : @color-marked;
 	}
 
 	.cdm.published .left i.pub-pic,
 	.hl.published .left i.pub-pic {
-		color : #ff5718;
+		color : @color-published;
 	}
 
 }

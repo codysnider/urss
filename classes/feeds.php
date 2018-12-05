@@ -328,7 +328,7 @@ class Feeds extends Handler_Protected {
 				}
 
 				if (feeds::feedHasIcon($feed_id)) {
-					$feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
+					$feed_icon_img = "<img class=\"icon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
 				} else {
 					$feed_icon_img = "<i class='icon-syndicate material-icons'>rss_feed</i>";
 				}
@@ -449,7 +449,7 @@ class Feeds extends Handler_Protected {
 							$vf_catchup_link = "<a class='catchup' onclick='Feeds.catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
 
 							$feed_icon_src = Feeds::getFeedIcon($feed_id);
-							$feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"$feed_icon_src\">";
+							$feed_icon_img = "<img class=\"icon\" src=\"$feed_icon_src\">";
 
 							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-title'>".
 								"<div style=\"float : right\">$feed_icon_img</div>".
@@ -1492,22 +1492,22 @@ class Feeds extends Handler_Protected {
 	static function getFeedIcon($id) {
 		switch ($id) {
 			case 0:
-				return "images/archive.png";
+				return "archive";
 				break;
 			case -1:
-				return "images/star.png";
+				return "star";
 				break;
 			case -2:
-				return "images/feed.png";
+				return "rss_feed";
 				break;
 			case -3:
-				return "images/fresh.png";
+				return "new_releases";
 				break;
 			case -4:
-				return "images/folder.png";
+				return "inbox";
 				break;
 			case -6:
-				return "images/time.png";
+				return "cached";
 				break;
 			default:
 				if ($id < LABEL_BASE_INDEX) {

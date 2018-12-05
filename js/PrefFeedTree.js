@@ -11,7 +11,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			} else {
 				icon.src = 'images/blank_icon.gif';
 			}
-			icon.className = 'tinyFeedIcon';
+			icon.className = 'icon';
 			domConstruct.place(icon, tnode.iconNode, 'only');
 
 			let param = this.model.store.getValue(args.item, 'param');
@@ -80,7 +80,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				"dijitTreeRow Error";
 		},
 		getIconClass: function (item, opened) {
-			return (!item || this.model.store.getValue(item, 'type') == 'category') ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "feedIcon";
+			return (!item || this.model.store.getValue(item, 'type') == 'category') ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "feed-icon";
 		},
 		reload: function() {
 			const searchElem = $("feed_search");
