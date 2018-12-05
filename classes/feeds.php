@@ -367,7 +367,7 @@ class Feeds extends Handler_Protected {
 						}
 					}
 
-					$reply['content'] .= "<div class='hl hlMenuAttach $class' data-orig-feed-id='$feed_id' data-article-id='$id' id='RROW-$id' $mouseover_attrs>";
+					$reply['content'] .= "<div class='hl $class' data-orig-feed-id='$feed_id' data-article-id='$id' id='RROW-$id' $mouseover_attrs>";
 
 					$reply['content'] .= "<div class='left'>";
 
@@ -381,7 +381,7 @@ class Feeds extends Handler_Protected {
 					$reply['content'] .= "</div>";
 
 					$reply['content'] .= "<div onclick='return Headlines.click(event, $id)'
-                    class=\"title\"><span class='hl-content $hlc_suffix'>";
+                    class=\"title\"><span data-article-id=\"$id\" class='hl-content hlMenuAttach $hlc_suffix'>";
 					$reply['content'] .= "<a class=\"title $hlc_suffix\"
                     href=\"" . htmlspecialchars($line["link"]) . "\"
                     onclick=\"\">" .
