@@ -204,54 +204,41 @@ body.ttrss_main {
 	.hl {
 		border: 0px solid #ddd;
 		border-bottom-width: 1px;
-		padding : 1px;
 		transition : color 0.2s, background 0.2s;
+		display : flex;
+		flex-direction : row;
+		flex-wrap : nowrap;
 
-		div.title {
-			display : table-cell;
-			cursor : pointer;
-			width : 100%;
-			vertical-align : middle;
-			overflow : hidden;
+		> * {
+			align-self : center;
 			white-space : nowrap;
-			max-width : 500px;
-			text-overflow : ellipsis;
-			padding: 4px 6px;
+			padding : 5px;
 		}
 
-		div.left {
-			display : table-cell;
+		img {
 			vertical-align : middle;
-			white-space: nowrap;
+		}
+
+		div.title {
+			cursor : pointer;
+			flex-grow : 2;
+			overflow : hidden;
+			text-overflow : ellipsis;
+			padding-left : 5px;
 		}
 
 		div.right {
-			display : table-cell;
-			white-space: nowrap;
-			text-align : right;
-			vertical-align : middle;
-		}
-
-		div.right img {
-			max-width : 16px;
-			max-height : 16px;
-		}
-
-		span.feed {
-			display : table-cell;
-			vertical-align : middle;
 			text-align : right;
 		}
 
 		span.feed a {
 			border-radius : 4px;
 			display : inline-block;
-			padding : 1px 4px 1px 4px;
+			padding : 1px 4px;
 			font-size : 11px;
 			font-style : italic;
 			font-weight : normal;
 			color : @default-text;
-			white-space : nowrap;
 		}
 
 		span.feed a:hover {
@@ -260,11 +247,8 @@ body.ttrss_main {
 
 		span.updated {
 			color : @default-text;
-			display : table-cell;
-			vertical-align : middle;
 			text-align : right;
 			font-size : 11px;
-			white-space : nowrap;
 			padding-left : 10px;
 		}
 
@@ -272,22 +256,12 @@ body.ttrss_main {
 			display : inline-block;
 		}
 
-		div.left {
-			padding-left : 8px;
-		}
-
 		div.left input {
-			margin-left : 4px;
-			margin-right : 4px;
+			margin : 0px 4px;
 		}
 
 		div.left img, div.right img {
 			margin : 0px 4px;
-		}
-
-		div.left img {
-			width : 16px;
-			height : 16px;
 		}
 
 		div.title a {
@@ -390,6 +364,14 @@ body.ttrss_main {
 		background-color: #fcf8e3;
 		border: 1px solid #fbeed5;
 		border-radius: 4px;
+
+		.close {
+			position: relative;
+			top: -2px;
+			right: -21px;
+			line-height: 20px;
+			cursor : pointer;
+		}
 	}
 
 	.alert,
@@ -399,14 +381,6 @@ body.ttrss_main {
 
 	.alert h4 {
 		margin: 0;
-	}
-
-	.alert .close {
-		position: relative;
-		top: -2px;
-		right: -21px;
-		line-height: 20px;
-		cursor : pointer;
 	}
 
 	.alert-success {
@@ -435,10 +409,10 @@ body.ttrss_main {
 		color: #3a87ad;
 		background-color: #d9edf7;
 		border-color: #bce8f1;
-	}
 
-	.alert-info h4 {
-		color: #3a87ad;
+		h4 {
+			color: #3a87ad;
+		}
 	}
 
 	ul.nomarks {
@@ -691,20 +665,19 @@ body.ttrss_main {
 	}
 
 
-	div#headlines-frame.wide .title {
-		max-width : none;
-		overflow : visible;
-		white-space : normal;
-	}
+	div#headlines-frame.wide {
+		.title {
+			overflow: visible;
+			white-space: normal;
+		}
 
-	div#headlines-frame.wide .hl .feed {
-		display : none;
+		.hl .feed {
+			display: none;
+		}
 	}
 
 	img.score-pic {
-		vertical-align : middle;
-		width : 16px;
-		height : 16px;
+
 	}
 
 	div.dlgSec {
@@ -1086,27 +1059,6 @@ body.ttrss_main {
 	#headlines-frame .dijitCheckBox {
 		margin-right : 4px;
 	}
-
-	/*
-	#headlines-frame .dijitCheckBoxHover,
-	#headlines-frame .dijitCheckBoxChecked {
-		opacity : 1;
-	}
-
-	#feedTree .dijitTreeRow img.dijitTreeExpandoLeaf {
-		width : 16px;
-		height : 16px;
-		vertical-align : middle;
-		position : relative;
-	}
-
-	.dijitDropDownButton.attachments .dijitButtonText {
-		font-size : 12px;
-	}
-
-	.dijitDropDownButton.attachments {
-		display : inline-block;
-	} */
 
 	#editTagsDlg{
 		overflow: visible;

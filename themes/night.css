@@ -21,26 +21,6 @@ body.ttrss_main {
 		border-top-width : 1px;
 		border-style : solid;
 	} */
-  /*
-	#headlines-frame .dijitCheckBoxHover,
-	#headlines-frame .dijitCheckBoxChecked {
-		opacity : 1;
-	}
-
-	#feedTree .dijitTreeRow img.dijitTreeExpandoLeaf {
-		width : 16px;
-		height : 16px;
-		vertical-align : middle;
-		position : relative;
-	}
-
-	.dijitDropDownButton.attachments .dijitButtonText {
-		font-size : 12px;
-	}
-
-	.dijitDropDownButton.attachments {
-		display : inline-block;
-	} */
 }
 body.ttrss_main :focus {
   outline: none;
@@ -202,79 +182,56 @@ body.ttrss_main .notify.notify_error {
 body.ttrss_main .hl {
   border: 0px solid #ddd;
   border-bottom-width: 1px;
-  padding: 1px;
   transition: color 0.2s, background 0.2s;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+body.ttrss_main .hl > * {
+  align-self: center;
+  white-space: nowrap;
+  padding: 5px;
+}
+body.ttrss_main .hl img {
+  vertical-align: middle;
 }
 body.ttrss_main .hl div.title {
-  display: table-cell;
   cursor: pointer;
-  width: 100%;
-  vertical-align: middle;
+  flex-grow: 2;
   overflow: hidden;
-  white-space: nowrap;
-  max-width: 500px;
   text-overflow: ellipsis;
-  padding: 4px 6px;
-}
-body.ttrss_main .hl div.left {
-  display: table-cell;
-  vertical-align: middle;
-  white-space: nowrap;
+  padding-left: 5px;
 }
 body.ttrss_main .hl div.right {
-  display: table-cell;
-  white-space: nowrap;
-  text-align: right;
-  vertical-align: middle;
-}
-body.ttrss_main .hl div.right img {
-  max-width: 16px;
-  max-height: 16px;
-}
-body.ttrss_main .hl span.feed {
-  display: table-cell;
-  vertical-align: middle;
   text-align: right;
 }
 body.ttrss_main .hl span.feed a {
   border-radius: 4px;
   display: inline-block;
-  padding: 1px 4px 1px 4px;
+  padding: 1px 4px;
   font-size: 11px;
   font-style: italic;
   font-weight: normal;
   color: #555555;
-  white-space: nowrap;
 }
 body.ttrss_main .hl span.feed a:hover {
   color: #257aa7;
 }
 body.ttrss_main .hl span.updated {
   color: #555555;
-  display: table-cell;
-  vertical-align: middle;
   text-align: right;
   font-size: 11px;
-  white-space: nowrap;
   padding-left: 10px;
 }
 body.ttrss_main .hl span.updated div {
   display: inline-block;
 }
-body.ttrss_main .hl div.left {
-  padding-left: 8px;
-}
 body.ttrss_main .hl div.left input {
-  margin-left: 4px;
-  margin-right: 4px;
+  margin: 0px 4px;
 }
 body.ttrss_main .hl div.left img,
 body.ttrss_main .hl div.right img {
   margin: 0px 4px;
-}
-body.ttrss_main .hl div.left img {
-  width: 16px;
-  height: 16px;
 }
 body.ttrss_main .hl div.title a {
   font-weight: 600;
@@ -370,19 +327,19 @@ body.ttrss_main .alert {
   border: 1px solid #fbeed5;
   border-radius: 4px;
 }
-body.ttrss_main .alert,
-body.ttrss_main .alert h4 {
-  color: #c09853;
-}
-body.ttrss_main .alert h4 {
-  margin: 0;
-}
 body.ttrss_main .alert .close {
   position: relative;
   top: -2px;
   right: -21px;
   line-height: 20px;
   cursor: pointer;
+}
+body.ttrss_main .alert,
+body.ttrss_main .alert h4 {
+  color: #c09853;
+}
+body.ttrss_main .alert h4 {
+  margin: 0;
 }
 body.ttrss_main .alert-success {
   color: #468847;
@@ -615,17 +572,11 @@ body.ttrss_main div.autocomplete ul li {
   cursor: pointer;
 }
 body.ttrss_main div#headlines-frame.wide .title {
-  max-width: none;
   overflow: visible;
   white-space: normal;
 }
 body.ttrss_main div#headlines-frame.wide .hl .feed {
   display: none;
-}
-body.ttrss_main img.score-pic {
-  vertical-align: middle;
-  width: 16px;
-  height: 16px;
 }
 body.ttrss_main div.dlgSec {
   font-size: 14px;
@@ -1064,8 +1015,7 @@ body.ttrss_main .dijitDialog h4:first-of-type {
   white-space: nowrap;
 }
 .cdm .header input {
-  margin-left: 4px;
-  margin-right: 4px;
+  margin: 0px 4px;
 }
 .cdm .footer {
   height: 30px;

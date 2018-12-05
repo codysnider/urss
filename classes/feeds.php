@@ -528,7 +528,7 @@ class Feeds extends Handler_Protected {
 
 					$tmp_content .= "<span class='updated' title='$date_entered_fmt'>$updated_fmt</span>";
 
-					$tmp_content .= "<div style=\"vertical-align : middle\">";
+					$tmp_content .= "<div class='right'>";
 					$tmp_content .= "$score_pic";
 
 					if (!get_pref("VFEED_GROUP_BY_FEED") && $line["feed_title"]) {
