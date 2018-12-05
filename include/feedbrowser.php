@@ -63,8 +63,7 @@
 				htmlspecialchars($line["title"])."</span></a>";
 
 				$feed_url = "<a target=\"_blank\" rel=\"noopener noreferrer\" class=\"fb_feedUrl\"
-							href=\"$feed_url\"><img src='images/pub_set.png'
-							style='vertical-align : middle'></a>";
+							href=\"$feed_url\"><i class='icon-syndicate material-icons'>rss_feed</i></a>";
 
 				$rv .= "<li>$check_box $feed_url $site_url".
 							"&nbsp;<span class='subscribers'>($subscribers)</span></li>";
@@ -89,8 +88,7 @@
 				htmlspecialchars($line["title"])."</span></a>";
 
 				$feed_url = "<a target=\"_blank\" rel=\"noopener noreferrer\" class=\"fb_feedUrl\"
-							href=\"$feed_url\"><img src='images/pub_set.png'
-							style='vertical-align : middle'></a>";
+							href=\"$feed_url\"><i class='icon-syndicate material-icons'>rss_feed</i></a>";
 
 
 				$rv .= "<li id=\"FBROW-".$line["id"]."\">".

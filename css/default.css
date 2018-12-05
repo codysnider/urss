@@ -454,8 +454,11 @@ body.ttrss_main ul.browseFeedList {
   padding: 0px;
 }
 body.ttrss_main ul.browseFeedList li {
-  margin: 0px;
-  padding: 2px 4px 2px 4px;
+  display: flex;
+}
+body.ttrss_main ul.browseFeedList li > * {
+  align-self: center;
+  margin: 2px;
 }
 body.ttrss_main .browseFeedList span.subscribers {
   color: #808080;
