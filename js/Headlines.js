@@ -14,6 +14,8 @@ define(["dojo/_base/declare"], function (declare) {
 
 				if (!in_body && (event.ctrlKey || id == Article.getActive() || App.getInitParam("cdm_expanded"))) {
 					Article.openInNewWindow(id);
+					Headlines.toggleUnread(id, 0);
+					return;
 				}
 
 				if (Article.getActive() != id) {
@@ -28,7 +30,7 @@ define(["dojo/_base/declare"], function (declare) {
 			} else {
 				if (event.ctrlKey) {
 					Article.openInNewWindow(id);
-					Article.setActive(id);
+					Headlines.toggleUnread(id, 0);
 				} else {
 					Article.view(id);
 				}
