@@ -847,7 +847,6 @@ body.ttrss_main {
 			border: 0px solid #ddd;
 			border-bottom-width: 1px;
 			height : 32px;
-			line-height : 32px;
 			display : flex;
 			flex-direction : row;
 			flex-wrap : nowrap;
@@ -871,12 +870,23 @@ body.ttrss_main {
 
 				.left {
 					flex-grow: 2;
+					display : flex;
 
 					img {
 						vertical-align : middle;
 						margin-right : 8px;
-						position : relative;
-						top : -2px;
+					}
+
+					> * {
+						align-self: center;
+					}
+				}
+
+				.right {
+					display : flex;
+
+					> * {
+						align-self : center;
 					}
 				}
 			}
@@ -1019,11 +1029,6 @@ body.ttrss_main {
 		display : block;
 		margin-top : 10px;
 		max-width : 120px;
-	}
-
-	#selected_prompt {
-		margin-right : 25px;
-		vertical-align  : middle;
 	}
 
 	#filterDlg_feeds select {
