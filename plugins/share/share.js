@@ -32,7 +32,7 @@ Plugins.Share = {
 								new Effect.Highlight(e);
 
 								const img = $("SHARE-IMG-" + id);
-								if (img) img.src = img.src.replace("notshared.png", "share.png");
+								img.addClassName("shared");
 
 								Notify.close();
 
@@ -54,8 +54,8 @@ Plugins.Share = {
 					xhrPost("backend.php", query, () => {
 						notify("Article unshared.");
 
-						var img = $("SHARE-IMG-" + id);
-						if (img) img.src = img.src.replace("share.png", "notshared.png");
+						const img = $("SHARE-IMG-" + id);
+						img.removeClassName("shared");
 
 						dialog.hide();
 					});
@@ -68,7 +68,7 @@ Plugins.Share = {
 		dialog.show();
 
 		const img = $("SHARE-IMG-" + id);
-		if (img) img.src = img.src.replace("notshared.png", "share.png");
+		img.addClassName("shared");
 	}
 };
 

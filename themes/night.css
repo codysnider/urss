@@ -1029,7 +1029,8 @@ body.ttrss_main .hl.published .left i.pub-pic {
   flex-wrap: nowrap;
 }
 .cdm .header img,
-.cdm .footer img {
+.cdm .footer img,
+.cdm .footer i {
   margin: 0px 4px;
   vertical-align: middle;
 }

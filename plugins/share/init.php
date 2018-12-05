@@ -20,6 +20,10 @@ class Share extends Plugin {
 		return file_get_contents(dirname(__FILE__) . "/share.js");
 	}
 
+	function get_css() {
+		return file_get_contents(dirname(__FILE__) . "/share.css");
+	}
+
 	function get_prefs_js() {
 		return file_get_contents(dirname(__FILE__) . "/share_prefs.js");
 	}
@@ -72,12 +76,11 @@ class Share extends Plugin {
 	}
 
 	function hook_article_button($line) {
-		$img = $line['uuid'] ? "share.png" : "notshared.png";
+		$img_class = $line['uuid'] ? "shared" : "";
 
-		return "<img id='SHARE-IMG-".$line['int_id']."' src=\"plugins/share/$img\"
-			class='tagsPic' style=\"cursor : pointer\"
-			onclick=\"Plugins.Share.shareArticle(".$line['int_id'].")\"
-			title='".__('Share by URL')."'>";
+		return "<i id='SHARE-IMG-".$line['int_id']."' class='material-icons icon-share $img_class'
+			style='cursor : pointer' onclick=\"Plugins.Share.shareArticle(".$line['int_id'].")\"
+			title='".__('Share by URL')."'>share</i>";
 	}
 
 	function shareArticle() {
