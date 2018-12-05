@@ -1493,6 +1493,9 @@ body.ttrss_prefs ul.userFeedList {
   margin: 0px 0px 5px 0px;
   padding: 5px;
 }
+body.ttrss_prefs .prefPrefsList td {
+  padding-bottom: 4px;
+}
 body.ttrss_prefs div#feedlistLoading,
 body.ttrss_prefs div#filterlistLoading,
 body.ttrss_prefs div#labellistLoading {
