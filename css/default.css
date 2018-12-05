@@ -200,7 +200,6 @@ body.ttrss_main .hl .right > * {
 body.ttrss_main .hl .left i.material-icons,
 body.ttrss_main .hl .right i.material-icons {
   margin-left: 2px;
-  font-size: 20px;
   padding: 2px;
   transition: color 0.2s linear;
   user-select: none;
@@ -970,7 +969,6 @@ body.ttrss_main .dijitDialog h4:first-of-type {
   margin-top: 0px;
 }
 body.ttrss_main i.icon-syndicate {
-  font-size: 19px;
   color: #ff5718;
   margin-right: 2px;
 }
@@ -1022,7 +1020,6 @@ body.ttrss_main .hl.published .left i.pub-pic {
 .cdm .header .left i.material-icons,
 .cdm .header .right i.material-icons {
   margin-left: 2px;
-  font-size: 20px;
   padding: 2px;
   user-select: none;
 }
