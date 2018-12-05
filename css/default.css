@@ -416,7 +416,6 @@ body.ttrss_main span.hlLabelRef {
 body.ttrss_main i.marked-pic,
 body.ttrss_main i.pub-pic {
   cursor: pointer;
-  color: #ccc;
 }
 body.ttrss_main div.tagCloudContainer {
   background: white;
@@ -1574,6 +1573,10 @@ body.ttrss_prefs hr {
   float: right;
   margin-right: 1em;
 }
+.flat .dijitTree .labelParam.filterDisabled,
+.flat .dijitTree .dijitTreeLabel.filterDisabled {
+  text-decoration: line-through;
+}
 .flat .dijitTree .feedParam {
   color: #555555;
   float: right;
@@ -1944,6 +1947,7 @@ body.ttrss_zoom div.post div.content pre {
   /* Preferred icon size */
   display: inline-block;
   line-height: 1;
+  color: #ccc;
   text-transform: none;
   letter-spacing: normal;
   word-wrap: normal;

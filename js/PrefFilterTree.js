@@ -23,13 +23,13 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				domConstruct.place(param, tnode.rowNode, 'next');
 			}
 
-			if (this.model.store.getValue(args.item, 'id') != 'root') {
-				const img = dojo.doc.createElement('img');
-				img.src ='images/filter.png';
-				img.className = 'marked-pic';
-				tnode._filterIconNode = img;
+			/* if (this.model.store.getValue(args.item, 'id') != 'root') {
+				const i = dojo.doc.createElement('i');
+				i.className = 'material-icons filter';
+				i.innerHTML = 'label';
+				tnode._filterIconNode = i;
 				domConstruct.place(tnode._filterIconNode, tnode.labelNode, 'before');
-			}
+			} */
 
 			return tnode;
 		},

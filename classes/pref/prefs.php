@@ -748,7 +748,7 @@ class Pref_Prefs extends Handler_Protected {
 
 				$icon_class = $checked ? "plugin-enabled" : "plugin-disabled";
 
-				print "<td><label><i class='material-icons $icon_class'>settings</i> $name</label></td>";
+				print "<td><label><i class='material-icons $icon_class'>extension</i> $name</label></td>";
 				print "<td>" . htmlspecialchars($about[1]);
 				if (@$about[4]) {
 					print " &mdash; <a target=\"_blank\" rel=\"noopener noreferrer\" class=\"visibleLink\"
@@ -807,7 +807,7 @@ class Pref_Prefs extends Handler_Protected {
 					dojoType=\"dijit.form.CheckBox\" $checked $disabled
 					type=\"checkbox\"></td>";
 
-				print "<td><label for='FPCHK-$name'><i class='material-icons $icon_class'>settings</i> $name</label></td>";
+				print "<td><label for='FPCHK-$name'><i class='material-icons $icon_class'>extension</i> $name</label></td>";
 				print "<td><label for='FPCHK-$name'>" . htmlspecialchars($about[1]) . "</label>";
 				if (@$about[4]) {
 					print " &mdash; <a target=\"_blank\" rel=\"noopener noreferrer\" class=\"visibleLink\"
