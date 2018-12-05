@@ -434,67 +434,6 @@ body.ttrss_main {
 		font-size : 11px;
 	}
 
-	#main-toolbar {
-		background : white;
-		border: 0px solid #ddd;
-		border-bottom-width: 1px;
-		height : 32px;
-		line-height : 32px;
-		display : flex;
-		flex-direction : row;
-		flex-wrap : nowrap;
-		color : @default-text;
-		font-size : 12px;
-
-		> * {
-			align-self : center;
-		}
-
-		.dijitSelect,
-		.dijitDropDownButton .dijitButtonNode,
-		.dijitComboButton .dijitButtonNode {
-			border : 0px;
-		}
-
-		#main_toolbar_form {
-
-		}
-
-		#headlines-toolbar {
-			padding-right : 4px;
-			flex-grow : 2;
-			display : flex;
-
-			.left {
-				flex-grow: 2;
-
-				img {
-					vertical-align : middle;
-					margin-right : 8px;
-					position : relative;
-					top : -2px;
-				}
-			}
-		}
-
-		#selected_prompt {
-			font-style : italic;
-			text-align : right;
-			margin-right : 4px;
-		}
-
-		.actionChooser {
-
-		}
-
-		@media (max-width: 992px) {
-			#selected_prompt {
-				display : none;
-			}
-		}
-	}
-
-
 	span.preview {
 		color : #999;
 		font-weight : normal;
@@ -892,23 +831,68 @@ body.ttrss_main {
 		}
 	}
 
-	#headlines-toolbar_splitter, #toolbar_splitter {
+	#toolbar-frame_splitter {
 		display : none;
 	}
 
-	/* #content-insert_splitter.dijitSplitterH {
-		background : #f0f0f0;
-		border-color: #ddd;
-		border-top-width : 1px;
-		border-style : solid;
-	} */
-
-	#toolbar {
+	#toolbar-frame {
 		padding : 0px;
 		margin : 0px;
 		border-width : 0px;
 		white-space: nowrap;
 		font-size : 12px;
+
+		#toolbar {
+			background : white;
+			border: 0px solid #ddd;
+			border-bottom-width: 1px;
+			height : 32px;
+			line-height : 32px;
+			display : flex;
+			flex-direction : row;
+			flex-wrap : nowrap;
+			color : @default-text;
+			font-size : 12px;
+
+			> * {
+				align-self : center;
+			}
+
+			.dijitSelect,
+			.dijitDropDownButton .dijitButtonNode,
+			.dijitComboButton .dijitButtonNode {
+				border : 0px;
+			}
+
+			#toolbar-headlines {
+				padding-right : 4px;
+				flex-grow : 2;
+				display : flex;
+
+				.left {
+					flex-grow: 2;
+
+					img {
+						vertical-align : middle;
+						margin-right : 8px;
+						position : relative;
+						top : -2px;
+					}
+				}
+			}
+
+			#selected_prompt {
+				font-style : italic;
+				text-align : right;
+				margin-right : 4px;
+			}
+
+			@media (max-width: 992px) {
+				#selected_prompt {
+					display : none;
+				}
+			}
+		}
 	}
 
 	#header {

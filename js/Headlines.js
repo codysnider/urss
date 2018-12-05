@@ -46,7 +46,7 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 		},
 		loadMore: function () {
-			const view_mode = document.forms["main_toolbar_form"].view_mode.value;
+			const view_mode = document.forms["toolbar-main"].view_mode.value;
 			const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
 			const num_all = $$("#headlines-frame > div[id*=RROW]").length;
 			const num_unread = Feeds.getUnread(Feeds.getActive(), Feeds.activeIsCat());
@@ -270,7 +270,7 @@ define(["dojo/_base/declare"], function (declare) {
 				if (offset == 0) {
 					this.loaded_article_ids = [];
 
-					dojo.html.set($("headlines-toolbar"),
+					dojo.html.set($("toolbar-headlines"),
 						reply['headlines']['toolbar'],
 						{parseContent: true});
 
@@ -389,7 +389,7 @@ define(["dojo/_base/declare"], function (declare) {
 			Notify.close();
 		},
 		reverse: function () {
-			const toolbar = document.forms["main_toolbar_form"];
+			const toolbar = document.forms["toolbar-main"];
 			const order_by = dijit.getEnclosingWidget(toolbar.order_by);
 
 			let value = order_by.attr('value');

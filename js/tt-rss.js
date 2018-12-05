@@ -121,7 +121,7 @@ require(["dojo/_base/kernel",
 
 					Cookie.delete("ttrss_test");
 
-					const toolbar = document.forms["main_toolbar_form"];
+					const toolbar = document.forms["toolbar-main"];
 
 					dijit.getEnclosingWidget(toolbar.view_mode).attr('value',
 						App.getInitParam("default_view_mode"));

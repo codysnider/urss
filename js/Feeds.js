@@ -319,10 +319,10 @@ define(["dojo/_base/declare"], function (declare) {
 				}, 10 * 1000);
 			}
 
-			Form.enable("main_toolbar_form");
+			Form.enable("toolbar-main");
 
 			let query = Object.assign({op: "feeds", method: "view", feed: feed},
-				dojo.formToObject("main_toolbar_form"));
+				dojo.formToObject("toolbar-main"));
 
 			if (method) query.m = method;
 
@@ -347,7 +347,7 @@ define(["dojo/_base/declare"], function (declare) {
 				query.m = "ForceUpdate";
 			}
 
-			Form.enable("main_toolbar_form");
+			Form.enable("toolbar-main");
 
 			if (!delayed)
 				if (!this.setExpando(feed, is_cat,

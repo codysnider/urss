@@ -161,8 +161,8 @@
 <div dojoType="dijit.layout.BorderContainer" region="center" id="header-wrap" gutters="false">
 <div dojoType="dijit.layout.BorderContainer" region="center" id="content-wrap">
 
-<div id="toolbar" dojoType="dijit.layout.ContentPane" region="top">
-	<div id="main-toolbar" dojoType="dijit.Toolbar">
+<div id="toolbar-frame" dojoType="dijit.layout.ContentPane" region="top">
+	<div id="toolbar" dojoType="dijit.Toolbar">
 
 		<?php
 		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_MAIN_TOOLBAR_BUTTON) as $p) {
@@ -170,11 +170,11 @@
 		}
 		?>
 
-		<form id="headlines-toolbar" action="" onsubmit='return false'>
+		<form id="toolbar-headlines" action="" onsubmit='return false'>
 
 		</form>
 
-		<form id="main_toolbar_form" action="" onsubmit='return false'>
+		<form id="toolbar-main" action="" onsubmit='return false'>
 
 		<select name="view_mode" title="<?php echo __('Show articles') ?>"
 			onchange="App.onViewModeChanged()"
@@ -214,7 +214,7 @@
 
 		</form>
 
-		<div class="actionChooser">
+		<div class="action-chooser">
 
 			<?php
 				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_TOOLBAR_BUTTON) as $p) {

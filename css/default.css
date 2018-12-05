@@ -15,12 +15,6 @@ body.ttrss_main {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   overflow: hidden;
-  /* #content-insert_splitter.dijitSplitterH {
-		background : #f0f0f0;
-		border-color: #ddd;
-		border-top-width : 1px;
-		border-style : solid;
-	} */
 }
 body.ttrss_main :focus {
   outline: none;
@@ -382,50 +376,6 @@ body.ttrss_main .insensitive {
 body.ttrss_main .small {
   font-size: 11px;
 }
-body.ttrss_main #main-toolbar {
-  background: white;
-  border: 0px solid #ddd;
-  border-bottom-width: 1px;
-  height: 32px;
-  line-height: 32px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  color: #555555;
-  font-size: 12px;
-}
-body.ttrss_main #main-toolbar > * {
-  align-self: center;
-}
-body.ttrss_main #main-toolbar .dijitSelect,
-body.ttrss_main #main-toolbar .dijitDropDownButton .dijitButtonNode,
-body.ttrss_main #main-toolbar .dijitComboButton .dijitButtonNode {
-  border: 0px;
-}
-body.ttrss_main #main-toolbar #headlines-toolbar {
-  padding-right: 4px;
-  flex-grow: 2;
-  display: flex;
-}
-body.ttrss_main #main-toolbar #headlines-toolbar .left {
-  flex-grow: 2;
-}
-body.ttrss_main #main-toolbar #headlines-toolbar .left img {
-  vertical-align: middle;
-  margin-right: 8px;
-  position: relative;
-  top: -2px;
-}
-body.ttrss_main #main-toolbar #selected_prompt {
-  font-style: italic;
-  text-align: right;
-  margin-right: 4px;
-}
-@media (max-width: 992px) {
-  body.ttrss_main #main-toolbar #selected_prompt {
-    display: none;
-  }
-}
 body.ttrss_main span.preview {
   color: #999;
   font-weight: normal;
@@ -757,16 +707,59 @@ body.ttrss_main #headlines-frame div.feed-title a {
 body.ttrss_main #headlines-frame div.feed-title a:hover {
   color: #257aa7;
 }
-body.ttrss_main #headlines-toolbar_splitter,
-body.ttrss_main #toolbar_splitter {
+body.ttrss_main #toolbar-frame_splitter {
   display: none;
 }
-body.ttrss_main #toolbar {
+body.ttrss_main #toolbar-frame {
   padding: 0px;
   margin: 0px;
   border-width: 0px;
   white-space: nowrap;
   font-size: 12px;
+}
+body.ttrss_main #toolbar-frame #toolbar {
+  background: white;
+  border: 0px solid #ddd;
+  border-bottom-width: 1px;
+  height: 32px;
+  line-height: 32px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  color: #555555;
+  font-size: 12px;
+}
+body.ttrss_main #toolbar-frame #toolbar > * {
+  align-self: center;
+}
+body.ttrss_main #toolbar-frame #toolbar .dijitSelect,
+body.ttrss_main #toolbar-frame #toolbar .dijitDropDownButton .dijitButtonNode,
+body.ttrss_main #toolbar-frame #toolbar .dijitComboButton .dijitButtonNode {
+  border: 0px;
+}
+body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines {
+  padding-right: 4px;
+  flex-grow: 2;
+  display: flex;
+}
+body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .left {
+  flex-grow: 2;
+}
+body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .left img {
+  vertical-align: middle;
+  margin-right: 8px;
+  position: relative;
+  top: -2px;
+}
+body.ttrss_main #toolbar-frame #toolbar #selected_prompt {
+  font-style: italic;
+  text-align: right;
+  margin-right: 4px;
+}
+@media (max-width: 992px) {
+  body.ttrss_main #toolbar-frame #toolbar #selected_prompt {
+    display: none;
+  }
 }
 body.ttrss_main #header {
   border-width: 0px;
