@@ -16,10 +16,12 @@ define(["dojo/_base/declare"], function (declare) {
 					Article.openInNewWindow(id);
 				}
 
-				Article.setActive(id);
+				if (Article.getActive() != id) {
+					Article.setActive(id);
 
-				if (!App.getInitParam("cdm_expanded"))
-					Article.cdmScrollToId(id);
+					if (!App.getInitParam("cdm_expanded"))
+						Article.cdmScrollToId(id);
+				}
 
 				return in_body;
 
@@ -230,6 +232,9 @@ define(["dojo/_base/declare"], function (declare) {
 			let feed_id = false;
 
 			if (reply) {
+
+				if (offset == 0)
+					Article.setActive(0);
 
 				is_cat = reply['headlines']['is_cat'];
 				feed_id = reply['headlines']['id'];

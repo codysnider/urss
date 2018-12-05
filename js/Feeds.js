@@ -303,11 +303,6 @@ define(["dojo/_base/declare"], function (declare) {
 			// this is used to quickly switch between feeds, sets active but xhr is on a timeout
 			const delayed = params.delayed || false;
 
-			if (feed != this.getActive() || this.activeIsCat() != is_cat) {
-				this._search_query = false;
-				Article.setActive(0);
-			}
-
 			if (offset != 0) {
 				if (this.infscroll_in_progress)
 					return;
