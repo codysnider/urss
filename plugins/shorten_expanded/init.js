@@ -32,6 +32,8 @@ require(['dojo/_base/kernel', 'dojo/ready'], function  (dojo, ready) {
 							c_inter.innerHTML + "</div>" +
 							"<button class='expandPrompt' onclick='return expandSizeWrapper(\""+row.id+"\")' href='#'>" +
 								__("Click to expand article") + "</button>";
+
+						Headlines.unpackVisible();
 					}
 				}
 			}, 150);
