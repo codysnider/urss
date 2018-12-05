@@ -296,13 +296,11 @@ class Feeds extends Handler_Protected {
 					++$num_unread;
 				}
 
-				$marked_pic_src = $line["marked"] ? "mark_set.png" : "mark_unset.png";
 				$class .= $line["marked"] ? " marked" : "";
-				$marked_pic = "<img src=\"images/$marked_pic_src\" class=\"marked-pic marked-$id\" onclick='Headlines.toggleMark($id)'>";
+				$marked_pic = "<i class=\"marked-pic marked-$id material-icons\" onclick='Headlines.toggleMark($id)'>star</i>";
 
-				$published_pic_src = $line["published"] ? "pub_set.png" : "pub_unset.png";
 				$class .= $line["published"] ? " published" : "";
-                $published_pic = "<img src=\"images/$published_pic_src\" class=\"pub-pic pub-$id\" onclick='Headlines.togglePub($id)'>";
+                $published_pic = "<i class=\"pub-pic pub-$id material-icons\" onclick='Headlines.togglePub($id)'>rss_feed</i>";
 
 				$updated_fmt = make_local_datetime($line["updated"], false, false, false, true);
 				$date_entered_fmt = T_sprintf("Imported at %s",
