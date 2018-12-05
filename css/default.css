@@ -416,6 +416,7 @@ body.ttrss_main span.hlLabelRef {
 body.ttrss_main i.marked-pic,
 body.ttrss_main i.pub-pic {
   cursor: pointer;
+  color: #ccc;
 }
 body.ttrss_main div.tagCloudContainer {
   background: white;
@@ -1486,9 +1487,6 @@ body.ttrss_prefs table.prefPluginsList label {
 body.ttrss_prefs table.prefPluginsList i.plugin-enabled {
   color: #69C671;
 }
-body.ttrss_prefs table.prefPluginsList i.plugin-disabled {
-  color: #999;
-}
 body.ttrss_prefs table.prefPluginsList label img {
   vertical-align: middle;
 }
@@ -1947,7 +1945,7 @@ body.ttrss_zoom div.post div.content pre {
   /* Preferred icon size */
   display: inline-block;
   line-height: 1;
-  color: #ccc;
+  color: #999;
   text-transform: none;
   letter-spacing: normal;
   word-wrap: normal;
