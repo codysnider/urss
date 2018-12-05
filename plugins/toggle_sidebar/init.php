@@ -19,8 +19,8 @@ class Toggle_Sidebar extends Plugin {
 		?>
 
 		<button dojoType="dijit.form.Button" onclick="Feeds.toggle()">
-			<img src="plugins/toggle_sidebar/application_side_list.png"
-				 title="<?php echo __('Collapse feedlist') ?>">
+			<i class="material-icons"
+               title="<?php echo __('Toggle feedlist') ?>">fullscreen</i>
 		</button>
 
 		<?php
