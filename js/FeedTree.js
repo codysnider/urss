@@ -8,14 +8,27 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 		_createTreeNode: function(args) {
 			const tnode = new dijit._TreeNode(args);
 
-			const icon = dojo.doc.createElement('img');
-			if (args.item.icon && args.item.icon[0]) {
-				icon.src = args.item.icon[0];
-			} else {
-				icon.src = 'images/blank_icon.gif';
+			const iconName = args.item.icon ? String(args.item.icon[0]) : null;
+			let iconNode;
+
+			if (iconName) {
+				if (iconName.indexOf("/") == -1) {
+					iconNode = dojo.doc.createElement("i");
+					iconNode.className = "material-icons icon icon-" + iconName;
+					iconNode.innerHTML = iconName;
+				} else {
+					iconNode = dojo.doc.createElement('img');
+					if (args.item.icon && args.item.icon[0]) {
+						iconNode.src = args.item.icon[0];
+					} else {
+						iconNode.src = 'images/blank_icon.gif';
+					}
+					iconNode.className = 'icon';
+				}
 			}
-			icon.className = 'tinyFeedIcon';
-			domConstruct.place(icon, tnode.iconNode, 'only');
+
+			if (iconNode)
+				domConstruct.place(iconNode, tnode.iconNode, 'only');
 
 			const id = args.item.id[0];
 			const bare_id = parseInt(id.substr(id.indexOf(':')+1));
@@ -161,7 +174,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 				return "";
 		},
 		getIconClass: function (item, opened) {
-			return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "feedIcon";
+			return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "feed-icon";
 		},
 		getLabelClass: function (item, opened) {
 			return (item.unread == 0) ? "dijitTreeLabel" : "dijitTreeLabel Unread";
@@ -275,7 +288,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 				treeNode = treeNode[0];
 				const icon = dojo.doc.createElement('img');
 				icon.src = src;
-				icon.className = 'tinyFeedIcon';
+				icon.className = 'icon';
 				domConstruct.place(icon, treeNode.iconNode, 'only');
 				return true;
 			}

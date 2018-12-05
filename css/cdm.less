@@ -13,8 +13,24 @@
 	.header {
 		> * {
 			align-self : center;
-			padding : 5px;
+			padding : 4px;
 			white-space : nowrap;
+		}
+
+		.left, .right {
+			display : flex;
+
+			> * {
+				align-self : center;
+			}
+
+			i.material-icons {
+				margin-left : 2px;
+				padding : 2px;
+				transition : color 0.2s linear;
+				user-select: none;
+				font-size : 21px;
+			}
 		}
 
 		.titleWrap {
@@ -75,6 +91,10 @@
 
 	.collapse, .excerpt {
 		display : none;
+	}
+
+	.titleWrap {
+		white-space : normal;
 	}
 
 	.footer {
@@ -201,18 +221,36 @@ div#floatingTitle {
 	border-bottom-width: 1px;
 	background : white;
 	color : @default-text;
+	display : flex;
+	flex-direction : row;
+	flex-wrap : nowrap;
 	box-shadow : 0px 1px 1px -1px rgba(0,0,0,0.1);
 
 	> * {
-		display : table-cell;
+		align-self: center;
 		white-space : nowrap;
-		vertical-align : middle;
-		padding : 9px 5px;
+		padding : 4px;
 	}
 
-	img {
-		margin-right : 4px;
-		margin-left : 4px;
+	.left, .right {
+		display : flex;
+
+		> * {
+			align-self : center;
+		}
+
+		i.material-icons {
+			margin-left : 2px;
+			font-size : 20px;
+			padding : 2px;
+			user-select: none;
+		}
+
+		i.anchor {
+			margin-left : 0px;
+			padding : 0px;
+			color : #ccc;
+		}
 	}
 
 	span.author {
@@ -269,7 +307,6 @@ div#floatingTitle {
 		white-space : normal;
 	}
 
-	.dijit,
 	img.score-pic {
 		display : none;
 	}

@@ -1,4 +1,4 @@
-@import "../lib/flat-ttrss/flat.css";
+@import "../lib/flat-ttrss/flat_combined.css";
 body.ttrss_main,
 body.ttrss_prefs,
 #main {
@@ -15,12 +15,6 @@ body.ttrss_main {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   overflow: hidden;
-  /* #content-insert_splitter.dijitSplitterH {
-		background : #f0f0f0;
-		border-color: #ddd;
-		border-top-width : 1px;
-		border-style : solid;
-	} */
 }
 body.ttrss_main :focus {
   outline: none;
@@ -190,17 +184,32 @@ body.ttrss_main .hl {
 body.ttrss_main .hl > * {
   align-self: center;
   white-space: nowrap;
-  padding: 5px;
+  padding: 4px;
 }
 body.ttrss_main .hl img {
   vertical-align: middle;
+}
+body.ttrss_main .hl .left,
+body.ttrss_main .hl .right {
+  display: flex;
+}
+body.ttrss_main .hl .left > *,
+body.ttrss_main .hl .right > * {
+  align-self: center;
+}
+body.ttrss_main .hl .left i.material-icons,
+body.ttrss_main .hl .right i.material-icons {
+  margin-left: 2px;
+  padding: 2px;
+  transition: color 0.2s linear;
+  user-select: none;
+  font-size: 21px;
 }
 body.ttrss_main .hl div.title {
   cursor: pointer;
   flex-grow: 2;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-left: 5px;
 }
 body.ttrss_main .hl div.right {
   text-align: right;
@@ -382,50 +391,6 @@ body.ttrss_main .insensitive {
 body.ttrss_main .small {
   font-size: 11px;
 }
-body.ttrss_main #main-toolbar {
-  background: white;
-  border: 0px solid #ddd;
-  border-bottom-width: 1px;
-  height: 32px;
-  line-height: 32px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  color: #555555;
-  font-size: 12px;
-}
-body.ttrss_main #main-toolbar > * {
-  align-self: center;
-}
-body.ttrss_main #main-toolbar .dijitSelect,
-body.ttrss_main #main-toolbar .dijitDropDownButton .dijitButtonNode,
-body.ttrss_main #main-toolbar .dijitComboButton .dijitButtonNode {
-  border: 0px;
-}
-body.ttrss_main #main-toolbar #headlines-toolbar {
-  padding-right: 4px;
-  flex-grow: 2;
-  display: flex;
-}
-body.ttrss_main #main-toolbar #headlines-toolbar .left {
-  flex-grow: 2;
-}
-body.ttrss_main #main-toolbar #headlines-toolbar .left img {
-  vertical-align: middle;
-  margin-right: 8px;
-  position: relative;
-  top: -2px;
-}
-body.ttrss_main #main-toolbar #selected_prompt {
-  font-style: italic;
-  text-align: right;
-  margin-right: 4px;
-}
-@media (max-width: 992px) {
-  body.ttrss_main #main-toolbar #selected_prompt {
-    display: none;
-  }
-}
 body.ttrss_main span.preview {
   color: #999;
   font-weight: normal;
@@ -448,20 +413,10 @@ body.ttrss_main span.hlLabelRef {
   white-space: nowrap;
   border-radius: 4px;
 }
-body.ttrss_main img.marked-pic,
-body.ttrss_main img.pub-pic {
+body.ttrss_main i.marked-pic,
+body.ttrss_main i.pub-pic {
   cursor: pointer;
-  vertical-align: middle;
-  opacity: 0.5;
-  transition: opacity 0.25s;
-}
-body.ttrss_main img.marked-pic:hover,
-body.ttrss_main img.pub-pic:hover {
-  opacity: 1;
-}
-body.ttrss_main img[src*='pub_set.png'],
-body.ttrss_main img[src*='mark_set.png'] {
-  opacity: 1;
+  color: #ccc;
 }
 body.ttrss_main div.tagCloudContainer {
   background: white;
@@ -499,8 +454,11 @@ body.ttrss_main ul.browseFeedList {
   padding: 0px;
 }
 body.ttrss_main ul.browseFeedList li {
-  margin: 0px;
-  padding: 2px 4px 2px 4px;
+  display: flex;
+}
+body.ttrss_main ul.browseFeedList li > * {
+  align-self: center;
+  margin: 2px;
 }
 body.ttrss_main .browseFeedList span.subscribers {
   color: #808080;
@@ -655,11 +613,6 @@ body.ttrss_main div.fatalError textarea {
   width: 565px;
   height: 200px;
 }
-body.ttrss_main #header-wrap {
-  border-width: 0px;
-  margin: 0px;
-  padding: 0px;
-}
 body.ttrss_main #content-wrap {
   padding: 0px;
   border-width: 0px;
@@ -706,7 +659,7 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .loadingExpando {
   left: -3px;
   height: 22px;
   position: relative;
-  top: -6px;
+  top: -3px;
 }
 body.ttrss_main #feeds-holder #feedTree .dijitTreeRow .dijitTreeLabel.Unread {
   font-weight: bold;
@@ -725,9 +678,35 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRowSelected {
   border-color: #ddd transparent;
   background: white;
 }
-body.ttrss_main #feeds-holder #feedTree img.tinyFeedIcon {
+body.ttrss_main #feeds-holder #feedTree .icon {
   position: relative;
   top: -2px;
+}
+body.ttrss_main #feeds-holder #feedTree i.icon {
+  left: -2px;
+}
+body.ttrss_main #feeds-holder #feedTree i.icon.icon-inbox {
+  color: #555;
+}
+body.ttrss_main #feeds-holder #feedTree i.icon.icon-archive {
+  color: #c77b2e;
+}
+body.ttrss_main #feeds-holder #feedTree i.icon.icon-star {
+  color: #ffc069;
+  font-size: 21px;
+  top: -4px;
+  left: -4px;
+}
+body.ttrss_main #feeds-holder #feedTree i.icon.icon-rss_feed {
+  color: #ff7c4b;
+}
+body.ttrss_main #feeds-holder #feedTree i.icon.icon-new_releases {
+  color: #69c671;
+}
+body.ttrss_main #feeds-holder #feedTree i.icon.icon-cached {
+  font-weight: bold;
+  left: -3px;
+  color: #257aa7;
 }
 body.ttrss_main #headlines-wrap-inner {
   padding: 0px;
@@ -757,16 +736,66 @@ body.ttrss_main #headlines-frame div.feed-title a {
 body.ttrss_main #headlines-frame div.feed-title a:hover {
   color: #257aa7;
 }
-body.ttrss_main #headlines-toolbar_splitter,
-body.ttrss_main #toolbar_splitter {
+body.ttrss_main #toolbar-frame_splitter {
   display: none;
 }
-body.ttrss_main #toolbar {
+body.ttrss_main #toolbar-frame {
   padding: 0px;
   margin: 0px;
   border-width: 0px;
   white-space: nowrap;
   font-size: 12px;
+}
+body.ttrss_main #toolbar-frame #toolbar {
+  background: white;
+  border: 0px solid #ddd;
+  border-bottom-width: 1px;
+  height: 32px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  color: #555555;
+  font-size: 12px;
+}
+body.ttrss_main #toolbar-frame #toolbar > * {
+  align-self: center;
+}
+body.ttrss_main #toolbar-frame #toolbar .dijitSelect,
+body.ttrss_main #toolbar-frame #toolbar .dijitDropDownButton .dijitButtonNode,
+body.ttrss_main #toolbar-frame #toolbar .dijitComboButton .dijitButtonNode {
+  border: 0px;
+}
+body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines {
+  padding-right: 4px;
+  flex-grow: 2;
+  display: flex;
+}
+body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .left {
+  flex-grow: 2;
+  display: flex;
+}
+body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .left img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .left > * {
+  align-self: center;
+}
+body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .right {
+  display: flex;
+}
+body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .right > * {
+  align-self: center;
+}
+body.ttrss_main #toolbar-frame #toolbar #selected_prompt {
+  font-style: italic;
+  text-align: right;
+  margin-right: 4px;
+}
+@media (max-width: 992px) {
+  body.ttrss_main #toolbar-frame #toolbar #selected_prompt {
+    display: none;
+  }
 }
 body.ttrss_main #header {
   border-width: 0px;
@@ -779,12 +808,6 @@ body.ttrss_main #header {
   top: 0px;
   z-index: 5;
 }
-body.ttrss_main #footer {
-  text-align: center;
-  color: #555555;
-  padding: 4px 4px 8px 4px;
-  border-width: 0px;
-}
 body.ttrss_main #content-insert {
   padding: 0px;
   border-color: #ddd;
@@ -793,8 +816,8 @@ body.ttrss_main #content-insert {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
-body.ttrss_main img.feedIcon,
-body.ttrss_main img.tinyFeedIcon {
+body.ttrss_main img.feed-icon,
+body.ttrss_main img.icon {
   width: 16px;
   height: 16px;
   line-height: 16px;
@@ -881,10 +904,6 @@ body.ttrss_main select.attachments {
   display: block;
   margin-top: 10px;
   max-width: 120px;
-}
-body.ttrss_main #selected_prompt {
-  margin-right: 25px;
-  vertical-align: middle;
 }
 body.ttrss_main #filterDlg_feeds select {
   height: 150px;
@@ -976,6 +995,20 @@ body.ttrss_main .dijitDialog h3:first-of-type,
 body.ttrss_main .dijitDialog h4:first-of-type {
   margin-top: 0px;
 }
+body.ttrss_main i.icon-syndicate {
+  color: #ff7c4b;
+  margin-right: 8px;
+  border: 1px solid #ff7c4b;
+  border-radius: 4px;
+}
+body.ttrss_main .cdm.marked .left i.marked-pic,
+body.ttrss_main .hl.marked .left i.marked-pic {
+  color: #ffc069;
+}
+body.ttrss_main .cdm.published .left i.pub-pic,
+body.ttrss_main .hl.published .left i.pub-pic {
+  color: #ff7c4b;
+}
 ::selection {
   background: #257aa7;
   color: white;
@@ -1002,8 +1035,24 @@ body.ttrss_main .dijitDialog h4:first-of-type {
 }
 .cdm .header > * {
   align-self: center;
-  padding: 5px;
+  padding: 4px;
   white-space: nowrap;
+}
+.cdm .header .left,
+.cdm .header .right {
+  display: flex;
+}
+.cdm .header .left > *,
+.cdm .header .right > * {
+  align-self: center;
+}
+.cdm .header .left i.material-icons,
+.cdm .header .right i.material-icons {
+  margin-left: 2px;
+  padding: 2px;
+  transition: color 0.2s linear;
+  user-select: none;
+  font-size: 21px;
 }
 .cdm .header .titleWrap {
   flex-grow: 2;
@@ -1053,6 +1102,9 @@ body.ttrss_main .dijitDialog h4:first-of-type {
 .cdm.expanded .collapse,
 .cdm.expanded .excerpt {
   display: none;
+}
+.cdm.expanded .titleWrap {
+  white-space: normal;
 }
 .cdm.expanded .footer {
   border: 0px solid #ddd;
@@ -1154,17 +1206,36 @@ div#floatingTitle {
   border-bottom-width: 1px;
   background: white;
   color: #555555;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.1);
 }
 div#floatingTitle > * {
-  display: table-cell;
+  align-self: center;
   white-space: nowrap;
-  vertical-align: middle;
-  padding: 9px 5px;
+  padding: 4px;
 }
-div#floatingTitle img {
-  margin-right: 4px;
-  margin-left: 4px;
+div#floatingTitle .left,
+div#floatingTitle .right {
+  display: flex;
+}
+div#floatingTitle .left > *,
+div#floatingTitle .right > * {
+  align-self: center;
+}
+div#floatingTitle .left i.material-icons,
+div#floatingTitle .right i.material-icons {
+  margin-left: 2px;
+  font-size: 20px;
+  padding: 2px;
+  user-select: none;
+}
+div#floatingTitle .left i.anchor,
+div#floatingTitle .right i.anchor {
+  margin-left: 0px;
+  padding: 0px;
+  color: #ccc;
 }
 div#floatingTitle span.author {
   color: #555555;
@@ -1212,7 +1283,6 @@ div#floatingTitle span.titleWrap {
   width: 100%;
   white-space: normal;
 }
-div#floatingTitle .dijit,
 div#floatingTitle img.score-pic {
   display: none;
 }
@@ -1346,9 +1416,20 @@ body.ttrss_prefs {
 }
 body.ttrss_prefs #footer,
 body.ttrss_prefs #header {
+  padding: 8px;
+  font-size: 13px;
+}
+body.ttrss_prefs #header {
+  float: right;
+}
+body.ttrss_prefs #footer_splitter {
+  display: none;
+}
+body.ttrss_prefs #footer {
   background-color: #f5f5f5;
-  padding-left: 8px;
-  padding-right: 8px;
+  font-size: 13px;
+  border: 0px;
+  text-align: center;
 }
 body.ttrss_prefs #header a:hover {
   color: black;
@@ -1434,6 +1515,9 @@ body.ttrss_prefs table.prefUserList td {
 body.ttrss_prefs table.prefPluginsList label {
   white-space: nowrap;
 }
+body.ttrss_prefs table.prefPluginsList i.plugin-enabled {
+  color: #69C671;
+}
 body.ttrss_prefs table.prefPluginsList label img {
   vertical-align: middle;
 }
@@ -1517,6 +1601,10 @@ body.ttrss_prefs hr {
 .flat .dijitTree .labelParam {
   float: right;
   margin-right: 1em;
+}
+.flat .dijitTree .labelParam.filterDisabled,
+.flat .dijitTree .dijitTreeLabel.filterDisabled {
+  text-decoration: line-through;
 }
 .flat .dijitTree .feedParam {
   color: #555555;
@@ -1870,5 +1958,38 @@ body.ttrss_zoom div.post div.content pre {
   display: block;
   max-width: 98%;
   overflow: auto;
+}
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../lib/iconfont/MaterialIcons-Regular.eot);
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(../lib/iconfont/MaterialIcons-Regular.woff2) format('woff2'), url(../lib/iconfont/MaterialIcons-Regular.woff) format('woff'), url(../lib/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+  
+  /* For IE6-8 */
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;
+  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  color: #777;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }
 /*# sourceMappingURL=default.css.map */

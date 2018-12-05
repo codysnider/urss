@@ -160,9 +160,9 @@ class Pref_Users extends Handler_Protected {
 					$icon_file = ICONS_URL."/".$line["id"].".ico";
 
 					if (file_exists($icon_file) && filesize($icon_file) > 0) {
-						$feed_icon = "<img class=\"tinyFeedIcon\" src=\"$icon_file\">";
+						$feed_icon = "<img class=\"icon\" src=\"$icon_file\">";
 					} else {
-						$feed_icon = "<img class=\"tinyFeedIcon\" src=\"images/blank_icon.gif\">";
+						$feed_icon = "<img class=\"icon\" src=\"images/blank_icon.gif\">";
 					}
 
 					print "<li>$feed_icon&nbsp;<a href=\"".$line["site_url"]."\">".$line["title"]."</a></li>";
@@ -422,7 +422,7 @@ class Pref_Users extends Handler_Protected {
 				print "<td align='center'><input onclick='Tables.onRowChecked(this); event.stopPropagation();'
 					dojoType=\"dijit.form.CheckBox\" type=\"checkbox\"></td>";
 
-				print "<td title='".__('Click to edit')."'><img src='images/user.png' class='marked-pic' alt=''> " . $line["login"] . "</td>";
+				print "<td title='".__('Click to edit')."'><i class='material-icons'>person</i> " . $line["login"] . "</td>";
 
 				print "<td>" .	$access_level_names[$line["access_level"]] . "</td>";
 				print "<td>" . $line["num_feeds"] . "</td>";

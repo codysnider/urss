@@ -14,6 +14,8 @@ define(["dojo/_base/declare"], function (declare) {
 
 				if (!in_body && (event.ctrlKey || id == Article.getActive() || App.getInitParam("cdm_expanded"))) {
 					Article.openInNewWindow(id);
+					Headlines.toggleUnread(id, 0);
+					return false;
 				}
 
 				if (Article.getActive() != id) {
@@ -28,7 +30,7 @@ define(["dojo/_base/declare"], function (declare) {
 			} else {
 				if (event.ctrlKey) {
 					Article.openInNewWindow(id);
-					Article.setActive(id);
+					Headlines.toggleUnread(id, 0);
 				} else {
 					Article.view(id);
 				}
@@ -46,7 +48,7 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 		},
 		loadMore: function () {
-			const view_mode = document.forms["main_toolbar_form"].view_mode.value;
+			const view_mode = document.forms["toolbar-main"].view_mode.value;
 			const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
 			const num_all = $$("#headlines-frame > div[id*=RROW]").length;
 			const num_unread = Feeds.getUnread(Feeds.getActive(), Feeds.activeIsCat());
@@ -171,15 +173,11 @@ define(["dojo/_base/declare"], function (declare) {
 
 							ft.setAttribute("data-article-id", id);
 							ft.innerHTML = header.innerHTML;
-							ft.firstChild.innerHTML = "<img class='anchor marked-pic' src='images/page_white_go.png' " +
-								"onclick=\"Article.cdmScrollToId(" + id + ", true)\">" + ft.firstChild.innerHTML;
+
+							ft.select(".dijitCheckBox")[0].outerHTML = "<i class=\"material-icons anchor\" onclick=\"Article.cdmScrollToId(" + id + ", true)\">expand_more</i>";
 
 							this.initFloatingMenu();
 
-							const cb = ft.select(".rchk")[0];
-
-							if (cb)
-								cb.parentNode.removeChild(cb);
 						}
 
 						if (row.hasClassName("Unread"))
@@ -270,7 +268,7 @@ define(["dojo/_base/declare"], function (declare) {
 				if (offset == 0) {
 					this.loaded_article_ids = [];
 
-					dojo.html.set($("headlines-toolbar"),
+					dojo.html.set($("toolbar-headlines"),
 						reply['headlines']['toolbar'],
 						{parseContent: true});
 
@@ -389,7 +387,7 @@ define(["dojo/_base/declare"], function (declare) {
 			Notify.close();
 		},
 		reverse: function () {
-			const toolbar = document.forms["main_toolbar_form"];
+			const toolbar = document.forms["toolbar-main"];
 			const order_by = dijit.getEnclosingWidget(toolbar.order_by);
 
 			let value = order_by.attr('value');
@@ -496,19 +494,9 @@ define(["dojo/_base/declare"], function (declare) {
 			const row = $("RROW-" + id);
 
 			if (row) {
-				const imgs = $$("img[class*=marked-pic][class*=marked-" + id + "]");
-
-				imgs.each((img) => {
-					if (!row.hasClassName("marked")) {
-						img.src = img.src.replace("mark_unset", "mark_set");
-						query.mark = 1;
-					} else {
-						img.src = img.src.replace("mark_set", "mark_unset");
-						query.mark = 0;
-					}
-				});
 
 				row.toggleClassName("marked");
+				query.mark = row.hasClassName("marked") ? 1 : 0;
 
 				if (!client_only)
 					xhrPost("backend.php", query, (transport) => {
@@ -522,19 +510,8 @@ define(["dojo/_base/declare"], function (declare) {
 			if (row) {
 				const query = {op: "rpc", id: id, method: "publ"};
 
-				const imgs = $$("img[class*=pub-pic][class*=pub-" + id + "]");
-
-				imgs.each((img) => {
-					if (!row.hasClassName("published")) {
-						img.src = img.src.replace("pub_unset", "pub_set");
-						query.pub = 1;
-					} else {
-						img.src = img.src.replace("pub_set", "pub_unset");
-						query.pub = 0;
-					}
-				});
-
 				row.toggleClassName("published");
+				query.pub = row.hasClassName("published") ? 1 : 0;
 
 				if (!client_only)
 					xhrPost("backend.php", query, (transport) => {
@@ -1024,6 +1001,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 				const menu = new dijit.Menu({
 					id: "floatingMenu",
+					selector: ".hlMenuAttach",
 					targetNodeIds: ["floatingTitle"]
 				});
 

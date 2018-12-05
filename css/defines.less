@@ -4,6 +4,10 @@
 @color-accent: #257aa7;
 @color-accent-light: lighten(@color-accent, 50%);
 @color-link: @color-accent;
+@color-published: lighten(#ff5718, 10%);
+@color-marked: #ffc069;
+@color-panel-bg: #f5f5f5;
+@color-enabled: #69C671;
 @default-text: #555;
 
 body.ttrss_main,
@@ -24,4 +28,43 @@ body.ttrss_prefs,
 @import "utility.less";
 @import "zoom.less";
 
-@import "../lib/flat-ttrss/flat.css";
+@import "../lib/flat-ttrss/flat_combined.css";
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../lib/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+  local('MaterialIcons-Regular'),
+  url(../lib/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+  url(../lib/iconfont/MaterialIcons-Regular.woff) format('woff'),
+  url(../lib/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  color : #777;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}

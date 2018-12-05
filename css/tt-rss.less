@@ -212,11 +212,26 @@ body.ttrss_main {
 		> * {
 			align-self : center;
 			white-space : nowrap;
-			padding : 5px;
+			padding : 4px;
 		}
 
 		img {
 			vertical-align : middle;
+		}
+		.left, .right {
+			display : flex;
+
+			> * {
+				align-self : center;
+			}
+
+			i.material-icons {
+				margin-left : 2px;
+				padding : 2px;
+				transition : color 0.2s linear;
+				user-select: none;
+				font-size : 21px;
+			}
 		}
 
 		div.title {
@@ -224,7 +239,6 @@ body.ttrss_main {
 			flex-grow : 2;
 			overflow : hidden;
 			text-overflow : ellipsis;
-			padding-left : 5px;
 		}
 
 		div.right {
@@ -434,67 +448,6 @@ body.ttrss_main {
 		font-size : 11px;
 	}
 
-	#main-toolbar {
-		background : white;
-		border: 0px solid #ddd;
-		border-bottom-width: 1px;
-		height : 32px;
-		line-height : 32px;
-		display : flex;
-		flex-direction : row;
-		flex-wrap : nowrap;
-		color : @default-text;
-		font-size : 12px;
-
-		> * {
-			align-self : center;
-		}
-
-		.dijitSelect,
-		.dijitDropDownButton .dijitButtonNode,
-		.dijitComboButton .dijitButtonNode {
-			border : 0px;
-		}
-
-		#main_toolbar_form {
-
-		}
-
-		#headlines-toolbar {
-			padding-right : 4px;
-			flex-grow : 2;
-			display : flex;
-
-			.left {
-				flex-grow: 2;
-
-				img {
-					vertical-align : middle;
-					margin-right : 8px;
-					position : relative;
-					top : -2px;
-				}
-			}
-		}
-
-		#selected_prompt {
-			font-style : italic;
-			text-align : right;
-			margin-right : 4px;
-		}
-
-		.actionChooser {
-
-		}
-
-		@media (max-width: 992px) {
-			#selected_prompt {
-				display : none;
-			}
-		}
-	}
-
-
 	span.preview {
 		color : #999;
 		font-weight : normal;
@@ -520,19 +473,9 @@ body.ttrss_main {
 		border-radius : 4px;
 	}
 
-	img.marked-pic, img.pub-pic {
+	i.marked-pic, i.pub-pic {
 		cursor : pointer;
-		vertical-align : middle;
-		opacity : 0.5;
-		transition : opacity 0.25s;
-	}
-
-	img.marked-pic:hover, img.pub-pic:hover {
-		opacity : 1;
-	}
-
-	img[src*='pub_set.png'], img[src*='mark_set.png'] {
-		opacity : 1;
+		color : #ccc;
 	}
 
 	div.tagCloudContainer {
@@ -576,8 +519,12 @@ body.ttrss_main {
 		padding : 0px;
 
 		li {
-			margin : 0px;
-			padding : 2px 4px 2px 4px;
+			display : flex;
+
+			> * {
+				align-self : center;
+				margin : 2px;
+			}
 		}
 	}
 
@@ -770,12 +717,6 @@ body.ttrss_main {
 		}
 	}
 
-	#header-wrap {
-		border-width : 0px;
-		margin : 0px;
-		padding : 0px;
-	}
-
 	#content-wrap {
 		padding : 0px;
 		border-width : 0px;
@@ -825,7 +766,7 @@ body.ttrss_main {
 				left : -3px;
 				height : 22px;
 				position : relative;
-				top : -6px;
+				top : -3px;
 			}
 
 			.dijitTreeRow .dijitTreeLabel.Unread {
@@ -850,9 +791,42 @@ body.ttrss_main {
 				background : white;
 			}
 
-			img.tinyFeedIcon {
+			.icon {
 				position : relative;
 				top : -2px;
+			}
+
+			i.icon {
+				left : -2px;
+			}
+
+			i.icon.icon-inbox {
+				color : #555;
+			}
+
+			i.icon.icon-archive {
+				color : #c77b2e;
+			}
+
+			i.icon.icon-star {
+				color : @color-marked;
+				font-size : 21px;
+				top : -4px;
+				left : -4px;
+			}
+
+			i.icon.icon-rss_feed {
+				color : @color-published;
+			}
+
+			i.icon.icon-new_releases {
+				color : @color-enabled;
+			}
+
+			i.icon.icon-cached {
+				font-weight : bold;
+				left : -3px;
+				color : @color-accent;
 			}
 
 		}
@@ -892,23 +866,78 @@ body.ttrss_main {
 		}
 	}
 
-	#headlines-toolbar_splitter, #toolbar_splitter {
+	#toolbar-frame_splitter {
 		display : none;
 	}
 
-	/* #content-insert_splitter.dijitSplitterH {
-		background : #f0f0f0;
-		border-color: #ddd;
-		border-top-width : 1px;
-		border-style : solid;
-	} */
-
-	#toolbar {
+	#toolbar-frame {
 		padding : 0px;
 		margin : 0px;
 		border-width : 0px;
 		white-space: nowrap;
 		font-size : 12px;
+
+		#toolbar {
+			background : white;
+			border: 0px solid #ddd;
+			border-bottom-width: 1px;
+			height : 32px;
+			display : flex;
+			flex-direction : row;
+			flex-wrap : nowrap;
+			color : @default-text;
+			font-size : 12px;
+
+			> * {
+				align-self : center;
+			}
+
+			.dijitSelect,
+			.dijitDropDownButton .dijitButtonNode,
+			.dijitComboButton .dijitButtonNode {
+				border : 0px;
+			}
+
+			#toolbar-headlines {
+				padding-right : 4px;
+				flex-grow : 2;
+				display : flex;
+
+				.left {
+					flex-grow: 2;
+					display : flex;
+
+					img {
+						vertical-align : middle;
+						margin-right : 8px;
+					}
+
+					> * {
+						align-self: center;
+					}
+				}
+
+				.right {
+					display : flex;
+
+					> * {
+						align-self : center;
+					}
+				}
+			}
+
+			#selected_prompt {
+				font-style : italic;
+				text-align : right;
+				margin-right : 4px;
+			}
+
+			@media (max-width: 992px) {
+				#selected_prompt {
+					display : none;
+				}
+			}
+		}
 	}
 
 	#header {
@@ -923,13 +952,6 @@ body.ttrss_main {
 		z-index : 5;
 	}
 
-	#footer {
-		text-align : center;
-		color : @default-text;
-		padding : 4px 4px 8px 4px;
-		border-width : 0px;
-	}
-
 	#content-insert {
 		padding : 0px;
 		border-color : #ddd;
@@ -939,7 +961,7 @@ body.ttrss_main {
 		-webkit-overflow-scrolling : touch;
 	}
 
-	img.feedIcon, img.tinyFeedIcon {
+	img.feed-icon, img.icon {
 		width : 16px;
 		height : 16px;
 		line-height : 16px;
@@ -1035,11 +1057,6 @@ body.ttrss_main {
 		display : block;
 		margin-top : 10px;
 		max-width : 120px;
-	}
-
-	#selected_prompt {
-		margin-right : 25px;
-		vertical-align  : middle;
 	}
 
 	#filterDlg_feeds select {
@@ -1155,6 +1172,26 @@ body.ttrss_main .dijitDialog {
 	h4:first-of-type {
 		margin-top: 0px;
 	}
+}
+
+body.ttrss_main {
+	i.icon-syndicate {
+		color : @color-published;
+		margin-right : 8px;
+		border : 1px solid @color-published;
+		border-radius : 4px;
+	}
+
+	.cdm.marked .left i.marked-pic,
+	.hl.marked .left i.marked-pic {
+		color : @color-marked;
+	}
+
+	.cdm.published .left i.pub-pic,
+	.hl.published .left i.pub-pic {
+		color : @color-published;
+	}
+
 }
 
 ::selection {

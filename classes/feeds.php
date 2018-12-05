@@ -35,7 +35,7 @@ class Feeds extends Handler_Protected {
 		$reply .= "<a href=\"#\"
 				title=\"".__("Show as feed")."\"
 				onclick=\"App.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">
-				<img src=\"images/pub_set.png\"></a>";
+				<i class='icon-syndicate material-icons'>rss_feed</i></a>";
 
 		$reply .= "<span id='feed_title' class='$error_class'>";
 
@@ -296,13 +296,11 @@ class Feeds extends Handler_Protected {
 					++$num_unread;
 				}
 
-				$marked_pic_src = $line["marked"] ? "mark_set.png" : "mark_unset.png";
 				$class .= $line["marked"] ? " marked" : "";
-				$marked_pic = "<img src=\"images/$marked_pic_src\" class=\"marked-pic marked-$id\" onclick='Headlines.toggleMark($id)'>";
+				$marked_pic = "<i class=\"marked-pic marked-$id material-icons\" onclick='Headlines.toggleMark($id)'>star</i>";
 
-				$published_pic_src = $line["published"] ? "pub_set.png" : "pub_unset.png";
 				$class .= $line["published"] ? " published" : "";
-                $published_pic = "<img src=\"images/$published_pic_src\" class=\"pub-pic pub-$id\" onclick='Headlines.togglePub($id)'>";
+                $published_pic = "<i class=\"pub-pic pub-$id material-icons\" onclick='Headlines.togglePub($id)'>rss_feed</i>";
 
 				$updated_fmt = make_local_datetime($line["updated"], false, false, false, true);
 				$date_entered_fmt = T_sprintf("Imported at %s",
@@ -330,9 +328,9 @@ class Feeds extends Handler_Protected {
 				}
 
 				if (feeds::feedHasIcon($feed_id)) {
-					$feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
+					$feed_icon_img = "<img class=\"icon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
 				} else {
-					$feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"images/pub_set.png\" alt=\"\">";
+					$feed_icon_img = "<i class='icon-syndicate material-icons'>rss_feed</i>";
 				}
 
 				$entry_site_url = $line["site_url"];
@@ -451,7 +449,7 @@ class Feeds extends Handler_Protected {
 							$vf_catchup_link = "<a class='catchup' onclick='Feeds.catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
 
 							$feed_icon_src = Feeds::getFeedIcon($feed_id);
-							$feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"$feed_icon_src\">";
+							$feed_icon_img = "<img class=\"icon\" src=\"$feed_icon_src\">";
 
 							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-title'>".
 								"<div style=\"float : right\">$feed_icon_img</div>".
@@ -468,7 +466,7 @@ class Feeds extends Handler_Protected {
                         id=\"RROW-$id\" data-content=\"$content_encoded\" data-article-id='$id' data-orig-feed-id='$feed_id' $mouseover_attrs>";
 
 					$tmp_content .= "<div class=\"header\">";
-					$tmp_content .= "<div class=\"buttons\">";
+					$tmp_content .= "<div class=\"left\">";
 
 					$tmp_content .= "<input dojoType=\"dijit.form.CheckBox\"
                         type=\"checkbox\" onclick=\"Headlines.onRowChecked(this)\"
@@ -576,7 +574,6 @@ class Feeds extends Handler_Protected {
 							$tmp_content .= "&nbsp;";
 
 							$tmp_content .= "<a target='_blank' rel='noopener noreferrer' href='" . htmlspecialchars($tmp_line['feed_url']) . "'>";
-							$tmp_content .= "<img title='".__('Feed URL')."'class='tinyFeedIcon' src='images/pub_unset.png'></a>";
 
 							$tmp_content .= "</div>";
 						}
@@ -1495,22 +1492,22 @@ class Feeds extends Handler_Protected {
 	static function getFeedIcon($id) {
 		switch ($id) {
 			case 0:
-				return "images/archive.png";
+				return "archive";
 				break;
 			case -1:
-				return "images/star.png";
+				return "star";
 				break;
 			case -2:
-				return "images/feed.png";
+				return "rss_feed";
 				break;
 			case -3:
-				return "images/fresh.png";
+				return "new_releases";
 				break;
 			case -4:
-				return "images/folder.png";
+				return "inbox";
 				break;
 			case -6:
-				return "images/time.png";
+				return "cached";
 				break;
 			default:
 				if ($id < LABEL_BASE_INDEX) {
