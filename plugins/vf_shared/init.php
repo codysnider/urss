@@ -14,7 +14,7 @@ class VF_Shared extends Plugin {
 	function init($host) {
 		$this->host = $host;
 
-		$host->add_feed(-1, __("Shared articles"), 'share', $this);
+		$host->add_feed(-1, __("Shared articles"), 'link', $this);
 	}
 
 	function api_version() {

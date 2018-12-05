@@ -80,7 +80,7 @@ class Share extends Plugin {
 
 		return "<i id='SHARE-IMG-".$line['int_id']."' class='material-icons icon-share $img_class'
 			style='cursor : pointer' onclick=\"Plugins.Share.shareArticle(".$line['int_id'].")\"
-			title='".__('Share by URL')."'>share</i>";
+			title='".__('Share by URL')."'>link</i>";
 	}
 
 	function shareArticle() {
