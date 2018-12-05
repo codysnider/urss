@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: tt-rss unstable\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-03 14:24+0300\n"
-"PO-Revision-Date: 2013-07-13 11:05+0900\n"
-"Last-Translator: Yak! <yak_ex@mx.scn.tv>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2018-12-05 18:43+0000\n"
+"Last-Translator: ncaq net (エヌユル) <ncaq@ncaq.net>\n"
+"Language-Team: Japanese <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"ja/>\n"
 "Language: ja_JP\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -193,7 +195,7 @@ msgstr "ユーザーが見つかりません"
 #: js/tt-rss.js:464
 #: plugins/import_export/import_export.js:17
 msgid "Loading, please wait..."
-msgstr "読み込みんでいます。しばらくお待ちください..."
+msgstr "読み込んでいます。しばらくお待ちください..."
 
 #: index.php:181
 msgid "Show articles"
@@ -339,7 +341,7 @@ msgstr "ログアウト"
 
 #: index.php:261
 msgid "Updates are available from Git."
-msgstr ""
+msgstr "Gitからのアップデートが利用できます。"
 
 #: prefs.php:33
 #: prefs.php:130
