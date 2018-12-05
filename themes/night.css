@@ -1107,6 +1107,9 @@ body.ttrss_main .hl.published .left i.pub-pic {
 .cdm.expanded .excerpt {
   display: none;
 }
+.cdm.expanded .titleWrap {
+  white-space: normal;
+}
 .cdm.expanded .footer {
   border: 0px solid #ddd;
   border-bottom-width: 1px;
