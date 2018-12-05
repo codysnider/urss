@@ -330,7 +330,7 @@ class Feeds extends Handler_Protected {
 				if (feeds::feedHasIcon($feed_id)) {
 					$feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
 				} else {
-					$feed_icon_img = "<img class=\"tinyFeedIcon\" src=\"images/pub_set.png\" alt=\"\">";
+					$feed_icon_img = "<i class='icon-syndicate material-icons'>rss_feed</i>";
 				}
 
 				$entry_site_url = $line["site_url"];
@@ -574,7 +574,6 @@ class Feeds extends Handler_Protected {
 							$tmp_content .= "&nbsp;";
 
 							$tmp_content .= "<a target='_blank' rel='noopener noreferrer' href='" . htmlspecialchars($tmp_line['feed_url']) . "'>";
-							$tmp_content .= "<img title='".__('Feed URL')."'class='tinyFeedIcon' src='images/pub_unset.png'></a>";
 
 							$tmp_content .= "</div>";
 						}

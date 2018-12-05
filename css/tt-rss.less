@@ -218,8 +218,7 @@ body.ttrss_main {
 		img {
 			vertical-align : middle;
 		}
-
-		.left {
+		.left, .right {
 			display : flex;
 
 			> * {
@@ -871,12 +870,6 @@ body.ttrss_main {
 					flex-grow: 2;
 					display : flex;
 
-					i.icon-syndicate {
-						font-size : 19px;
-						color : #ff5718;
-						margin-right : 2px;
-					}
-
 					img {
 						vertical-align : middle;
 						margin-right : 8px;
@@ -1144,17 +1137,24 @@ body.ttrss_main .dijitDialog {
 	}
 }
 
+body.ttrss_main {
+	i.icon-syndicate {
+		font-size : 19px;
+		color : #ff5718;
+		margin-right : 2px;
+	}
 
-.cdm.marked .left i.marked-pic,
-.hl.marked .left i.marked-pic {
-	color : #ffc069;
+	.cdm.marked .left i.marked-pic,
+	.hl.marked .left i.marked-pic {
+		color : #ffc069;
+	}
+
+	.cdm.published .left i.pub-pic,
+	.hl.published .left i.pub-pic {
+		color : #ff5718;
+	}
+
 }
-
-.cdm.published .left i.pub-pic,
-.hl.published .left i.pub-pic {
-	color : #ff5718;
-}
-
 
 ::selection {
 	background : @color-accent;
