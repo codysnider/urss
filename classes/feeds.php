@@ -1507,7 +1507,7 @@ class Feeds extends Handler_Protected {
 				return "inbox";
 				break;
 			case -6:
-				return "cached";
+				return "restore";
 				break;
 			default:
 				if ($id < LABEL_BASE_INDEX) {

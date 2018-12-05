@@ -113,10 +113,9 @@ class Af_Psql_Trgm extends Plugin {
 	}
 
 	function hook_article_button($line) {
-		return "<img src=\"plugins/af_psql_trgm/button.png\"
-			style=\"cursor : pointer\" style=\"cursor : pointer\"
+		return "<i style=\"cursor : pointer\" class='material-icons'
 			onclick=\"Plugins.Psql_Trgm.showRelated(".$line["id"].")\"
-			class='tagsPic' title='".__('Show related articles')."'>";
+			class='tagsPic' title='".__('Show related articles')."'>find_in_page</i>";
 	}
 
 	function hook_prefs_tab($args) {
