@@ -422,7 +422,7 @@ class Pref_Users extends Handler_Protected {
 				print "<td align='center'><input onclick='Tables.onRowChecked(this); event.stopPropagation();'
 					dojoType=\"dijit.form.CheckBox\" type=\"checkbox\"></td>";
 
-				print "<td title='".__('Click to edit')."'><i class='material-icons'>portrait</i> " . $line["login"] . "</td>";
+				print "<td title='".__('Click to edit')."'><i class='material-icons'>person</i> " . $line["login"] . "</td>";
 
 				print "<td>" .	$access_level_names[$line["access_level"]] . "</td>";
 				print "<td>" . $line["num_feeds"] . "</td>";
