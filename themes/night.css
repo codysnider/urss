@@ -699,10 +699,6 @@ body.ttrss_main #feeds-holder #feedTree i.icon.icon-star {
 }
 body.ttrss_main #feeds-holder #feedTree i.icon.icon-rss_feed {
   color: #ff7c4b;
-  border: 1px solid #ff7c4b;
-  border-radius: 4px;
-  left: -4px;
-  top: -4px;
 }
 body.ttrss_main #feeds-holder #feedTree i.icon.icon-new_releases {
   color: #69c671;
