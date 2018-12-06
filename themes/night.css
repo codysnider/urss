@@ -697,8 +697,8 @@ body.ttrss_main #feeds-holder #feedTree i.icon.icon-star {
 body.ttrss_main #feeds-holder #feedTree i.icon.icon-rss_feed {
   color: #ff7c4b;
 }
-body.ttrss_main #feeds-holder #feedTree i.icon.icon-whatshot {
-  color: red;
+body.ttrss_main #feeds-holder #feedTree i.icon.icon-new_releases {
+  color: #69c671;
 }
 body.ttrss_main #feeds-holder #feedTree i.icon.icon-restore {
   font-weight: bold;

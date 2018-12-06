@@ -1501,7 +1501,7 @@ class Feeds extends Handler_Protected {
 				return "rss_feed";
 				break;
 			case -3:
-				return "whatshot";
+				return "new_releases";
 				break;
 			case -4:
 				return "inbox";
