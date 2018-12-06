@@ -2445,7 +2445,7 @@
 	}
 
 	function theme_valid($theme) {
-		$bundled_themes = [ "default.php", "night.css", "compact.css" ];
+		$bundled_themes = [ "night.css", "compact.css" ];
 
 		if (in_array($theme, $bundled_themes)) return true;
 

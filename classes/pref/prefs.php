@@ -554,8 +554,17 @@ class Pref_Prefs extends Handler_Protected {
 
 				if (!theme_valid($value)) $value = "default.php";
 
-				print_select($pref_name, $value, $themes,
-					'dojoType="dijit.form.Select"');
+				print "<select name='$pref_name' id='$pref_name' dojoType='dijit.form.Select'>";
+
+				$issel = $value == "default.php" ? "selected='selected'" : "";
+				print "<option $issel value='default.php'>".__("default")."</option>";
+
+				foreach ($themes as $theme) {
+					$issel = $value == $theme ? "selected='selected'" : "";
+					print "<option $issel value='$theme'>$theme</option>";
+				}
+
+				print "</select>";
 
 
 			} else if ($pref_name == "DEFAULT_UPDATE_INTERVAL") {
