@@ -581,10 +581,10 @@ class Feeds extends Handler_Protected {
 
 					$tmp_content .= "<div class='left'>";
 
-					$tmp_content .= "<img src='images/tag.png' alt='Tags' title='Tags'>
-                    <span id=\"ATSTR-$id\">$tags_str</span>
-                    <a title=\"".__('Edit tags for this article')."\"
-                    href=\"#\" onclick=\"Article.editTags($id)\">(+)</a>";
+					$tmp_content .= "<i class='material-icons'>label_outline</i>
+                        <span id=\"ATSTR-$id\">$tags_str</span>
+                        <a title=\"".__('Edit tags for this article')."\"
+                        href=\"#\" onclick=\"Article.editTags($id)\">(+)</a>";
 
 					$num_comments = (int) $line["num_comments"];
 					$entry_comments = "";

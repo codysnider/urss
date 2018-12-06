@@ -627,7 +627,8 @@ class Article extends Handler_Protected {
 
 			} else {
 				if ($line["comments"] && $line["link"] != $line["comments"]) {
-					$entry_comments = "<a class=\"comments\" target='_blank' rel=\"noopener noreferrer\" href=\"".htmlspecialchars($line["comments"])."\">".__("comments")."</a>";
+					$entry_comments = "<a class=\"comments\" target='_blank' rel=\"noopener noreferrer\" href=\"".
+						htmlspecialchars($line["comments"])."\">".__("comments")."</a>";
 				}
 			}
 
@@ -676,54 +677,56 @@ class Article extends Handler_Protected {
 					$rv['content'] .= "<meta property=\"og:image\" content=\"" . htmlspecialchars($og_image) . "\"/>";
 				}
 
-				$rv['content'] .= "<body class=\"claro ttrss_utility ttrss_zoom\">";
+				$rv['content'] .= "<body class='flat ttrss_utility ttrss_zoom'>";
 			}
 
-			$rv['content'] .= "<div class=\"post\" id=\"POST-$id\">";
+			$rv['content'] .= "<div class='post post-$id'>";
 
-			$rv['content'] .= "<div class=\"header\">";
+			/* header */
 
-			$entry_author = $line["author"];
+			$rv['content'] .= "<div class='header'>";
+			$rv['content'] .= "<div class='row'>"; # row
 
-			if ($entry_author) {
-				$entry_author = __(" - ") . $entry_author;
-			}
-
+			//$entry_author = $line["author"] ? " - " . $line["author"] : "";
 			$parsed_updated = make_local_datetime($line["updated"], true,
 				$owner_uid, true);
-
-			if (!$zoom_mode)
-				$rv['content'] .= "<div class=\"date\">$parsed_updated</div>";
 
 			if ($line["link"]) {
 				$rv['content'] .= "<div class='title'><a target='_blank' rel='noopener noreferrer'
 					title=\"".htmlspecialchars($line['title'])."\"
-					href=\"" .
-					htmlspecialchars($line["link"]) . "\">" .
-					$line["title"] . "</a>" .
-					"<span class='author'>$entry_author</span></div>";
+					href=\"" .htmlspecialchars($line["link"]) . "\">" .	$line["title"] . "</a></div>";
 			} else {
-				$rv['content'] .= "<div class='title'>" . $line["title"] . "$entry_author</div>";
+				$rv['content'] .= "<div class='title'>" . $line["title"] . "</div>";
 			}
 
-			if ($zoom_mode) {
-				$feed_title = htmlspecialchars($line["feed_title"]);
+			if (!$zoom_mode)
+				$rv['content'] .= "<div class='date'>$parsed_updated<br/></div>";
 
-				$rv['content'] .= "<div class=\"feed-title\">$feed_title</div>";
+			$rv['content'] .= "</div>"; # row
 
-				$rv['content'] .= "<div class=\"date\">$parsed_updated</div>";
+			$rv['content'] .= "<div class='row'>"; # row
+
+			/* left buttons */
+
+			$rv['content'] .= "<div class='buttons left'>";
+			foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_LEFT_BUTTON) as $p) {
+				$rv['content'] .= $p->hook_article_left_button($line);
 			}
+			$rv['content'] .= "</div>";
+
+			/* comments */
+
+			$rv['content'] .= "<div class='comments'>$entry_comments</div>";
+			$rv['content'] .= "<div class='author'>".$line['author']."</div>";
+
+			/* tags */
 
 			$tags_str = Article::format_tags_string($line["tags"], $id);
 			$tags_str_full = join(", ", $line["tags"]);
 
 			if (!$tags_str_full) $tags_str_full = __("no tags");
 
-			if (!$entry_comments) $entry_comments = "&nbsp;"; # placeholder
-
-			$rv['content'] .= "<div class='tags' style='float : right'>
-				<img src='images/tag.png'
-				class='tagsPic' alt='Tags' title='Tags'>&nbsp;";
+			$rv['content'] .= "<i class='material-icons'>label_outline</i><div>";
 
 			if (!$zoom_mode) {
 				$rv['content'] .= "<span id=\"ATSTR-$id\">$tags_str</span>
@@ -734,22 +737,39 @@ class Article extends Handler_Protected {
 					id=\"ATSTRTIP-$id\" connectId=\"ATSTR-$id\"
 					position=\"below\">$tags_str_full</div>";
 
-				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_BUTTON) as $p) {
-					$rv['content'] .= $p->hook_article_button($line);
-				}
-
 			} else {
 				$tags_str = strip_tags($tags_str);
 				$rv['content'] .= "<span id=\"ATSTR-$id\">$tags_str</span>";
 			}
+
 			$rv['content'] .= "</div>";
-			$rv['content'] .= "<div clear='both'>";
 
-			foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_LEFT_BUTTON) as $p) {
-				$rv['content'] .= $p->hook_article_left_button($line);
+			/* buttons */
+
+			$rv['content'] .= "<div class='buttons right'>";
+			foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_BUTTON) as $p) {
+				$rv['content'] .= $p->hook_article_button($line);
 			}
+			$rv['content'] .= "</div>";
 
-			$rv['content'] .= "$entry_comments</div>";
+			$rv['content'] .= "</div>"; # row
+
+			$rv['content'] .= "</div>"; # header
+
+			/* note */
+
+			$rv['content'] .= "<div id=\"POSTNOTE-$id\">";
+			if ($line['note']) {
+				$rv['content'] .= Article::format_article_note($id, $line['note'], !$zoom_mode);
+			}
+			$rv['content'] .= "</div>";
+
+			/* content */
+
+			$lang = $line['lang'] ? $line['lang'] : "en";
+			$rv['content'] .= "<div class=\"content\" lang=\"$lang\">";
+
+			/* originally from */
 
 			if ($line["orig_feed_id"]) {
 
@@ -776,17 +796,7 @@ class Article extends Handler_Protected {
 				}
 			}
 
-			$rv['content'] .= "</div>";
-
-			$rv['content'] .= "<div id=\"POSTNOTE-$id\">";
-			if ($line['note']) {
-				$rv['content'] .= Article::format_article_note($id, $line['note'], !$zoom_mode);
-			}
-			$rv['content'] .= "</div>";
-
-			if (!$line['lang']) $line['lang'] = 'en';
-
-			$rv['content'] .= "<div class=\"content\" lang=\"".$line['lang']."\">";
+			/* content body */
 
 			$rv['content'] .= $line["content"];
 
@@ -797,9 +807,9 @@ class Article extends Handler_Protected {
 					$line["hide_images"]);
 			}
 
-			$rv['content'] .= "</div>";
+			$rv['content'] .= "</div>"; # content
 
-			$rv['content'] .= "</div>";
+			$rv['content'] .= "</div>"; # post
 
 		}
 

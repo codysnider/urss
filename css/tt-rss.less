@@ -11,6 +11,7 @@ body.ttrss_main {
 
 	div.post {
 		padding : 0px;
+		font-size : 13px;
 
 		div.header {
 			padding : 5px;
@@ -19,34 +20,43 @@ body.ttrss_main {
 			border-bottom-width: 1px;
 			background: #f0f0f0;
 
-			div.date {
+			.left, .right {
+				display : flex;
+			}
+
+			.row {
+				display : flex;
+				margin-bottom : 4px;
+				flex-wrap : nowrap;
+
+				> * {
+					align-self : center;
+				}
+			}
+
+			.comments {
+				flex-grow : 2;
+			}
+
+			.date {
 				text-align : right;
-				float : right;
+				white-space : nowrap;
+				align-self : flex-start;
 			}
 
-			div {
-				padding-bottom : 3px;
+			img, i {
+				margin : 0px 4px;
+				vertical-align: middle;
 			}
 
-			span.author {
-				color : @default-text;
-				font-size : 11px;
-				font-weight : normal;
+			.title {
+				flex-grow : 2;
+				align-self : flex-start;
+				font-size : 15px;
+				font-weight : 600;
+				text-rendering: optimizelegibility;
+				font-family : @fonts-ui-bold;
 			}
-		}
-
-		div.title {
-			overflow : hidden;
-			font-size : 15px;
-			text-overflow: ellipsis;
-			white-space : nowrap;
-			font-weight : 600;
-			text-rendering: optimizelegibility;
-			font-family : @fonts-ui-bold;
-		}
-
-		div.date {
-			padding-left : 10px;
 		}
 
 		div.content {
@@ -68,21 +78,6 @@ body.ttrss_main {
 				min-width : 50%;
 				max-width : 98%;
 			}
-		}
-
-		div.postEnclosures {
-			color : @default-text;
-		}
-
-		img.tagsPic {
-			width : 16px;
-			height : 16px;
-			margin-left : 4px;
-			vertical-align : middle;
-		}
-
-		span.author {
-			font-size : 12px;
 		}
 	}
 

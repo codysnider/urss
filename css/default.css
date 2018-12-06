@@ -21,6 +21,7 @@ body.ttrss_main :focus {
 }
 body.ttrss_main div.post {
   padding: 0px;
+  font-size: 13px;
 }
 body.ttrss_main div.post div.header {
   padding: 5px;
@@ -29,29 +30,38 @@ body.ttrss_main div.post div.header {
   border-bottom-width: 1px;
   background: #f0f0f0;
 }
-body.ttrss_main div.post div.header div.date {
+body.ttrss_main div.post div.header .left,
+body.ttrss_main div.post div.header .right {
+  display: flex;
+}
+body.ttrss_main div.post div.header .row {
+  display: flex;
+  margin-bottom: 4px;
+  flex-wrap: nowrap;
+}
+body.ttrss_main div.post div.header .row > * {
+  align-self: center;
+}
+body.ttrss_main div.post div.header .comments {
+  flex-grow: 2;
+}
+body.ttrss_main div.post div.header .date {
   text-align: right;
-  float: right;
-}
-body.ttrss_main div.post div.header div {
-  padding-bottom: 3px;
-}
-body.ttrss_main div.post div.header span.author {
-  color: #555555;
-  font-size: 11px;
-  font-weight: normal;
-}
-body.ttrss_main div.post div.title {
-  overflow: hidden;
-  font-size: 15px;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  align-self: flex-start;
+}
+body.ttrss_main div.post div.header img,
+body.ttrss_main div.post div.header i {
+  margin: 0px 4px;
+  vertical-align: middle;
+}
+body.ttrss_main div.post div.header .title {
+  flex-grow: 2;
+  align-self: flex-start;
+  font-size: 15px;
   font-weight: 600;
   text-rendering: optimizelegibility;
   font-family: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-body.ttrss_main div.post div.date {
-  padding-left: 10px;
 }
 body.ttrss_main div.post div.content {
   padding: 10px;
@@ -69,18 +79,6 @@ body.ttrss_main div.post div.content p {
 body.ttrss_main div.post div.content iframe {
   min-width: 50%;
   max-width: 98%;
-}
-body.ttrss_main div.post div.postEnclosures {
-  color: #555555;
-}
-body.ttrss_main div.post img.tagsPic {
-  width: 16px;
-  height: 16px;
-  margin-left: 4px;
-  vertical-align: middle;
-}
-body.ttrss_main div.post span.author {
-  font-size: 12px;
 }
 body.ttrss_main div.articleNote {
   background-color: #fff7d5;
@@ -1147,10 +1145,6 @@ div.cdm.expanded.Unread div.content {
 }
 div.cdm.active div.content {
   color: black;
-}
-.cdm div.content div.postEnclosures {
-  margin-top: 1em;
-  color: #555555;
 }
 .cdm div.feed-title {
   border: 0px solid #257aa7;
