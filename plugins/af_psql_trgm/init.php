@@ -56,7 +56,7 @@ class Af_Psql_Trgm extends Plugin {
 
 			$title = $row['title'];
 
-			print "<h2>$title</h2>";
+			print "<p>$title</p>";
 
 			$sth = $this->pdo->prepare("SELECT ttrss_entries.id AS id,
 				feed_id,
@@ -77,26 +77,28 @@ class Af_Psql_Trgm extends Plugin {
 
 			$sth->execute([$owner_uid, $id]);
 
-			print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
+			print "<ul class='browseFeedList'>";
 
 			while ($line = $sth->fetch()) {
-				print "<li>";
-				print "<div class='insensitive small' style='margin-left : 20px; float : right'>" .
-					smart_date_time(strtotime($line["updated"]))
-					. "</div>";
+				print "<li style='display : flex'>";
+				print "<i class='material-icons'>bookmark_outline</i>";
 
 				$sm = sprintf("%.2f", $line['sm']);
-				print "<img src='images/score_high.png' title='$sm'
-				style='vertical-align : middle'>";
-
 				$article_link = htmlspecialchars($line["link"]);
+
+				print "<div style='flex-grow : 2'>";
+
 				print " <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"$article_link\">".
 					$line["title"]."</a>";
 
 				print " (<a href=\"#\" onclick=\"Feeds.open({feed:".$line["feed_id"]."})\">".
 					htmlspecialchars($line["feed_title"])."</a>)";
 
-				print " <span class='insensitive'>($sm)</span>";
+				print " &mdash; $sm";
+
+				print "</div>";
+
+				print "<div style='text-align : right' class='insensitive'>" . smart_date_time(strtotime($line["updated"])) . "</div>";
 
 				print "</li>";
 			}
@@ -115,7 +117,7 @@ class Af_Psql_Trgm extends Plugin {
 	function hook_article_button($line) {
 		return "<i style=\"cursor : pointer\" class='material-icons'
 			onclick=\"Plugins.Psql_Trgm.showRelated(".$line["id"].")\"
-			class='tagsPic' title='".__('Show related articles')."'>find_in_page</i>";
+			title='".__('Show related articles')."'>bookmark_outline</i>";
 	}
 
 	function hook_prefs_tab($args) {
