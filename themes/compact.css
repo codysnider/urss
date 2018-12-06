@@ -1,4 +1,7 @@
 @import "../css/default.css";
+body.ttrss_main.ttrss_index.flat #feedTree.dijitTree .dijitTreeLabel {
+  font-size: 13px ! important;
+}
 body.ttrss_main.ttrss_index.flat .dijitMenu .dijitMenuItemLabel,
 body.ttrss_main.ttrss_index.flat .content-inner,
 body.ttrss_main.ttrss_index.flat #content-insert,
