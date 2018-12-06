@@ -518,7 +518,7 @@ class Pref_Filters extends Handler_Protected {
 				__('Remove')."</button>";
 			print "</div>";
 
-			print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterEditDlg').test()\">".
+			print "<button dojoType=\"dijit.form.Button\" class=\"alt-info\" onclick=\"return dijit.byId('filterEditDlg').test()\">".
 				__('Test')."</button> ";
 
 			print "<button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"alt-primary\" onclick=\"return dijit.byId('filterEditDlg').execute()\">".
@@ -857,7 +857,7 @@ class Pref_Filters extends Handler_Protected {
 
 	function newfilter() {
 
-		print "<form name='filter_new_form' id='filter_new_form'>";
+		print "<form name='filter_new_form' id='filter_new_form' onsubmit='return false'>";
 
 		print_hidden("op", "pref-filters");
 		print_hidden("method", "add");
@@ -935,10 +935,10 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<div class=\"dlgButtons\">";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterEditDlg').test()\">".
+		print "<button dojoType=\"dijit.form.Button\" class=\"alt-info\" onclick=\"return dijit.byId('filterEditDlg').test()\">".
 			__('Test')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterEditDlg').execute()\">".
+		print "<button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"alt-primary\" onclick=\"return dijit.byId('filterEditDlg').execute()\">".
 			__('Create')."</button> ";
 
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterEditDlg').hide()\">".

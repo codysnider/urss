@@ -542,7 +542,7 @@ class Pref_Prefs extends Handler_Protected {
 				print_select($pref_name, $value, $timezones, 'dojoType="dijit.form.FilteringSelect"');
 			} else if ($pref_name == "USER_STYLESHEET") {
 
-				print "<button dojoType=\"dijit.form.Button\"
+				print "<button dojoType=\"dijit.form.Button\" class='alt-info'
 					onclick=\"Helpers.customizeCSS()\">" . __('Customize') . "</button>";
 
 			} else if ($pref_name == "USER_CSS_THEME") {
