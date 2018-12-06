@@ -438,8 +438,6 @@ define(["dojo/_base/declare"], function (declare) {
 				cmode: cmode, ids: ids.toString()
 			};
 
-			Notify.progress("Loading, please wait...");
-
 			xhrPost("backend.php", query, (transport) => {
 				App.handleRpcJson(transport);
 				if (callback) callback(transport);
