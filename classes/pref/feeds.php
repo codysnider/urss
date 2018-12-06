@@ -542,9 +542,8 @@ class Pref_Feeds extends Handler_Protected {
 			$last_error = $row["last_error"];
 
 			if ($last_error) {
-				print "&nbsp;<img src=\"images/error.png\" alt=\"(error)\"
-				style=\"vertical-align : middle\"
-				title=\"".htmlspecialchars($last_error)."\">";
+				print "&nbsp;<i class=\"material-icons\" 
+					title=\"".htmlspecialchars($last_error)."\">error</i>";
 
 			}
 

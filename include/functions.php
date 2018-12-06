@@ -1107,9 +1107,6 @@
 
 		$params['simple_update'] = defined('SIMPLE_UPDATE_MODE') && SIMPLE_UPDATE_MODE;
 
-		$params["icon_alert"] = base64_img("images/alert.png");
-		$params["icon_information"] = base64_img("images/information.png");
-		$params["icon_cross"] = base64_img("images/cross.png");
 		$params["icon_indicator_white"] = base64_img("images/indicator_white.gif");
 
 		$params["labels"] = Labels::get_all_labels($_SESSION["uid"]);

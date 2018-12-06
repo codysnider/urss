@@ -752,7 +752,8 @@ body.ttrss_main #toolbar-frame #toolbar .dijitDropDownButton .dijitButtonNode,
 body.ttrss_main #toolbar-frame #toolbar .dijitComboButton .dijitButtonNode {
   border: 0px;
 }
-body.ttrss_main #toolbar-frame #toolbar .net-alert i {
+body.ttrss_main #toolbar-frame #toolbar .net-alert i,
+body.ttrss_main #toolbar-frame #toolbar .left i.icon-error {
   color: red;
 }
 body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines {
@@ -776,6 +777,10 @@ body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .right {
 }
 body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .right > * {
   align-self: center;
+}
+body.ttrss_main #toolbar-frame #toolbar #updates-available {
+  color: #69c671;
+  padding-right: 4px;
 }
 body.ttrss_main #toolbar-frame #toolbar #selected_prompt {
   font-style: italic;

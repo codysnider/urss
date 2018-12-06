@@ -264,12 +264,10 @@ define(["dojo/_base/declare"], function (declare) {
 					}
 
 					if (k == "update_result") {
-						const updatesIcon = dijit.byId("updatesIcon").domNode;
-
 						if (v) {
-							Element.show(updatesIcon);
+							Element.show("updates-available");
 						} else {
-							Element.hide(updatesIcon);
+							Element.hide("updates-available");
 						}
 					}
 

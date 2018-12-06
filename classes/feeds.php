@@ -28,8 +28,6 @@ class Feeds extends Handler_Protected {
 		$rss_link = htmlspecialchars(get_self_url_prefix() .
 			"/public.php?op=rss&id=$feed_id$cat_q$search_q");
 
-		$error_class = $error ? "error" : "";
-
 		$reply .= "<span class='left'>";
 
 		$reply .= "<a href=\"#\"
@@ -37,24 +35,19 @@ class Feeds extends Handler_Protected {
 				onclick=\"App.displayDlg('".__("Show as feed")."','generatedFeed', '$feed_id:$is_cat:$rss_link')\">
 				<i class='icon-syndicate material-icons'>rss_feed</i></a>";
 
-		$reply .= "<span id='feed_title' class='$error_class'>";
+		$reply .= "<span id='feed_title'>";
 
 		if ($feed_site_url) {
-			$last_updated = T_sprintf("Last updated: %s",
-				$feed_last_updated);
+			$last_updated = T_sprintf("Last updated: %s", $feed_last_updated);
 
-			$target = "target=\"_blank\"";
-			$reply .= "<a title=\"$last_updated\" $target href=\"$feed_site_url\">".
+			$reply .= "<a title=\"$last_updated\" target='_blank' href=\"$feed_site_url\">".
 				truncate_string(strip_tags($feed_title), 30)."</a>";
-
-			if ($error) {
-				$error = htmlspecialchars($error);
-				$reply .= "&nbsp;<img title=\"$error\" src='images/error.png' alt='error' class=\"noborder\">";
-			}
-
 		} else {
 			$reply .= strip_tags($feed_title);
 		}
+
+		if ($error)
+			$reply .= " <i title=\"" . htmlspecialchars($error) . "\" class='material-icons icon-error'>error</i>";
 
 		$reply .= "</span></span>";
 
@@ -1503,7 +1496,7 @@ class Feeds extends Handler_Protected {
 				break;
 			default:
 				if ($id < LABEL_BASE_INDEX) {
-					return "images/label.png";
+					return "label";
 				} else {
 					$icon = self::getIconFile($id);
 

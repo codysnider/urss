@@ -199,9 +199,8 @@ const Notify = {
 			else
 				msgfmt = "<i class='material-icons icon-notify'>%s</i>".replace("%s", icon) + msgfmt;
 
-		msgfmt += ("<i class='material-icons icon-close' title=\"" +
-			__("Click to close") + "\" onclick=\"Notify.close()\">close</i>")
-				.replace("%s", App.getInitParam("icon_cross"));
+		msgfmt += "<i class='material-icons icon-close' title=\"" +
+			__("Click to close") + "\" onclick=\"Notify.close()\">close</i>";
 
 		notify.innerHTML = msgfmt;
 		notify.addClassName("visible");
