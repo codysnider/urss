@@ -627,7 +627,7 @@ define(["dojo/_base/declare"], function (declare) {
 		updateRandom: function() {
 			console.log("in update_random_feed");
 
-			xhrPost("backend.php", {op: "rpc", method: "updateRandom"}, (transport) => {
+			xhrPost("backend.php", {op: "rpc", method: "updaterandomfeed"}, (transport) => {
 				App.handleRpcJson(transport, true);
 			});
 		},
