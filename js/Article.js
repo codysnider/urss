@@ -22,13 +22,22 @@ define(["dojo/_base/declare"], function (declare) {
 							reply.id.each((id) => {
 								const row = $("RROW-" + id);
 
+								row.removeClassName("score-low");
+								row.removeClassName("score-high");
+								row.removeClassName("score-half-low");
+								row.removeClassName("score-half-high");
+								row.removeClassName("score-neutral");
+
+								row.addClassName(reply["score_class"]);
+
+
 								if (row) {
-									const pic = row.getElementsByClassName("score-pic")[0];
+									const pic = row.select(".icon-score")[0];
 
 									if (pic) {
-										pic.src = pic.src.replace(/score_.*?\.png/,
-											reply["score_pic"]);
-										pic.setAttribute("score", reply["score"]);
+										pic.innerHTML = reply["score_pic"];
+										pic.setAttribute("data-score", reply["score"]);
+										pic.setAttribute("title", reply["score"]);
 									}
 								}
 							});
@@ -41,18 +50,27 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 		},
 		setScore: function (id, pic) {
-			const score = pic.getAttribute("score");
+			const row = pic.up("div[id*=RROW]");
+			const score = pic.getAttribute("data-score");
 
 			const new_score = prompt(__("Please enter new score for this article:"), score);
 
-			if (new_score != undefined) {
+			if (row && new_score != undefined) {
 				const query = {op: "article", method: "setScore", id: id, score: new_score};
 
 				xhrJson("backend.php", query, (reply) => {
 					if (reply) {
-						pic.src = pic.src.replace(/score_.*?\.png/, reply["score_pic"]);
-						pic.setAttribute("score", new_score);
+						pic.innerHTML = reply["score_pic"];
+						pic.setAttribute("data-score", new_score);
 						pic.setAttribute("title", new_score);
+
+						row.removeClassName("score-low");
+						row.removeClassName("score-high");
+						row.removeClassName("score-half-low");
+						row.removeClassName("score-half-high");
+						row.removeClassName("score-neutral");
+
+						row.addClassName(reply["score_class"]);
 					}
 				});
 			}

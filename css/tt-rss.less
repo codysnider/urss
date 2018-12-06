@@ -296,16 +296,6 @@ body.ttrss_main {
 		}
 	}
 
-	.hl.Unread a.title.high, .hl.Unread span.hl-content.high .preview {
-		color : #00dd00;
-	}
-
-	.hl a.title.low, span.hl-content.low .preview,
-	.hl.Unread a.title.low, .hl.Unread span.hl-content.low .preview {
-		color : #909090;
-		text-decoration : line-through;
-	}
-
 	.hl.Unread div.title a {
 		color : black;
 	}
@@ -1193,6 +1183,18 @@ body.ttrss_main {
 	.cdm.published .left i.pub-pic,
 	.hl.published .left i.pub-pic {
 		color : @color-published;
+	}
+
+	.score-high i.icon-score {
+		color : @color-enabled;
+	}
+
+	.score-low i.icon-score {
+		color : #500;
+	}
+
+	.score-neutral i.icon-score {
+		opacity : 0.5;
 	}
 
 }

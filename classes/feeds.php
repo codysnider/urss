@@ -308,18 +308,10 @@ class Feeds extends Handler_Protected {
 
 				$score = $line["score"];
 
-				$score_pic = "images/" . get_score_pic($score);
-
-				$score_pic = "<img class='score-pic' score='$score' onclick='Article.setScore($id, this)' src=\"$score_pic\"
-                title=\"$score\">";
-
-				if ($score > 500) {
-					$hlc_suffix = "high";
-				} else if ($score < -100) {
-					$hlc_suffix = "low";
-				} else {
-					$hlc_suffix = "";
-				}
+				$score_pic = "<i class='material-icons icon-score' title='$score' 
+                       data-score='$score' onclick='Article.setScore($id, this)'>" .
+                        get_score_pic($score) . "</i>";
+                $score_class = get_score_class($score);
 
 				$entry_author = $line["author"];
 
@@ -365,7 +357,7 @@ class Feeds extends Handler_Protected {
 						}
 					}
 
-					$reply['content'] .= "<div class='hl $class' data-orig-feed-id='$feed_id' data-article-id='$id' id='RROW-$id' $mouseover_attrs>";
+					$reply['content'] .= "<div class='hl $class $score_class' data-orig-feed-id='$feed_id' data-article-id='$id' id='RROW-$id' $mouseover_attrs>";
 
 					$reply['content'] .= "<div class='left'>";
 
@@ -379,8 +371,8 @@ class Feeds extends Handler_Protected {
 					$reply['content'] .= "</div>";
 
 					$reply['content'] .= "<div onclick='return Headlines.click(event, $id)'
-                    class=\"title\"><span data-article-id=\"$id\" class='hl-content hlMenuAttach $hlc_suffix'>";
-					$reply['content'] .= "<a class=\"title $hlc_suffix\"
+                    class=\"title\"><span data-article-id=\"$id\" class='hl-content hlMenuAttach'>";
+					$reply['content'] .= "<a class=\"title\"
                     href=\"" . htmlspecialchars($line["link"]) . "\"
                     onclick=\"\">" .
 						truncate_string($line["title"], 200);
@@ -462,7 +454,7 @@ class Feeds extends Handler_Protected {
                     $content_encoded = htmlspecialchars($line["content"]);
 
 					$expanded_class = get_pref("CDM_EXPANDED") ? "expanded" : "expandable";
-                    $tmp_content = "<div class=\"cdm $expanded_class $hlc_suffix $class\"
+                    $tmp_content = "<div class=\"cdm $expanded_class $score_class $class\"
                         id=\"RROW-$id\" data-content=\"$content_encoded\" data-article-id='$id' data-orig-feed-id='$feed_id' $mouseover_attrs>";
 
 					$tmp_content .= "<div class=\"header\">";

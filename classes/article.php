@@ -253,6 +253,7 @@ class Article extends Handler_Protected {
 
 		print json_encode(array("id" => $ids,
 			"score" => (int)$score,
+			"score_class" => get_score_class($score),
 			"score_pic" => get_score_pic($score)));
 	}
 

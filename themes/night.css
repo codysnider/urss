@@ -257,17 +257,6 @@ body.ttrss_main .hl a.title.high,
 body.ttrss_main .hl span.hl-content.high .preview {
   color: #00aa00;
 }
-body.ttrss_main .hl.Unread a.title.high,
-body.ttrss_main .hl.Unread span.hl-content.high .preview {
-  color: #00dd00;
-}
-body.ttrss_main .hl a.title.low,
-body.ttrss_main span.hl-content.low .preview,
-body.ttrss_main .hl.Unread a.title.low,
-body.ttrss_main .hl.Unread span.hl-content.low .preview {
-  color: #909090;
-  text-decoration: line-through;
-}
 body.ttrss_main .hl.Unread div.title a {
   color: black;
 }
@@ -1010,6 +999,15 @@ body.ttrss_main .cdm.published .left i.pub-pic,
 body.ttrss_main .hl.published .left i.pub-pic {
   color: #ff7c4b;
 }
+body.ttrss_main .score-high i.icon-score {
+  color: #69c671;
+}
+body.ttrss_main .score-low i.icon-score {
+  color: #500;
+}
+body.ttrss_main .score-neutral i.icon-score {
+  opacity: 0.5;
+}
 ::selection {
   background: #257aa7;
   color: white;
@@ -1307,24 +1305,6 @@ div#floatingTitle .feed-title a.catchup:hover {
 }
 div#floatingTitle.Unread a.title {
   color: black;
-}
-.cdm.high .header a.title.high,
-.cdm.high .header .excerpt,
-.cdm.high .header span.author {
-  color: #00aa00;
-}
-.cdm.Unread.high .header a.title.high,
-.cdm.Unread.high .header .excerpt,
-.cdm.Unread.high .header span.author {
-  color: #00dd00;
-}
-.cdm .header a.title.low,
-.cdm.low .header .excerpt,
-.cdm.Unread .header a.title.low,
-.cdm.Unread.low .header .excerpt,
-.cdm.low .header span.author {
-  color: #909090;
-  text-decoration: line-through;
 }
 .cdm.expandable {
   background-color: #f0f0f0;
