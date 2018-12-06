@@ -29,12 +29,9 @@ class Pref_Labels extends Handler_Protected {
 			$fg_color = $line['fg_color'];
 			$bg_color = $line['bg_color'];
 
-			print "<span class=\"labelColorIndicator\" id=\"label-editor-indicator\" style='color : $fg_color; background-color : $bg_color; margin-bottom : 4px; margin-right : 4px'>&alpha;</span>";
-
-			print "<input style=\"font-size : 16px\" name=\"caption\"
-			dojoType=\"dijit.form.ValidationTextBox\"
-			required=\"true\"
-			value=\"".htmlspecialchars($line['caption'])."\">";
+			print "<input style='font-size : 16px; color : $fg_color; background : $bg_color; transition : background 0.1s linear'
+				id='labelEdit_caption' name='caption' dojoType='dijit.form.ValidationTextBox'
+				required='true' value=\"".htmlspecialchars($line['caption'])."\">";
 
 			print "</div>";
 			print "<div class=\"dlgSec\">" . __("Colors") . "</div>";
@@ -56,8 +53,8 @@ class Pref_Labels extends Handler_Protected {
 
 			print "<div dojoType=\"dijit.ColorPalette\">
 			<script type=\"dojo/method\" event=\"onChange\" args=\"fg_color\">
-				dijit.byId(\"labelEdit_fgColor\").attr('value', fg_color);
-				$('label-editor-indicator').setStyle({color: fg_color});
+				dijit.byId('labelEdit_fgColor').attr('value', fg_color);
+				dijit.byId('labelEdit_caption').domNode.setStyle({color: fg_color});
 			</script>
 			</div>";
 			print "</div>";
@@ -66,8 +63,8 @@ class Pref_Labels extends Handler_Protected {
 
 			print "<div dojoType=\"dijit.ColorPalette\">
 			<script type=\"dojo/method\" event=\"onChange\" args=\"bg_color\">
-				dijit.byId(\"labelEdit_bgColor\").attr('value', bg_color);
-				$('label-editor-indicator').setStyle({backgroundColor: bg_color});
+				dijit.byId('labelEdit_bgColor').attr('value', bg_color);
+				dijit.byId('labelEdit_caption').domNode.setStyle({backgroundColor: bg_color});
 			</script>
 			</div>";
 			print "</div>";

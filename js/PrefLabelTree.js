@@ -18,18 +18,20 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 			const bare_id = this.model.store.getValue(args.item, 'bare_id');
 
 			if (type == 'label') {
-				const span = dojo.doc.createElement('span');
-				span.innerHTML = '&alpha;';
-				span.className = 'labelColorIndicator';
-				span.id = 'LICID-' + bare_id;
+				const label = dojo.doc.createElement('i');
+				//const fg_color = args.item.fg_color[0];
+				const bg_color = args.item.bg_color[0];
 
-				span.setStyle({
-					color: fg_color,
-					backgroundColor: bg_color});
+				label.className = "material-icons icon-label";
+				label.innerHTML = "label";
+				label.setStyle({
+					color: bg_color,
+				});
 
-				tnode._labelIconNode = span;
+				domConstruct.place(label, tnode.iconNode, 'before');
 
-				domConstruct.place(tnode._labelIconNode, tnode.labelNode, 'before');
+				//tnode._labelIconNode = span;
+				//domConstruct.place(tnode._labelIconNode, tnode.labelNode, 'before');
 			}
 
 			return tnode;

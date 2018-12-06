@@ -34,17 +34,17 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 			const bare_id = parseInt(id.substr(id.indexOf(':')+1));
 
 			if (bare_id < _label_base_index) {
-				const span = dojo.doc.createElement('span');
-				const fg_color = args.item.fg_color[0];
+				const label = dojo.doc.createElement('i');
+				//const fg_color = args.item.fg_color[0];
 				const bg_color = args.item.bg_color[0];
 
-				span.innerHTML = "&alpha;";
-				span.className = 'labelColorIndicator';
-				span.setStyle({
-					color: fg_color,
-					backgroundColor: bg_color});
+				label.className = "material-icons icon icon-label";
+				label.innerHTML = "label";
+				label.setStyle({
+					color: bg_color,
+					});
 
-				domConstruct.place(span, tnode.iconNode, 'only');
+				domConstruct.place(label, tnode.iconNode, 'only');
 			}
 
 			if (id.match("FEED:")) {

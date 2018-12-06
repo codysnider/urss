@@ -574,17 +574,8 @@ body.ttrss_main .dijitDialog .dlgButtons {
   text-align: right;
   clear: both;
 }
-body.ttrss_main span.labelColorIndicator {
-  height: 16px;
-  width: 16px;
-  border-radius: 4px;
-  line-height: 14px;
-  vertical-align: middle;
-  font-size: 9px;
-  display: inline-block;
-  background-color: #fff7d5;
-  color: #063064;
-  text-align: center;
+body.ttrss_main i.icon-label {
+  color: #fff7d5;
 }
 body.ttrss_main div#cmdline {
   position: absolute;
@@ -677,6 +668,7 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRowSelected {
   box-shadow: -1px 0px 2px -1px rgba(0, 0, 0, 0.1);
   border-color: #ddd transparent;
   background: white;
+  color: #333;
 }
 body.ttrss_main #feeds-holder #feedTree .icon {
   position: relative;
@@ -1600,8 +1592,8 @@ body.ttrss_prefs hr {
 .flat .dijitTree .dijitTreeRowSelected .dijitTreeExpando {
   color: #257aa7;
 }
-.flat .dijitTree .dijitTreeNode .dijitTreeRowSelected {
-  background: white;
+.flat .dijitTree .dijitTreeNode:not(.dijitTreeNodeHover) .dijitTreeRowSelected {
+  color: white;
 }
 .flat .dijitTree .labelParam {
   float: right;

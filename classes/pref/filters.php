@@ -320,10 +320,10 @@ class Pref_Filters extends Handler_Protected {
 				$label_sth->execute([$line['action_param'], $_SESSION['uid']]);
 
 				if ($label_row = $label_sth->fetch()) {
-					$fg_color = $label_row["fg_color"];
+					//$fg_color = $label_row["fg_color"];
 					$bg_color = $label_row["bg_color"];
 
-					$name[1] = "<span class=\"labelColorIndicator\" id=\"label-editor-indicator\" style='color : $fg_color; background-color : $bg_color; margin-right : 4px'>&alpha;</span>" . $name[1];
+					$name[1] = "<i class=\"material-icons\" style='color : $bg_color; margin-right : 4px'>label</i>" . $name[1];
 				}
 			}
 
