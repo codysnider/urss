@@ -209,6 +209,7 @@ body.ttrss_main {
 		display : flex;
 		flex-direction : row;
 		flex-wrap : nowrap;
+		background : @color-panel-bg;
 
 		> * {
 			align-self : center;
@@ -283,12 +284,16 @@ body.ttrss_main {
 			font-weight : 600;
 			text-rendering: optimizelegibility;
 			font-family : @fonts-ui;
-			color : #777;
+			color : #555;
 		}
 
 		a.title.high, span.hl-content.high .preview {
 			color : #00aa00;
 		}
+	}
+
+	.hl.Unread {
+		background : white;
 	}
 
 	.hl.Unread div.title a {
@@ -356,7 +361,7 @@ body.ttrss_main {
 		font-family: monospace;
 		font-size: 12px;
 		border: 0px solid #ccc;
-		background: #f5f5f5;
+		background: @color-panel-bg;
 		display: block;
 		max-width: 98%;
 		overflow: auto;
@@ -709,7 +714,7 @@ body.ttrss_main {
 		padding : 0px;
 		border: 0px solid #ddd;
 		overflow : hidden;
-		background : #f5f5f5;
+		background : @color-panel-bg;
 		box-shadow : inset -1px 0px 2px -1px rgba(0,0,0,0.1);
 		-webkit-overflow-scrolling : touch;
 

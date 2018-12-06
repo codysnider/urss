@@ -183,6 +183,7 @@ body.ttrss_main .hl {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  background: #f5f5f5;
 }
 body.ttrss_main .hl > * {
   align-self: center;
@@ -249,11 +250,14 @@ body.ttrss_main .hl div.title a {
   font-weight: 600;
   text-rendering: optimizelegibility;
   font-family: "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #777;
+  color: #555;
 }
 body.ttrss_main .hl a.title.high,
 body.ttrss_main .hl span.hl-content.high .preview {
   color: #00aa00;
+}
+body.ttrss_main .hl.Unread {
+  background: white;
 }
 body.ttrss_main .hl.Unread div.title a {
   color: black;
@@ -1306,7 +1310,7 @@ div#floatingTitle.Unread a.title {
   color: black;
 }
 .cdm.expandable {
-  background-color: #f0f0f0;
+  background-color: #f5f5f5;
   border: 0px solid #ddd;
   border-bottom-width: 1px;
 }
