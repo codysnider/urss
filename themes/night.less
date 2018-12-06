@@ -68,28 +68,31 @@ body.flat.ttrss_main.ttrss_index {
 
   /* feeds */
 
-  #feeds-holder #feedTree .dijitTreeRow {
-    color : var(--fg-light) ! important;
-  }
+  #feeds-holder {
+    #feedTree .dijitTreeRow {
+      color : var(--fg-light) ! important;
+    }
 
-  #feeds-holder #feedTree.dijitTree .dijitTreeRowHover {
-    background : var(--bg-panel);
-    border-color : var(--border-main) transparent;
-  }
+    #feedTree.dijitTree .dijitTreeRowHover {
+      background : var(--bg-panel);
+      border-color : var(--border-main) transparent;
+    }
 
-  #feeds-holder #feedTree.dijitTree .dijitTreeRowSelected {
-    background : var(--bg-main);
-    border-color : var(--bg-main) transparent;
-  }
+    #feedTree.dijitTree .dijitTreeRowSelected {
+      background : var(--bg-main);
+      border-color : var(--bg-main) transparent;
+    }
 
-  #feeds-holder #feedTree .dijitTreeRowSelected .dijitTreeLabel {
-    text-shadow : none;
-  }
+    #feedTree .dijitTreeRowSelected .dijitTreeLabel {
+      text-shadow : none;
+    }
 
-  #feeds-holder #feedTree .counterNode.aux {
-    background : var(--bg-panel);
-    color : var(--fg-main);
-    border-color : var(--bg-main);
+    #feedTree .counterNode.aux {
+      background : var(--bg-panel);
+      color : var(--fg-main);
+      border-color : var(--bg-main);
+    }
+
   }
 
   /* headlines */
@@ -97,20 +100,42 @@ body.flat.ttrss_main.ttrss_index {
   #headlines-frame {
     background : var(--bg-main);
     color : var(--fg-light);
+
+    i.material-icons,
+    .dijitCheckBox {
+      opacity : 0.7;
+    }
+
+    .hl {
+      border-color : var(--border-dark);
+    }
+
+    .hl:not(.Selected):not(.active) .title a {
+      color : var(--fg-main);
+    }
+
+    .hl.Unread:not(.Selected):not(.active) .title a {
+      color : var(--fg-light);
+    }
+
   }
 
-  #main-toolbar {
+  /* toolbar */
+
+  #toolbar-frame #toolbar {
     background : var(--bg-panel);
     border-color : var(--border-dark);
-  }
 
-  #main-toolbar .dijitButtonText {
-    color : var(--fg-light);
-  }
+    .dijitButtonText {
+      color : var(--fg-light);
+    }
 
-  #main-toolbar .dijitSelect,
-  #main-toolbar .dijitSelect .dijitButtonText {
-    background : var(--bg-panel);
+    .dijitSelect,
+    .dijitDropDownButton .dijitButtonNode,
+    .dijitComboButton .dijitButtonNode,
+    .dijitSelect .dijitButtonText {
+      background : var(--bg-panel);
+    }
   }
 
   .hl .feed a,
@@ -118,17 +143,6 @@ body.flat.ttrss_main.ttrss_index {
     color : white;
   }
 
-  #headlines-frame .hl {
-    border-color : var(--border-dark);
-  }
-
-  #headlines-frame .hl:not(.Selected):not(.active) .title a {
-    color : var(--fg-main);
-  }
-
-  #headlines-frame .hl.Unread:not(.Selected):not(.active) .title a {
-    color : var(--fg-light);
-  }
 
   .post .header {
     background : var(--bg-panel);

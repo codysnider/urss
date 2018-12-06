@@ -750,6 +750,7 @@ body.ttrss_main #toolbar-frame #toolbar {
   background: white;
   border: 0px solid #ddd;
   border-bottom-width: 1px;
+  padding-left: 4px;
   height: 32px;
   display: flex;
   flex-direction: row;
@@ -2010,6 +2011,7 @@ body.flat.ttrss_main.ttrss_index {
   /* misc */
   /* feeds */
   /* headlines */
+  /* toolbar */
   /* other dijits */
 }
 body.flat.ttrss_main.ttrss_index #feeds-holder {
@@ -2075,20 +2077,9 @@ body.flat.ttrss_main.ttrss_index #headlines-frame {
   background: var(--bg-main);
   color: var(--fg-light);
 }
-body.flat.ttrss_main.ttrss_index #main-toolbar {
-  background: var(--bg-panel);
-  border-color: var(--border-dark);
-}
-body.flat.ttrss_main.ttrss_index #main-toolbar .dijitButtonText {
-  color: var(--fg-light);
-}
-body.flat.ttrss_main.ttrss_index #main-toolbar .dijitSelect,
-body.flat.ttrss_main.ttrss_index #main-toolbar .dijitSelect .dijitButtonText {
-  background: var(--bg-panel);
-}
-body.flat.ttrss_main.ttrss_index .hl .feed a,
-body.flat.ttrss_main.ttrss_index .cdm .feed a {
-  color: white;
+body.flat.ttrss_main.ttrss_index #headlines-frame i.material-icons,
+body.flat.ttrss_main.ttrss_index #headlines-frame .dijitCheckBox {
+  opacity: 0.7;
 }
 body.flat.ttrss_main.ttrss_index #headlines-frame .hl {
   border-color: var(--border-dark);
@@ -2098,6 +2089,23 @@ body.flat.ttrss_main.ttrss_index #headlines-frame .hl:not(.Selected):not(.active
 }
 body.flat.ttrss_main.ttrss_index #headlines-frame .hl.Unread:not(.Selected):not(.active) .title a {
   color: var(--fg-light);
+}
+body.flat.ttrss_main.ttrss_index #toolbar-frame #toolbar {
+  background: var(--bg-panel);
+  border-color: var(--border-dark);
+}
+body.flat.ttrss_main.ttrss_index #toolbar-frame #toolbar .dijitButtonText {
+  color: var(--fg-light);
+}
+body.flat.ttrss_main.ttrss_index #toolbar-frame #toolbar .dijitSelect,
+body.flat.ttrss_main.ttrss_index #toolbar-frame #toolbar .dijitDropDownButton .dijitButtonNode,
+body.flat.ttrss_main.ttrss_index #toolbar-frame #toolbar .dijitComboButton .dijitButtonNode,
+body.flat.ttrss_main.ttrss_index #toolbar-frame #toolbar .dijitSelect .dijitButtonText {
+  background: var(--bg-panel);
+}
+body.flat.ttrss_main.ttrss_index .hl .feed a,
+body.flat.ttrss_main.ttrss_index .cdm .feed a {
+  color: white;
 }
 body.flat.ttrss_main.ttrss_index .post .header {
   background: var(--bg-panel);
