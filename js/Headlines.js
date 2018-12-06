@@ -23,6 +23,8 @@ define(["dojo/_base/declare"], function (declare) {
 
 					if (!App.getInitParam("cdm_expanded"))
 						Article.cdmScrollToId(id);
+				} else if (in_body) {
+					Headlines.toggleUnread(id, 0);
 				}
 
 				return in_body;
