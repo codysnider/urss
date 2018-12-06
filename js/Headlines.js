@@ -441,6 +441,7 @@ define(["dojo/_base/declare"], function (declare) {
 			xhrPost("backend.php", query, (transport) => {
 				App.handleRpcJson(transport);
 				if (callback) callback(transport);
+				Headlines.updateFloatingTitle(true);
 			});
 		},
 		selectionToggleMarked: function (ids) {
@@ -635,6 +636,7 @@ define(["dojo/_base/declare"], function (declare) {
 					xhrPost("backend.php",
 						{op: "rpc", method: "catchupSelected", cmode: cmode, ids: id}, (transport) => {
 							App.handleRpcJson(transport);
+							Headlines.updateFloatingTitle(true);
 						});
 			}
 		},
