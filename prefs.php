@@ -124,23 +124,23 @@
     <div dojoType="dijit.layout.TabContainer" region="center" id="pref-tabs">
         <div id="genConfigTab" dojoType="dijit.layout.ContentPane"
             href="backend.php?op=pref-prefs"
-            title="<?php echo __('Preferences') ?>"></div>
+            title="<i class='material-icons'>settings</i> <?php echo __('Preferences') ?>"></div>
         <div id="feedConfigTab" dojoType="dijit.layout.ContentPane"
             href="backend.php?op=pref-feeds"
-            title="<?php echo __('Feeds') ?>"></div>
+            title="<i class='material-icons'>rss_feed</i>  <?php echo __('Feeds') ?>"></div>
         <div id="filterConfigTab" dojoType="dijit.layout.ContentPane"
             href="backend.php?op=pref-filters"
-            title="<?php echo __('Filters') ?>"></div>
+            title="<i class='material-icons'>filter_list1</i> <?php echo __('Filters') ?>"></div>
         <div id="labelConfigTab" dojoType="dijit.layout.ContentPane"
             href="backend.php?op=pref-labels"
-            title="<?php echo __('Labels') ?>"></div>
+            title="<i class='material-icons'>label_outline1</i> <?php echo __('Labels') ?>"></div>
         <?php if ($_SESSION["access_level"] >= 10) { ?>
             <div id="userConfigTab" dojoType="dijit.layout.ContentPane"
                 href="backend.php?op=pref-users"
-                title="<?php echo __('Users') ?>"></div>
+                title="<i class='material-icons'>person</i> <?php echo __('Users') ?>"></div>
             <div id="systemConfigTab" dojoType="dijit.layout.ContentPane"
                 href="backend.php?op=pref-system"
-                title="<?php echo __('System') ?>"></div>
+                title="<i class='material-icons'>info_outline</i> <?php echo __('System') ?>"></div>
         <?php } ?>
         <?php
             PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TABS,
