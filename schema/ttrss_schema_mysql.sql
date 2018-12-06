@@ -244,6 +244,7 @@ create table ttrss_filters2(id integer primary key auto_increment,
 	inverse bool not null default false,
 	title varchar(250) not null default '',
 	order_id integer not null default 0,
+	last_triggered datetime default null,
 	foreign key (owner_uid) references ttrss_users(id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 create table ttrss_filters2_rules(id integer primary key auto_increment,
@@ -284,7 +285,7 @@ create table ttrss_tags (id integer primary key auto_increment,
 
 create table ttrss_version (schema_version int not null) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert into ttrss_version values (134);
+insert into ttrss_version values (135);
 
 create table ttrss_enclosures (id integer primary key auto_increment,
 	content_url text not null,

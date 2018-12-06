@@ -239,6 +239,7 @@ create table ttrss_filters2(id serial not null primary key,
 	inverse boolean not null default false,
 	title varchar(250) not null default '',
 	order_id integer not null default 0,
+	last_triggered timestamp default null,
 	enabled boolean not null default true);
 
 create table ttrss_filters2_rules(id serial not null primary key,
@@ -266,7 +267,7 @@ create index ttrss_tags_post_int_id_idx on ttrss_tags(post_int_id);
 
 create table ttrss_version (schema_version int not null);
 
-insert into ttrss_version values (134);
+insert into ttrss_version values (135);
 
 create table ttrss_enclosures (id serial not null primary key,
 	content_url text not null,

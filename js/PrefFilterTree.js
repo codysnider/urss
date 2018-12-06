@@ -39,12 +39,16 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 			const feed = this.model.store.getValue(item, 'feed');
 			const inverse = this.model.store.getValue(item, 'inverse');
+			const last_triggered = this.model.store.getValue(item, 'last_triggered');
 
 			if (feed)
 				label += " (" + __("in") + " " + feed + ")";
 
 			if (inverse)
 				label += " (" + __("Inverse") + ")";
+
+			if (last_triggered)
+				label += " — " + last_triggered;
 
 			return label;
 		},

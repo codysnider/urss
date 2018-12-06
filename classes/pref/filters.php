@@ -333,6 +333,7 @@ class Pref_Filters extends Handler_Protected {
 			$filter['name'] = $name[0];
 			$filter['param'] = $name[1];
 			$filter['checkbox'] = false;
+			$filter['last_triggered'] = $line["last_triggered"] ? make_local_datetime($line["last_triggered"], false) : null;
 			$filter['enabled'] = $line["enabled"];
 			$filter['rules'] = $this->getfilterrules_concise($line['id']);
 

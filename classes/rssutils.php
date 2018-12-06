@@ -781,6 +781,12 @@ class RSSUtils {
 					$plugin->hook_filter_triggered($feed, $owner_uid, $article, $matched_filters, $matched_rules, $article_filters);
 				}
 
+				$matched_filter_ids = implode(",", array_map(function($f) { return $f['id']; }, $matched_filters));
+
+				$fsth = $pdo->prepare("UPDATE ttrss_filters2 SET last_triggered = NOW() WHERE 
+							   id IN (?) AND owner_uid = ?");
+				$fsth->execute([$matched_filter_ids, $owner_uid]);
+
 				if (Debug::get_loglevel() >= Debug::$LOG_EXTENDED) {
 					Debug::log("matched filters: ", Debug::$LOG_VERBOSE);
 
