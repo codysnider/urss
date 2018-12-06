@@ -161,6 +161,11 @@
         <div id="toolbar-frame" dojoType="dijit.layout.ContentPane" region="top">
             <div id="toolbar" dojoType="dijit.Toolbar">
 
+            <div class="net-alert" style="display : none"
+                    title="<?php echo __("Communication problem with server.") ?>">
+                <i class="material-icons">error_outline</i>
+            </div>
+
             <?php
             foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_MAIN_TOOLBAR_BUTTON) as $p) {
                 echo $p->hook_main_toolbar_button();
@@ -218,11 +223,6 @@
                          echo $p->hook_toolbar_button();
                     }
                 ?>
-
-                <button id="net-alert" dojoType="dijit.form.Button" style="display : none" disabled="true"
-                    title="<?php echo __("Communication problem with server.") ?>">
-                    <img src="images/error.png" />
-                </button>
 
                 <div dojoType="dijit.form.DropDownButton">
                     <span><?php echo __('Actions...') ?></span>

@@ -184,10 +184,7 @@ define(["dojo/_base/declare"], function (declare) {
 		},
 		handleRpcJson: function(transport) {
 
-			const netalert_dijit = dijit.byId("net-alert");
-			let netalert = false;
-
-			if (netalert_dijit) netalert = netalert_dijit.domNode;
+			const netalert = $$("#toolbar .net-alert")[0];
 
 			try {
 				const reply = JSON.parse(transport.responseText);
@@ -239,17 +236,15 @@ define(["dojo/_base/declare"], function (declare) {
 					return reply;
 
 				} else {
-					if (netalert)
-						netalert.show();
-					else
-						Notify.error("Communication problem with server.");
+					if (netalert) netalert.show();
+
+					Notify.error("Communication problem with server.");
 				}
 
 			} catch (e) {
-				if (netalert)
-					netalert.show();
-				else
-					Notify.error("Communication problem with server.");
+				if (netalert) netalert.show();
+
+				Notify.error("Communication problem with server.");
 
 				console.error(e);
 			}
