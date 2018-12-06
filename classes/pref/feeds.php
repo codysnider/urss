@@ -1134,7 +1134,8 @@ class Pref_Feeds extends Handler_Protected {
 	function index() {
 
 		print "<div dojoType=\"dijit.layout.AccordionContainer\" region=\"center\">";
-		print "<div id=\"pref-feeds-feeds\" dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Feeds')."\">";
+		print "<div id=\"pref-feeds-feeds\" dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>rss_feed</i> ".__('Feeds')."\">";
 
 		$sth = $this->pdo->prepare("SELECT COUNT(id) AS num_errors
 			FROM ttrss_feeds WHERE last_error != '' AND owner_uid = ?");
@@ -1268,7 +1269,8 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "</div>"; # feeds pane
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('OPML')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>import_export</i> ".__('OPML')."\">";
 
 		print __("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.") .
 			__("Only main settings profile can be migrated using OPML.");
@@ -1323,7 +1325,8 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "</div>"; # pane
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Published & shared articles / Generated feeds')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>share</i> ".__('Published & shared articles / Generated feeds')."\">";
 
 		print __('Published articles can be subscribed by anyone who knows the following URL:');
 

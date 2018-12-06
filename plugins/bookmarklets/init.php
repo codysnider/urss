@@ -17,7 +17,8 @@ class Bookmarklets extends Plugin {
   function hook_prefs_tab($args) {
     if ($args == "prefFeeds") {
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Bookmarklets')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>bookmark</i> ".__('Bookmarklets')."\">";
 
 		print __("Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it.");
 

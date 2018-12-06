@@ -50,7 +50,8 @@ class Import_Export extends Plugin implements IHandler {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Import and export')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>import_export</i> ".__('Import and export')."\">";
 
 		print_notice(__("You can export and import your Starred and Archived articles for safekeeping or when migrating between tt-rss instances of same version."));
 

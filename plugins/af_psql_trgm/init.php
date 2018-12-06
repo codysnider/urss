@@ -121,7 +121,8 @@ class Af_Psql_Trgm extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Mark similar articles as read')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>extension</i> ".__('Mark similar articles as read')."\">";
 
 		if (DB_TYPE != "pgsql") {
 			print_error("Database type not supported.");

@@ -44,7 +44,8 @@ class Af_Readability extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Readability settings (af_readability)')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>extension</i> ".__('Readability settings (af_readability)')."\">";
 
 		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
 			print_error("This plugin requires PHP version 5.6.");

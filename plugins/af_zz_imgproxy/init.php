@@ -205,7 +205,8 @@ class Af_Zz_ImgProxy extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Image proxy settings (af_zz_imgproxy)')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>extension</i> ".__('Image proxy settings (af_zz_imgproxy)')."\">";
 
 		print "<form dojoType=\"dijit.form.Form\">";
 

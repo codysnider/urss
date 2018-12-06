@@ -32,7 +32,8 @@ class Mail extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefPrefs") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Mail plugin')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>mail</i> ".__('Mail plugin')."\">";
 
 		print "<p>" . __("You can set predefined email addressed here (comma-separated list):") . "</p>";
 

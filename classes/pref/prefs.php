@@ -176,7 +176,8 @@ class Pref_Prefs extends Handler_Protected {
 		$_SESSION["prefs_op_result"] = "";
 
 		print "<div dojoType=\"dijit.layout.AccordionContainer\" region=\"center\">";
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Personal data / Authentication')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>person</i> ".__('Personal data / Authentication')."\">";
 
 		print "<form dojoType=\"dijit.form.Form\" id=\"changeUserdataForm\">";
 
@@ -422,7 +423,8 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "</div>"; #pane
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" selected=\"true\" title=\"".__('Preferences')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" selected=\"true\" 
+			title=\"<i class='material-icons'>settings</i> ".__('Preferences')."\">";
 
 		print "<form dojoType=\"dijit.form.Form\" id=\"changeSettingsForm\">";
 
@@ -675,7 +677,8 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "</div>"; #pane
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Plugins')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>extension</i> ".__('Plugins')."\">";
 
 		print "<form dojoType=\"dijit.form.Form\" id=\"changePluginsForm\">";
 
@@ -839,14 +842,16 @@ class Pref_Prefs extends Handler_Protected {
 		print "</div>"; #pane
 
 		print "</div>"; #pane
-		print "</doiv>"; #border-container
+		print "</div>"; #border-container
 
 		print "</form>";
+
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB,
 			"hook_prefs_tab", "prefPrefs");
 
 		print "</div>"; #container
+
 	}
 
 	function toggleAdvanced() {

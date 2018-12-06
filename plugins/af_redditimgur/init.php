@@ -27,7 +27,8 @@ class Af_RedditImgur extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Reddit content settings (af_redditimgur)')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>extension</i> ".__('Reddit content settings (af_redditimgur)')."\">";
 
 		$enable_readability = $this->host->get($this, "enable_readability");
 		$enable_content_dupcheck = $this->host->get($this, "enable_content_dupcheck");

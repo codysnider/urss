@@ -1437,6 +1437,13 @@ body.ttrss_prefs .dijitTree#labelTree .dijitTreeIcon,
 body.ttrss_prefs .dijitTree#filterTree .dijitTreeIcon {
   display: none;
 }
+body.ttrss_prefs .dijitAccordionTitle i.material-icons {
+  top: -1px;
+  position: relative;
+}
+body.ttrss_prefs .dijitAccordionTitleSelected i.material-icons {
+  color: white;
+}
 body.ttrss_prefs #pref-filter-wrap,
 body.ttrss_prefs #pref-filter-header,
 body.ttrss_prefs #pref-filter-content,

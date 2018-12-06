@@ -26,7 +26,8 @@ class Pref_System extends Handler_Protected {
 	function index() {
 
 		print "<div dojoType=\"dijit.layout.AccordionContainer\" region=\"center\">";
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Event Log')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>report</i> ".__('Event Log')."\">";
 
 		if (LOG_DESTINATION == "sql") {
 

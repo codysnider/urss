@@ -49,7 +49,8 @@ class NSFW extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefPrefs") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__("NSFW Plugin")."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>extension</i> ".__("NSFW Plugin")."\">";
 
 		print "<br/>";
 

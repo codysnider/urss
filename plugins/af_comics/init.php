@@ -46,7 +46,8 @@ class Af_Comics extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Feeds supported by af_comics')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>photo</i> ".__('Feeds supported by af_comics')."\">";
 
 		print "<p>" . __("The following comics are currently supported:") . "</p>";
 
