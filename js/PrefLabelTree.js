@@ -20,9 +20,10 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 			if (type == 'label') {
 				const label = dojo.doc.createElement('i');
 				//const fg_color = args.item.fg_color[0];
-				const bg_color = args.item.bg_color[0];
+				const bg_color = String(args.item.bg_color);
 
 				label.className = "material-icons icon-label";
+				label.id = 'icon-label-' + String(args.item.bare_id);
 				label.innerHTML = "label";
 				label.setStyle({
 					color: bg_color,
@@ -82,11 +83,10 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 						color = bg;
 					}
 
-					const e = $("LICID-" + id);
+					const e = $("icon-label-" + id);
 
 					if (e) {
-						if (fg) e.style.color = fg;
-						if (bg) e.style.backgroundColor = bg;
+						if (fg) e.style.color = bg;
 					}
 
 					const query = {
