@@ -1945,7 +1945,8 @@
 				}
 			}
 
-			$filter = array();
+			$filter = [];
+			$filter["id"] = $filter_id;
 			$filter["match_any_rule"] = sql_bool_to_bool($line["match_any_rule"]);
 			$filter["inverse"] = sql_bool_to_bool($line["inverse"]);
 			$filter["rules"] = $rules;

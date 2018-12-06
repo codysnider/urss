@@ -57,6 +57,7 @@ class PluginHost {
 	const HOOK_SEND_LOCAL_FILE = 37;
 	const HOOK_UNSUBSCRIBE_FEED = 38;
 	const HOOK_SEND_MAIL = 39;
+	const HOOK_FILTER_TRIGGERED = 40;
 
 	const KIND_ALL = 1;
 	const KIND_SYSTEM = 2;

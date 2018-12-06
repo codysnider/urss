@@ -769,13 +769,25 @@ class RSSUtils {
 
 				/* Collect article tags here so we could filter by them: */
 
-				$matched_rules = array();
+				$matched_rules = [];
+				$matched_filters = [];
 
 				$article_filters = RSSUtils::get_article_filters($filters, $article["title"],
 					$article["content"], $article["link"], $article["author"],
-					$article["tags"], $matched_rules);
+					$article["tags"], $matched_rules, $matched_filters);
+
+				// $article_filters should be renamed to something like $filter_actions; actual filter objects are in $matched_filters
+				foreach ($pluginhost->get_hooks(PluginHost::HOOK_FILTER_TRIGGERED) as $plugin) {
+					$plugin->hook_filter_triggered($feed, $owner_uid, $article, $matched_filters, $matched_rules, $article_filters);
+				}
 
 				if (Debug::get_loglevel() >= Debug::$LOG_EXTENDED) {
+					Debug::log("matched filters: ", Debug::$LOG_VERBOSE);
+
+					if (count($matched_filters != 0)) {
+						print_r($matched_filters);
+					}
+
 					Debug::log("matched filter rules: ", Debug::$LOG_VERBOSE);
 
 					if (count($matched_rules) != 0) {
@@ -1342,7 +1354,7 @@ class RSSUtils {
 		return $params;
 	}
 
-	static function get_article_filters($filters, $title, $content, $link, $author, $tags, &$matched_rules = false) {
+	static function get_article_filters($filters, $title, $content, $link, $author, $tags, &$matched_rules = false, &$matched_filters = false) {
 		$matches = array();
 
 		foreach ($filters as $filter) {
@@ -1409,6 +1421,7 @@ class RSSUtils {
 
 			if ($filter_match) {
 				if (is_array($matched_rules)) array_push($matched_rules, $rule);
+				if (is_array($matched_filters)) array_push($matched_filters, $filter);
 
 				foreach ($filter["actions"] AS $action) {
 					array_push($matches, $action);
