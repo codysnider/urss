@@ -1890,28 +1890,37 @@ body.ttrss_zoom div.post div.header {
   font-size: 12px;
   color: #555;
 }
-body.ttrss_zoom div.post div.header .author {
-  font-size: 11px;
+body.ttrss_zoom div.post div.header .row {
+  display: flex;
+  margin-bottom: 4px;
+  flex-wrap: nowrap;
 }
-body.ttrss_zoom div.post div.header div.feed-title {
-  float: left;
+body.ttrss_zoom div.post div.header .row > * {
+  align-self: center;
+}
+body.ttrss_zoom div.post div.header .comments {
+  flex-grow: 2;
+}
+body.ttrss_zoom div.post div.header .date {
   text-align: right;
+  white-space: nowrap;
+  align-self: flex-start;
 }
-body.ttrss_zoom div.post div.header a.comments {
-  text-align: right;
-}
-body.ttrss_zoom div.post div.header div.date {
-  float: none;
-  text-align: right;
-  margin-bottom: 5px;
-}
-body.ttrss_zoom div.post div.header div.tags img {
+body.ttrss_zoom div.post div.header img,
+body.ttrss_zoom div.post div.header i {
+  margin: 0px 4px;
   vertical-align: middle;
 }
-body.ttrss_zoom div.post div.header div.title {
-  white-space: normal;
-  font-size: 16px;
-  margin-bottom: 5px;
+body.ttrss_zoom div.post div.header .title {
+  flex-grow: 2;
+  align-self: flex-start;
+  font-size: 15px;
+  font-weight: 600;
+  text-rendering: optimizelegibility;
+  font-family: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+body.ttrss_zoom div.post div.header div.feed-title {
+  text-align: right;
 }
 body.ttrss_zoom div.post p {
   -webkit-hyphens: auto;

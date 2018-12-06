@@ -771,7 +771,7 @@ class Article extends Handler_Protected {
 
 			/* originally from */
 
-			if ($line["orig_feed_id"]) {
+			if (!$zoom_mode && $line["orig_feed_id"]) {
 
 				$of_sth = $pdo->prepare("SELECT * FROM ttrss_archived_feeds
 					WHERE id = ? AND owner_uid = ?");
@@ -811,14 +811,6 @@ class Article extends Handler_Protected {
 
 			$rv['content'] .= "</div>"; # post
 
-		}
-
-		if ($zoom_mode) {
-			$rv['content'] .= "
-				<div class='footer'>
-				<button onclick=\"return window.close()\">".
-				__("Close this window")."</button></div>";
-			$rv['content'] .= "</body></html>";
 		}
 
 		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FORMAT_ARTICLE) as $p) {
