@@ -454,13 +454,9 @@ class Pref_Prefs extends Handler_Protected {
 
 		$profile = $_SESSION["profile"];
 
-		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) $profile = null;
-
 		if ($profile) {
 			print_notice(__("Some preferences are only available in default profile."));
-		}
 
-		if ($_SESSION["profile"]) {
 			initialize_user_prefs($_SESSION["uid"], $profile);
 		} else {
 			initialize_user_prefs($_SESSION["uid"]);

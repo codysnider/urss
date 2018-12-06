@@ -509,7 +509,7 @@ class Handler_Public extends Handler {
 
 				if (clean($_POST["profile"])) {
 
-					$profile = clean($_POST["profile"]);
+					$profile = (int) clean($_POST["profile"]);
 
 					$sth = $this->pdo->prepare("SELECT id FROM ttrss_settings_profiles
 						WHERE id = ? AND owner_uid = ?");
@@ -517,7 +517,9 @@ class Handler_Public extends Handler {
 
 					if ($sth->fetch()) {
 						$_SESSION["profile"] = $profile;
-					}
+ 					} else {
+					    $_SESSION["profile"] = null;
+                    }
 				}
 			} else {
 
