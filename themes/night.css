@@ -196,7 +196,7 @@ body.flat.ttrss_main.ttrss_index .dijitMenu .dijitMenuItemSelected td {
 body.flat.ttrss_main.ttrss_index .dijitMenu .dijitMenuSeparator * {
   border-bottom-color: var(--border-dark) ! important;
 }
-body.flat.ttrss_main.ttrss_index .articleNote {
+body.flat.ttrss_main.ttrss_index .article-note {
   background: var(--bg-panel);
   border-color: #9a8c59;
 }

@@ -80,15 +80,18 @@ body.ttrss_main div.post div.content iframe {
   min-width: 50%;
   max-width: 98%;
 }
-body.ttrss_main div.articleNote {
+body.ttrss_main .article-note {
   background-color: #fff7d5;
-  padding: 5px;
   margin: 5px;
   border: 1px solid #e7d796;
   color: #9a8c59;
+  display: flex;
 }
-body.ttrss_main div.articleNote div.noteEdit {
-  float: right;
+body.ttrss_main .article-note > * {
+  align-self: center;
+  padding: 5px;
+}
+body.ttrss_main .article-note.editable {
   cursor: pointer;
 }
 body.ttrss_main h1 {

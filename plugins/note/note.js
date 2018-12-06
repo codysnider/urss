@@ -20,14 +20,15 @@ Plugins.Note = {
 						if (reply) {
 							ArticleCache.del(id);
 
-							var elem = $("POSTNOTE-" + id);
+							const elem = $("POSTNOTE-" + id);
 
 							if (elem) {
-								Element.hide(elem);
 								elem.innerHTML = reply.note;
 
 								if (reply.raw_length != 0)
-									new Effect.Appear(elem);
+									Element.show(elem);
+								else
+									Element.hide(elem);
 							}
 						}
 					});

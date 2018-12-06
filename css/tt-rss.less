@@ -81,17 +81,21 @@ body.ttrss_main {
 		}
 	}
 
-	div.articleNote {
+	.article-note {
 		background-color : #fff7d5;
-		padding : 5px;
 		margin : 5px;
 		border: 1px solid #e7d796;
 		color : #9a8c59;
+		display : flex;
 
-		div.noteEdit {
-			float : right;
-			cursor : pointer;
+		> * {
+			align-self : center;
+			padding : 5px;
 		}
+	}
+
+	.article-note.editable {
+		cursor : pointer;
 	}
 
 	h1 {

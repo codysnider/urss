@@ -23,7 +23,7 @@ class Note extends Plugin {
 
 	function hook_article_button($line) {
 		return "<i class='material-icons' onclick=\"Plugins.Note.edit(".$line["id"].")\"
-			style='cursor : pointer' title='".__('Edit article note')."'>note_add</i>";
+			style='cursor : pointer' title='".__('Edit article note')."'>note</i>";
 	}
 
 	function edit() {
