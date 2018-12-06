@@ -153,24 +153,10 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 					Filters.editFilterTest(query);
 				},
 				selectRules: function (select) {
-					$$("#filterDlg_Matches input[type=checkbox]").each(function (e) {
-						e.checked = select;
-						if (select)
-							e.parentNode.addClassName("Selected");
-						else
-							e.parentNode.removeClassName("Selected");
-					});
+					Lists.select("filterDlg_Matches", select);
 				},
 				selectActions: function (select) {
-					$$("#filterDlg_Actions input[type=checkbox]").each(function (e) {
-						e.checked = select;
-
-						if (select)
-							e.parentNode.addClassName("Selected");
-						else
-							e.parentNode.removeClassName("Selected");
-
-					});
+					Lists.select("filterDlg_Actions", select);
 				},
 				editRule: function (e) {
 					const li = e.parentNode;

@@ -56,7 +56,23 @@ const Lists = {
 
 		if (row)
 			checked ? row.addClassName("Selected") : row.removeClassName("Selected");
-	}
+	},
+	select: function(elemId, selected) {
+		$(elemId).select("li").each((row) => {
+			const checkNode = row.select(".dijitCheckBox,input[type=checkbox]")[0];
+			if (checkNode) {
+				const widget = dijit.getEnclosingWidget(checkNode);
+
+				if (widget) {
+					widget.attr("checked", selected);
+				} else {
+					checkNode.checked = selected;
+				}
+
+				this.onRowChecked(widget);
+			}
+		});
+	},
 };
 
 // noinspection JSUnusedGlobalSymbols
