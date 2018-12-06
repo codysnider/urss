@@ -1592,7 +1592,7 @@ body.ttrss_prefs hr {
 .flat .dijitTree .dijitTreeRowSelected .dijitTreeExpando {
   color: #257aa7;
 }
-.flat .dijitTree .dijitTreeNode:not(.dijitTreeNodeHover) .dijitTreeRowSelected {
+.flat .dijitTree .dijitTreeNode .dijitTreeRow.dijitTreeRowSelected {
   color: white;
 }
 .flat .dijitTree .labelParam {
@@ -1614,6 +1614,9 @@ body.ttrss_prefs hr {
   font-size: 12px;
   margin-left: 100px;
   line-height: normal;
+}
+.flat .dijitTree .dijitTreeRowSelected .filterRules span {
+  color: white;
 }
 .flat .dijitTree .dijitTreeContainer {
   max-width: 100%;
