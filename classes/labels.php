@@ -163,8 +163,8 @@ class Labels
 			/* Remove cached data */
 
 			$sth = $pdo->prepare("UPDATE ttrss_user_entries SET label_cache = ''
-				WHERE label_cache LIKE ? AND owner_uid = ?");
-			$sth->execute(["%$caption%", $owner_uid]);
+				WHERE owner_uid = ?");
+			$sth->execute([$owner_uid]);
 
 		}
 

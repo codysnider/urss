@@ -144,13 +144,11 @@ class Pref_Labels extends Handler_Protected {
 				$sth->execute([$fg, $bg, $id, $_SESSION['uid']]);
 			}
 
-			$caption = Labels::find_caption($id, $_SESSION["uid"]);
-
 			/* Remove cached data */
 
 			$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET label_cache = ''
-				WHERE label_cache LIKE ? AND owner_uid = ?");
-			$sth->execute(["%$caption%", $_SESSION['uid']]);
+				WHERE owner_uid = ?");
+			$sth->execute([$_SESSION['uid']]);
 		}
 	}
 
@@ -163,13 +161,11 @@ class Pref_Labels extends Handler_Protected {
 				AND owner_uid = ?");
 			$sth->execute([$id, $_SESSION['uid']]);
 
-			$caption = Labels::find_caption($id, $_SESSION["uid"]);
-
 			/* Remove cached data */
 
 			$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET label_cache = ''
-				WHERE label_cache LIKE ? AND owner_uid = ?");
-			$sth->execute(["%$caption%", $_SESSION['uid']]);
+				WHERE owner_uid = ?");
+			$sth->execute([$_SESSION['uid']]);
 		}
 	}
 
