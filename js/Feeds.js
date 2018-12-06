@@ -213,6 +213,8 @@ define(["dojo/_base/declare"], function (declare) {
 			App.setLoadingProgress(50);
 
 			document.onkeydown = (event) => { return App.hotkeyHandler(event) };
+			window.onresize = () => { Headlines.scrollHandler(); }
+
 			window.setInterval(() => { Headlines.catchupBatched() }, 10 * 1000);
 
 			if (!this.getActive()) {
