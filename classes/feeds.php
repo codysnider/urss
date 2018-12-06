@@ -487,8 +487,8 @@ class Feeds extends Handler_Protected {
 
 					if (!get_pref("CDM_EXPANDED")) {
 						$tmp_content .= "<span class='collapse'>
-                            <img src=\"images/collapse.png\" onclick=\"return Article.cdmUnsetActive(event)\"
-                            title=\"" . __("Collapse article") . "\"/></span>";
+                            <i class=\"material-icons\" onclick=\"return Article.cdmUnsetActive(event)\"
+                            title=\"" . __("Collapse article") . "\">remove_circle</i></span>";
 
 						if (get_pref('SHOW_CONTENT_PREVIEW')) {
 							$tmp_content .= "<span class='excerpt'>" . $line["content_preview"] . "</span>";

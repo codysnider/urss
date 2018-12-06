@@ -1359,6 +1359,10 @@ div.cdm.expandable div.header a.title {
 div.cdm.expandable.Unread div.header a.title {
   color: black;
 }
+div.cdm.expandable.active .collapse i {
+  color: #257aa7;
+  cursor: pointer;
+}
 div.cdm.expandable.active .excerpt {
   display: none;
 }
