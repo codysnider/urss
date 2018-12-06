@@ -170,8 +170,7 @@ const Notify = {
 		}
 
 		let msgfmt = "<span class=\"msg\">%s</span>".replace("%s", __(msg));
-		let icon = false;
-
+		let icon = "";
 
 		notify.className = "notify";
 
@@ -180,22 +179,28 @@ const Notify = {
 		switch (kind) {
 			case this.KIND_INFO:
 				notify.addClassName("notify_info")
-				icon = App.getInitParam("icon_information");
+				icon = "notifications";
 				break;
 			case this.KIND_ERROR:
 				notify.addClassName("notify_error");
-				icon = App.getInitParam("icon_alert");
+				icon = "error";
 				break;
 			case this.KIND_PROGRESS:
 				notify.addClassName("notify_progress");
 				icon = App.getInitParam("icon_indicator_white")
 				break;
+			default:
+				icon = "notifications";
 		}
 
-		if (icon) msgfmt = "<span><img src=\"%s\"></span>".replace("%s", icon) + msgfmt;
+		if (icon)
+			if (icon.indexOf("data:image") != -1)
+				msgfmt = "<img src=\"%s\">".replace("%s", icon) + msgfmt;
+			else
+				msgfmt = "<i class='material-icons icon-notify'>%s</i>".replace("%s", icon) + msgfmt;
 
-		msgfmt += (" <span><img src=\"%s\" class='close' title=\"" +
-			__("Click to close") + "\" onclick=\"Notify.close()\"></span>")
+		msgfmt += ("<i class='material-icons icon-close' title=\"" +
+			__("Click to close") + "\" onclick=\"Notify.close()\">close</i>")
 				.replace("%s", App.getInitParam("icon_cross"));
 
 		notify.innerHTML = msgfmt;
