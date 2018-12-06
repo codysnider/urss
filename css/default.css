@@ -998,6 +998,9 @@ body.ttrss_main i.icon-syndicate {
   border: 1px solid #ff7c4b;
   border-radius: 4px;
 }
+body.ttrss_main i.icon-no-feed {
+  opacity: 0.2;
+}
 body.ttrss_main .cdm.marked .left i.marked-pic,
 body.ttrss_main .hl.marked .left i.marked-pic {
   color: #ffc069;

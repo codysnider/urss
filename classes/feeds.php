@@ -259,6 +259,12 @@ class Feeds extends Handler_Protected {
 				$label_cache = $line["label_cache"];
 				$labels = false;
 
+				// normalize archived feed
+				if ($feed_id === null) {
+					$feed_id = 0;
+					$line["feed_title"] = __("Archived articles");
+				}
+
 				$mouseover_attrs = "onmouseover='Article.mouseIn($id)' onmouseout='Article.mouseOut($id)'";
 
 				if ($label_cache) {
@@ -315,7 +321,7 @@ class Feeds extends Handler_Protected {
 				if (feeds::feedHasIcon($feed_id)) {
 					$feed_icon_img = "<img class=\"icon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
 				} else {
-					$feed_icon_img = "<i class='icon-syndicate material-icons'>rss_feed</i>";
+					$feed_icon_img = "<i class='icon-no-feed material-icons'>rss_feed</i>";
 				}
 
 				$entry_site_url = $line["site_url"];
@@ -334,7 +340,7 @@ class Feeds extends Handler_Protected {
 				if (!get_pref('COMBINED_DISPLAY_MODE')) {
 
 					if ($vfeed_group_enabled) {
-						if ($feed_id != $vgroup_last_feed && $line["feed_title"]) {
+						if ($feed_id != $vgroup_last_feed) {
 
 							$vgroup_last_feed = $feed_id;
 
@@ -345,8 +351,6 @@ class Feeds extends Handler_Protected {
 								"<a class='title' href=\"#\" onclick=\"Feeds.open({feed:$feed_id})\">".
 								$line["feed_title"]."</a>
                             $vf_catchup_link</div>";
-
-
 						}
 					}
 
@@ -399,8 +403,7 @@ class Feeds extends Handler_Protected {
 
 					$reply['content'] .= $score_pic;
 
-					if ($line["feed_title"] && !$vfeed_group_enabled) {
-
+					if (!$vfeed_group_enabled) {
 						$reply['content'] .= "<span onclick=\"Feeds.open({feed:$feed_id})\"
                         style=\"cursor : pointer\"
                         title=\"".htmlspecialchars($line['feed_title'])."\">
@@ -475,8 +478,8 @@ class Feeds extends Handler_Protected {
 					$tmp_content .= "<span
                     onclick=\"return Headlines.click(event, $id);\"
                     data-article-id=\"$id\"
-                    class=\"titleWrap hlMenuAttach $hlc_suffix\">
-                    <a class=\"title $hlc_suffix\"
+                    class=\"titleWrap hlMenuAttach\">
+                    <a class=\"title\"
                     title=\"".htmlspecialchars($line["title"])."\"
                     target=\"_blank\" rel=\"noopener noreferrer\" href=\"".
 						htmlspecialchars($line["link"])."\">".
@@ -514,7 +517,7 @@ class Feeds extends Handler_Protected {
 					$tmp_content .= "<div class='right'>";
 					$tmp_content .= "$score_pic";
 
-					if (!get_pref("VFEED_GROUP_BY_FEED") && $line["feed_title"]) {
+					if (!get_pref("VFEED_GROUP_BY_FEED")) {
 						$tmp_content .= "<span style=\"cursor : pointer\"
                         title=\"".htmlspecialchars($line["feed_title"])."\"
                         onclick=\"Feeds.open({feed:$feed_id})\">$feed_icon_img</span>";
