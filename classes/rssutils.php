@@ -781,13 +781,15 @@ class RSSUtils {
 					$plugin->hook_filter_triggered($feed, $owner_uid, $article, $matched_filters, $matched_rules, $article_filters);
 				}
 
-				$matched_filter_ids = implode(",", array_map(function($f) { return $f['id']; }, $matched_filters));
+				$matched_filter_ids = array_map(function($f) { return $f['id']; }, $matched_filters);
 
+				if (count($matched_filter_ids) > 0) {
+					$filter_ids_qmarks = arr_qmarks($matched_filter_ids);
 
-				if ($matched_filter_ids) {
 					$fsth = $pdo->prepare("UPDATE ttrss_filters2 SET last_triggered = NOW() WHERE 
-							   id IN (?) AND owner_uid = ?");
-					$fsth->execute([$matched_filter_ids, $owner_uid]);
+							   id IN ($filter_ids_qmarks) AND owner_uid = ?");
+
+					$fsth->execute(array_merge($matched_filter_ids, [$owner_uid]));
 				}
 
 				if (Debug::get_loglevel() >= Debug::$LOG_EXTENDED) {
