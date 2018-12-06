@@ -192,7 +192,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 					if (header.offsetTop + header.offsetHeight < hf.scrollTop + ft.offsetHeight - 5 &&
 						row.offsetTop + row.offsetHeight >= hf.scrollTop + ft.offsetHeight - 5)
-						new Effect.Appear(ft, {duration: 0.3});
+						Element.show(ft);
 					else
 						Element.hide(ft);
 
