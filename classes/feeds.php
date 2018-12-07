@@ -160,8 +160,6 @@ class Feeds extends Handler_Protected {
 			$disable_cache = true;
 		}
 
-		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("H0", $timing_info);
-
 		if (!$cat_view && is_numeric($feed) && $feed < PLUGIN_FEED_BASE_INDEX && $feed > LABEL_BASE_INDEX) {
 			$handler = PluginHost::getInstance()->get_feed_handler(
 				PluginHost::feed_to_pfeed_id($feed));
@@ -204,8 +202,6 @@ class Feeds extends Handler_Protected {
 
 		$vfeed_group_enabled = get_pref("VFEED_GROUP_BY_FEED") && $feed != -6;
 
-		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("H1", $timing_info);
-
 		$result = $qfh_ret[0]; // this could be either a PDO query result or a -1 if first id changed
 		$feed_title = $qfh_ret[1];
 		$feed_site_url = $qfh_ret[2];
@@ -232,10 +228,7 @@ class Feeds extends Handler_Protected {
 
 		$headlines_count = 0;
 
-        if ($_REQUEST["debug"]) $timing_info = print_checkpoint("PS", $timing_info);
-
         if (is_object($result)) {
-
 			while ($line = $result->fetch(PDO::FETCH_ASSOC)) {
 
 				++$headlines_count;
@@ -378,304 +371,8 @@ class Feeds extends Handler_Protected {
 				}
 
 				array_push($reply['content'], $line);
-
-				/* if (!get_pref('COMBINED_DISPLAY_MODE')) {
-
-					if ($vfeed_group_enabled) {
-						if ($feed_id != $vgroup_last_feed) {
-
-							$vgroup_last_feed = $feed_id;
-
-							$vf_catchup_link = "<a class='catchup' onclick='Feeds.catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
-
-							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-title'>".
-								"<div style='float : right'>$feed_icon_img</div>".
-								"<a class='title' href=\"#\" onclick=\"Feeds.open({feed:$feed_id})\">".
-								$line["feed_title"]."</a>
-                            $vf_catchup_link</div>";
-						}
-					}
-
-					$reply['content'] .= "<div class='hl $class $score_class' data-orig-feed-id='$feed_id' data-article-id='$id' id='RROW-$id' $mouseover_attrs>";
-
-					$reply['content'] .= "<div class='left'>";
-
-					$reply['content'] .= "<input dojoType=\"dijit.form.CheckBox\"
-                        type=\"checkbox\" onclick=\"Headlines.onRowChecked(this)\"
-                        class='rchk'>";
-
-					$reply['content'] .= "$marked_pic";
-					$reply['content'] .= "$published_pic";
-
-					$reply['content'] .= "</div>";
-
-					$reply['content'] .= "<div onclick='return Headlines.click(event, $id)'
-                    class=\"title\"><span data-article-id=\"$id\" class='hl-content hlMenuAttach'>";
-					$reply['content'] .= "<a class=\"title\"
-                    href=\"" . htmlspecialchars($line["link"]) . "\"
-                    onclick=\"\">" .
-						truncate_string($line["title"], 200);
-
-					if (get_pref('SHOW_CONTENT_PREVIEW')) {
-						$reply['content'] .= "<span class=\"preview\">" . $line["content_preview"] . "</span>";
-					}
-
-					$reply['content'] .= "</a></span>";
-
-					$reply['content'] .= $labels_str;
-
-					$reply['content'] .= "</div>";
-
-					if (!$vfeed_group_enabled) {
-						if (@$line["feed_title"]) {
-							$rgba = @$rgba_cache[$feed_id];
-
-							$reply['content'] .= "<span class=\"feed\"><a style=\"background : rgba($rgba, 0.3)\" href=\"#\" onclick=\"Feeds.open({feed:$feed_id})\">".
-								truncate_string($line["feed_title"],30)."</a></span>";
-						}
-					}
-
-
-					$reply['content'] .= "<span class=\"updated\">";
-
-					$reply['content'] .= "<div title='$date_entered_fmt'>$updated_fmt</div>
-                    </span>";
-
-					$reply['content'] .= "<div class=\"right\">";
-
-					$reply['content'] .= $score_pic;
-
-					if (!$vfeed_group_enabled) {
-						$reply['content'] .= "<span onclick=\"Feeds.open({feed:$feed_id})\"
-                        style=\"cursor : pointer\"
-                        title=\"".htmlspecialchars($line['feed_title'])."\">
-                        $feed_icon_img</span>";
-					}
-
-					$reply['content'] .= "</div>";
-					$reply['content'] .= "</div>";
-
-				} else { // CDM
-
-					if ($line["tag_cache"])
-						$tags = explode(",", $line["tag_cache"]);
-					else
-						$tags = false;
-
-					$line["content"] = sanitize($line["content"],
-						$line['hide_images'], false, $entry_site_url, $highlight_words, $line["id"]);
-
-					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_RENDER_ARTICLE_CDM) as $p) {
-						$line = $p->hook_render_article_cdm($line);
-					}
-
-					$line['content'] = rewrite_cached_urls($line['content']);
-
-					if ($vfeed_group_enabled && $line["feed_title"]) {
-						if ($feed_id != $vgroup_last_feed) {
-
-							$vgroup_last_feed = $feed_id;
-
-							$vf_catchup_link = "<a class='catchup' onclick='Feeds.catchupFeedInGroup($feed_id);' href='#'>".__('mark feed as read')."</a>";
-
-							$feed_icon_src = Feeds::getFeedIcon($feed_id);
-							$feed_icon_img = "<img class=\"icon\" src=\"$feed_icon_src\">";
-
-							$reply['content'] .= "<div data-feed-id='$feed_id' class='feed-title'>".
-								"<div style=\"float : right\">$feed_icon_img</div>".
-								"<a href=\"#\" class='title' onclick=\"Feeds.open({feed:$feed_id})\">".
-								$line["feed_title"]."</a> $vf_catchup_link</div>";
-
-						}
-					}
-
-                    $content_encoded = htmlspecialchars($line["content"]);
-
-					$expanded_class = get_pref("CDM_EXPANDED") ? "expanded" : "expandable";
-                    $tmp_content = "<div class=\"cdm $expanded_class $score_class $class\"
-                        id=\"RROW-$id\" data-content=\"$content_encoded\" data-article-id='$id' data-orig-feed-id='$feed_id' $mouseover_attrs>";
-
-					$tmp_content .= "<div class=\"header\">";
-					$tmp_content .= "<div class=\"left\">";
-
-					$tmp_content .= "<input dojoType=\"dijit.form.CheckBox\"
-                        type=\"checkbox\" onclick=\"Headlines.onRowChecked(this)\"
-                        class='rchk'>";
-
-					$tmp_content .= "$marked_pic";
-					$tmp_content .= "$published_pic";
-
-					$tmp_content .= "</div>";
-
-					if ($highlight_words && count($highlight_words) > 0) {
-						foreach ($highlight_words as $word) {
-						    $word = preg_quote($word, "/");
-
-							$line["title"] = preg_replace("/($word)/i",
-								"<span class=\"highlight\">$1</span>", $line["title"]);
-						}
-					}
-
-					// data-article-id included for context menu
-					$tmp_content .= "<span
-                    onclick=\"return Headlines.click(event, $id);\"
-                    data-article-id=\"$id\"
-                    class=\"titleWrap hlMenuAttach\">
-                    <a class=\"title\"
-                    title=\"".htmlspecialchars($line["title"])."\"
-                    target=\"_blank\" rel=\"noopener noreferrer\" href=\"".
-						htmlspecialchars($line["link"])."\">".
-						$line["title"] .
-						"</a> <span class=\"author\">$entry_author</span>";
-
-					$tmp_content .= $labels_str;
-
-					if (!get_pref("CDM_EXPANDED")) {
-						$tmp_content .= "<span class='collapse'>
-                            <i class=\"material-icons\" onclick=\"return Article.cdmUnsetActive(event)\"
-                            title=\"" . __("Collapse article") . "\">remove_circle</i></span>";
-
-						if (get_pref('SHOW_CONTENT_PREVIEW')) {
-							$tmp_content .= "<span class='excerpt'>" . $line["content_preview"] . "</span>";
-						}
-					}
-
-					$tmp_content .= "</span>";
-
-					if (!$vfeed_group_enabled) {
-						if (@$line["feed_title"]) {
-							$rgba = @$rgba_cache[$feed_id];
-
-							$tmp_content .= "<div class=\"feed\">
-                            <a href=\"#\" style=\"background-color: rgba($rgba,0.3)\"
-                            onclick=\"Feeds.open({feed:$feed_id})\">".
-								truncate_string($line["feed_title"],30)."</a>
-                        </div>";
-						}
-					}
-
-					$tmp_content .= "<span class='updated' title='$date_entered_fmt'>$updated_fmt</span>";
-
-					$tmp_content .= "<div class='right'>";
-					$tmp_content .= "$score_pic";
-
-					if (!get_pref("VFEED_GROUP_BY_FEED")) {
-						$tmp_content .= "<span style=\"cursor : pointer\"
-                        title=\"".htmlspecialchars($line["feed_title"])."\"
-                        onclick=\"Feeds.open({feed:$feed_id})\">$feed_icon_img</span>";
-					}
-					$tmp_content .= "</div>"; //score wrapper2
-
-					$tmp_content .= "</div>"; //header
-
-					$tmp_content .= "<div class=\"content\" onclick=\"return Headlines.click(event, $id, true);\">";
-
-					$tmp_content .= "<div id=\"POSTNOTE-$id\">";
-					if ($line['note']) {
-						$tmp_content .= Article::format_article_note($id, $line['note']);
-					}
-					$tmp_content .= "</div>"; //POSTNOTE
-
-					if (!$line['lang']) $line['lang'] = 'en';
-
-					// this is filled from RROW data-content
-					$tmp_content .= "<div class=\"content-inner\" lang=\"".$line['lang']."\">
-                        <img src='images/indicator_white.gif'>
-                    </div>";
-					$tmp_content .= "<div class=\"intermediate\">";
-
-					if ($line["orig_feed_id"]) {
-
-						$ofgh = $this->pdo->prepare("SELECT * FROM ttrss_archived_feeds
-                        WHERE id = ? AND owner_uid = ?");
-						$ofgh->execute([$line["orig_feed_id"], $_SESSION['uid']]);
-
-						if ($tmp_line = $ofgh->fetch()) {
-
-							$tmp_content .= "<div clear='both'>";
-							$tmp_content .= __("Originally from:");
-
-							$tmp_content .= "&nbsp;";
-
-							$tmp_content .= "<a target='_blank' rel='noopener noreferrer'
-                            href=' " . htmlspecialchars($tmp_line['site_url']) . "'>" .
-								$tmp_line['title'] . "</a>";
-
-							$tmp_content .= "&nbsp;";
-
-							$tmp_content .= "<a target='_blank' rel='noopener noreferrer' href='" . htmlspecialchars($tmp_line['feed_url']) . "'>";
-
-							$tmp_content .= "</div>";
-						}
-					}
-
-
-					$always_display_enclosures = $line["always_display_enclosures"];
-					$tmp_content .= Article::format_article_enclosures($id, $always_display_enclosures,
-						$line["content"], $line["hide_images"]);
-
-					$tmp_content .= "</div>"; // cdmIntermediate
-
-					$tmp_content .= "<div class=\"footer\" onclick=\"event.stopPropagation()\">";
-
-					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_LEFT_BUTTON) as $p) {
-						$tmp_content .= $p->hook_article_left_button($line);
-					}
-
-					$tags_str = Article::format_tags_string($tags, $id);
-
-					$tmp_content .= "<div class='left'>";
-
-					$tmp_content .= "<i class='material-icons'>label_outline</i>
-                        <span id=\"ATSTR-$id\">$tags_str</span>
-                        <a title=\"".__('Edit tags for this article')."\"
-                        href=\"#\" onclick=\"Article.editTags($id)\">(+)</a>";
-
-					$num_comments = (int) $line["num_comments"];
-					$entry_comments = "";
-
-					if ($num_comments > 0) {
-						if ($line["comments"]) {
-							$comments_url = htmlspecialchars($line["comments"]);
-						} else {
-							$comments_url = htmlspecialchars($line["link"]);
-						}
-						$entry_comments = "<a class=\"comments\"
-                        target='_blank' rel='noopener noreferrer' href=\"$comments_url\">$num_comments ".
-							_ngettext("comment", "comments", $num_comments)."</a>";
-
-					} else {
-						if ($line["comments"] && $line["link"] != $line["comments"]) {
-							$entry_comments = "<a class=\"comments\" target='_blank' rel='noopener noreferrer' href=\"".htmlspecialchars($line["comments"])."\">".__("comments")."</a>";
-						}
-					}
-
-					if ($entry_comments) $tmp_content .= "&nbsp;($entry_comments)";
-
-					$tmp_content .= "</div>";
-					$tmp_content .= "<div class='right'>";
-
-					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_BUTTON) as $p) {
-						$tmp_content .= $p->hook_article_button($line);
-					}
-
-					$tmp_content .= "</div>"; // buttons
-
-					$tmp_content .= "</div>"; // cdm footer
-					$tmp_content .= "</div>"; // cdmContent
-					$tmp_content .= "</div>"; // RROW.cdm
-
-					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FORMAT_ARTICLE_CDM) as $p) {
-						$tmp_content = $p->hook_format_article_cdm($tmp_content, $line);
-					}
-
-					$reply['content'] .= $tmp_content;
-				} // end html */
-
 			}
         }
-
-        if ($_REQUEST["debug"]) $timing_info = print_checkpoint("PE", $timing_info);
 
 		if (!$headlines_count) {
 
@@ -733,8 +430,6 @@ class Feeds extends Handler_Protected {
 			}
 		}
 
-		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("H2", $timing_info);
-
 		return array($topmost_article_ids, $headlines_count, $feed, $disable_cache, $reply);
 	}
 
@@ -747,11 +442,7 @@ class Feeds extends Handler_Protected {
 	}
 
 	function view() {
-		$timing_info = microtime(true);
-
 		$reply = array();
-
-		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("0", $timing_info);
 
 		$feed = $_REQUEST["feed"];
 		$method = $_REQUEST["m"];
@@ -825,7 +516,7 @@ class Feeds extends Handler_Protected {
 			$sth->execute([$feed, $_SESSION['uid']]);
 		}
 
-		$reply['headlines'] = array();
+		$reply['headlines'] = [];
 
 		$override_order = false;
 		$skip_first_id_check = false;
@@ -843,15 +534,12 @@ class Feeds extends Handler_Protected {
 			break;
 		}
 
-		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("04", $timing_info);
-
 		$ret = $this->format_headlines_list($feed, $method,
 			$view_mode, $limit, $cat_view, $offset,
 			$override_order, true, $check_first_id, $skip_first_id_check);
 
 		$headlines_count = $ret[1];
 		$disable_cache = $ret[3];
-
 		$reply['headlines'] = $ret[4];
 
 		if (!$next_unread_feed)
@@ -861,13 +549,10 @@ class Feeds extends Handler_Protected {
 
 		$reply['headlines']['is_cat'] = (bool) $cat_view;
 
-		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("05", $timing_info);
+		$reply['headlines-info'] = ["count" => (int) $headlines_count,
+            						"disable_cache" => (bool) $disable_cache];
 
-		$reply['headlines-info'] = array("count" => (int) $headlines_count,
-            						"disable_cache" => (bool) $disable_cache);
-
-		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("30", $timing_info);
-
+		// this is parsed by handleRpcJson() on first viewfeed() to set cdm expanded, etc
 		$reply['runtime-info'] = make_runtime_info();
 
 		print json_encode($reply);
