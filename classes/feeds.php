@@ -234,8 +234,6 @@ class Feeds extends Handler_Protected {
 
 		$headlines_count = 0;
 
-        $lnum = $offset;
-        $num_unread = 0;
         if ($_REQUEST["debug"]) $timing_info = print_checkpoint("PS", $timing_info);
 
         if (is_object($result)) {
@@ -261,9 +259,8 @@ class Feeds extends Handler_Protected {
 					$line['feed_id'] = 0;
 					$line["feed_title"] = __("Archived articles");
 				}
-				$feed_id = $line["feed_id"];
 
-				//$mouseover_attrs = "onmouseover='Article.mouseIn($id)' onmouseout='Article.mouseOut($id)'";
+				$feed_id = $line["feed_id"];
 
 				$label_cache = $line["label_cache"];
 				$labels = false;
@@ -292,18 +289,49 @@ class Feeds extends Handler_Protected {
 					array_push($topmost_article_ids, $id);
 				}
 
-				$class = "";
+				if (!$line["feed_title"]) $line["feed_title"] = "";
 
-				if ($line["unread"]) {
-					$class .= " Unread";
-					++$num_unread;
-				}
+				if (get_pref('COMBINED_DISPLAY_MODE')) {
 
-				$class .= $line["marked"] ? " marked" : "";
-				//$marked_pic = "<i class=\"marked-pic marked-$id material-icons\" onclick='Headlines.toggleMark($id)'>star</i>";
+					$line["buttons_left"] = "";
+					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_LEFT_BUTTON) as $p) {
+						$line["buttons_left"] .= $p->hook_article_left_button($line);
+					}
 
-				//$class .= $line["published"] ? " published" : "";
-                //$published_pic = "<i class=\"pub-pic pub-$id material-icons\" onclick='Headlines.togglePub($id)'>rss_feed</i>";
+					$line["buttons"] = "";
+					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_BUTTON) as $p) {
+						$line["buttons"] .= $p->hook_article_button($line);
+					}
+
+					$line["content"] = sanitize($line["content"],
+						$line['hide_images'], false, $line["site_url"], $highlight_words, $line["id"]);
+
+					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_RENDER_ARTICLE_CDM) as $p) {
+						$line = $p->hook_render_article_cdm($line);
+					}
+
+					$line['content'] = rewrite_cached_urls($line['content']);
+					$line["content"] = htmlspecialchars($line["content"]);
+
+					if ($line['note'])
+					    $line['note'] = Article::format_article_note($id, $line['note']);
+					else
+					    $line['note'] = "";
+
+					if (!get_pref("CDM_EXPANDED")) {
+						$line["cdm_excerpt"] = "<span class='collapse'>
+                            <i class='material-icons' onclick='return Article.cdmUnsetActive(event)'
+                                title=\"" . __("Collapse article") . "\">remove_circle</i></span>";
+
+						if (get_pref('SHOW_CONTENT_PREVIEW')) {
+							$line["cdm_excerpt"] .= "<span class='excerpt'>" . $line["content_preview"] . "</span>";
+						}
+					}
+
+					$line["enclosures"] = Article::format_article_enclosures($id, $line["always_display_enclosures"],
+						$line["content"], $line["hide_images"]);
+                }
+
 
 				$line["updated"] = make_local_datetime($line["updated"], false, false, false, true);
 				$line['imported'] = T_sprintf("Imported at %s",
@@ -314,11 +342,12 @@ class Feeds extends Handler_Protected {
 				$line["score_pic"] = get_score_pic($score);
                 $line["score_class"] = get_score_class($score);
 
-				//$entry_author = $line["author"];
+				if ($line["tag_cache"])
+					$tags = explode(",", $line["tag_cache"]);
+				else
+					$tags = false;
 
-				/* if ($entry_author) {
-					$entry_author = " &mdash; $entry_author";
-				} */
+				$line["tags_str"] = Article::format_tags_string($tags, $id);
 
 				if (feeds::feedHasIcon($feed_id)) {
 					$line['feed_icon'] = "<img class=\"icon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
@@ -326,16 +355,14 @@ class Feeds extends Handler_Protected {
 					$line['feed_icon'] = "<i class='icon-no-feed material-icons'>rss_feed</i>";
 				}
 
-				//$entry_site_url = $line["site_url"];
-
-				//setting feed headline background color, needs to change text color based on dark/light
+			    //setting feed headline background color, needs to change text color based on dark/light
 				$fav_color = $line['favicon_avg_color'];
 
 				require_once "colors.php";
 
 				if ($fav_color && $fav_color != 'fail') {
 					if (!isset($rgba_cache[$feed_id])) {
-						$rgba_cache[$feed_id] = join(",", _color_unpack($fav_color));
+						$rgba_cache[$feed_id] = join(",", _color_unpack($fav_color)) . ", 0.3";
 					}
 
 					$line['favicon_avg_color_rgba'] = $rgba_cache[$feed_id];
@@ -419,7 +446,7 @@ class Feeds extends Handler_Protected {
 					$reply['content'] .= "</div>";
 					$reply['content'] .= "</div>";
 
-				} else { // HL
+				} else { // CDM
 
 					if ($line["tag_cache"])
 						$tags = explode(",", $line["tag_cache"]);
@@ -636,7 +663,6 @@ class Feeds extends Handler_Protected {
 					$reply['content'] .= $tmp_content;
 				} // end html */
 
-				++$lnum;
 			}
         }
 
@@ -644,7 +670,7 @@ class Feeds extends Handler_Protected {
 
 		if (!$headlines_count) {
 
-			if (!is_numeric($result)) {
+			if (is_object($result)) {
 
 				switch ($view_mode) {
 					case "unread":

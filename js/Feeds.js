@@ -363,7 +363,7 @@ define(["dojo/_base/declare"], function (declare) {
 			if (viewfeed_debug) {
 				window.open("backend.php?" +
 					dojo.objectToQuery(
-						Object.assign({debug: 1, csrf_token: App.getInitParam("csrf_token")}, query)
+						Object.assign({debug: 0, csrf_token: App.getInitParam("csrf_token")}, query)
 					));
 			}
 
