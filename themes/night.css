@@ -1036,6 +1036,9 @@ body.ttrss_main .score-neutral i.icon-score {
 ::-webkit-scrollbar-track {
   background-color: #eee;
 }
+video::-webkit-media-controls-overlay-play-button {
+  display: none;
+}
 .cdm .header,
 .cdm .footer {
   display: flex;
@@ -2019,7 +2022,7 @@ body.flat.ttrss_main .post .content img,
 body.flat.ttrss_main .cdm .content-inner img,
 body.flat.ttrss_main .post .content video,
 body.flat.ttrss_main .cdm .content-inner video {
-  transition: opacity 0.5s linear, filter 0.5s linear;
+  transition: opacity 0.2s linear, filter 0.2s linear;
 }
 body.flat.ttrss_main .post .content img:not(:hover),
 body.flat.ttrss_main .cdm .content-inner img:not(:hover),

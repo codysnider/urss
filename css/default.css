@@ -1036,6 +1036,9 @@ body.ttrss_main .score-neutral i.icon-score {
 ::-webkit-scrollbar-track {
   background-color: #eee;
 }
+video::-webkit-media-controls-overlay-play-button {
+  display: none;
+}
 .cdm .header,
 .cdm .footer {
   display: flex;
