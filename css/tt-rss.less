@@ -798,11 +798,11 @@ body.ttrss_main {
 
 		.dijitCheckBox:not(.dijitCheckBoxChecked) {
 			background: transparent;
-			opacity : 0.7;
+			opacity : 0.9;
 		}
 
 		.dijitCheckBox:not(.dijitCheckBoxChecked)::before {
-			color : @default-text;
+			color : lighten(@default-text, 20%);
 		}
 
 		div.feed-title {
