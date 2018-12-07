@@ -3,7 +3,7 @@ class Af_Comics_ComicPress extends Af_ComicFilter {
 
 	function supported() {
 		return array("Buni", "Buttersafe", "Happy Jar", "CSection",
-			"Extra Fabulous Comics", "Nedroid");
+			"Extra Fabulous Comics", "Nedroid", "Stonetoss");
 	}
 
 	function process(&$article) {
@@ -12,6 +12,7 @@ class Af_Comics_ComicPress extends Af_ComicFilter {
 				strpos($article["guid"], "extrafabulouscomics.com") !== FALSE ||
 				strpos($article["guid"], "happyjar.com") !== FALSE ||
 				strpos($article["guid"], "nedroid.com") !== FALSE ||
+				strpos($article["guid"], "stonetoss.com") !== FALSE ||
 				strpos($article["guid"], "csectioncomics.com") !== FALSE) {
 
 				// lol at people who block clients by user agent
