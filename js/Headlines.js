@@ -270,6 +270,18 @@ define(["dojo/_base/declare"], function (declare) {
 					${__('Originally from:')} <a target="_blank" rel="noopener noreferrer" href="${hl.orig_feed[1]}">${hl.orig_feed[0]}</a>
 					</div>` : "";
 
+				let comments = "";
+
+				if (hl.comments) {
+					let comments_msg = __("comments");
+
+					if (hl.num_comments > 0) {
+						comments_msg = hl.num_comments + " " + ngettext("comment", "comments", hl.num_comments)
+					}
+
+					comments = `<a href="${hl.comments}">(${comments_msg})</a>`;
+				}
+
 				row = `<div class="cdm ${row_class} ${hl.score_class}" id="RROW-${hl.id}" data-article-id="${hl.id}" data-orig-feed-id="${hl.feed_id}" 
 							data-content="${hl.content}" onmouseover="Article.mouseIn(${hl.id})" onmouseout="Article.mouseOut(${hl.id})">
 							
@@ -320,6 +332,7 @@ define(["dojo/_base/declare"], function (declare) {
 										<span id="ATSTR-${hl.id}">${hl.tags_str}</span>
 										<a title="Edit tags for this article" href="#" 
 											onclick="Article.editTags(${hl.id})">(+)</a>
+										${comments}
 									</div>
 									
 									<div class="right">${hl.buttons}</div>
