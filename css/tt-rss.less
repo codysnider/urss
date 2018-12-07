@@ -796,6 +796,15 @@ body.ttrss_main {
 		-webkit-transform: translateZ(0);
 		-webkit-backface-visibility: hidden;
 
+		.dijitCheckBox:not(.dijitCheckBoxChecked) {
+			background: transparent;
+			opacity : 0.7;
+		}
+
+		.dijitCheckBox:not(.dijitCheckBoxChecked)::before {
+			color : @default-text;
+		}
+
 		div.feed-title {
 			border: 0px solid @color-link;
 			border-bottom-width: 1px;
