@@ -230,7 +230,7 @@ class Feeds extends Handler_Protected {
 			}
 		}
 
-		$reply['content'] = '';
+		$reply['content'] = [];
 
 		$headlines_count = 0;
 
@@ -240,32 +240,33 @@ class Feeds extends Handler_Protected {
 
         if (is_object($result)) {
 
-			while ($line = $result->fetch()) {
+			while ($line = $result->fetch(PDO::FETCH_ASSOC)) {
 
 				++$headlines_count;
 
-				$line["content_preview"] =  "&mdash; " . truncate_string(strip_tags($line["content"]), 250);
+				if (!get_pref('SHOW_CONTENT_PREVIEW')) {
+					$line["content_preview"] = null;
+				} else {
+					$line["content_preview"] =  "&mdash; " . truncate_string(strip_tags($line["content"]), 250);
 
-				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_QUERY_HEADLINES) as $p) {
-					$line = $p->hook_query_headlines($line, 250, false);
-				}
-
-				if (get_pref('SHOW_CONTENT_PREVIEW')) {
-					$content_preview =  $line["content_preview"];
-				}
+					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_QUERY_HEADLINES) as $p) {
+						$line = $p->hook_query_headlines($line, 250, false);
+					}
+                }
 
 				$id = $line["id"];
-				$feed_id = $line["feed_id"];
-				$label_cache = $line["label_cache"];
-				$labels = false;
 
 				// normalize archived feed
-				if ($feed_id === null) {
-					$feed_id = 0;
+				if ($line['feed_id'] === null) {
+					$line['feed_id'] = 0;
 					$line["feed_title"] = __("Archived articles");
 				}
+				$feed_id = $line["feed_id"];
 
-				$mouseover_attrs = "onmouseover='Article.mouseIn($id)' onmouseout='Article.mouseOut($id)'";
+				//$mouseover_attrs = "onmouseover='Article.mouseIn($id)' onmouseout='Article.mouseOut($id)'";
+
+				$label_cache = $line["label_cache"];
+				$labels = false;
 
 				if ($label_cache) {
 					$label_cache = json_decode($label_cache, true);
@@ -284,6 +285,9 @@ class Feeds extends Handler_Protected {
 				$labels_str .= Article::format_article_labels($labels);
 				$labels_str .= "</span>";
 
+				$line["labels"] = $labels_str;
+				unset($line["label_cache"]);
+
 				if (count($topmost_article_ids) < 3) {
 					array_push($topmost_article_ids, $id);
 				}
@@ -296,35 +300,33 @@ class Feeds extends Handler_Protected {
 				}
 
 				$class .= $line["marked"] ? " marked" : "";
-				$marked_pic = "<i class=\"marked-pic marked-$id material-icons\" onclick='Headlines.toggleMark($id)'>star</i>";
+				//$marked_pic = "<i class=\"marked-pic marked-$id material-icons\" onclick='Headlines.toggleMark($id)'>star</i>";
 
-				$class .= $line["published"] ? " published" : "";
-                $published_pic = "<i class=\"pub-pic pub-$id material-icons\" onclick='Headlines.togglePub($id)'>rss_feed</i>";
+				//$class .= $line["published"] ? " published" : "";
+                //$published_pic = "<i class=\"pub-pic pub-$id material-icons\" onclick='Headlines.togglePub($id)'>rss_feed</i>";
 
-				$updated_fmt = make_local_datetime($line["updated"], false, false, false, true);
-				$date_entered_fmt = T_sprintf("Imported at %s",
+				$line["updated"] = make_local_datetime($line["updated"], false, false, false, true);
+				$line['imported'] = T_sprintf("Imported at %s",
 					make_local_datetime($line["date_entered"], false));
 
 				$score = $line["score"];
 
-				$score_pic = "<i class='material-icons icon-score' title='$score' 
-                       data-score='$score' onclick='Article.setScore($id, this)'>" .
-                        get_score_pic($score) . "</i>";
-                $score_class = get_score_class($score);
+				$line["score_pic"] = get_score_pic($score);
+                $line["score_class"] = get_score_class($score);
 
-				$entry_author = $line["author"];
+				//$entry_author = $line["author"];
 
-				if ($entry_author) {
+				/* if ($entry_author) {
 					$entry_author = " &mdash; $entry_author";
-				}
+				} */
 
 				if (feeds::feedHasIcon($feed_id)) {
-					$feed_icon_img = "<img class=\"icon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
+					$line['feed_icon'] = "<img class=\"icon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
 				} else {
-					$feed_icon_img = "<i class='icon-no-feed material-icons'>rss_feed</i>";
+					$line['feed_icon'] = "<i class='icon-no-feed material-icons'>rss_feed</i>";
 				}
 
-				$entry_site_url = $line["site_url"];
+				//$entry_site_url = $line["site_url"];
 
 				//setting feed headline background color, needs to change text color based on dark/light
 				$fav_color = $line['favicon_avg_color'];
@@ -335,9 +337,13 @@ class Feeds extends Handler_Protected {
 					if (!isset($rgba_cache[$feed_id])) {
 						$rgba_cache[$feed_id] = join(",", _color_unpack($fav_color));
 					}
+
+					$line['favicon_avg_color_rgba'] = $rgba_cache[$feed_id];
 				}
 
-				if (!get_pref('COMBINED_DISPLAY_MODE')) {
+				array_push($reply['content'], $line);
+
+				/* if (!get_pref('COMBINED_DISPLAY_MODE')) {
 
 					if ($vfeed_group_enabled) {
 						if ($feed_id != $vgroup_last_feed) {
@@ -413,7 +419,7 @@ class Feeds extends Handler_Protected {
 					$reply['content'] .= "</div>";
 					$reply['content'] .= "</div>";
 
-				} else {
+				} else { // HL
 
 					if ($line["tag_cache"])
 						$tags = explode(",", $line["tag_cache"]);
@@ -628,7 +634,7 @@ class Feeds extends Handler_Protected {
 					}
 
 					$reply['content'] .= $tmp_content;
-				}
+				} // end html */
 
 				++$lnum;
 			}

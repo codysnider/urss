@@ -239,6 +239,86 @@ define(["dojo/_base/declare"], function (declare) {
 				}
 			}
 		},
+		renderHeadline: function (headlines, hl) {
+			let row = null;
+
+			if (App.isCombinedMode()) {
+				row = `<div class="cdm expanded ${hl.score_class}" id="RROW-${hl.id}" data-article-id="${hl.id}" data-orig-feed-id="${hl.feed_id}" 
+						onmouseover="Article.mouseIn(${hl.id})" onmouseout="Article.mouseOut(${hl.id})">
+					<div class="header">
+						<div class="left">
+							<input dojoType="dijit.form.CheckBox" type="checkbox" onclick="Headlines.onRowChecked(this)" class='rchk'>
+							<i class="marked-pic marked-8797658 material-icons" onclick="Headlines.toggleMark(8797658)">star</i>
+							<i class="pub-pic pub-8797658 material-icons" onclick="Headlines.togglePub(8797658)">rss_feed</i>
+						</div>
+						
+						<span onclick="return Headlines.click(event, ${hl.id});" data-article-id="${hl.id}" class="titleWrap hlMenuAttach">
+                    		<a class="title" title="${hl.title}" target="_blank" rel="noopener noreferrer" href="${hl.link}">
+                    			${hl.title}</a>
+                    		<span class="author"> — ${hl.author}</span>
+							<span class="HLLCTR-${hl.id}"></span>
+						</span>
+						
+						<div class="feed">
+                            <a href="#" style="background-color: rgba(${hl.favicon_avg_color_rgba} ,0.3)" 
+                            	onclick="Feeds.open({feed:${hl.feed_id}})">${hl.feed_title}</a>
+                        </div>
+                        
+                        <span class="updated" title="${hl.imported}">${hl.updated}</span>
+                        
+                        <div class="right">
+                        
+                        <i class="material-icons icon-score" title="${hl.score}" data-score="${hl.score}" onclick="Article.setScore(${hl.id}, this)">${hl.score_icon}</i>
+                        
+                        <span style="cursor : pointer" title="Tiny Tiny RSS '&quot;" onclick="Feeds.open({feed:3205})"><img class="icon" src="feed-icons/3205.ico" alt=""></span></div></div><div class="content" onclick="return Headlines.click(event, 8797658, true);"><div id="POSTNOTE-8797658"></div><div class="content-inner" lang="en"><p>Sorry for hijacking this htread, but I have a similar issue.</p>
+<p>I have a feed category with about 120 unread articles. I toggle headline grouping, but I am not sure if this matters or not.</p>
+<p>I click on the category on the left pane, and start clicking “ctrl+down” to scroll to read the articles.<br>
+At some point ( I tried to figure it out, but can say exactly after how many articles I read) the page won’t scroll down with “ctrl+down”, so I have to scroll with down key alone.</p>
+<p>TT-rss says it’s refreshing the content (or something similar), but was it does, is marking as read a bunch of articles, that were supposed to be shown between the last one I actually read, and the first unread it shows, which should not really be the first unread.</p>
+<p>Last time it happened, I had around 120 unread articles, I could scroll via ctrl+down untill 80 were unread, I scroled manually, and it jumped to 50 unread. The right pane is also refreshed, so I can not scroll up to go through the ones marked as unread.</p>
+<p>I hope it is somewhat related to this thread, otherwise let me know and I can open a new one.</p>
+<p>Please let me know if what I wrote is clear.</p>
+<p>By the way I am running f6e287df110b2046643551aaae70917c61b061c9 on shared hosting, PHP 7 and Mysql.</p></div><div class="intermediate"></div><div class="footer" onclick="event.stopPropagation()"><div class="left"><i class="material-icons">label_outline</i>
+                        <span id="ATSTR-8797658">no tags</span>
+                        <a title="Edit tags for this article" href="#" onclick="Article.editTags(8797658)">(+)</a></div><div class="right"><i style="cursor : pointer" class="material-icons" onclick="Plugins.Psql_Trgm.showRelated(8797658)" title="Show related articles">bookmark_outline</i><i class="material-icons" style="cursor : pointer" onclick="Plugins.Mail.send(8797658)" title="Forward by email">mail</i><i class="material-icons" onclick="Plugins.Note.edit(8797658)" style="cursor : pointer" title="Edit article note">note</i><i id="SHARE-IMG-6023086" class="material-icons icon-share " style="cursor : pointer" onclick="Plugins.Share.shareArticle(6023086)" title="Share by URL">link</i></div></div></div></div>`;
+
+
+			} else {
+				row = `<div class="hl ${hl.score_class}" data-orig-feed-id="${hl.feed_id}" data-article-id="${hl.id}" id="RROW-${hl.id}" 
+					onmouseover="Article.mouseIn(${hl.id})" onmouseout="Article.mouseOut(${hl.id})">
+				<div class="left">
+					<input dojoType="dijit.form.CheckBox" type="checkbox" onclick="Headlines.onRowChecked(this)" class='rchk'>
+				    <i class="marked-pic marked-8804827 material-icons" onclick="Headlines.toggleMark(${hl.id})">star</i>
+				    <i class="pub-pic pub-${hl.id} material-icons" onclick="Headlines.togglePub(${hl.id})">rss_feed</i>
+				</div>
+				<div onclick="return Headlines.click(event, ${hl.id})" class="title">
+					<span data-article-id="${hl.id}" class="hl-content hlMenuAttach">
+						<a class="title" href="${hl.link}">${hl.title}
+							<span class="preview">${hl.content_preview}</span>
+						</a>
+					</span>
+				</div>
+                <span class="feed">
+                	<a style="background : rgba(${hl.favicon_avg_color_rgba}, 0.3)" href="#" onclick="Feeds.open({feed:${hl.feed_id}})">${hl.feed_title}</a>
+                </span>
+				<div title="${hl.imported}">
+				  <span class="updated">${hl.updated}</span>
+				</div>
+				<div class="right">
+				  <i class="material-icons icon-score" title="${hl.score}" data-score="${hl.score}"
+				  onclick="Article.setScore(${hl.id}, this)">${hl.score_pic}</i>
+				  <span onclick="Feeds.open({feed:${hl.feed_id})" style="cursor : pointer" title="${hl.feed_title}">${hl.feed_icon}</span>
+				</div>
+			  </div>
+			`;
+			}
+
+			const tmp = document.createElement("div");
+			tmp.innerHTML = row;
+			dojo.parser.parse(tmp);
+
+			$("headlines-frame").appendChild(tmp.firstChild);
+		},
 		onLoaded: function (transport, offset) {
 			const reply = App.handleRpcJson(transport);
 
@@ -276,7 +356,8 @@ define(["dojo/_base/declare"], function (declare) {
 				$("headlines-frame").addClassName(App.isCombinedMode() ? "cdm" : "normal");
 
 				const headlines_count = reply['headlines-info']['count'];
-				Feeds.infscroll_disabled = parseInt(headlines_count) != 30;
+				//Feeds.infscroll_disabled = parseInt(headlines_count) != 30;
+				Feeds.infscroll_disabled = true; // TEMPORARY
 
 				console.log('received', headlines_count, 'headlines, infscroll disabled=', Feeds.infscroll_disabled);
 
@@ -292,7 +373,11 @@ define(["dojo/_base/declare"], function (declare) {
 
 					$("headlines-frame").innerHTML = '';
 
-					let tmp = document.createElement("div");
+					for (let i = 0; i < reply['headlines']['content'].length; i++) {
+						this.renderHeadline(reply['headlines'], reply['headlines']['content'][i]);
+					}
+
+					/* let tmp = document.createElement("div");
 					tmp.innerHTML = reply['headlines']['content'];
 					dojo.parser.parse(tmp);
 
@@ -304,7 +389,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 							this.loaded_article_ids.push(row.id);
 						}
-					}
+					} */
 
 					let hsp = $("headlines-spacer");
 
