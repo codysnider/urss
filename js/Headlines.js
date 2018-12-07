@@ -251,6 +251,10 @@ define(["dojo/_base/declare"], function (declare) {
 			if (App.isCombinedMode()) {
 				row_class += App.getInitParam("cdm_expanded") ? " expanded" : " expandable";
 
+				let originally_from = hl.orig_feed ? `<div>
+					${__('Originally from:')} <a target="_blank" rel="noopener noreferrer" href="${hl.orig_feed[1]}">${hl.orig_feed[0]}</a>
+					</div>` : "";
+
 				row = `<div class="cdm ${row_class} ${hl.score_class}" id="RROW-${hl.id}" data-article-id="${hl.id}" data-orig-feed-id="${hl.feed_id}" 
 							data-content="${hl.content}" onmouseover="Article.mouseIn(${hl.id})" onmouseout="Article.mouseOut(${hl.id})">
 							
@@ -290,6 +294,7 @@ define(["dojo/_base/declare"], function (declare) {
 								<div id="POSTNOTE-${hl.id}">${hl.note}</div>
 								<div class="content-inner" lang="${hl.lang ? hl.lang : 'en'}"></div>
 								<div class="intermediate">
+									${originally_from}
 									${hl.enclosures}
 								</div>
 								<div class="footer" onclick="event.stopPropagation()">
