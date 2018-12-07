@@ -1004,10 +1004,12 @@ body.ttrss_main i.icon-syndicate {
 body.ttrss_main i.icon-no-feed {
   opacity: 0.2;
 }
+body.ttrss_main #floatingTitle.marked i.marked-pic,
 body.ttrss_main .cdm.marked .left i.marked-pic,
 body.ttrss_main .hl.marked .left i.marked-pic {
   color: #ffc069;
 }
+body.ttrss_main #floatingTitle.published i.pub-pic,
 body.ttrss_main .cdm.published .left i.pub-pic,
 body.ttrss_main .hl.published .left i.pub-pic {
   color: #ff7c4b;
@@ -1805,12 +1807,6 @@ body#sharepopup input {
 .flat .dijitAccordionContainer {
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
-.flat .dijitDialog .dijitDialogPaneContent {
-  background: #222222;
-}
-.flat .dijitTab:not(.dijitTabChecked) {
-  background: #222222;
-}
 .flat .dijitCheckBox.dijitCheckBoxChecked {
   background-color: #69C671;
 }
@@ -1985,6 +1981,12 @@ body.flat.ttrss_main .insensitive {
 }
 body.flat.ttrss_main .dijitAccordionInnerContainerSelected .dijitAccordionTitle {
   color: white;
+}
+body.flat.ttrss_main .dijitDialog .dijitDialogPaneContent {
+  background: #222222;
+}
+body.flat.ttrss_main .dijitTab:not(.dijitTabChecked) {
+  background: #222222;
 }
 body.flat.ttrss_main textarea {
   color: #cccccc;
