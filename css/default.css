@@ -995,6 +995,9 @@ body.ttrss_main .score-low i.icon-score {
 body.ttrss_main .score-neutral i.icon-score {
   opacity: 0.5;
 }
+body.ttrss_main i.icon-score {
+  cursor: pointer;
+}
 body.ttrss_main .panel {
   border: 1px solid #ddd;
   background: #f5f5f5;
@@ -1288,9 +1291,6 @@ div#floatingTitle .excerpt {
 div#floatingTitle span.titleWrap {
   width: 100%;
   white-space: normal;
-}
-div#floatingTitle img.score-pic {
-  display: none;
 }
 div#floatingTitle .feed-title > * {
   display: table-cell;
