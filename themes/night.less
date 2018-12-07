@@ -7,7 +7,7 @@
 @bg-panel : #222;
 @fg-main: #ccc;
 @fg-insensitive: darken(@fg-main, 20%);
-@fg-light : #ccc;
+@fg-light : lighten(@fg-main, 10%);
 @bg-active: #2a89bc;
 
 body.flat.ttrss_main.ttrss_prefs {
@@ -84,9 +84,31 @@ body.flat.ttrss_main {
 			border-color : @border-dark;
 		}
 
-		.hl:not(.active):not(.Selected),
-		.cdm:not(.Selected) {
+		.hl:not(.active):not(.Selected):not(.Unread),
+		.cdm.expandable:not(.active):not(.Selected):not(.Unread) {
+			background : @bg-main;
+		}
+
+		.hl.Unread:not(.active):not(.Selected),
+		.cdm.expandable.Unread:not(.active):not(.Selected) {
+			background : @bg-panel;
+		}
+
+		.cdm.expanded {
 			background: @bg-main;
+		}
+
+		.hl.Unread .title,
+		.cdm.Unread .title {
+			color : @fg-light;
+		}
+
+		.cdm.expanded.active .title {
+			color : @color-accent;
+		}
+
+		.cdm.expandable.active {
+			background : @bg-panel ! important;
 		}
 
 		.hl, .cdm {
@@ -94,15 +116,19 @@ body.flat.ttrss_main {
 			color : @fg-main;
 
 			.title {
-				color : darken(@fg-main, 30%);
+				color : @fg-main;
+			}
+
+			.author {
+				color : @fg-insensitive;
+			}
+
+			.updated, .content {
+				color : @fg-main;
 			}
 
 			.feed a {
 				color : @fg-light;
-			}
-
-			.content {
-				color : @fg-main;
 			}
 		}
 
@@ -111,18 +137,9 @@ body.flat.ttrss_main {
 			color : @fg-main;
 		}
 
-		.hl.Unread .title,
-		.cdm.Unread .title {
-			color : @fg-light;
-		}
-
 		i.material-icons,
 		.dijitCheckBox {
 			opacity : 0.7;
-		}
-
-		.cdm.expandable.active {
-			background : darken(@bg-main, 5%) ! important;
 		}
 
 	}

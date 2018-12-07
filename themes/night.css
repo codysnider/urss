@@ -1921,7 +1921,7 @@ body.flat.ttrss_main #overlay {
 body.flat.ttrss_main #toolbar-frame #toolbar {
   background: #222222;
   border-color: #222222;
-  color: #cccccc;
+  color: #e6e6e6;
 }
 body.flat.ttrss_main #feeds-holder {
   background: #222222;
@@ -1935,7 +1935,7 @@ body.flat.ttrss_main #feeds-holder #feedTree .counterNode.aux {
 body.flat.ttrss_main #feeds-holder #feedTree .dijitTreeRowSelected {
   background: #333333;
   border-color: #333333 transparent;
-  color: #cccccc;
+  color: #e6e6e6;
 }
 body.flat.ttrss_main #feeds-holder #feedTree .dijitTreeRowSelected .dijitTreeLabel {
   text-shadow: none;
@@ -1945,20 +1945,37 @@ body.flat.ttrss_main #floatingTitle {
   border-color: #222222;
 }
 body.flat.ttrss_main #floatingTitle .feed a {
-  color: #cccccc;
+  color: #e6e6e6;
 }
 body.flat.ttrss_main #floatingTitle i.material-icons {
   opacity: 0.7;
 }
 body.flat.ttrss_main div#floatingTitle.Unread a.title {
-  color: #cccccc;
+  color: #e6e6e6;
 }
 body.flat.ttrss_main #headlines-frame .whiteBox {
   border-color: #222222;
 }
-body.flat.ttrss_main #headlines-frame .hl:not(.active):not(.Selected),
-body.flat.ttrss_main #headlines-frame .cdm:not(.Selected) {
+body.flat.ttrss_main #headlines-frame .hl:not(.active):not(.Selected):not(.Unread),
+body.flat.ttrss_main #headlines-frame .cdm.expandable:not(.active):not(.Selected):not(.Unread) {
   background: #333333;
+}
+body.flat.ttrss_main #headlines-frame .hl.Unread:not(.active):not(.Selected),
+body.flat.ttrss_main #headlines-frame .cdm.expandable.Unread:not(.active):not(.Selected) {
+  background: #222222;
+}
+body.flat.ttrss_main #headlines-frame .cdm.expanded {
+  background: #333333;
+}
+body.flat.ttrss_main #headlines-frame .hl.Unread .title,
+body.flat.ttrss_main #headlines-frame .cdm.Unread .title {
+  color: #e6e6e6;
+}
+body.flat.ttrss_main #headlines-frame .cdm.expanded.active .title {
+  color: #257aa7;
+}
+body.flat.ttrss_main #headlines-frame .cdm.expandable.active {
+  background: #222222 ! important;
 }
 body.flat.ttrss_main #headlines-frame .hl,
 body.flat.ttrss_main #headlines-frame .cdm {
@@ -1967,30 +1984,29 @@ body.flat.ttrss_main #headlines-frame .cdm {
 }
 body.flat.ttrss_main #headlines-frame .hl .title,
 body.flat.ttrss_main #headlines-frame .cdm .title {
-  color: #808080;
-}
-body.flat.ttrss_main #headlines-frame .hl .feed a,
-body.flat.ttrss_main #headlines-frame .cdm .feed a {
   color: #cccccc;
 }
+body.flat.ttrss_main #headlines-frame .hl .author,
+body.flat.ttrss_main #headlines-frame .cdm .author {
+  color: #999999;
+}
+body.flat.ttrss_main #headlines-frame .hl .updated,
+body.flat.ttrss_main #headlines-frame .cdm .updated,
 body.flat.ttrss_main #headlines-frame .hl .content,
 body.flat.ttrss_main #headlines-frame .cdm .content {
   color: #cccccc;
+}
+body.flat.ttrss_main #headlines-frame .hl .feed a,
+body.flat.ttrss_main #headlines-frame .cdm .feed a {
+  color: #e6e6e6;
 }
 body.flat.ttrss_main #headlines-frame .cdm .footer {
   border-color: #222222;
   color: #cccccc;
 }
-body.flat.ttrss_main #headlines-frame .hl.Unread .title,
-body.flat.ttrss_main #headlines-frame .cdm.Unread .title {
-  color: #cccccc;
-}
 body.flat.ttrss_main #headlines-frame i.material-icons,
 body.flat.ttrss_main #headlines-frame .dijitCheckBox {
   opacity: 0.7;
-}
-body.flat.ttrss_main #headlines-frame .cdm.expandable.active {
-  background: #262626 ! important;
 }
 body.flat.ttrss_main #content-insert .post .header {
   background: #222222;
@@ -2012,10 +2028,10 @@ body.flat.ttrss_main .dijitTab:not(.dijitTabChecked) {
   background: #222222;
 }
 body.flat.ttrss_main .dijitTab.dijitTabChecked.dijitTabHover {
-  color: #cccccc;
+  color: #e6e6e6;
 }
 body.flat.ttrss_main textarea {
-  color: #cccccc;
+  color: #e6e6e6;
 }
 body.flat.ttrss_main code {
   color: #c90 ! important;
