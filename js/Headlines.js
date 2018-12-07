@@ -246,6 +246,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (hl.marked) row_class += " marked";
 			if (hl.published) row_class += " published";
+			if (hl.unread) row_class += " Unread";
 
 			if (App.isCombinedMode()) {
 				row_class += App.getInitParam("cdm_expanded") ? " expanded" : " expandable";
