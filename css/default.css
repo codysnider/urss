@@ -1744,7 +1744,7 @@ body#sharepopup input {
   padding: 0px;
 }
 .flat .dijitCheckBox {
-  border: 0px;
+  margin: 1px;
 }
 .flat .dijitCheckBox:before {
   font-family: "flat-icon";

@@ -1744,7 +1744,7 @@ body#sharepopup input {
   padding: 0px;
 }
 .flat .dijitCheckBox {
-  border: 0px;
+  margin: 1px;
 }
 .flat .dijitCheckBox:before {
   font-family: "flat-icon";
@@ -1941,6 +1941,7 @@ body.flat.ttrss_main #content-insert .post .header {
 }
 body.flat.ttrss_main .dijitCheckBox:not(.dijitChecked)::before {
   color: #999999;
+  background: #222222;
 }
 body.flat.ttrss_main .insensitive {
   color: #999999;
