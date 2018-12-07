@@ -1238,15 +1238,17 @@ div#floatingTitle .right > * {
 div#floatingTitle .left i.material-icons,
 div#floatingTitle .right i.material-icons {
   margin-left: 2px;
-  font-size: 20px;
+  font-size: 21px;
   padding: 2px;
   user-select: none;
 }
-div#floatingTitle .left i.anchor,
-div#floatingTitle .right i.anchor {
+div#floatingTitle .left i.icon-anchor,
+div#floatingTitle .right i.icon-anchor {
   margin-left: 0px;
+  margin-right: 1px;
   padding: 0px;
   color: #ccc;
+  cursor: pointer;
 }
 div#floatingTitle span.author {
   color: #555555;
@@ -1260,9 +1262,6 @@ div#floatingTitle a.title {
   font-weight: 600;
   text-rendering: optimizelegibility;
   font-family: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-div#floatingTitle img.anchor {
-  margin-left: 0px;
 }
 div#floatingTitle div.feed {
   padding-right: 10px;

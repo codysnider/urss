@@ -237,15 +237,17 @@ div#floatingTitle {
 
 		i.material-icons {
 			margin-left : 2px;
-			font-size : 20px;
+			font-size : 21px;
 			padding : 2px;
 			user-select: none;
 		}
 
-		i.anchor {
+		i.icon-anchor {
 			margin-left : 0px;
+			margin-right : 1px; // replaces checkbox which is a bit wider
 			padding : 0px;
 			color : #ccc;
+			cursor : pointer;
 		}
 	}
 
@@ -262,10 +264,6 @@ div#floatingTitle {
 		font-weight : 600;
 		text-rendering: optimizelegibility;
 		font-family : @fonts-ui-bold;
-	}
-
-	img.anchor {
-		margin-left : 0px;
 	}
 
 	div.feed {

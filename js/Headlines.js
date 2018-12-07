@@ -158,6 +158,7 @@ define(["dojo/_base/declare"], function (declare) {
 		updateFloatingTitle: function (status_only) {
 			if (!App.isCombinedMode()/* || !App.getInitParam("cdm_expanded")*/) return;
 
+			const safety_offset = 120; /* px, needed for firefox */
 			const hf = $("headlines-frame");
 			const elems = $$("#headlines-frame > div[id*=RROW]");
 			const ft = $("floatingTitle");
@@ -165,7 +166,7 @@ define(["dojo/_base/declare"], function (declare) {
 			for (let i = 0; i < elems.length; i++) {
 				const row = elems[i];
 
-				if (row && row.offsetTop + row.offsetHeight > hf.scrollTop) {
+				if (row && row.offsetTop + row.offsetHeight > hf.scrollTop + safety_offset) {
 
 					const header = row.select(".header")[0];
 					const id = row.getAttribute("data-article-id");
@@ -176,7 +177,7 @@ define(["dojo/_base/declare"], function (declare) {
 							ft.setAttribute("data-article-id", id);
 							ft.innerHTML = header.innerHTML;
 
-							ft.select(".dijitCheckBox")[0].outerHTML = "<i class=\"material-icons anchor\" onclick=\"Article.cdmScrollToId(" + id + ", true)\">expand_more</i>";
+							ft.select(".dijitCheckBox")[0].outerHTML = "<i class=\"material-icons icon-anchor\" onclick=\"Article.cdmScrollToId(" + id + ", true)\">expand_more</i>";
 
 							this.initFloatingMenu();
 
@@ -202,11 +203,16 @@ define(["dojo/_base/declare"], function (declare) {
 
 					ft.style.marginRight = hf.offsetWidth - row.offsetWidth + "px";
 
-					if (header.offsetTop + header.offsetHeight < hf.scrollTop + ft.offsetHeight - 5 &&
+					/* if (header.offsetTop + header.offsetHeight < hf.scrollTop + ft.offsetHeight - 5 &&
 						row.offsetTop + row.offsetHeight >= hf.scrollTop + ft.offsetHeight - 5)
 						Element.show(ft);
 					else
-						Element.hide(ft);
+						Element.hide(ft); */
+
+					if (hf.scrollTop - row.offsetTop <= header.offsetHeight + safety_offset)
+						ft.fade({duration: 0.2});
+					else
+						ft.appear({duration: 0.2});
 
 					return;
 				}
