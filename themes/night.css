@@ -1944,6 +1944,15 @@ body.flat.ttrss_main #floatingTitle {
   background-color: #333333;
   border-color: #222222;
 }
+body.flat.ttrss_main #floatingTitle .feed a {
+  color: #cccccc;
+}
+body.flat.ttrss_main #floatingTitle i.material-icons {
+  opacity: 0.7;
+}
+body.flat.ttrss_main div#floatingTitle.Unread a.title {
+  color: #cccccc;
+}
 body.flat.ttrss_main #headlines-frame .whiteBox {
   border-color: #222222;
 }
