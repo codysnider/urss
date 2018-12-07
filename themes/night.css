@@ -1793,6 +1793,17 @@ body#sharepopup input {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.flat label.dijitButton {
+  border: 1px solid #ccc;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  top: 1px;
+}
+.flat label.dijitButton:hover {
+  background-color: #f5f5f5;
+}
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
@@ -1957,6 +1968,13 @@ body.flat.ttrss_main .dijitTab:not(.dijitTabChecked) {
 }
 body.flat.ttrss_main .dijitTab.dijitTabChecked.dijitTabHover {
   color: #e6e6e6;
+}
+body.flat.ttrss_main label.dijitButton {
+  border: 1px solid #666666;
+}
+body.flat.ttrss_main label.dijitButton:hover {
+  border-color: #2f2f2f;
+  background-color: #333333;
 }
 body.flat.ttrss_main textarea {
   color: #e6e6e6;
