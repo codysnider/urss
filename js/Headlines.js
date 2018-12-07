@@ -155,7 +155,7 @@ define(["dojo/_base/declare"], function (declare) {
 				console.warn("scrollHandler", e);
 			}
 		},
-		updateFloatingTitle: function (unread_only) {
+		updateFloatingTitle: function (status_only) {
 			if (!App.isCombinedMode()/* || !App.getInitParam("cdm_expanded")*/) return;
 
 			const hf = $("headlines-frame");
@@ -170,7 +170,7 @@ define(["dojo/_base/declare"], function (declare) {
 					const header = row.select(".header")[0];
 					const id = row.getAttribute("data-article-id");
 
-					if (unread_only || id != ft.getAttribute("data-article-id")) {
+					if (status_only || id != ft.getAttribute("data-article-id")) {
 						if (id != ft.getAttribute("data-article-id")) {
 
 							ft.setAttribute("data-article-id", id);
@@ -186,6 +186,16 @@ define(["dojo/_base/declare"], function (declare) {
 							ft.addClassName("Unread");
 						else
 							ft.removeClassName("Unread");
+
+						if (row.hasClassName("marked"))
+							ft.addClassName("marked");
+						else
+							ft.removeClassName("marked");
+
+						if (row.hasClassName("published"))
+							ft.addClassName("published");
+						else
+							ft.removeClassName("published");
 
 						PluginHost.run(PluginHost.HOOK_FLOATING_TITLE, row);
 					}
@@ -495,9 +505,10 @@ define(["dojo/_base/declare"], function (declare) {
 			const row = $("RROW-" + id);
 
 			if (row) {
-
 				row.toggleClassName("marked");
 				query.mark = row.hasClassName("marked") ? 1 : 0;
+
+				Headlines.updateFloatingTitle(true);
 
 				if (!client_only)
 					xhrPost("backend.php", query, (transport) => {
@@ -513,6 +524,8 @@ define(["dojo/_base/declare"], function (declare) {
 
 				row.toggleClassName("published");
 				query.pub = row.hasClassName("published") ? 1 : 0;
+
+				Headlines.updateFloatingTitle(true);
 
 				if (!client_only)
 					xhrPost("backend.php", query, (transport) => {
