@@ -63,7 +63,7 @@ class Af_Psql_Trgm extends Plugin {
 				ttrss_entries.title AS title,
 				updated, link,
 				ttrss_feeds.title AS feed_title,
-				SIMILARITY(ttrss_entries.title, '$title') AS sm
+				SIMILARITY(ttrss_entries.title, ?) AS sm
 			FROM
 				ttrss_entries, ttrss_user_entries LEFT JOIN ttrss_feeds ON (ttrss_feeds.id = feed_id)
 			WHERE
@@ -75,7 +75,7 @@ class Af_Psql_Trgm extends Plugin {
 				sm DESC, date_entered DESC
 			LIMIT 10");
 
-			$sth->execute([$owner_uid, $id]);
+			$sth->execute([$title, $owner_uid, $id]);
 
 			print "<ul class='panel panel-scrollable'>";
 
