@@ -1983,6 +1983,9 @@ body.flat.ttrss_main #content-insert .post .header {
   background: #222222;
   border-color: #222222;
 }
+body.flat.ttrss_main .dijitCheckBox:not(.dijitChecked)::before {
+  color: #999999;
+}
 body.flat.ttrss_main .insensitive {
   color: #999999;
 }
