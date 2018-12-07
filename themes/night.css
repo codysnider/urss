@@ -1840,16 +1840,14 @@ body#sharepopup input {
 }
 .flat .dijitTree .labelParam {
   float: right;
-  margin-right: 1em;
+  margin-right: 16px;
 }
 .flat .dijitTree .labelParam.filterDisabled,
 .flat .dijitTree .dijitTreeLabel.filterDisabled {
   text-decoration: line-through;
 }
 .flat .dijitTree .feedParam {
-  color: #555555;
   float: right;
-  margin-right: 1em;
 }
 .flat .dijitTree .filterRules {
   display: block;
@@ -1904,6 +1902,10 @@ body.flat.ttrss_main.ttrss_prefs #footer {
 }
 body.flat.ttrss_main.ttrss_prefs #footer a {
   color: #fff;
+}
+body.flat.ttrss_main.ttrss_prefs td.filename,
+body.flat.ttrss_main.ttrss_prefs div.prefHelp {
+  color: #999999;
 }
 body.flat.ttrss_main {
   color: #cccccc;
@@ -1976,7 +1978,7 @@ body.flat.ttrss_main #content-insert .post .header {
   border-color: #222222;
 }
 body.flat.ttrss_main .insensitive {
-  color: #cccccc;
+  color: #999999;
 }
 body.flat.ttrss_main .dijitAccordionInnerContainerSelected .dijitAccordionTitle {
   color: white;
@@ -1986,6 +1988,9 @@ body.flat.ttrss_main .dijitDialog .dijitDialogPaneContent {
 }
 body.flat.ttrss_main .dijitTab:not(.dijitTabChecked) {
   background: #222222;
+}
+body.flat.ttrss_main .dijitTab.dijitTabChecked.dijitTabHover {
+  color: #cccccc;
 }
 body.flat.ttrss_main textarea {
   color: #cccccc;

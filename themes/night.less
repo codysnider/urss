@@ -6,6 +6,7 @@
 @border-dark : #222;
 @bg-panel : #222;
 @fg-main: #ccc;
+@fg-insensitive: darken(@fg-main, 20%);
 @fg-light : #ccc;
 @bg-active: #2a89bc;
 
@@ -16,6 +17,11 @@ body.flat.ttrss_main.ttrss_prefs {
 
 	#footer a {
 		color : #fff;
+	}
+
+	td.filename,
+	div.prefHelp {
+		color : @fg-insensitive;
 	}
 }
 
@@ -110,7 +116,7 @@ body.flat.ttrss_main {
 	}
 
 	.insensitive {
-		color : @fg-light;
+		color : @fg-insensitive;
 	}
 
 	.dijitAccordionInnerContainerSelected .dijitAccordionTitle {
@@ -123,6 +129,10 @@ body.flat.ttrss_main {
 
 	.dijitTab:not(.dijitTabChecked) {
 		background : @bg-panel;
+	}
+
+	.dijitTab.dijitTabChecked.dijitTabHover {
+		color : @fg-light;
 	}
 
 	textarea {
