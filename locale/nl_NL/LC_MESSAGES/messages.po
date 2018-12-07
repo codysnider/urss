@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-03 14:24+0300\n"
-"PO-Revision-Date: 2018-12-05 18:43+0000\n"
-"Last-Translator: Patrick Ahles <p.ahles+weblate@gmail.com>\n"
+"PO-Revision-Date: 2018-12-08 14:36+0000\n"
+"Last-Translator: Eric Vissers <eric.vissers@xs4all.nl>\n"
 "Language-Team: Dutch <https://weblate.tt-rss.org/projects/tt-rss/messages/nl/"
 ">\n"
 "Language: nl_NL\n"
@@ -880,6 +880,8 @@ msgstr "%s kan worden bekeken via de volgende geheime URL:"
 #: classes/dlg.php:192
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
 msgstr ""
+"Je gebruikt het standaard tt-rss wachtwoord. Pas dit alsjeblief aan in de "
+"Voorkeuren (Persoonlijke gegevens / Authenticatie)."
 
 #: classes/dlg.php:196
 msgid "Open Preferences"
@@ -1429,11 +1431,11 @@ msgstr "Zoek naar"
 #: classes/feeds.php:1097
 #, php-format
 msgid "in %s"
-msgstr ""
+msgstr "in %s"
 
 #: classes/feeds.php:1102
 msgid "Used for word stemming"
-msgstr ""
+msgstr "Gebruikt voor woordstam"
 
 #: classes/feeds.php:1111
 msgid "Search syntax"
@@ -1591,7 +1593,7 @@ msgstr "Geen overeenkomstige gebruikers gevonden."
 
 #: classes/pref/system.php:29
 msgid "Event Log"
-msgstr ""
+msgstr "Gebeurtenissen logboek"
 
 #: classes/pref/system.php:40
 msgid "Refresh"
@@ -1693,7 +1695,7 @@ msgstr "Aanmaken"
 
 #: classes/pref/filters.php:987
 msgid "Regular expression, without outer delimiters (i.e. slashes)"
-msgstr ""
+msgstr "Regular expression, zonder buitenste afscheiding (bijv. slashes)"
 
 #: classes/pref/filters.php:993
 msgid "Inverse regular expression matching"
@@ -1880,6 +1882,8 @@ msgstr "Lang datumformaat"
 #: classes/pref/prefs.php:42
 msgid "The syntax used is identical to the PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
 msgstr ""
+"De gebruikte syntax is gelijk aan de PHP <a href='http://php.net/manual/"
+"function.date.php'>date()</a> functie."
 
 #: classes/pref/prefs.php:43
 msgid "On catchup show next feed"
@@ -2112,6 +2116,8 @@ msgstr "Systeem plug-ins"
 #: classes/pref/prefs.php:712
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr ""
+"Systeem plugins zijn ingesteld in <strong>config.php</strong> voor alle "
+"gebruikers."
 
 #: classes/pref/prefs.php:717
 #: classes/pref/prefs.php:773
@@ -2272,7 +2278,7 @@ msgstr "Afbeeldingen niet insluiten"
 #: classes/pref/feeds.php:712
 #: classes/pref/feeds.php:898
 msgid "Cache media"
-msgstr ""
+msgstr "Cache media"
 
 #: classes/pref/feeds.php:724
 #: classes/pref/feeds.php:904
@@ -2424,7 +2430,7 @@ msgstr "Gebruik deze bookmarklet om willekeurige pagina's met Tiny Tiny RSS te p
 #: plugins/af_psql_trgm/init.php:29
 #, php-format
 msgid "Data saved (%s, %d)"
-msgstr ""
+msgstr "Gegevens opgeslagen (%s,%d)"
 
 #: plugins/af_psql_trgm/init.php:119
 msgid "Show related articles"
@@ -2438,6 +2444,9 @@ msgstr "Markeer gelijksoortige artikelen als gelezen"
 #: plugins/af_psql_trgm/init.php:164
 msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
 msgstr ""
+"PostgreSQL trigram extensie geeft string overeenkomst weer als een floating "
+"point nummer (0-1). Het te laag instellen geeft valse positieven, nul zet "
+"controleren uit."
 
 #: plugins/af_psql_trgm/init.php:167
 msgid "Global settings"
@@ -2445,11 +2454,11 @@ msgstr "Algemene instellingen"
 
 #: plugins/af_psql_trgm/init.php:171
 msgid "Minimum similarity:"
-msgstr ""
+msgstr "Minimale overeenkomst:"
 
 #: plugins/af_psql_trgm/init.php:176
 msgid "Minimum title length:"
-msgstr ""
+msgstr "Minimale titel lengte:"
 
 #: plugins/af_psql_trgm/init.php:181
 msgid "Enable for all feeds:"
@@ -2458,23 +2467,23 @@ msgstr "Inschakelen voor alle feeds:"
 #: plugins/af_psql_trgm/init.php:198
 #: plugins/af_readability/init.php:90
 msgid "Currently enabled for (click to edit):"
-msgstr ""
+msgstr "Op dit moment ingeschakeld voor (klik om te bewerken):"
 
 #: plugins/af_psql_trgm/init.php:216
 msgid "Similarity (pg_trgm)"
-msgstr ""
+msgstr "Overeenkomst (pg_trgm)"
 
 #: plugins/af_redditimgur/init.php:30
 msgid "Reddit content settings (af_redditimgur)"
-msgstr ""
+msgstr "Reddit inhoud instellingen (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:60
 msgid "Extract missing content using Readability"
-msgstr ""
+msgstr "Leid missende content af met Readability"
 
 #: plugins/af_redditimgur/init.php:65
 msgid "Enable additional duplicate checking"
-msgstr ""
+msgstr "Schakel additionele controle op duplicaten in"
 
 #: plugins/af_redditimgur/init.php:79
 #: plugins/af_zz_imgproxy/init.php:252
@@ -2500,19 +2509,24 @@ msgstr "Configuratie opgeslagen."
 
 #: plugins/af_comics/init.php:49
 msgid "Feeds supported by af_comics"
-msgstr ""
+msgstr "Feeds ondersteund door af_comics"
 
 #: plugins/af_comics/init.php:51
 msgid "The following comics are currently supported:"
-msgstr ""
+msgstr "De volgende comics worden op dit moment ondersteund:"
 
 #: plugins/af_comics/init.php:69
 msgid "To subscribe to GoComics use the comic's regular web page as the feed URL (e.g. for the <em>Garfield</em> comic use <code>http://www.gocomics.com/garfield</code>)."
 msgstr ""
+"Om te abonneren op GoCommics gebruik de comics regulere web pagina als het "
+"feed URL (bijv. voor de comic <em>Garfield</em> gebruik "
+"<code>http://www.gocomics.com/garfield</code>)."
 
 #: plugins/af_comics/init.php:71
 msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
 msgstr ""
+"Ze elke aangepast filter in <code>filters.local</code> in de plugin "
+"directory."
 
 #: plugins/note/init.php:28
 #: plugins/note/note.js:10
@@ -2541,7 +2555,7 @@ msgstr "Artikel niet meer delen"
 
 #: plugins/mail/init.php:29
 msgid "Mail addresses saved."
-msgstr ""
+msgstr "Email adressen opgeslagen."
 
 #: plugins/mail/init.php:35
 msgid "Mail plugin"
@@ -2550,6 +2564,8 @@ msgstr "Mail plug-in"
 #: plugins/mail/init.php:37
 msgid "You can set predefined email addressed here (comma-separated list):"
 msgstr ""
+"Je kunt voorgedefinieerde email adressen hier instellen (komma gescheiden "
+"lijst):"
 
 #: plugins/mail/init.php:118
 #: plugins/mail/init.php:124
@@ -2598,7 +2614,7 @@ msgstr "Sluit dit dialoogvenster"
 
 #: plugins/af_zz_imgproxy/init.php:208
 msgid "Image proxy settings (af_zz_imgproxy)"
-msgstr ""
+msgstr "Afbeelding proxy instellingen (af_zz_imgproxy)"
 
 #: plugins/af_zz_imgproxy/init.php:232
 msgid "Enable proxy for all remote images."
@@ -2626,29 +2642,27 @@ msgstr "Sluit artikel"
 
 #: plugins/af_readability/init.php:25
 msgid "Data saved."
-msgstr ""
+msgstr "Gegevens opgeslagen."
 
 #: plugins/af_readability/init.php:41
-#, fuzzy
 msgid "Inline content"
-msgstr "Bewerk artikel notitie"
+msgstr "Inhoud weergeven"
 
 #: plugins/af_readability/init.php:47
 msgid "Readability settings (af_readability)"
-msgstr ""
+msgstr "Readability instellingen (af_readability)"
 
 #: plugins/af_readability/init.php:78
 msgid "Use Readability for pages shared via bookmarklet."
-msgstr ""
+msgstr "Gebruik Readability voor pagina's gedeeld via bookmarklet."
 
 #: plugins/af_readability/init.php:107
 msgid "Readability"
 msgstr "Readability"
 
 #: plugins/af_readability/init.php:118
-#, fuzzy
 msgid "Inline article content"
-msgstr "Bewerk artikel notitie"
+msgstr "Artikel inhoud weergeven"
 
 #: plugins/toggle_sidebar/init.php:23
 msgid "Collapse feedlist"
@@ -2760,6 +2774,8 @@ msgstr "Artikel URL:"
 #: js/Article.js:162
 msgid "Could not display article (invalid object received - see error console for details)"
 msgstr ""
+"Kon artikel niet weergeven (ongelding object ontvangen - zie error console "
+"voor details)"
 
 #: js/Article.js:186
 msgid "Edit article Tags"
@@ -2784,6 +2800,8 @@ msgstr "Abonneren op feed"
 #: js/CommonDialogs.js:94
 msgid "Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."
 msgstr ""
+"Kan de uitvoer niet ontleden. Dit kan een server timeout en/of netwerk "
+"problemen aangeven. Backend output was naar de browser console geschreven."
 
 #: js/CommonDialogs.js:109
 #, perl-format
@@ -3102,7 +3120,7 @@ msgstr "Artikel doorsturen per e-mail"
 
 #: plugins/mail/mail.js:30
 msgid "Error sending email:"
-msgstr ""
+msgstr "Fout bij verzenden van email:"
 
 #: plugins/shorten_expanded/init.js:34
 msgid "Click to expand article"
@@ -3129,11 +3147,13 @@ msgstr "Kies het bestand eerst aub."
 
 #: js/AppBase.js:267
 msgid "<span onclick=\"App.explainError(1)\">Update daemon is not running.</span>"
-msgstr ""
+msgstr "<span onclick=\"App.explainError(1)\">Update daemon draait niet.</span>"
 
 #: js/AppBase.js:282
 msgid "<span onclick=\"App.explainError(3)\">Update daemon is not updating feeds.</span>"
 msgstr ""
+"<span onclick=\"App.explainError(3)\">Update daemon werkt geen feeds "
+"bij.</span>"
 
 #: js/Article.js:190
 msgid "Saving article tags..."
@@ -3199,7 +3219,7 @@ msgstr "Bewerk actie"
 
 #: js/CommonFilters.js:194
 msgid "Looking for articles (%d processed, %f found)..."
-msgstr ""
+msgstr "Op zoek naar artikelen (%d verwerkt, %f gevonden)..."
 
 #: js/CommonFilters.js:224
 msgid "Found %d articles matching this filter:"
@@ -3207,7 +3227,7 @@ msgstr "%d artikelen gevonden volgens dit filter:"
 
 #: js/CommonFilters.js:235
 msgid "Error while trying to get filter test results."
-msgstr ""
+msgstr "Fout bij het verkijgen van de filter test resultaten."
 
 #: js/CommonFilters.js:277
 msgid "Create Filter"
@@ -3406,7 +3426,7 @@ msgstr "Eerst embed_original plug-in inschakelen aub."
 #: js/tt-rss.js:444
 #: js/tt-rss.js:535
 msgid "Widescreen is not available in combined mode."
-msgstr ""
+msgstr "Breedbeeld is niet beschikbaar in combinatie modus."
 
 #: js/tt-rss.js:504
 msgid "Please select some feed first."
