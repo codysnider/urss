@@ -1,20 +1,7 @@
 .flat {
 
 	li {
-		padding : 2px;
-	}
-
-	.filterRules span.inverse,
-	#filterDlg_Matches span.filterRule.inverse {
-		color: red;
-	}
-
-	.dijitDialog .dijitDialogPaneContent {
-		background : @color-panel-bg;
-	}
-
-	.dijitAccordionContainer {
-		box-shadow : 0px 0px 8px rgba(0,0,0,0.1);
+		padding: 2px;
 	}
 
 	.filterRules span {
@@ -26,37 +13,45 @@
 		color: green;
 	}
 
+	.filterRules span.inverse,
+	#filterDlg_Matches span.filterRule.inverse {
+		color: red;
+	}
+
 	.dijitToolbar {
-		font-size : 13px;
-		padding : 0px;
+		font-size: 13px;
+		padding: 0px;
+	}
+
+	.dijitAccordionContainer {
+		box-shadow : 0px 0px 8px rgba(0,0,0,0.1);
+	}
+
+	.dijitDialog .dijitDialogPaneContent {
+		background : @bg-panel;
 	}
 
 	.dijitTab:not(.dijitTabChecked) {
-		background : @color-panel-bg;
-	}
-
-	.dijitMenu .dijitMenuItem .dijitMenuItemLabel {
-		padding : 4px 8px;
-		font-size : 13px;
-	}
-
-	.dijitMenu .dijitMenuItem td {
-		padding : 0px;
-	}
-
-	.dijitCheckBox {
-		border : 0px;
-		background : #ccc;
-	}
-
-	.dijitCheckBox:before {
-		font-family: "flat-icon";
-		content : "\f00c";
-		color : white;
+		background : @bg-panel;
 	}
 
 	.dijitCheckBox.dijitCheckBoxChecked {
 		background-color : #69C671;
+	}
+
+	.dijitMenu .dijitMenuItem .dijitMenuItemLabel {
+		padding: 4px 8px;
+		font-size: 13px;
+	}
+
+	.dijitMenu .dijitMenuItem td {
+		padding: 0px;
+	}
+
+	.dijitCheckBox:before {
+		font-family: "flat-icon";
+		content: "\f00c";
+		color: white;
 	}
 
 	.dijitTree {
@@ -65,19 +60,24 @@
 			display : none;
 		}
 
-		.dijitTreeRow .dijitTreeExpando {
-			position : relative;
-			top : -2px;
-		}
+		.dijitTreeRowSelected {
+			.filterRules span {
+				color : white;
+			}
 
-		.dijitTreeRowSelected .dijitTreeExpando {
-			color : @color-accent;
+			.dijitTreeExpando {
+				color : @color-accent;
+			}
 		}
 
 		.dijitTreeNode .dijitTreeRow.dijitTreeRowSelected {
 			color : white;
 		}
 
+		.dijitTreeRow .dijitTreeExpando {
+			position : relative;
+			top : -2px;
+		}
 		.labelParam {
 			float: right;
 			margin-right: 1em;
@@ -102,9 +102,6 @@
 			line-height : normal;
 		}
 
-		.dijitTreeRowSelected .filterRules span {
-			color : white;
-		}
 
 		.dijitTreeContainer {
 			max-width : 100%;
@@ -115,10 +112,5 @@
 			text-overflow: ellipsis;
 		}
 
-		.dijitTreeNode .dijitTreeRow {
-			padding : 4px 0px 4px;
-			border-width : 1px;
-			color : #333;
-		}
 	}
 }
