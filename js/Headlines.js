@@ -266,9 +266,9 @@ define(["dojo/_base/declare"], function (declare) {
 			if (App.isCombinedMode()) {
 				row_class += App.getInitParam("cdm_expanded") ? " expanded" : " expandable";
 
-				let originally_from = hl.orig_feed ? `<div>
+				let originally_from = hl.orig_feed ? `<span>
 					${__('Originally from:')} <a target="_blank" rel="noopener noreferrer" href="${hl.orig_feed[1]}">${hl.orig_feed[0]}</a>
-					</div>` : "";
+					</span>` : "";
 
 				let comments = "";
 
@@ -320,8 +320,7 @@ define(["dojo/_base/declare"], function (declare) {
 							<div class="content" onclick="return Headlines.click(event, ${hl.id}, true);">
 								<div id="POSTNOTE-${hl.id}">${hl.note}</div>
 								<div class="content-inner" lang="${hl.lang ? hl.lang : 'en'}"></div>
-								<div class="intermediate">
-									${originally_from}
+								<div class="intermediate">									
 									${hl.enclosures}
 								</div>
 								<div class="footer" onclick="event.stopPropagation()">
@@ -335,7 +334,10 @@ define(["dojo/_base/declare"], function (declare) {
 										${comments}
 									</div>
 									
-									<div class="right">${hl.buttons}</div>
+									<div class="right">
+									 	${originally_from}
+										${hl.buttons}
+									</div>
 								</div>
 							</div>
 						</div>`;
