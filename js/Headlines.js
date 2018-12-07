@@ -248,6 +248,22 @@ define(["dojo/_base/declare"], function (declare) {
 			if (hl.published) row_class += " published";
 			if (hl.unread) row_class += " Unread";
 
+
+			if (headlines.vfeed_group_enabled && hl.feed_title && this.vgroup_last_feed != hl.feed_id) {
+				let vgrhdr = `<div data-feed-id='${hl.feed_id}' class='feed-title'>
+					<div style='float : right'>${hl.feed_icon}</div>
+					<a class="title" href="#" onclick="Feeds.open({feed:${hl.feed_id}})">${hl.feed_title}
+					<a class="catchup" onclick="Feeds.catchupFeedInGroup(${hl.feed_id})" href="#">${__('mark feed as read')}</a>
+					</div>`
+
+				const tmp = document.createElement("div");
+				tmp.innerHTML = vgrhdr;
+
+				$("headlines-frame").appendChild(tmp.firstChild);
+
+				this.vgroup_last_feed = hl.feed_id;
+			}
+
 			if (App.isCombinedMode()) {
 				row_class += App.getInitParam("cdm_expanded") ? " expanded" : " expandable";
 
@@ -343,11 +359,13 @@ define(["dojo/_base/declare"], function (declare) {
 			`;
 			}
 
-			const tmp = document.createElement("div");
-			tmp.innerHTML = row;
-			dojo.parser.parse(tmp);
+			if (row != null) {
+				const tmp = document.createElement("div");
+				tmp.innerHTML = row;
+				dojo.parser.parse(tmp);
 
-			$("headlines-frame").appendChild(tmp.firstChild);
+				$("headlines-frame").appendChild(tmp.firstChild);
+			}
 		},
 		onLoaded: function (transport, offset) {
 			const reply = App.handleRpcJson(transport);
@@ -390,11 +408,12 @@ define(["dojo/_base/declare"], function (declare) {
 
 				console.log('received', headlines_count, 'headlines, infscroll disabled=', Feeds.infscroll_disabled);
 
-				this.vgroup_last_feed = reply['headlines-info']['vgroup_last_feed'];
+				//this.vgroup_last_feed = reply['headlines-info']['vgroup_last_feed'];
 				this.current_first_id = reply['headlines']['first_id'];
 
 				if (offset == 0) {
 					this.loaded_article_ids = [];
+					this.vgroup_last_feed = undefined;
 
 					dojo.html.set($("toolbar-headlines"),
 						reply['headlines']['toolbar'],

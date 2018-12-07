@@ -340,11 +340,6 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (offset != 0) {
 				query.skip = offset;
-
-				// to prevent duplicate feed titles when showing grouped vfeeds
-				if (Headlines.vgroup_last_feed != undefined) {
-					query.vgrlf = Headlines.vgroup_last_feed;
-				}
 			} else if (!is_cat && feed == this.getActive() && !params.method) {
 				query.m = "ForceUpdate";
 			}

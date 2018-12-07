@@ -680,7 +680,7 @@ body.ttrss_main #headlines-frame {
 body.ttrss_main #headlines-frame div.feed-title {
   border: 0px solid #257aa7;
   border-bottom-width: 1px;
-  padding: 5px 3px 5px 5px;
+  padding: 5px 8px;
 }
 body.ttrss_main #headlines-frame div.feed-title a.title {
   color: #555555;

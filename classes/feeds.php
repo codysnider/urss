@@ -113,8 +113,7 @@ class Feeds extends Handler_Protected {
 	}
 
 	private function format_headlines_list($feed, $method, $view_mode, $limit, $cat_view,
-					$offset, $vgr_last_feed = false,
-					$override_order = false, $include_children = false, $check_first_id = false,
+					$offset, $override_order = false, $include_children = false, $check_first_id = false,
 					$skip_first_id_check = false) {
 
 		$disable_cache = false;
@@ -216,8 +215,7 @@ class Feeds extends Handler_Protected {
 		$highlight_words = $qfh_ret[5];
 		$reply['first_id'] = $qfh_ret[6];
 		$reply['search_query'] = [$search, $search_language];
-
-		$vgroup_last_feed = $vgr_last_feed;
+		$reply['vfeed_group_enabled'] = $vfeed_group_enabled;
 
 		$reply['toolbar'] = $this->format_headline_subtoolbar($feed_site_url,
 			$feed_title,
@@ -737,8 +735,7 @@ class Feeds extends Handler_Protected {
 
 		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("H2", $timing_info);
 
-		return array($topmost_article_ids, $headlines_count, $feed, $disable_cache,
-			$vgroup_last_feed, $reply);
+		return array($topmost_article_ids, $headlines_count, $feed, $disable_cache, $reply);
 	}
 
 	function catchupAll() {
@@ -763,7 +760,6 @@ class Feeds extends Handler_Protected {
 		@$cat_view = $_REQUEST["cat"] == "true";
 		@$next_unread_feed = $_REQUEST["nuf"];
 		@$offset = $_REQUEST["skip"];
-		@$vgroup_last_feed = $_REQUEST["vgrlf"];
 		$order_by = $_REQUEST["order_by"];
 		$check_first_id = $_REQUEST["fid"];
 
@@ -851,18 +847,12 @@ class Feeds extends Handler_Protected {
 
 		$ret = $this->format_headlines_list($feed, $method,
 			$view_mode, $limit, $cat_view, $offset,
-			$vgroup_last_feed, $override_order, true, $check_first_id, $skip_first_id_check);
+			$override_order, true, $check_first_id, $skip_first_id_check);
 
-		//$topmost_article_ids = $ret[0];
 		$headlines_count = $ret[1];
-		/* $returned_feed = $ret[2]; */
 		$disable_cache = $ret[3];
-		$vgroup_last_feed = $ret[4];
 
-		//$reply['headlines']['content'] =& $ret[5]['content'];
-		//$reply['headlines']['toolbar'] =& $ret[5]['toolbar'];
-
-		$reply['headlines'] = $ret[5];
+		$reply['headlines'] = $ret[4];
 
 		if (!$next_unread_feed)
 			$reply['headlines']['id'] = $feed;
@@ -874,8 +864,7 @@ class Feeds extends Handler_Protected {
 		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("05", $timing_info);
 
 		$reply['headlines-info'] = array("count" => (int) $headlines_count,
-						"vgroup_last_feed" => $vgroup_last_feed,
-						"disable_cache" => (bool) $disable_cache);
+            						"disable_cache" => (bool) $disable_cache);
 
 		if ($_REQUEST["debug"]) $timing_info = print_checkpoint("30", $timing_info);
 
@@ -921,7 +910,6 @@ class Feeds extends Handler_Protected {
 		$reply['headlines']['content'] .= "</span></p>";
 
 		$reply['headlines-info'] = array("count" => 0,
-			"vgroup_last_feed" => '',
 			"unread" => 0,
 			"disable_cache" => true);
 
@@ -938,7 +926,6 @@ class Feeds extends Handler_Protected {
 		$reply['headlines']['content'] = "<div class='whiteBox'>". $error . "</div>";
 
 		$reply['headlines-info'] = array("count" => 0,
-			"vgroup_last_feed" => '',
 			"unread" => 0,
 			"disable_cache" => true);
 
