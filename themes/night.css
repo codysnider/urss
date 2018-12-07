@@ -1091,7 +1091,7 @@ video::-webkit-media-controls-overlay-play-button {
   flex-grow: 2;
 }
 .cdm .intermediate {
-  margin: 10px;
+  margin-top: 10px;
 }
 .cdm .content-inner {
   margin: 10px;
