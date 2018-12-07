@@ -40,7 +40,7 @@ define(["dojo/_base/declare"], function (declare) {
 				title: __("Settings Profiles"),
 				style: "width: 600px",
 				getSelectedProfiles: function () {
-					return Tables.getSelected("prefFeedProfileList");
+					return Tables.getSelected("pref-profiles-list");
 				},
 				removeSelected: function () {
 					const sel_rows = this.getSelectedProfiles();

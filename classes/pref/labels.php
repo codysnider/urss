@@ -255,11 +255,11 @@ class Pref_Labels extends Handler_Protected {
 
 	function index() {
 
-		print "<div id=\"pref-label-wrap\" dojoType=\"dijit.layout.BorderContainer\" gutters=\"false\">";
-		print "<div id=\"pref-label-header\" dojoType=\"dijit.layout.ContentPane\" region=\"top\">";
-		print "<div id=\"pref-label-toolbar\" dojoType=\"dijit.Toolbar\">";
+		print "<div dojoType='dijit.layout.BorderContainer' gutters='false'>";
+		print "<div style='padding : 0px' dojoType='dijit.layout.ContentPane' region='top'>";
+		print "<div dojoType='dijit.Toolbar'>";
 
-		print "<div dojoType=\"dijit.form.DropDownButton\">".
+		print "<div dojoType='dijit.form.DropDownButton'>".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"dijit.byId('labelTree').model.setAllChecked(true)\"
@@ -280,7 +280,7 @@ class Pref_Labels extends Handler_Protected {
 
 		print "</div>"; #toolbar
 		print "</div>"; #pane
-		print "<div id=\"pref-label-content\" dojoType=\"dijit.layout.ContentPane\" region=\"center\">";
+		print "<div style='padding : 0px' dojoType=\"dijit.layout.ContentPane\" region=\"center\">";
 
 		print "<div id=\"labellistLoading\">
 		<img src='images/indicator_tiny.gif'>".

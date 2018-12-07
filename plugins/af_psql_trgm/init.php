@@ -77,7 +77,7 @@ class Af_Psql_Trgm extends Plugin {
 
 			$sth->execute([$owner_uid, $id]);
 
-			print "<ul class='browseFeedList'>";
+			print "<ul class='panel panel-scrollable'>";
 
 			while ($line = $sth->fetch()) {
 				print "<li style='display : flex'>";
@@ -199,7 +199,7 @@ class Af_Psql_Trgm extends Plugin {
 			if (count($enabled_feeds) > 0) {
 				print "<h3>" . __("Currently enabled for (click to edit):") . "</h3>";
 
-				print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
+				print "<ul class=\"panel panel-scrollable list list-unstyled\">";
 				foreach ($enabled_feeds as $f) {
 					print "<li>" .
 						"<img src='images/pub_set.png'

@@ -179,7 +179,7 @@ define(["dojo/_base/declare"], function (declare) {
 				title: __("Feeds with update errors"),
 				style: "width: 600px",
 				getSelectedFeeds: function () {
-					return Tables.getSelected("prefErrorFeedList");
+					return Tables.getSelected("error-feeds-list");
 				},
 				removeSelected: function () {
 					const sel_rows = this.getSelectedFeeds();

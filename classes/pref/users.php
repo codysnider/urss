@@ -153,7 +153,7 @@ class Pref_Users extends Handler_Protected {
 					WHERE owner_uid = ? ORDER BY title");
 				$sth->execute([$id]);
 
-				print "<ul class=\"userFeedList\">";
+				print "<ul class=\"panel panel-scrollable list list-unstyled\">";
 
 				while ($line = $sth->fetch()) {
 
@@ -326,10 +326,9 @@ class Pref_Users extends Handler_Protected {
 
 			global $access_level_names;
 
-			print "<div id=\"pref-user-wrap\" dojoType=\"dijit.layout.BorderContainer\" gutters=\"false\">";
-			print "<div id=\"pref-user-header\" dojoType=\"dijit.layout.ContentPane\" region=\"top\">";
-
-			print "<div id=\"pref-user-toolbar\" dojoType=\"dijit.Toolbar\">";
+			print "<div dojoType='dijit.layout.BorderContainer' gutters='false'>";
+			print "<div style='padding : 0px' dojoType='dijit.layout.ContentPane' region='top'>";
+			print "<div dojoType='dijit.Toolbar'>";
 
 			$user_search = trim(clean($_REQUEST["search"]));
 
@@ -376,7 +375,7 @@ class Pref_Users extends Handler_Protected {
 
 			print "</div>"; #toolbar
 			print "</div>"; #pane
-			print "<div id=\"pref-user-content\" dojoType=\"dijit.layout.ContentPane\" region=\"center\">";
+			print "<div style='padding : 0px' dojoType='dijit.layout.ContentPane' region='center'>";
 
 			$sort = validate_field($sort,
 				["login", "access_level", "created", "num_feeds", "created", "last_login"], "login");

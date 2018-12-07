@@ -16,15 +16,12 @@ class Dlg extends Handler_Protected {
 	function importOpml() {
 		print __("If you have imported labels and/or filters, you might need to reload preferences to see your new data.") . "</p>";
 
-		print "<div class=\"prefFeedOPMLHolder\">";
-
-		print "<ul class='nomarks'>";
+		print "<div class='panel panel-scrollable'>";
 
 		$opml = new Opml($_REQUEST);
 
 		$opml->opml_import($_SESSION["uid"]);
 
-		print "</ul>";
 		print "</div>";
 
 		print "<div align='center'>";
@@ -43,7 +40,7 @@ class Dlg extends Handler_Protected {
 
 		print __("Your Public OPML URL is:");
 
-		print "<div class=\"tagCloudContainer\">";
+		print "<div class='panel'>";
 		print "<a id='pub_opml_url' href='$url_path' target='_blank'>$url_path</a>";
 		print "</div>";
 
@@ -94,7 +91,7 @@ class Dlg extends Handler_Protected {
 	}
 
 	function printTagCloud() {
-		print "<div class=\"tagCloudContainer\">";
+		print "<div class='panel'>";
 
 		// from here: http://www.roscripts.com/Create_tag_cloud-71.html
 
@@ -170,7 +167,7 @@ class Dlg extends Handler_Protected {
 
 		print "<div>".T_sprintf("%s can be accessed via the following secret URL:", $feed_title)."</div>";
 
-		print "<div class=\"tagCloudContainer\">";
+		print "<div class='panel'>";
 		print "<a id='gen_feed_url' href='$url_path' target='_blank'>$url_path</a>";
 		print "</div>";
 

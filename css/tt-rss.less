@@ -330,15 +330,6 @@ body.ttrss_main {
 		color : #909090;
 	}
 
-	div.filterTestHolder {
-		height : 300px;
-		overflow : auto;
-		border-color : #ddd;
-		border-style : solid;
-		margin : 0px 0px 5px 0px;
-		border-width : 1px;
-	}
-
 	#content-insert blockquote,
 	#headlines-frame blockquote,
 	.dijitContentPane blockquote {
@@ -429,12 +420,6 @@ body.ttrss_main {
 		}
 	}
 
-	ul.nomarks {
-		list-style-type : none;
-		margin : 0px;
-		padding : 10px;
-	}
-
 	div.prefHelp {
 		color : @default-text;
 		padding : 5px;
@@ -478,33 +463,11 @@ body.ttrss_main {
 		color : #ccc;
 	}
 
-	div.tagCloudContainer {
-		background : white;
-		border : 1px solid #ddd;
-		margin : 5px 0px 5px 0px;
-		padding : 5px;
-		text-align : center;
-	}
-
 	div.errorExplained {
 		border : 1px solid #ddd;
 		margin : 5px 0px 5px 0px;
 		padding : 5px;
 	}
-
-	ul.feedErrorsList {
-		max-height : 300px;
-		overflow : auto;
-		list-style-type : none;
-		border : 1px solid #ddd;
-		margin : 0px 0px 5px 0px;
-		padding : 5px;
-
-		em {
-			color : @default-text;
-		}
-	}
-
 
 	ul.browseFeedList {
 		height : 300px;
@@ -561,11 +524,6 @@ body.ttrss_main {
 	#overlay_inner {
 		font-weight : bold;
 		margin : 1em;
-	}
-
-	form {
-		margin : 0px;
-		padding : 0px;
 	}
 
 	div.loadingPrompt {
@@ -1210,6 +1168,33 @@ body.ttrss_main {
 
 	.score-neutral i.icon-score {
 		opacity : 0.5;
+	}
+
+	.panel {
+		border : 1px solid #ddd;
+		background : @color-panel-bg;
+		padding : 4px;
+	}
+
+	.dijitDialog .panel {
+		background : white;
+	}
+
+	.panel-scrollable {
+		overflow : auto;
+		height : 200px;
+	}
+
+	ul.list li {
+		padding : 2px;
+	}
+
+	ul.list {
+		padding : 4px;
+	}
+
+	ul.list-unstyled {
+		list-style-type : none;
 	}
 
 }

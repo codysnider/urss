@@ -1015,9 +1015,9 @@ class Pref_Prefs extends Handler_Protected {
 		print "<div dojoType=\"dijit.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-		print "<div onclick=\"Tables.select('prefFeedProfileList', true)\"
+		print "<div onclick=\"Tables.select('pref-profiles-list', true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
-		print "<div onclick=\"Tables.select('prefFeedProfileList', false)\"
+		print "<div onclick=\"Tables.select('pref-profiles-list', false)\"
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 
@@ -1035,19 +1035,15 @@ class Pref_Prefs extends Handler_Protected {
 			WHERE owner_uid = ? ORDER BY title");
 		$sth->execute([$_SESSION['uid']]);
 
-		print "<div class=\"prefProfileHolder\">";
+		print "<div class='panel panel-scrollable'>";
 
-		print "<form id=\"profile_edit_form\" onsubmit=\"return false\">";
+		print "<form id='profile_edit_form' onsubmit='return false'>";
 
-		print "<table width=\"100%\" class=\"prefFeedProfileList\"
-			cellspacing=\"0\" id=\"prefFeedProfileList\">";
+		print "<table width='100%' id='pref-profiles-list'>";
 
-		print "<tr class=\"placeholder\">"; # data-row-id='0' <-- no point, shouldn't be removed
+		print "<tr>"; # data-row-id='0' <-- no point, shouldn't be removed
 
-		print "<td width='5%' align='center'><input
-			onclick='Tables.onRowChecked(this);'
-			dojoType=\"dijit.form.CheckBox\"
-			type=\"checkbox\"></td>";
+		print "<td><input onclick='Tables.onRowChecked(this);' dojoType='dijit.form.CheckBox' type='checkbox'></td>";
 
 		if (!$_SESSION["profile"]) {
 			$is_active = __("(active)");
@@ -1055,8 +1051,7 @@ class Pref_Prefs extends Handler_Protected {
 			$is_active = "";
 		}
 
-		print "<td><span>" .
-			__("Default profile") . " $is_active</span></td>";
+		print "<td width='100%'><span>" . __("Default profile") . " $is_active</span></td>";
 
 		print "</tr>";
 
@@ -1066,14 +1061,11 @@ class Pref_Prefs extends Handler_Protected {
 
 			$profile_id = $line["id"];
 
-			print "<tr class=\"placeholder\" data-row-id='$profile_id'>";
+			print "<tr data-row-id='$profile_id'>";
 
 			$edit_title = htmlspecialchars($line["title"]);
 
-			print "<td width='5%' align='center'><input
-				onclick='Tables.onRowChecked(this);'
-				dojoType=\"dijit.form.CheckBox\"
-				type=\"checkbox\"></td>";
+			print "<td><input onclick='Tables.onRowChecked(this);' dojoType='dijit.form.CheckBox' type='checkbox'></td>";
 
 			if ($_SESSION["profile"] == $line["id"]) {
 				$is_active = __("(active)");

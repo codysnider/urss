@@ -369,7 +369,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 				title: __("Feeds without recent updates"),
 				style: "width: 600px",
 				getSelectedFeeds: function () {
-					return Tables.getSelected("prefInactiveFeedList");
+					return Tables.getSelected("inactive-feeds-list");
 				},
 				removeSelected: function () {
 					const sel_rows = this.getSelectedFeeds();

@@ -199,8 +199,8 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<div><img id='prefFilterLoadingIndicator' src='images/indicator_tiny.gif'>&nbsp;<span id='prefFilterProgressMsg'>Looking for articles...</span></div>";
 
-		print "<br/><div class=\"filterTestHolder\">";
-		print "<table width=\"100%\" cellspacing=\"0\" id=\"prefFilterTestResultList\">";
+		print "<br/><div class='panel panel-scrollable'>";
+		print "<table width='100%' id='prefFilterTestResultList'>";
 		print "</table></div>";
 
 		print "<div style='text-align : center'>";
@@ -772,9 +772,9 @@ class Pref_Filters extends Handler_Protected {
 			$filter_search = $_SESSION["prefs_filter_search"];
 		}
 
-		print "<div id=\"pref-filter-wrap\" dojoType=\"dijit.layout.BorderContainer\" gutters=\"false\">";
-		print "<div id=\"pref-filter-header\" dojoType=\"dijit.layout.ContentPane\" region=\"top\">";
-		print "<div id=\"pref-filter-toolbar\" dojoType=\"dijit.Toolbar\">";
+		print "<div dojoType='dijit.layout.BorderContainer' gutters='false'>";
+		print "<div style='padding : 0px' dojoType='dijit.layout.ContentPane' region='top'>";
+		print "<div dojoType='dijit.Toolbar'>";
 
 		if (array_key_exists("search", $_REQUEST)) {
 			$_SESSION["prefs_filter_search"] = $filter_search;
@@ -816,9 +816,9 @@ class Pref_Filters extends Handler_Protected {
 
 		print "</div>"; # toolbar
 		print "</div>"; # toolbar-frame
-		print "<div id=\"pref-filter-content\" dojoType=\"dijit.layout.ContentPane\" region=\"center\">";
+		print "<div style='padding : 0px' dojoType='dijit.layout.ContentPane' region='center'>";
 
-		print "<div id=\"filterlistLoading\">
+		print "<div id='filterlistLoading'>
 		<img src='images/indicator_tiny.gif'>".
 		 __("Loading, please wait...")."</div>";
 

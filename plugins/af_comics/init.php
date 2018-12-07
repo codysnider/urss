@@ -61,7 +61,7 @@ class Af_Comics extends Plugin {
 
 		asort($comics);
 
-		print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
+		print "<ul class='panel panel-scrollable list list-unstyled'>";
 		foreach ($comics as $comic) {
 			print "<li>$comic</li>";
 		}

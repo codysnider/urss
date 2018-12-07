@@ -1132,8 +1132,8 @@ class Pref_Feeds extends Handler_Protected {
 
 	function index() {
 
-		print "<div dojoType=\"dijit.layout.AccordionContainer\" region=\"center\">";
-		print "<div id=\"pref-feeds-feeds\" dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType='dijit.layout.AccordionContainer' region='center'>";
+		print "<div style='padding : 0px' dojoType='dijit.layout.AccordionPane' 
 			title=\"<i class='material-icons'>rss_feed</i> ".__('Feeds')."\">";
 
 		$sth = $this->pdo->prepare("SELECT COUNT(id) AS num_errors
@@ -1222,7 +1222,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "</div>"; # toolbar
 
 		//print '</div>';
-		print '<div dojoType="dijit.layout.ContentPane" region="center">';
+		print '<div style="padding : 0px" dojoType="dijit.layout.ContentPane" region="center">';
 
 		print "<div id=\"feedlistLoading\">
 		<img src='images/indicator_tiny.gif'>".
@@ -1423,16 +1423,15 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div dojoType=\"dijit.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-		print "<div onclick=\"Tables.select('prefInactiveFeedList', true)\"
+		print "<div onclick=\"Tables.select('inactive-feeds-list', true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
-		print "<div onclick=\"Tables.select('prefInactiveFeedList', false)\"
+		print "<div onclick=\"Tables.select('inactive-feeds-list', false)\"
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 		print "</div>"; #toolbar
 
-		print "<div class=\"inactiveFeedHolder\">";
-
-		print "<table width=\"100%\" cellspacing=\"0\" id=\"prefInactiveFeedList\">";
+		print "<div class='panel panel-scrollable'>";
+		print "<table width='100%' id='inactive-feeds-list'>";
 
 		$lnum = 1;
 
@@ -1440,7 +1439,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			$feed_id = $line["id"];
 
-			print "<tr class=\"placeholder\" data-row-id='$feed_id'>";
+			print "<tr data-row-id='$feed_id'>";
 
 			print "<td width='5%' align='center'><input
 				onclick='Tables.onRowChecked(this);' dojoType=\"dijit.form.CheckBox\"
@@ -1485,16 +1484,15 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div dojoType=\"dijit.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-		print "<div onclick=\"Tables.select('prefErrorFeedList', true)\"
+		print "<div onclick=\"Tables.select('error-feeds-list', true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
-		print "<div onclick=\"Tables.select('prefErrorFeedList', false)\"
+		print "<div onclick=\"Tables.select('error-feeds-list', false)\"
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 		print "</div>"; #toolbar
 
-		print "<div class=\"inactiveFeedHolder\">";
-
-		print "<table width=\"100%\" cellspacing=\"0\" id=\"prefErrorFeedList\">";
+		print "<div class='panel panel-scrollable'>";
+		print "<table width='100%' id='error-feeds-list'>";
 
 		$lnum = 1;
 
@@ -1502,7 +1500,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			$feed_id = $line["id"];
 
-			print "<tr class=\"placeholder\" data-row-id='$feed_id'>";
+			print "<tr data-row-id='$feed_id'>";
 
 			print "<td width='5%' align='center'><input
 				onclick='Tables.onRowChecked(this);' dojoType=\"dijit.form.CheckBox\"
