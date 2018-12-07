@@ -271,7 +271,6 @@ class Feeds extends Handler_Protected {
 				$labels_str .= "</span>";
 
 				$line["labels"] = $labels_str;
-				unset($line["label_cache"]);
 
 				if (count($topmost_article_ids) < 3) {
 					array_push($topmost_article_ids, $id);
@@ -361,7 +360,7 @@ class Feeds extends Handler_Protected {
 
 				if ($fav_color && $fav_color != 'fail') {
 					if (!isset($rgba_cache[$feed_id])) {
-						$rgba_cache[$feed_id] = join(",", _color_unpack($fav_color)) . ", 0.3";
+						$rgba_cache[$feed_id] = join(",", _color_unpack($fav_color)) . ",0.3";
 					}
 
 					$line['favicon_avg_color_rgba'] = $rgba_cache[$feed_id];
@@ -369,7 +368,7 @@ class Feeds extends Handler_Protected {
 
 				/* we don't need those */
 
-                foreach (["date_entered", "guid", "last_published", "last_marked", "tag_cache", "favicon_avg_color"] as $k)
+                foreach (["date_entered", "guid", "last_published", "last_marked", "tag_cache", "favicon_avg_color", "uuid", "label_cache"] as $k)
                     unset($line[$k]);
 
 				array_push($reply['content'], $line);
