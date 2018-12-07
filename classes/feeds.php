@@ -330,6 +330,17 @@ class Feeds extends Handler_Protected {
 
 					$line["enclosures"] = Article::format_article_enclosures($id, $line["always_display_enclosures"],
 						$line["content"], $line["hide_images"]);
+
+					if ($line["orig_feed_id"]) {
+
+						$ofgh = $this->pdo->prepare("SELECT * FROM ttrss_archived_feeds
+                        WHERE id = ? AND owner_uid = ?");
+						$ofgh->execute([$line["orig_feed_id"], $_SESSION['uid']]);
+
+						if ($tmp_line = $ofgh->fetch()) {
+						    $line["orig_feed"] = [ $tmp_line["title"], $tmp_line["site_url"], $tmp_line["feed_url"] ];
+						}
+					}
                 }
 
 
