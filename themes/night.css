@@ -1937,6 +1937,9 @@ body.flat.ttrss_main #feeds-holder #feedTree .dijitTreeRowSelected {
 body.flat.ttrss_main #feeds-holder #feedTree .dijitTreeRowSelected .dijitTreeLabel {
   text-shadow: none;
 }
+body.flat.ttrss_main #headlines-frame .whiteBox {
+  border-color: #222222;
+}
 body.flat.ttrss_main #headlines-frame .hl:not(.active):not(.Selected),
 body.flat.ttrss_main #headlines-frame .cdm:not(.Selected) {
   background: #333333;
