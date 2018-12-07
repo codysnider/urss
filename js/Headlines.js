@@ -201,7 +201,7 @@ define(["dojo/_base/declare"], function (declare) {
 						PluginHost.run(PluginHost.HOOK_FLOATING_TITLE, row);
 					}
 
-					ft.style.marginRight = hf.offsetWidth - row.offsetWidth + "px";
+					//ft.style.marginRight = hf.offsetWidth - row.offsetWidth + "px";
 
 					/* if (header.offsetTop + header.offsetHeight < hf.scrollTop + ft.offsetHeight - 5 &&
 						row.offsetTop + row.offsetHeight >= hf.scrollTop + ft.offsetHeight - 5)
