@@ -516,9 +516,9 @@ class Article extends Handler_Protected {
 			}
 
 			if (count($entries_inline) > 0) {
-				$rv .= "<hr clear='both'/>";
+				//$rv .= "<hr clear='both'/>";
 				foreach ($entries_inline as $entry) { $rv .= $entry; };
-				$rv .= "<hr clear='both'/>";
+				$rv .= "<br clear='both'/>";
 			}
 
 			$rv .= "<div class=\"attachments\" dojoType=\"dijit.form.DropDownButton\">".
