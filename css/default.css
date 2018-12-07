@@ -80,6 +80,15 @@ body.ttrss_main div.post div.content iframe {
   min-width: 50%;
   max-width: 98%;
 }
+body.ttrss_main .inline-player {
+  display: flex;
+}
+body.ttrss_main .inline-player > * {
+  align-self: center;
+}
+body.ttrss_main .inline-player audio {
+  margin-right: 8px;
+}
 body.ttrss_main .article-note {
   background-color: #fff7d5;
   margin: 5px;
@@ -1095,6 +1104,7 @@ video::-webkit-media-controls-overlay-play-button {
 }
 .cdm .intermediate {
   margin-top: 10px;
+  margin-left: 10px;
 }
 .cdm .content-inner {
   margin: 10px;
