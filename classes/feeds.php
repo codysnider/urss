@@ -121,9 +121,6 @@ class Feeds extends Handler_Protected {
 		$reply = array();
 
 		$rgba_cache = array();
-
-		$timing_info = microtime(true);
-
 		$topmost_article_ids = array();
 
 		if (!$offset) $offset = 0;
@@ -369,6 +366,11 @@ class Feeds extends Handler_Protected {
 
 					$line['favicon_avg_color_rgba'] = $rgba_cache[$feed_id];
 				}
+
+				/* we don't need those */
+
+                foreach (["date_entered", "guid", "last_published", "last_marked", "tag_cache", "favicon_avg_color"] as $k)
+                    unset($line[$k]);
 
 				array_push($reply['content'], $line);
 			}
