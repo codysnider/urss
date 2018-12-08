@@ -1861,6 +1861,9 @@ body.flat.ttrss_main.ttrss_prefs div.prefHelp {
 body.flat.ttrss_main {
   color: #cccccc;
 }
+body.flat.ttrss_main a:hover {
+  color: #58adda;
+}
 body.flat.ttrss_main #main,
 body.flat.ttrss_main #overlay {
   color: #cccccc;
@@ -1952,8 +1955,8 @@ body.flat.ttrss_main #headlines-frame .cdm .footer {
   border-color: #222222;
   color: #cccccc;
 }
-body.flat.ttrss_main #headlines-frame i.material-icons,
-body.flat.ttrss_main #headlines-frame .dijitCheckBox {
+body.flat.ttrss_main #headlines-frame .left i.material-icons,
+body.flat.ttrss_main #headlines-frame .left .dijitCheckBox {
   opacity: 0.7;
 }
 body.flat.ttrss_main #content-insert .post .header {
