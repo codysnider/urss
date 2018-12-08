@@ -86,7 +86,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree", "dijit/f
 					const e = $("icon-label-" + id);
 
 					if (e) {
-						if (fg) e.style.color = bg;
+						if (bg) e.style.color = bg;
 					}
 
 					const query = {
