@@ -631,9 +631,6 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeRow .dijitTreeLabel.Unread {
 body.ttrss_main #feeds-holder #feedTree .dijitTreeRow.Error .dijitTreeLabel {
   color: red;
 }
-body.ttrss_main #feeds-holder #feedTree .dijitTreeRow.UpdatesDisabled .dijitTreeLabel {
-  color: #909090;
-}
 body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRow {
   border: 1px solid transparent;
 }
@@ -977,6 +974,9 @@ body.ttrss_main i.icon-syndicate {
 }
 body.ttrss_main i.icon-no-feed {
   opacity: 0.2;
+}
+body.ttrss_main .dijitTreeRow.UpdatesDisabled .dijitTreeLabel {
+  opacity: 0.5;
 }
 body.ttrss_main #floatingTitle.marked i.marked-pic,
 body.ttrss_main .cdm.marked .left i.marked-pic,

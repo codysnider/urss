@@ -76,8 +76,12 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			this.tree.model.store.save();
 		},
 		getRowClass: function (item, opened) {
-			return (!item.error || item.error == '') ? "dijitTreeRow" :
+			let rc = (!item.error || item.error == '') ? "dijitTreeRow" :
 				"dijitTreeRow Error";
+
+			if (item.updates_disabled > 0) rc += " UpdatesDisabled";
+
+			return rc;
 		},
 		getIconClass: function (item, opened) {
 			return (!item || this.model.store.getValue(item, 'type') == 'category') ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "feed-icon";
