@@ -117,8 +117,6 @@ require(["dojo/_base/kernel",
 							}
 						});
 
-					Cookie.delete("ttrss_test");
-
 					const toolbar = document.forms["toolbar-main"];
 
 					dijit.getEnclosingWidget(toolbar.view_mode).attr('value',
@@ -147,6 +145,9 @@ require(["dojo/_base/kernel",
 					}
 
 					console.log("second stage ok");
+
+					PluginHost.run(PluginHost.HOOK_INIT_COMPLETE, null);
+
 				},
 				updateTitle: function() {
 					let tmp = "Tiny Tiny RSS";

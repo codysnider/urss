@@ -1,7 +1,9 @@
 require(['dojo/_base/kernel', 'dojo/ready'], function (dojo, ready) {
 	ready(function () {
-		App.updateTitle = function () {
-			document.title = "Tiny Tiny RSS";
-		};
+		PluginHost.register(PluginHost.HOOK_INIT_COMPLETE, () => {
+			App.updateTitle = function () {
+				document.title = "Tiny Tiny RSS";
+			};
+		});
 	});
 });
