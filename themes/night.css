@@ -1863,6 +1863,9 @@ body.flat.ttrss_main.ttrss_prefs div.prefHelp {
 body.flat.ttrss_main {
   color: #cccccc;
 }
+body.flat.ttrss_main img[src*='indicator_white.gif'] {
+  filter: invert(1);
+}
 body.flat.ttrss_main a:hover {
   color: #58adda;
 }

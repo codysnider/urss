@@ -28,6 +28,10 @@ body.flat.ttrss_main.ttrss_prefs {
 body.flat.ttrss_main {
 	color : @fg-main;
 
+	img[src*='indicator_white.gif'] {
+		filter : invert(1);
+	}
+
 	a:hover {
 		color : lighten(@color-link, 20%);
 	}
