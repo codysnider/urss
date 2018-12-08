@@ -365,13 +365,13 @@ define(["dojo/_base/declare"], function (declare) {
 			`;
 			}
 
-			if (row != null) {
-				const tmp = document.createElement("div");
-				tmp.innerHTML = row;
-				dojo.parser.parse(tmp);
+			const tmp = document.createElement("div");
+			tmp.innerHTML = row;
+			dojo.parser.parse(tmp);
 
-				$("headlines-frame").appendChild(tmp.firstChild);
-			}
+			PluginHost.run(PluginHost.HOOK_HEADLINE_RENDERED, tmp.firstChild);
+
+			$("headlines-frame").appendChild(tmp.firstChild);
 		},
 		onLoaded: function (transport, offset) {
 			const reply = App.handleRpcJson(transport);

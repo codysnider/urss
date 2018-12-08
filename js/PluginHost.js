@@ -12,6 +12,7 @@ PluginHost = {
 	HOOK_RUNTIME_INFO_LOADED: 9,
 	HOOK_FLOATING_TITLE: 10,
 	HOOK_INIT_COMPLETE: 11,
+	HOOK_HEADLINE_RENDERED: 12,
 	hooks: [],
 	register: function (name, callback) {
 		if (typeof(this.hooks[name]) == 'undefined')
