@@ -74,14 +74,18 @@
 			position : relative;
 			top : -2px;
 		}
+
 		.labelParam {
 			float: right;
 			margin-right: 16px;
 		}
 
-		.labelParam.filterDisabled,
-		.dijitTreeLabel.filterDisabled {
-			text-decoration : line-through;
+		.dijitTreeRow.filterDisabled {
+			opacity : 0.5;
+
+			.filterRules {
+				filter : saturate(0%);
+			}
 		}
 
 		.feedParam {

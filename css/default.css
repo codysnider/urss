@@ -1782,9 +1782,11 @@ body#sharepopup input {
   float: right;
   margin-right: 16px;
 }
-.flat .dijitTree .labelParam.filterDisabled,
-.flat .dijitTree .dijitTreeLabel.filterDisabled {
-  text-decoration: line-through;
+.flat .dijitTree .dijitTreeRow.filterDisabled {
+  opacity: 0.5;
+}
+.flat .dijitTree .dijitTreeRow.filterDisabled .filterRules {
+  filter: saturate(0%);
 }
 .flat .dijitTree .feedParam {
   float: right;

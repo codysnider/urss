@@ -55,13 +55,10 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 		getIconClass: function (item, opened) {
 			return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "invisible";
 		},
-		getLabelClass: function (item, opened) {
-			const enabled = this.model.store.getValue(item, 'enabled');
-			return (enabled != false) ? "dijitTreeLabel labelFixedLength" : "dijitTreeLabel labelFixedLength filterDisabled";
-		},
 		getRowClass: function (item, opened) {
-			return (!item.error || item.error == '') ? "dijitTreeRow" :
-				"dijitTreeRow Error";
+			const enabled = this.model.store.getValue(item, 'enabled');
+
+			return enabled ? "dijitTreeRow" : "dijitTreeRow filterDisabled";
 		},
 		checkItemAcceptance: function(target, source, position) {
 			const item = dijit.getEnclosingWidget(target).item;
