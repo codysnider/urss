@@ -179,7 +179,7 @@ require(["dojo/_base/kernel",
 					}
 				},
 				switchPanelMode: function(wide) {
-					if (App.isCombinedMode()) return;
+					//if (App.isCombinedMode()) return;
 
 					const article_id = Article.getActive();
 
