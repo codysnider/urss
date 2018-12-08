@@ -101,7 +101,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			});
 		},
 		joinSelectedFilters: function() {
-			const rows = getSelectedFilters();
+			const rows = this.getSelectedFilters();
 
 			if (rows.length == 0) {
 				alert(__("No filters selected."));

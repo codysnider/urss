@@ -923,6 +923,7 @@ class RSSUtils {
 					$entry_ref_id = $ref_id;
 
 					if (RSSUtils::find_article_filter($article_filters, "filter")) {
+						Debug::log("article is filtered out, nothing to do.");
 						$pdo->commit();
 						continue;
 					}
