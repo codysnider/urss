@@ -242,6 +242,13 @@ class Feeds extends Handler_Protected {
 
 				$id = $line["id"];
 
+				// frontend doesn't expect pdo returning booleans as strings on mysql
+				if (DB_TYPE == "mysql") {
+					foreach (["unread", "marked", "published"] as $k) {
+						$line[$k] = $line[$k] === "1";
+					}
+				}
+
 				// normalize archived feed
 				if ($line['feed_id'] === null) {
 					$line['feed_id'] = 0;
