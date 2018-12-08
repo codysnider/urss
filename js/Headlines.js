@@ -4,7 +4,7 @@ define(["dojo/_base/declare"], function (declare) {
 	Headlines = {
 		vgroup_last_feed: undefined,
 		_headlines_scroll_timeout: 0,
-		loaded_article_ids: [],
+		headlines: [],
 		current_first_id: 0,
 		catchup_id_batch: [],
 		click: function (event, id, in_body) {
@@ -239,6 +239,9 @@ define(["dojo/_base/declare"], function (declare) {
 				}
 			}
 		},
+		objectById: function (id){
+			return this.headlines[id];
+		},
 		renderHeadline: function (headlines, hl) {
 			let row = null;
 
@@ -266,24 +269,11 @@ define(["dojo/_base/declare"], function (declare) {
 			if (App.isCombinedMode()) {
 				row_class += App.getInitParam("cdm_expanded") ? " expanded" : " expandable";
 
-				let originally_from = hl.orig_feed ? `<span>
-					${__('Originally from:')} <a target="_blank" rel="noopener noreferrer" href="${hl.orig_feed[1]}">${hl.orig_feed[0]}</a>
-					</span>` : "";
-
-				let comments = "";
-
-				if (hl.comments) {
-					let comments_msg = __("comments");
-
-					if (hl.num_comments > 0) {
-						comments_msg = hl.num_comments + " " + ngettext("comment", "comments", hl.num_comments)
-					}
-
-					comments = `<a href="${hl.comments}">(${comments_msg})</a>`;
-				}
+				const comments = Article.formatComments(hl);
+				const originally_from = Article.formatOriginallyFrom(hl);
 
 				row = `<div class="cdm ${row_class} ${hl.score_class}" id="RROW-${hl.id}" data-article-id="${hl.id}" data-orig-feed-id="${hl.feed_id}" 
-							data-content="${hl.content}" onmouseover="Article.mouseIn(${hl.id})" onmouseout="Article.mouseOut(${hl.id})">
+							data-content="${escapeHtml(hl.content)}" onmouseover="Article.mouseIn(${hl.id})" onmouseout="Article.mouseOut(${hl.id})">
 							
 							<div class="header">
 								<div class="left">
@@ -319,7 +309,9 @@ define(["dojo/_base/declare"], function (declare) {
 									
 							<div class="content" onclick="return Headlines.click(event, ${hl.id}, true);">
 								<div id="POSTNOTE-${hl.id}">${hl.note}</div>
-								<div class="content-inner" lang="${hl.lang ? hl.lang : 'en'}"></div>
+								<div class="content-inner" lang="${hl.lang ? hl.lang : 'en'}">
+									<img src="${App.getInitParam('icon_indicator_white')}">
+								</div>
 								<div class="intermediate">									
 									${hl.enclosures}
 								</div>
@@ -329,7 +321,7 @@ define(["dojo/_base/declare"], function (declare) {
 										${hl.buttons_left}
 										<i class="material-icons">label_outline</i>
 										<span id="ATSTR-${hl.id}">${hl.tags_str}</span>
-										<a title="Edit tags for this article" href="#" 
+										<a title="${__("Edit tags for this article")}" href="#" 
 											onclick="Article.editTags(${hl.id})">(+)</a>
 										${comments}
 									</div>
@@ -426,7 +418,7 @@ define(["dojo/_base/declare"], function (declare) {
 				this.current_first_id = reply['headlines']['first_id'];
 
 				if (offset == 0) {
-					this.loaded_article_ids = [];
+					//this.headlines = [];
 					this.vgroup_last_feed = undefined;
 
 					dojo.html.set($("toolbar-headlines"),
@@ -439,7 +431,10 @@ define(["dojo/_base/declare"], function (declare) {
 						$("headlines-frame").innerHTML = '';
 
 						for (let i = 0; i < reply['headlines']['content'].length; i++) {
-							this.renderHeadline(reply['headlines'], reply['headlines']['content'][i]);
+							const hl = reply['headlines']['content'][i];
+
+							this.renderHeadline(reply['headlines'], hl);
+							this.headlines[parseInt(hl.id)] = hl;
 						}
 					}
 
@@ -505,7 +500,10 @@ define(["dojo/_base/declare"], function (declare) {
 						$("headlines-frame").innerHTML = reply['headlines']['content'];
 					} else {
 						for (let i = 0; i < reply['headlines']['content'].length; i++) {
-							this.renderHeadline(reply['headlines'], reply['headlines']['content'][i]);
+							const hl = reply['headlines']['content'][i];
+
+							this.renderHeadline(reply['headlines'], hl);
+							this.headlines[parseInt(hl.id)] = hl;
 						}
 					}
 
@@ -1012,10 +1010,6 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (App.getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
 				return;
-			}
-
-			for (let i = 0; i < rows.length; i++) {
-				ArticleCache.del(rows[i]);
 			}
 
 			const query = {op: "rpc", method: op, ids: rows.toString()};

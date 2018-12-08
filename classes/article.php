@@ -27,6 +27,7 @@ class Article extends Handler_Protected {
 		}
 	}
 
+	/*
 	function view() {
 		$id = clean($_REQUEST["id"]);
 		$cids = explode(",", clean($_REQUEST["cids"]));
@@ -63,8 +64,9 @@ class Article extends Handler_Protected {
 		}
 
 		print json_encode($articles);
-	}
+	} */
 
+	/*
 	private function catchupArticleById($id, $cmode) {
 
 		if ($cmode == 0) {
@@ -86,6 +88,7 @@ class Article extends Handler_Protected {
 		$feed_id = $this->getArticleFeed($id);
 		CCache::update($feed_id, $_SESSION["uid"]);
 	}
+	*/
 
 	static function create_published_article($title, $url, $content, $labels_str,
 			$owner_uid) {

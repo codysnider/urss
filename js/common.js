@@ -331,3 +331,16 @@ function popupOpenArticle(id) {
 		w.location = "backend.php?op=article&method=view&mode=raw&html=1&zoom=1&id=" + id + "&csrf_token=" + App.getInitParam("csrf_token");
 	}
 }
+
+// htmlspecialchars()-alike for headlines data-content attribute
+function escapeHtml(text) {
+	const map = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#039;'
+	};
+
+	return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}

@@ -137,58 +137,65 @@ define(["dojo/_base/declare"], function (declare) {
 			} catch (e) {
 			}
 		},
+		formatComments: function(hl) {
+			let comments = "";
+
+			if (hl.comments) {
+				let comments_msg = __("comments");
+
+				if (hl.num_comments > 0) {
+					comments_msg = hl.num_comments + " " + ngettext("comment", "comments", hl.num_comments)
+				}
+
+				comments = `<a href="${hl.comments}">(${comments_msg})</a>`;
+			}
+
+			return comments;
+		},
+		formatOriginallyFrom: function(hl) {
+			return hl.orig_feed ? `<span>
+					${__('Originally from:')} <a target="_blank" rel="noopener noreferrer" href="${hl.orig_feed[1]}">${hl.orig_feed[0]}</a>
+					</span>` : "";
+		},
 		view: function (id, noexpand) {
 			this.setActive(id);
 
 			if (!noexpand) {
-				console.log("loading article", id);
+				const hl = Headlines.objectById(id);
 
-				const cids = [];
+				if (hl) {
 
-				/* only request uncached articles */
+					const comments = this.formatComments(hl);
+					const originally_from = this.formatOriginallyFrom(hl);
 
-				this.getRelativeIds(id).each((n) => {
-					if (!ArticleCache.get(n))
-						cids.push(n);
-				});
+					const article = `<div class="post post-${hl.id}">
+						<div class="header">
+							<div class="row">
+								<div class="title"><a target="_blank" rel="noopener noreferrer" title="${hl.title}" href="${hl.link}">${hl.title}</a></div>
+								<div class="date">${hl.updated_long}</div>
+							</div>
+							<div class="row">
+								<div class="buttons left">${hl.buttons_left}</div>
+								<div class="comments">${comments}</div>
+								<div class="author">${hl.author}</div>
+								<i class="material-icons">label_outline</i>
+								<span id="ATSTR-${hl.id}">${hl.tags_str}</span>
+								&nbsp;<a title="${__("Edit tags for this article")}" href="#" 
+									onclick="Article.editTags(${hl.id})">(+)</a>
+								<div class="buttons right">${hl.buttons}</div>
+							</div>
+						</div>
+						<div id="POSTNOTE-${hl.id}">${hl.note}</div>
+						<div class="content" lang="${hl.lang ? hl.lang : 'en'}">
+							${originally_from}
+							${hl.content}
+							${hl.enclosures}
+						</div>
+						</div>`;
 
-				const cached_article = ArticleCache.get(id);
-
-				if (cached_article) {
-					console.log('rendering cached', id);
-					this.render(cached_article);
-					return false;
+					Headlines.toggleUnread(id, 0);
+					this.render(article);
 				}
-
-				xhrPost("backend.php", {op: "article", method: "view", id: id, cids: cids.toString()}, (transport) => {
-					try {
-						const reply = App.handleRpcJson(transport);
-
-						if (reply) {
-
-							reply.each(function (article) {
-								if (Article.getActive() == article['id']) {
-									Article.render(article['content']);
-								}
-								ArticleCache.set(article['id'], article['content']);
-							});
-
-						} else {
-							console.error("Invalid object received: " + transport.responseText);
-
-							Article.render("<div class='whiteBox'>" +
-								__('Could not display article (invalid object received - see error console for details)') + "</div>");
-						}
-
-						//const unread_in_buffer = $$("#headlines-frame > div[id*=RROW][class*=Unread]").length;
-						//request_counters(unread_in_buffer == 0);
-
-						Notify.close();
-
-					} catch (e) {
-						App.Error.report(e);
-					}
-				})
 			}
 
 			return false;

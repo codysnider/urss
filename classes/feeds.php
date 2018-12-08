@@ -285,60 +285,58 @@ class Feeds extends Handler_Protected {
 
 				if (!$line["feed_title"]) $line["feed_title"] = "";
 
-				if (get_pref('COMBINED_DISPLAY_MODE')) {
-
-					$line["buttons_left"] = "";
-					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_LEFT_BUTTON) as $p) {
-						$line["buttons_left"] .= $p->hook_article_left_button($line);
-					}
-
-					$line["buttons"] = "";
-					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_BUTTON) as $p) {
-						$line["buttons"] .= $p->hook_article_button($line);
-					}
-
-					$line["content"] = sanitize($line["content"],
-						$line['hide_images'], false, $line["site_url"], $highlight_words, $line["id"]);
-
-					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_RENDER_ARTICLE_CDM) as $p) {
-						$line = $p->hook_render_article_cdm($line);
-					}
-
-					$line['content'] = rewrite_cached_urls($line['content']);
-					$line["content"] = htmlspecialchars($line["content"]);
-
-					if ($line['note'])
-					    $line['note'] = Article::format_article_note($id, $line['note']);
-					else
-					    $line['note'] = "";
-
-					if (!get_pref("CDM_EXPANDED")) {
-						$line["cdm_excerpt"] = "<span class='collapse'>
-                            <i class='material-icons' onclick='return Article.cdmUnsetActive(event)'
-                                title=\"" . __("Collapse article") . "\">remove_circle</i></span>";
-
-						if (get_pref('SHOW_CONTENT_PREVIEW')) {
-							$line["cdm_excerpt"] .= "<span class='excerpt'>" . $line["content_preview"] . "</span>";
-						}
-					}
-
-					$line["enclosures"] = Article::format_article_enclosures($id, $line["always_display_enclosures"],
-						$line["content"], $line["hide_images"]);
-
-					if ($line["orig_feed_id"]) {
-
-						$ofgh = $this->pdo->prepare("SELECT * FROM ttrss_archived_feeds
-                        WHERE id = ? AND owner_uid = ?");
-						$ofgh->execute([$line["orig_feed_id"], $_SESSION['uid']]);
-
-						if ($tmp_line = $ofgh->fetch()) {
-						    $line["orig_feed"] = [ $tmp_line["title"], $tmp_line["site_url"], $tmp_line["feed_url"] ];
-						}
-					}
+                $line["buttons_left"] = "";
+                foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_LEFT_BUTTON) as $p) {
+                    $line["buttons_left"] .= $p->hook_article_left_button($line);
                 }
 
+                $line["buttons"] = "";
+                foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_BUTTON) as $p) {
+                    $line["buttons"] .= $p->hook_article_button($line);
+                }
 
+                $line["content"] = sanitize($line["content"],
+                    $line['hide_images'], false, $line["site_url"], $highlight_words, $line["id"]);
+
+                foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_RENDER_ARTICLE_CDM) as $p) {
+                    $line = $p->hook_render_article_cdm($line);
+                }
+
+                $line['content'] = rewrite_cached_urls($line['content']);
+
+                if ($line['note'])
+                    $line['note'] = Article::format_article_note($id, $line['note']);
+                else
+                    $line['note'] = "";
+
+                if (!get_pref("CDM_EXPANDED")) {
+                    $line["cdm_excerpt"] = "<span class='collapse'>
+                        <i class='material-icons' onclick='return Article.cdmUnsetActive(event)'
+                            title=\"" . __("Collapse article") . "\">remove_circle</i></span>";
+
+                    if (get_pref('SHOW_CONTENT_PREVIEW')) {
+                        $line["cdm_excerpt"] .= "<span class='excerpt'>" . $line["content_preview"] . "</span>";
+                    }
+                }
+
+                $line["enclosures"] = Article::format_article_enclosures($id, $line["always_display_enclosures"],
+                    $line["content"], $line["hide_images"]);
+
+                if ($line["orig_feed_id"]) {
+
+                    $ofgh = $this->pdo->prepare("SELECT * FROM ttrss_archived_feeds
+                    WHERE id = ? AND owner_uid = ?");
+                    $ofgh->execute([$line["orig_feed_id"], $_SESSION['uid']]);
+
+                    if ($tmp_line = $ofgh->fetch()) {
+                        $line["orig_feed"] = [ $tmp_line["title"], $tmp_line["site_url"], $tmp_line["feed_url"] ];
+                    }
+                }
+
+				$line["updated_long"] = make_local_datetime($line["updated"],true);
 				$line["updated"] = make_local_datetime($line["updated"], false, false, false, true);
+
+
 				$line['imported'] = T_sprintf("Imported at %s",
 					make_local_datetime($line["date_entered"], false));
 

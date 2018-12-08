@@ -7,7 +7,6 @@ let Filters;
 let Feeds;
 let Headlines;
 let Article;
-let ArticleCache;
 let PluginHost;
 
 const Plugins = {};
@@ -54,7 +53,6 @@ require(["dojo/_base/kernel",
 	"fox/Feeds",
 	"fox/Headlines",
 	"fox/Article",
-	"fox/ArticleCache",
 	"fox/FeedStoreModel",
 	"fox/FeedTree"], function (dojo, declare, ready, parser, AppBase) {
 
@@ -138,8 +136,6 @@ require(["dojo/_base/kernel",
 
 					App.setLoadingProgress(50);
 
-					ArticleCache.clear();
-
 					this._widescreen_mode = App.getInitParam("widescreen");
 					this.switchPanelMode(this._widescreen_mode);
 
@@ -162,7 +158,6 @@ require(["dojo/_base/kernel",
 					document.title = tmp;
 				},
 				onViewModeChanged: function() {
-					ArticleCache.clear();
 					return Feeds.reloadCurrent('');
 				},
 				isCombinedMode: function() {

@@ -18,8 +18,6 @@ Plugins.Note = {
 						dialog.hide();
 
 						if (reply) {
-							ArticleCache.del(id);
-
 							const elem = $("POSTNOTE-" + id);
 
 							if (elem) {
