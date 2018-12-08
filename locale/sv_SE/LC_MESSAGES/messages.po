@@ -12,15 +12,16 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS sv_SE\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-03 14:24+0300\n"
-"PO-Revision-Date: 2013-05-24 19:41+0100\n"
-"Last-Translator: Mattias Tengblad <mst@eyesx.com>\n"
-"Language-Team: Mattias Tengblad <mst@eyesx.com>\n"
+"PO-Revision-Date: 2018-12-10 00:37+0000\n"
+"Last-Translator: Pontus Nyman <pontusnyman@gmail.com>\n"
+"Language-Team: Swedish <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"sv/>\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: backend.php:73
@@ -62,15 +63,13 @@ msgstr "Inaktivera uppdateringar"
 
 #: backend.php:84
 #: backend.php:94
-#, fuzzy
 msgid "15 minutes"
 msgstr "Varje kvart"
 
 #: backend.php:85
 #: backend.php:95
-#, fuzzy
 msgid "30 minutes"
-msgstr "Varje halvtimma"
+msgstr "Varje halvtimme"
 
 #: backend.php:86
 #: backend.php:96
@@ -79,15 +78,13 @@ msgstr "Varje timma"
 
 #: backend.php:87
 #: backend.php:97
-#, fuzzy
 msgid "4 hours"
-msgstr "Var 4:e timme"
+msgstr "Var fjärde timme"
 
 #: backend.php:88
 #: backend.php:98
-#, fuzzy
 msgid "12 hours"
-msgstr "Var 12:e timme"
+msgstr "Var tolfte timme"
 
 #: backend.php:89
 #: backend.php:99
@@ -345,7 +342,7 @@ msgstr "Logga ut"
 
 #: index.php:261
 msgid "Updates are available from Git."
-msgstr ""
+msgstr "Uppdateringar tillgängliga via Git."
 
 #: prefs.php:33
 #: prefs.php:130
