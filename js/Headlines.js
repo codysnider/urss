@@ -347,7 +347,7 @@ define(["dojo/_base/declare"], function (declare) {
 				<div onclick="return Headlines.click(event, ${hl.id})" class="title">
 					<span data-article-id="${hl.id}" class="hl-content hlMenuAttach">
 						<a class="title" href="${hl.link}">${hl.title} <span class="preview">${hl.content_preview}</span></a>
-						<!-- <span class="author">${hl.author}</span> -->
+						<span class="author">${hl.author}</span>
 						<span class="HLLCTR-${hl.id}">${hl.labels}</span>
 					</span>
 				</div>

@@ -227,6 +227,12 @@ body.ttrss_main .hl div.title {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+body.ttrss_main .hl span.author {
+  white-space: nowrap;
+  color: #cccccc;
+  font-size: 11px;
+  font-weight: normal;
+}
 body.ttrss_main .hl div.right {
   text-align: right;
 }
