@@ -762,6 +762,7 @@ body.ttrss_main #toolbar-frame #toolbar #selected_prompt {
   font-style: italic;
   text-align: right;
   margin-right: 4px;
+  color: #b87d2c;
 }
 @media (max-width: 992px) {
   body.ttrss_main #toolbar-frame #toolbar #selected_prompt {
