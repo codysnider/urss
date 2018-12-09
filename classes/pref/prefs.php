@@ -552,10 +552,10 @@ class Pref_Prefs extends Handler_Protected {
 
 				$themes = array_merge(glob("themes/*.php"), glob("themes/*.css"), glob("themes.local/*.css"));
 				$themes = array_map("basename", $themes);
-				$themes = array_filter($themes, "theme_valid");
+				$themes = array_filter($themes, "theme_exists");
 				asort($themes);
 
-				if (!theme_valid($value)) $value = "default.php";
+				if (!theme_exists($value)) $value = "default.php";
 
 				print "<select name='$pref_name' id='$pref_name' dojoType='dijit.form.Select'>";
 

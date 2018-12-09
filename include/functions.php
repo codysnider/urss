@@ -1078,7 +1078,7 @@
 		$params["label_base_index"] = (int) LABEL_BASE_INDEX;
 
 		$theme = get_pref( "USER_CSS_THEME", false, false);
-		$params["theme"] = theme_valid("$theme") ? $theme : "";
+		$params["theme"] = theme_exists($theme) ? $theme : "";
 
 		$params["plugins"] = implode(", ", PluginHost::getInstance()->get_plugin_names());
 
@@ -2442,27 +2442,8 @@
 		if (file_exists($check)) return $check;
 	}
 
-	function theme_valid($theme) {
-		$bundled_themes = [ "night.css", "compact.css" ];
-
-		if (in_array($theme, $bundled_themes)) return true;
-
-		$file = "themes/" . basename($theme);
-
-		if (!file_exists($file)) $file = "themes.local/" . basename($theme);
-
-		if (file_exists($file) && is_readable($file)) {
-			$fh = fopen($file, "r");
-
-			if ($fh) {
-				$header = fgets($fh);
-				fclose($fh);
-
-				return strpos($header, "supports-version:" . VERSION_STATIC) !== FALSE;
-			}
-		}
-
-		return false;
+	function theme_exists($theme) {
+		return file_exists("themes/$theme") || file_exists("themes.local/$theme");
 	}
 
 	/**
