@@ -1904,6 +1904,9 @@ body.flat.ttrss_main #feeds-holder #feedTree .counterNode.aux {
   color: #cccccc;
   border-color: #333333;
 }
+body.flat.ttrss_main #feeds-holder #feedTree .counterNode {
+  background: #8f6122;
+}
 body.flat.ttrss_main #feeds-holder #feedTree .dijitTreeRowSelected {
   background: #333333;
   border-color: #333333 transparent;
@@ -1943,7 +1946,15 @@ body.flat.ttrss_main #headlines-frame .hl.Unread .title,
 body.flat.ttrss_main #headlines-frame .cdm.Unread .title {
   color: #e6e6e6;
 }
-body.flat.ttrss_main #headlines-frame .cdm.expanded.active .title {
+body.flat.ttrss_main #headlines-frame .hl.active {
+  background: #7a531d ! important;
+}
+body.flat.ttrss_main #headlines-frame .hl.Selected,
+body.flat.ttrss_main #headlines-frame .cdm.expandable.Selected {
+  background: #675030;
+}
+body.flat.ttrss_main #headlines-frame .cdm.expanded.active .title,
+body.flat.ttrss_main #headlines-frame .cdm.expandable.active .title {
   color: #b87d2c;
 }
 body.flat.ttrss_main #headlines-frame .cdm.expandable.active {

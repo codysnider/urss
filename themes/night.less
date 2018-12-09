@@ -60,6 +60,10 @@ body.flat.ttrss_main {
 				border-color: @bg-main;
 			}
 
+			.counterNode {
+				background : darken(@color-accent, 10%);
+			}
+
 			.dijitTreeRowSelected {
 				background : @bg-main;
 				border-color : @bg-main transparent;
@@ -113,7 +117,17 @@ body.flat.ttrss_main {
 			color : @fg-light;
 		}
 
-		.cdm.expanded.active .title {
+		.hl.active {
+			background : darken(@color-accent, 15%) ! important;
+		}
+
+		.hl.Selected,
+		.cdm.expandable.Selected {
+			background : desaturate(darken(@color-accent, 15%), 25%);
+		}
+
+		.cdm.expanded.active .title,
+		.cdm.expandable.active .title {
 			color : @color-accent;
 		}
 
