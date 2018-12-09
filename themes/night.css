@@ -819,8 +819,10 @@ body.ttrss_main .player:hover {
   background: #222222;
   cursor: pointer;
 }
-body.ttrss_main #headlines-spacer {
+body.ttrss_main #headlines-frame.auto_catchup #headlines-spacer {
   height: 100%;
+}
+body.ttrss_main #headlines-spacer {
   margin-left: 1px;
   text-align: center;
   color: #cccccc;
