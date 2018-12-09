@@ -114,7 +114,7 @@ class Feeds extends Handler_Protected {
 
 	private function format_headlines_list($feed, $method, $view_mode, $limit, $cat_view,
 					$offset, $override_order = false, $include_children = false, $check_first_id = false,
-					$skip_first_id_check = false) {
+					$skip_first_id_check = false, $order_by = false) {
 
 		$disable_cache = false;
 
@@ -172,7 +172,8 @@ class Feeds extends Handler_Protected {
 					"owner_uid" => $_SESSION["uid"],
 					"filter" => false,
 					"since_id" => 0,
-					"include_children" => $include_children);
+					"include_children" => $include_children,
+					"order_by" => $order_by);
 
 				$qfh_ret = $handler->get_headlines(PluginHost::feed_to_pfeed_id($feed),
 					$options);
@@ -191,7 +192,8 @@ class Feeds extends Handler_Protected {
 				"offset" => $offset,
 				"include_children" => $include_children,
 				"check_first_id" => $check_first_id,
-				"skip_first_id_check" => $skip_first_id_check
+				"skip_first_id_check" => $skip_first_id_check,
+                "order_by" => $order_by
 			);
 
 			$qfh_ret = $this->queryFeedHeadlines($params);
@@ -542,7 +544,7 @@ class Feeds extends Handler_Protected {
 
 		$ret = $this->format_headlines_list($feed, $method,
 			$view_mode, $limit, $cat_view, $offset,
-			$override_order, true, $check_first_id, $skip_first_id_check);
+			$override_order, true, $check_first_id, $skip_first_id_check, $order_by);
 
 		$headlines_count = $ret[1];
 		$disable_cache = $ret[3];
@@ -1431,6 +1433,7 @@ class Feeds extends Handler_Protected {
 		$start_ts = isset($params["start_ts"]) ? $params["start_ts"] : false;
 		$check_first_id = isset($params["check_first_id"]) ? $params["check_first_id"] : false;
 		$skip_first_id_check = isset($params["skip_first_id_check"]) ? $params["skip_first_id_check"] : false;
+		$order_by = isset($params["order_by"]) ? $params["order_by"] : false;
 
 		$ext_tables_part = "";
 		$limit_query_part = "";
@@ -1660,10 +1663,12 @@ class Feeds extends Handler_Protected {
 		if (is_numeric($feed)) {
 			// proper override_order applied above
 			if ($vfeed_query_part && !$ignore_vfeed_group && get_pref('VFEED_GROUP_BY_FEED', $owner_uid)) {
+                $yyiw_desc = $order_by == "date_reverse" ? "" : "desc";
+
 				if (!$override_order) {
-					$order_by = "ttrss_feeds.title, ".$order_by;
+					$order_by = "yyiw $yyiw_desc, ttrss_feeds.title, ".$order_by;
 				} else {
-					$order_by = "ttrss_feeds.title, ".$override_order;
+					$order_by = "yyiw $yyiw_desc, ttrss_feeds.title, ".$override_order;
 				}
 			}
 
@@ -1693,8 +1698,10 @@ class Feeds extends Handler_Protected {
 
 			if (DB_TYPE == "pgsql") {
 				$sanity_interval_qpart = "date_entered >= NOW() - INTERVAL '1 hour' AND";
+				$yyiw_qpart = "to_char(date_entered, 'YYYY-IW') AS yyiw";
 			} else {
 				$sanity_interval_qpart = "date_entered >= DATE_SUB(NOW(), INTERVAL 1 hour) AND";
+				$yyiw_qpart = "concat(year(date_entered),lpad(weekofyear(date_entered), 2, '0')) AS yyiw";
 			}
 
 			if (!$search && !$skip_first_id_check) {
@@ -1702,6 +1709,7 @@ class Feeds extends Handler_Protected {
 				$query = "SELECT DISTINCT
 							ttrss_feeds.title,
 							date_entered,
+                            $yyiw_qpart,
 							guid,
 							ttrss_entries.id,
 							ttrss_entries.title,
@@ -1740,6 +1748,7 @@ class Feeds extends Handler_Protected {
 
 			$query = "SELECT DISTINCT
 						date_entered,
+                        $yyiw_qpart,
 						guid,
 						ttrss_entries.id,ttrss_entries.title,
 						updated,

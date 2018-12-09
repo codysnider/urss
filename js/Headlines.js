@@ -567,10 +567,10 @@ define(["dojo/_base/declare"], function (declare) {
 
 			let value = order_by.attr('value');
 
-			if (value == "date_reverse")
-				value = "default";
-			else
+			if (value != "date_reverse")
 				value = "date_reverse";
+			else
+				value = "default";
 
 			order_by.attr('value', value);
 
