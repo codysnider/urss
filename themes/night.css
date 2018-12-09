@@ -1862,6 +1862,21 @@ body.flat.ttrss_main.ttrss_prefs div.prefHelp {
 }
 body.flat.ttrss_main {
   color: #cccccc;
+  /*
+	.post .content img,
+	.cdm .content-inner img,
+	.post .content video,
+	.cdm .content-inner video {
+		transition : opacity 0.2s linear, filter 0.2s linear;
+	}
+
+	.post .content img:not(:hover),
+	.cdm .content-inner img:not(:hover),
+	.post .content video:not(:hover),
+	.cdm .content-inner video:not(:hover) {
+		opacity : 0.5;
+		filter: grayscale(80%);
+	} */
 }
 body.flat.ttrss_main img[src*='indicator_white.gif'] {
   filter: invert(1);
@@ -2020,19 +2035,6 @@ body.flat.ttrss_main ul#filterDlg_Matches,
 body.flat.ttrss_main ul#filterDlg_Actions {
   background: #222222;
   border-color: #666666;
-}
-body.flat.ttrss_main .post .content img,
-body.flat.ttrss_main .cdm .content-inner img,
-body.flat.ttrss_main .post .content video,
-body.flat.ttrss_main .cdm .content-inner video {
-  transition: opacity 0.2s linear, filter 0.2s linear;
-}
-body.flat.ttrss_main .post .content img:not(:hover),
-body.flat.ttrss_main .cdm .content-inner img:not(:hover),
-body.flat.ttrss_main .post .content video:not(:hover),
-body.flat.ttrss_main .cdm .content-inner video:not(:hover) {
-  opacity: 0.5;
-  filter: grayscale(80%);
 }
 body.flat.ttrss_main .article-note {
   background: #222222;
