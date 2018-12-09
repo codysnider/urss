@@ -1,6 +1,8 @@
 @import "../css/defines.less";
 @import "../lib/flat-ttrss/flat_combined_dark.css";
 
+@color-accent: #b87d2c;
+
 @bg-main : #333;
 @border-main : #666;
 @border-dark : #222;
@@ -8,7 +10,7 @@
 @fg-main: #ccc;
 @fg-insensitive: darken(@fg-main, 20%);
 @fg-light : lighten(@fg-main, 10%);
-@bg-active: #2a89bc;
+@bg-active: @color-accent;
 
 body.flat.ttrss_main.ttrss_prefs {
 	#main, #footer {

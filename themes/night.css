@@ -128,11 +128,11 @@ body.ttrss_main hr {
   border-bottom-width: 1px;
 }
 body.ttrss_main a {
-  color: #257aa7;
+  color: #b87d2c;
   text-decoration: none;
 }
 body.ttrss_main a:hover {
-  color: #133d54;
+  color: #664518;
   text-decoration: underline;
 }
 body.ttrss_main #notify.visible {
@@ -173,11 +173,11 @@ body.ttrss_main .notify.notify_progress {
   background-color: #fff7d5;
 }
 body.ttrss_main .notify.notify_info {
-  border-color: #257aa7;
-  background-color: #d5ebf6;
+  border-color: #b87d2c;
+  background-color: #faf3e9;
 }
 body.ttrss_main .notify.notify_info i.icon-notify {
-  color: #257aa7;
+  color: #b87d2c;
 }
 body.ttrss_main .notify.notify_error {
   background-color: #c00;
@@ -240,7 +240,7 @@ body.ttrss_main .hl span.feed a {
   color: #555555;
 }
 body.ttrss_main .hl span.feed a:hover {
-  color: #257aa7;
+  color: #b87d2c;
 }
 body.ttrss_main .hl span.updated {
   color: #555555;
@@ -275,16 +275,16 @@ body.ttrss_main .hl.Unread div.title a {
   color: black;
 }
 body.ttrss_main .hl.active div.title a {
-  color: #257aa7;
+  color: #b87d2c;
   /* text-shadow : 1px 1px 2px #fff; */
 }
 body.ttrss_main .hl.active {
-  background: #257aa7 ! important;
+  background: #b87d2c ! important;
 }
 body.ttrss_main .hl.active,
 body.ttrss_main .hl.Selected {
   color: white;
-  background: #3f728e;
+  background: #9c7948;
 }
 body.ttrss_main .hl.active a,
 body.ttrss_main .hl.Selected a,
@@ -558,7 +558,7 @@ body.ttrss_main div#cmdline {
   color: #555555;
   font-weight: bold;
   background-color: white;
-  border: 1px solid #257aa7;
+  border: 1px solid #b87d2c;
   padding: 3px 5px 3px 5px;
   z-index: 5;
 }
@@ -606,9 +606,9 @@ body.ttrss_main #feeds-holder #feedTree .counterNode {
   display: inline-block;
   font-size: 9px;
   text-align: center;
-  border: 1px solid #2a89bc;
+  border: 1px solid #cd8b31;
   color: white;
-  background: #2a89bc;
+  background: #cd8b31;
   border-radius: 4px;
   vertical-align: middle;
   float: right;
@@ -668,7 +668,7 @@ body.ttrss_main #feeds-holder #feedTree i.icon.icon-whatshot {
 body.ttrss_main #feeds-holder #feedTree i.icon.icon-restore {
   font-weight: bold;
   left: -3px;
-  color: #257aa7;
+  color: #b87d2c;
 }
 body.ttrss_main #headlines-wrap-inner {
   padding: 0px;
@@ -684,7 +684,7 @@ body.ttrss_main #headlines-frame {
   -webkit-backface-visibility: hidden;
 }
 body.ttrss_main #headlines-frame div.feed-title {
-  border: 0px solid #257aa7;
+  border: 0px solid #b87d2c;
   border-bottom-width: 1px;
   padding: 5px 8px;
 }
@@ -696,7 +696,7 @@ body.ttrss_main #headlines-frame div.feed-title a {
   color: #555555;
 }
 body.ttrss_main #headlines-frame div.feed-title a:hover {
-  color: #257aa7;
+  color: #b87d2c;
 }
 body.ttrss_main #toolbar-frame_splitter {
   display: none;
@@ -830,7 +830,7 @@ body.ttrss_main #headlines-spacer span {
   display: block;
 }
 body.ttrss_main #headlines-spacer a:hover {
-  color: #257aa7;
+  color: #b87d2c;
 }
 body.ttrss_main ul#filterDlg_Matches,
 body.ttrss_main ul#filterDlg_Actions {
@@ -864,7 +864,7 @@ body.ttrss_main ul.helpKbList {
 body.ttrss_main ul.helpKbList span.hksequence {
   width: 6em;
   margin-left: 20px;
-  color: #257aa7;
+  color: #b87d2c;
   font-weight: bold;
   display: inline-block;
 }
@@ -918,7 +918,7 @@ body.ttrss_login label {
   color: gray;
 }
 body.ttrss_login div.header {
-  border: 0px solid #257aa7;
+  border: 0px solid #b87d2c;
   border-bottom-width: 1px;
   margin-bottom: 1em;
   padding-bottom: 5px;
@@ -926,7 +926,7 @@ body.ttrss_login div.header {
 body.ttrss_login div.footer {
   margin-top: 1em;
   padding-top: 5px;
-  border: 0px solid #257aa7;
+  border: 0px solid #b87d2c;
   border-top-width: 1px;
   text-align: center;
   color: gray;
@@ -938,19 +938,19 @@ body.ttrss_login a.forgotpass {
   display: inline-block;
 }
 body.ttrss_login a {
-  color: #257aa7;
+  color: #b87d2c;
   text-decoration: none;
 }
 body.ttrss_login a:hover,
 body.ttrss_login a:focus {
-  color: #257aa7;
+  color: #b87d2c;
   text-decoration: underline;
 }
 body.ttrss_login div.footer a {
   color: gray;
 }
 body.ttrss_login div.footer a:hover {
-  color: #257aa7;
+  color: #b87d2c;
 }
 body.ttrss_login div.row {
   padding: 0px 0px 5px 0px;
@@ -1022,14 +1022,14 @@ body.ttrss_main ul.list-unstyled {
   list-style-type: none;
 }
 ::selection {
-  background: #257aa7;
+  background: #b87d2c;
   color: white;
 }
 ::-webkit-scrollbar {
   width: 4px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #257aa7;
+  background-color: #b87d2c;
 }
 ::-webkit-scrollbar-track {
   background-color: #eee;
@@ -1146,7 +1146,7 @@ div.cdm.expanded.active {
   background: white;
 }
 div.cdm.expanded.active div.header a.title {
-  color: #257aa7;
+  color: #b87d2c;
 }
 div.cdm.expanded.Unread div.header a.title {
   color: black;
@@ -1161,7 +1161,7 @@ div.cdm.active div.content {
   color: black;
 }
 .cdm div.feed-title {
-  border: 0px solid #257aa7;
+  border: 0px solid #b87d2c;
   border-bottom-width: 1px;
   padding: 5px 3px 5px 5px;
 }
@@ -1173,7 +1173,7 @@ div.cdm.active div.content {
   color: #555555;
 }
 .cdm div.feed-title a:hover {
-  color: #257aa7;
+  color: #b87d2c;
 }
 .cdm div.header span.feed {
   float: right;
@@ -1310,7 +1310,7 @@ div#floatingTitle .feed-title a.catchup {
   white-space: nowrap;
 }
 div#floatingTitle .feed-title a.catchup:hover {
-  color: #257aa7;
+  color: #b87d2c;
 }
 div#floatingTitle.Unread a.title {
   color: black;
@@ -1339,7 +1339,7 @@ div#floatingTitle.Unread a.title {
   background: white;
 }
 .cdm.expandable.Selected:not(.active) {
-  background: #3f728e;
+  background: #9c7948;
 }
 .cdm.expandable.Selected:not(.active) a,
 .cdm.expandable.Selected:not(.active) .header a.title,
@@ -1364,14 +1364,14 @@ div.cdm.expandable.Unread div.header a.title {
   color: black;
 }
 div.cdm.expandable.active .collapse i {
-  color: #257aa7;
+  color: #b87d2c;
   cursor: pointer;
 }
 div.cdm.expandable.active .excerpt {
   display: none;
 }
 div.cdm.expandable.active div.header a.title {
-  color: #257aa7;
+  color: #b87d2c;
   font-size: 16px;
   font-weight: 600;
   text-rendering: optimizelegibility;
@@ -1431,7 +1431,7 @@ body.ttrss_prefs .dijitDialog #pref-profiles-list .dijitInlineEditBoxDisplayMode
 body.ttrss_prefs tr.title td {
   border: 0px solid #ecf4ff;
   border-bottom-width: 1px;
-  color: #257aa7;
+  color: #b87d2c;
 }
 body.ttrss_prefs .prefPrefsList td {
   padding-bottom: 4px;
@@ -1524,12 +1524,12 @@ body.ttrss_utility .floatingLogo {
   display: none;
 }
 body.ttrss_utility a {
-  color: #257aa7;
+  color: #b87d2c;
   text-decoration: none;
 }
 body.ttrss_utility a:hover,
 body.ttrss_utility a:focus {
-  color: #133d54;
+  color: #664518;
   text-decoration: underline;
 }
 body.ttrss_utility .alert {
@@ -1583,13 +1583,13 @@ body.ttrss_utility .alert-info h4 {
   color: #3a87ad;
 }
 body.ttrss_utility h1 {
-  color: #257aa7;
+  color: #b87d2c;
   font-size: 32px;
   margin: 20px 0px 5px 0px;
   text-shadow: 0 0 6px #fff;
 }
 body.ttrss_utility h2 {
-  color: #257aa7;
+  color: #b87d2c;
   font-size: 14pt;
   border-width: 0px 0px 1px 0px;
   border-color: #f0f0f0;
@@ -1709,11 +1709,11 @@ body#sharepopup {
 body#sharepopup h1 {
   font-size: 14px;
   margin: 0px;
-  color: #257aa7;
+  color: #b87d2c;
 }
 body#sharepopup table {
   background: white;
-  border: 1px solid #257aa7;
+  border: 1px solid #b87d2c;
   padding: 5px;
 }
 body#sharepopup form {
@@ -1769,7 +1769,7 @@ body#sharepopup input {
   color: white;
 }
 .flat .dijitTree .dijitTreeRowSelected .dijitTreeExpando {
-  color: #257aa7;
+  color: #b87d2c;
 }
 .flat .dijitTree .dijitTreeNode .dijitTreeRow.dijitTreeRowSelected {
   color: white;
@@ -1882,7 +1882,7 @@ body.flat.ttrss_main img[src*='indicator_white.gif'] {
   filter: invert(1);
 }
 body.flat.ttrss_main a:hover {
-  color: #58adda;
+  color: #dcae6e;
 }
 body.flat.ttrss_main #main,
 body.flat.ttrss_main #overlay {
@@ -1943,7 +1943,7 @@ body.flat.ttrss_main #headlines-frame .cdm.Unread .title {
   color: #e6e6e6;
 }
 body.flat.ttrss_main #headlines-frame .cdm.expanded.active .title {
-  color: #257aa7;
+  color: #b87d2c;
 }
 body.flat.ttrss_main #headlines-frame .cdm.expandable.active {
   background: #222222 ! important;
@@ -2033,7 +2033,7 @@ body.flat.ttrss_main .dijitDialog .panel {
 body.flat.ttrss_main #headlines-frame blockquote,
 body.flat.ttrss_main #content-insert blockquote {
   color: #cccccc;
-  border-color: #257aa7;
+  border-color: #b87d2c;
 }
 body.flat.ttrss_main pre {
   color: #cccccc;
