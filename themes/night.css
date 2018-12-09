@@ -1761,6 +1761,9 @@ body#sharepopup input {
   padding: 4px 8px;
   font-size: 13px;
 }
+.flat .dijitMenu .dijitMenuItem.dijitDisabled:not(.dijitMenuItemSelected) .dijitMenuItemLabel {
+  color: #d29745;
+}
 .flat .dijitMenu .dijitMenuItem td {
   padding: 0px;
 }
