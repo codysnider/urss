@@ -47,17 +47,21 @@ Plugins.Share = {
 			unshare: function () {
 				if (confirm(__("Remove sharing for this article?"))) {
 
-					Notify.progress("Trying to unshare...", true);
-
 					const query = {op: "pluginhandler", plugin: "share", method: "unshare", id: id};
 
 					xhrPost("backend.php", query, () => {
-						notify("Article unshared.");
+						try {
+							const img = $("SHARE-IMG-" + id);
 
-						const img = $("SHARE-IMG-" + id);
-						img.removeClassName("shared");
+							if (img) {
+								img.removeClassName("shared");
+								img.up("div[id*=RROW]").removeClassName("shared");
+							}
 
-						dialog.hide();
+							dialog.hide();
+						} catch (e) {
+							console.error(e);
+						}
 					});
 				}
 
