@@ -158,7 +158,7 @@ class Handler_Public extends Handler {
 				}
 
 				$tpl->setVariable('ARTICLE_OG_IMAGE',
-                        $this->get_article_image($enclosures, $line['content'], $feed_site_url));
+                        $this->get_article_image($enclosures, $line['content'], $feed_site_url), true);
 
 				$tpl->addBlock('entry');
 			}
