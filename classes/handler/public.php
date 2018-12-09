@@ -139,17 +139,26 @@ class Handler_Public extends Handler {
 
 				$enclosures = Article::get_article_enclosures($line["id"]);
 
-				foreach ($enclosures as $e) {
-					$type = htmlspecialchars($e['content_type']);
-					$url = htmlspecialchars($e['content_url']);
-					$length = $e['duration'] ? $e['duration'] : 1;
+				if (count($enclosures) > 0) {
+					foreach ($enclosures as $e) {
+						$type = htmlspecialchars($e['content_type']);
+						$url = htmlspecialchars($e['content_url']);
+						$length = $e['duration'] ? $e['duration'] : 1;
 
-					$tpl->setVariable('ARTICLE_ENCLOSURE_URL', $url, true);
-					$tpl->setVariable('ARTICLE_ENCLOSURE_TYPE', $type, true);
-					$tpl->setVariable('ARTICLE_ENCLOSURE_LENGTH', $length, true);
+						$tpl->setVariable('ARTICLE_ENCLOSURE_URL', $url, true);
+						$tpl->setVariable('ARTICLE_ENCLOSURE_TYPE', $type, true);
+						$tpl->setVariable('ARTICLE_ENCLOSURE_LENGTH', $length, true);
 
-					$tpl->addBlock('enclosure');
+						$tpl->addBlock('enclosure');
+					}
+				} else {
+					$tpl->setVariable('ARTICLE_ENCLOSURE_URL', null, true);
+					$tpl->setVariable('ARTICLE_ENCLOSURE_TYPE', null, true);
+					$tpl->setVariable('ARTICLE_ENCLOSURE_LENGTH', null, true);
 				}
+
+				$tpl->setVariable('ARTICLE_OG_IMAGE',
+                        $this->get_article_image($enclosures, $line['content'], $feed_site_url));
 
 				$tpl->addBlock('entry');
 			}
@@ -309,6 +318,32 @@ class Handler_Public extends Handler {
 
 	}
 
+	private function get_article_image($enclosures, $content, $site_url) {
+	    $og_image = false;
+
+		foreach ($enclosures as $enc) {
+			if (strpos($enc["content_type"], "image/") !== FALSE) {
+				$og_image = $enc["content_url"];
+				break;
+			}
+		}
+
+		if (!$og_image) {
+			$tmpdoc = new DOMDocument();
+
+			if (@$tmpdoc->loadHTML(mb_substr($content, 0, 131070))) {
+				$tmpxpath = new DOMXPath($tmpdoc);
+				$first_img = $tmpxpath->query("//img")->item(0);
+
+				if ($first_img) {
+					$og_image = $first_img->getAttribute("src");
+				}
+			}
+		}
+
+		return rewrite_relative_url($site_url, $og_image);
+    }
+
 	private function format_article($id, $owner_uid) {
 
 		$pdo = Db::pdo();
@@ -385,27 +420,7 @@ class Handler_Public extends Handler {
 
             $rv .= "</head>";
 
-            $og_image = false;
-
-            foreach ($enclosures as $enc) {
-                if (strpos($enc["content_type"], "image/") !== FALSE) {
-                    $og_image = $enc["content_url"];
-                    break;
-                }
-            }
-
-            if (!$og_image) {
-                $tmpdoc = new DOMDocument();
-
-                if (@$tmpdoc->loadHTML(mb_substr($line["content"], 0, 131070))) {
-                    $tmpxpath = new DOMXPath($tmpdoc);
-                    $first_img = $tmpxpath->query("//img")->item(0);
-
-                    if ($first_img) {
-                        $og_image = $first_img->getAttribute("src");
-                    }
-                }
-            }
+            $og_image = $this->get_article_image($enclosures, $line['content'], $line["site_url"]);
 
             if ($og_image) {
                 $rv .= "<meta property=\"og:image\" content=\"" . htmlspecialchars($og_image) . "\"/>";
