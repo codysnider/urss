@@ -268,6 +268,9 @@ body.ttrss_main .hl a.title.high,
 body.ttrss_main .hl span.hl-content.high .preview {
   color: #00aa00;
 }
+body.ttrss_main .hl.vgrlf .feed {
+  display: none;
+}
 body.ttrss_main .hl.Unread {
   background: white;
 }
@@ -1160,6 +1163,9 @@ div.cdm.expanded.Unread div.content {
 }
 div.cdm.active div.content {
   color: black;
+}
+div.cdm.vgrlf .feed {
+  display: none;
 }
 .cdm div.feed-title {
   border: 0px solid #257aa7;

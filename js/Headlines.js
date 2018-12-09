@@ -250,6 +250,7 @@ define(["dojo/_base/declare"], function (declare) {
 			if (hl.marked) row_class += " marked";
 			if (hl.published) row_class += " published";
 			if (hl.unread) row_class += " Unread";
+			if (headlines.vfeed_group_enabled) row_class += " vgrlf";
 
 			if (headlines.vfeed_group_enabled && hl.feed_title && this.vgroup_last_feed != hl.feed_id) {
 				let vgrhdr = `<div data-feed-id='${hl.feed_id}' class='feed-title'>
