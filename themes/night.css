@@ -1961,6 +1961,16 @@ body.flat.ttrss_main #headlines-frame .hl.Selected .dijitCheckBox,
 body.flat.ttrss_main #headlines-frame .cdm.expandable.Selected .dijitCheckBox {
   filter: invert(1);
 }
+body.flat.ttrss_main #headlines-frame .hl.Selected.marked i.marked-pic,
+body.flat.ttrss_main #headlines-frame .cdm.expandable.Selected.marked i.marked-pic,
+body.flat.ttrss_main #headlines-frame .hl.active.marked i.marked-pic {
+  filter: invert(1);
+}
+body.flat.ttrss_main #headlines-frame .hl.Selected.published i.pub-pic,
+body.flat.ttrss_main #headlines-frame .cdm.expandable.Selected.published i.pub-pic,
+body.flat.ttrss_main #headlines-frame .hl.active.published i.pub-pic {
+  filter: invert(1);
+}
 body.flat.ttrss_main #headlines-frame .cdm.expanded.active .title,
 body.flat.ttrss_main #headlines-frame .cdm.expandable.active .title {
   color: #b87d2c;
