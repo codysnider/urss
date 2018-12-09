@@ -109,10 +109,13 @@ define(["dojo/_base/declare"], function (declare) {
 		},
 		openInNewWindow: function (id) {
 			const w = window.open("");
-			w.opener = null;
-			w.location = "backend.php?op=article&method=redirect&id=" + id;
 
-			Headlines.toggleUnread(id, 0);
+			if (w) {
+				w.opener = null;
+				w.location = "backend.php?op=article&method=redirect&id=" + id;
+
+				Headlines.toggleUnread(id, 0);
+			}
 		},
 		render: function (article) {
 			App.cleanupMemory("content-insert");
