@@ -331,7 +331,7 @@ body.ttrss_main .dijitContentPane pre {
 body.ttrss_main .alert {
   padding: 8px 35px 8px 14px;
   margin-bottom: 10px;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  /* text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); */
   background-color: #fcf8e3;
   border: 1px solid #fbeed5;
   border-radius: 4px;
@@ -2056,5 +2056,9 @@ body.flat.ttrss_main ::-webkit-scrollbar-thumb {
 }
 body.flat.ttrss_main ::-webkit-scrollbar-track {
   background-color: #222222;
+}
+body.flat.ttrss_main .alert {
+  background: #222222;
+  border-color: #664518;
 }
 /*# sourceMappingURL=night.css.map */
