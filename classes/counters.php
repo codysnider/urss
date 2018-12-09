@@ -24,11 +24,11 @@ class Counters {
 
 		$pdo = DB::pdo();
 
-		$sth = $pdo->prepare("SELECT id AS cat_id, value AS unread,
+		$sth = $pdo->prepare("SELECT ttrss_feed_categories.id AS cat_id, value AS unread,
 			(SELECT COUNT(id) FROM ttrss_feed_categories AS c2
 				WHERE c2.parent_cat = ttrss_feed_categories.id) AS num_children
 			FROM ttrss_feed_categories, ttrss_cat_counters_cache
-			WHERE ttrss_cat_counters_cache.feed_id = id AND
+			WHERE ttrss_cat_counters_cache.feed_id = ttrss_feed_categories.id AND
 			ttrss_cat_counters_cache.owner_uid = ttrss_feed_categories.owner_uid AND
 			ttrss_feed_categories.owner_uid = ?");
 		$sth->execute([$_SESSION['uid']]);
@@ -172,7 +172,7 @@ class Counters {
 			FROM ttrss_feeds, ttrss_counters_cache
 			WHERE ttrss_feeds.owner_uid = ?
 				AND ttrss_counters_cache.owner_uid = ttrss_feeds.owner_uid
-				AND ttrss_counters_cache.feed_id = id");
+				AND ttrss_counters_cache.feed_id = ttrss_feeds.id");
 		$sth->execute([$_SESSION['uid']]);
 
 		while ($line = $sth->fetch()) {
