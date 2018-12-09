@@ -318,8 +318,10 @@ define(["dojo/_base/declare"], function (declare) {
 								_label_base_index = parseInt(params[k]);
 								break;
 							case "cdm_auto_catchup":
-								if (params[k] == 1)
-									$("headlines-frame").addClassName("auto_catchup");
+								if (params[k] == 1) {
+									const hl = $("headlines-frame");
+									if (hl) hl.addClassName("auto_catchup");
+								}
 								break;
 							case "hotkeys":
 								// filter mnemonic definitions (used for help panel) from hotkeys map
