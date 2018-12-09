@@ -2,19 +2,23 @@
 @import "../lib/flat-ttrss/flat_combined_dark.css";
 
 @color-accent: #b87d2c;
+@color-panel-bg : #222;
+@default-text: #ccc;
+@default-fg: @default-text;
+@border-default: #222;
 
 @bg-main : #333;
-@border-main : #666;
-@border-dark : #222;
-@bg-panel : #222;
-@fg-main: #ccc;
-@fg-insensitive: darken(@fg-main, 20%);
-@fg-light : lighten(@fg-main, 10%);
-@bg-active: @color-accent;
+
+@border-light : #666;
+
+@default-text: #ccc;
+
+@fg-insensitive: darken(@default-text, 20%);
+@fg-light : lighten(@default-text, 10%);
 
 body.flat.ttrss_main.ttrss_prefs {
 	#main, #footer {
-		background: @bg-panel;
+		background: @color-panel-bg;
 	}
 
 	#footer a {
@@ -28,8 +32,6 @@ body.flat.ttrss_main.ttrss_prefs {
 }
 
 body.flat.ttrss_main {
-	color : @fg-main;
-
 	img[src*='indicator_white.gif'] {
 		filter : invert(1);
 	}
@@ -39,24 +41,23 @@ body.flat.ttrss_main {
 	}
 
 	#main, #overlay {
-		color : @fg-main;
+		color : @default-text;
 		background: @bg-main;
 	}
 
 	#toolbar-frame #toolbar {
-		background : @bg-panel;
-		border-color : @border-dark;
+		background : @color-panel-bg;
 		color : @fg-light;
 	}
 
 	#feeds-holder {
-		background : @bg-panel;
-		box-shadow : inset -1px 0px 2px -1px @border-main;
+		background : @color-panel-bg;
+		box-shadow : inset -1px 0px 2px -1px @border-light;
 
 		#feedTree {
 			.counterNode.aux {
-				background: @bg-panel;
-				color: @fg-main;
+				background: @color-panel-bg;
+				color: @default-text;
 				border-color: @bg-main;
 			}
 
@@ -74,7 +75,6 @@ body.flat.ttrss_main {
 
 	#floatingTitle {
 		background-color : @bg-main;
-		border-color : @border-dark;
 
 		.feed a {
 			color : @fg-light;
@@ -90,10 +90,6 @@ body.flat.ttrss_main {
 	}
 
 	#headlines-frame {
-		.whiteBox {
-			border-color : @border-dark;
-		}
-
 		.hl:not(.active):not(.Selected):not(.Unread),
 		.cdm.expandable:not(.active):not(.Selected):not(.Unread) {
 			background : @bg-main;
@@ -101,7 +97,7 @@ body.flat.ttrss_main {
 
 		.hl.Unread:not(.active):not(.Selected),
 		.cdm.expandable.Unread:not(.active):not(.Selected) {
-			background : @bg-panel;
+			background : @color-panel-bg;
 		}
 
 		.cdm.expanded {
@@ -151,15 +147,14 @@ body.flat.ttrss_main {
 		}
 
 		.cdm.expandable.active {
-			background : @bg-panel ! important;
+			background : @color-panel-bg ! important;
 		}
 
 		.hl, .cdm {
-			border-color : @border-dark;
-			color : @fg-main;
+			color : @default-text;
 
 			.title {
-				color : @fg-main;
+				color : @default-text;
 			}
 
 			.author {
@@ -167,7 +162,7 @@ body.flat.ttrss_main {
 			}
 
 			.updated, .content {
-				color : @fg-main;
+				color : @default-text;
 			}
 
 			.feed a {
@@ -176,8 +171,8 @@ body.flat.ttrss_main {
 		}
 
 		.cdm .footer {
-			border-color : @bg-panel;
-			color : @fg-main;
+			border-color : @color-panel-bg;
+			color : @default-text;
 		}
 
 		.left {
@@ -192,8 +187,7 @@ body.flat.ttrss_main {
 	#content-insert {
 		.post {
 			.header {
-				background : @bg-panel;
-				border-color: @border-dark;
+				background : @color-panel-bg;
 			}
 		}
 	}
@@ -207,14 +201,14 @@ body.flat.ttrss_main {
 
 		.dijitSelect:not(.dijitHover) {
 			.dijitButtonContents, .dijitButtonNode {
-				background-color: @bg-panel;
+				background-color: @color-panel-bg;
 			}
 		}
 	}
 
 	.dijitCheckBox:not(.dijitChecked)::before {
 		color : @fg-insensitive;
-		background: @bg-panel;
+		background: @color-panel-bg;
 	}
 
 	.insensitive {
@@ -226,11 +220,11 @@ body.flat.ttrss_main {
 	}
 
 	.dijitDialog .dijitDialogPaneContent {
-		background : @bg-panel;
+		background : @color-panel-bg;
 	}
 
 	.dijitTab:not(.dijitTabChecked) {
-		background : @bg-panel;
+		background : @color-panel-bg;
 	}
 
 	.dijitTab.dijitTabChecked.dijitTabHover {
@@ -238,11 +232,11 @@ body.flat.ttrss_main {
 	}
 
 	label.dijitButton {
-		border: 1px solid @border-main;
+		border: 1px solid @border-light;
 	}
 
 	label.dijitButton:hover {
-		border-color : lighten(@border-dark, 5%);
+		border-color : lighten(@border-default, 5%);
 		background-color: @bg-main;
 	}
 
@@ -255,8 +249,8 @@ body.flat.ttrss_main {
 	}
 
 	.panel {
-		background-color : @bg-panel;
-		border-color : @border-main;
+		background-color : @color-panel-bg;
+		border-color : @border-light;
 	}
 
 	.dijitDialog .panel {
@@ -265,18 +259,18 @@ body.flat.ttrss_main {
 
 	#headlines-frame blockquote,
 	#content-insert blockquote {
-		color : @fg-main;
+		color : @default-text;
 		border-color : @color-accent;
 	}
 
 	pre {
-		color : @fg-main;
-		background : @bg-panel ! important;
+		color : @default-text;
+		background : @color-panel-bg ! important;
 	}
 
 	ul#filterDlg_Matches, ul#filterDlg_Actions {
-		background: @bg-panel;
-		border-color : @border-main;
+		background: @color-panel-bg;
+		border-color : @border-light;
 	}
 
 	/*
@@ -296,7 +290,7 @@ body.flat.ttrss_main {
 	} */
 
 	.article-note {
-		background : @bg-panel;
+		background : @color-panel-bg;
 		border-color : #9a8c59;
 	}
 
@@ -305,15 +299,15 @@ body.flat.ttrss_main {
 	}
 
 	::-webkit-scrollbar-thumb {
-		background-color: @border-main;
+		background-color: @border-light;
 	}
 
 	::-webkit-scrollbar-track {
-		background-color: @bg-panel;
+		background-color: @color-panel-bg;
 	}
 
 	.alert {
-		background: @bg-panel;
+		background: @color-panel-bg;
 		border-color : darken(@color-accent, 20%);
 	}
 

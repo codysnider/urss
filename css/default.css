@@ -11,7 +11,7 @@ body.ttrss_prefs,
 }
 body.ttrss_main {
   background: white;
-  color: black;
+  color: #000000;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   overflow: hidden;
@@ -26,7 +26,7 @@ body.ttrss_main div.post {
 body.ttrss_main div.post div.header {
   padding: 5px;
   color: #909090;
-  border: 0px solid #ddd;
+  border: 0px solid #dddddd;
   border-bottom-width: 1px;
   background: #f0f0f0;
 }
@@ -189,7 +189,7 @@ body.ttrss_main .notify.notify_error i.icon-close {
   color: white;
 }
 body.ttrss_main .hl {
-  border: 0px solid #ddd;
+  border: 0px solid #dddddd;
   border-bottom-width: 1px;
   transition: color 0.2s, background 0.2s;
   display: flex;
@@ -414,7 +414,7 @@ body.ttrss_main i.pub-pic {
   color: #ccc;
 }
 body.ttrss_main div.errorExplained {
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   margin: 5px 0px 5px 0px;
   padding: 5px;
 }
@@ -423,7 +423,7 @@ body.ttrss_main ul.browseFeedList {
   width: 100%;
   overflow: auto;
   border-width: 0px 1px 1px 1px;
-  border-color: #ddd;
+  border-color: #dddddd;
   border-style: solid;
   margin: 0px 0px 5px 0px;
   background-color: white;
@@ -475,7 +475,7 @@ body.ttrss_main div.whiteBox {
   text-align: center;
   padding: 1em 1em 0px 1em;
   font-size: 11px;
-  border: 0px solid #ddd;
+  border: 0px solid #dddddd;
   border-bottom-width: 1px;
 }
 body.ttrss_main div.autocomplete {
@@ -584,7 +584,7 @@ body.ttrss_main #content-wrap {
 }
 body.ttrss_main #feeds-holder {
   padding: 0px;
-  border: 0px solid #ddd;
+  border: 0px solid #dddddd;
   overflow: hidden;
   background: #f5f5f5;
   box-shadow: inset -1px 0px 2px -1px rgba(0, 0, 0, 0.1);
@@ -636,7 +636,7 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRow {
 }
 body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRowSelected {
   box-shadow: -1px 0px 2px -1px rgba(0, 0, 0, 0.1);
-  border-color: #ddd transparent;
+  border-color: #dddddd transparent;
   background: white;
   color: #333;
 }
@@ -677,7 +677,7 @@ body.ttrss_main #headlines-wrap-inner {
 }
 body.ttrss_main #headlines-frame {
   padding: 0px;
-  border: 0px #ddd;
+  border: 0px #dddddd;
   margin-top: 0px;
   -webkit-overflow-scrolling: touch;
   -webkit-transform: translateZ(0);
@@ -710,7 +710,7 @@ body.ttrss_main #toolbar-frame {
 }
 body.ttrss_main #toolbar-frame #toolbar {
   background: white;
-  border: 0px solid #ddd;
+  border: 0px solid #dddddd;
   border-bottom-width: 1px;
   padding-left: 4px;
   height: 32px;
@@ -782,7 +782,7 @@ body.ttrss_main #header {
 }
 body.ttrss_main #content-insert {
   padding: 0px;
-  border-color: #ddd;
+  border-color: #dddddd;
   border-width: 0px;
   line-height: 1.5;
   overflow: auto;
@@ -839,7 +839,7 @@ body.ttrss_main ul#filterDlg_Actions {
   overflow: auto;
   list-style-type: none;
   border-style: solid;
-  border-color: #ddd;
+  border-color: #dddddd;
   border-width: 1px 1px 1px 1px;
   background-color: white;
   margin: 0px 0px 5px 0px;
@@ -858,7 +858,7 @@ body.ttrss_main ul.helpKbList {
   max-height: 300px;
   overflow: auto;
   list-style-type: none;
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   margin: 0px 0px 5px 0px;
   padding: 5px;
 }
@@ -1002,7 +1002,7 @@ body.ttrss_main i.icon-score {
   cursor: pointer;
 }
 body.ttrss_main .panel {
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   background: #f5f5f5;
   padding: 4px;
 }
@@ -1125,7 +1125,7 @@ video::-webkit-media-controls-overlay-play-button {
   white-space: normal;
 }
 .cdm.expanded .footer {
-  border: 0px solid #ddd;
+  border: 0px solid #dddddd;
   border-bottom-width: 1px;
 }
 .cdm.expanded > hr {
@@ -1216,7 +1216,7 @@ div#floatingTitle {
   top: 0px;
   right: 0px;
   left: 0px;
-  border: 0px solid #ddd;
+  border: 0px solid #dddddd;
   border-bottom-width: 1px;
   background: white;
   color: #555555;
@@ -1318,7 +1318,7 @@ div#floatingTitle.Unread a.title {
 }
 .cdm.expandable {
   background-color: #f5f5f5;
-  border: 0px solid #ddd;
+  border: 0px solid #dddddd;
   border-bottom-width: 1px;
 }
 .cdm.expandable > hr {
@@ -1745,7 +1745,8 @@ body#sharepopup input {
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
 .flat .dijitCheckBox.dijitCheckBoxChecked {
-  background-color: #69C671;
+  background-color: #69c671;
+  border-color: #45b74f;
 }
 .flat .dijitMenu .dijitMenuItem .dijitMenuItemLabel {
   padding: 4px 8px;
