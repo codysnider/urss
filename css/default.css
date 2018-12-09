@@ -1769,6 +1769,10 @@ body#sharepopup input {
   content: "\f00c";
   color: white;
 }
+.flat .dijitTab i.material-icons,
+.flat .dijitAccordionInnerContainer:not(.dijitSelected) i.material-icons {
+  color: #257aa7;
+}
 .flat .dijitTree .dijitFolderClosed,
 .flat .dijitTree .dijitFolderOpened {
   display: none;
