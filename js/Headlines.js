@@ -255,7 +255,7 @@ define(["dojo/_base/declare"], function (declare) {
 				let vgrhdr = `<div data-feed-id='${hl.feed_id}' class='feed-title'>
 					<div style='float : right'>${hl.feed_icon}</div>
 					<a class="title" href="#" onclick="Feeds.open({feed:${hl.feed_id}})">${hl.feed_title}
-					<a class="catchup" onclick="Feeds.catchupFeedInGroup(${hl.feed_id})" href="#">${__('mark feed as read')}</a>
+					<a class="catchup" title="${__('mark feed as read')}" onclick="Feeds.catchupFeedInGroup(${hl.feed_id})" href="#"><i class="material-icons">check_circle</i></a>
 					</div>`
 
 				const tmp = document.createElement("div");

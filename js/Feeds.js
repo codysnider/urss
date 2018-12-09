@@ -480,40 +480,17 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (App.getInitParam("confirm_feed_catchup") != 1 || confirm(str)) {
 
-				const rows = $$("#headlines-frame > div[id*=RROW][data-orig-feed-id='" + id + "']");
+				const rows = $$("#headlines-frame > div[id*=RROW][class*=Unread][data-orig-feed-id='" + id + "']");
 
 				if (rows.length > 0) {
 
-					rows.each(function (row) {
-						row.removeClassName("Unread");
+					for (let i = 0; i < rows.length; i++)
+						Headlines.catchup_id_batch.push(rows[i].getAttribute("data-article-id"));
 
-						if (row.getAttribute("data-article-id") != Article.getActive()) {
-							new Effect.Fade(row, {duration: 0.5});
-						}
-
+					Headlines.catchupBatched(() => {
+						Headlines.updateFloatingTitle(true);
 					});
-
-					const feedTitles = $$("#headlines-frame > div[class='feed-title']");
-
-					for (let i = 0; i < feedTitles.length; i++) {
-						if (feedTitles[i].getAttribute("data-feed-id") == id) {
-
-							if (i < feedTitles.length - 1) {
-								new Effect.Fade(feedTitles[i], {duration: 0.5});
-							}
-
-							break;
-						}
-					}
-
-					Headlines.updateFloatingTitle(true);
 				}
-
-				Notify.progress("Loading, please wait...", true);
-
-				xhrPost("backend.php", {op: "rpc", method: "catchupFeed", feed_id: id, is_cat: false}, (transport) => {
-					App.handleRpcJson(transport);
-				});
 			}
 		},
 		getUnread: function(feed, is_cat) {
