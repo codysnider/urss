@@ -534,6 +534,9 @@ require(["dojo/_base/kernel",
 								alert(__("Widescreen is not available in combined mode."));
 							}
 							break;
+						case "qmcToggleNightMode":
+							App.toggleNightMode();
+							break;
 						case "qmcHKhelp":
 							App.helpDialog("main");
 							break;
