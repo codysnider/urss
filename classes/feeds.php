@@ -231,7 +231,7 @@ class Feeds extends Handler_Protected {
 				++$headlines_count;
 
 				if (!get_pref('SHOW_CONTENT_PREVIEW')) {
-					$line["content_preview"] = null;
+					$line["content_preview"] = "";
 				} else {
 					$line["content_preview"] =  "&mdash; " . truncate_string(strip_tags($line["content"]), 250);
 
