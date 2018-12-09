@@ -163,6 +163,20 @@ body.flat.ttrss_main {
 		}
 	}
 
+	.dijitToolbar {
+		.dijitSelect {
+			.dijitButtonContents, .dijitButtonNode {
+				transition: background-color 0.3s linear;
+			}
+		}
+
+		.dijitSelect:not(.dijitHover) {
+			.dijitButtonContents, .dijitButtonNode {
+				background-color: @bg-panel;
+			}
+		}
+	}
+
 	.dijitCheckBox:not(.dijitChecked)::before {
 		color : @fg-insensitive;
 		background: @bg-panel;

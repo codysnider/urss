@@ -1983,6 +1983,14 @@ body.flat.ttrss_main #content-insert .post .header {
   background: #222222;
   border-color: #222222;
 }
+body.flat.ttrss_main .dijitToolbar .dijitSelect .dijitButtonContents,
+body.flat.ttrss_main .dijitToolbar .dijitSelect .dijitButtonNode {
+  transition: background-color 0.3s linear;
+}
+body.flat.ttrss_main .dijitToolbar .dijitSelect:not(.dijitHover) .dijitButtonContents,
+body.flat.ttrss_main .dijitToolbar .dijitSelect:not(.dijitHover) .dijitButtonNode {
+  background-color: #222222;
+}
 body.flat.ttrss_main .dijitCheckBox:not(.dijitChecked)::before {
   color: #999999;
   background: #222222;
