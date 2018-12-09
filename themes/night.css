@@ -1904,9 +1904,6 @@ body.flat.ttrss_main #feeds-holder #feedTree .counterNode.aux {
   color: #cccccc;
   border-color: #333333;
 }
-body.flat.ttrss_main #feeds-holder #feedTree .counterNode {
-  background: #8f6122;
-}
 body.flat.ttrss_main #feeds-holder #feedTree .dijitTreeRowSelected {
   background: #333333;
   border-color: #333333 transparent;
