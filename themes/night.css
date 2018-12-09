@@ -1421,9 +1421,6 @@ body.ttrss_prefs #footer {
   border: 0px;
   text-align: center;
 }
-body.ttrss_prefs #header a:hover {
-  color: black;
-}
 body.ttrss_prefs #header img {
   vertical-align: middle;
   cursor: pointer;
