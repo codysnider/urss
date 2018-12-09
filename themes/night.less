@@ -120,18 +120,19 @@ body.flat.ttrss_main {
 		.hl.active,
 		.hl.Selected,
 		.cdm.expandable.Selected {
-			*:not(.dijitCheckBox) {
+			> * {
+				filter : invert(1);
+
+				img {
+					filter : invert(1);
+				}
+			}
+
+			.dijitCheckBox {
 				filter : invert(1);
 			}
-
-			.updated {
-				color : @bg-panel;
-			}
-
-			> .left .dijitCheckBox {
-				filter : invert(1) ! important;
-			}
 		}
+		
 
 		.cdm.expanded.active .title,
 		.cdm.expandable.active .title {
