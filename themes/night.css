@@ -1033,6 +1033,9 @@ body.ttrss_main ul.list {
 body.ttrss_main ul.list-unstyled {
   list-style-type: none;
 }
+body.ttrss_main .text-center {
+  text-align: center;
+}
 ::selection {
   background: #b87d2c;
   color: #333333;
@@ -1471,7 +1474,7 @@ body.ttrss_prefs table.prefPluginsList label {
   white-space: nowrap;
 }
 body.ttrss_prefs table.prefPluginsList i.plugin-enabled {
-  color: #69C671;
+  color: #69c671;
 }
 body.ttrss_prefs table.prefPluginsList label img {
   vertical-align: middle;

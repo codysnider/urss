@@ -40,7 +40,7 @@ class Dlg extends Handler_Protected {
 
 		print __("Your Public OPML URL is:");
 
-		print "<div class='panel'>";
+		print "<div class='panel text-center'>";
 		print "<a id='pub_opml_url' href='$url_path' target='_blank'>$url_path</a>";
 		print "</div>";
 
@@ -91,7 +91,7 @@ class Dlg extends Handler_Protected {
 	}
 
 	function printTagCloud() {
-		print "<div class='panel'>";
+		print "<div class='panel text-center'>";
 
 		// from here: http://www.roscripts.com/Create_tag_cloud-71.html
 
@@ -167,7 +167,7 @@ class Dlg extends Handler_Protected {
 
 		print "<div>".T_sprintf("%s can be accessed via the following secret URL:", $feed_title)."</div>";
 
-		print "<div class='panel'>";
+		print "<div class='panel text-center'>";
 		print "<a id='gen_feed_url' href='$url_path' target='_blank'>$url_path</a>";
 		print "</div>";
 

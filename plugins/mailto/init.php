@@ -72,7 +72,7 @@ class MailTo extends Plugin {
 
 		print __("Clicking the following link to invoke your mail client:");
 
-		print "<div class='panel'>";
+		print "<div class='panel text-center'>";
 		print "<a target=\"_blank\" href=\"$mailto_link\">".
 			__("Forward selected article(s) by email.")."</a>";
 		print "</div>";
