@@ -404,7 +404,7 @@ class Handler_Public extends Handler {
 
 				?>
 
-				<table height='100%' width='100%'><tr><td colspan='2'>
+				<table height='100%' width='100%' class="panel"><tr><td colspan='2'>
 				<h1><?php echo __("Share with Tiny Tiny RSS") ?></h1>
 				</td></tr>
 

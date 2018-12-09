@@ -4,7 +4,7 @@ body.ttrss_utility.sanity_failed {
 
 body.ttrss_utility {
 	background : @color-panel-bg;
-	color : black;
+	color : @default-fg;
 	padding : 0px;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
@@ -263,20 +263,14 @@ body.small_margins {
 }
 
 body#sharepopup {
-	background: white url("../images/toolbar.png") repeat-x bottom;
+	color : @default-fg;
+	background: @default-bg;
 	margin : 10px;
-	padding : 0px;
 
 	h1 {
 		font-size : 14px;
 		margin : 0px;
 		color : @color-accent;
-	}
-
-	table {
-		background : white;
-		border : 1px solid @color-accent;
-		padding : 5px;
 	}
 
 	form {

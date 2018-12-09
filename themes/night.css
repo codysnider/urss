@@ -1487,7 +1487,7 @@ body.ttrss_utility.sanity_failed {
 }
 body.ttrss_utility {
   background: #222222;
-  color: black;
+  color: #cccccc;
   padding: 0px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -1703,19 +1703,14 @@ body.small_margins {
   max-width: none;
 }
 body#sharepopup {
-  background: #ffffff url("../images/toolbar.png") repeat-x bottom;
+  color: #cccccc;
+  background: #333333;
   margin: 10px;
-  padding: 0px;
 }
 body#sharepopup h1 {
   font-size: 14px;
   margin: 0px;
   color: #b87d2c;
-}
-body#sharepopup table {
-  background: white;
-  border: 1px solid #b87d2c;
-  padding: 5px;
 }
 body#sharepopup form {
   height: 100%;
