@@ -10,7 +10,7 @@ body.ttrss_prefs,
   margin: 0;
 }
 body.ttrss_main {
-  background: white;
+  background: #ffffff;
   color: #000000;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -28,7 +28,7 @@ body.ttrss_main div.post div.header {
   color: #909090;
   border: 0px solid #dddddd;
   border-bottom-width: 1px;
-  background: #f0f0f0;
+  background: #f5f5f5;
 }
 body.ttrss_main div.post div.header .left,
 body.ttrss_main div.post div.header .right {
@@ -394,12 +394,12 @@ body.ttrss_main span.preview {
 }
 body.ttrss_main .hl.Selected .hlLabelRef,
 body.ttrss_main .hl.active .hlLabelRef {
-  color: #063064;
+  color: #000000;
 }
 body.ttrss_main span.hlLabelRef {
   background-color: #fff7d5;
   font-size: 8px;
-  color: #063064;
+  color: #000000;
   font-weight: normal;
   margin-left: 2px;
   padding: 1px 4px 1px 4px;
@@ -453,7 +453,7 @@ body.ttrss_main .noborder {
   border-width: 0px;
 }
 body.ttrss_main #overlay {
-  background: white;
+  background: #ffffff;
   left: 0;
   top: 0;
   height: 100%;
@@ -481,8 +481,8 @@ body.ttrss_main div.whiteBox {
 body.ttrss_main div.autocomplete {
   position: absolute;
   width: 250px;
-  background-color: white;
-  border: 1px solid #778899;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
   margin: 0px;
   padding: 0px;
 }
@@ -492,7 +492,7 @@ body.ttrss_main div.autocomplete ul {
   padding: 0px;
 }
 body.ttrss_main div.autocomplete ul li.selected {
-  background-color: #fff7d5;
+  background-color: #e6e6e6;
 }
 body.ttrss_main div.autocomplete ul li {
   list-style-type: none;
@@ -557,7 +557,7 @@ body.ttrss_main div#cmdline {
   font-size: 11px;
   color: #555555;
   font-weight: bold;
-  background-color: white;
+  background-color: #ffffff;
   border: 1px solid #257aa7;
   padding: 3px 5px 3px 5px;
   z-index: 5;
@@ -597,9 +597,9 @@ body.ttrss_main #feeds-holder #feedTree {
   font-family: "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 body.ttrss_main #feeds-holder #feedTree .counterNode.aux {
-  background: #f0f0f0;
-  color: #999;
-  border-color: #f0f0f0;
+  background: #f5f5f5;
+  color: #6f6f6f;
+  border-color: #dcdcdc;
 }
 body.ttrss_main #feeds-holder #feedTree .counterNode {
   font-weight: bold;
@@ -637,7 +637,7 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRow {
 body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRowSelected {
   box-shadow: -1px 0px 2px -1px rgba(0, 0, 0, 0.1);
   border-color: #dddddd transparent;
-  background: white;
+  background: #ffffff;
   color: #333;
 }
 body.ttrss_main #feeds-holder #feedTree .icon {
@@ -806,14 +806,14 @@ body.ttrss_main .player {
   margin: 0px 2px 0px 2px;
   width: 50px;
   text-align: center;
-  background: white;
+  background: #ffffff;
 }
 body.ttrss_main .player.playing {
   color: #00c000;
   border-color: #00c000;
 }
 body.ttrss_main .player:hover {
-  background: #f0f0f0;
+  background: #f5f5f5;
   cursor: pointer;
 }
 body.ttrss_main #headlines-spacer {
@@ -841,7 +841,7 @@ body.ttrss_main ul#filterDlg_Actions {
   border-style: solid;
   border-color: #dddddd;
   border-width: 1px 1px 1px 1px;
-  background-color: white;
+  background-color: #ffffff;
   margin: 0px 0px 5px 0px;
   padding: 4px;
   min-height: 16px;
@@ -1007,7 +1007,7 @@ body.ttrss_main .panel {
   padding: 4px;
 }
 body.ttrss_main .dijitDialog .panel {
-  background: white;
+  background: #ffffff;
 }
 body.ttrss_main .panel-scrollable {
   overflow: auto;
@@ -1024,7 +1024,7 @@ body.ttrss_main ul.list-unstyled {
 }
 ::selection {
   background: #257aa7;
-  color: white;
+  color: #ffffff;
 }
 ::-webkit-scrollbar {
   width: 4px;

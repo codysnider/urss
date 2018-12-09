@@ -107,7 +107,7 @@
 
 <div id="overlay">
 	<div id="overlay_inner">
-		<div class="insensitive"><?php echo __("Loading, please wait...") ?></div>
+		<?php echo __("Loading, please wait...") ?>
 		<div dojoType="dijit.ProgressBar" places="0" style="width : 300px" id="loading_bar"
 	     progress="0" maximum="100">
 		</div>

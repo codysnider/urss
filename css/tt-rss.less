@@ -1,5 +1,5 @@
 body.ttrss_main {
-	background : white;
+	background : @default-bg;
 	color : @default-fg;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
@@ -18,7 +18,7 @@ body.ttrss_main {
 			color : #909090;
 			border: 0px solid @border-default;
 			border-bottom-width: 1px;
-			background: #f0f0f0;
+			background: @color-panel-bg;
 
 			.left, .right {
 				display : flex;
@@ -454,13 +454,13 @@ body.ttrss_main {
 
 	.hl.Selected .hlLabelRef,
 	.hl.active .hlLabelRef {
-		color : #063064;
+		color : @default-fg;
 	}
 
 	span.hlLabelRef {
 		background-color : #fff7d5;
 		font-size : 8px;
-		color : #063064;
+		color : @default-fg;
 		font-weight : normal;
 		margin-left : 2px;
 		padding : 1px 4px 1px 4px;
@@ -524,7 +524,7 @@ body.ttrss_main {
 	}
 
 	#overlay {
-		background : white;
+		background : @default-bg;
 		left : 0;
 		top : 0;
 		height : 100%;
@@ -556,8 +556,8 @@ body.ttrss_main {
 	div.autocomplete {
 		position : absolute;
 		width : 250px;
-		background-color : white;
-		border :1px solid #778899;
+		background-color : @default-bg;
+		border :1px solid @border-default;
 		margin : 0px;
 		padding : 0px;
 
@@ -568,7 +568,7 @@ body.ttrss_main {
 		}
 
 		ul li.selected {
-			background-color : #fff7d5;
+			background-color : darken(@default-bg, 10%);
 		}
 
 		ul li {
@@ -650,7 +650,7 @@ body.ttrss_main {
 		font-size : 11px;
 		color : @default-text;
 		font-weight : bold;
-		background-color : white;
+		background-color : @default-bg;
 		border : 1px solid @color-accent;
 		padding : 3px 5px 3px 5px;
 		z-index : 5;
@@ -696,9 +696,9 @@ body.ttrss_main {
 			font-family : @fonts-ui;
 
 			.counterNode.aux {
-				background : #f0f0f0;
-				color : #999;
-				border-color : #f0f0f0;
+				background : @color-panel-bg;
+				color : lighten(@default-text, 10%);
+				border-color : darken(@color-panel-bg, 10%);
 			}
 
 			.counterNode {
@@ -742,7 +742,7 @@ body.ttrss_main {
 			.dijitTreeNode .dijitTreeRowSelected {
 				box-shadow : -1px 0px 2px -1px rgba(0,0,0,0.1);
 				border-color : @border-default transparent;
-				background : white;
+				background : @default-bg;
 				color : #333;
 			}
 
@@ -945,7 +945,7 @@ body.ttrss_main {
 		margin : 0px 2px 0px 2px;
 		width : 50px;
 		text-align : center;
-		background : white;
+		background : @default-bg;
 	}
 
 	.player.playing {
@@ -954,7 +954,7 @@ body.ttrss_main {
 	}
 
 	.player:hover {
-		background : #f0f0f0;
+		background : @color-panel-bg;
 		cursor : pointer;
 	}
 
@@ -984,7 +984,7 @@ body.ttrss_main {
 		border-style : solid;
 		border-color : @border-default;
 		border-width : 1px 1px 1px 1px;
-		background-color : white;
+		background-color : @default-bg;
 		margin : 0px 0px 5px 0px;
 		padding : 4px;
 		min-height : 16px;
@@ -1191,7 +1191,7 @@ body.ttrss_main {
 	}
 
 	.dijitDialog .panel {
-		background : white;
+		background : @default-bg;
 	}
 
 	.panel-scrollable {
@@ -1215,7 +1215,7 @@ body.ttrss_main {
 
 ::selection {
 	background : @color-accent;
-	color : white;
+	color : @default-bg;
 }
 
 ::-webkit-scrollbar {
