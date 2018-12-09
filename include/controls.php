@@ -233,10 +233,12 @@ function print_feed_cat_select($id, $default_id,
 	}
 }
 
-function stylesheet_tag($filename) {
+function stylesheet_tag($filename, $id = false) {
 	$timestamp = filemtime($filename);
 
-	return "<link rel=\"stylesheet\" type=\"text/css\" href=\"$filename?$timestamp\"/>\n";
+	$id_part = $id ? "id=\"$id\"" : "";
+
+	return "<link rel=\"stylesheet\" $id_part type=\"text/css\" href=\"$filename?$timestamp\"/>\n";
 }
 
 function javascript_tag($filename) {

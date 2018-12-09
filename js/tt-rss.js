@@ -466,6 +466,9 @@ require(["dojo/_base/kernel",
 							Feeds.reloadCurrent();
 						});
 					};
+					this.hotkey_actions["toggle_night_mode"] = function () {
+						App.toggleNightMode();
+					};
 				},
 				onActionSelected: function(opid) {
 					switch (opid) {

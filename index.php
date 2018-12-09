@@ -64,9 +64,9 @@
 	<?php if ($_SESSION["uid"]) {
 		$theme = get_pref("USER_CSS_THEME", false, false);
 		if ($theme && theme_exists("$theme")) {
-			echo stylesheet_tag(get_theme_path($theme));
+			echo stylesheet_tag(get_theme_path($theme), 'theme_css');
 		} else {
-			echo stylesheet_tag("css/default.css");
+			echo stylesheet_tag("css/default.css", 'theme_css');
 		}
 	}
 	?>

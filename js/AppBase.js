@@ -51,8 +51,9 @@ define(["dojo/_base/declare"], function (declare) {
 			if (dijit.byId("loading_bar"))
 				dijit.byId("loading_bar").update({progress: loading_progress});
 
-			if (loading_progress >= 90)
-				Element.hide("overlay");
+			if (loading_progress >= 90) {
+				$("overlay").hide();
+			}
 
 		},
 		keyeventToAction: function(event) {
@@ -350,6 +351,29 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 
 			this.initSecondStage();
+		},
+		toggleNightMode: function() {
+			const link = $("theme_css");
+
+			if (link) {
+
+				let user_theme = "";
+				let user_css = "";
+
+				if (link.getAttribute("href").indexOf("themes/night.css") == -1) {
+					user_css = "themes/night.css?" + Date.now();
+					user_theme = "night.css";
+				} else {
+					user_theme = "default.php";
+					user_css = "css/default.css?" + Date.now();
+				}
+
+				fetch(user_css).then(() => {
+					link.setAttribute("href", user_css);
+					xhrPost("backend.php", {op: "rpc", method: "setpref", key: "USER_CSS_THEME", value: user_theme});
+				});
+
+			}
 		},
 		explainError: function(code) {
 			return this.displayDlg(__("Error explained"), "explainError", code);
