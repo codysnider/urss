@@ -1701,7 +1701,7 @@ class Feeds extends Handler_Protected {
 				$yyiw_qpart = "to_char(date_entered, 'IYYY-IW') AS yyiw";
 			} else {
 				$sanity_interval_qpart = "date_entered >= DATE_SUB(NOW(), INTERVAL 1 hour) AND";
-				$yyiw_qpart = "concat(year(date_entered),lpad(weekofyear(date_entered), 2, '0')) AS yyiw";
+				$yyiw_qpart = "date_format(date_entered, '%Y-%u') AS yyiw";
 			}
 
 			if (!$search && !$skip_first_id_check) {
