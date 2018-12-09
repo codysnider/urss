@@ -117,13 +117,20 @@ body.flat.ttrss_main {
 			color : @fg-light;
 		}
 
-		.hl.active {
-			background : darken(@color-accent, 15%) ! important;
-		}
-
+		.hl.active,
 		.hl.Selected,
 		.cdm.expandable.Selected {
-			background : desaturate(darken(@color-accent, 15%), 25%);
+			*:not(.dijitCheckBox) {
+				filter : invert(1);
+			}
+
+			.updated {
+				color : @bg-panel;
+			}
+
+			> .left .dijitCheckBox {
+				filter : invert(1) ! important;
+			}
 		}
 
 		.cdm.expanded.active .title,

@@ -1946,12 +1946,20 @@ body.flat.ttrss_main #headlines-frame .hl.Unread .title,
 body.flat.ttrss_main #headlines-frame .cdm.Unread .title {
   color: #e6e6e6;
 }
-body.flat.ttrss_main #headlines-frame .hl.active {
-  background: #7a531d ! important;
+body.flat.ttrss_main #headlines-frame .hl.active *:not(.dijitCheckBox),
+body.flat.ttrss_main #headlines-frame .hl.Selected *:not(.dijitCheckBox),
+body.flat.ttrss_main #headlines-frame .cdm.expandable.Selected *:not(.dijitCheckBox) {
+  filter: invert(1);
 }
-body.flat.ttrss_main #headlines-frame .hl.Selected,
-body.flat.ttrss_main #headlines-frame .cdm.expandable.Selected {
-  background: #675030;
+body.flat.ttrss_main #headlines-frame .hl.active .updated,
+body.flat.ttrss_main #headlines-frame .hl.Selected .updated,
+body.flat.ttrss_main #headlines-frame .cdm.expandable.Selected .updated {
+  color: #222222;
+}
+body.flat.ttrss_main #headlines-frame .hl.active > .left .dijitCheckBox,
+body.flat.ttrss_main #headlines-frame .hl.Selected > .left .dijitCheckBox,
+body.flat.ttrss_main #headlines-frame .cdm.expandable.Selected > .left .dijitCheckBox {
+  filter: invert(1) ! important;
 }
 body.flat.ttrss_main #headlines-frame .cdm.expanded.active .title,
 body.flat.ttrss_main #headlines-frame .cdm.expandable.active .title {
