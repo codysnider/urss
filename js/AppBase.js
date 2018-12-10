@@ -272,6 +272,14 @@ define(["dojo/_base/declare"], function (declare) {
 						}
 					}
 
+					if (k == "recent_log_events") {
+						const alert = $$(".log-alert")[0];
+
+						if (alert) {
+							v > 0 ? alert.show() : alert.hide();
+						}
+					}
+
 					if (k == "daemon_stamp_ok" && v != 1) {
 						Notify.error("<span onclick=\"App.explainError(3)\">Update daemon is not updating feeds.</span>", true);
 						return;

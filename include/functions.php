@@ -1311,7 +1311,7 @@
 
 		$data["labels"] = Labels::get_all_labels($_SESSION["uid"]);
 
-		if (LOG_DESTINATION == 'sql') {
+		if (LOG_DESTINATION == 'sql' && $_SESSION['access_level'] >= 10) {
 			if (DB_TYPE == 'pgsql') {
 				$log_interval = "created_at > NOW() - interval '1 hour'";
 			} else {
@@ -1322,7 +1322,7 @@
 			$sth->execute();
 
 			if ($row = $sth->fetch()) {
-				$data['recent_eventlog_entries'] = $row['cid'];
+				$data['recent_log_events'] = $row['cid'];
 			}
 		}
 

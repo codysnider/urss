@@ -741,6 +741,9 @@ body.ttrss_main #toolbar-frame #toolbar .net-alert i,
 body.ttrss_main #toolbar-frame #toolbar .left i.icon-error {
   color: red;
 }
+body.ttrss_main #toolbar-frame #toolbar .log-alert i {
+  color: #ddba1c;
+}
 body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines {
   padding-right: 4px;
   flex-grow: 2;

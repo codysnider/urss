@@ -166,6 +166,11 @@
                 <i class="material-icons">error_outline</i>
             </div>
 
+            <div class="log-alert" style="display : none"
+                 title="<?php echo __("Recent entries found in event log.") ?>">
+                <i class="material-icons">warning</i>
+            </div>
+
             <?php
             foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_MAIN_TOOLBAR_BUTTON) as $p) {
                 echo $p->hook_main_toolbar_button();
