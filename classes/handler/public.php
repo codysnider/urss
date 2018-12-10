@@ -497,10 +497,10 @@ class Handler_Public extends Handler {
 
 			$rv .= $line["content"];
 
-            /* $rv .= Article::format_article_enclosures($id,
+            $rv .= Article::format_article_enclosures($id,
                 $line["always_display_enclosures"],
                 $line["content"],
-                $line["hide_images"]); */
+                $line["hide_images"]);
 
 			$rv .= "</div>"; # content
 

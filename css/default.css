@@ -1893,6 +1893,9 @@ body.ttrss_zoom div.post {
   background: white;
   box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.1);
 }
+body.ttrss_zoom div.post .attachments {
+  display: none;
+}
 body.ttrss_zoom div.post div.header {
   margin: 10px;
   padding-bottom: 10px;
