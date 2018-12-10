@@ -168,10 +168,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 
 		},
 		getTooltip: function (item) {
-			if (item.updated)
-				return item.updated;
-			else
-				return "";
+			return [item.updated, item.error].filter(x => x && x != "").join(" - ");
 		},
 		getIconClass: function (item, opened) {
 			return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "feed-icon";
