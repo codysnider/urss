@@ -396,18 +396,8 @@ require(["dojo/_base/kernel",
 						if (id) {
 							const row = $("RROW-" + id);
 
-							if (row) {
-								const cb = dijit.getEnclosingWidget(
-									row.select(".rchk")[0]);
-
-								if (cb) {
-									if (!row.hasClassName("active"))
-										cb.attr("checked", !cb.attr("checked"));
-
-									Headlines.onRowChecked(cb);
-									return false;
-								}
-							}
+							if (row)
+								row.toggleClassName("Selected");
 						}
 					};
 					this.hotkey_actions["create_label"] = function () {

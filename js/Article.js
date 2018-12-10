@@ -79,12 +79,6 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (row) {
 				row.removeClassName("active");
-				const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
-
-				if (cb && !row.hasClassName("Selected"))
-					cb.attr("checked", false);
-
-				Article.setActive(0);
 
 				if (event)
 					event.stopPropagation();
@@ -282,11 +276,6 @@ define(["dojo/_base/declare"], function (declare) {
 
 			$$("div[id*=RROW][class*=active]").each((e) => {
 				e.removeClassName("active");
-
-				if (!e.hasClassName("Selected")) {
-					const cb = dijit.getEnclosingWidget(e.select(".rchk")[0]);
-					if (cb) cb.attr("checked", false);
-				}
 			});
 
 			const row = $("RROW-" + id);
@@ -294,21 +283,11 @@ define(["dojo/_base/declare"], function (declare) {
 			if (row) {
 				Article.unpack(row);
 
-				if (row.hasClassName("Unread")) {
-					Headlines.toggleUnread(id, 0);
-				}
-
+				row.removeClassName("Unread");
 				row.addClassName("active");
-
-				if (!row.hasClassName("Selected")) {
-					const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
-					if (cb) cb.attr("checked", true);
-				}
 
 				PluginHost.run(PluginHost.HOOK_ARTICLE_SET_ACTIVE, row.getAttribute("data-article-id"));
 			}
-
-			//Headlines.updateSelectedPrompt();
 		},
 		getActive: function () {
 			const row = document.querySelector("#headlines-frame > div[id*=RROW][class*=active]");

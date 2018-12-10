@@ -29,7 +29,7 @@ define(["dojo/_base/declare"], function (declare) {
 							hl.selected = row.hasClassName("Selected");
 							hl.active = row.hasClassName("active");
 
-							modified.push({id: hl.id, new: hl, old: hl_old});
+							modified.push({id: hl.id, new: hl, old: hl_old, row: row});
 						}
 					}
 				}
@@ -46,6 +46,10 @@ define(["dojo/_base/declare"], function (declare) {
 				tpub: [],
 				read: [],
 				unread: [],
+				select: [],
+				deselect: [],
+				activate: [],
+				deactivate: [],
 			};
 
 			modified.each(function(m) {
@@ -57,6 +61,40 @@ define(["dojo/_base/declare"], function (declare) {
 
 				if (m.old.unread != m.new.unread)
 					m.new.unread ? ops.unread.push(m.id) : ops.read.push(m.id);
+
+				if (m.old.selected != m.new.selected)
+					m.new.selected ? ops.select.push(m.row) : ops.deselect.push(m.row);
+
+				if (m.old.active != m.new.active)
+					m.new.active ? ops.activate.push(m.row) : ops.deactivate.push(m.row);
+			});
+
+			ops.select.each((row) => {
+				const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
+
+				if (cb)
+					cb.attr('checked', true);
+			});
+
+			ops.deselect.each((row) => {
+				const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
+
+				if (cb && !row.hasClassName("active"))
+					cb.attr('checked', false);
+			});
+
+			ops.activate.each((row) => {
+				const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
+
+				if (cb)
+					cb.attr('checked', true);
+			});
+
+			ops.deactivate.each((row) => {
+				const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
+
+				if (cb && !row.hasClassName("Selected"))
+					cb.attr('checked', false);
 			});
 
 			if (ops.tmark.length != 0)
@@ -924,8 +962,6 @@ define(["dojo/_base/declare"], function (declare) {
 			} else {
 				row.removeClassName("Selected");
 			}
-
-			//this.updateSelectedPrompt();
 		},
 		select: function (mode, articleId) {
 			// mode = all,none,unread,invert,marked,published
@@ -955,32 +991,17 @@ define(["dojo/_base/declare"], function (declare) {
 
 			for (let i = 0; i < rows.length; i++) {
 				const row = rows[i];
-				const cb = dijit.getEnclosingWidget(row.select(".rchk")[0]);
 
 				switch (mode) {
 					case "none":
 						row.removeClassName("Selected");
-
-						if (!row.hasClassName("active"))
-							cb.attr("checked", false);
 						break;
 					case "invert":
-						if (row.hasClassName("Selected")) {
-							row.removeClassName("Selected");
-
-							if (!row.hasClassName("active"))
-								cb.attr("checked", false);
-						} else {
-							row.addClassName("Selected");
-							cb.attr("checked", true);
-						}
+						row.toggleClassName("Selected");
 						break;
 					default:
 						row.addClassName("Selected");
-						cb.attr("checked", true);
 				}
-
-				//Headlines.updateSelectedPrompt();
 			}
 		},
 		archiveSelection: function () {
@@ -1090,15 +1111,6 @@ define(["dojo/_base/declare"], function (declare) {
 						var e = $("RROW-" + ids_to_mark[i]);
 						e.removeClassName("Unread");
 					}
-
-					const query = {
-						op: "rpc", method: "catchupSelected",
-						cmode: 0, ids: ids_to_mark.toString()
-					};
-
-					xhrPost("backend.php", query, (transport) => {
-						App.handleRpcJson(transport);
-					});
 				}
 			}
 		},
