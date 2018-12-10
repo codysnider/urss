@@ -27,7 +27,7 @@ class Pref_Labels extends Handler_Protected {
 			print "<div class=\"dlgSecCont\">";
 
 			$fg_color = $line['fg_color'];
-			$bg_color = $line['bg_color'];
+			$bg_color = $line['bg_color'] ? $line['bg_color'] : '#fff7d5';
 
 			print "<input style='font-size : 16px; color : $fg_color; background : $bg_color; transition : background 0.1s linear'
 				id='labelEdit_caption' name='caption' dojoType='dijit.form.ValidationTextBox'

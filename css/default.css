@@ -401,21 +401,24 @@ body.ttrss_main span.preview {
   font-size: 12px;
   padding-left: 4px;
 }
-body.ttrss_main .hl.Selected .hlLabelRef,
-body.ttrss_main .hl.active .hlLabelRef {
-  color: #000000;
-}
-body.ttrss_main span.hlLabelRef {
+body.ttrss_main .label {
+  display: inline-flex;
+  vertical-align: middle;
   background-color: #fff7d5;
-  font-size: 8px;
+  font-size: 9px;
   color: #000000;
   font-weight: normal;
   margin-left: 2px;
-  padding: 1px 4px 1px 4px;
-  display: inline-block;
-  vertical-align: middle;
+  padding: 1px 4px;
   white-space: nowrap;
   border-radius: 4px;
+  border: 1px solid;
+}
+body.ttrss_main .label i {
+  margin-right: 2px;
+}
+body.ttrss_main .label > * {
+  align-self: center;
 }
 body.ttrss_main i.marked-pic,
 body.ttrss_main i.pub-pic {
