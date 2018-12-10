@@ -97,6 +97,8 @@ define(["dojo/_base/declare"], function (declare) {
 			if (dijit.byId("content-insert"))
 				dijit.byId("headlines-wrap-inner").removeChild(
 					dijit.byId("content-insert"));
+
+			Article.setActive(0);
 		},
 		displayUrl: function (id) {
 			const query = {op: "rpc", method: "getlinktitlebyid", id: id};
@@ -300,7 +302,7 @@ define(["dojo/_base/declare"], function (declare) {
 					Headlines.catchupBatched(() => {
 						Feeds.decrementFeedCounter(Feeds.getActive(), Feeds.activeIsCat());
 						Headlines.toggleUnread(id, 0);
-						Headlines.updateFloatingTitle(true);
+						//Headlines.updateFloatingTitle(true);
 					});
 
 				}
@@ -315,7 +317,7 @@ define(["dojo/_base/declare"], function (declare) {
 				PluginHost.run(PluginHost.HOOK_ARTICLE_SET_ACTIVE, this._active_article_id);
 			}
 
-			Headlines.updateSelectedPrompt();
+			//Headlines.updateSelectedPrompt();
 		},
 		getActive: function () {
 			return this._active_article_id;
@@ -333,26 +335,6 @@ define(["dojo/_base/declare"], function (declare) {
 				}
 
 			}
-		},
-		getRelativeIds: function (id, limit) {
-
-			const tmp = [];
-
-			if (!limit) limit = 6; //3
-
-			const ids = Headlines.getLoaded();
-
-			for (let i = 0; i < ids.length; i++) {
-				if (ids[i] == id) {
-					for (let k = 1; k <= limit; k++) {
-						//if (i > k-1) tmp.push(ids[i-k]);
-						if (i < ids.length - k) tmp.push(ids[i + k]);
-					}
-					break;
-				}
-			}
-
-			return tmp;
 		},
 		mouseIn: function (id) {
 			this.post_under_pointer = id;

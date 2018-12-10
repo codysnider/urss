@@ -7,6 +7,32 @@ define(["dojo/_base/declare"], function (declare) {
 		headlines: [],
 		current_first_id: 0,
 		catchup_id_batch: [],
+		row_observer: new MutationObserver((mutations) => {
+			mutations.each((m) => {
+				if (m.type == 'attributes' && m.attributeName == 'class') {
+
+					const row = m.target;
+					const id = row.getAttribute("data-article-id");
+
+					if (Headlines.headlines[id]) {
+						const hl = Headlines.headlines[id];
+
+						if (hl) {
+							hl.unread = row.hasClassName("Unread");
+							hl.marked = row.hasClassName("marked");
+							hl.published = row.hasClassName("published");
+
+							// not sent by backend
+							hl.selected = row.hasClassName("Selected");
+							hl.active = row.hasClassName("active");
+						}
+					}
+				}
+			})
+
+			Headlines.updateSelectedPrompt();
+			Headlines.updateFloatingTitle(true);
+		}),
 		click: function (event, id, in_body) {
 			in_body = in_body || false;
 
@@ -201,14 +227,6 @@ define(["dojo/_base/declare"], function (declare) {
 						PluginHost.run(PluginHost.HOOK_FLOATING_TITLE, row);
 					}
 
-					//ft.style.marginRight = hf.offsetWidth - row.offsetWidth + "px";
-
-					/* if (header.offsetTop + header.offsetHeight < hf.scrollTop + ft.offsetHeight - 5 &&
-						row.offsetTop + row.offsetHeight >= hf.scrollTop + ft.offsetHeight - 5)
-						Element.show(ft);
-					else
-						Element.hide(ft); */
-
 					if (hf.scrollTop - row.offsetTop <= header.offsetHeight + safety_offset)
 						ft.fade({duration: 0.2});
 					else
@@ -242,18 +260,14 @@ define(["dojo/_base/declare"], function (declare) {
 
 			$$("#headlines-frame > div[id*=RROW]").each((row) => {
 				const id = row.getAttribute("data-article-id");
-				const selected = row.hasClassName("Selected");
-				const active = row.hasClassName("active");
-				const marked = row.hasClassName("marked");
-				const published = row.hasClassName("published");
-				const unread = row.hasClassName("Unread");
+				const hl = this.headlines[id];
 
-				if (this.headlines[id]) {
-					const new_row = this.render({}, this.headlines[id]);
+				if (hl) {
+					const new_row = this.render({}, hl);
 
 					row.parentNode.replaceChild(new_row, row);
 
-					if (active) {
+					if (hl.active) {
 						new_row.addClassName("active");
 
 						if (App.isCombinedMode())
@@ -262,22 +276,7 @@ define(["dojo/_base/declare"], function (declare) {
 							Article.view(id);
 					}
 
-					if (selected) this.select("all", id);
-
-					if (marked)
-						new_row.addClassName("marked");
-					else
-						new_row.removeClassName("marked");
-
-					if (published)
-						new_row.addClassName("published");
-					else
-						new_row.removeClassName("published");
-
-					if (unread)
-						new_row.addClassName("Unread");
-					else
-						new_row.removeClassName("Unread");
+					if (hl.selected) this.select("all", id);
 
 					Article.unpack(new_row);
 
@@ -412,6 +411,8 @@ define(["dojo/_base/declare"], function (declare) {
 			tmp.innerHTML = row;
 			dojo.parser.parse(tmp);
 
+			this.row_observer.observe(tmp.firstChild, {attributes: true});
+
 			PluginHost.run(PluginHost.HOOK_HEADLINE_RENDERED, tmp.firstChild);
 
 			return tmp.firstChild;
@@ -476,26 +477,11 @@ define(["dojo/_base/declare"], function (declare) {
 						for (let i = 0; i < reply['headlines']['content'].length; i++) {
 							const hl = reply['headlines']['content'][i];
 
-							$("headlines-frame").appendChild(
-								this.render(reply['headlines'], hl));
+							$("headlines-frame").appendChild(this.render(reply['headlines'], hl));
 
 							this.headlines[parseInt(hl.id)] = hl;
 						}
 					}
-
-					/* let tmp = document.createElement("div");
-					tmp.innerHTML = reply['headlines']['content'];
-					dojo.parser.parse(tmp);
-
-					while (tmp.hasChildNodes()) {
-						const row = tmp.removeChild(tmp.firstChild);
-
-						if (this.loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("feed-title")) {
-							dijit.byId("headlines-frame").domNode.appendChild(row);
-
-							this.loaded_article_ids.push(row.id);
-						}
-					} */
 
 					let hsp = $("headlines-spacer");
 
@@ -520,26 +506,11 @@ define(["dojo/_base/declare"], function (declare) {
 
 				} else if (headlines_count > 0 && feed_id == Feeds.getActive() && is_cat == Feeds.activeIsCat()) {
 					const c = dijit.byId("headlines-frame");
-					//const ids = Headlines.getSelected();
 
 					let hsp = $("headlines-spacer");
 
 					if (hsp)
 						c.domNode.removeChild(hsp);
-
-					/* let tmp = document.createElement("div");
-					tmp.innerHTML = reply['headlines']['content'];
-					dojo.parser.parse(tmp);
-
-					while (tmp.hasChildNodes()) {
-						let row = tmp.removeChild(tmp.firstChild);
-
-						if (this.loaded_article_ids.indexOf(row.id) == -1 || row.hasClassName("feed-title")) {
-							dijit.byId("headlines-frame").domNode.appendChild(row);
-
-							this.loaded_article_ids.push(row.id);
-						}
-					} */
 
 					if (typeof reply['headlines']['content'] == 'string') {
 						$("headlines-frame").innerHTML = reply['headlines']['content'];
@@ -547,8 +518,7 @@ define(["dojo/_base/declare"], function (declare) {
 						for (let i = 0; i < reply['headlines']['content'].length; i++) {
 							const hl = reply['headlines']['content'][i];
 
-							$("headlines-frame").appendChild(
-								this.render(reply['headlines'], hl));
+							$("headlines-frame").appendChild(this.render(reply['headlines'], hl));
 
 							this.headlines[parseInt(hl.id)] = hl;
 						}
@@ -560,12 +530,6 @@ define(["dojo/_base/declare"], function (declare) {
 					}
 
 					c.domNode.appendChild(hsp);
-
-					/* console.log("restore selected ids: " + ids);
-
-					for (let i = 0; i < ids.length; i++) {
-						markHeadline(ids[i]);
-					} */
 
 					this.initHeadlinesMenu();
 
@@ -663,7 +627,6 @@ define(["dojo/_base/declare"], function (declare) {
 			xhrPost("backend.php", query, (transport) => {
 				App.handleRpcJson(transport);
 				if (callback) callback(transport);
-				Headlines.updateFloatingTitle(true);
 			});
 		},
 		selectionToggleMarked: function (ids) {
@@ -718,8 +681,6 @@ define(["dojo/_base/declare"], function (declare) {
 				row.toggleClassName("marked");
 				query.mark = row.hasClassName("marked") ? 1 : 0;
 
-				Headlines.updateFloatingTitle(true);
-
 				if (!client_only)
 					xhrPost("backend.php", query, (transport) => {
 						App.handleRpcJson(transport);
@@ -734,8 +695,6 @@ define(["dojo/_base/declare"], function (declare) {
 
 				row.toggleClassName("published");
 				query.pub = row.hasClassName("published") ? 1 : 0;
-
-				Headlines.updateFloatingTitle(true);
 
 				if (!client_only)
 					xhrPost("backend.php", query, (transport) => {
@@ -861,7 +820,6 @@ define(["dojo/_base/declare"], function (declare) {
 					xhrPost("backend.php",
 						{op: "rpc", method: "catchupSelected", cmode: cmode, ids: id}, (transport) => {
 							App.handleRpcJson(transport);
-							Headlines.updateFloatingTitle(true);
 						});
 			}
 		},
@@ -974,7 +932,7 @@ define(["dojo/_base/declare"], function (declare) {
 				row.removeClassName("Selected");
 			}
 
-			this.updateSelectedPrompt();
+			//this.updateSelectedPrompt();
 		},
 		select: function (mode, articleId) {
 			// mode = all,none,unread,invert,marked,published
@@ -1029,7 +987,7 @@ define(["dojo/_base/declare"], function (declare) {
 						cb.attr("checked", true);
 				}
 
-				Headlines.updateSelectedPrompt();
+				//Headlines.updateSelectedPrompt();
 			}
 		},
 		archiveSelection: function () {
@@ -1113,8 +1071,6 @@ define(["dojo/_base/declare"], function (declare) {
 							Headlines.catchup_id_batch.remove(id);
 						});
 					}
-
-					Headlines.updateFloatingTitle(true);
 
 					if (callback) callback();
 				});
