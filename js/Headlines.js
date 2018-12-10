@@ -238,12 +238,15 @@ define(["dojo/_base/declare"], function (declare) {
 			return this.headlines[id];
 		},
 		renderAgain: function() {
+			// TODO: wrap headline elements into a knockoutjs model to prevent all this stuff
+
 			$$("#headlines-frame > div[id*=RROW]").each((row) => {
 				const id = row.getAttribute("data-article-id");
 				const selected = row.hasClassName("Selected");
 				const active = row.hasClassName("active");
 				const marked = row.hasClassName("marked");
 				const published = row.hasClassName("published");
+				const unread = row.hasClassName("Unread");
 
 				if (this.headlines[id]) {
 					const new_row = this.render({}, this.headlines[id]);
@@ -261,8 +264,20 @@ define(["dojo/_base/declare"], function (declare) {
 
 					if (selected) this.select("all", id);
 
-					if (marked) new_row.addClassName("marked");
-					if (published) new_row.addClassName("published");
+					if (marked)
+						new_row.addClassName("marked");
+					else
+						new_row.removeClassName("marked");
+
+					if (published)
+						new_row.addClassName("published");
+					else
+						new_row.removeClassName("published");
+
+					if (unread)
+						new_row.addClassName("Unread");
+					else
+						new_row.removeClassName("Unread");
 
 					Article.unpack(new_row);
 
