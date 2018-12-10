@@ -8,6 +8,8 @@ define(["dojo/_base/declare"], function (declare) {
 		current_first_id: 0,
 		catchup_id_batch: [],
 		row_observer: new MutationObserver((mutations) => {
+			const modified = [];
+
 			mutations.each((m) => {
 				if (m.type == 'attributes' && m.attributeName == 'class') {
 
@@ -18,6 +20,8 @@ define(["dojo/_base/declare"], function (declare) {
 						const hl = Headlines.headlines[id];
 
 						if (hl) {
+							const hl_old = Object.extend({}, hl);
+
 							hl.unread = row.hasClassName("Unread");
 							hl.marked = row.hasClassName("marked");
 							hl.published = row.hasClassName("published");
@@ -25,14 +29,45 @@ define(["dojo/_base/declare"], function (declare) {
 							// not sent by backend
 							hl.selected = row.hasClassName("Selected");
 							hl.active = row.hasClassName("active");
+
+							modified.push({id: hl.id, new: hl, old: hl_old});
 						}
 					}
 				}
-			})
+			});
 
 			Headlines.updateSelectedPrompt();
 			Headlines.updateFloatingTitle(true);
+
+			Headlines.syncModified(modified);
 		}),
+		syncModified: function(modified) {
+			const ops = {
+				tmark: [],
+				tpub: [],
+			};
+
+			modified.each(function(m) {
+				if (m.old.marked != m.new.marked)
+					ops.tmark.push(m.id);
+
+				if (m.old.published != m.new.published)
+					ops.tpub.push(m.id);
+			});
+
+			if (ops.tmark.length != 0)
+				xhrPost("backend.php",
+					{ op: "rpc", method: "markSelected", ids: ops.tmark.toString(), cmode: 2}, (transport) => {
+						App.handleRpcJson(transport);
+					});
+
+			if (ops.tpub.length != 0)
+				xhrPost("backend.php",
+					{ op: "rpc", method: "publishSelected", ids: ops.tpub.toString(), cmode: 2}, (transport) => {
+						App.handleRpcJson(transport);
+					});
+
+		},
 		click: function (event, id, in_body) {
 			in_body = in_body || false;
 
@@ -630,78 +665,41 @@ define(["dojo/_base/declare"], function (declare) {
 			});
 		},
 		selectionToggleMarked: function (ids) {
-			const rows = ids || Headlines.getSelected();
+			ids = ids || Headlines.getSelected();
 
-			if (rows.length == 0) {
+			if (ids.length == 0) {
 				alert(__("No articles selected."));
 				return;
 			}
 
-			for (let i = 0; i < rows.length; i++) {
-				this.toggleMark(rows[i], true, true);
-			}
-
-			const query = {
-				op: "rpc", method: "markSelected",
-				ids: rows.toString(), cmode: 2
-			};
-
-			xhrPost("backend.php", query, (transport) => {
-				App.handleRpcJson(transport);
+			ids.each((id) => {
+				this.toggleMark(id);
 			});
 		},
 		selectionTogglePublished: function (ids) {
-			const rows = ids || Headlines.getSelected();
+			ids = ids || Headlines.getSelected();
 
-			if (rows.length == 0) {
+			if (ids.length == 0) {
 				alert(__("No articles selected."));
 				return;
 			}
 
-			for (let i = 0; i < rows.length; i++) {
-				this.togglePub(rows[i], true);
-			}
-
-			if (rows.length > 0) {
-				const query = {
-					op: "rpc", method: "publishSelected",
-					ids: rows.toString(), cmode: 2
-				};
-
-				xhrPost("backend.php", query, (transport) => {
-					App.handleRpcJson(transport);
-				});
-			}
+			ids.each((id) => {
+				this.toggleMark(id);
+			});
 		},
-		toggleMark: function (id, client_only) {
-			const query = {op: "rpc", id: id, method: "mark"};
+		toggleMark: function (id) {
 			const row = $("RROW-" + id);
 
-			if (row) {
+			if (row)
 				row.toggleClassName("marked");
-				query.mark = row.hasClassName("marked") ? 1 : 0;
 
-				if (!client_only)
-					xhrPost("backend.php", query, (transport) => {
-						App.handleRpcJson(transport);
-					});
-			}
 		},
-		togglePub: function (id, client_only) {
+		togglePub: function (id) {
 			const row = $("RROW-" + id);
 
-			if (row) {
-				const query = {op: "rpc", id: id, method: "publ"};
-
+			if (row)
 				row.toggleClassName("published");
-				query.pub = row.hasClassName("published") ? 1 : 0;
-
-				if (!client_only)
-					xhrPost("backend.php", query, (transport) => {
-						App.handleRpcJson(transport);
-					});
-
-			}
 		},
 		move: function (mode, noscroll, noexpand) {
 			const rows = Headlines.getLoaded();
