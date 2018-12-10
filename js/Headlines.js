@@ -6,7 +6,6 @@ define(["dojo/_base/declare"], function (declare) {
 		_headlines_scroll_timeout: 0,
 		headlines: [],
 		current_first_id: 0,
-		catchup_id_batch: [],
 		row_observer: new MutationObserver((mutations) => {
 			const modified = [];
 
@@ -45,6 +44,8 @@ define(["dojo/_base/declare"], function (declare) {
 			const ops = {
 				tmark: [],
 				tpub: [],
+				read: [],
+				unread: [],
 			};
 
 			modified.each(function(m) {
@@ -53,6 +54,9 @@ define(["dojo/_base/declare"], function (declare) {
 
 				if (m.old.published != m.new.published)
 					ops.tpub.push(m.id);
+
+				if (m.old.unread != m.new.unread)
+					m.new.unread ? ops.unread.push(m.id) : ops.read.push(m.id);
 			});
 
 			if (ops.tmark.length != 0)
@@ -67,7 +71,19 @@ define(["dojo/_base/declare"], function (declare) {
 						App.handleRpcJson(transport);
 					});
 
-		},
+			if (ops.read.length != 0)
+				xhrPost("backend.php",
+					{ op: "rpc", method: "catchupSelected", ids: ops.read.toString(), cmode: 0}, (transport) => {
+						App.handleRpcJson(transport);
+					});
+
+			if (ops.unread.length != 0)
+				xhrPost("backend.php",
+					{ op: "rpc", method: "catchupSelected", ids: ops.unread.toString(), cmode: 1}, (transport) => {
+						App.handleRpcJson(transport);
+					});
+
+			},
 		click: function (event, id, in_body) {
 			in_body = in_body || false;
 
@@ -188,11 +204,7 @@ define(["dojo/_base/declare"], function (declare) {
 						const row = rows[i];
 
 						if ($("headlines-frame").scrollTop > (row.offsetTop + row.offsetHeight / 2)) {
-							const id = row.getAttribute("data-article-id")
-
-							if (this.catchup_id_batch.indexOf(id) == -1)
-								this.catchup_id_batch.push(id);
-
+							row.removeClassName("Unread");
 						} else {
 							break;
 						}
@@ -625,8 +637,7 @@ define(["dojo/_base/declare"], function (declare) {
 		selectionToggleUnread: function (params) {
 			params = params || {};
 
-			const cmode = params.cmode || 2;
-			const callback = params.callback;
+			const cmode = params.cmode != undefined ? params.cmode : 2;
 			const no_error = params.no_error || false;
 			const ids = params.ids || Headlines.getSelected();
 
@@ -652,16 +663,6 @@ define(["dojo/_base/declare"], function (declare) {
 							row.toggleClassName("Unread");
 					}
 				}
-			});
-
-			const query = {
-				op: "rpc", method: "catchupSelected",
-				cmode: cmode, ids: ids.toString()
-			};
-
-			xhrPost("backend.php", query, (transport) => {
-				App.handleRpcJson(transport);
-				if (callback) callback(transport);
 			});
 		},
 		selectionToggleMarked: function (ids) {
@@ -798,7 +799,7 @@ define(["dojo/_base/declare"], function (declare) {
 			const row = $("RROW-" + id);
 
 			if (row) {
-				const origClassName = row.className;
+				//const origClassName = row.className;
 
 				if (cmode == undefined) cmode = 2;
 
@@ -813,12 +814,6 @@ define(["dojo/_base/declare"], function (declare) {
 						row.toggleClassName("Unread");
 						break;
 				}
-
-				if (row.className != origClassName)
-					xhrPost("backend.php",
-						{op: "rpc", method: "catchupSelected", cmode: cmode, ids: id}, (transport) => {
-							App.handleRpcJson(transport);
-						});
 			}
 		},
 		selectionRemoveLabel: function (id, ids) {
@@ -1043,38 +1038,7 @@ define(["dojo/_base/declare"], function (declare) {
 				return;
 			}
 
-			Headlines.selectionToggleUnread({callback: Feeds.reloadCurrent, no_error: 1});
-		},
-		catchupBatched: function (callback) {
-			console.log("catchupBatched, size=", this.catchup_id_batch.length);
-
-			if (this.catchup_id_batch.length > 0) {
-
-				// make a copy of the array
-				const batch = this.catchup_id_batch.slice();
-				const query = {
-					op: "rpc", method: "catchupSelected",
-					cmode: 0, ids: batch.toString()
-				};
-
-				xhrPost("backend.php", query, (transport) => {
-					const reply = App.handleRpcJson(transport);
-
-					if (reply) {
-						const batch = reply.ids;
-
-						batch.each(function (id) {
-							const elem = $("RROW-" + id);
-							if (elem) elem.removeClassName("Unread");
-							Headlines.catchup_id_batch.remove(id);
-						});
-					}
-
-					if (callback) callback();
-				});
-			} else {
-				if (callback) callback();
-			}
+			Headlines.selectionToggleUnread({ids: rows, cmode: 0});
 		},
 		catchupRelativeTo: function (below, id) {
 

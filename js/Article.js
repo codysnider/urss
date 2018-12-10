@@ -298,13 +298,7 @@ define(["dojo/_base/declare"], function (declare) {
 				Article.unpack(row);
 
 				if (row.hasClassName("Unread")) {
-
-					Headlines.catchupBatched(() => {
-						Feeds.decrementFeedCounter(Feeds.getActive(), Feeds.activeIsCat());
-						Headlines.toggleUnread(id, 0);
-						//Headlines.updateFloatingTitle(true);
-					});
-
+					Headlines.toggleUnread(id, 0);
 				}
 
 				row.addClassName("active");

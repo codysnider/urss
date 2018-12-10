@@ -215,8 +215,6 @@ define(["dojo/_base/declare"], function (declare) {
 			document.onkeydown = (event) => { return App.hotkeyHandler(event) };
 			window.onresize = () => { Headlines.scrollHandler(); }
 
-			window.setInterval(() => { Headlines.catchupBatched() }, 10 * 1000);
-
 			if (!this.getActive()) {
 				this.open({feed: -3});
 			} else {
@@ -364,17 +362,15 @@ define(["dojo/_base/declare"], function (declare) {
 
 			window.clearTimeout(this._viewfeed_wait_timeout);
 			this._viewfeed_wait_timeout = window.setTimeout(() => {
-				Headlines.catchupBatched(() => {
-					xhrPost("backend.php", query, (transport) => {
-						try {
-							window.clearTimeout(this._infscroll_timeout);
-							this.setExpando(feed, is_cat, 'images/blank_icon.gif');
-							Headlines.onLoaded(transport, offset);
-							PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
-						} catch (e) {
-							App.Error.report(e);
-						}
-					});
+				xhrPost("backend.php", query, (transport) => {
+					try {
+						window.clearTimeout(this._infscroll_timeout);
+						this.setExpando(feed, is_cat, 'images/blank_icon.gif');
+						Headlines.onLoaded(transport, offset);
+						PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
+					} catch (e) {
+						App.Error.report(e);
+					}
 				});
 			}, delayed ? 250 : 0);
 		},
@@ -392,27 +388,6 @@ define(["dojo/_base/declare"], function (declare) {
 
 				App.global_unread = 0;
 				App.updateTitle();
-			}
-		},
-		decrementFeedCounter: function(feed, is_cat) {
-			let ctr = this.getUnread(feed, is_cat);
-
-			if (ctr > 0) {
-				this.setUnread(feed, is_cat, ctr - 1);
-				App.global_unread -= 1;
-				App.updateTitle();
-
-				if (!is_cat) {
-					const cat = parseInt(this.getCategory(feed));
-
-					if (!isNaN(cat)) {
-						ctr = this.getUnread(cat, true);
-
-						if (ctr > 0) {
-							this.setUnread(cat, true, ctr - 1);
-						}
-					}
-				}
 			}
 		},
 		catchupFeed: function(feed, is_cat, mode) {
@@ -482,15 +457,9 @@ define(["dojo/_base/declare"], function (declare) {
 
 				const rows = $$("#headlines-frame > div[id*=RROW][class*=Unread][data-orig-feed-id='" + id + "']");
 
-				if (rows.length > 0) {
-
-					for (let i = 0; i < rows.length; i++)
-						Headlines.catchup_id_batch.push(rows[i].getAttribute("data-article-id"));
-
-					Headlines.catchupBatched(() => {
-						Headlines.updateFloatingTitle(true);
-					});
-				}
+				rows.each((row) => {
+					row.removeClassName("Unread");
+				})
 			}
 		},
 		getUnread: function(feed, is_cat) {
