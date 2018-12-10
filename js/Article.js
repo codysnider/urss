@@ -2,7 +2,6 @@
 /* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
 	Article = {
-		_active_article_id: 0,
 		selectionSetScore: function () {
 			const ids = Headlines.getSelected();
 
@@ -290,8 +289,6 @@ define(["dojo/_base/declare"], function (declare) {
 				}
 			});
 
-			this._active_article_id = id;
-
 			const row = $("RROW-" + id);
 
 			if (row) {
@@ -308,13 +305,18 @@ define(["dojo/_base/declare"], function (declare) {
 					if (cb) cb.attr("checked", true);
 				}
 
-				PluginHost.run(PluginHost.HOOK_ARTICLE_SET_ACTIVE, this._active_article_id);
+				PluginHost.run(PluginHost.HOOK_ARTICLE_SET_ACTIVE, row.getAttribute("data-article-id"));
 			}
 
 			//Headlines.updateSelectedPrompt();
 		},
 		getActive: function () {
-			return this._active_article_id;
+			const row = document.querySelector("#headlines-frame > div[id*=RROW][class*=active]");
+
+			if (row)
+				return row.getAttribute("data-article-id");
+			else
+				return 0;
 		},
 		scroll: function (offset) {
 			if (!App.isCombinedMode()) {
