@@ -160,6 +160,16 @@ define(["dojo/_base/declare"], function (declare) {
 					${__('Originally from:')} <a target="_blank" rel="noopener noreferrer" href="${hl.orig_feed[1]}">${hl.orig_feed[0]}</a>
 					</span>` : "";
 		},
+		unpack: function(row) {
+			if (row.hasAttribute("data-content")) {
+				console.log("unpacking: " + row.id);
+
+				row.select(".content-inner")[0].innerHTML = row.getAttribute("data-content");
+				row.removeAttribute("data-content");
+
+				PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
+			}
+		},
 		view: function (id, noexpand) {
 			this.setActive(id);
 
@@ -283,14 +293,7 @@ define(["dojo/_base/declare"], function (declare) {
 			const row = $("RROW-" + id);
 
 			if (row) {
-				if (row.hasAttribute("data-content")) {
-					console.log("unpacking: " + row.id);
-
-					row.select(".content-inner")[0].innerHTML = row.getAttribute("data-content");
-					row.removeAttribute("data-content");
-
-					PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
-				}
+				Article.unpack(row);
 
 				if (row.hasClassName("Unread")) {
 

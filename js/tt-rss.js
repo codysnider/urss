@@ -444,8 +444,6 @@ require(["dojo/_base/kernel",
 						App.helpDialog("main");
 					};
 					this.hotkey_actions["toggle_combined_mode"] = function () {
-						Notify.progress("Loading, please wait...");
-
 						const value = App.isCombinedMode() ? "false" : "true";
 
 						xhrPost("backend.php", {op: "rpc", method: "setpref", key: "COMBINED_DISPLAY_MODE", value: value}, () => {
@@ -453,17 +451,15 @@ require(["dojo/_base/kernel",
 								!App.getInitParam("combined_display_mode"));
 
 							Article.close();
-							Feeds.reloadCurrent();
+							Headlines.renderAgain();
 						})
 					};
 					this.hotkey_actions["toggle_cdm_expanded"] = function () {
-						Notify.progress("Loading, please wait...");
-
 						const value = App.getInitParam("cdm_expanded") ? "false" : "true";
 
 						xhrPost("backend.php", {op: "rpc", method: "setpref", key: "CDM_EXPANDED", value: value}, () => {
 							App.setInitParam("cdm_expanded", !App.getInitParam("cdm_expanded"));
-							Feeds.reloadCurrent();
+							Headlines.renderAgain();
 						});
 					};
 					this.hotkey_actions["toggle_night_mode"] = function () {

@@ -228,12 +228,7 @@ define(["dojo/_base/declare"], function (declare) {
 				const row = rows[i];
 
 				if (row.offsetTop <= threshold) {
-					console.log("unpacking: " + row.id);
-
-					row.select(".content-inner")[0].innerHTML = row.getAttribute("data-content");
-					row.removeAttribute("data-content");
-
-					PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
+					Article.unpack(row);
 				} else {
 					break;
 				}
@@ -242,7 +237,34 @@ define(["dojo/_base/declare"], function (declare) {
 		objectById: function (id){
 			return this.headlines[id];
 		},
-		renderHeadline: function (headlines, hl) {
+		renderAgain: function() {
+			$$("#headlines-frame > div[id*=RROW]").each((row) => {
+				const id = row.getAttribute("data-article-id");
+				const selected = row.hasClassName("Selected");
+				const active = row.hasClassName("active");
+
+				if (this.headlines[id]) {
+					const new_row = this.render({}, this.headlines[id]);
+
+					row.parentNode.replaceChild(new_row, row);
+
+					if (active) {
+						new_row.addClassName("active");
+
+						if (App.isCombinedMode())
+							Article.cdmScrollToId(id);
+						else
+							Article.view(id);
+					}
+
+					if (selected) this.select("all", id);
+
+					Article.unpack(new_row);
+
+				}
+			});
+		},
+		render: function (headlines, hl) {
 			let row = null;
 
 			let row_class = "";
@@ -372,7 +394,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			PluginHost.run(PluginHost.HOOK_HEADLINE_RENDERED, tmp.firstChild);
 
-			$("headlines-frame").appendChild(tmp.firstChild);
+			return tmp.firstChild;
 		},
 		onLoaded: function (transport, offset) {
 			const reply = App.handleRpcJson(transport);
@@ -434,7 +456,9 @@ define(["dojo/_base/declare"], function (declare) {
 						for (let i = 0; i < reply['headlines']['content'].length; i++) {
 							const hl = reply['headlines']['content'][i];
 
-							this.renderHeadline(reply['headlines'], hl);
+							$("headlines-frame").appendChild(
+								this.render(reply['headlines'], hl));
+
 							this.headlines[parseInt(hl.id)] = hl;
 						}
 					}
@@ -503,7 +527,9 @@ define(["dojo/_base/declare"], function (declare) {
 						for (let i = 0; i < reply['headlines']['content'].length; i++) {
 							const hl = reply['headlines']['content'][i];
 
-							this.renderHeadline(reply['headlines'], hl);
+							$("headlines-frame").appendChild(
+								this.render(reply['headlines'], hl));
+
 							this.headlines[parseInt(hl.id)] = hl;
 						}
 					}
@@ -930,9 +956,11 @@ define(["dojo/_base/declare"], function (declare) {
 
 			this.updateSelectedPrompt();
 		},
-		select: function (mode) {
+		select: function (mode, articleId) {
 			// mode = all,none,unread,invert,marked,published
 			let query = "#headlines-frame > div[id*=RROW]";
+
+			if (articleId) query += "[data-article-id=" + articleId + "]";
 
 			switch (mode) {
 				case "none":
