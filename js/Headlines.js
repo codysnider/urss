@@ -242,6 +242,8 @@ define(["dojo/_base/declare"], function (declare) {
 				const id = row.getAttribute("data-article-id");
 				const selected = row.hasClassName("Selected");
 				const active = row.hasClassName("active");
+				const marked = row.hasClassName("marked");
+				const published = row.hasClassName("published");
 
 				if (this.headlines[id]) {
 					const new_row = this.render({}, this.headlines[id]);
@@ -258,6 +260,9 @@ define(["dojo/_base/declare"], function (declare) {
 					}
 
 					if (selected) this.select("all", id);
+
+					if (marked) new_row.addClassName("marked");
+					if (published) new_row.addClassName("published");
 
 					Article.unpack(new_row);
 
