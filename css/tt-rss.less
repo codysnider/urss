@@ -1013,24 +1013,22 @@ body.ttrss_main {
 		margin-right: 4px;
 	}
 
-	ul.helpKbList {
-		max-height : 300px;
-		overflow : auto;
-		list-style-type : none;
-		border : 1px solid @border-default;
-		margin : 0px 0px 5px 0px;
-		padding : 5px;
-
-		span.hksequence {
-			width : 6em;
-			margin-left : 20px;
-			color : @color-accent;
-			font-weight : bold;
-			display : inline-block;
+	ul.hotkeys-help {
+		li {
+			display : flex;
 		}
 
-		h2 {
-			margin-top : 0px;
+		li.desc {
+			flex-grow : 2;
+		}
+
+		.hk {
+			color : @color-accent;
+			width : 100px;
+		}
+
+		h3 {
+			margin : 8px 0px;
 		}
 	}
 

@@ -31,12 +31,13 @@ class Backend extends Handler {
 			__("Other interface tips are available in the Tiny Tiny RSS wiki.") .
 			"</a>");
 
-		print "<ul class='helpKbList' id='helpKbList'>";
+		print "<ul class='panel panel-scrollable hotkeys-help' style='height : 300px'>";
 
 		print "<h2>" . __("Keyboard Shortcuts") . "</h2>";
 
 		foreach ($info as $section => $hotkeys) {
 
+			print "<li><hr></li>";
 			print "<li><h3>" . $section . "</h3></li>";
 
 			foreach ($hotkeys as $action => $description) {
@@ -72,8 +73,8 @@ class Backend extends Handler {
 						}
 
 						print "<li>";
-					 	print "<span class='hksequence'>$sequence</span>";
-					  	print $description;
+					 	print "<div class='hk'><code>$sequence</code></div>";
+					  	print "<div class='desc'>$description</div>";
 						print "</li>";
 					}
 				}

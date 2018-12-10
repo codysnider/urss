@@ -865,23 +865,18 @@ body.ttrss_main ul#filterDlg_Matches li .dijitCheckBox,
 body.ttrss_main ul#filterDlg_Actions li .dijitCheckBox {
   margin-right: 4px;
 }
-body.ttrss_main ul.helpKbList {
-  max-height: 300px;
-  overflow: auto;
-  list-style-type: none;
-  border: 1px solid #dddddd;
-  margin: 0px 0px 5px 0px;
-  padding: 5px;
+body.ttrss_main ul.hotkeys-help li {
+  display: flex;
 }
-body.ttrss_main ul.helpKbList span.hksequence {
-  width: 6em;
-  margin-left: 20px;
+body.ttrss_main ul.hotkeys-help li.desc {
+  flex-grow: 2;
+}
+body.ttrss_main ul.hotkeys-help .hk {
   color: #257aa7;
-  font-weight: bold;
-  display: inline-block;
+  width: 100px;
 }
-body.ttrss_main ul.helpKbList h2 {
-  margin-top: 0px;
+body.ttrss_main ul.hotkeys-help h3 {
+  margin: 8px 0px;
 }
 body.ttrss_main select.attachments {
   display: block;
