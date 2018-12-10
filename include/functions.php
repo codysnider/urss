@@ -1311,6 +1311,21 @@
 
 		$data["labels"] = Labels::get_all_labels($_SESSION["uid"]);
 
+		if (LOG_DESTINATION == 'sql') {
+			if (DB_TYPE == 'pgsql') {
+				$log_interval = "created_at > NOW() - interval '1 hour'";
+			} else {
+				$log_interval = "created_at > DATE_SUB(NOW(), INTERVAL 1 HOUR)";
+			}
+
+			$sth = $pdo->prepare("SELECT COUNT(id) AS cid FROM ttrss_error_log WHERE $log_interval");
+			$sth->execute();
+
+			if ($row = $sth->fetch()) {
+				$data['recent_eventlog_entries'] = $row['cid'];
+			}
+		}
+
 		if (CHECK_FOR_UPDATES && !$disable_update_check && $_SESSION["last_version_check"] + 86400 + rand(-1000, 1000) < time()) {
 			$update_result = @check_for_update();
 
