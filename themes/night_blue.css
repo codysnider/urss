@@ -1435,12 +1435,6 @@ body.ttrss_prefs #header img {
   vertical-align: middle;
   cursor: pointer;
 }
-body.ttrss_prefs #user-css-editor {
-  height: 300px;
-}
-body.ttrss_prefs #user-css-editor .codeflask {
-  position: relative;
-}
 body.ttrss_prefs .dijitTree#filterTree .dijitTreeIcon,
 body.ttrss_prefs .dijitTree#labelTree .dijitTreeIcon,
 body.ttrss_prefs .dijitTree#filterTree .dijitTreeIcon {
@@ -1478,6 +1472,10 @@ body.ttrss_prefs div#labellistLoading {
 }
 body.ttrss_prefs #errorButton {
   color: red;
+}
+body.ttrss_prefs .user-css-editor {
+  height: 300px;
+  width: 575px;
 }
 body.ttrss_prefs table.prefPluginsList td label,
 body.ttrss_prefs table.prefUserList td {

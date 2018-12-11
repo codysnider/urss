@@ -1472,6 +1472,10 @@ body.ttrss_prefs div#labellistLoading {
 body.ttrss_prefs #errorButton {
   color: red;
 }
+body.ttrss_prefs .user-css-editor {
+  height: 300px;
+  width: 575px;
+}
 body.ttrss_prefs table.prefPluginsList td label,
 body.ttrss_prefs table.prefUserList td {
   cursor: pointer;
