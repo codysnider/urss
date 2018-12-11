@@ -342,8 +342,6 @@ class Feeds extends Handler_Protected {
 				$line['imported'] = T_sprintf("Imported at %s",
 					make_local_datetime($line["date_entered"], false));
 
-				$score = $line["score"];
-
 				if ($line["tag_cache"])
 					$tags = explode(",", $line["tag_cache"]);
 				else
@@ -372,7 +370,8 @@ class Feeds extends Handler_Protected {
 
 				/* we don't need those */
 
-                foreach (["date_entered", "guid", "last_published", "last_marked", "tag_cache", "favicon_avg_color", "uuid", "label_cache"] as $k)
+                foreach (["date_entered", "guid", "last_published", "last_marked", "tag_cache", "favicon_avg_color",
+                             "uuid", "label_cache", "yyiw"] as $k)
                     unset($line[$k]);
 
 				array_push($reply['content'], $line);

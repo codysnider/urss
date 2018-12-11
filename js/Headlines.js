@@ -10,7 +10,7 @@ define(["dojo/_base/declare"], function (declare) {
 			const modified = [];
 
 			mutations.each((m) => {
-				if (m.type == 'attributes' && m.attributeName == 'class') {
+				if (m.type == 'attributes' && ['class', 'data-score'].indexOf(m.attributeName) != -1) {
 
 					const row = m.target;
 					const id = row.getAttribute("data-article-id");
@@ -28,6 +28,8 @@ define(["dojo/_base/declare"], function (declare) {
 							// not sent by backend
 							hl.selected = row.hasClassName("Selected");
 							hl.active = row.hasClassName("active");
+
+							hl.score = row.getAttribute("data-score");
 
 							modified.push({id: hl.id, new: hl, old: hl_old, row: row});
 						}
@@ -52,6 +54,7 @@ define(["dojo/_base/declare"], function (declare) {
 				deselect: [],
 				activate: [],
 				deactivate: [],
+				rescore: {},
 			};
 
 			modified.each(function(m) {
@@ -69,6 +72,13 @@ define(["dojo/_base/declare"], function (declare) {
 
 				if (m.old.active != m.new.active)
 					m.new.active ? ops.activate.push(m.row) : ops.deactivate.push(m.row);
+
+				if (m.old.score != m.new.score) {
+					const score = m.new.score;
+
+					ops.rescore[score] = ops.rescore[score] || [];
+					ops.rescore[score].push(m.id);
+				}
 			});
 
 			ops.select.each((row) => {
@@ -116,6 +126,15 @@ define(["dojo/_base/declare"], function (declare) {
 			if (ops.unread.length != 0)
 				promises.push(xhrPost("backend.php",
 					{ op: "rpc", method: "catchupSelected", ids: ops.unread.toString(), cmode: 1}));
+
+			const scores = Object.keys(ops.rescore);
+
+			if (scores.length != 0) {
+				scores.each((score) => {
+					promises.push(xhrPost("backend.php",
+						{ op: "article", method: "setScore", id: ops.rescore[score].toString(), score: score }));
+				});
+			}
 
 			if (promises.length > 0)
 				Promise.all([promises]).then(() => {

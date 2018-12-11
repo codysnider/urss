@@ -30,37 +30,27 @@ define(["dojo/_base/declare"], function (declare) {
 			const ids = Headlines.getSelected();
 
 			if (ids.length > 0) {
-				console.log(ids);
-
 				const score = prompt(__("Please enter new score for selected articles:"));
 
-				if (score != undefined) {
-					const query = {
-						op: "article", method: "setScore", id: ids.toString(),
-						score: score
-					};
+				if (parseInt(score) != undefined) {
+					ids.each((id) => {
+						const row = $("RROW-" + id);
 
-					xhrJson("backend.php", query, (reply) => {
-						if (reply) {
-							reply.id.each((id) => {
-								const row = $("RROW-" + id);
+						if (row) {
+							row.setAttribute("data-score", score);
 
-								["score-low", "score-high", "score-half-low", "score-half-high", "score-neutral"]
-									.each(function(scl) {
+							const pic = row.select(".icon-score")[0];
+
+							pic.innerHTML = Article.getScorePic(score);
+							pic.setAttribute("title", score);
+
+							["score-low", "score-high", "score-half-low", "score-half-high", "score-neutral"]
+								.each(function(scl) {
+									if (row.hasClassName(scl))
 										row.removeClassName(scl);
-									});
+								});
 
-								row.addClassName(Article.getScoreClass(reply['score']));
-
-								if (row) {
-									row.setAttribute("data-score", reply["score"]);
-
-									const pic = row.select(".icon-score")[0];
-
-									pic.innerHTML = reply["score_pic"];
-									pic.setAttribute("title", reply["score"]);
-								}
-							});
+							row.addClassName(Article.getScoreClass(score));
 						}
 					});
 				}
@@ -71,26 +61,27 @@ define(["dojo/_base/declare"], function (declare) {
 		},
 		setScore: function (id, pic) {
 			const row = pic.up("div[id*=RROW]");
-			const score = row.getAttribute("data-score");
 
-			const new_score = prompt(__("Please enter new score for this article:"), score);
+			if (row) {
+				const score_old = row.getAttribute("data-score");
+				const score = prompt(__("Please enter new score for this article:"), score_old);
 
-			if (row && new_score != undefined) {
-				const query = {op: "article", method: "setScore", id: id, score: new_score};
+				if (parseInt(score) != undefined) {
+					row.setAttribute("data-score", score);
 
-				xhrJson("backend.php", query, (reply) => {
-					if (reply) {
-						pic.innerHTML = reply["score_pic"];
-						row.setAttribute("title", new_score);
+					const pic = row.select(".icon-score")[0];
 
-						["score-low", "score-high", "score-half-low", "score-half-high", "score-neutral"]
-							.each(function(scl) {
+					pic.innerHTML = Article.getScorePic(score);
+					pic.setAttribute("title", score);
+
+					["score-low", "score-high", "score-half-low", "score-half-high", "score-neutral"]
+						.each(function(scl) {
+							if (row.hasClassName(scl))
 								row.removeClassName(scl);
 						});
 
-						row.addClassName(Article.getScoreClass(reply['score']));
-					}
-				});
+					row.addClassName(Article.getScoreClass(score));
+				}
 			}
 		},
 		cdmUnsetActive: function (event) {
