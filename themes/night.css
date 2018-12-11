@@ -577,15 +577,15 @@ body.ttrss_main #feed_browser_spinner {
   height: 18px;
   width: 18px;
 }
-body.ttrss_main div.fatalError {
-  margin-bottom: 10px;
+body.ttrss_main .error-contents .message {
+  color: red;
 }
-body.ttrss_main div.fatalError button {
-  margin-top: 5px;
-}
-body.ttrss_main div.fatalError textarea {
-  width: 565px;
+body.ttrss_main .error-contents textarea {
+  width: 99%;
   height: 200px;
+}
+body.ttrss_main .error-contents .dlgButtons {
+  text-align: center;
 }
 body.ttrss_main #content-wrap {
   padding: 0px;

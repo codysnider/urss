@@ -414,18 +414,15 @@ define(["dojo/_base/declare"], function (declare) {
 					if (dijit.byId("exceptionDlg"))
 						dijit.byId("exceptionDlg").destroyRecursive();
 
-					let content = "<div class='fatalError'><p>" + message + "</p>";
-
-					if (error.stack)
-						content += "<div><b>Stack trace:</b></div>" +
-							"<textarea name=\"stack\" readonly=\"1\">" + error.stack + "</textarea>";
-
-					content += "<div style='text-align : center'>";
-
-					content += "<button dojoType=\"dijit.form.Button\" " +
-						"onclick=\"dijit.byId('exceptionDlg').hide()\">" +
-						__('Close this window') + "</button>";
-					content += "</div>";
+					let content = `<div class="error-contents">
+							<p class="message">${message}</p>
+							<div><b>Stack trace:</b></div>
+							<textarea name="stack" readonly="1">${error.stack}</textarea>
+							<div class="dlgButtons">
+								<button dojoType="dijit.form.Button"
+									onclick=\"dijit.byId('exceptionDlg').hide()">${__('Close this window')}</button>
+							</div>
+						</div>`;
 
 					const dialog = new dijit.Dialog({
 						id: "exceptionDlg",
