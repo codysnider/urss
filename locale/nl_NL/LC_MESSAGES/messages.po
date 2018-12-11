@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-11 14:31+0300\n"
-"PO-Revision-Date: 2018-12-10 00:37+0000\n"
+"PO-Revision-Date: 2018-12-13 18:19+0000\n"
 "Last-Translator: Patrick Ahles <p.ahles+weblate@gmail.com>\n"
-"Language-Team: Dutch <https://weblate.tt-rss.org/projects/tt-rss/messages/nl/>\n"
+"Language-Team: Dutch <https://weblate.tt-rss.org/projects/tt-rss/messages/nl/"
+">\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -197,7 +198,7 @@ msgstr "Communicatieprobleem met de server."
 
 #: index.php:168
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "Recente meldingen gevonden in het gebeurtenissenlogboek."
 
 #: index.php:171
 msgid "Updates are available from Git."
@@ -333,9 +334,8 @@ msgstr "Wisselen breedbeeldmodus"
 
 #: index.php:245
 #: include/functions.php:1177
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "In/uitschakelen gecombineerde modus"
+msgstr "In/uitschakelen nacht modus"
 
 #: index.php:246
 msgid "Keyboard shortcuts help"
@@ -2034,9 +2034,8 @@ msgid "Customize"
 msgstr "Aanpassen"
 
 #: classes/pref/prefs.php:563
-#, fuzzy
 msgid "default"
-msgstr "Standaard"
+msgstr "standaard"
 
 #: classes/pref/prefs.php:625
 msgid "Register"
@@ -2124,9 +2123,10 @@ msgid "Incorrect password"
 msgstr "Onjuist wachtwoord"
 
 #: classes/pref/prefs.php:989
-#, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr "U kunt door de CSS-declaraties aan te passen de kleuren, lettertypen en lay-out van uw huidige thema hier aanpassen. <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">Dit bestand</a> kan als richtlijn worden gebruikt."
+msgstr ""
+"U kunt door de CSS-declaraties aan te passen de kleuren, lettertypen en lay-"
+"out van uw huidige thema hier aanpassen."
 
 #: classes/pref/prefs.php:1024
 msgid "Create profile"
@@ -2314,9 +2314,8 @@ msgid "Include settings"
 msgstr "Toevoegingsinstellingen"
 
 #: classes/pref/feeds.php:1313
-#, fuzzy
 msgid "Published OPML"
-msgstr "Gepubliceerd"
+msgstr "Gepubliceerde OPML"
 
 #: classes/pref/feeds.php:1315
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
@@ -2339,9 +2338,10 @@ msgid "Published & shared articles / Generated feeds"
 msgstr "Gepubliceerde & gedeelde artikelen / Gegenereerde feeds"
 
 #: classes/pref/feeds.php:1330
-#, fuzzy
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "Uw OPML kan openbaar worden gepubliceerd en er kan op worden geabonneerd door iedereen die de URL hieronder kent."
+msgstr ""
+"Iedereen die de volgende URL kent kan zich abonneeren op de gepubliceerde "
+"artikelen:"
 
 #: classes/pref/feeds.php:1338
 msgid "Display URL"
@@ -2626,7 +2626,6 @@ msgid "Inline article content"
 msgstr "Artikelinhoud weergeven"
 
 #: plugins/toggle_sidebar/init.php:23
-#, fuzzy
 msgid "Toggle feedlist"
 msgstr "Feedlijst inklappen"
 
@@ -2706,7 +2705,7 @@ msgstr "Foutuitleg"
 
 #: js/AppBase.js:408
 msgid "Fatal error"
-msgstr ""
+msgstr "Fatale fout"
 
 #: js/Article.js:33
 msgid "Please enter new score for selected articles:"
@@ -2752,7 +2751,10 @@ msgstr "Abonneren op feed"
 
 #: js/CommonDialogs.js:96
 msgid "Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."
-msgstr "Kan de uitvoer niet ontleden. Dit kan een server timeout en/of netwerkproblemen aangeven. Backend-output is naar de browser-console geschreven."
+msgstr ""
+"Kan de uitvoer niet ontleden. Dit kan een server-timeout en/of "
+"netwerkproblemen aangeven. Backend-output is naar de browser-console "
+"geschreven."
 
 #: js/CommonDialogs.js:111
 #, perl-format
@@ -2906,7 +2908,7 @@ msgstr "Open origineel artikel"
 
 #: js/Headlines.js:1195
 msgid "Display article URL"
-msgstr "Toon artikel URL"
+msgstr "Toon artikel-URL"
 
 #: js/Headlines.js:1302
 msgid "Assign label"
@@ -2939,7 +2941,9 @@ msgstr "Categorie verwijderen"
 #: js/PrefFeedTree.js:140
 #, perl-format
 msgid "Remove category %s? Any nested feeds would be placed into Uncategorized."
-msgstr "Categorie %s verwijderen? elke genestelde feed zal in de rubriek 'Ongecategoriseerd' worden geplaatst."
+msgstr ""
+"Categorie %s verwijderen? Elke genestelde feed zal in de rubriek "
+"'Ongecategoriseerd' worden geplaatst."
 
 #: js/PrefFeedTree.js:153
 msgid "Unsubscribe from selected feeds?"
@@ -2967,7 +2971,7 @@ msgstr "Categorie hernoemen in:"
 
 #: js/PrefFeedTree.js:327
 msgid "Category title:"
-msgstr "Categorie titel:"
+msgstr "Categorietitel:"
 
 #: js/PrefFeedTree.js:351
 msgid "Subscribing to feeds..."
@@ -3045,7 +3049,7 @@ msgstr "Wis opgeslagen data voor deze plug-in?"
 
 #: js/PrefHelpers.js:168
 msgid "Please choose an OPML file first."
-msgstr "kies eerst een OPML-bestand aub."
+msgstr "Kies eerst een OPML-bestand aub."
 
 #: js/PrefHelpers.js:192
 msgid "OPML Import"
@@ -3065,7 +3069,7 @@ msgstr "Verwante artikelen"
 
 #: plugins/share/share_prefs.js:3
 msgid "This will invalidate all previously shared article URLs. Continue?"
-msgstr "Dit zal all eerder gedeelde artikel-URL's ongeldig maken. Doorgaan?"
+msgstr "Dit zal alle eerder gedeelde artikel-URL's ongeldig maken. Doorgaan?"
 
 #: plugins/share/share.js:10
 msgid "Share article by URL"
@@ -3090,7 +3094,7 @@ msgstr "Artikel doorsturen per e-mail"
 
 #: plugins/mail/mail.js:30
 msgid "Error sending email:"
-msgstr "Fout bij verzenden van email:"
+msgstr "Fout bij verzenden van e-mail:"
 
 #: plugins/import_export/import_export.js:13
 msgid "Export Data"
@@ -3121,15 +3125,15 @@ msgstr "<span onclick=\"App.explainError(3)\">Update daemon werkt geen feeds bij
 
 #: js/AppBase.js:458
 msgid "Unhandled exception"
-msgstr ""
+msgstr "Niet verwerkte uitzondering"
 
 #: js/Article.js:229
 msgid "Edit article Tags"
-msgstr "Bewerk artikel tags"
+msgstr "Bewerk artikel-tags"
 
 #: js/Article.js:233
 msgid "Saving article tags..."
-msgstr "Artikel tags opslaan..."
+msgstr "Artikel-tags opslaan..."
 
 #: js/CommonDialogs.js:13
 msgid "Upload complete."
@@ -3145,11 +3149,11 @@ msgstr "Upload mislukt."
 
 #: js/CommonDialogs.js:31
 msgid "Removing feed icon..."
-msgstr "Opgeslagen feed pictogram verwijderen..."
+msgstr "Opgeslagen feedpictogram verwijderen..."
 
 #: js/CommonDialogs.js:36
 msgid "Feed icon removed."
-msgstr "Feed pictogram verwijderd."
+msgstr "Feedpictogram verwijderd."
 
 #: js/CommonDialogs.js:54
 msgid "Uploading, please wait..."
@@ -3290,11 +3294,11 @@ msgstr "Geselecteerde filters verwijderen..."
 #: js/PrefHelpers.js:5
 #: plugins/share/share_prefs.js:4
 msgid "Clearing URLs..."
-msgstr "URLs opruimen..."
+msgstr "URL's opruimen..."
 
 #: js/PrefHelpers.js:8
 msgid "Generated URLs cleared."
-msgstr "Genereerde URLs gewist."
+msgstr "Genereerde URL's gewist."
 
 #: js/PrefHelpers.js:50
 msgid "Removing selected profiles..."
@@ -3311,7 +3315,7 @@ msgstr "Aan 't importeren, even wachten aub..."
 
 #: js/PrefLabelTree.js:69
 msgid "Label Editor"
-msgstr "Label editor"
+msgstr "Labeleditor"
 
 #: js/PrefLabelTree.js:126
 msgid "Reset selected labels to default colors?"
@@ -3359,7 +3363,7 @@ msgstr "Wachtwoord van geselecteerde gebruiker opnieuw instellen?"
 
 #: js/PrefUsers.js:67
 msgid "Resetting password for selected user..."
-msgstr "Wachtwoord van geselecteerde gebruiker opnieuw instellen..."
+msgstr "Wachtwoord van geselecteerde gebruiker opnieuw aan het instellen..."
 
 #: js/PrefUsers.js:82
 msgid "Remove selected users? Neither default admin nor your account will be removed."
@@ -3396,7 +3400,7 @@ msgstr "Artikel notitie opslaan..."
 
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
-msgstr "Gedeelde URLs opgeruimd."
+msgstr "Gedeelde URL's opgeruimd."
 
 #: plugins/share/share.js:15
 msgid "Trying to change URL..."
