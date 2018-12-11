@@ -65,6 +65,9 @@ require(["dojo/_base/kernel",
 				constructor: function () {
 					parser.parse();
 
+					if (!this.checkBrowserFeatures())
+						return;
+
 					this.setLoadingProgress(30);
 					this.initHotkeyActions();
 
@@ -88,6 +91,22 @@ require(["dojo/_base/kernel",
 							App.Error.report(e);
 						}
 					});
+				},
+				checkBrowserFeatures: function() {
+					let errorMsg = "";
+
+					['requestIdleCallback', 'MutationObserver'].each(function(wf) {
+						if (! (wf in window)) {
+							errorMsg = `Browser feature check failed: <code>window.${wf}</code> not found.`;
+							throw $break;
+						}
+					});
+
+					if (errorMsg) {
+						fatalError(4, errorMsg, navigator.userAgent);
+					}
+
+					return errorMsg == "";
 				},
 				initSecondStage: function () {
 					this.enableCsrfSupport();

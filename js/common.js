@@ -266,14 +266,17 @@ function fatalError(code, msg, ext_info) {
 			msg = ERRORS[code];
 		}
 
-		let content = "<div><b>Error code:</b> " + code + "</div>" +
-			"<p>" + msg + "</p>";
+		let content = `<div><b>Error code:</b> ${code} </div>
+			<p>${msg}</p>`;
 
 		if (ext_info) {
-			content = content + "<div><b>Additional information:</b></div>" +
-				"<textarea style='width: 100%' readonly=\"1\">" +
-				ext_info + "</textarea>";
+			content = content + `<div><b>Additional information:</b></div>
+				<textarea style='width: 100%' readonly="1">${ext_info}</textarea>`;
 		}
+
+		content += `<div style='text-align : center'>
+			<button dojoType="dijit.form.Button" onclick="window.location.reload()">
+			${__('Try again')}</button></div>`;
 
 		const dialog = new dijit.Dialog({
 			title: "Fatal error",
