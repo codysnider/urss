@@ -577,14 +577,21 @@ body.ttrss_main #feed_browser_spinner {
   height: 18px;
   width: 18px;
 }
-body.ttrss_main .error-contents .message {
+body.ttrss_main #exceptionDlg .dijitDialogTitleBar {
+  background: red;
+  color: white;
+}
+body.ttrss_main #exceptionDlg .dijitDialogPaneContent {
+  background: #fcc;
+}
+body.ttrss_main #exceptionDlg .error-contents .message {
   color: red;
 }
-body.ttrss_main .error-contents textarea {
+body.ttrss_main #exceptionDlg .error-contents textarea {
   width: 99%;
   height: 200px;
 }
-body.ttrss_main .error-contents .dlgButtons {
+body.ttrss_main #exceptionDlg .error-contents .dlgButtons {
   text-align: center;
 }
 body.ttrss_main #content-wrap {

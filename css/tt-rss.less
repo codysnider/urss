@@ -676,17 +676,28 @@ body.ttrss_main {
 		width : 18px;
 	}
 
-	.error-contents {
-		.message {
-			color : red;
+	#exceptionDlg {
+		.dijitDialogTitleBar {
+			background : red;
+			color : white;
 		}
 
-		textarea {
-			width : 99%;
-			height : 200px;
+		.dijitDialogPaneContent {
+			background : #fcc;
 		}
-		.dlgButtons {
-			text-align : center;
+
+		.error-contents {
+			.message {
+				color : red;
+			}
+
+			textarea {
+				width : 99%;
+				height : 200px;
+			}
+			.dlgButtons {
+				text-align : center;
+			}
 		}
 	}
 

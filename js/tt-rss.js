@@ -103,7 +103,7 @@ require(["dojo/_base/kernel",
 					});
 
 					if (errorMsg) {
-						fatalError(4, errorMsg, navigator.userAgent);
+						this.Error.fatal(errorMsg, {info: navigator.userAgent});
 					}
 
 					return errorMsg == "";

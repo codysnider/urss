@@ -191,17 +191,17 @@ define(["dojo/_base/declare"], function (declare) {
 				const reply = JSON.parse(transport.responseText);
 
 				if (reply) {
-
 					const error = reply['error'];
 
 					if (error) {
 						const code = error['code'];
-						const msg = error['msg'];
+						const msg = error['message'];
 
-						console.warn("[handleRpcJson] received fatal error " + code + "/" + msg);
+						console.warn("[handleRpcJson] received fatal error ", code, msg);
 
 						if (code != 0) {
-							fatalError(code, msg);
+							/* global ERRORS */
+							this.Error.fatal(ERRORS[code], {info: msg, code: code});
 							return false;
 						}
 					}
@@ -299,18 +299,22 @@ define(["dojo/_base/declare"], function (declare) {
 			PluginHost.run(PluginHost.HOOK_RUNTIME_INFO_LOADED, data);
 		},
 		backendSanityCallback: function (transport) {
-
 			const reply = JSON.parse(transport.responseText);
 
+			/* global ERRORS */
+
 			if (!reply) {
-				fatalError(3, "Sanity check: invalid RPC reply", transport.responseText);
+				this.Error.fatal(ERRORS[3], {info: transport.responseText});
 				return;
 			}
 
-			const error_code = reply['error']['code'];
+			if (reply['error']) {
+				const code = reply['error']['code'];
 
-			if (error_code && error_code != 0) {
-				return fatalError(error_code, reply['error']['message']);
+				if (code && code != 0) {
+					return this.Error.fatal(ERRORS[code],
+						{code: code, info: reply['error']['message']});
+				}
 			}
 
 			console.log("sanity check ok");
@@ -387,6 +391,22 @@ define(["dojo/_base/declare"], function (declare) {
 			return this.displayDlg(__("Error explained"), "explainError", code);
 		},
 		Error: {
+			fatal: function (error, params) {
+				params = params || {};
+
+				if (params.code) {
+					if (params.code == 6) {
+						window.location.href = "index.php";
+						return;
+					} else if (params.code == 5) {
+						window.location.href = "public.php?op=dbupdate";
+						return;
+					}
+				}
+
+				return this.report(error,
+					Object.extend({title: __("Fatal error")}, params));
+			},
 			report: function(error, params) {
 				params = params || {};
 
@@ -414,10 +434,19 @@ define(["dojo/_base/declare"], function (declare) {
 					if (dijit.byId("exceptionDlg"))
 						dijit.byId("exceptionDlg").destroyRecursive();
 
+					let stack_msg = "";
+
+					if (error.stack)
+						stack_msg += `<div><b>Stack trace:</b></div>
+							<textarea name="stack" readonly="1">${error.stack}</textarea>`;
+
+					if (params.info)
+						stack_msg += `<div><b>Additional information:</b></div>
+							<textarea name="stack" readonly="1">${params.info}</textarea>`;
+
 					let content = `<div class="error-contents">
 							<p class="message">${message}</p>
-							<div><b>Stack trace:</b></div>
-							<textarea name="stack" readonly="1">${error.stack}</textarea>
+							${stack_msg}
 							<div class="dlgButtons">
 								<button dojoType="dijit.form.Button"
 									onclick=\"dijit.byId('exceptionDlg').hide()">${__('Close this window')}</button>
@@ -426,7 +455,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 					const dialog = new dijit.Dialog({
 						id: "exceptionDlg",
-						title: "Unhandled exception",
+						title: params.title || __("Unhandled exception"),
 						style: "width: 600px",
 						content: content
 					});
