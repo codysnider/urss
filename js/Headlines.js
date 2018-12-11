@@ -99,31 +99,30 @@ define(["dojo/_base/declare"], function (declare) {
 					cb.attr('checked', false);
 			});
 
+			const promises = [];
+
 			if (ops.tmark.length != 0)
-				xhrPost("backend.php",
-					{ op: "rpc", method: "markSelected", ids: ops.tmark.toString(), cmode: 2}, (transport) => {
-						App.handleRpcJson(transport);
-					});
+				promises.push(xhrPost("backend.php",
+					{ op: "rpc", method: "markSelected", ids: ops.tmark.toString(), cmode: 2}));
 
 			if (ops.tpub.length != 0)
-				xhrPost("backend.php",
-					{ op: "rpc", method: "publishSelected", ids: ops.tpub.toString(), cmode: 2}, (transport) => {
-						App.handleRpcJson(transport);
-					});
+				promises.push(xhrPost("backend.php",
+					{ op: "rpc", method: "publishSelected", ids: ops.tpub.toString(), cmode: 2}));
 
 			if (ops.read.length != 0)
-				xhrPost("backend.php",
-					{ op: "rpc", method: "catchupSelected", ids: ops.read.toString(), cmode: 0}, (transport) => {
-						App.handleRpcJson(transport);
-					});
+				promises.push(xhrPost("backend.php",
+					{ op: "rpc", method: "catchupSelected", ids: ops.read.toString(), cmode: 0}));
 
 			if (ops.unread.length != 0)
-				xhrPost("backend.php",
-					{ op: "rpc", method: "catchupSelected", ids: ops.unread.toString(), cmode: 1}, (transport) => {
-						App.handleRpcJson(transport);
-					});
+				promises.push(xhrPost("backend.php",
+					{ op: "rpc", method: "catchupSelected", ids: ops.unread.toString(), cmode: 1}));
 
-			},
+			if (promises.length > 0)
+				Promise.all([promises]).then(() => {
+					Feeds.requestCounters(true);
+				});
+
+		},
 		click: function (event, id, in_body) {
 			in_body = in_body || false;
 
