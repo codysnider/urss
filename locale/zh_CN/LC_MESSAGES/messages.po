@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-11 14:31+0300\n"
-"PO-Revision-Date: 2018-12-04 13:27+0000\n"
-"Last-Translator: Henry Wang <wqr624@gmail.com>\n"
-"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/tt-rss/messages/zh_Hans/>\n"
+"PO-Revision-Date: 2018-12-13 18:18+0000\n"
+"Last-Translator: Ptsa Daniel <ptsa1987@gmail.com>\n"
+"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/"
+"tt-rss/messages/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -195,7 +196,7 @@ msgstr "连接服务器出错."
 
 #: index.php:168
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "在事件日志中找到的最近条目."
 
 #: index.php:171
 msgid "Updates are available from Git."
@@ -331,9 +332,8 @@ msgstr "切换宽屏模式"
 
 #: index.php:245
 #: include/functions.php:1177
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "切换合并模式"
+msgstr "切换夜间模式"
 
 #: index.php:246
 msgid "Keyboard shortcuts help"
@@ -2029,7 +2029,6 @@ msgid "Customize"
 msgstr "自定义"
 
 #: classes/pref/prefs.php:563
-#, fuzzy
 msgid "default"
 msgstr "默认"
 
@@ -2119,9 +2118,8 @@ msgid "Incorrect password"
 msgstr "密码错误"
 
 #: classes/pref/prefs.php:989
-#, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr "您可以通过自定义 CSS 来更改颜色，字体和版式。具体可参考 <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">本文件</a>。"
+msgstr "您可以通过自定义 CSS 来更改颜色，字体和版式。"
 
 #: classes/pref/prefs.php:1024
 msgid "Create profile"
@@ -2308,9 +2306,8 @@ msgid "Include settings"
 msgstr "包含设置"
 
 #: classes/pref/feeds.php:1313
-#, fuzzy
 msgid "Published OPML"
-msgstr "已发布"
+msgstr "发布OPML"
 
 #: classes/pref/feeds.php:1315
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
@@ -2318,7 +2315,7 @@ msgstr "您可以公开发布您的 OPML 。网上的任何人都可以通过如
 
 #: classes/pref/feeds.php:1317
 msgid "Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds."
-msgstr ""
+msgstr "已发布的OPML中不包括您的Tiny Tiny RSS设置，需要身份验证的信息源或者最受欢迎的信息源中隐藏的信息源."
 
 #: classes/pref/feeds.php:1319
 msgid "Public OPML URL"
@@ -2333,9 +2330,8 @@ msgid "Published & shared articles / Generated feeds"
 msgstr "已发布的文章和生成的信息源"
 
 #: classes/pref/feeds.php:1330
-#, fuzzy
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "您可以公开发布您的 OPML 。网上的任何人都可以通过如下 URL 订阅该文件。"
+msgstr "知道以下网址的任何人都可以订阅已发布的文章："
 
 #: classes/pref/feeds.php:1338
 msgid "Display URL"
@@ -2620,9 +2616,8 @@ msgid "Inline article content"
 msgstr "Inline 文章内容"
 
 #: plugins/toggle_sidebar/init.php:23
-#, fuzzy
 msgid "Toggle feedlist"
-msgstr "收缩侧边栏"
+msgstr "切换侧边栏"
 
 #: plugins/import_export/init.php:54
 msgid "Import and export"
@@ -2697,7 +2692,7 @@ msgstr "Error释义"
 
 #: js/AppBase.js:408
 msgid "Fatal error"
-msgstr ""
+msgstr "致命错误"
 
 #: js/Article.js:33
 msgid "Please enter new score for selected articles:"
@@ -3104,7 +3099,7 @@ msgstr "<span onclick=\"App.explainError(3)\">更新程序未更新订阅源.</s
 
 #: js/AppBase.js:458
 msgid "Unhandled exception"
-msgstr ""
+msgstr "未处理的异常"
 
 #: js/Article.js:229
 msgid "Edit article Tags"
