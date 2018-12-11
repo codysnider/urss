@@ -38,7 +38,9 @@ define(["dojo/_base/declare"], function (declare) {
 			Headlines.updateSelectedPrompt();
 			Headlines.updateFloatingTitle(true);
 
-			Headlines.syncModified(modified);
+			window.requestIdleCallback(() => {
+				Headlines.syncModified(modified);
+			});
 		}),
 		syncModified: function(modified) {
 			const ops = {
