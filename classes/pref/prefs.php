@@ -992,7 +992,12 @@ class Pref_Prefs extends Handler_Protected {
 		print_hidden("method", "setpref");
 		print_hidden("key", "USER_STYLESHEET");
 
-		print "<div class='panel' id='user-css-editor'>$value</div>";
+		print "<table width='100%'><tr><td>";
+		print "<textarea dojoType=\"dijit.form.SimpleTextarea\"
+			style='font-size : 12px; width : 98%; height: 200px;'
+			placeHolder='body#ttrssMain { font-size : 14px; };'
+			name='value'>$value</textarea>";
+		print "</td></tr></table>";
 
 		print "<div class='dlgButtons'>";
 		print "<button dojoType=\"dijit.form.Button\"
