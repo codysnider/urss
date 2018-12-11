@@ -18,23 +18,35 @@ function exception_error(e, e_compat, filename, lineno, colno) {
 
 function xhrPost(url, params, complete) {
 	console.log("xhrPost:", params);
-	return new Ajax.Request(url, {
-		parameters: params,
-		onComplete: complete
+
+	return new Promise((resolve, reject) => {
+		new Ajax.Request(url, {
+			parameters: params,
+			onComplete: function(reply) {
+				if (complete != undefined) complete(reply);
+
+				resolve(reply);
+			}
+		});
 	});
 }
 
 function xhrJson(url, params, complete) {
-	return xhrPost(url, params, (reply) => {
-		try {
-			const obj = JSON.parse(reply.responseText);
-			complete(obj);
-		} catch (e) {
-			console.error("xhrJson", e, reply);
-			complete(null);
-		}
+	return new Promise((resolve, reject) => {
+		return xhrPost(url, params).then((reply) => {
+			let obj = null;
 
-	})
+			try {
+				obj = JSON.parse(reply.responseText);
+			} catch (e) {
+				console.error("xhrJson", e, reply);
+			}
+
+			if (complete != undefined) complete(obj);
+
+			resolve(obj);
+		});
+	});
 }
 
 /* add method to remove element from array */
