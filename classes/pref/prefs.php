@@ -984,10 +984,9 @@ class Pref_Prefs extends Handler_Protected {
 
 	function customizeCSS() {
 		$value = get_pref("USER_STYLESHEET");
-
 		$value = str_replace("<br/>", "\n", $value);
 
-		print_notice(T_sprintf("You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here. <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">This file</a> can be used as a baseline.", "css/tt-rss.css"));
+		print_notice(__("You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."));
 
 		print_hidden("op", "rpc");
 		print_hidden("method", "setpref");
