@@ -1977,34 +1977,6 @@
 		return $filters;
 	}
 
-	function get_score_pic($score) {
-		if ($score > 500) {
-			return "trending_up";
-		} else if ($score > 0) {
-			return "trending_up";
-		} else if ($score < 0) {
-			return "trending_down";
-		} else {
-			return "trending_neutral";
-		}
-	}
-
-	function get_score_class($score) {
-		if ($score > 500) {
-			$score_class = "score-high";
-		} else if ($score > 0) {
-			$score_class = "score-half-high";
-		} else if ($score < -100) {
-			$score_class = "score-low";
-		} else if ($score < 0) {
-			$score_class = "score-half-low";
-		} else {
-			$score_class = "score-neutral";
-		}
-
-		return $score_class;
-	}
-
 	function init_plugins() {
 		PluginHost::getInstance()->load(PLUGINS, PluginHost::KIND_ALL);
 

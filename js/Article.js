@@ -2,6 +2,30 @@
 /* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
 	Article = {
+		getScoreClass: function (score) {
+			if (score > 500) {
+				return "score-high";
+			} else if (score > 0) {
+				return "score-half-high";
+			} else if (score < -100) {
+				return "score-low";
+			} else if (score < 0) {
+				return "score-half-low";
+			} else {
+				return "score-neutral";
+			}
+		},
+		getScorePic: function (score) {
+			if (score > 500) {
+				return "trending_up";
+			} else if (score > 0) {
+				return "trending_up";
+			} else if (score < 0) {
+				return "trending_down";
+			} else {
+				return "trending_neutral";
+			}
+		},
 		selectionSetScore: function () {
 			const ids = Headlines.getSelected();
 
@@ -21,23 +45,20 @@ define(["dojo/_base/declare"], function (declare) {
 							reply.id.each((id) => {
 								const row = $("RROW-" + id);
 
-								row.removeClassName("score-low");
-								row.removeClassName("score-high");
-								row.removeClassName("score-half-low");
-								row.removeClassName("score-half-high");
-								row.removeClassName("score-neutral");
+								["score-low", "score-high", "score-half-low", "score-half-high", "score-neutral"]
+									.each(function(scl) {
+										row.removeClassName(scl);
+									});
 
-								row.addClassName(reply["score_class"]);
-
+								row.addClassName(Article.getScoreClass(reply['score']));
 
 								if (row) {
+									row.setAttribute("data-score", reply["score"]);
+
 									const pic = row.select(".icon-score")[0];
 
-									if (pic) {
-										pic.innerHTML = reply["score_pic"];
-										pic.setAttribute("data-score", reply["score"]);
-										pic.setAttribute("title", reply["score"]);
-									}
+									pic.innerHTML = reply["score_pic"];
+									pic.setAttribute("title", reply["score"]);
 								}
 							});
 						}
@@ -50,7 +71,7 @@ define(["dojo/_base/declare"], function (declare) {
 		},
 		setScore: function (id, pic) {
 			const row = pic.up("div[id*=RROW]");
-			const score = pic.getAttribute("data-score");
+			const score = row.getAttribute("data-score");
 
 			const new_score = prompt(__("Please enter new score for this article:"), score);
 
@@ -60,16 +81,14 @@ define(["dojo/_base/declare"], function (declare) {
 				xhrJson("backend.php", query, (reply) => {
 					if (reply) {
 						pic.innerHTML = reply["score_pic"];
-						pic.setAttribute("data-score", new_score);
-						pic.setAttribute("title", new_score);
+						row.setAttribute("title", new_score);
 
-						row.removeClassName("score-low");
-						row.removeClassName("score-high");
-						row.removeClassName("score-half-low");
-						row.removeClassName("score-half-high");
-						row.removeClassName("score-neutral");
+						["score-low", "score-high", "score-half-low", "score-half-high", "score-neutral"]
+							.each(function(scl) {
+								row.removeClassName(scl);
+						});
 
-						row.addClassName(reply["score_class"]);
+						row.addClassName(Article.getScoreClass(reply['score']));
 					}
 				});
 			}

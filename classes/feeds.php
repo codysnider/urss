@@ -344,9 +344,6 @@ class Feeds extends Handler_Protected {
 
 				$score = $line["score"];
 
-				$line["score_pic"] = get_score_pic($score);
-                $line["score_class"] = get_score_class($score);
-
 				if ($line["tag_cache"])
 					$tags = explode(",", $line["tag_cache"]);
 				else

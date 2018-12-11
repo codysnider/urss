@@ -254,10 +254,7 @@ class Article extends Handler_Protected {
 
 		$sth->execute(array_merge([$score], $ids, [$_SESSION['uid']]));
 
-		print json_encode(array("id" => $ids,
-			"score" => (int)$score,
-			"score_class" => get_score_class($score),
-			"score_pic" => get_score_pic($score)));
+		print json_encode(["id" => $ids, "score" => (int)$score]);
 	}
 
 	function getScore() {
@@ -269,9 +266,7 @@ class Article extends Handler_Protected {
 
 		$score = $row['score'];
 
-		print json_encode(array("id" => $id,
-			"score" => (int)$score,
-			"score_pic" => get_score_pic($score)));
+		print json_encode(["id" => $id, "score" => (int)$score]);
 	}
 
 

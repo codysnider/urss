@@ -400,8 +400,9 @@ define(["dojo/_base/declare"], function (declare) {
 				const comments = Article.formatComments(hl);
 				const originally_from = Article.formatOriginallyFrom(hl);
 
-				row = `<div class="cdm ${row_class} ${hl.score_class}" id="RROW-${hl.id}" data-article-id="${hl.id}" data-orig-feed-id="${hl.feed_id}" 
-							data-content="${escapeHtml(hl.content)}" onmouseover="Article.mouseIn(${hl.id})" onmouseout="Article.mouseOut(${hl.id})">
+				row = `<div class="cdm ${row_class} ${Article.getScoreClass(hl.score)}" id="RROW-${hl.id}" data-article-id="${hl.id}" data-orig-feed-id="${hl.feed_id}" 
+							data-content="${escapeHtml(hl.content)}" data-score="${hl.score}" 
+							onmouseover="Article.mouseIn(${hl.id})" onmouseout="Article.mouseOut(${hl.id})">
 							
 							<div class="header">
 								<div class="left">
@@ -426,8 +427,7 @@ define(["dojo/_base/declare"], function (declare) {
 								<span class="updated" title="${hl.imported}">${hl.updated}</span>
 								
 								<div class="right">                        
-									<i class="material-icons icon-score" title="${hl.score}" data-score="${hl.score}" 
-										onclick="Article.setScore(${hl.id}, this)">${hl.score_pic}</i>
+									<i class="material-icons icon-score" title="${hl.score}" onclick="Article.setScore(${hl.id}, this)">${Article.getScorePic(hl.score)}</i>
 								
 									<span style="cursor : pointer" title="${hl.feed_title}" onclick="Feeds.open({feed:${hl.feed_id}})">
 										${hl.feed_icon}</span>
@@ -464,8 +464,8 @@ define(["dojo/_base/declare"], function (declare) {
 
 
 			} else {
-				row = `<div class="hl ${row_class} ${hl.score_class}" data-orig-feed-id="${hl.feed_id}" data-article-id="${hl.id}" id="RROW-${hl.id}" 
-					onmouseover="Article.mouseIn(${hl.id})" onmouseout="Article.mouseOut(${hl.id})">
+				row = `<div class="hl ${row_class} ${Article.getScoreClass(hl.score)}" data-orig-feed-id="${hl.feed_id}" data-article-id="${hl.id}" id="RROW-${hl.id}" 
+					data-score="${hl.score}" onmouseover="Article.mouseIn(${hl.id})" onmouseout="Article.mouseOut(${hl.id})">
 				<div class="left">
 					<input dojoType="dijit.form.CheckBox" type="checkbox" onclick="Headlines.onRowChecked(this)" class='rchk'>
 				    <i class="marked-pic marked-${hl.id} material-icons" onclick="Headlines.toggleMark(${hl.id})">star</i>
@@ -485,8 +485,7 @@ define(["dojo/_base/declare"], function (declare) {
 				  <span class="updated">${hl.updated}</span>
 				</div>
 				<div class="right">
-				  <i class="material-icons icon-score" title="${hl.score}" data-score="${hl.score}"
-				  onclick="Article.setScore(${hl.id}, this)">${hl.score_pic}</i>
+				  <i class="material-icons icon-score" title="${hl.score}" onclick="Article.setScore(${hl.id}, this)">${Article.getScorePic(hl.score)}</i>
 				  <span onclick="Feeds.open({feed:${hl.feed_id})" style="cursor : pointer" title="${hl.feed_title}">${hl.feed_icon}</span>
 				</div>
 			  </div>
