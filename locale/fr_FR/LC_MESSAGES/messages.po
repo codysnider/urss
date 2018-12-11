@@ -13,9 +13,10 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-11 14:31+0300\n"
-"PO-Revision-Date: 2018-12-05 06:14+0000\n"
+"PO-Revision-Date: 2018-12-13 18:19+0000\n"
 "Last-Translator: Glandos <bugs-ttrss@antipoul.fr>\n"
-"Language-Team: French <https://weblate.tt-rss.org/projects/tt-rss/messages/fr/>\n"
+"Language-Team: French <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"fr/>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -199,7 +200,7 @@ msgstr "Un problème de communication avec le serveur est survenu."
 
 #: index.php:168
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "Des nouveaux évènements ont été journalisés."
 
 #: index.php:171
 msgid "Updates are available from Git."
@@ -335,9 +336,8 @@ msgstr "Basculer le mode écran large"
 
 #: index.php:245
 #: include/functions.php:1177
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "Basculer le mode combiné"
+msgstr "(Dés)activer le mode nuit"
 
 #: index.php:246
 msgid "Keyboard shortcuts help"
@@ -2036,9 +2036,8 @@ msgid "Customize"
 msgstr "Personnaliser"
 
 #: classes/pref/prefs.php:563
-#, fuzzy
 msgid "default"
-msgstr "Utiliser la valeur par défaut"
+msgstr "défaut"
 
 #: classes/pref/prefs.php:625
 msgid "Register"
@@ -2126,9 +2125,10 @@ msgid "Incorrect password"
 msgstr "Mot de passe incorrect"
 
 #: classes/pref/prefs.php:989
-#, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr "Vous pouvez redéfinir les couleurs, les polices et la mise en page du thème actuellement sélectionné à l’aide de vos propres instructions CSS ici. <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">Ce fichier</a> peut être utilisé comme base de départ."
+msgstr ""
+"Vous pouvez ici redéfinir les couleurs, les polices et la mise en page du "
+"thème actuellement sélectionné à l’aide de vos propres instructions CSS."
 
 #: classes/pref/prefs.php:1024
 msgid "Create profile"
@@ -2316,9 +2316,8 @@ msgid "Include settings"
 msgstr "Inclure les paramètres"
 
 #: classes/pref/feeds.php:1313
-#, fuzzy
 msgid "Published OPML"
-msgstr "Publiés"
+msgstr "OPML publiés"
 
 #: classes/pref/feeds.php:1315
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
@@ -2341,9 +2340,9 @@ msgid "Published & shared articles / Generated feeds"
 msgstr "Articles publiés et partagés / Flux générés"
 
 #: classes/pref/feeds.php:1330
-#, fuzzy
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "Votre fichier OPML peut être publié et toute personne qui connaît l’adresse indiquée ci-dessous peut s’y abonner."
+msgstr ""
+"Quiconque connaît l'adresse suivante peut s’abonner à vos articles publiés :"
 
 #: classes/pref/feeds.php:1338
 msgid "Display URL"
@@ -2628,9 +2627,8 @@ msgid "Inline article content"
 msgstr "Simplifier le contenu de l’article"
 
 #: plugins/toggle_sidebar/init.php:23
-#, fuzzy
 msgid "Toggle feedlist"
-msgstr "Contracter la liste des flux"
+msgstr "Afficher/masquer la liste des flux"
 
 #: plugins/import_export/init.php:54
 msgid "Import and export"
@@ -2708,7 +2706,7 @@ msgstr "Erreur expliquée"
 
 #: js/AppBase.js:408
 msgid "Fatal error"
-msgstr ""
+msgstr "Erreur fatale"
 
 #: js/Article.js:33
 msgid "Please enter new score for selected articles:"
@@ -3123,7 +3121,7 @@ msgstr "<span onclick=\"App.explainError(3)\">Le service de mise-à-jour ne met 
 
 #: js/AppBase.js:458
 msgid "Unhandled exception"
-msgstr ""
+msgstr "Exception non gérée"
 
 #: js/Article.js:229
 msgid "Edit article Tags"
