@@ -95,7 +95,7 @@ require(["dojo/_base/kernel",
 				checkBrowserFeatures: function() {
 					let errorMsg = "";
 
-					['requestIdleCallback', 'MutationObserver'].each(function(wf) {
+					['MutationObserver'].each(function(wf) {
 						if (! (wf in window)) {
 							errorMsg = `Browser feature check failed: <code>window.${wf}</code> not found.`;
 							throw $break;
