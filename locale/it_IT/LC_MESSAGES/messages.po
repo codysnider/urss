@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-11 14:31+0300\n"
-"PO-Revision-Date: 2018-12-04 03:09+0000\n"
-"Last-Translator: Stefano D. <dedioste@gmail.com>\n"
-"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/it/>\n"
+"PO-Revision-Date: 2018-12-13 18:19+0000\n"
+"Last-Translator: Dario Di Ludovico <dario@diludovico.it>\n"
+"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"it/>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -196,7 +197,7 @@ msgstr "Problema di comunicazione con il server."
 
 #: index.php:168
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "Nuove voci nel registro degli eventi."
 
 #: index.php:171
 msgid "Updates are available from Git."
@@ -332,9 +333,8 @@ msgstr "Modalità widescreen"
 
 #: index.php:245
 #: include/functions.php:1177
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "Attiva/disattiva modalità combinata"
+msgstr "Attiva/disattiva modalità notturna"
 
 #: index.php:246
 msgid "Keyboard shortcuts help"
@@ -2033,9 +2033,8 @@ msgid "Customize"
 msgstr "Personalizza"
 
 #: classes/pref/prefs.php:563
-#, fuzzy
 msgid "default"
-msgstr "Predefinito"
+msgstr "predefinito"
 
 #: classes/pref/prefs.php:625
 msgid "Register"
@@ -2123,9 +2122,10 @@ msgid "Incorrect password"
 msgstr "Password sbagliata"
 
 #: classes/pref/prefs.php:989
-#, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr "Si possono cambiare i colori, i caratteri e la disposizione del tema correntemente selezionato attraverso le dichiarazioni CSS personalizzate. <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">Questo file</a> può essere usato come esempio."
+msgstr ""
+"Si possono cambiare i colori, i caratteri e la disposizione del tema "
+"correntemente selezionato attraverso le dichiarazioni CSS personalizzate."
 
 #: classes/pref/prefs.php:1024
 msgid "Create profile"
@@ -2313,9 +2313,8 @@ msgid "Include settings"
 msgstr "Includi le impostazioni"
 
 #: classes/pref/feeds.php:1313
-#, fuzzy
 msgid "Published OPML"
-msgstr "Pubblicati"
+msgstr "Pubblicati in OPML"
 
 #: classes/pref/feeds.php:1315
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
@@ -2338,9 +2337,10 @@ msgid "Published & shared articles / Generated feeds"
 msgstr "Articoli pubblicati e condivisi / Notiziari generati"
 
 #: classes/pref/feeds.php:1330
-#, fuzzy
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "Il tuo OPML può essere reso pubblico e può essere sottoscritto da chiunque conosca l'URL seguente."
+msgstr ""
+"Gli articoli pubblicati possono essere sottoscritti da chiunque conosca "
+"l'URL seguente:"
 
 #: classes/pref/feeds.php:1338
 msgid "Display URL"
@@ -2625,9 +2625,8 @@ msgid "Inline article content"
 msgstr "Contenuto completo dell'articolo"
 
 #: plugins/toggle_sidebar/init.php:23
-#, fuzzy
 msgid "Toggle feedlist"
-msgstr "Riduci elenco notiziari"
+msgstr "Attiva/disattiva la lista dei feed"
 
 #: plugins/import_export/init.php:54
 msgid "Import and export"
@@ -2705,7 +2704,7 @@ msgstr "Errore spiegato"
 
 #: js/AppBase.js:408
 msgid "Fatal error"
-msgstr ""
+msgstr "Errore fatale"
 
 #: js/Article.js:33
 msgid "Please enter new score for selected articles:"
@@ -3120,7 +3119,7 @@ msgstr "<span onclick=\"App.explainError(3)\">Il daemon di aggiornamento non sta
 
 #: js/AppBase.js:458
 msgid "Unhandled exception"
-msgstr ""
+msgstr "Eccezione non gestita"
 
 #: js/Article.js:229
 msgid "Edit article Tags"
