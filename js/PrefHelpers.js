@@ -103,27 +103,39 @@ define(["dojo/_base/declare"], function (declare) {
 			dialog.show();
 		},
 		customizeCSS: function() {
-			const query = "backend.php?op=pref-prefs&method=customizeCSS";
+			require(["codeflask"], function(CodeFlask) {
 
-			if (dijit.byId("cssEditDlg"))
-				dijit.byId("cssEditDlg").destroyRecursive();
+				const query = "backend.php?op=pref-prefs&method=customizeCSS";
 
-			const dialog = new dijit.Dialog({
-				id: "cssEditDlg",
-				title: __("Customize stylesheet"),
-				style: "width: 600px",
-				execute: function () {
-					Notify.progress('Saving data...', true);
+				if (dijit.byId("cssEditDlg"))
+					dijit.byId("cssEditDlg").destroyRecursive();
 
-					xhrPost("backend.php", this.attr('value'), () => {
-						window.location.reload();
-					});
+				const dialog = new dijit.Dialog({
+					id: "cssEditDlg",
+					title: __("Customize stylesheet"),
+					style: "width: 600px",
+					execute: function () {
+						Notify.progress('Saving data...', true);
 
-				},
-				href: query
+						const params = this.attr('value');
+						params.value = this._flask.getCode();
+
+						xhrPost("backend.php", params, () => {
+							window.location.reload();
+						});
+
+					},
+					href: query
+				});
+
+				dojo.connect(dialog, "onShow", function () {
+					setTimeout(() => {
+						dialog._flask = new CodeFlask('#user-css-editor', {language: 'css'});
+					}, 250);
+				});
+
+				dialog.show();
 			});
-
-			dialog.show();
 		},
 		confirmReset: function() {
 			if (confirm(__("Reset to defaults?"))) {

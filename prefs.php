@@ -59,6 +59,9 @@
 			packages: [
 				{ name: "lib", location: "../" },
 				{ name: "fox", location: "../../js" },
+			],
+			aliases: [
+				[ "codeflask", "lib/codeflask.min.js" ]
 			]
 		};
 	</script>
