@@ -169,7 +169,14 @@ define(["dojo/_base/declare"], function (declare) {
 			if (row.hasAttribute("data-content")) {
 				console.log("unpacking: " + row.id);
 
-				row.select(".content-inner")[0].innerHTML = row.getAttribute("data-content");
+				const container = row.querySelector(".content-inner");
+
+				container.innerHTML = row.getAttribute("data-content").trim();
+
+				// blank content element might screw up onclick selection and keyboard moving
+				if (container.textContent.length == 0)
+					container.innerHTML += "&nbsp;";
+
 				row.removeAttribute("data-content");
 
 				PluginHost.run(PluginHost.HOOK_ARTICLE_RENDERED_CDM, row);
