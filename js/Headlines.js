@@ -442,7 +442,7 @@ define(["dojo/_base/declare"], function (declare) {
 								</span>
 								
 								<div class="feed">
-									<a href="#" style="background-color: rgba(${hl.favicon_avg_color_rgba})" 
+									<a href="#" style="background-color: ${hl.feed_bg_color}"
 										onclick="Feeds.open({feed:${hl.feed_id}})">${hl.feed_title}</a>
 								</div>
 								
@@ -501,7 +501,7 @@ define(["dojo/_base/declare"], function (declare) {
 					</span>
 				</div>
                 <span class="feed">
-                	<a style="background : rgba(${hl.favicon_avg_color_rgba})" href="#" onclick="Feeds.open({feed:${hl.feed_id}})">${hl.feed_title}</a>
+                	<a style="background : ${hl.feed_bg_color}" href="#" onclick="Feeds.open({feed:${hl.feed_id}})">${hl.feed_title}</a>
                 </span>
 				<div title="${hl.imported}">
 				  <span class="updated">${hl.updated}</span>

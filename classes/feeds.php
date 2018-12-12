@@ -360,13 +360,17 @@ class Feeds extends Handler_Protected {
 
 				require_once "colors.php";
 
-				if ($fav_color && $fav_color != 'fail') {
-					if (!isset($rgba_cache[$feed_id])) {
-						$rgba_cache[$feed_id] = join(",", _color_unpack($fav_color)) . ",0.3";
+				if (!isset($rgba_cache[$feed_id])) {
+					if ($fav_color && $fav_color != 'fail') {
+						$rgba_cache[$feed_id] = _color_unpack($fav_color);
+					} else {
+						$rgba_cache[$feed_id] = _color_unpack($this->color_of($line['feed_title']));
 					}
-
-					$line['favicon_avg_color_rgba'] = $rgba_cache[$feed_id];
 				}
+
+				if (isset($rgba_cache[$feed_id])) {
+				    $line['feed_bg_color'] = 'rgba(' . implode(",", $rgba_cache[$feed_id]) . ',0.3)';
+                }
 
 				/* we don't need those */
 
@@ -1878,6 +1882,21 @@ class Feeds extends Handler_Protected {
 
 	}
 
+    function color_of($name) {
+        $colormap = [ "#1cd7d7","#d91111","#1212d7","#8e16e5","#7b7b7b",
+            "#39f110","#0bbea6","#ec0e0e","#1534f2","#b9e416",
+            "#479af2","#f36b14","#10c7e9","#1e8fe7","#e22727" ];
+
+        $sum = 0;
+
+        for ($i = 0; $i < strlen($name); $i++) {
+            $sum += ord($name{$i});
+        }
+
+        $sum %= count($colormap);
+
+        return $colormap[$sum];
+	}
 
 }
 
