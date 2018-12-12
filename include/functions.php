@@ -1305,10 +1305,7 @@
 
 		$data["max_feed_id"] = (int) $max_feed_id;
 		$data["num_feeds"] = (int) $num_feeds;
-
-		$data['last_article_id'] = Article::getLastArticleId();
 		$data['cdm_expanded'] = get_pref('CDM_EXPANDED');
-
 		$data["labels"] = Labels::get_all_labels($_SESSION["uid"]);
 
 		if (LOG_DESTINATION == 'sql' && $_SESSION['access_level'] >= 10) {

@@ -218,7 +218,6 @@ define(["dojo/_base/declare"], function (declare) {
 
 					if (message == "UPDATE_COUNTERS") {
 						console.log("need to refresh counters...");
-						App.setInitParam("last_article_id", -1);
 						Feeds.requestCounters(true);
 					}
 

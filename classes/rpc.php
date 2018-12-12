@@ -271,17 +271,14 @@ class RPC extends Handler_Protected {
 	}
 
 	function getAllCounters() {
-		$last_article_id = (int) clean($_REQUEST["last_article_id"]);
+		@$seq = (int) $_REQUEST['seq'];
 
-		$reply = array();
+		$reply = [
+			'counters' => Counters::getAllCounters()
+		];
 
-		if (!empty($_REQUEST['seq'])) $reply['seq'] = (int) $_REQUEST['seq'];
-
-		if ($last_article_id != Article::getLastArticleId()) {
-			$reply['counters'] = Counters::getAllCounters();
-		}
-
-		$reply['runtime-info'] = make_runtime_info();
+		if ($seq % 2 == 0)
+			$reply['runtime-info'] = make_runtime_info();
 
 		print json_encode($reply);
 	}

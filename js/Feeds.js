@@ -120,27 +120,10 @@ define(["dojo/_base/declare"], function (declare) {
 			this._search_query = "";
 			this.reloadCurrent();
 		},
-		requestCounters: function(force) {
-			const date = new Date();
-			const timestamp = Math.round(date.getTime() / 1000);
-
-			if (force || timestamp - this.counters_last_request > 5) {
-				console.log("scheduling request of counters...");
-
-				this.counters_last_request = timestamp;
-
-				let query = {op: "rpc", method: "getAllCounters", seq: App.next_seq()};
-
-				if (!force)
-					query.last_article_id = App.getInitParam("last_article_id");
-
-				xhrPost("backend.php", query, (transport) => {
-					App.handleRpcJson(transport);
-				});
-
-			} else {
-				console.log("request_counters: rate limit reached: " + (timestamp - this.counters_last_request));
-			}
+		requestCounters: function() {
+			xhrPost("backend.php", {op: "rpc", method: "getAllCounters", seq: App.next_seq()}, (transport) => {
+				App.handleRpcJson(transport);
+			});
 		},
 		reload: function() {
 			try {
