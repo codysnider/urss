@@ -508,7 +508,7 @@ define(["dojo/_base/declare"], function (declare) {
 				</div>
 				<div class="right">
 				  <i class="material-icons icon-score" title="${hl.score}" onclick="Article.setScore(${hl.id}, this)">${Article.getScorePic(hl.score)}</i>
-				  <span onclick="Feeds.open({feed:${hl.feed_id})" style="cursor : pointer" title="${hl.feed_title}">${hl.feed_icon}</span>
+				  <span onclick="Feeds.open({feed:${hl.feed_id}})" style="cursor : pointer" title="${hl.feed_title}">${hl.feed_icon}</span>
 				</div>
 			  </div>
 			`;
