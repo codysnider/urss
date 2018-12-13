@@ -84,12 +84,15 @@
 	<?php
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
 			if (method_exists($p, "get_prefs_js")) {
-				echo "try {";
-				echo JShrink\Minifier::minify($p->get_prefs_js());
-				echo "} catch (e) {
-				 	console.warn('failed to initialize plugin JS: $n');
-					console.warn(e);
-				}";
+				$script = $p->get_prefs_js();
+
+				if ($script) {
+					echo "try {
+					    $script
+					} catch (e) {
+                        console.warn('failed to initialize plugin JS: $n', e);
+                    }";
+				}
 			}
 		}
 
