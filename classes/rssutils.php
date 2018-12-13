@@ -830,7 +830,7 @@ class RSSUtils {
 								$start = microtime(true);
 								$article = $plugin->hook_article_filter_action($article, $pfaction);
 
-								Debug::log(sprintf("=== %.4f (sec)", Debug::$LOG_VERBOSE));
+								Debug::log(sprintf("=== %.4f (sec)", microtime(true) - $start), Debug::$LOG_VERBOSE);
 							} else {
 								Debug::log("??? $pfclass: plugin object not found.", Debug::$LOG_VERBOSE);
 							}
