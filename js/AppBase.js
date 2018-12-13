@@ -379,10 +379,11 @@ define(["dojo/_base/declare"], function (declare) {
 					user_css = "css/default.css?" + Date.now();
 				}
 
-				fetch(user_css).then(() => {
+				$("main").fade({duration: 0.5, afterFinish: () => {
 					link.setAttribute("href", user_css);
+					$("main").appear({duration: 0.5});
 					xhrPost("backend.php", {op: "rpc", method: "setpref", key: "USER_CSS_THEME", value: user_theme});
-				});
+				}});
 
 			}
 		},
