@@ -93,8 +93,7 @@ class Af_Readability extends Plugin {
 			print "<ul class='panel panel-scrollable list list-unstyled'>";
 			foreach ($enabled_feeds as $f) {
 				print "<li>" .
-					"<img src='images/pub_set.png'
-						style='vertical-align : middle'> <a href='#'
+					"<i class='material-icons'>rss_feed</i> <a href='#'
 						onclick='CommonDialogs.editFeed($f)'>".
 					Feeds::getFeedTitle($f) . "</a></li>";
 			}
