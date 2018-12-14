@@ -259,9 +259,13 @@ class RSSUtils {
 				global $fetch_curl_used;
 
 				if (!$fetch_curl_used) {
-					$tmp = @gzdecode($feed_data);
+					$is_gzipped = RSSUtils::is_gzipped($feed_data);
 
-					if ($tmp) $feed_data = $tmp;
+					if ($is_gzipped) {
+						$tmp = @gzdecode($feed_data);
+
+						if ($tmp) $feed_data = $tmp;
+					}
 				}
 
 				$feed_data = trim($feed_data);
@@ -433,9 +437,15 @@ class RSSUtils {
 			global $fetch_curl_used;
 
 			if (!$fetch_curl_used) {
-				$tmp = @gzdecode($feed_data);
+				$is_gzipped = RSSUtils::is_gzipped($feed_data);
 
-				if ($tmp) $feed_data = $tmp;
+				Debug::log("is_gzipped: $is_gzipped", Debug::$LOG_VERBOSE);
+
+				if ($is_gzipped) {
+					$tmp = @gzdecode($feed_data);
+
+					if ($tmp) $feed_data = $tmp;
+				}
 			}
 
 			$feed_data = trim($feed_data);
@@ -1602,6 +1612,8 @@ class RSSUtils {
 		}
 	}
 
-
+	private static function is_gzipped($feed_data) {
+		return mb_strpos($feed_data, "\x1f" . "\x8b" . "\x08", 0, "US-ASCII") === 0;
+	}
 
 }
