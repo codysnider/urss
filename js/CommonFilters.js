@@ -218,7 +218,8 @@ define(["dojo/_base/declare"], function (declare) {
 									Element.hide("prefFilterLoadingIndicator");
 
 									if (test_dlg.results == 0) {
-										$("prefFilterTestResultList").innerHTML = "<tr><td align='center'>No recent articles matching this filter have been found.</td></tr>";
+										$("prefFilterTestResultList").innerHTML = `<tr><td align='center'>
+											${__('No recent articles matching this filter have been found.')}</td></tr>`;
 										$("prefFilterProgressMsg").innerHTML = "Articles matching this filter:";
 									} else {
 										$("prefFilterProgressMsg").innerHTML = __("Found %d articles matching this filter:")

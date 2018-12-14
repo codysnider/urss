@@ -146,47 +146,15 @@ class Pref_Filters extends Handler_Protected {
 
 				$content_preview = $line["content_preview"];
 
-				$tmp = "<tr style='margin-top : 5px'>";
-
-				#$tmp .= "<td width='5%' align='center'><input dojoType=\"dijit.form.CheckBox\"
-				#	checked=\"1\" disabled=\"1\" type=\"checkbox\"></td>";
-
-				$id = $line['id'];
-				$tmp .= "<td width='5%' align='center'><img style='cursor : pointer' title='".__("Preview article")."'
-					src='images/information.png' onclick='popupOpenArticle($id)'></td><td>";
-
-				/*foreach ($filter['rules'] as $rule) {
-					$reg_exp = str_replace('/', '\/', $rule["reg_exp"]);
-
-					$line["title"] = preg_replace("/($reg_exp)/i",
-						"<span class=\"highlight\">$1</span>", $line["title"]);
-
-					$content_preview = preg_replace("/($reg_exp)/i",
-						"<span class=\"highlight\">$1</span>", $content_preview);
-				}*/
-
-				$tmp .= "<strong>" . $line["title"] . "</strong><br/>";
-				$tmp .= $line['feed_title'] . ", " . mb_substr($line["date_entered"], 0, 16);
-				$tmp .= "<div class='insensitive'>" . $content_preview . "</div>";
-				$tmp .= "</td></tr>";
+				$tmp = "<li><span class='title'>" . $line["title"] . "</span><br/>" .
+					"<span class='feed'>" . $line['feed_title'] . "</span>, <span class='date'>" . mb_substr($line["date_entered"], 0, 16) . "</span>" .
+					"<div class='preview insensitive'>" . $content_preview . "</div>" .
+					"</li>";
 
 				array_push($rv, $tmp);
 
-				/*array_push($rv, array("title" => $line["title"],
-					"content" => $content_preview,
-					"date" => $line["date_entered"],
-					"feed" => $line["feed_title"])); */
-
 			}
 		}
-
-			//$offset += $limit;
-		//}
-
-		/*if ($found == 0) {
-			print "<tr><td align='center'>" .
-				__("No recent articles matching this filter have been found.");
-		}*/
 
 		print json_encode($rv);
 	}
@@ -199,9 +167,8 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<div><img id='prefFilterLoadingIndicator' src='images/indicator_tiny.gif'>&nbsp;<span id='prefFilterProgressMsg'>Looking for articles...</span></div>";
 
-		print "<br/><div class='panel panel-scrollable'>";
-		print "<table width='100%' id='prefFilterTestResultList'>";
-		print "</table></div>";
+		print "<ul class='panel panel-scrollable list list-unstyled' id='prefFilterTestResultList'>";
+		print "</ul>";
 
 		print "<div style='text-align : center'>";
 		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('filterTestDlg').hide()\">".

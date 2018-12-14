@@ -1043,6 +1043,15 @@ body.ttrss_main ul.list-unstyled {
 body.ttrss_main .text-center {
   text-align: center;
 }
+body.ttrss_main #prefFilterTestResultList .preview {
+  margin: 8px;
+}
+body.ttrss_main #prefFilterTestResultList .title {
+  font-weight: bold;
+}
+body.ttrss_main #prefFilterTestResultList .feed {
+  color: #257aa7;
+}
 ::selection {
   background: #257aa7;
   color: #333333;
