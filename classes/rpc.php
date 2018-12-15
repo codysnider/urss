@@ -274,7 +274,8 @@ class RPC extends Handler_Protected {
 		@$seq = (int) $_REQUEST['seq'];
 
 		$reply = [
-			'counters' => Counters::getAllCounters()
+			'counters' => Counters::getAllCounters(),
+			'seq' => $seq
 		];
 
 		if ($seq % 2 == 0)
