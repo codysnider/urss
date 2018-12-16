@@ -282,6 +282,7 @@ define(["dojo/_base/declare"], function (declare) {
 			const is_cat = !!params.is_cat || false;
 			const offset = params.offset || 0;
 			const viewfeed_debug = params.viewfeed_debug;
+			const append = params.append || false;
 			const method = params.method;
 			// this is used to quickly switch between feeds, sets active but xhr is on a timeout
 			const delayed = params.delayed || false;
@@ -349,7 +350,7 @@ define(["dojo/_base/declare"], function (declare) {
 					try {
 						window.clearTimeout(this._infscroll_timeout);
 						this.setExpando(feed, is_cat, 'images/blank_icon.gif');
-						Headlines.onLoaded(transport, offset);
+						Headlines.onLoaded(transport, offset, append);
 						PluginHost.run(PluginHost.HOOK_FEED_LOADED, [feed, is_cat]);
 					} catch (e) {
 						App.Error.report(e);

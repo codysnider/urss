@@ -218,7 +218,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			console.log("loadMore, offset=", offset);
 
-			Feeds.open({feed: Feeds.getActive(), is_cat: Feeds.activeIsCat(), offset: offset});
+			Feeds.open({feed: Feeds.getActive(), is_cat: Feeds.activeIsCat(), offset: offset, append: true});
 		},
 		scrollHandler: function () {
 			try {
@@ -529,10 +529,10 @@ define(["dojo/_base/declare"], function (declare) {
 
 			return tmp.firstChild;
 		},
-		onLoaded: function (transport, offset) {
+		onLoaded: function (transport, offset, append) {
 			const reply = App.handleRpcJson(transport);
 
-			console.log("Headlines.onLoaded: offset=", offset);
+			console.log("Headlines.onLoaded: offset=", offset, "append=", append);
 
 			let is_cat = false;
 			let feed_id = false;
@@ -573,7 +573,7 @@ define(["dojo/_base/declare"], function (declare) {
 				//this.vgroup_last_feed = reply['headlines-info']['vgroup_last_feed'];
 				this.current_first_id = reply['headlines']['first_id'];
 
-				if (offset == 0) {
+				if (!append) {
 					//this.headlines = [];
 					this.vgroup_last_feed = undefined;
 
