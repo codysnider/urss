@@ -163,10 +163,30 @@ require(["dojo/_base/kernel",
 						window.setInterval(() => { Feeds.updateRandom() }, 30 * 1000);
 					}
 
+					if (App.getInitParam('check_for_updates')) {
+						window.setInterval(() => {
+							App.checkForUpdates();
+						}, 3600 * 1000);
+					}
+
 					console.log("second stage ok");
 
 					PluginHost.run(PluginHost.HOOK_INIT_COMPLETE, null);
 
+				},
+				checkForUpdates: function() {
+					console.log('checking for updates...');
+
+					xhrJson("backend.php", {op: 'rpc', method: 'checkforupdates'})
+						.then((reply) => {
+							console.log('update reply', reply);
+
+							if (reply.id) {
+								$("updates-available").show();
+							} else {
+								$("updates-available").hide();
+							}
+						});
 				},
 				updateTitle: function() {
 					let tmp = "Tiny Tiny RSS";

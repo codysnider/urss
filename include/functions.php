@@ -679,8 +679,6 @@
 				$_SESSION["user_agent"] = sha1($_SERVER['HTTP_USER_AGENT']);
 				$_SESSION["pwd_hash"] = $row["pwd_hash"];
 
-				$_SESSION["last_version_check"] = time();
-
 				initialize_user_prefs($_SESSION["uid"]);
 
 				return true;
@@ -1068,6 +1066,7 @@
 			$params[strtolower($param)] = (int) get_pref($param);
 		}
 
+		$params["check_for_updates"] = CHECK_FOR_UPDATES;
 		$params["icons_url"] = ICONS_URL;
 		$params["cookie_lifetime"] = SESSION_COOKIE_LIFETIME;
 		$params["default_view_mode"] = get_pref("_DEFAULT_VIEW_MODE");
@@ -1270,27 +1269,7 @@
 		return array($prefixes, $hotkeys);
 	}
 
-	function check_for_update() {
-		if (defined("GIT_VERSION_TIMESTAMP")) {
-			$content = @fetch_file_contents(array("url" => "http://tt-rss.org/version.json", "timeout" => 5));
-
-			if ($content) {
-				$content = json_decode($content, true);
-
-				if ($content && isset($content["changeset"])) {
-					if ((int)GIT_VERSION_TIMESTAMP < (int)$content["changeset"]["timestamp"] &&
-						GIT_VERSION_HEAD != $content["changeset"]["id"]) {
-
-						return $content["changeset"]["id"];
-					}
-				}
-			}
-		}
-
-		return "";
-	}
-
-	function make_runtime_info($disable_update_check = false) {
+	function make_runtime_info() {
 		$data = array();
 
 		$pdo = Db::pdo();
@@ -1321,14 +1300,6 @@
 			if ($row = $sth->fetch()) {
 				$data['recent_log_events'] = $row['cid'];
 			}
-		}
-
-		if (CHECK_FOR_UPDATES && !$disable_update_check && $_SESSION["last_version_check"] + 86400 + rand(-1000, 1000) < time()) {
-			$update_result = @check_for_update();
-
-			$data["update_result"] = $update_result;
-
-			$_SESSION["last_version_check"] = time();
 		}
 
 		if (file_exists(LOCK_DIRECTORY . "/update_daemon.lock")) {

@@ -324,7 +324,7 @@ class RPC extends Handler_Protected {
 
 		if ($reply['error']['code'] == 0) {
 			$reply['init-params'] = make_init_params();
-			$reply['runtime-info'] = make_runtime_info(true);
+			$reply['runtime-info'] = make_runtime_info();
 		}
 
 		print json_encode($reply);
@@ -597,4 +597,27 @@ class RPC extends Handler_Protected {
 		}
 
 	}
+
+	function checkforupdates() {
+		$rv = [];
+
+		if (CHECK_FOR_UPDATES && defined("GIT_VERSION_TIMESTAMP")) {
+			$content = @fetch_file_contents(["url" => "https://tt-rss.org/version.json"]);
+
+			if ($content) {
+				$content = json_decode($content, true);
+
+				if ($content && isset($content["changeset"])) {
+					if ((int)GIT_VERSION_TIMESTAMP < (int)$content["changeset"]["timestamp"] &&
+						GIT_VERSION_HEAD != $content["changeset"]["id"]) {
+
+						$rv = $content["changeset"];
+					}
+				}
+			}
+		}
+
+		print json_encode($rv);
+	}
+
 }

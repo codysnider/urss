@@ -262,14 +262,6 @@ define(["dojo/_base/declare"], function (declare) {
 						return;
 					}
 
-					if (k == "update_result") {
-						if (v) {
-							Element.show("updates-available");
-						} else {
-							Element.hide("updates-available");
-						}
-					}
-
 					if (k == "recent_log_events") {
 						const alert = $$(".log-alert")[0];
 
