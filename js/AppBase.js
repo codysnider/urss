@@ -209,8 +209,7 @@ define(["dojo/_base/declare"], function (declare) {
 					const seq = reply['seq'];
 
 					if (seq && this.get_seq() != seq) {
-						console.log("[handleRpcJson] sequence mismatch: " + seq +
-							" (want: " + this.get_seq() + ")");
+						console.log("[handleRpcJson] sequence mismatch: ", seq, '!=', this.get_seq());
 						return true;
 					}
 

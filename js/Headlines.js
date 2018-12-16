@@ -141,7 +141,9 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (promises.length > 0)
 				Promise.all([promises]).then(() => {
-					Feeds.requestCounters(true);
+					setTimeout(() => {
+						Feeds.requestCounters(true);
+					}, 1000);
 				});
 
 		},
