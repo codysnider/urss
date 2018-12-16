@@ -4,6 +4,7 @@ define(["dojo/_base/declare"], function (declare) {
 	Headlines = {
 		vgroup_last_feed: undefined,
 		_headlines_scroll_timeout: 0,
+		_observer_counters_timeout: 0,
 		headlines: [],
 		current_first_id: 0,
 		row_observer: new MutationObserver((mutations) => {
@@ -141,7 +142,9 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (promises.length > 0)
 				Promise.all([promises]).then(() => {
-					setTimeout(() => {
+					window.clearTimeout(this._observer_counters_timeout);
+
+					this._observer_counters_timeout = setTimeout(() => {
 						Feeds.requestCounters(true);
 					}, 1000);
 				});
