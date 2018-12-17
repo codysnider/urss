@@ -37,7 +37,7 @@ class Mailer {
 				return 0;
 		}
 
-		$headers[] = "From: $from_combined";
+		$headers = [ "From: $from_combined", "Content-Type: text/plain; charset=UTF-8" ];
 
 		return mail($to_combined, $subject, $message, implode("\r\n", array_merge($headers, $additional_headers)));
 	}
