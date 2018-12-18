@@ -539,31 +539,12 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (reply) {
 
-				if (offset == 0)
-					Article.setActive(0);
-
 				is_cat = reply['headlines']['is_cat'];
 				feed_id = reply['headlines']['id'];
 				Feeds.last_search_query = reply['headlines']['search_query'];
 
 				if (feed_id != -7 && (feed_id != Feeds.getActive() || is_cat != Feeds.activeIsCat()))
 					return;
-
-				try {
-					if (offset == 0) {
-						$("headlines-frame").scrollTop = 0;
-
-						Element.hide("floatingTitle");
-						$("floatingTitle").setAttribute("data-article-id", 0);
-						$("floatingTitle").innerHTML = "";
-					}
-				} catch (e) {
-				}
-
-				$("headlines-frame").removeClassName("cdm");
-				$("headlines-frame").removeClassName("normal");
-
-				$("headlines-frame").addClassName(App.isCombinedMode() ? "cdm" : "normal");
 
 				const headlines_count = reply['headlines-info']['count'];
 				Feeds.infscroll_disabled = parseInt(headlines_count) != 30;
@@ -574,6 +555,24 @@ define(["dojo/_base/declare"], function (declare) {
 				this.current_first_id = reply['headlines']['first_id'];
 
 				if (!append) {
+
+					$("headlines-frame").removeClassName("cdm");
+					$("headlines-frame").removeClassName("normal");
+
+					$("headlines-frame").addClassName(App.isCombinedMode() ? "cdm" : "normal");
+
+					Article.setActive(0);
+
+					try {
+						$("headlines-frame").scrollTop = 0;
+
+						Element.hide("floatingTitle");
+						$("floatingTitle").setAttribute("data-article-id", 0);
+						$("floatingTitle").innerHTML = "";
+					} catch (e) {
+						console.warn(e);
+					}
+
 					//this.headlines = [];
 					this.vgroup_last_feed = undefined;
 
