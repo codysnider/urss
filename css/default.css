@@ -1757,7 +1757,7 @@ body#sharepopup input {
 .flat #filterDlg_Matches span.filterRule {
   color: green;
 }
-.flat .filterRules span.inverse,
+.flat #filterTree .filterRules li.inverse,
 .flat #filterDlg_Matches span.filterRule.inverse {
   color: red;
 }
