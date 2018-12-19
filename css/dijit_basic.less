@@ -4,11 +4,6 @@
 		padding: 2px;
 	}
 
-	.filterRules span {
-		display: block;
-		color: green;
-	}
-
 	#filterDlg_Matches span.filterRule {
 		color: green;
 	}
@@ -69,7 +64,7 @@
 		}
 
 		.dijitTreeRowSelected {
-			.filterRules span {
+			.filterRules li {
 				color : white;
 			}
 
@@ -105,13 +100,15 @@
 		}
 
 		.filterRules {
-			display: block;
-			color: #ccc;
 			font-size: 12px;
-			margin-left: 100px;
 			line-height : normal;
-		}
+			white-space: normal;
+			margin-left : 28px;
 
+			li {
+				color : green;
+			}
+		}
 
 		.dijitTreeContainer {
 			max-width : 100%;

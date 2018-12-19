@@ -17,7 +17,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 			}
 
 			if (rules) {
-				param = dojo.doc.createElement('span');
+				param = dojo.doc.createElement('ul');
 				param.className = 'filterRules';
 				param.innerHTML = rules;
 				domConstruct.place(param, tnode.rowNode, 'next');

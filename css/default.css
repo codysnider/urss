@@ -1485,9 +1485,6 @@ body.ttrss_prefs .user-css-editor {
   height: 300px;
   width: 575px;
 }
-body.ttrss_prefs #filterTree .filterRules * {
-  white-space: normal;
-}
 body.ttrss_prefs table.prefPluginsList td label,
 body.ttrss_prefs table.prefUserList td {
   cursor: pointer;
@@ -1757,10 +1754,6 @@ body#sharepopup input {
 .flat li {
   padding: 2px;
 }
-.flat .filterRules span {
-  display: block;
-  color: green;
-}
 .flat #filterDlg_Matches span.filterRule {
   color: green;
 }
@@ -1805,7 +1798,7 @@ body#sharepopup input {
 .flat .dijitTree .dijitFolderOpened {
   display: none;
 }
-.flat .dijitTree .dijitTreeRowSelected .filterRules span {
+.flat .dijitTree .dijitTreeRowSelected .filterRules li {
   color: white;
 }
 .flat .dijitTree .dijitTreeRowSelected .dijitTreeExpando {
@@ -1832,11 +1825,13 @@ body#sharepopup input {
   float: right;
 }
 .flat .dijitTree .filterRules {
-  display: block;
-  color: #ccc;
   font-size: 12px;
-  margin-left: 100px;
   line-height: normal;
+  white-space: normal;
+  margin-left: 28px;
+}
+.flat .dijitTree .filterRules li {
+  color: green;
 }
 .flat .dijitTree .dijitTreeContainer {
   max-width: 100%;

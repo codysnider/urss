@@ -177,7 +177,7 @@ class Pref_Filters extends Handler_Protected {
 
 	}
 
-	private function getfilterrules_concise($filter_id) {
+	private function getfilterrules_list($filter_id) {
 		$sth = $this->pdo->prepare("SELECT reg_exp,
 			inverse,
 			match_on,
@@ -227,11 +227,11 @@ class Pref_Filters extends Handler_Protected {
 
 			$inverse = $line["inverse"] ? "inverse" : "";
 
-			$rv .= "<span class='$inverse'>" . T_sprintf("%s on %s in %s %s",
+			$rv .= "<li class='$inverse'>" . T_sprintf("%s on %s in %s %s",
 				htmlspecialchars($line["reg_exp"]),
 				$line["field"],
 				$where,
-				$line["inverse"] ? __("(inverse)") : "") . "</span>";
+				$line["inverse"] ? __("(inverse)") : "") . "</li>";
 		}
 
 		return $rv;
@@ -306,7 +306,7 @@ class Pref_Filters extends Handler_Protected {
 			$filter['checkbox'] = false;
 			$filter['last_triggered'] = $line["last_triggered"] ? make_local_datetime($line["last_triggered"], false) : null;
 			$filter['enabled'] = $line["enabled"];
-			$filter['rules'] = $this->getfilterrules_concise($line['id']);
+			$filter['rules'] = $this->getfilterrules_list($line['id']);
 
 			if (!$filter_search || $match_ok) {
 				array_push($folder['items'], $filter);
