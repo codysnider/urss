@@ -268,6 +268,10 @@ class Pref_Filters extends Handler_Protected {
 
 			$match_ok = false;
 			if ($filter_search) {
+				if (mb_strpos($line['title'], $filter_search) !== false) {
+					$match_ok = true;
+				}
+
 				$rules_sth = $this->pdo->prepare("SELECT reg_exp
 					FROM ttrss_filters2_rules WHERE filter_id = ?");
 				$rules_sth->execute([$line['id']]);
@@ -752,7 +756,7 @@ class Pref_Filters extends Handler_Protected {
 		print "<div style='float : right; padding-right : 4px;'>
 			<input dojoType=\"dijit.form.TextBox\" id=\"filter_search\" size=\"20\" type=\"search\"
 				value=\"$filter_search\">
-			<button dojoType=\"dijit.form.Button\" onclick=\"updateFilterList()\">".
+			<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('filterTree').reload()\">".
 				__('Search')."</button>
 			</div>";
 
