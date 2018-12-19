@@ -1486,6 +1486,9 @@ body.ttrss_prefs .user-css-editor {
   height: 300px;
   width: 575px;
 }
+body.ttrss_prefs #filterTree .filterRules * {
+  white-space: normal;
+}
 body.ttrss_prefs table.prefPluginsList td label,
 body.ttrss_prefs table.prefUserList td {
   cursor: pointer;

@@ -750,7 +750,7 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 
 			ids.each((id) => {
-				this.toggleMark(id);
+				this.togglePub(id);
 			});
 		},
 		toggleMark: function (id) {
