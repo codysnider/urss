@@ -437,6 +437,14 @@
 
 			curl_close($ch);
 
+			$is_gzipped = RSSUtils::is_gzipped($contents);
+
+			if ($is_gzipped) {
+				$tmp = @gzdecode($contents);
+
+				if ($tmp) $contents = $tmp;
+			}
+
 			return $contents;
 		} else {
 
@@ -522,6 +530,15 @@
 
 				return false;
 			}
+
+			$is_gzipped = RSSUtils::is_gzipped($data);
+
+			if ($is_gzipped) {
+				$tmp = @gzdecode($data);
+
+				if ($tmp) $data = $tmp;
+			}
+
 			return $data;
 		}
 

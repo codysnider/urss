@@ -1612,7 +1612,7 @@ class RSSUtils {
 		}
 	}
 
-	private static function is_gzipped($feed_data) {
+	static function is_gzipped($feed_data) {
 		return mb_strpos($feed_data, "\x1f" . "\x8b" . "\x08", 0, "US-ASCII") === 0;
 	}
 

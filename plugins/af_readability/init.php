@@ -148,6 +148,7 @@ class Af_Readability extends Plugin {
 	}
 
 	public function extract_content($url) {
+
 		global $fetch_effective_url;
 
 		$tmp = fetch_file_contents([
@@ -158,7 +159,7 @@ class Af_Readability extends Plugin {
 		if ($tmp && mb_strlen($tmp) < 1024 * 500) {
 			$tmpdoc = new DOMDocument("1.0", "UTF-8");
 
-			if (!$tmpdoc->loadHTML('<?xml encoding="utf-8" ?>\n' . $tmp))
+			if (!$tmpdoc->loadHTML($tmp))
 				return false;
 
 			if (strtolower($tmpdoc->encoding) != 'utf-8') {
