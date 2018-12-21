@@ -256,18 +256,6 @@ class RSSUtils {
 					FEED_FETCH_TIMEOUT,
 					0);
 
-				global $fetch_curl_used;
-
-				if (!$fetch_curl_used) {
-					$is_gzipped = RSSUtils::is_gzipped($feed_data);
-
-					if ($is_gzipped) {
-						$tmp = @gzdecode($feed_data);
-
-						if ($tmp) $feed_data = $tmp;
-					}
-				}
-
 				$feed_data = trim($feed_data);
 
 				$rss = new FeedParser($feed_data);
@@ -433,20 +421,6 @@ class RSSUtils {
 				"timeout" => $no_cache ? FEED_FETCH_NO_CACHE_TIMEOUT : FEED_FETCH_TIMEOUT,
 				"last_modified" => $force_refetch ? "" : $stored_last_modified
 			]);
-
-			global $fetch_curl_used;
-
-			if (!$fetch_curl_used) {
-				$is_gzipped = RSSUtils::is_gzipped($feed_data);
-
-				Debug::log("is_gzipped: $is_gzipped", Debug::$LOG_VERBOSE);
-
-				if ($is_gzipped) {
-					$tmp = @gzdecode($feed_data);
-
-					if ($tmp) $feed_data = $tmp;
-				}
-			}
 
 			$feed_data = trim($feed_data);
 
