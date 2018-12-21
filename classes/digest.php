@@ -141,8 +141,8 @@ class Digest
 				AND score >= 0
 			ORDER BY ttrss_feed_categories.title, ttrss_feeds.title, score DESC, date_updated DESC
 			LIMIT :limit");
-		$sth->bindParam(':user_id', intval($user_id, 10), \PDO::PARAM_INT);
-		$sth->bindParam(':limit', intval($limit, 10), \PDO::PARAM_INT);
+		$sth->bindParam(':user_id', intval($user_id, 10), PDO::PARAM_INT);
+		$sth->bindParam(':limit', intval($limit, 10), PDO::PARAM_INT);
 		$sth->execute();
 
 		$headlines_count = 0;
