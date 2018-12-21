@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: TT-RSS CZech\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-11 14:31+0300\n"
-"PO-Revision-Date: 2014-09-09 08:13+0100\n"
-"Last-Translator: Trottel <trottel09@gmail.com>\n"
-"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2018-12-20 13:54+0000\n"
+"Last-Translator: Marek Pavelka <mara.pavelka@gmail.com>\n"
+"Language-Team: Czech <https://weblate.tt-rss.org/projects/tt-rss/messages/cs/"
+">\n"
 "Language: cs_CZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -110,7 +111,9 @@ msgstr "Administrátor"
 
 #: errors.php:9
 msgid "This program requires XmlHttpRequest to function properly. Your browser doesn't seem to support it."
-msgstr "Tento program vyžaduje pro správnou funkci XmlHttpRequest. Zdá se, že váš prohlížeč je nepodporuje."
+msgstr ""
+"Tento program vyžaduje pro správnou funkci XmlHttpRequest. Zdá se, že váš "
+"prohlížeč ji nepodporuje."
 
 #: errors.php:12
 msgid "This program requires cookies to function properly. Your browser doesn't seem to support them."
@@ -157,14 +160,12 @@ msgid "SQL escaping test failed, check your database and PHP configuration"
 msgstr "Test obrany proti SQL Injection selhal, zkontrolujte konfiguraci databáze a PHP"
 
 #: errors.php:37
-#, fuzzy
 msgid "Method not found"
-msgstr "Kanál nenalezen."
+msgstr "Metoda nebyla nalezena"
 
 #: errors.php:39
-#, fuzzy
 msgid "Plugin not found"
-msgstr "Uživatel nebyl nalezen"
+msgstr "Modul nebyl nalezen"
 
 #: index.php:141
 #: index.php:156
@@ -204,7 +205,7 @@ msgstr ""
 
 #: index.php:171
 msgid "Updates are available from Git."
-msgstr ""
+msgstr "Jsou dostupné aktualizace z Git."
 
 #: index.php:185
 msgid "Show articles"
@@ -336,9 +337,8 @@ msgstr "Přepnout širokoúhlý režim"
 
 #: index.php:245
 #: include/functions.php:1177
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "Přepnout kombinovaný režim"
+msgstr "Přepnout noční režim"
 
 #: index.php:246
 msgid "Keyboard shortcuts help"
@@ -418,7 +418,9 @@ msgstr "Zpět do Tiny Tiny RSS"
 
 #: register.php:216
 msgid "Your temporary password will be sent to the specified email. Accounts, which were not logged in once, are erased automatically 24 hours after temporary password is sent."
-msgstr "Vaše dočasné heslo bude odesláno na zadaný e-mail. Účet, do kterého se nikdo do 24 hodin od odeslání dočasného hesla nepřihlásí, bude smazán."
+msgstr ""
+"Vaše dočasné heslo bude odesláno na zadaný e-mail. Účty, do kterých se nikdo "
+"do 24 hodin od odeslání dočasného hesla nepřihlásí, jsou automaticky smazány."
 
 #: register.php:222
 msgid "Desired login:"
@@ -444,7 +446,7 @@ msgstr "Odeslat registraci"
 
 #: register.php:251
 msgid "Your registration information is incomplete."
-msgstr "Vaše registrační údaje nejsou úplné."
+msgstr "Vaše registrační údaje jsou neúplné."
 
 #: register.php:266
 msgid "Sorry, this username is already taken."
@@ -480,7 +482,7 @@ msgstr "Všechny kanály"
 #: classes/feeds.php:1386
 #: classes/pref/feeds.php:233
 msgid "Uncategorized"
-msgstr "Bez zařazení"
+msgstr "Bez kategorie"
 
 #: include/feedbrowser.php:79
 #, php-format
@@ -497,7 +499,7 @@ msgstr "Nenalezeny žádné kanály."
 #: include/functions.php:928
 #, php-format
 msgid "%d min"
-msgstr ""
+msgstr "%d min"
 
 #: include/functions.php:1119
 msgid "Navigation"
