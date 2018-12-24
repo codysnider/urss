@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: TT-RSS CZech\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-11 14:31+0300\n"
-"PO-Revision-Date: 2018-12-20 13:54+0000\n"
+"PO-Revision-Date: 2018-12-23 18:12+0000\n"
 "Last-Translator: Marek Pavelka <mara.pavelka@gmail.com>\n"
 "Language-Team: Czech <https://weblate.tt-rss.org/projects/tt-rss/messages/cs/"
 ">\n"
@@ -58,15 +58,13 @@ msgstr "Zakázat aktualizace"
 
 #: backend.php:84
 #: backend.php:94
-#, fuzzy
 msgid "15 minutes"
-msgstr "Každých 15 minut"
+msgstr "15 minut"
 
 #: backend.php:85
 #: backend.php:95
-#, fuzzy
 msgid "30 minutes"
-msgstr "Každých 30 minut"
+msgstr "30 minut"
 
 #: backend.php:86
 #: backend.php:96
@@ -75,15 +73,13 @@ msgstr "Každou hodinu"
 
 #: backend.php:87
 #: backend.php:97
-#, fuzzy
 msgid "4 hours"
-msgstr "Každé 4 hodiny"
+msgstr "4 hodiny"
 
 #: backend.php:88
 #: backend.php:98
-#, fuzzy
 msgid "12 hours"
-msgstr "Každých 12 hodin"
+msgstr "12 hodin"
 
 #: backend.php:89
 #: backend.php:99
@@ -201,7 +197,7 @@ msgstr "Chyba při komunikaci se serverem."
 
 #: index.php:168
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "Poslední záznamy nalezené v protokolu událostí."
 
 #: index.php:171
 msgid "Updates are available from Git."
@@ -667,16 +663,15 @@ msgstr "Obrácené pořadí nadpisů"
 
 #: include/functions.php:1159
 msgid "Toggle headline grouping"
-msgstr ""
+msgstr "Přepnout seskupování nadpisů"
 
 #: include/functions.php:1160
 msgid "Debug feed update"
 msgstr "Ladit aktualizaci kanálů"
 
 #: include/functions.php:1161
-#, fuzzy
 msgid "Debug viewfeed()"
-msgstr "Ladit aktualizaci kanálů"
+msgstr "Ladit viewfeed()"
 
 #: include/functions.php:1162
 #: js/FeedTree.js:111
@@ -712,7 +707,7 @@ msgstr "Nové"
 #: js/tt-rss.js:408
 #: js/tt-rss.js:487
 msgid "Tag cloud"
-msgstr "Seznam značek"
+msgstr "Shluk značek"
 
 #: include/functions.php:1173
 msgid "Other"
@@ -738,36 +733,37 @@ msgstr "Zobrazit dialogové okno nápovědy"
 
 #: include/functions.php:2462
 msgid "There is no error, the file uploaded with success"
-msgstr ""
+msgstr "Nedošlo k žádné chybě, soubor byl úspěšně nahrán"
 
 #: include/functions.php:2463
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
-msgstr ""
+msgstr "Nahrávaný soubor překračuje direktivu upload_max_filesize v php.ini"
 
 #: include/functions.php:2464
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
+"Nahrávaný soubor překračuje direktivu MAX_FILE_SIZE, která byla zadána ve "
+"formuláři HTML"
 
 #: include/functions.php:2465
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Nahrávaný soubor byl nahrán pouze částečně"
 
 #: include/functions.php:2466
-#, fuzzy
 msgid "No file was uploaded"
-msgstr "Nebyl nahrán žádný soubor."
+msgstr "Nebyl nahrán žádný soubor"
 
 #: include/functions.php:2467
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "Chybí dočasná složka"
 
 #: include/functions.php:2468
 msgid "Failed to write file to disk."
-msgstr ""
+msgstr "Nepodařilo se zapsat soubor na disk."
 
 #: include/functions.php:2469
 msgid "A PHP extension stopped the file upload."
-msgstr ""
+msgstr "Rozšíření PHP zastavilo nahrávání souboru."
 
 #: include/login_form.php:84
 #: classes/handler/public.php:673
@@ -797,7 +793,7 @@ msgstr "Výchozí profil"
 
 #: include/login_form.php:119
 msgid "Use less traffic"
-msgstr "Generovat méně provozu"
+msgstr "Používat méně provozu"
 
 #: include/login_form.php:123
 msgid "Does not display images in articles, reduces automatic refreshes."
@@ -817,9 +813,8 @@ msgid "Session failed to validate (schema version changed)"
 msgstr "Nepodařilo se ověřit relaci (změnila se verze schématu)"
 
 #: include/sessions.php:53
-#, fuzzy
 msgid "Session failed to validate (UA changed)."
-msgstr "Nepodařilo se ověřit relaci (změnilo se heslo)"
+msgstr "Nepodařilo se ověřit relaci (změnilo se UA)."
 
 #: include/sessions.php:67
 msgid "Session failed to validate (password changed)"
@@ -875,18 +870,19 @@ msgid "Update daemon is taking too long to perform a feed update. This could ind
 msgstr "Démonu aktualizací trvá příliš dlouho provedení aktualizace kanálu. To může znamenat problém, jako je zhroucení nebo zablokování. Zkontrolujte proces typu démon nebo kontaktujte vlastníka instance."
 
 #: classes/dlg.php:168
-#, fuzzy, php-format
+#, php-format
 msgid "%s can be accessed via the following secret URL:"
-msgstr "Můžete sdílet tento článek pomocí následující jedinečné URL:"
+msgstr "K %s lze přistupovat pomocí následující tajné URL:"
 
 #: classes/dlg.php:189
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
 msgstr ""
+"Používáte výchozí heslo tt-rss. Změňte ho v Předvolbách (Osobní údaje / "
+"Ověření)."
 
 #: classes/dlg.php:193
-#, fuzzy
 msgid "Open Preferences"
-msgstr "Předvolby"
+msgstr "Otevřít Předvolby"
 
 #: classes/article.php:26
 msgid "Article not found."
@@ -1021,7 +1017,7 @@ msgstr "Nesprávné uživatelské jméno nebo heslo"
 #: classes/handler/public.php:790
 #, php-format
 msgid "Already subscribed to <b>%s</b>."
-msgstr "Již odebíráte <b>%s</b>."
+msgstr "Již přihlášen k odběru <b>%s</b>."
 
 #: classes/handler/public.php:793
 #, php-format
@@ -1053,7 +1049,7 @@ msgstr "Přihlásit se k odběru vybraného kanálu"
 
 #: classes/handler/public.php:851
 msgid "Edit subscription options"
-msgstr "Upravit volby odebírání"
+msgstr "Upravit volby odběru"
 
 #: classes/handler/public.php:889
 msgid "Password recovery"
@@ -1172,9 +1168,8 @@ msgstr "Chyba při zpracování dokumentu."
 #: classes/feeds.php:99
 #: classes/feeds.php:100
 #: classes/pref/feeds.php:1337
-#, fuzzy
 msgid "Show as feed"
-msgstr "Tento kanál"
+msgstr "Zobrazit jako kanál"
 
 #: classes/feeds.php:41
 #, php-format
@@ -1182,9 +1177,8 @@ msgid "Last updated: %s"
 msgstr "Naposledy aktualizováno: %s"
 
 #: classes/feeds.php:60
-#, fuzzy
 msgid "Select..."
-msgstr "Vybrat"
+msgstr "Vybrat..."
 
 #: classes/feeds.php:62
 #: classes/pref/users.php:358
@@ -1234,7 +1228,7 @@ msgstr "Nastavit hodnocení"
 
 #: classes/feeds.php:79
 msgid "Move back"
-msgstr "Zpět"
+msgstr "Přesunout zpět"
 
 #: classes/feeds.php:80
 #: classes/pref/filters.php:401
@@ -1296,7 +1290,10 @@ msgstr "Nenalezeny žádné články označené hvězdičkou k zobrazení."
 
 #: classes/feeds.php:397
 msgid "No articles found to display. You can assign articles to labels manually from article header context menu (applies to all selected articles) or use a filter."
-msgstr "Nenalezeny žádné články k zobrazení. Můžete přiřadit články ke štítkům ručně z kontextové nabídky v hlavičce článku (použije se pro všechny vybrané články) nebo použít filtr."
+msgstr ""
+"Nenalezeny žádné články k zobrazení. Můžete přiřadit články ke štítkům ručně "
+"z místní nabídky v záhlaví článku (použije se pro všechny vybrané články) "
+"nebo použít filtr."
 
 #: classes/feeds.php:399
 msgid "No articles found to display."
@@ -1408,11 +1405,11 @@ msgstr "Hledat"
 #: classes/feeds.php:770
 #, php-format
 msgid "in %s"
-msgstr ""
+msgstr "v %s"
 
 #: classes/feeds.php:775
 msgid "Used for word stemming"
-msgstr ""
+msgstr "Použito pro rozklad slov"
 
 #: classes/feeds.php:784
 msgid "Search syntax"
@@ -1446,12 +1443,11 @@ msgstr "Výsledky hledání: %s"
 #: classes/pref/users.php:6
 #: classes/pref/system.php:8
 msgid "Your access level is insufficient to open this tab."
-msgstr "Nemáte dostatečnou úroveň přístupu pro otevření této záložky."
+msgstr "Nemáte dostatečnou úroveň přístupu pro otevření této karty."
 
 #: classes/pref/users.php:26
-#, fuzzy
 msgid "Edit user"
-msgstr "Upravit pravidlo"
+msgstr "Upravit uživatele"
 
 #: classes/pref/users.php:64
 msgid "Access level: "
@@ -1465,7 +1461,7 @@ msgstr "Volby"
 
 #: classes/pref/users.php:96
 msgid "User details"
-msgstr "Podrobnosti uživatele"
+msgstr "Podrobnosti o uživateli"
 
 #: classes/pref/users.php:136
 #: classes/pref/users.php:406
@@ -1481,9 +1477,8 @@ msgid "Subscribed feeds count"
 msgstr "Počet odebíraných kanálů"
 
 #: classes/pref/users.php:146
-#, fuzzy
 msgid "Stored articles"
-msgstr "Články označené hvězdičkou"
+msgstr "Uložené články"
 
 #: classes/pref/users.php:150
 #: classes/pref/users.php:405
@@ -1492,32 +1487,32 @@ msgstr "Odebírané kanály"
 
 #: classes/pref/users.php:176
 msgid "User not found"
-msgstr "Uživatel nebyl nalezen"
+msgstr "Uživatel nenalezen"
 
 #: classes/pref/users.php:247
-#, fuzzy, php-format
+#, php-format
 msgid "Added user %s with password %s"
-msgstr "Přidán uživatel <b>%s</b> s heslem <b>%s</b>"
+msgstr "Přidán uživatel %s s heslem %s"
 
 #: classes/pref/users.php:254
-#, fuzzy, php-format
+#, php-format
 msgid "Could not create user %s"
-msgstr "Nelze vytvořit uživatele <b>%s</b>"
+msgstr "Nelze vytvořit uživatele %s"
 
 #: classes/pref/users.php:258
-#, fuzzy, php-format
+#, php-format
 msgid "User %s already exists."
-msgstr "Uživatel <b>%s</b> již existuje."
+msgstr "Uživatel %s již existuje."
 
 #: classes/pref/users.php:286
-#, fuzzy, php-format
+#, php-format
 msgid "Changed password of user %s to %s"
-msgstr "Změněno heslo uživatele <b>%s</b> na <b>%s</b>"
+msgstr "Změněno heslo uživatele %s na %s"
 
 #: classes/pref/users.php:288
-#, fuzzy, php-format
+#, php-format
 msgid "Sending new password of user %s to %s"
-msgstr "Odesílání nového hesla uživatele <b>%s</b> na <b>%s</b>"
+msgstr "Odesílání nového hesla uživatele %s na %s"
 
 #: classes/pref/users.php:311
 msgid "[tt-rss] Password change notification"
@@ -1564,11 +1559,11 @@ msgstr "Nejsou definováni žádní uživatelé."
 
 #: classes/pref/users.php:442
 msgid "No matching users found."
-msgstr "Nebyli nalezeni žádní odpovídající uživatelé."
+msgstr "Nenalezeni žádní odpovídající uživatelé."
 
 #: classes/pref/system.php:30
 msgid "Event Log"
-msgstr ""
+msgstr "Protokol událostí"
 
 #: classes/pref/system.php:41
 msgid "Refresh"
@@ -1596,9 +1591,8 @@ msgid "Date"
 msgstr "Datum"
 
 #: classes/pref/filters.php:155
-#, fuzzy
 msgid "Preview article"
-msgstr "Nové články"
+msgstr "Náhled článku"
 
 #: classes/pref/filters.php:267
 #: classes/pref/filters.php:574
@@ -1671,7 +1665,7 @@ msgstr "Vytvořit"
 
 #: classes/pref/filters.php:988
 msgid "Regular expression, without outer delimiters (i.e. slashes)"
-msgstr ""
+msgstr "Regulární výraz, bez vnějších oddělovačů (tj. lomítek)"
 
 #: classes/pref/filters.php:994
 msgid "Inverse regular expression matching"
@@ -1704,9 +1698,8 @@ msgid "Perform Action"
 msgstr "Provést akci"
 
 #: classes/pref/filters.php:1094
-#, fuzzy
 msgid "No actions available"
-msgstr "Je dostupná nová verze!"
+msgstr "Nejsou dostupné žádné akce"
 
 #: classes/pref/filters.php:1113
 msgid "Save action"
@@ -1730,9 +1723,8 @@ msgstr[1] "%s (%d pravidla)"
 msgstr[2] "%s (%d pravidel)"
 
 #: classes/pref/filters.php:1156
-#, fuzzy
 msgid "matches any rule"
-msgstr "Odpovídá jakémukoliv pravidlu"
+msgstr "odpovídá jakémukoliv pravidlu"
 
 #: classes/pref/filters.php:1159
 #, php-format
@@ -1753,7 +1745,7 @@ msgstr "Rozhraní"
 
 #: classes/pref/prefs.php:20
 msgid "Advanced"
-msgstr "Pokročilé"
+msgstr "Rozšířené"
 
 #: classes/pref/prefs.php:21
 msgid "Digest"
@@ -1769,7 +1761,9 @@ msgstr "Zakázané značky"
 
 #: classes/pref/prefs.php:26
 msgid "When auto-detecting tags in articles these tags will not be applied (comma-separated list)."
-msgstr "Při automatické detekci značek v článcích nebudou použity tyto značky (seznam oddělený čárkami)."
+msgstr ""
+"Při automatickém rozpoznávání značek v článcích nebudou použity tyto značky ("
+"seznam oddělený čárkami)."
 
 #: classes/pref/prefs.php:27
 msgid "Automatically mark articles as read"
@@ -1789,7 +1783,9 @@ msgstr "Kombinované zobrazení kanálu"
 
 #: classes/pref/prefs.php:29
 msgid "Display expanded list of feed articles, instead of separate displays for headlines and article content"
-msgstr "Zobrazit rozbalený seznam článků kanálu namísto odděleného zobrazení nadpisů a obsahů článku"
+msgstr ""
+"Zobrazit rozbalený seznam článků kanálu namísto odděleného zobrazení pro "
+"nadpisy a obsah článku"
 
 #: classes/pref/prefs.php:30
 msgid "Confirm marking feed as read"
@@ -1901,16 +1897,15 @@ msgstr "Použít pro seřazení nadpisů datum zadané kanálem namísto data m�
 
 #: classes/pref/prefs.php:50
 msgid "Login with an SSL certificate"
-msgstr "Přihlásit s certifikátem SSL"
+msgstr "Přihlásit se s certifikátem SSL"
 
 #: classes/pref/prefs.php:50
 msgid "Click to register your SSL client certificate with tt-rss"
 msgstr "Klikněte pro registraci klientského certifikátu SSL s tt-rss"
 
 #: classes/pref/prefs.php:51
-#, fuzzy
 msgid "Do not embed media in articles"
-msgstr "Nevkládat obrázky do článků"
+msgstr "Nevkládat média do článků"
 
 #: classes/pref/prefs.php:52
 msgid "Strip unsafe tags from articles"
@@ -1987,7 +1982,7 @@ msgstr "Úroveň přístupu"
 
 #: classes/pref/prefs.php:235
 msgid "Save data"
-msgstr "Uložit data"
+msgstr "Uložit údaje"
 
 #: classes/pref/prefs.php:283
 msgid "Changing your current password will disable OTP."
@@ -2015,7 +2010,9 @@ msgstr "Jednorázové heslo / Ověření"
 
 #: classes/pref/prefs.php:316
 msgid "One time passwords are currently enabled. Enter your current password below to disable."
-msgstr "Jednorázová hesla jsou nyní povolena. Zadejte své aktuální heslo pro zakázání."
+msgstr ""
+"Jednorázová hesla jsou nyní povolena. Níže zadejte své aktuální heslo pro "
+"zakázání."
 
 #: classes/pref/prefs.php:341
 #: classes/pref/prefs.php:392
@@ -2055,9 +2052,8 @@ msgid "Customize"
 msgstr "Přizpůsobit"
 
 #: classes/pref/prefs.php:563
-#, fuzzy
 msgid "default"
-msgstr "Výchozí"
+msgstr "výchozí"
 
 #: classes/pref/prefs.php:625
 msgid "Register"
@@ -2096,6 +2092,8 @@ msgstr "Systémové moduly"
 #: classes/pref/prefs.php:727
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr ""
+"Systémové moduly jsou povoleny v <strong>config.php</strong> pro všechny "
+"uživatele."
 
 #: classes/pref/prefs.php:732
 #: classes/pref/prefs.php:788
@@ -2145,9 +2143,10 @@ msgid "Incorrect password"
 msgstr "Nesprávné heslo"
 
 #: classes/pref/prefs.php:989
-#, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr "Zde můžete přepsat barvy, písma a rozvržení aktuálně vybraného motivu vlastním nastavením CSS. <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">Tento soubor</a> může být použit jako vodítko."
+msgstr ""
+"Zde můžete přepsat barvy, písma a rozvržení vámi aktuálně vybraného motivu "
+"vlastním nastavením CSS."
 
 #: classes/pref/prefs.php:1024
 msgid "Create profile"
@@ -2212,20 +2211,17 @@ msgid "Feed URL"
 msgstr "URL kanálu"
 
 #: classes/pref/feeds.php:570
-#, fuzzy
 msgid "Site URL:"
-msgstr "URL článku:"
+msgstr "URL stránky:"
 
 #: classes/pref/feeds.php:572
-#, fuzzy
 msgid "Site URL"
-msgstr "URL kanálu"
+msgstr "URL stránky"
 
 #: classes/pref/feeds.php:583
 #: classes/pref/feeds.php:813
-#, fuzzy
 msgid "Language:"
-msgstr "Jazyk"
+msgstr "Jazyk:"
 
 #: classes/pref/feeds.php:590
 #: classes/pref/feeds.php:822
@@ -2258,14 +2254,13 @@ msgstr "Vždy zobrazovat obrázkové přílohy"
 
 #: classes/pref/feeds.php:698
 #: classes/pref/feeds.php:889
-#, fuzzy
 msgid "Do not embed media"
-msgstr "Nevkládat obrázky"
+msgstr "Nevkládat média"
 
 #: classes/pref/feeds.php:711
 #: classes/pref/feeds.php:897
 msgid "Cache media"
-msgstr ""
+msgstr "Ukládat média do mezipaměti"
 
 #: classes/pref/feeds.php:723
 #: classes/pref/feeds.php:903
@@ -2279,9 +2274,8 @@ msgstr "Ikona"
 #: classes/pref/feeds.php:741
 #: classes/pref/feeds.php:1286
 #: plugins/import_export/init.php:72
-#, fuzzy
 msgid "Choose file..."
-msgstr "Vytvořit filtr..."
+msgstr "Zvolte soubor..."
 
 #: classes/pref/feeds.php:748
 msgid "Replace"
@@ -2329,9 +2323,8 @@ msgid "Only main settings profile can be migrated using OPML."
 msgstr "Pomocí OPML může být migrován pouze profil hlavního nastavení."
 
 #: classes/pref/feeds.php:1292
-#, fuzzy
 msgid "Import OPML"
-msgstr "Importovat mé OPML"
+msgstr "Importovat OPML"
 
 #: classes/pref/feeds.php:1302
 msgid "Export OPML"
@@ -2342,9 +2335,8 @@ msgid "Include settings"
 msgstr "Zahrnout nastavení"
 
 #: classes/pref/feeds.php:1313
-#, fuzzy
 msgid "Published OPML"
-msgstr "Publikováno"
+msgstr "Publikované OPML"
 
 #: classes/pref/feeds.php:1315
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
@@ -2352,7 +2344,9 @@ msgstr "Vaše OPML může být publikováno veřejně a odebíráno kýmkoliv, k
 
 #: classes/pref/feeds.php:1317
 msgid "Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds."
-msgstr "Publikované OPML neobsahují vaše nastavení Tiny Tiny RSS, kanály vyžadující ověření nebo skryté kanály před oblíbenými kanály."
+msgstr ""
+"Publikované OPML neobsahuje vaše nastavení Tiny Tiny RSS, kanály vyžadující "
+"ověření nebo skryté kanály před oblíbenými kanály."
 
 #: classes/pref/feeds.php:1319
 msgid "Public OPML URL"
@@ -2360,16 +2354,16 @@ msgstr "Veřejná URL OPML"
 
 #: classes/pref/feeds.php:1320
 msgid "Display published OPML URL"
-msgstr "Zobrazit URL publikovaných OPML"
+msgstr "Zobrazit URL publikovaného OPML"
 
 #: classes/pref/feeds.php:1328
 msgid "Published & shared articles / Generated feeds"
 msgstr "Publikované a sdílené články / Generované kanály"
 
 #: classes/pref/feeds.php:1330
-#, fuzzy
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "Vaše OPML může být publikováno veřejně a odebíráno kýmkoliv, kdo zná následující URL."
+msgstr ""
+"Publikované články mohou být odebírány kýmkoliv, kdo zná následující URL:"
 
 #: classes/pref/feeds.php:1338
 msgid "Display URL"
@@ -2429,72 +2423,70 @@ msgstr "Použijte tento záložkový aplet pro publikování libovolných strán
 #: plugins/af_psql_trgm/init.php:29
 #, php-format
 msgid "Data saved (%s, %d)"
-msgstr ""
+msgstr "Data uložena (%s, %d)"
 
 #: plugins/af_psql_trgm/init.php:120
-#, fuzzy
 msgid "Show related articles"
-msgstr "Sdílené články"
+msgstr "Zobrazit související články"
 
 #: plugins/af_psql_trgm/init.php:127
 #: plugins/af_psql_trgm/init.php:229
-#, fuzzy
 msgid "Mark similar articles as read"
-msgstr "Označit všechny články jako přečtené?"
+msgstr "Označit podobné články jako přečtené"
 
 #: plugins/af_psql_trgm/init.php:166
 msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
 msgstr ""
+"Rozšíření trigramu PostgreSQL vrací řetězcovou podobnost jako číslo s "
+"plovoucí desetinnou čárkou (0-1). Nastavení příliš nízké hodnoty může "
+"způsobit falešně pozitivní výsledky, nula kontrolu zakáže."
 
 #: plugins/af_psql_trgm/init.php:169
-#, fuzzy
 msgid "Global settings"
-msgstr "Zahrnout nastavení"
+msgstr "Globální nastavení"
 
 #: plugins/af_psql_trgm/init.php:173
 msgid "Minimum similarity:"
-msgstr ""
+msgstr "Minimální podobnost:"
 
 #: plugins/af_psql_trgm/init.php:178
 msgid "Minimum title length:"
-msgstr ""
+msgstr "Minimální délka názvu:"
 
 #: plugins/af_psql_trgm/init.php:183
-#, fuzzy
 msgid "Enable for all feeds:"
-msgstr "Povolit kategorie kanálů"
+msgstr "Povolit pro všechny kanály:"
 
 #: plugins/af_psql_trgm/init.php:200
 #: plugins/af_readability/init.php:91
 msgid "Currently enabled for (click to edit):"
-msgstr ""
+msgstr "Aktuálně povoleno pro (klikněte pro úpravu):"
 
 #: plugins/af_psql_trgm/init.php:218
 msgid "Similarity (pg_trgm)"
-msgstr ""
+msgstr "Podobnost (pg_trgm)"
 
 #: plugins/af_redditimgur/init.php:31
 msgid "Reddit content settings (af_redditimgur)"
-msgstr ""
+msgstr "Nastavení obsahu Redditu (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:61
 msgid "Extract missing content using Readability"
-msgstr ""
+msgstr "Extrahovat chybějící obsah pomocí Readability"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
-msgstr ""
+msgstr "Povolit dodatečnou kontrolu duplicit"
 
 #: plugins/af_redditimgur/init.php:80
 #: plugins/af_zz_imgproxy/init.php:253
-#, fuzzy
 msgid "Configuration saved"
-msgstr "Konfigurace uložena."
+msgstr "Konfigurace uložena"
 
 #: plugins/nsfw/init.php:30
 #: plugins/nsfw/init.php:42
 msgid "Not work safe (click to toggle)"
-msgstr "Není bezpečné pro práci (kliknutím přepnout)"
+msgstr "Neotvírat v práci (kliknutím přepnout)"
 
 #: plugins/nsfw/init.php:53
 msgid "NSFW Plugin"
@@ -2502,7 +2494,7 @@ msgstr "Modul Neotvírat v práci"
 
 #: plugins/nsfw/init.php:80
 msgid "Tags to consider NSFW (comma-separated)"
-msgstr "Značky považované za neotvírat v práci (oddělené čárkami)"
+msgstr "Značky považované za Neotvírat v práci (oddělené čárkami)"
 
 #: plugins/nsfw/init.php:101
 msgid "Configuration saved."
@@ -2519,10 +2511,15 @@ msgstr "Nyní jsou podporovány následující komiksy:"
 #: plugins/af_comics/init.php:70
 msgid "To subscribe to GoComics use the comic's regular web page as the feed URL (e.g. for the <em>Garfield</em> comic use <code>http://www.gocomics.com/garfield</code>)."
 msgstr ""
+"Pro přihlášení k odběru GoComics použijte jako URL kanálu normální webovou "
+"stránku komiksu  (např. pro komiks <em>Garfield</em> použijte "
+"<code>http://www.gocomics.com/garfield</code>)."
 
 #: plugins/af_comics/init.php:72
 msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
 msgstr ""
+"Všechny aktualizované filtry přetáhněte do <code>filters.local</code> v "
+"adresáři modulu."
 
 #: plugins/note/init.php:26
 #: plugins/note/note.js:10
@@ -2543,7 +2540,7 @@ msgstr "Sdílet pomocí URL"
 
 #: plugins/share/init.php:105
 msgid "You can share this article by the following unique URL:"
-msgstr "Můžete sdílet tento článek pomocí následující jedinečné URL:"
+msgstr "Tento článek můžete sdílet pomocí následující jedinečné URL:"
 
 #: plugins/share/init.php:127
 msgid "Unshare article"
@@ -2575,7 +2572,7 @@ msgstr "Více článků"
 
 #: plugins/mail/init.php:146
 msgid "To:"
-msgstr "Do:"
+msgstr "Komu:"
 
 #: plugins/mail/init.php:161
 msgid "Subject:"
@@ -2604,21 +2601,19 @@ msgstr "Měli byste být schopni upravit zprávu před odesláním ve vašem po�
 
 #: plugins/mailto/init.php:85
 msgid "Close this dialog"
-msgstr "Zavřít tento dialog"
+msgstr "Zavřít toto dialogové okno"
 
 #: plugins/af_zz_imgproxy/init.php:209
 msgid "Image proxy settings (af_zz_imgproxy)"
-msgstr ""
+msgstr "Nastavení proxy obrázků (af_zz_imgproxy)"
 
 #: plugins/af_zz_imgproxy/init.php:233
-#, fuzzy
 msgid "Enable proxy for all remote images."
-msgstr "Povolit kategorie kanálů"
+msgstr "Povolit proxy pro všechny vzdálené obrázky."
 
 #: plugins/af_zz_imgproxy/init.php:237
-#, fuzzy
 msgid "Don't cache files locally."
-msgstr "Ukládat obrázky do mezipaměti místně"
+msgstr "Neukládat soubory do mezipaměti místně."
 
 #: plugins/auth_internal/init.php:67
 msgid "Please enter your one time password:"
@@ -2638,35 +2633,32 @@ msgstr "Zavřít článek"
 
 #: plugins/af_readability/init.php:25
 msgid "Data saved."
-msgstr ""
+msgstr "Data uložena."
 
 #: plugins/af_readability/init.php:41
-#, fuzzy
 msgid "Inline content"
-msgstr "Upravit poznámku článku"
+msgstr "Vložený obsah"
 
 #: plugins/af_readability/init.php:48
 msgid "Readability settings (af_readability)"
-msgstr ""
+msgstr "Nastavení Readability (af_readability)"
 
 #: plugins/af_readability/init.php:79
 msgid "Use Readability for pages shared via bookmarklet."
 msgstr ""
+"Použít Readability pro stránky sdílené prostřednictvím záložkového apletu."
 
 #: plugins/af_readability/init.php:108
-#, fuzzy
 msgid "Readability"
-msgstr "Zkontrolovat dostupnost"
+msgstr "Readability"
 
 #: plugins/af_readability/init.php:119
-#, fuzzy
 msgid "Inline article content"
-msgstr "Upravit poznámku článku"
+msgstr "Vložený obsah článku"
 
 #: plugins/toggle_sidebar/init.php:23
-#, fuzzy
 msgid "Toggle feedlist"
-msgstr "Sbalit seznam kanálů"
+msgstr "Přepnout seznam kanálů"
 
 #: plugins/import_export/init.php:54
 msgid "Import and export"
@@ -2729,9 +2721,9 @@ msgid "Prepare data"
 msgstr "Připravit data"
 
 #: plugins/import_export/init.php:460
-#, fuzzy, php-format
+#, php-format
 msgid "Upload failed with error code %d (%s)"
-msgstr "Nahrávání selhalo s kódem chyby %d"
+msgstr "Nahrávání selhalo s kódem chyby %d (%s)"
 
 #: plugins/import_export/init.php:484
 msgid "No file uploaded."
@@ -2747,7 +2739,7 @@ msgstr "Vysvětlení chyby"
 
 #: js/AppBase.js:408
 msgid "Fatal error"
-msgstr ""
+msgstr "Závažná chyba"
 
 #: js/Article.js:33
 msgid "Please enter new score for selected articles:"
@@ -2764,9 +2756,8 @@ msgstr "Zadejte nové hodnocení pro vybrané články:"
 #: js/Headlines.js:1066
 #: plugins/mail/mail.js:7
 #: plugins/mailto/init.js:7
-#, fuzzy
 msgid "No articles selected."
-msgstr "Není vybrán žádný článek."
+msgstr "Nejsou vybrány žádné články."
 
 #: js/Article.js:67
 msgid "Please enter new score for this article:"
@@ -2842,9 +2833,8 @@ msgstr "Odebrat vybrané kanály?"
 #: js/PrefFeedTree.js:230
 #: js/PrefFeedTree.js:246
 #: js/PrefFeedTree.js:398
-#, fuzzy
 msgid "No feeds selected."
-msgstr "Není vybrán žádný kanál."
+msgstr "Nejsou vybrány žádné kanály."
 
 #: js/CommonDialogs.js:234
 msgid "More Feeds"
@@ -2879,9 +2869,8 @@ msgid "Generate new syndication address for this feed?"
 msgstr "Generovat novou adresu syndikace pro tento kanál?"
 
 #: js/Feeds.js:230
-#, fuzzy
 msgid "Your password is at default value"
-msgstr "Vaše heslo má výchozí hodnotu, změňte ho."
+msgstr "Vaše heslo má výchozí hodnotu"
 
 #: js/Headlines.js:849
 #, perl-format
@@ -3001,7 +2990,6 @@ msgid "Remove selected categories?"
 msgstr "Odebrat vybrané kategorie?"
 
 #: js/PrefFeedTree.js:209
-#, fuzzy
 msgid "No categories selected."
 msgstr "Nejsou vybrány žádné kategorie."
 
@@ -3014,9 +3002,8 @@ msgid "Save changes to selected feeds?"
 msgstr "Uložit změny ve vybraných kanálech?"
 
 #: js/PrefFeedTree.js:315
-#, fuzzy
 msgid "Rename category to:"
-msgstr "Odebrat kategorii"
+msgstr "Přejmenovat kategorii na:"
 
 #: js/PrefFeedTree.js:327
 msgid "Category title:"
@@ -3037,7 +3024,6 @@ msgstr "Inverzní"
 #: js/PrefFilterTree.js:107
 #: js/PrefFilterTree.js:123
 #: js/PrefFilterTree.js:236
-#, fuzzy
 msgid "No filters selected."
 msgstr "Nejsou vybrány žádné filtry."
 
@@ -3066,9 +3052,8 @@ msgid "This will invalidate all previously generated feed URLs. Continue?"
 msgstr "Zneplatní všechny dříve vygenerované URL kanálů. Pokračovat?"
 
 #: js/PrefHelpers.js:21
-#, fuzzy
 msgid "Clear event log?"
-msgstr "Vymazat protokol"
+msgstr "Vymazat protokol událostí?"
 
 #: js/PrefHelpers.js:40
 msgid "Settings Profiles"
@@ -3079,7 +3064,6 @@ msgid "Remove selected profiles? Active and default profiles will not be removed
 msgstr "Odebrat vybrané profily? Aktivní a výchozí profily nebudou odebrány."
 
 #: js/PrefHelpers.js:64
-#, fuzzy
 msgid "No profiles selected."
 msgstr "Nejsou vybrány žádné profily."
 
@@ -3116,9 +3100,8 @@ msgid "Click to close"
 msgstr "Klikněte pro zavření"
 
 #: plugins/af_psql_trgm/init.js:10
-#, fuzzy
 msgid "Related articles"
-msgstr "Smazat článek"
+msgstr "Související články"
 
 #: plugins/share/share_prefs.js:3
 msgid "This will invalidate all previously shared article URLs. Continue?"
@@ -3172,14 +3155,17 @@ msgstr "Nejdříve zvolte soubor."
 #: js/AppBase.js:263
 msgid "<span onclick=\"App.explainError(1)\">Update daemon is not running.</span>"
 msgstr ""
+"<span onclick=\"App.explainError(1)\">Démon aktualizací není spuštěn.</span>"
 
 #: js/AppBase.js:284
 msgid "<span onclick=\"App.explainError(3)\">Update daemon is not updating feeds.</span>"
 msgstr ""
+"<span onclick=\"App.explainError(3)\">Démon aktualizací neaktualizuje "
+"kanály.</span>"
 
 #: js/AppBase.js:458
 msgid "Unhandled exception"
-msgstr ""
+msgstr "Neošetřená výjimka"
 
 #: js/Article.js:229
 msgid "Edit article Tags"
@@ -3194,14 +3180,12 @@ msgid "Upload complete."
 msgstr "Nahrávání dokončeno."
 
 #: js/CommonDialogs.js:22
-#, fuzzy
 msgid "Upload failed: icon is too big."
-msgstr "Nahrávání selhalo s kódem chyby %d"
+msgstr "Nahrávání selhalo: ikona je příliš velká."
 
 #: js/CommonDialogs.js:25
-#, fuzzy
 msgid "Upload failed."
-msgstr "Nahrávání dokončeno."
+msgstr "Nahrávání selhalo."
 
 #: js/CommonDialogs.js:31
 msgid "Removing feed icon..."
@@ -3238,9 +3222,8 @@ msgstr "Pokus o změnu adresy..."
 
 #: js/CommonDialogs.js:460
 #: js/PrefHelpers.js:231
-#, fuzzy
 msgid "Could not change feed URL."
-msgstr "Nelze vytvořit uživatele <b>%s</b>"
+msgstr "Nelze změnit URL kanálu."
 
 #: js/CommonFilters.js:133
 msgid "Edit rule"
@@ -3252,25 +3235,23 @@ msgstr "Upravit akci"
 
 #: js/CommonFilters.js:194
 msgid "Looking for articles (%d processed, %f found)..."
-msgstr ""
+msgstr "Hledání článků (%d zpracováno, %f nalezeno)..."
 
 #: js/CommonFilters.js:224
-#, fuzzy
 msgid "Found %d articles matching this filter:"
-msgstr "Články odpovídající tomuto filtru:"
+msgstr "Nalezeno %d článků odpovídajících tomuto filtru:"
 
 #: js/CommonFilters.js:235
 msgid "Error while trying to get filter test results."
-msgstr ""
+msgstr "Chyba při pokusu o získání výsledků testu filtru."
 
 #: js/CommonFilters.js:277
 msgid "Create Filter"
 msgstr "Vytvořit filtr"
 
 #: js/FeedTree.js:89
-#, fuzzy
 msgid "(Un)collapse"
-msgstr "Rozbalit nebo sbalit postranní panel"
+msgstr "Rozbalit nebo sbalit"
 
 #: js/Feeds.js:378
 msgid "Mark all articles as read?"
@@ -3281,34 +3262,28 @@ msgid "Marking all feeds as read..."
 msgstr "Označování všech kanálů jako přečtených..."
 
 #: js/Feeds.js:400
-#, fuzzy
 msgid "Mark %w in %s older than 1 day as read?"
-msgstr "Označit všechny články starší než 1 den v %s jako přečtené?"
+msgstr "Označit %w v %s starší než 1 den jako přečtené?"
 
 #: js/Feeds.js:403
-#, fuzzy
 msgid "Mark %w in %s older than 1 week as read?"
-msgstr "Označit všechny články starší než 1 týden v %s jako přečtené?"
+msgstr "Označit %w v %s starší než 1 týden jako přečtené?"
 
 #: js/Feeds.js:406
-#, fuzzy
 msgid "Mark %w in %s older than 2 weeks as read?"
-msgstr "Označit všechny články starší než 2 týdny v %s jako přečtené?"
+msgstr "Označit %w v %s starší než 2 týdny jako přečtené?"
 
 #: js/Feeds.js:409
-#, fuzzy
 msgid "Mark %w in %s as read?"
-msgstr "Označit všechny články v %s jako přečtené?"
+msgstr "Označit %w v %s jako přečtené?"
 
 #: js/Feeds.js:412
-#, fuzzy
 msgid "search results"
-msgstr "Výsledky hledání: %s"
+msgstr "výsledky hledání"
 
 #: js/Feeds.js:412
-#, fuzzy
 msgid "all articles"
-msgstr "Všechny články"
+msgstr "všechny články"
 
 #: js/Feeds.js:454
 msgid "Mark all articles in %s as read?"
@@ -3325,9 +3300,8 @@ msgid "Cancel search"
 msgstr "Zrušit hledání"
 
 #: js/Headlines.js:656
-#, fuzzy
 msgid "New articles found, reload feed to continue."
-msgstr "Nenalezeny žádné články k zobrazení."
+msgstr "Nalezeny nové články, načtěte znovu kanál pro pokračování."
 
 #: js/PrefFeedTree.js:141
 msgid "Removing category..."
@@ -3389,7 +3363,6 @@ msgstr "Obnovit vybrané štítky na výchozí barvy?"
 
 #: js/PrefLabelTree.js:139
 #: js/PrefLabelTree.js:159
-#, fuzzy
 msgid "No labels selected."
 msgstr "Nejsou vybrány žádné štítky."
 
@@ -3402,9 +3375,8 @@ msgid "Removing selected labels..."
 msgstr "Odebírání vybraných štítků..."
 
 #: js/PrefUsers.js:15
-#, fuzzy
 msgid "Please enter username:"
-msgstr "Zadejte přihlašovací jméno:"
+msgstr "Zadejte uživatelské jméno:"
 
 #: js/PrefUsers.js:18
 msgid "Adding user..."
@@ -3417,15 +3389,13 @@ msgstr "Editor uživatelů"
 #: js/PrefUsers.js:57
 #: js/PrefUsers.js:96
 #: js/PrefUsers.js:103
-#, fuzzy
 msgid "No users selected."
 msgstr "Nejsou vybráni žádní uživatelé."
 
 #: js/PrefUsers.js:62
 #: js/PrefUsers.js:108
-#, fuzzy
 msgid "Please select one user."
-msgstr "Vyberte pouze jednoho uživatele."
+msgstr "Vyberte jednoho uživatele."
 
 #: js/PrefUsers.js:66
 msgid "Reset password of selected user?"
@@ -3444,9 +3414,8 @@ msgid "Removing selected users..."
 msgstr "Odebírání vybraných uživatelů..."
 
 #: js/tt-rss.js:323
-#, fuzzy
 msgid "Please enable mail or mailto plugin first."
-msgstr "Nejdříve povolte modul odesílání e-mailů."
+msgstr "Nejdříve povolte modul mail nebo mailto."
 
 #: js/tt-rss.js:436
 msgid "Please enable embed_original plugin first."
@@ -3455,7 +3424,7 @@ msgstr "Nejdříve povolte modul embed_original."
 #: js/tt-rss.js:449
 #: js/tt-rss.js:539
 msgid "Widescreen is not available in combined mode."
-msgstr ""
+msgstr "Širokoúhlá obrazovka není dostupná v kombinovaném režimu."
 
 #: js/tt-rss.js:508
 msgid "Please select some feed first."
@@ -3478,9 +3447,8 @@ msgid "Trying to change URL..."
 msgstr "Pokus o změnu URL..."
 
 #: plugins/share/share.js:40
-#, fuzzy
 msgid "Could not change URL."
-msgstr "Pokus o změnu URL..."
+msgstr "Nelze změnit URL."
 
 #: plugins/shorten_expanded/init.js:42
 msgid "Click to expand article"
