@@ -846,7 +846,7 @@ class Handler_Public extends Handler {
 				print "<form method=\"GET\" style='display: inline'
 					action=\"$tp_uri\">
 					<input type=\"hidden\" name=\"tab\" value=\"feedConfig\">
-					<input type=\"hidden\" name=\"method\" value=\"editFeed\">
+					<input type=\"hidden\" name=\"method\" value=\"editfeed\">
 					<input type=\"hidden\" name=\"methodparam\" value=\"$feed_id\">
 					<input type=\"submit\" value=\"".__("Edit subscription options")."\">
 					</form>";
