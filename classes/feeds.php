@@ -1805,6 +1805,7 @@ class Feeds extends Handler_Protected {
 							feed_id,
 							orig_feed_id,
 							marked,
+							published,
 							num_comments,
 							comments,
 							int_id,
