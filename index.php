@@ -26,24 +26,8 @@
 	require_once "version.php";
 	require_once "config.php";
 	require_once "db-prefs.php";
-	require_once "lib/Mobile_Detect.php";
-
-	$mobile = new Mobile_Detect();
 
 	if (!init_plugins()) return;
-
-	if (!$_REQUEST['mobile']) {
-		if ($mobile->isTablet() && PluginHost::getInstance()->get_plugin("digest")) {
-			header('Location: backend.php?op=digest');
-			exit;
-		} else if ($mobile->isMobile() && PluginHost::getInstance()->get_plugin("mobile")) {
-			header('Location: backend.php?op=mobile');
-			exit;
-		} else if ($mobile->isMobile() && PluginHost::getInstance()->get_plugin("digest")) {
-			header('Location: backend.php?op=digest');
-			exit;
-		}
-	}
 
 	login_sequence();
 
