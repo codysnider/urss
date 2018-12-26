@@ -263,8 +263,8 @@ class RSSUtils {
 
 				if (!$rss->error()) {
 					$basic_info = array(
-						'title' => mb_substr($rss->get_title(), 0, 199),
-						'site_url' => mb_substr(rewrite_relative_url($fetch_url, $rss->get_link()), 0, 245)
+						'title' => mb_substr(clean($rss->get_title()), 0, 199),
+						'site_url' => mb_substr(rewrite_relative_url($fetch_url, clean($rss->get_link())), 0, 245)
 					);
 				}
 			}
@@ -499,10 +499,10 @@ class RSSUtils {
 				return false;
 			}
 
-			$site_url = mb_substr(rewrite_relative_url($fetch_url, $rss->get_link()), 0, 245);
+			$site_url = mb_substr(rewrite_relative_url($fetch_url, clean($rss->get_link())), 0, 245);
 
 			Debug::log("site_url: $site_url", Debug::$LOG_VERBOSE);
-			Debug::log("feed_title: " . $rss->get_title(), Debug::$LOG_VERBOSE);
+			Debug::log("feed_title: " . clean($rss->get_title()), Debug::$LOG_VERBOSE);
 
 			if ($favicon_needs_check || $force_refetch) {
 
@@ -609,7 +609,7 @@ class RSSUtils {
 
 				$entry_title = strip_tags($item->get_title());
 
-				$entry_link = rewrite_relative_url($site_url, $item->get_link());
+				$entry_link = rewrite_relative_url($site_url, clean($item->get_link()));
 
 				$entry_language = mb_substr(trim($item->get_language()), 0, 2);
 
