@@ -735,7 +735,7 @@ class Pref_Prefs extends Handler_Protected {
 				<td width='10%'>".__('Author')."</td></tr>";
 
 		$system_enabled = array_map("trim", explode(",", PLUGINS));
-		$user_enabled = array_map("trim", explode(",", get_pref("_ENABLED_PLUGINS", $_SESSION['uid'])));
+		$user_enabled = array_map("trim", explode(",", get_pref("_ENABLED_PLUGINS")));
 
 		$tmppluginhost = new PluginHost();
 		$tmppluginhost->load_all($tmppluginhost::KIND_ALL, $_SESSION["uid"], true);
@@ -973,7 +973,7 @@ class Pref_Prefs extends Handler_Protected {
 		else
 			$plugins = "";
 
-		set_pref("_ENABLED_PLUGINS", $plugins, $_SESSION["uid"]);
+		set_pref("_ENABLED_PLUGINS", $plugins);
 	}
 
 	function clearplugindata() {
