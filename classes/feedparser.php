@@ -246,11 +246,11 @@ class FeedParser {
 	}
 
 	function get_link() {
-		return $this->link;
+		return clean($this->link);
 	}
 
 	function get_title() {
-		return $this->title;
+		return clean($this->title);
 	}
 
 	function get_items() {
@@ -266,7 +266,7 @@ class FeedParser {
 
 			foreach ($links as $link) {
 				if (!$rel || $link->hasAttribute('rel') && $link->getAttribute('rel') == $rel) {
-					array_push($rv, trim($link->getAttribute('href')));
+					array_push($rv, clean(trim($link->getAttribute('href'))));
 				}
 			}
 			break;
@@ -275,7 +275,7 @@ class FeedParser {
 
 			foreach ($links as $link) {
 				if (!$rel || $link->hasAttribute('rel') && $link->getAttribute('rel') == $rel) {
-					array_push($rv, trim($link->getAttribute('href')));
+					array_push($rv, clean(trim($link->getAttribute('href'))));
 				}
 			}
 			break;
