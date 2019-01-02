@@ -12,9 +12,10 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-11 14:31+0300\n"
-"PO-Revision-Date: 2018-12-05 18:43+0000\n"
-"Last-Translator: ZerFEr <schmitt.sebastian@mailbox.org>\n"
-"Language-Team: German <https://weblate.tt-rss.org/projects/tt-rss/messages/de/>\n"
+"PO-Revision-Date: 2019-01-02 09:12+0000\n"
+"Last-Translator: Dennis Mootz <dennis@mootz.eu>\n"
+"Language-Team: German <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,23 +34,23 @@ msgstr "Niemals löschen"
 
 #: backend.php:75
 msgid "1 week old"
-msgstr "Nach 1 Woche"
+msgstr "Nach einer Woche"
 
 #: backend.php:76
 msgid "2 weeks old"
-msgstr "Nach 2 Wochen"
+msgstr "Nach zwei Wochen"
 
 #: backend.php:77
 msgid "1 month old"
-msgstr "Nach 1 Monat"
+msgstr "Nach einem Monat"
 
 #: backend.php:78
 msgid "2 months old"
-msgstr "Nach 2 Monaten"
+msgstr "Nach zwei Monaten"
 
 #: backend.php:79
 msgid "3 months old"
-msgstr "Nach 3 Monaten"
+msgstr "Nach drei Monaten"
 
 #: backend.php:82
 msgid "Default interval"
@@ -199,7 +200,7 @@ msgstr "Kommunikationsfehler mit Server."
 
 #: index.php:168
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "Neue Einträge im Event-Log gefunden."
 
 #: index.php:171
 msgid "Updates are available from Git."
@@ -335,9 +336,8 @@ msgstr "Breitbild-Modus umschalten"
 
 #: index.php:245
 #: include/functions.php:1177
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "Kombinierte Feed-Anzeige umschalten"
+msgstr "Nacht-Modus umschalten"
 
 #: index.php:246
 msgid "Keyboard shortcuts help"
@@ -2036,9 +2036,8 @@ msgid "Customize"
 msgstr "Anpassen"
 
 #: classes/pref/prefs.php:563
-#, fuzzy
 msgid "default"
-msgstr "Standard"
+msgstr "standard"
 
 #: classes/pref/prefs.php:625
 msgid "Register"
@@ -2126,9 +2125,10 @@ msgid "Incorrect password"
 msgstr "Falsches Passwort"
 
 #: classes/pref/prefs.php:989
-#, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr "Sie können Farben, Schriftarten und das Layout Ihres aktuell gewählten Themas mit einem eigenen CSS-Stylesheet überschreiben. <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">Diese Datei</a> kann als Grundlage benutzt werden."
+msgstr ""
+"Sie können Farben, Schriftarten und das Layout Ihres aktuell gewählten "
+"Themas mit einem eigenen CSS-Stylesheet überschreiben."
 
 #: classes/pref/prefs.php:1024
 msgid "Create profile"
@@ -2316,9 +2316,8 @@ msgid "Include settings"
 msgstr "Inklusive Einstellungen"
 
 #: classes/pref/feeds.php:1313
-#, fuzzy
 msgid "Published OPML"
-msgstr "Veröffentlicht"
+msgstr "OPML veröffentlicht"
 
 #: classes/pref/feeds.php:1315
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
@@ -2341,9 +2340,8 @@ msgid "Published & shared articles / Generated feeds"
 msgstr "Veröffentlichte & geteilte Artikel / erzeugte Feeds"
 
 #: classes/pref/feeds.php:1330
-#, fuzzy
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "Ihre OPML können veröffentlicht werden, so dass jeder, der die URL kennt, diese abonnieren kann."
+msgstr "Mit der folgenden URL können sie veröffentlichte Artikel beobachten:"
 
 #: classes/pref/feeds.php:1338
 msgid "Display URL"
@@ -2628,9 +2626,8 @@ msgid "Inline article content"
 msgstr "Artikelinhalt"
 
 #: plugins/toggle_sidebar/init.php:23
-#, fuzzy
 msgid "Toggle feedlist"
-msgstr "Feedliste verbergen"
+msgstr "Feed-Liste verbergen"
 
 #: plugins/import_export/init.php:54
 msgid "Import and export"
@@ -2708,7 +2705,7 @@ msgstr "Fehler erklärt"
 
 #: js/AppBase.js:408
 msgid "Fatal error"
-msgstr ""
+msgstr "Schwerwiegender Fehler"
 
 #: js/Article.js:33
 msgid "Please enter new score for selected articles:"
@@ -3123,7 +3120,7 @@ msgstr "<span onclick=\"App.explainError(3)\">Aktualisierungs-Dienst aktualisier
 
 #: js/AppBase.js:458
 msgid "Unhandled exception"
-msgstr ""
+msgstr "Schwerwiegender Fehler: (Unhandled Exception)"
 
 #: js/Article.js:229
 msgid "Edit article Tags"
