@@ -547,6 +547,8 @@ define(["dojo/_base/declare"], function (declare) {
 					return;
 
 				const headlines_count = reply['headlines-info']['count'];
+
+				Feeds.infscroll_disabled = parseInt(headlines_count) < 30;
 				console.log('received', headlines_count, 'headlines, infscroll disabled=', Feeds.infscroll_disabled);
 
 				//this.vgroup_last_feed = reply['headlines-info']['vgroup_last_feed'];
@@ -638,9 +640,9 @@ define(["dojo/_base/declare"], function (declare) {
 						}
 					}
 
-					console.log('appended', headlines_appended, 'headlines');
-
 					Feeds.infscroll_disabled = headlines_appended != 30;
+
+					console.log('appended', headlines_appended, 'headlines, infscroll_disabled=', Feeds.infscroll_disabled);
 
 					if (!hsp) {
 						hsp = document.createElement("div");
