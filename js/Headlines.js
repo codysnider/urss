@@ -573,7 +573,7 @@ define(["dojo/_base/declare"], function (declare) {
 						console.warn(e);
 					}
 
-					//this.headlines = [];
+					this.headlines = [];
 					this.vgroup_last_feed = undefined;
 
 					dojo.html.set($("toolbar-headlines"),
