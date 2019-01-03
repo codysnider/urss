@@ -424,7 +424,10 @@ class RPC extends Handler_Protected {
 
 		Feeds::catchup_feed($feed_id, $is_cat, false, $mode, [$search_query, $search_lang]);
 
-		print json_encode(array("message" => "UPDATE_COUNTERS"));
+		// return counters here synchronously so that frontend can figure out next unread feed properly
+		print json_encode(['counters' => Counters::getAllCounters()]);
+
+		//print json_encode(array("message" => "UPDATE_COUNTERS"));
 	}
 
 	function setpanelmode() {
