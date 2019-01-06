@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-11 14:31+0300\n"
-"PO-Revision-Date: 2018-12-13 18:19+0000\n"
-"Last-Translator: Glandos <bugs-ttrss@antipoul.fr>\n"
+"PO-Revision-Date: 2019-01-01 16:12+0000\n"
+"Last-Translator: Yann Soubeyrand <yann.soubeyrand@gmx.fr>\n"
 "Language-Team: French <https://weblate.tt-rss.org/projects/tt-rss/messages/"
 "fr/>\n"
 "Language: fr_FR\n"
@@ -1211,7 +1211,7 @@ msgstr "Aucun"
 
 #: classes/feeds.php:67
 msgid "Selection toggle:"
-msgstr "Sélectionner :"
+msgstr "Basculer la sélection :"
 
 #: classes/feeds.php:73
 msgid "Selection:"
