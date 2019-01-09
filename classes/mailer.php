@@ -16,7 +16,7 @@ class Mailer {
 
 		$additional_headers = $params["headers"] ? $params["headers"] : [];
 
-		$from_combined = $from_name ? "$to_name <$to_address>" : $to_address;
+		$from_combined = $from_name ? "$from_name <$from_address>" : $from_address;
 		$to_combined = $to_name ? "$to_name <$to_address>" : $to_address;
 
 		Logger::get()->log("Sending mail from $from_combined to $to_combined <$to_address> [$subject]: $message");
