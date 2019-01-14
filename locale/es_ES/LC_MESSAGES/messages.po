@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-11 14:31+0300\n"
-"PO-Revision-Date: 2014-03-10 14:18+0100\n"
-"Last-Translator: DavidM <milarupa@yahoo.es>\n"
-"Language-Team: Español <milarupa@yahoo.es>\n"
+"PO-Revision-Date: 2019-01-10 10:12+0000\n"
+"Last-Translator: Jesus Leal <lealp22@gmail.com>\n"
+"Language-Team: Spanish <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"es/>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -200,11 +201,11 @@ msgstr "Problema de comunicación con el servidor."
 
 #: index.php:168
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "Se encontraron entradas recientes en el log de eventos."
 
 #: index.php:171
 msgid "Updates are available from Git."
-msgstr ""
+msgstr "Existen actualizaciones disponibles en Git."
 
 #: index.php:185
 msgid "Show articles"
@@ -496,7 +497,7 @@ msgstr "No se han encontrado fuentes."
 #: include/functions.php:928
 #, php-format
 msgid "%d min"
-msgstr ""
+msgstr "%d min"
 
 #: include/functions.php:1119
 msgid "Navigation"
@@ -664,7 +665,7 @@ msgstr "Invertir orden de titulares"
 
 #: include/functions.php:1159
 msgid "Toggle headline grouping"
-msgstr ""
+msgstr "Cambiar agrupación de titulares"
 
 #: include/functions.php:1160
 msgid "Debug feed update"
@@ -735,19 +736,23 @@ msgstr "Mostrar el diálogo de ayuda"
 
 #: include/functions.php:2462
 msgid "There is no error, the file uploaded with success"
-msgstr ""
+msgstr "No hay errores, el fichero se ha actualizado correctamente"
 
 #: include/functions.php:2463
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
+"El fichero cargado excede la directiva upload_max_filesize directive en "
+"php.ini"
 
 #: include/functions.php:2464
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
+"El fichero cargado excede la directiva MAX_FILE_SIZE especificada en el "
+"formulario HTML"
 
 #: include/functions.php:2465
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "El fichero cargado solo fue subido parcialmente"
 
 #: include/functions.php:2466
 #, fuzzy
@@ -756,15 +761,15 @@ msgstr "No se ha cargado ningún archivo."
 
 #: include/functions.php:2467
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "No se ha encontrado una carpeta temporal"
 
 #: include/functions.php:2468
 msgid "Failed to write file to disk."
-msgstr ""
+msgstr "Fallo en la escritura en disco."
 
 #: include/functions.php:2469
 msgid "A PHP extension stopped the file upload."
-msgstr ""
+msgstr "Una extensión PHP detuvo la carga del fichero."
 
 #: include/login_form.php:84
 #: classes/handler/public.php:673
@@ -879,6 +884,8 @@ msgstr "Puede compartir este artículo con la siguiente URL única:"
 #: classes/dlg.php:189
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
 msgstr ""
+"Está utilizando el password por defecto de tt-rss. Por favor, debe cambiarlo "
+"en Preferencias (Datos personales / Auntentificación)."
 
 #: classes/dlg.php:193
 #, fuzzy
@@ -1404,7 +1411,7 @@ msgstr "Buscar"
 #: classes/feeds.php:770
 #, php-format
 msgid "in %s"
-msgstr ""
+msgstr "en %s"
 
 #: classes/feeds.php:775
 msgid "Used for word stemming"
