@@ -323,8 +323,7 @@ class Handler_Public extends Handler {
 
 		foreach ($enclosures as $enc) {
 			if (strpos($enc["content_type"], "image/") !== FALSE) {
-				$og_image = $enc["content_url"];
-				break;
+				return rewrite_relative_url($site_url, $enc["content_url"]);
 			}
 		}
 
@@ -333,15 +332,18 @@ class Handler_Public extends Handler {
 
 			if (@$tmpdoc->loadHTML(mb_substr($content, 0, 131070))) {
 				$tmpxpath = new DOMXPath($tmpdoc);
-				$first_img = $tmpxpath->query("//img")->item(0);
+				$imgs = $tmpxpath->query("//img");
 
-				if ($first_img) {
-					$og_image = $first_img->getAttribute("src");
+				foreach ($imgs as $img) {
+					$src = $img->getAttribute("src");
+
+					if (mb_strpos($src, "data:") !== 0)
+						return rewrite_relative_url($site_url, $src);
 				}
 			}
 		}
 
-		return rewrite_relative_url($site_url, $og_image);
+		return false;
     }
 
 	private function format_article($id, $owner_uid) {
