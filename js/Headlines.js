@@ -561,6 +561,9 @@ define(["dojo/_base/declare"], function (declare) {
 
 					$("headlines-frame").addClassName(App.isCombinedMode() ? "cdm" : "normal");
 
+					$("headlines-frame").setAttribute("is-vfeed",
+						reply['headlines']['is_vfeed'] ? 1 : 0);
+
 					Article.setActive(0);
 
 					try {

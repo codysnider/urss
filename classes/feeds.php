@@ -209,6 +209,7 @@ class Feeds extends Handler_Protected {
 			make_local_datetime($qfh_ret[4], false) : __("Never");
 		$highlight_words = $qfh_ret[5];
 		$reply['first_id'] = $qfh_ret[6];
+		$reply['is_vfeed'] = $qfh_ret[7];
 		$reply['search_query'] = [$search, $search_language];
 		$reply['vfeed_group_enabled'] = $vfeed_group_enabled;
 
@@ -1748,7 +1749,7 @@ class Feeds extends Handler_Protected {
 					$first_id = (int)$row["id"];
 
 					if ($offset > 0 && $first_id && $check_first_id && $first_id != $check_first_id) {
-						return array(-1, $feed_title, $feed_site_url, $last_error, $last_updated, $search_words, $first_id);
+						return array(-1, $feed_title, $feed_site_url, $last_error, $last_updated, $search_words, $first_id, $vfeed_query_part != "");
 					}
 				}
 			}
@@ -1837,7 +1838,7 @@ class Feeds extends Handler_Protected {
 			$res = $pdo->query($query);
 		}
 
-		return array($res, $feed_title, $feed_site_url, $last_error, $last_updated, $search_words, $first_id);
+		return array($res, $feed_title, $feed_site_url, $last_error, $last_updated, $search_words, $first_id, $vfeed_query_part != "");
 
 	}
 
