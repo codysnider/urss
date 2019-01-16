@@ -105,6 +105,7 @@
 					"pt_PT" => "Portuguese/Portugal",
 					"zh_CN" => "Simplified Chinese",
 					"zh_TW" => "Traditional Chinese",
+					"uk_UA" => "Украинский",
 					"sv_SE" => "Svenska",
 					"fi_FI" => "Suomi",
 					"tr_TR" => "Türkçe");
