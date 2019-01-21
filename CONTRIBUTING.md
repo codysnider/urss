@@ -7,7 +7,7 @@ TLDR: it works pretty much like Github.
 3. Do the needful
 4. File a pull request with your changes against master branch.
 
-### If you can't fork the repository on Gogs, please see this forum thread:
+**If you can't fork the repository on Gogs, please see this forum thread:**
 
 https://discourse.tt-rss.org/t/pull-requests-gogs-spam/1850/2
 
