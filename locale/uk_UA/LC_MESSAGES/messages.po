@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2019-01-15 22:14+0000\n"
+"PO-Revision-Date: 2019-01-19 12:35+0000\n"
 "Last-Translator: Андрій Жук <zhouck@gmail.com>\n"
-"Language-Team: Ukrainian <https://weblate.tt-rss.org/projects/tt-rss/messages/uk_UA/>\n"
+"Language-Team: Ukrainian <https://weblate.tt-rss.org/projects/tt-rss/"
+"messages/uk/>\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
@@ -151,18 +153,19 @@ msgstr "Ваша версія MySQL зараз не підтримується. 
 #: errors.php:35
 msgid "SQL escaping test failed, check your database and PHP configuration"
 msgstr ""
+"Тест екранування SQL не вдався, перевірте конфігурацію PHP та бази даних"
 
 #: errors.php:37
 msgid "Method not found"
-msgstr ""
+msgstr "Метод не знайдено"
 
 #: errors.php:39
 msgid "Plugin not found"
-msgstr ""
+msgstr "Плагін не знайдено"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
-msgstr ""
+msgstr "Перетворення даних у JSON не вдалося"
 
 #: index.php:128
 #: index.php:143
@@ -188,79 +191,79 @@ msgstr ""
 #: js/PrefHelpers.js:138
 #: plugins/import_export/import_export.js:17
 msgid "Loading, please wait..."
-msgstr ""
+msgstr "Йде завантаження, зачекайте, будь ласка..."
 
 #: index.php:152
 #: js/AppBase.js:240
 #: js/AppBase.js:246
 msgid "Communication problem with server."
-msgstr ""
+msgstr "Проблеми зв’язку з сервером."
 
 #: index.php:155
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "Знайдено свіжі записи в журналі подій."
 
 #: index.php:158
 msgid "Updates are available from Git."
-msgstr ""
+msgstr "Доступні оновлення з Git."
 
 #: index.php:172
 msgid "Show articles"
-msgstr ""
+msgstr "Показати статті"
 
 #: index.php:175
 msgid "Adaptive"
-msgstr ""
+msgstr "Адаптивно"
 
 #: index.php:176
 msgid "All Articles"
-msgstr ""
+msgstr "Всі статті"
 
 #: index.php:177
 #: include/functions.php:1194
 #: classes/feeds.php:70
 msgid "Starred"
-msgstr ""
+msgstr "Позначені зірочкою"
 
 #: index.php:178
 #: include/functions.php:1195
 #: classes/feeds.php:71
 msgid "Published"
-msgstr ""
+msgstr "Опубліковані"
 
 #: index.php:179
 #: classes/feeds.php:63
 #: classes/feeds.php:69
 msgid "Unread"
-msgstr ""
+msgstr "Непрочитані"
 
 #: index.php:180
 msgid "With Note"
-msgstr ""
+msgstr "З нотаткою"
 
 #: index.php:181
 msgid "Ignore Scoring"
-msgstr ""
+msgstr "Не зважати на оцінки"
 
 #: index.php:184
 msgid "Sort articles"
-msgstr ""
+msgstr "Сортувати статті"
 
 #: index.php:187
 msgid "Default"
-msgstr ""
+msgstr "Типово"
 
 #: index.php:188
 msgid "Newest first"
-msgstr ""
+msgstr "Спочатку нові"
 
 #: index.php:189
 msgid "Oldest first"
-msgstr ""
+msgstr "Спочатку старіші"
 
 #: index.php:190
 msgid "Title"
-msgstr ""
+msgstr "Заголовок"
 
 #: index.php:194
 #: index.php:228
@@ -269,131 +272,131 @@ msgstr ""
 #: js/FeedTree.js:55
 #: js/FeedTree.js:83
 msgid "Mark as read"
-msgstr ""
+msgstr "Як прочитані"
 
 #: index.php:197
 msgid "Older than one day"
-msgstr ""
+msgstr "Старіше за день"
 
 #: index.php:200
 msgid "Older than one week"
-msgstr ""
+msgstr "Старіше за тиждень"
 
 #: index.php:203
 msgid "Older than two weeks"
-msgstr ""
+msgstr "Старіше за два тижні"
 
 #: index.php:219
 msgid "Actions..."
-msgstr ""
+msgstr "Дії..."
 
 #: index.php:221
 msgid "Preferences..."
-msgstr ""
+msgstr "Налаштування..."
 
 #: index.php:222
 msgid "Search..."
-msgstr ""
+msgstr "Пошук..."
 
 #: index.php:223
 msgid "Feed actions:"
-msgstr ""
+msgstr "Дії з каналами:"
 
 #: index.php:224
 #: classes/handler/public.php:786
 msgid "Subscribe to feed..."
-msgstr ""
+msgstr "Підписатися на канал..."
 
 #: index.php:225
 msgid "Edit this feed..."
-msgstr ""
+msgstr "Редагувати цей канал..."
 
 #: index.php:226
 #: classes/pref/feeds.php:768
 #: classes/pref/feeds.php:1202
 #: js/PrefFeedTree.js:62
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Відписатися"
 
 #: index.php:227
 msgid "All feeds:"
-msgstr ""
+msgstr "Всі канали:"
 
 #: index.php:229
 msgid "(Un)hide read feeds"
-msgstr ""
+msgstr "Показати/приховати прочитані канали"
 
 #: index.php:230
 msgid "Other actions:"
-msgstr ""
+msgstr "Інші дії:"
 
 #: index.php:231
 #: include/functions.php:1168
 msgid "Toggle widescreen mode"
-msgstr ""
+msgstr "Перемкнути повний екран"
 
 #: index.php:232
 #: include/functions.php:1202
 msgid "Toggle night mode"
-msgstr ""
+msgstr "Перемкнути нічний режим"
 
 #: index.php:233
 msgid "Keyboard shortcuts help"
-msgstr ""
+msgstr "Допомога з клавіатурних скорочень"
 
 #: index.php:242
 msgid "Logout"
-msgstr ""
+msgstr "Вихід"
 
 #: prefs.php:33
 #: prefs.php:130
 #: include/functions.php:1197
 #: classes/pref/prefs.php:430
 msgid "Preferences"
-msgstr ""
+msgstr "Налаштування"
 
 #: prefs.php:122
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Гарячі клавіші"
 
 #: prefs.php:123
 msgid "Exit preferences"
-msgstr ""
+msgstr "Закрити налаштування"
 
 #: prefs.php:133
 #: classes/pref/feeds.php:114
 #: classes/pref/feeds.php:1137
 #: classes/pref/feeds.php:1191
 msgid "Feeds"
-msgstr ""
+msgstr "Канали"
 
 #: prefs.php:137
 #: classes/pref/filters.php:243
 msgid "Filters"
-msgstr ""
+msgstr "Фільтри"
 
 #: prefs.php:141
 #: classes/pref/labels.php:91
 #: classes/feeds.php:1385
 msgid "Labels"
-msgstr ""
+msgstr "Мітки"
 
 #: prefs.php:146
 msgid "Users"
-msgstr ""
+msgstr "Користувачі"
 
 #: prefs.php:149
 msgid "System"
-msgstr ""
+msgstr "Система"
 
 #: register.php:185
 #: include/login_form.php:140
 msgid "Create new account"
-msgstr ""
+msgstr "Створити нову обліковку"
 
 #: register.php:191
 msgid "New user registrations are administratively disabled."
-msgstr ""
+msgstr "Реєстрація нових користувачів закрита."
 
 #: register.php:195
 #: register.php:240
@@ -411,64 +414,66 @@ msgstr ""
 #: classes/handler/public.php:1133
 #: classes/handler/public.php:1158
 msgid "Return to Tiny Tiny RSS"
-msgstr ""
+msgstr "Повернутися до Tiny Tiny RSS"
 
 #: register.php:216
 msgid "Your temporary password will be sent to the specified email. Accounts, which were not logged in once, are erased automatically 24 hours after temporary password is sent."
 msgstr ""
+"Ваш тимчасовий пароль був надісланий на вказану електронну адресу. Якщо ви "
+"не зайдете з надісланим паролем, за 24 години створений запис буде стерто."
 
 #: register.php:222
 msgid "Desired login:"
-msgstr ""
+msgstr "Бажане ім’я:"
 
 #: register.php:225
 msgid "Check availability"
-msgstr ""
+msgstr "Перевірка доступності"
 
 #: register.php:227
 #: classes/handler/public.php:948
 msgid "Email:"
-msgstr ""
+msgstr "Ел. пошта:"
 
 #: register.php:230
 #: classes/handler/public.php:953
 msgid "How much is two plus two:"
-msgstr ""
+msgstr "Скільки буде два плюс два:"
 
 #: register.php:233
 msgid "Submit registration"
-msgstr ""
+msgstr "Зареєструватися"
 
 #: register.php:251
 msgid "Your registration information is incomplete."
-msgstr ""
+msgstr "Надана інформація недостатня для реєстрації."
 
 #: register.php:266
 msgid "Sorry, this username is already taken."
-msgstr ""
+msgstr "Вибачте, це ім’я вже використовується."
 
 #: register.php:285
 msgid "Registration failed."
-msgstr ""
+msgstr "Реєстрація не вдалася."
 
 #: register.php:331
 msgid "Account created successfully."
-msgstr ""
+msgstr "Обліковий запис успішно створений."
 
 #: register.php:353
 msgid "New user registrations are currently closed."
-msgstr ""
+msgstr "Реєстрація нових користувачів тимчасово припинена."
 
 #: update.php:67
 msgid "Tiny Tiny RSS data update script."
-msgstr ""
+msgstr "Сценарій оновлення даних Tiny Tiny RSS."
 
 #: include/controls.php:85
 #: classes/pref/filters.php:212
 #: classes/pref/filters.php:223
 #: classes/pref/filters.php:525
 msgid "All feeds"
-msgstr ""
+msgstr "Всі канали"
 
 #: include/controls.php:138
 #: include/controls.php:230
@@ -477,7 +482,7 @@ msgstr ""
 #: classes/pref/feeds.php:233
 #: classes/feeds.php:1397
 msgid "Uncategorized"
-msgstr ""
+msgstr "Без категорії"
 
 #: include/feedbrowser.php:79
 #, php-format
@@ -489,36 +494,36 @@ msgstr[2] ""
 
 #: include/feedbrowser.php:102
 msgid "No feeds found."
-msgstr ""
+msgstr "Канали не знайдені."
 
 #: include/functions.php:952
 #, php-format
 msgid "%d min"
-msgstr ""
+msgstr "%d мін"
 
 #: include/functions.php:1144
 msgid "Navigation"
-msgstr ""
+msgstr "Навігація"
 
 #: include/functions.php:1145
 msgid "Open next feed"
-msgstr ""
+msgstr "Відкрити наступний канал"
 
 #: include/functions.php:1146
 msgid "Open previous feed"
-msgstr ""
+msgstr "Відкрити попередній канал"
 
 #: include/functions.php:1147
 msgid "Open next article"
-msgstr ""
+msgstr "Відкрити наступну статтю"
 
 #: include/functions.php:1148
 msgid "Open previous article"
-msgstr ""
+msgstr "Відкрити попередню статтю"
 
 #: include/functions.php:1149
 msgid "Open next article (don't scroll long articles)"
-msgstr ""
+msgstr "Відкрити наступну статтю (не прокручувати довгі статті)"
 
 #: include/functions.php:1150
 msgid "Open previous article (don't scroll long articles)"

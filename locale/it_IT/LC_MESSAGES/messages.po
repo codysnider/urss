@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2018-12-13 18:19+0000\n"
+"PO-Revision-Date: 2019-01-19 12:35+0000\n"
 "Last-Translator: Dario Di Ludovico <dario@diludovico.it>\n"
-"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/it/>\n"
+"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"it/>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -164,7 +165,7 @@ msgstr "Plugin non trovato"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
-msgstr ""
+msgstr "La codifica dei dati in formato JSON è fallita"
 
 #: index.php:128
 #: index.php:143
@@ -204,7 +205,7 @@ msgstr "Nuove voci nel registro degli eventi."
 
 #: index.php:158
 msgid "Updates are available from Git."
-msgstr "Gli aggiornamenti sono disponibili via Git."
+msgstr "Ci sono aggiornamenti disponibili via Git."
 
 #: index.php:172
 msgid "Show articles"
@@ -332,7 +333,7 @@ msgstr "Altre azioni:"
 #: index.php:231
 #: include/functions.php:1168
 msgid "Toggle widescreen mode"
-msgstr "Modalità widescreen"
+msgstr "Attiva/disattiva modalità a schermo pieno"
 
 #: index.php:232
 #: include/functions.php:1202
@@ -395,7 +396,7 @@ msgstr "Crea un nuovo account"
 
 #: register.php:191
 msgid "New user registrations are administratively disabled."
-msgstr "La registrazione di nuovi utenti è disattivata dall'amministratore."
+msgstr "L'amministratore ha disattivato la registrazione di nuovi utenti."
 
 #: register.php:195
 #: register.php:240
@@ -511,7 +512,7 @@ msgstr "Apri il notiziario precedente"
 
 #: include/functions.php:1147
 msgid "Open next article"
-msgstr "Apri il prossimo articolo"
+msgstr "Apri l'articolo successivo"
 
 #: include/functions.php:1148
 msgid "Open previous article"
@@ -519,7 +520,7 @@ msgstr "Apri l'articolo precedente"
 
 #: include/functions.php:1149
 msgid "Open next article (don't scroll long articles)"
-msgstr "Apri il prossimo articolo (non scorrere gli articoli lunghi)"
+msgstr "Apri l'articolo successivo (non scorrere gli articoli lunghi)"
 
 #: include/functions.php:1150
 msgid "Open previous article (don't scroll long articles)"
@@ -527,7 +528,7 @@ msgstr "Apri l'articolo precedente (non scorrere gli articoli lunghi)"
 
 #: include/functions.php:1151
 msgid "Move to next article (don't expand or mark read)"
-msgstr "Passa al prossimo articolo (senza espandere o segnare come letto)"
+msgstr "Passa all'articolo successivo (senza espandere o segnare come letto)"
 
 #: include/functions.php:1152
 msgid "Move to previous article (don't expand or mark read)"
