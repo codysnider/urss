@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2019-01-21 23:35+0000\n"
+"PO-Revision-Date: 2019-01-25 12:35+0000\n"
 "Last-Translator: Андрій Жук <zhouck@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.tt-rss.org/projects/tt-rss/"
 "messages/uk/>\n"
@@ -951,31 +951,31 @@ msgstr "Помилка: завантажуйте OPML файл."
 
 #: classes/opml.php:582
 msgid "Error: unable to find moved OPML file."
-msgstr ""
+msgstr "Помилка: не вдалося знайти переміщений OPML файл."
 
 #: classes/opml.php:591
 msgid "Error while parsing document."
-msgstr ""
+msgstr "Помилка розбору документу."
 
 #: classes/backend.php:31
 msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
-msgstr ""
+msgstr "Інші підказки з інтерфейсу доступні у вікі Tiny Tiny RSS."
 
 #: classes/backend.php:36
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Гарячі клавіші"
 
 #: classes/backend.php:60
 msgid "Shift"
-msgstr ""
+msgstr "Shift"
 
 #: classes/backend.php:63
 msgid "Ctrl"
-msgstr ""
+msgstr "Ctrl"
 
 #: classes/backend.php:98
 msgid "Help topic not found."
-msgstr ""
+msgstr "Стаття допомоги не знайдена."
 
 #: classes/backend.php:104
 #: classes/dlg.php:30
@@ -993,47 +993,57 @@ msgstr ""
 #: plugins/import_export/init.php:491
 #: plugins/share/init.php:133
 msgid "Close this window"
-msgstr ""
+msgstr "Закрити це вікно"
 
 #: classes/dlg.php:17
 msgid "If you have imported labels and/or filters, you might need to reload preferences to see your new data."
 msgstr ""
+"Якщо ви маєте імпортовані мітки та/чи фільтри, вам (можливо) треба "
+"перезавантажити налаштування аби побачити нові дані."
 
 #: classes/dlg.php:41
 msgid "Your Public OPML URL is:"
-msgstr ""
+msgstr "Ваш публічний URL для OPML:"
 
 #: classes/dlg.php:50
 #: classes/dlg.php:177
 #: plugins/share/init.php:130
 msgid "Generate new URL"
-msgstr ""
+msgstr "Створити новий URL"
 
 #: classes/dlg.php:64
 msgid "Update daemon is enabled in configuration, but daemon process is not running, which prevents all feeds from updating. Please start the daemon process or contact instance owner."
 msgstr ""
+"Сервіс оновлення увімкнутий в налаштуваннях, однак не запущений; це є "
+"прийчиною не-оновлення всіх каналів. Будь ласка, запустіть сервіс оновлення "
+"або зв’яжіться з власником сервісу."
 
 #: classes/dlg.php:68
 #: classes/dlg.php:77
 msgid "Last update:"
-msgstr ""
+msgstr "Останнє оновлення:"
 
 #: classes/dlg.php:73
 msgid "Update daemon is taking too long to perform a feed update. This could indicate a problem like crash or a hang. Please check the daemon process or contact instance owner."
 msgstr ""
+"Сервіс оновлення занадто довго оновлює канал. Це може бути ознакою проблем, "
+"він міг впасти чи зависнути. Будь ласка, перевірте сервіс оновлення або зв’"
+"яжіться з власником сервісу."
 
 #: classes/dlg.php:168
 #, php-format
 msgid "%s can be accessed via the following secret URL:"
-msgstr ""
+msgstr "%s може бути доступним з наступним секретним URL:"
 
 #: classes/dlg.php:189
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
 msgstr ""
+"Ви використовуєте типовий пароль tt-rss. Будь ласка, змініть його в "
+"Налаштуваннях (Персональні дані / Автентифікація)."
 
 #: classes/dlg.php:193
 msgid "Open Preferences"
-msgstr ""
+msgstr "Відкрити Налаштування"
 
 #: classes/handler/public.php:397
 #: js/Article.js:155
@@ -1046,147 +1056,149 @@ msgstr[2] ""
 #: classes/handler/public.php:402
 #: js/Article.js:152
 msgid "comments"
-msgstr ""
+msgstr "коментарі"
 
 #: classes/handler/public.php:616
 #: plugins/bookmarklets/init.php:39
 msgid "Share with Tiny Tiny RSS"
-msgstr ""
+msgstr "Поширити з Tiny Tiny RSS"
 
 #: classes/handler/public.php:624
 msgid "Title:"
-msgstr ""
+msgstr "Заголовок:"
 
 #: classes/handler/public.php:626
 #: classes/pref/feeds.php:536
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: classes/handler/public.php:628
 msgid "Content:"
-msgstr ""
+msgstr "Вміст:"
 
 #: classes/handler/public.php:630
 msgid "Labels:"
-msgstr ""
+msgstr "Мітки:"
 
 #: classes/handler/public.php:649
 msgid "Shared article will appear in the Published feed."
-msgstr ""
+msgstr "Поширені статті з’являться на каналі Опубліковані."
 
 #: classes/handler/public.php:651
 msgid "Share"
-msgstr ""
+msgstr "Поширити"
 
 #: classes/handler/public.php:673
 msgid "Not logged in"
-msgstr ""
+msgstr "Вхід не виконано"
 
 #: classes/handler/public.php:738
 msgid "Incorrect username or password"
-msgstr ""
+msgstr "Неправильне ім’я чи пароль"
 
 #: classes/handler/public.php:792
 #, php-format
 msgid "Already subscribed to <b>%s</b>."
-msgstr ""
+msgstr "Вже підписані на канал <b>%s</b>."
 
 #: classes/handler/public.php:795
 #, php-format
 msgid "Subscribed to <b>%s</b>."
-msgstr ""
+msgstr "Додана підписка на канал <b>%s</b>."
 
 #: classes/handler/public.php:798
 #, php-format
 msgid "Could not subscribe to <b>%s</b>."
-msgstr ""
+msgstr "Не вдалося підписатися на канал <b>%s</b>."
 
 #: classes/handler/public.php:801
 #, php-format
 msgid "No feeds found in <b>%s</b>."
-msgstr ""
+msgstr "Не знайдено каналів в <b>%s</b>."
 
 #: classes/handler/public.php:804
 msgid "Multiple feed URLs found."
-msgstr ""
+msgstr "Декілька URL каналів знайдено."
 
 #: classes/handler/public.php:808
 #, php-format
 msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr ""
+"Не вдалося підписатися на <b>%s</b>.<br>Не вдалося завантажити канал за URL."
 
 #: classes/handler/public.php:826
 msgid "Subscribe to selected feed"
-msgstr ""
+msgstr "Підписатися на обрані канали"
 
 #: classes/handler/public.php:853
 msgid "Edit subscription options"
-msgstr ""
+msgstr "Змінити налаштування підписки"
 
 #: classes/handler/public.php:891
 msgid "Password recovery"
-msgstr ""
+msgstr "Відновлення пароля"
 
 #: classes/handler/public.php:936
 msgid "You will need to provide valid account name and email. A password reset link will be sent to your email address."
 msgstr ""
+"Вкажіть коректне ім’я та пароль. Пароль прийде на вашу електронну адресу."
 
 #: classes/handler/public.php:958
 #: classes/pref/users.php:371
 msgid "Reset password"
-msgstr ""
+msgstr "Скинути пароль"
 
 #: classes/handler/public.php:968
 msgid "Some of the required form parameters are missing or incorrect."
-msgstr ""
+msgstr "Декілька необхідних параметрів форми відсутні або неправильні."
 
 #: classes/handler/public.php:972
 #: classes/handler/public.php:1041
 msgid "Go back"
-msgstr ""
+msgstr "Назад"
 
 #: classes/handler/public.php:1010
 msgid "[tt-rss] Password reset request"
-msgstr ""
+msgstr "[tt-rss] Запит на скидання пароля"
 
 #: classes/handler/public.php:1037
 msgid "Sorry, login and email combination not found."
-msgstr ""
+msgstr "Пробачте, але комбінацію імені/паролю не знайдено."
 
 #: classes/handler/public.php:1059
 msgid "Your access level is insufficient to run this script."
-msgstr ""
+msgstr "Ваш рівень доступу недостатній для запуску сценарію."
 
 #: classes/handler/public.php:1085
 msgid "Database Updater"
-msgstr ""
+msgstr "Оновлювач бази даних"
 
 #: classes/handler/public.php:1150
 msgid "Perform updates"
-msgstr ""
+msgstr "Виконати оновлення"
 
 #: classes/pref/labels.php:25
 #: classes/pref/filters.php:349
 #: classes/pref/filters.php:838
 msgid "Caption"
-msgstr ""
+msgstr "Заголовок"
 
 #: classes/pref/labels.php:37
 msgid "Colors"
-msgstr ""
+msgstr "Кольори"
 
 #: classes/pref/labels.php:42
 msgid "Foreground:"
-msgstr ""
+msgstr "Передній план:"
 
 #: classes/pref/labels.php:42
 msgid "Background:"
-msgstr ""
+msgstr "Тло:"
 
 #: classes/pref/labels.php:237
 #, php-format
 msgid "Created label <b>%s</b>"
-msgstr ""
+msgstr "Створена мітка <b>%s</b>"
 
 #: classes/pref/labels.php:263
 #: classes/pref/users.php:355
@@ -1200,7 +1212,7 @@ msgstr ""
 #: classes/pref/filters.php:874
 #: classes/pref/prefs.php:1012
 msgid "Select"
-msgstr ""
+msgstr "Обрати"
 
 #: classes/pref/labels.php:266
 #: classes/pref/users.php:358
@@ -1215,7 +1227,7 @@ msgstr ""
 #: classes/pref/prefs.php:1015
 #: classes/feeds.php:62
 msgid "All"
-msgstr ""
+msgstr "Всі"
 
 #: classes/pref/labels.php:268
 #: classes/pref/users.php:360
@@ -1230,7 +1242,7 @@ msgstr ""
 #: classes/pref/prefs.php:1017
 #: classes/feeds.php:65
 msgid "None"
-msgstr ""
+msgstr "Жоден"
 
 #: classes/pref/labels.php:275
 #: classes/pref/users.php:369
@@ -1239,96 +1251,96 @@ msgstr ""
 #: classes/pref/filters.php:786
 #: classes/feeds.php:760
 msgid "Remove"
-msgstr ""
+msgstr "Вилучити"
 
 #: classes/pref/labels.php:278
 msgid "Clear colors"
-msgstr ""
+msgstr "Очистити кольори"
 
 #: classes/pref/users.php:6
 #: classes/pref/system.php:8
 msgid "Your access level is insufficient to open this tab."
-msgstr ""
+msgstr "Ваш рівень доступу недостатній для відкриття цієї вкладки."
 
 #: classes/pref/users.php:26
 msgid "Edit user"
-msgstr ""
+msgstr "Редагувати користувача"
 
 #: classes/pref/users.php:61
 #: classes/pref/feeds.php:620
 #: classes/pref/feeds.php:847
 #: classes/feeds.php:681
 msgid "Authentication"
-msgstr ""
+msgstr "Автентифікація"
 
 #: classes/pref/users.php:64
 msgid "Access level: "
-msgstr ""
+msgstr "Рівень доступу: "
 
 #: classes/pref/users.php:82
 #: classes/pref/feeds.php:646
 #: classes/pref/feeds.php:865
 msgid "Options"
-msgstr ""
+msgstr "Опції"
 
 #: classes/pref/users.php:96
 msgid "User details"
-msgstr ""
+msgstr "Подробиці"
 
 #: classes/pref/users.php:136
 #: classes/pref/users.php:406
 msgid "Registered"
-msgstr ""
+msgstr "Зареєстрований"
 
 #: classes/pref/users.php:137
 msgid "Last logged in"
-msgstr ""
+msgstr "Востаннє заходив"
 
 #: classes/pref/users.php:145
 msgid "Subscribed feeds count"
-msgstr ""
+msgstr "Кількість підписаних каналів"
 
 #: classes/pref/users.php:146
 msgid "Stored articles"
-msgstr ""
+msgstr "Збережені статті"
 
 #: classes/pref/users.php:150
 #: classes/pref/users.php:405
 msgid "Subscribed feeds"
-msgstr ""
+msgstr "Підписані канали"
 
 #: classes/pref/users.php:176
 msgid "User not found"
-msgstr ""
+msgstr "Користувач не знайдений"
 
 #: classes/pref/users.php:247
 #, php-format
 msgid "Added user %s with password %s"
-msgstr ""
+msgstr "Додано користувача %s з паролем %s"
 
 #: classes/pref/users.php:254
 #, php-format
 msgid "Could not create user %s"
-msgstr ""
+msgstr "Не вдається створити користувача %s"
 
 #: classes/pref/users.php:258
 #, php-format
 msgid "User %s already exists."
-msgstr ""
+msgstr "Користувач %s вже існує."
 
 #: classes/pref/users.php:286
 #, php-format
 msgid "Changed password of user %s to %s"
-msgstr ""
+msgstr "Змінено пароль користувача %s на %s"
 
 #: classes/pref/users.php:288
 #, php-format
 msgid "Sending new password of user %s to %s"
-msgstr ""
+msgstr "Відправлено новий пароль користувача %s на %s"
 
 #: classes/pref/users.php:311
 msgid "[tt-rss] Password change notification"
-msgstr ""
+msgstr "[tt-rss] Сповіщення про зміну пароля"
 
 #: classes/pref/users.php:345
 #: classes/pref/feeds.php:1178
@@ -1337,16 +1349,16 @@ msgstr ""
 #: classes/feeds.php:799
 #: js/Feeds.js:540
 msgid "Search"
-msgstr ""
+msgstr "Пошук"
 
 #: classes/pref/users.php:363
 msgid "Create user"
-msgstr ""
+msgstr "Додати користувача"
 
 #: classes/pref/users.php:367
 #: classes/pref/filters.php:779
 msgid "Edit"
-msgstr ""
+msgstr "Змінити"
 
 #: classes/pref/users.php:403
 #: classes/pref/feeds.php:624
@@ -1354,60 +1366,60 @@ msgstr ""
 #: classes/pref/feeds.php:1649
 #: classes/feeds.php:685
 msgid "Login"
-msgstr ""
+msgstr "Ім’я"
 
 #: classes/pref/users.php:404
 msgid "Access Level"
-msgstr ""
+msgstr "Рівень доступу"
 
 #: classes/pref/users.php:407
 msgid "Last login"
-msgstr ""
+msgstr "Останній вхід"
 
 #: classes/pref/users.php:424
 msgid "Click to edit"
-msgstr ""
+msgstr "Клацнути для зміни"
 
 #: classes/pref/users.php:440
 msgid "No users defined."
-msgstr ""
+msgstr "Не визначені користувачі."
 
 #: classes/pref/users.php:442
 msgid "No matching users found."
-msgstr ""
+msgstr "Немає відповідних запиту користувачів."
 
 #: classes/pref/system.php:30
 msgid "Event Log"
-msgstr ""
+msgstr "Журнал подій"
 
 #: classes/pref/system.php:41
 msgid "Refresh"
-msgstr ""
+msgstr "Оновити"
 
 #: classes/pref/system.php:44
 #: classes/pref/prefs.php:629
 msgid "Clear"
-msgstr ""
+msgstr "Очистити"
 
 #: classes/pref/system.php:49
 msgid "Error"
-msgstr ""
+msgstr "Помилка"
 
 #: classes/pref/system.php:50
 msgid "Filename"
-msgstr ""
+msgstr "Назва файла"
 
 #: classes/pref/system.php:51
 msgid "Message"
-msgstr ""
+msgstr "Повідомлення"
 
 #: classes/pref/system.php:53
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: classes/pref/feeds.php:15
 msgid "Check to enable field"
-msgstr ""
+msgstr "Перевірити доступність поля"
 
 #: classes/pref/feeds.php:64
 #: classes/pref/feeds.php:219
@@ -1424,45 +1436,45 @@ msgstr[2] ""
 #: classes/pref/feeds.php:513
 #: classes/pref/prefs.php:18
 msgid "General"
-msgstr ""
+msgstr "Основні"
 
 #: classes/pref/feeds.php:527
 msgid "Feed Title"
-msgstr ""
+msgstr "Заголовок каналу"
 
 #: classes/pref/feeds.php:538
 msgid "Feed URL"
-msgstr ""
+msgstr "URL каналу"
 
 #: classes/pref/feeds.php:558
 #: classes/pref/feeds.php:799
 #: classes/pref/feeds.php:1635
 #: classes/feeds.php:661
 msgid "Place in category:"
-msgstr ""
+msgstr "Розмістити в категорії:"
 
 #: classes/pref/feeds.php:570
 msgid "Site URL:"
-msgstr ""
+msgstr "URL сайту:"
 
 #: classes/pref/feeds.php:572
 msgid "Site URL"
-msgstr ""
+msgstr "URL сайту"
 
 #: classes/pref/feeds.php:583
 #: classes/pref/feeds.php:813
 msgid "Language:"
-msgstr ""
+msgstr "Мова:"
 
 #: classes/pref/feeds.php:590
 #: classes/pref/feeds.php:822
 msgid "Update"
-msgstr ""
+msgstr "Оновити"
 
 #: classes/pref/feeds.php:605
 #: classes/pref/feeds.php:838
 msgid "Article purging:"
-msgstr ""
+msgstr "Видалення статей:"
 
 #: classes/pref/feeds.php:630
 #: classes/pref/feeds.php:859
@@ -1470,152 +1482,163 @@ msgstr ""
 #: classes/pref/prefs.php:247
 #: classes/feeds.php:689
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: classes/pref/feeds.php:634
 msgid "<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds."
 msgstr ""
+"<b>Підказка:</b> потрібно заповнити логін-інформацію, якщо ваш канал вимагає "
+"автентифікацію, за винятком каналів Твіттера."
 
 #: classes/pref/feeds.php:644
 #: classes/feeds.php:700
 msgid "This feed requires authentication."
-msgstr ""
+msgstr "Цей канал вимагає автентифікацію."
 
 #: classes/pref/feeds.php:660
 #: classes/pref/feeds.php:869
 msgid "Hide from Popular feeds"
-msgstr ""
+msgstr "Приховати зі списку Популярних каналів"
 
 #: classes/pref/feeds.php:672
 #: classes/pref/feeds.php:875
 msgid "Include in e-mail digest"
-msgstr ""
+msgstr "Включати в поштовий дайджест"
 
 #: classes/pref/feeds.php:685
 #: classes/pref/feeds.php:881
 msgid "Always display image attachments"
-msgstr ""
+msgstr "Завжди показувати долучення зображень"
 
 #: classes/pref/feeds.php:698
 #: classes/pref/feeds.php:889
 msgid "Do not embed media"
-msgstr ""
+msgstr "Не вбудовувати медіа"
 
 #: classes/pref/feeds.php:711
 #: classes/pref/feeds.php:897
 msgid "Cache media"
-msgstr ""
+msgstr "Кешувати медіа"
 
 #: classes/pref/feeds.php:723
 #: classes/pref/feeds.php:903
 msgid "Mark updated articles as unread"
-msgstr ""
+msgstr "Позначати оновлені статті як непрочитані"
 
 #: classes/pref/feeds.php:727
 msgid "Icon"
-msgstr ""
+msgstr "Іконка"
 
 #: classes/pref/feeds.php:741
 #: classes/pref/feeds.php:1286
 #: plugins/import_export/init.php:72
 msgid "Choose file..."
-msgstr ""
+msgstr "Оберіть файл..."
 
 #: classes/pref/feeds.php:748
 msgid "Replace"
-msgstr ""
+msgstr "Замінити"
 
 #: classes/pref/feeds.php:755
 #: classes/pref/prefs.php:693
 msgid "Plugins"
-msgstr ""
+msgstr "Додатки"
 
 #: classes/pref/feeds.php:1153
 msgid "Feeds with errors"
-msgstr ""
+msgstr "Канали з помилками"
 
 #: classes/pref/feeds.php:1160
 msgid "Inactive feeds"
-msgstr ""
+msgstr "Неактивні канали"
 
 #: classes/pref/feeds.php:1196
 msgid "Edit selected feeds"
-msgstr ""
+msgstr "Змінити обрані канали"
 
 #: classes/pref/feeds.php:1198
 #: classes/pref/feeds.php:1212
 #: classes/pref/filters.php:782
 msgid "Reset sort order"
-msgstr ""
+msgstr "Скинути порядок сортування"
 
 #: classes/pref/feeds.php:1200
 #: js/PrefFeedTree.js:347
 msgid "Batch subscribe"
-msgstr ""
+msgstr "Масова підписка"
 
 #: classes/pref/feeds.php:1207
 msgid "Categories"
-msgstr ""
+msgstr "Категорії"
 
 #: classes/pref/feeds.php:1210
 msgid "Add category"
-msgstr ""
+msgstr "Додати категорію"
 
 #: classes/pref/feeds.php:1214
 msgid "Remove selected"
-msgstr ""
+msgstr "Вилучити обрані"
 
 #: classes/pref/feeds.php:1272
 msgid "OPML"
-msgstr ""
+msgstr "OPML"
 
 #: classes/pref/feeds.php:1274
 msgid "Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings."
 msgstr ""
+"Використовуючи OPML ви можете експортувати та імпортувати ваші канали, "
+"фільтри, мітки та налаштування Tiny Tiny RSS."
 
 #: classes/pref/feeds.php:1275
 msgid "Only main settings profile can be migrated using OPML."
 msgstr ""
+"Лише головні налаштування профілю можуть бути перенесені за допомогою OPML."
 
 #: classes/pref/feeds.php:1292
 msgid "Import OPML"
-msgstr ""
+msgstr "Імпорт OPML"
 
 #: classes/pref/feeds.php:1302
 msgid "Export OPML"
-msgstr ""
+msgstr "Експорт OPML"
 
 #: classes/pref/feeds.php:1306
 msgid "Include settings"
-msgstr ""
+msgstr "Включати налаштування"
 
 #: classes/pref/feeds.php:1313
 msgid "Published OPML"
-msgstr ""
+msgstr "Опублікований OPML"
 
 #: classes/pref/feeds.php:1315
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
 msgstr ""
+"Ваш OPML файл опублікований і може бути підписаний будь ким, хто знає "
+"нижчевказаний URL."
 
 #: classes/pref/feeds.php:1317
 msgid "Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds."
 msgstr ""
+"Опублікований OPML не включає налаштування Tiny Tiny RSS, канали, що "
+"вимагають автентифікації чи канали, приховані зі списку Популярні."
 
 #: classes/pref/feeds.php:1319
 msgid "Public OPML URL"
-msgstr ""
+msgstr "Публічне посилання на OPML"
 
 #: classes/pref/feeds.php:1320
 msgid "Display published OPML URL"
-msgstr ""
+msgstr "Показати публічне посилання на OPML"
 
 #: classes/pref/feeds.php:1328
 msgid "Published & shared articles / Generated feeds"
-msgstr ""
+msgstr "Показати та поширити статті / Створені канали"
 
 #: classes/pref/feeds.php:1330
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
 msgstr ""
+"Опубліковані статті можуть бути підписаними будь ким, хто знає наступне "
+"посилання:"
 
 #: classes/pref/feeds.php:1337
 #: classes/feeds.php:34
@@ -1623,71 +1646,71 @@ msgstr ""
 #: classes/feeds.php:99
 #: classes/feeds.php:100
 msgid "Show as feed"
-msgstr ""
+msgstr "Показати як канал"
 
 #: classes/pref/feeds.php:1338
 msgid "Display URL"
-msgstr ""
+msgstr "Показати посилання"
 
 #: classes/pref/feeds.php:1341
 msgid "Clear all generated URLs"
-msgstr ""
+msgstr "Прибрати всі створені посилання"
 
 #: classes/pref/feeds.php:1420
 msgid "These feeds have not been updated with new content for 3 months (oldest first):"
-msgstr ""
+msgstr "Ці канали не оновлювалися більш ніж 3 місяці (найстаріші першими):"
 
 #: classes/pref/feeds.php:1450
 #: classes/pref/feeds.php:1511
 msgid "Click to edit feed"
-msgstr ""
+msgstr "Клацніть щоб змінити канал"
 
 #: classes/pref/feeds.php:1468
 #: classes/pref/feeds.php:1531
 msgid "Unsubscribe from selected feeds"
-msgstr ""
+msgstr "Відписатися від обраних каналів"
 
 #: classes/pref/feeds.php:1632
 msgid "Add one valid RSS feed per line (no feed detection is done)"
-msgstr ""
+msgstr "Додайте по одному RSS каналу на рядок (перевірка каналів не робиться)"
 
 #: classes/pref/feeds.php:1641
 msgid "Feeds to subscribe, One per line"
-msgstr ""
+msgstr "Канали для підписки, Один на рядок"
 
 #: classes/pref/feeds.php:1664
 msgid "Feeds require authentication."
-msgstr ""
+msgstr "Канали вимагають автентифікацію."
 
 #: classes/pref/feeds.php:1671
 #: classes/feeds.php:703
 #: classes/feeds.php:759
 msgid "Subscribe"
-msgstr ""
+msgstr "Підписатися"
 
 #: classes/pref/filters.php:234
 #: classes/pref/filters.php:545
 msgid "(inverse)"
-msgstr ""
+msgstr "(обернутий)"
 
 #: classes/pref/filters.php:230
 #: classes/pref/filters.php:544
 #, php-format
 msgid "%s on %s in %s %s"
-msgstr ""
+msgstr "%s на %s в %s%s"
 
 #: classes/pref/filters.php:355
 #: classes/pref/filters.php:842
 #: classes/pref/filters.php:949
 msgid "Match"
-msgstr ""
+msgstr "Шукати збіг"
 
 #: classes/pref/filters.php:369
 #: classes/pref/filters.php:427
 #: classes/pref/filters.php:856
 #: classes/pref/filters.php:883
 msgid "Add"
-msgstr ""
+msgstr "Додати"
 
 #: classes/pref/filters.php:372
 #: classes/pref/filters.php:430
@@ -1695,91 +1718,91 @@ msgstr ""
 #: classes/pref/filters.php:886
 #: classes/feeds.php:80
 msgid "Delete"
-msgstr ""
+msgstr "Видалити"
 
 #: classes/pref/filters.php:413
 #: classes/pref/filters.php:869
 msgid "Apply actions"
-msgstr ""
+msgstr "Застосувати дії"
 
 #: classes/pref/filters.php:464
 #: classes/pref/filters.php:898
 msgid "Enabled"
-msgstr ""
+msgstr "Увімкнутий"
 
 #: classes/pref/filters.php:473
 #: classes/pref/filters.php:901
 msgid "Match any rule"
-msgstr ""
+msgstr "Задовольняє будь яке з правил"
 
 #: classes/pref/filters.php:482
 #: classes/pref/filters.php:904
 msgid "Inverse matching"
-msgstr ""
+msgstr "Обернути фільтр"
 
 #: classes/pref/filters.php:494
 #: classes/pref/filters.php:911
 msgid "Test"
-msgstr ""
+msgstr "Перевірка"
 
 #: classes/pref/filters.php:776
 msgid "Combine"
-msgstr ""
+msgstr "Об’єднувати"
 
 #: classes/pref/filters.php:914
 msgid "Create"
-msgstr ""
+msgstr "Створити"
 
 #: classes/pref/filters.php:959
 msgid "Regular expression, without outer delimiters (i.e. slashes)"
-msgstr ""
+msgstr "Регулярний вираз, без зовнішніх обмежувачів (тобто без слешів)"
 
 #: classes/pref/filters.php:965
 msgid "Inverse regular expression matching"
-msgstr ""
+msgstr "Обернути збіг з регулярним виразом"
 
 #: classes/pref/filters.php:967
 msgid "on field"
-msgstr ""
+msgstr "по полю"
 
 #: classes/pref/filters.php:973
 #: js/PrefFilterTree.js:45
 msgid "in"
-msgstr ""
+msgstr "в"
 
 #: classes/pref/filters.php:986
 msgid "Wiki: Filters"
-msgstr ""
+msgstr "Wiki: Фільтри"
 
 #: classes/pref/filters.php:991
 msgid "Save rule"
-msgstr ""
+msgstr "Зберегти правило"
 
 #: classes/pref/filters.php:991
 #: js/CommonFilters.js:133
 msgid "Add rule"
-msgstr ""
+msgstr "Додати правило"
 
 #: classes/pref/filters.php:1014
 msgid "Perform Action"
-msgstr ""
+msgstr "Виконати дію"
 
 #: classes/pref/filters.php:1065
 msgid "No actions available"
-msgstr ""
+msgstr "Немає доступних дій"
 
 #: classes/pref/filters.php:1084
 msgid "Save action"
-msgstr ""
+msgstr "Зберегти дію"
 
 #: classes/pref/filters.php:1084
 #: js/CommonFilters.js:155
 msgid "Add action"
-msgstr ""
+msgstr "Додати дію"
 
 #: classes/pref/filters.php:1111
 msgid "[No caption]"
-msgstr ""
+msgstr "[Без заголовку]"
 
 #: classes/pref/filters.php:1113
 #, php-format
@@ -1791,7 +1814,7 @@ msgstr[2] ""
 
 #: classes/pref/filters.php:1127
 msgid "matches any rule"
-msgstr ""
+msgstr "задовольняє будь якому правилу"
 
 #: classes/pref/filters.php:1130
 #, php-format
@@ -1803,23 +1826,23 @@ msgstr[2] ""
 
 #: classes/pref/prefs.php:19
 msgid "Interface"
-msgstr ""
+msgstr "Інтерфейс"
 
 #: classes/pref/prefs.php:20
 msgid "Advanced"
-msgstr ""
+msgstr "Розширені"
 
 #: classes/pref/prefs.php:21
 msgid "Digest"
-msgstr ""
+msgstr "Дайджест"
 
 #: classes/pref/prefs.php:25
 msgid "Allow duplicate articles"
-msgstr ""
+msgstr "Дозволяти дублікати статей"
 
 #: classes/pref/prefs.php:26
 msgid "Blacklisted tags"
-msgstr ""
+msgstr "Чорний список тегів"
 
 #: classes/pref/prefs.php:26
 msgid "When auto-detecting tags in articles these tags will not be applied (comma-separated list)."
