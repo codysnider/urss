@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2019-01-19 12:35+0000\n"
+"PO-Revision-Date: 2019-01-21 23:35+0000\n"
 "Last-Translator: Андрій Жук <zhouck@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.tt-rss.org/projects/tt-rss/"
 "messages/uk/>\n"
@@ -527,311 +527,314 @@ msgstr "Відкрити наступну статтю (не прокручув�
 
 #: include/functions.php:1150
 msgid "Open previous article (don't scroll long articles)"
-msgstr ""
+msgstr "Відкрити попередню статтю (не прокручувати довгі статті)"
 
 #: include/functions.php:1151
 msgid "Move to next article (don't expand or mark read)"
-msgstr ""
+msgstr "Перейти до наступної статті (не розгортати чи позначати прочитаною)"
 
 #: include/functions.php:1152
 msgid "Move to previous article (don't expand or mark read)"
-msgstr ""
+msgstr "Перейти до попередньої статті (не розгортати чи позначати прочитаною)"
 
 #: include/functions.php:1153
 msgid "Show search dialog"
-msgstr ""
+msgstr "Показати діалог пошуку"
 
 #: include/functions.php:1154
 msgid "Article"
-msgstr ""
+msgstr "Стаття"
 
 #: include/functions.php:1155
 #: js/Headlines.js:1233
 msgid "Toggle starred"
-msgstr ""
+msgstr "Позначити/зняти відмітку"
 
 #: include/functions.php:1156
 #: js/Headlines.js:1245
 msgid "Toggle published"
-msgstr ""
+msgstr "Опубліковано/не опубліковано"
 
 #: include/functions.php:1157
 #: js/Headlines.js:1220
 msgid "Toggle unread"
-msgstr ""
+msgstr "Прочитано/не прочитано"
 
 #: include/functions.php:1158
 msgid "Edit tags"
-msgstr ""
+msgstr "Редагувати теги"
 
 #: include/functions.php:1159
 msgid "Open in new window"
-msgstr ""
+msgstr "Відкрити в новому вікні"
 
 #: include/functions.php:1160
 #: js/Headlines.js:1266
 msgid "Mark below as read"
-msgstr ""
+msgstr "Позначити статті нижче як прочитані"
 
 #: include/functions.php:1161
 #: js/Headlines.js:1259
 msgid "Mark above as read"
-msgstr ""
+msgstr "Позначити статті вище як прочитані"
 
 #: include/functions.php:1162
 msgid "Scroll down"
-msgstr ""
+msgstr "Гортати донизу"
 
 #: include/functions.php:1163
 msgid "Scroll up"
-msgstr ""
+msgstr "Гортати уверх"
 
 #: include/functions.php:1164
 msgid "Select article under cursor"
-msgstr ""
+msgstr "Обрати статтю під курсором"
 
 #: include/functions.php:1165
 msgid "Email article"
-msgstr ""
+msgstr "Надіслати статтю поштою"
 
 #: include/functions.php:1166
 msgid "Close/collapse article"
-msgstr ""
+msgstr "Закрити/згорнути статтю"
 
 #: include/functions.php:1167
 msgid "Toggle article expansion (combined mode)"
-msgstr ""
+msgstr "Перемкнути розтягнення статті (комбінований режим)"
 
 #: include/functions.php:1169
 msgid "Toggle embed original"
-msgstr ""
+msgstr "Перемкнути показ оригіналу"
 
 #: include/functions.php:1170
 msgid "Article selection"
-msgstr ""
+msgstr "Вибрати статтю"
 
 #: include/functions.php:1171
 msgid "Select all articles"
-msgstr ""
+msgstr "Вибрати всі статті"
 
 #: include/functions.php:1172
 msgid "Select unread"
-msgstr ""
+msgstr "Вибрати непрочитані"
 
 #: include/functions.php:1173
 msgid "Select starred"
-msgstr ""
+msgstr "Вибрати позначені зірочкою"
 
 #: include/functions.php:1174
 msgid "Select published"
-msgstr ""
+msgstr "Вибрати опубліковані"
 
 #: include/functions.php:1175
 msgid "Invert selection"
-msgstr ""
+msgstr "Інвертувати вибір"
 
 #: include/functions.php:1176
 msgid "Deselect everything"
-msgstr ""
+msgstr "Зняти вибір з усіх"
 
 #: include/functions.php:1177
 #: classes/pref/feeds.php:521
 #: classes/pref/feeds.php:792
 msgid "Feed"
-msgstr ""
+msgstr "Канал"
 
 #: include/functions.php:1178
 msgid "Refresh current feed"
-msgstr ""
+msgstr "Оновити поточний канал"
 
 #: include/functions.php:1179
 msgid "Un/hide read feeds"
-msgstr ""
+msgstr "Сховати/показати прочитані канали"
 
 #: include/functions.php:1180
 #: classes/pref/feeds.php:1194
 msgid "Subscribe to feed"
-msgstr ""
+msgstr "Підписатися на канал"
 
 #: include/functions.php:1181
 #: js/Headlines.js:1383
 #: js/PrefFeedTree.js:56
 #: js/FeedTree.js:62
 msgid "Edit feed"
-msgstr ""
+msgstr "Редагувати канал"
 
 #: include/functions.php:1183
 msgid "Reverse headlines"
-msgstr ""
+msgstr "Зворотній порядок заголовків"
 
 #: include/functions.php:1184
 msgid "Toggle headline grouping"
-msgstr ""
+msgstr "Перемкнути групування заголовків"
 
 #: include/functions.php:1185
 msgid "Debug feed update"
-msgstr ""
+msgstr "Налагодження оновлень каналу"
 
 #: include/functions.php:1186
 msgid "Debug viewfeed()"
-msgstr ""
+msgstr "Налагодження оновлення каналу"
 
 #: include/functions.php:1187
 #: js/FeedTree.js:111
 msgid "Mark all feeds as read"
-msgstr ""
+msgstr "Позначити всі канали як прочитані"
 
 #: include/functions.php:1188
 msgid "Un/collapse current category"
-msgstr ""
+msgstr "Згорнути/розгорнути поточну категорію"
 
 #: include/functions.php:1189
 msgid "Toggle auto expand in combined mode"
-msgstr ""
+msgstr "Перемкнути автоматичне розгортання в комбінованому режимі"
 
 #: include/functions.php:1190
 msgid "Toggle combined mode"
-msgstr ""
+msgstr "Перемкнути комбінований режим"
 
 #: include/functions.php:1191
 msgid "Go to"
-msgstr ""
+msgstr "Перейти до"
 
 #: include/functions.php:1192
 #: classes/feeds.php:1258
 msgid "All articles"
-msgstr ""
+msgstr "Всі статті"
 
 #: include/functions.php:1193
 msgid "Fresh"
-msgstr ""
+msgstr "Свіжі"
 
 #: include/functions.php:1196
 #: js/tt-rss.js:428
 #: js/tt-rss.js:507
 msgid "Tag cloud"
-msgstr ""
+msgstr "Хмара тегів"
 
 #: include/functions.php:1198
 msgid "Other"
-msgstr ""
+msgstr "Інші"
 
 #: include/functions.php:1199
 #: classes/pref/labels.php:272
 msgid "Create label"
-msgstr ""
+msgstr "Створити мітку"
 
 #: include/functions.php:1200
 #: classes/pref/filters.php:773
 msgid "Create filter"
-msgstr ""
+msgstr "Створити фільтр"
 
 #: include/functions.php:1201
 msgid "Un/collapse sidebar"
-msgstr ""
+msgstr "Показати/приховати бічну панель"
 
 #: include/functions.php:1203
 msgid "Show help dialog"
-msgstr ""
+msgstr "Показати діалог допомоги"
 
 #: include/functions.php:2456
 msgid "There is no error, the file uploaded with success"
-msgstr ""
+msgstr "Помилок немає, файл успішно завантажено"
 
 #: include/functions.php:2457
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
+"Розмір завантаженого файлу перевищує директиву upload_max_filesize в php.ini"
 
 #: include/functions.php:2458
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
+"Розмір завантаженого файлу перевищує директиву MAX_FILE_SIZE, вказану в "
+"формі HTML"
 
 #: include/functions.php:2459
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Завантажуваний файл було лише частково завантажено"
 
 #: include/functions.php:2460
 msgid "No file was uploaded"
-msgstr ""
+msgstr "Жоден файл не був завантажений"
 
 #: include/functions.php:2461
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "Відсутня тека для тимчасових файлів"
 
 #: include/functions.php:2462
 msgid "Failed to write file to disk."
-msgstr ""
+msgstr "Помилка запису файлу на диск."
 
 #: include/functions.php:2463
 msgid "A PHP extension stopped the file upload."
-msgstr ""
+msgstr "Розширення PHP зупинилося під час завантаження."
 
 #: include/login_form.php:84
 #: classes/handler/public.php:675
 #: classes/handler/public.php:943
 msgid "Login:"
-msgstr ""
+msgstr "Ім’я:"
 
 #: include/login_form.php:94
 #: classes/handler/public.php:678
 msgid "Password:"
-msgstr ""
+msgstr "Пароль:"
 
 #: include/login_form.php:101
 msgid "I forgot my password"
-msgstr ""
+msgstr "Я забув свій пароль"
 
 #: include/login_form.php:107
 msgid "Profile:"
-msgstr ""
+msgstr "Профіль:"
 
 #: include/login_form.php:111
 #: classes/handler/public.php:281
 #: classes/pref/prefs.php:1050
 #: classes/rpc.php:69
 msgid "Default profile"
-msgstr ""
+msgstr "Типовий профіль"
 
 #: include/login_form.php:119
 msgid "Use less traffic"
-msgstr ""
+msgstr "Використовувати менше трафіку"
 
 #: include/login_form.php:123
 msgid "Does not display images in articles, reduces automatic refreshes."
-msgstr ""
+msgstr "Не показувати зображення у статтях, зменшує кількість автооновлень."
 
 #: include/login_form.php:131
 msgid "Remember me"
-msgstr ""
+msgstr "Запам’ятати мене"
 
 #: include/login_form.php:137
 #: classes/handler/public.php:683
 msgid "Log in"
-msgstr ""
+msgstr "Увійти"
 
 #: include/sessions.php:45
 msgid "Session failed to validate (schema version changed)"
-msgstr ""
+msgstr "Не вдається перевірити сесію (версія схеми змінилася)"
 
 #: include/sessions.php:53
 msgid "Session failed to validate (UA changed)."
-msgstr ""
+msgstr "Не вдається перевірити сесію (UA змінився)."
 
 #: include/sessions.php:67
 msgid "Session failed to validate (password changed)"
-msgstr ""
+msgstr "Не вдається перевірити сесію (змінився пароль)"
 
 #: include/sessions.php:74
 msgid "Session failed to validate (user not found)"
-msgstr ""
+msgstr "Не вдається перевірити сесію (користувача не знайдено)"
 
 #: classes/article.php:26
 msgid "Article not found."
-msgstr ""
+msgstr "Статтю не знайдено."
 
 #: classes/article.php:214
 msgid "Tags for this article (separated by commas):"
-msgstr ""
+msgstr "Теги для статті (розділені комами):"
 
 #: classes/article.php:239
 #: classes/pref/labels.php:79
@@ -848,7 +851,7 @@ msgstr ""
 #: plugins/mail/init.php:66
 #: plugins/af_zz_imgproxy/init.php:239
 msgid "Save"
-msgstr ""
+msgstr "Зберегти"
 
 #: classes/article.php:241
 #: classes/handler/public.php:652
@@ -869,82 +872,82 @@ msgstr ""
 #: plugins/note/init.php:58
 #: plugins/mail/init.php:179
 msgid "Cancel"
-msgstr ""
+msgstr "Скасувати"
 
 #: classes/article.php:336
 #: classes/article.php:602
 msgid "no tags"
-msgstr ""
+msgstr "без тегів"
 
 #: classes/article.php:446
 msgid "unknown type"
-msgstr ""
+msgstr "невідомий тип"
 
 #: classes/article.php:523
 msgid "Attachments"
-msgstr ""
+msgstr "Вкладення"
 
 #: classes/opml.php:28
 #: classes/opml.php:33
 msgid "OPML Utility"
-msgstr ""
+msgstr "Утиліта OPML"
 
 #: classes/opml.php:37
 msgid "Importing OPML..."
-msgstr ""
+msgstr "Імпортування OPML..."
 
 #: classes/opml.php:42
 msgid "Return to preferences"
-msgstr ""
+msgstr "Повернутися до налаштувань"
 
 #: classes/opml.php:298
 #, php-format
 msgid "Adding feed: %s"
-msgstr ""
+msgstr "Додаю канал: %s"
 
 #: classes/opml.php:309
 #, php-format
 msgid "Duplicate feed: %s"
-msgstr ""
+msgstr "Канал вже існує: %s"
 
 #: classes/opml.php:323
 #, php-format
 msgid "Adding label %s"
-msgstr ""
+msgstr "Додаю мітку %s"
 
 #: classes/opml.php:326
 #, php-format
 msgid "Duplicate label: %s"
-msgstr ""
+msgstr "Мітка вже існує: %s"
 
 #: classes/opml.php:338
 #, php-format
 msgid "Setting preference key %s to %s"
-msgstr ""
+msgstr "Встановлюю ключ налаштувань %s в %s"
 
 #: classes/opml.php:374
 msgid "Adding filter..."
-msgstr ""
+msgstr "Додаю фільтр..."
 
 #: classes/opml.php:509
 #, php-format
 msgid "Processing category: %s"
-msgstr ""
+msgstr "Опрацьовую категорію: %s"
 
 #: classes/opml.php:555
 #, php-format
 msgid "Upload failed with error code %d"
-msgstr ""
+msgstr "Завантаження завершилося з помилкою %d"
 
 #: classes/opml.php:567
 #: plugins/import_export/init.php:472
 msgid "Unable to move uploaded file."
-msgstr ""
+msgstr "Не вдалося перемістити завантажений файл."
 
 #: classes/opml.php:571
 #: plugins/import_export/init.php:476
 msgid "Error: please upload OPML file."
-msgstr ""
+msgstr "Помилка: завантажуйте OPML файл."
 
 #: classes/opml.php:582
 msgid "Error: unable to find moved OPML file."
