@@ -276,9 +276,11 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 					const node = treeNode.rowNode;
 					const tree = this.domNode;
 
-					// scroll tree to selection if needed
-					if (node.offsetTop < tree.scrollTop || node.offsetTop > tree.scrollTop + tree.clientHeight) {
-						$("feedTree").scrollTop = node.offsetTop;
+					if (node && tree) {
+						// scroll tree to selection if needed
+						if (node.offsetTop < tree.scrollTop || node.offsetTop > tree.scrollTop + tree.clientHeight) {
+							$("feedTree").scrollTop = node.offsetTop;
+						}
 					}
 
 				}, 0);
