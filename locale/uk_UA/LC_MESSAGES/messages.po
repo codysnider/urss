@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2019-01-25 12:35+0000\n"
+"PO-Revision-Date: 2019-01-26 18:34+0000\n"
 "Last-Translator: Андрій Жук <zhouck@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.tt-rss.org/projects/tt-rss/"
 "messages/uk/>\n"
@@ -1847,171 +1847,188 @@ msgstr "Чорний список тегів"
 #: classes/pref/prefs.php:26
 msgid "When auto-detecting tags in articles these tags will not be applied (comma-separated list)."
 msgstr ""
+"Коли використовується автоматичне визначення тегів у статтях, ці теги не "
+"будуть використані (список, розділений комами)."
 
 #: classes/pref/prefs.php:27
 msgid "Automatically mark articles as read"
-msgstr ""
+msgstr "Автоматично позначати статті прочитаними"
 
 #: classes/pref/prefs.php:27
 msgid "This option enables marking articles as read automatically while you scroll article list."
 msgstr ""
+"Ця опція вмикає позначення статей прочитаними автоматично при прокрутці "
+"списку статей."
 
 #: classes/pref/prefs.php:28
 msgid "Automatically expand articles in combined mode"
-msgstr ""
+msgstr "Автоматично розгортати статті в комбінованому режимі"
 
 #: classes/pref/prefs.php:29
 msgid "Combined feed display"
-msgstr ""
+msgstr "Комбінований режим показу"
 
 #: classes/pref/prefs.php:29
 msgid "Display expanded list of feed articles, instead of separate displays for headlines and article content"
 msgstr ""
+"Показувати розгорнутий список статей каналу, замість показування окремо "
+"заголовків та вмісту статей"
 
 #: classes/pref/prefs.php:30
 msgid "Confirm marking feed as read"
-msgstr ""
+msgstr "Підтверджувати позначення каналу прочитаним"
 
 #: classes/pref/prefs.php:31
 msgid "Amount of articles to display at once"
-msgstr ""
+msgstr "Кількість статей, що показуються на сторінці"
 
 #: classes/pref/prefs.php:32
 msgid "Default feed update interval"
-msgstr ""
+msgstr "Типовий інтервал оновлення каналу"
 
 #: classes/pref/prefs.php:32
 msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
 msgstr ""
+"Найкоротший інтервал, за який канал може перевіритися, незалежно від методу "
+"оновлення"
 
 #: classes/pref/prefs.php:33
 msgid "Mark articles in e-mail digest as read"
-msgstr ""
+msgstr "Позначати статті, надіслані в дайджесті поштою, як прочитані"
 
 #: classes/pref/prefs.php:34
 msgid "Enable e-mail digest"
-msgstr ""
+msgstr "Включити дайджест електронною поштою"
 
 #: classes/pref/prefs.php:34
 msgid "This option enables sending daily digest of new (and unread) headlines on your configured e-mail address"
 msgstr ""
+"Ця опція дозволяє надсилати щоденний дайджест нових (та непрочитаних) "
+"заголовків на визначені електронні адреси"
 
 #: classes/pref/prefs.php:35
 msgid "Try to send digests around specified time"
-msgstr ""
+msgstr "Пробувати надсилати дайджест близько вказаного часу"
 
 #: classes/pref/prefs.php:35
 msgid "Uses UTC timezone"
-msgstr ""
+msgstr "Використовувати часову зону UTC"
 
 #: classes/pref/prefs.php:36
 msgid "Enable API access"
-msgstr ""
+msgstr "Дозволити доступ через API"
 
 #: classes/pref/prefs.php:36
 msgid "Allows external clients to access this account through the API"
 msgstr ""
+"Дозволяє зовнішнім клієнтам мати доступ до цього облікового запису через API"
 
 #: classes/pref/prefs.php:37
 msgid "Enable feed categories"
-msgstr ""
+msgstr "Дозволити категорії каналів"
 
 #: classes/pref/prefs.php:38
 msgid "Sort feeds by unread articles count"
-msgstr ""
+msgstr "Сортувати канали по кількості непрочитаних статей"
 
 #: classes/pref/prefs.php:39
 msgid "Maximum age of fresh articles (in hours)"
-msgstr ""
+msgstr "Найдовший вік нових статей (в годинах)"
 
 #: classes/pref/prefs.php:40
 msgid "Hide feeds with no unread articles"
-msgstr ""
+msgstr "Приховувати канали без непрочитаних статей"
 
 #: classes/pref/prefs.php:41
 msgid "Show special feeds when hiding read feeds"
-msgstr ""
+msgstr "Показувати спеціальні канали, коли приховуються прочитані канали"
 
 #: classes/pref/prefs.php:42
 msgid "Long date format"
-msgstr ""
+msgstr "Довгий формат дати"
 
 #: classes/pref/prefs.php:42
 msgid "The syntax used is identical to the PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
 msgstr ""
+"Використовується синтаксис, ідентичний до функції PHP <a href='http://php."
+"net/manual/function.date.php'>date()</a>."
 
 #: classes/pref/prefs.php:43
 msgid "On catchup show next feed"
-msgstr ""
+msgstr "Показувати наступний канал при відмітці прочитаним поточного"
 
 #: classes/pref/prefs.php:43
 msgid "Automatically open next feed with unread articles after marking one as read"
 msgstr ""
+"Автоматично відкривати новий канал з непрочитаними статтями після позначення "
+"поточного прочитаним"
 
 #: classes/pref/prefs.php:44
 msgid "Purge articles after this number of days (0 - disables)"
-msgstr ""
+msgstr "Витирати статті після такої кількості днів (0 - не витирати)"
 
 #: classes/pref/prefs.php:45
 msgid "Purge unread articles"
-msgstr ""
+msgstr "Витирати непрочитані статті"
 
 #: classes/pref/prefs.php:46
 msgid "Reverse headline order (oldest first)"
-msgstr ""
+msgstr "Зворотній порядок статей (старіші найперш)"
 
 #: classes/pref/prefs.php:47
 msgid "Short date format"
-msgstr ""
+msgstr "Короткий формат дати"
 
 #: classes/pref/prefs.php:48
 msgid "Show content preview in headlines list"
-msgstr ""
+msgstr "Показати передогляд вмісту в списку заголовків"
 
 #: classes/pref/prefs.php:49
 msgid "Sort headlines by feed date"
-msgstr ""
+msgstr "Сортувати заголовки по даті, вказаній у каналі"
 
 #: classes/pref/prefs.php:49
 msgid "Use feed-specified date to sort headlines instead of local import date."
 msgstr ""
+"Використовувати вказану для каналу дату для сортування заголовків замість "
+"дати імпорту."
 
 #: classes/pref/prefs.php:50
 msgid "Login with an SSL certificate"
-msgstr ""
+msgstr "Вхід з SSL сертифікатом"
 
 #: classes/pref/prefs.php:50
 msgid "Click to register your SSL client certificate with tt-rss"
-msgstr ""
+msgstr "Клацніть, щоб зареєструвати свій клієнтський SSL сертифікат в tt-rss"
 
 #: classes/pref/prefs.php:51
 msgid "Do not embed media in articles"
-msgstr ""
+msgstr "Не вбудовувати медіа у статті"
 
 #: classes/pref/prefs.php:52
 msgid "Strip unsafe tags from articles"
-msgstr ""
+msgstr "Видаляти небезпечні теги зі статей"
 
 #: classes/pref/prefs.php:52
 msgid "Strip all but most common HTML tags when reading articles."
-msgstr ""
+msgstr "Видаляти всі, окрім найбільш типових HTML тегів при показі статей."
 
 #: classes/pref/prefs.php:53
 #: js/PrefHelpers.js:113
 msgid "Customize stylesheet"
-msgstr ""
+msgstr "Власний css стиль"
 
 #: classes/pref/prefs.php:53
 msgid "Customize CSS stylesheet to your liking"
-msgstr ""
+msgstr "Налаштуйте вигляд за смаком, вказавши свій CSS"
 
 #: classes/pref/prefs.php:54
 msgid "Time zone"
-msgstr ""
+msgstr "Часова зона"
 
 #: classes/pref/prefs.php:55
 msgid "Group headlines in virtual feeds"
-msgstr ""
+msgstr "Групувати заголовки у віртуальні канали"
 
 #: classes/pref/prefs.php:55
 msgid "Special feeds, labels, and categories are grouped by originating feeds"
