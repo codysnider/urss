@@ -1,7 +1,7 @@
 <?php
 class Pref_Feeds extends Handler_Protected {
 	public static $feed_languages = array("English", "Danish", "Dutch", "Finnish", "French", "German", "Hungarian", "Italian", "Norwegian",
-		"Portuguese", "Russian", "Spanish", "Swedish", "Turkish", "Ukrainian", "Simple");
+		"Portuguese", "Russian", "Spanish", "Swedish", "Turkish", "Simple");
 
 	function csrf_ignore($method) {
 		$csrf_ignored = array("index", "getfeedtree", "add", "editcats", "editfeed",
