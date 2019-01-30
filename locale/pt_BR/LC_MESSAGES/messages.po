@@ -9,14 +9,16 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2018-04-28 09:07-0300\n"
-"Last-Translator: Eduardo Kalinowski <eduardo@kalinowski.com.br>\n"
-"Language-Team: Portuguese/Brazil\n"
+"PO-Revision-Date: 2019-01-31 17:35+0000\n"
+"Last-Translator: Marco Aurélio Graciotto Silva <magsilva@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) <https://weblate.tt-rss.org/projects/"
+"tt-rss/messages/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -162,7 +164,7 @@ msgstr "Plugin não encontrado"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
-msgstr ""
+msgstr "A codificação dos dados para JSON falhou"
 
 #: index.php:128
 #: index.php:143
@@ -198,7 +200,7 @@ msgstr "Problemas na comunicação com o servidor."
 
 #: index.php:155
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "Foram encontradas entradas recentes no log de eventos."
 
 #: index.php:158
 msgid "Updates are available from Git."
@@ -334,9 +336,8 @@ msgstr "Ativa/Desativa modo tela-cheia"
 
 #: index.php:232
 #: include/functions.php:1202
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "Ativar/Desativar modo combinado"
+msgstr "Ativar/Desativar modo noturno"
 
 #: index.php:233
 msgid "Keyboard shortcuts help"
@@ -793,7 +794,7 @@ msgstr "Usar menos tráfego"
 
 #: include/login_form.php:123
 msgid "Does not display images in articles, reduces automatic refreshes."
-msgstr "Não mostra imagens em artigos, reduz as atualizações automáticas"
+msgstr "Não mostra imagens em artigos, reduz as atualizações automáticas."
 
 #: include/login_form.php:131
 msgid "Remember me"
@@ -809,9 +810,8 @@ msgid "Session failed to validate (schema version changed)"
 msgstr "Falha ao validar a sessão (versão do banco de dados mudou)"
 
 #: include/sessions.php:53
-#, fuzzy
 msgid "Session failed to validate (UA changed)."
-msgstr "Falha ao validar a sessão (senha foi alterada)"
+msgstr "Não foi possível validar a sessão (UA alterado)."
 
 #: include/sessions.php:67
 msgid "Session failed to validate (password changed)"
@@ -1016,9 +1016,9 @@ msgid "Update daemon is taking too long to perform a feed update. This could ind
 msgstr "O serviço de atualização está demorando demais para atualizar um feed. Isso pode indicar um problema. Por favor verifique o processo correspondente ou contacte o administrador."
 
 #: classes/dlg.php:168
-#, fuzzy, php-format
+#, php-format
 msgid "%s can be accessed via the following secret URL:"
-msgstr "Você pode compartilhar esse artigo pela seguinte URL:"
+msgstr "%s pode ser compartilhado pela seguinte URL secreta:"
 
 #: classes/dlg.php:189
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
@@ -1081,7 +1081,7 @@ msgstr "Usuário ou senha inválidos"
 #: classes/handler/public.php:792
 #, php-format
 msgid "Already subscribed to <b>%s</b>."
-msgstr "Já inscrito em <b>%s</b>"
+msgstr "Já inscrito em <b>%s</b>."
 
 #: classes/handler/public.php:795
 #, php-format
@@ -1091,7 +1091,7 @@ msgstr "Inscrito em <b>%s</b>."
 #: classes/handler/public.php:798
 #, php-format
 msgid "Could not subscribe to <b>%s</b>."
-msgstr "Não foi possível inscrever-se em <b>%s</b>"
+msgstr "Não foi possível inscrever-se em <b>%s</b>."
 
 #: classes/handler/public.php:801
 #, php-format
@@ -1255,7 +1255,7 @@ msgstr "Autenticação"
 
 #: classes/pref/users.php:64
 msgid "Access level: "
-msgstr "Nível de acesso:"
+msgstr "Nível de acesso: "
 
 #: classes/pref/users.php:82
 #: classes/pref/feeds.php:646
@@ -1294,29 +1294,29 @@ msgid "User not found"
 msgstr "Usuário não encontrado"
 
 #: classes/pref/users.php:247
-#, fuzzy, php-format
+#, php-format
 msgid "Added user %s with password %s"
-msgstr "Adicionado usuário <b>%s</b> com senha <b>%s</b>"
+msgstr "Adicionado usuário %s com a senha %s"
 
 #: classes/pref/users.php:254
-#, fuzzy, php-format
+#, php-format
 msgid "Could not create user %s"
-msgstr "Não foi possível criar o usuário <b>%s</b>"
+msgstr "Não foi possível criar o usuário %s"
 
 #: classes/pref/users.php:258
-#, fuzzy, php-format
+#, php-format
 msgid "User %s already exists."
-msgstr "O usuário <b>%s</b> já existe."
+msgstr "Usuário %s já existe."
 
 #: classes/pref/users.php:286
-#, fuzzy, php-format
+#, php-format
 msgid "Changed password of user %s to %s"
-msgstr "Senha do usuário <b>%s</b> alterada para <b>%s</b>"
+msgstr "Senha do usuário %s alterada para %s"
 
 #: classes/pref/users.php:288
-#, fuzzy, php-format
+#, php-format
 msgid "Sending new password of user %s to %s"
-msgstr "Enviando nova senha do usuário <b>%s</b> para <b>%s</b>"
+msgstr "Enviando nova senha do usuário %s para %s"
 
 #: classes/pref/users.php:311
 msgid "[tt-rss] Password change notification"
@@ -1370,7 +1370,7 @@ msgstr "Nenhum usuário encontrado."
 
 #: classes/pref/system.php:30
 msgid "Event Log"
-msgstr ""
+msgstr "Registro (log) de eventos"
 
 #: classes/pref/system.php:41
 msgid "Refresh"
@@ -1489,7 +1489,6 @@ msgstr "Sempre mostrar imagens anexas"
 
 #: classes/pref/feeds.php:698
 #: classes/pref/feeds.php:889
-#, fuzzy
 msgid "Do not embed media"
 msgstr "Não embutir imagens"
 
@@ -1570,7 +1569,6 @@ msgid "Only main settings profile can be migrated using OPML."
 msgstr "Só o perfil de configurações principal pode ser migrado via OPML."
 
 #: classes/pref/feeds.php:1292
-#, fuzzy
 msgid "Import OPML"
 msgstr "Importar OPML"
 
@@ -1583,9 +1581,8 @@ msgid "Include settings"
 msgstr "Incluir configurações"
 
 #: classes/pref/feeds.php:1313
-#, fuzzy
 msgid "Published OPML"
-msgstr "Publicados"
+msgstr "OPML publicado"
 
 #: classes/pref/feeds.php:1315
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
@@ -1594,6 +1591,8 @@ msgstr "Seu OPML pode ser inscrito por qualquer um que conheça a URL abaixo."
 #: classes/pref/feeds.php:1317
 msgid "Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds."
 msgstr ""
+"OPML publicado não contém configurações do Tiny Tiny RSS, feeds que precisam "
+"de autenticação ou feeds ocultos dos feeds populares."
 
 #: classes/pref/feeds.php:1319
 msgid "Public OPML URL"
@@ -1608,18 +1607,18 @@ msgid "Published & shared articles / Generated feeds"
 msgstr "Artigos publicados e compartilhados / Feeds gerados"
 
 #: classes/pref/feeds.php:1330
-#, fuzzy
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "Seu OPML pode ser inscrito por qualquer um que conheça a URL abaixo."
+msgstr ""
+"Qualquer um pode se inscrever para os artigos publicados utilizando a URL a "
+"seguir:"
 
 #: classes/pref/feeds.php:1337
 #: classes/feeds.php:34
 #: classes/feeds.php:35
 #: classes/feeds.php:99
 #: classes/feeds.php:100
-#, fuzzy
 msgid "Show as feed"
-msgstr "Ver como um feed RSS"
+msgstr "Mostrar como um feed RSS"
 
 #: classes/pref/feeds.php:1338
 msgid "Display URL"
@@ -1853,7 +1852,9 @@ msgstr "Intervalo de atualização padrão"
 
 #: classes/pref/prefs.php:32
 msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
-msgstr "Intervalo mais curto em que um feed será verificado para atualização, não importando o mecanismo selecionado."
+msgstr ""
+"Intervalo mais curto em que um feed será verificado para atualização, não "
+"importando o mecanismo selecionado"
 
 #: classes/pref/prefs.php:33
 msgid "Mark articles in e-mail digest as read"
@@ -1956,7 +1957,6 @@ msgid "Click to register your SSL client certificate with tt-rss"
 msgstr "Clique para registrar seu certificado SSL no tt-rss"
 
 #: classes/pref/prefs.php:51
-#, fuzzy
 msgid "Do not embed media in articles"
 msgstr "Não incluir imagens nos artigos"
 
@@ -2103,7 +2103,6 @@ msgid "Customize"
 msgstr "Personalizar"
 
 #: classes/pref/prefs.php:563
-#, fuzzy
 msgid "default"
 msgstr "Padrão"
 
@@ -2188,9 +2187,10 @@ msgid "Incorrect password"
 msgstr "Senha inválida"
 
 #: classes/pref/prefs.php:989
-#, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr "Você pode alterar cores, fontes e layout do tema atual com uma folha de estilo (CSS) personalizada. <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">Esse arquivo</a> pode ser usado como referência."
+msgstr ""
+"Você pode alterar cores, fontes e layout do tema atual ao incluir "
+"declarações CSS personalizadas aqui."
 
 #: classes/pref/prefs.php:1026
 msgid "Create profile"
@@ -2440,7 +2440,7 @@ msgstr "Atualmente habilitado para (clique para editar):"
 
 #: plugins/af_readability/init.php:107
 msgid "Readability"
-msgstr "Readability"
+msgstr "Legibilidade"
 
 #: plugins/af_readability/init.php:118
 msgid "Inline article content"
@@ -2645,9 +2645,8 @@ msgid "Use this bookmarklet to publish arbitrary pages using Tiny Tiny RSS"
 msgstr "Use este bookmarklet para publicar qualquer página usando o Tiny Tiny RSS"
 
 #: plugins/toggle_sidebar/init.php:23
-#, fuzzy
 msgid "Toggle feedlist"
-msgstr "Contrair lista de feeds"
+msgstr "Expandir/Contrair lista de feeds"
 
 #: plugins/af_zz_imgproxy/init.php:209
 msgid "Image proxy settings (af_zz_imgproxy)"
@@ -2707,7 +2706,7 @@ msgstr "Detalhamento do erro"
 
 #: js/AppBase.js:399
 msgid "Fatal error"
-msgstr ""
+msgstr "Erro fatal"
 
 #: js/Article.js:33
 msgid "Please enter new score for selected articles:"
@@ -2724,7 +2723,6 @@ msgstr "Por favor entre uma nova classificação para os artigos selecionados:"
 #: js/Headlines.js:1082
 #: plugins/mail/mail.js:7
 #: plugins/mailto/init.js:7
-#, fuzzy
 msgid "No articles selected."
 msgstr "Nenhum artigo foi selecionado."
 
@@ -2802,7 +2800,6 @@ msgstr "Remover feeds selecionados?"
 #: js/PrefFeedTree.js:230
 #: js/PrefFeedTree.js:246
 #: js/PrefFeedTree.js:398
-#, fuzzy
 msgid "No feeds selected."
 msgstr "Nenhum feed foi selecionado."
 
@@ -2953,7 +2950,6 @@ msgid "Remove selected categories?"
 msgstr "Remover as categorias selecionadas?"
 
 #: js/PrefFeedTree.js:209
-#, fuzzy
 msgid "No categories selected."
 msgstr "Nenhuma categoria foi selecionada."
 
@@ -2966,9 +2962,8 @@ msgid "Save changes to selected feeds?"
 msgstr "Salvar alterações nas inscrições selecionadas?"
 
 #: js/PrefFeedTree.js:315
-#, fuzzy
 msgid "Rename category to:"
-msgstr "Remover categoria"
+msgstr "Remover categoria para:"
 
 #: js/PrefFeedTree.js:327
 msgid "Category title:"
@@ -2989,7 +2984,6 @@ msgstr "Invertido"
 #: js/PrefFilterTree.js:107
 #: js/PrefFilterTree.js:123
 #: js/PrefFilterTree.js:236
-#, fuzzy
 msgid "No filters selected."
 msgstr "Nenhum filtro foi selecionado."
 
@@ -3018,9 +3012,8 @@ msgid "This will invalidate all previously generated feed URLs. Continue?"
 msgstr "Isso irá invalidar todos os URLs gerados para feeds. Continuar?"
 
 #: js/PrefHelpers.js:21
-#, fuzzy
 msgid "Clear event log?"
-msgstr "Limpar o log"
+msgstr "Limpar o log de eventos?"
 
 #: js/PrefHelpers.js:40
 msgid "Settings Profiles"
@@ -3031,9 +3024,8 @@ msgid "Remove selected profiles? Active and default profiles will not be removed
 msgstr "Remover os perfis selecionados? O perfil ativo e os perfis padrão não serão removidos."
 
 #: js/PrefHelpers.js:64
-#, fuzzy
 msgid "No profiles selected."
-msgstr "Nenhum perfil está selecionado."
+msgstr "Nenhum perfil foi selecionado."
 
 #: js/PrefHelpers.js:71
 msgid "Activate selected profile?"
@@ -3118,14 +3110,18 @@ msgstr "Isso irá invalidar todos os URLs de artigos compartilhados anteriorment
 #: js/AppBase.js:261
 msgid "<span onclick=\"App.explainError(1)\">Update daemon is not running.</span>"
 msgstr ""
+"<span onclick=\"App.explainError(1)\">Serviço de atualização de feeds não "
+"está em funcionamento.</span>"
 
 #: js/AppBase.js:274
 msgid "<span onclick=\"App.explainError(3)\">Update daemon is not updating feeds.</span>"
 msgstr ""
+"<span onclick=\"App.explainError(3)\">Serviço de atualização não está "
+"atualizando os feeds.</span>"
 
 #: js/AppBase.js:449
 msgid "Unhandled exception"
-msgstr ""
+msgstr "Exceção não tratada"
 
 #: js/Article.js:236
 msgid "Edit article Tags"
@@ -3140,14 +3136,12 @@ msgid "Upload complete."
 msgstr "Upload completo."
 
 #: js/CommonDialogs.js:22
-#, fuzzy
 msgid "Upload failed: icon is too big."
-msgstr "Envio falhou com o código de erro %d"
+msgstr "Envio falhou: ícone é muito grande."
 
 #: js/CommonDialogs.js:25
-#, fuzzy
 msgid "Upload failed."
-msgstr "Upload completo."
+msgstr "Envio falhou."
 
 #: js/CommonDialogs.js:31
 msgid "Removing feed icon..."
@@ -3184,9 +3178,8 @@ msgstr "Tentando alterar endereço ..."
 
 #: js/CommonDialogs.js:460
 #: js/PrefHelpers.js:219
-#, fuzzy
 msgid "Could not change feed URL."
-msgstr "Não foi possível criar o usuário <b>%s</b>"
+msgstr "Não foi possível alterar o URL do feed."
 
 #: js/CommonFilters.js:133
 msgid "Edit rule"
@@ -3207,6 +3200,7 @@ msgstr "Encontrados %d artigos de acordo com este filtro:"
 #: js/CommonFilters.js:236
 msgid "Error while trying to get filter test results."
 msgstr ""
+"Aconteceu um erro enquanto testava obter os resultados de teste do filtro."
 
 #: js/CommonFilters.js:278
 msgid "Create Filter"
@@ -3326,9 +3320,8 @@ msgstr "Reiniciar marcadores selecionados para a cor padrão?"
 
 #: js/PrefLabelTree.js:139
 #: js/PrefLabelTree.js:159
-#, fuzzy
 msgid "No labels selected."
-msgstr "Nenhum marcador está selecionado."
+msgstr "Nenhum marcador foi selecionado."
 
 #: js/PrefLabelTree.js:146
 msgid "Remove selected labels?"
@@ -3339,9 +3332,8 @@ msgid "Removing selected labels..."
 msgstr "Removendo marcadores selecionados..."
 
 #: js/PrefUsers.js:15
-#, fuzzy
 msgid "Please enter username:"
-msgstr "Por favor entre o nome de usuário:"
+msgstr "Por favor, informe o nome de usuário:"
 
 #: js/PrefUsers.js:18
 msgid "Adding user..."
@@ -3354,15 +3346,13 @@ msgstr "Editor de usuários"
 #: js/PrefUsers.js:57
 #: js/PrefUsers.js:96
 #: js/PrefUsers.js:103
-#, fuzzy
 msgid "No users selected."
 msgstr "Nenhum usuário foi selecionado."
 
 #: js/PrefUsers.js:62
 #: js/PrefUsers.js:108
-#, fuzzy
 msgid "Please select one user."
-msgstr "Por favor selecione somente um usuário."
+msgstr "Por favor, selecione somente um usuário."
 
 #: js/PrefUsers.js:66
 msgid "Reset password of selected user?"
@@ -3381,9 +3371,8 @@ msgid "Removing selected users..."
 msgstr "Removendo usuários selecionados..."
 
 #: js/tt-rss.js:343
-#, fuzzy
 msgid "Please enable mail or mailto plugin first."
-msgstr "Por favor habilite o plugin de e-mail."
+msgstr "Por favor, habilite o plugin de e-mail antes de prosseguir."
 
 #: js/tt-rss.js:456
 msgid "Please enable embed_original plugin first."
@@ -3415,9 +3404,8 @@ msgid "Trying to change URL..."
 msgstr "Tentando mudar a URL..."
 
 #: plugins/share/share.js:40
-#, fuzzy
 msgid "Could not change URL."
-msgstr "Tentando mudar a URL..."
+msgstr "Não foi possível alterar a URL."
 
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
