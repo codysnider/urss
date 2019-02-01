@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2018-12-04 03:52+0000\n"
-"Last-Translator: Andrew Dolgov <fox@fakecake.org>\n"
-"Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/ru/>\n"
+"PO-Revision-Date: 2019-02-02 21:36+0000\n"
+"Last-Translator: Сергей «Solaris» Сидоров <solariscreator@gmail.com>\n"
+"Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"ru/>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
@@ -164,7 +166,7 @@ msgstr "Плагин не найден"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
-msgstr ""
+msgstr "Представление как JSON неудачно"
 
 #: index.php:128
 #: index.php:143
@@ -200,7 +202,7 @@ msgstr "Проблема соединения с сервером."
 
 #: index.php:155
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "В журнале событий есть свежие записи."
 
 #: index.php:158
 msgid "Updates are available from Git."
@@ -336,9 +338,8 @@ msgstr "Переключить широкоэкранный режим"
 
 #: index.php:232
 #: include/functions.php:1202
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "Переключить комбинированный режим"
+msgstr "Включить ночной режим"
 
 #: index.php:233
 msgid "Keyboard shortcuts help"
@@ -664,7 +665,7 @@ msgstr "Обратный порядок заголовков"
 
 #: include/functions.php:1184
 msgid "Toggle headline grouping"
-msgstr ""
+msgstr "Включить группировку заголовков"
 
 #: include/functions.php:1185
 msgid "Debug feed update"
@@ -734,11 +735,11 @@ msgstr "Показать диалог помощи"
 
 #: include/functions.php:2456
 msgid "There is no error, the file uploaded with success"
-msgstr ""
+msgstr "Это не ошибка! Файл загружен успешно."
 
 #: include/functions.php:2457
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
-msgstr ""
+msgstr "Загружаемый файл превышает upload_max_filesize параметр в php.ini"
 
 #: include/functions.php:2458
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
@@ -746,7 +747,7 @@ msgstr ""
 
 #: include/functions.php:2459
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Файл был загружен только частично"
 
 #: include/functions.php:2460
 msgid "No file was uploaded"
@@ -2495,11 +2496,11 @@ msgstr "Общие настройки"
 
 #: plugins/af_psql_trgm/init.php:173
 msgid "Minimum similarity:"
-msgstr ""
+msgstr "Минимальное сходство:"
 
 #: plugins/af_psql_trgm/init.php:178
 msgid "Minimum title length:"
-msgstr ""
+msgstr "Минимальная длинна заголовка:"
 
 #: plugins/af_psql_trgm/init.php:183
 msgid "Enable for all feeds:"
@@ -2511,7 +2512,7 @@ msgstr "Сходство (pg_trgm)"
 
 #: plugins/af_comics/init.php:50
 msgid "Feeds supported by af_comics"
-msgstr ""
+msgstr "Фид поддерживается af_comics"
 
 #: plugins/af_comics/init.php:52
 msgid "The following comics are currently supported:"
