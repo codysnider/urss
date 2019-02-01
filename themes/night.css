@@ -687,6 +687,9 @@ body.ttrss_main #headlines-wrap-inner {
   margin: 0px;
   border-width: 0px;
 }
+body.ttrss_main #headlines-frame[is-vfeed="0"] .header .feed {
+  display: none;
+}
 body.ttrss_main #headlines-frame {
   padding: 0px;
   border: 0px #222;
