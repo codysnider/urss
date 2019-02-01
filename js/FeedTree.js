@@ -110,7 +110,7 @@ define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"],
 				menu.addChild(new dijit.MenuItem({
 					label: __("Mark all feeds as read"),
 					onClick: function() {
-						Feeds.catchupAllFeeds();
+						Feeds.catchupAll();
 					}}));
 
 				menu.bindDomNode(tnode.domNode);

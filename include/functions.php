@@ -81,7 +81,7 @@
 	 */
 	function get_translations() {
 		$tr = array(
-					"auto"  => "Detect automatically",
+					"auto"  => __("Detect automatically"),
 					"ar_SA" => "العربيّة (Arabic)",
 					"bg_BG" => "Bulgarian",
 					"da_DA" => "Dansk",
@@ -105,7 +105,7 @@
 					"pt_PT" => "Portuguese/Portugal",
 					"zh_CN" => "Simplified Chinese",
 					"zh_TW" => "Traditional Chinese",
-					"uk_UA" => "Украинский",
+					"uk_UA" => "Українська",
 					"sv_SE" => "Svenska",
 					"fi_FI" => "Suomi",
 					"tr_TR" => "Türkçe");
