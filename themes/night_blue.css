@@ -11,8 +11,8 @@ body.ttrss_prefs,
   margin: 0;
 }
 body.ttrss_main {
-  background: #333333;
-  color: #cccccc;
+  background: #333;
+  color: #ccc;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   overflow: hidden;
@@ -27,9 +27,9 @@ body.ttrss_main div.post {
 body.ttrss_main div.post div.header {
   padding: 5px;
   color: #909090;
-  border: 0px solid #222222;
+  border: 0px solid #222;
   border-bottom-width: 1px;
-  background: #222222;
+  background: #222;
 }
 body.ttrss_main div.post div.header .left,
 body.ttrss_main div.post div.header .right {
@@ -190,13 +190,13 @@ body.ttrss_main .notify.notify_error i.icon-close {
   color: white;
 }
 body.ttrss_main .hl {
-  border: 0px solid #222222;
+  border: 0px solid #222;
   border-bottom-width: 1px;
   transition: color 0.2s, background 0.2s;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  background: #222222;
+  background: #222;
 }
 body.ttrss_main .hl > * {
   align-self: center;
@@ -230,7 +230,7 @@ body.ttrss_main .hl div.title {
 }
 body.ttrss_main .hl span.author {
   white-space: nowrap;
-  color: #cccccc;
+  color: #ccc;
   font-size: 11px;
   font-weight: normal;
 }
@@ -244,13 +244,13 @@ body.ttrss_main .hl span.feed a {
   font-size: 11px;
   font-style: italic;
   font-weight: normal;
-  color: #cccccc;
+  color: #ccc;
 }
 body.ttrss_main .hl span.feed a:hover {
   color: #257aa7;
 }
 body.ttrss_main .hl span.updated {
-  color: #cccccc;
+  color: #ccc;
   text-align: right;
   font-size: 11px;
   padding-left: 10px;
@@ -313,7 +313,7 @@ body.ttrss_main #content-insert blockquote,
 body.ttrss_main #headlines-frame blockquote,
 body.ttrss_main .dijitContentPane blockquote {
   margin: 5px 0px 5px 0px;
-  color: #cccccc;
+  color: #ccc;
   padding-left: 10px;
   border: 0px solid #ccc;
   border-left-width: 4px;
@@ -329,11 +329,11 @@ body.ttrss_main #headlines-frame pre,
 body.ttrss_main .dijitContentPane pre {
   margin: 5px 0px 5px 0px;
   padding: 10px;
-  color: #cccccc;
+  color: #ccc;
   font-family: monospace;
   font-size: 12px;
   border: 0px solid #ccc;
-  background: #222222;
+  background: #222;
   display: block;
   max-width: 98%;
   overflow: auto;
@@ -387,11 +387,11 @@ body.ttrss_main .alert-info h4 {
   color: #3a87ad;
 }
 body.ttrss_main div.prefHelp {
-  color: #cccccc;
+  color: #ccc;
   padding: 5px;
 }
 body.ttrss_main .insensitive {
-  color: #cccccc;
+  color: #ccc;
 }
 body.ttrss_main .small {
   font-size: 11px;
@@ -403,21 +403,15 @@ body.ttrss_main span.preview {
   padding-left: 4px;
 }
 body.ttrss_main .label {
-  display: inline-flex;
+  display: inline-block;
   vertical-align: middle;
   background-color: #fff7d5;
   font-size: 9px;
-  color: #cccccc;
+  color: #ccc;
   font-weight: normal;
   margin-left: 2px;
-  padding: 1px 4px 1px 1px;
+  padding: 2px 4px;
   white-space: nowrap;
-}
-body.ttrss_main .label i {
-  margin-right: 2px;
-}
-body.ttrss_main .label > * {
-  align-self: center;
 }
 body.ttrss_main i.marked-pic,
 body.ttrss_main i.pub-pic {
@@ -425,7 +419,7 @@ body.ttrss_main i.pub-pic {
   color: #ccc;
 }
 body.ttrss_main div.errorExplained {
-  border: 1px solid #222222;
+  border: 1px solid #222;
   margin: 5px 0px 5px 0px;
   padding: 5px;
 }
@@ -434,7 +428,7 @@ body.ttrss_main ul.browseFeedList {
   width: 100%;
   overflow: auto;
   border-width: 0px 1px 1px 1px;
-  border-color: #222222;
+  border-color: #222;
   border-style: solid;
   margin: 0px 0px 5px 0px;
   background-color: white;
@@ -464,7 +458,7 @@ body.ttrss_main .noborder {
   border-width: 0px;
 }
 body.ttrss_main #overlay {
-  background: #333333;
+  background: #333;
   left: 0;
   top: 0;
   height: 100%;
@@ -486,14 +480,14 @@ body.ttrss_main div.whiteBox {
   text-align: center;
   padding: 1em 1em 0px 1em;
   font-size: 11px;
-  border: 0px solid #222222;
+  border: 0px solid #222;
   border-bottom-width: 1px;
 }
 body.ttrss_main div.autocomplete {
   position: absolute;
   width: 250px;
-  background-color: #333333;
-  border: 1px solid #222222;
+  background-color: #333;
+  border: 1px solid #222;
   margin: 0px;
   padding: 0px;
 }
@@ -566,9 +560,9 @@ body.ttrss_main div#cmdline {
   left: 5px;
   bottom: 5px;
   font-size: 11px;
-  color: #cccccc;
+  color: #ccc;
   font-weight: bold;
-  background-color: #333333;
+  background-color: #333;
   border: 1px solid #257aa7;
   padding: 3px 5px 3px 5px;
   z-index: 5;
@@ -602,9 +596,9 @@ body.ttrss_main #content-wrap {
 }
 body.ttrss_main #feeds-holder {
   padding: 0px;
-  border: 0px solid #222222;
+  border: 0px solid #222;
   overflow: hidden;
-  background: #222222;
+  background: #222;
   box-shadow: inset -1px 0px 2px -1px rgba(0, 0, 0, 0.1);
   -webkit-overflow-scrolling: touch;
 }
@@ -615,7 +609,7 @@ body.ttrss_main #feeds-holder #feedTree {
   font-family: "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 body.ttrss_main #feeds-holder #feedTree .counterNode.aux {
-  background: #222222;
+  background: #222;
   color: #e6e6e6;
   border-color: #080808;
 }
@@ -654,8 +648,8 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRow {
 }
 body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRowSelected {
   box-shadow: -1px 0px 2px -1px rgba(0, 0, 0, 0.1);
-  border-color: #222222 transparent;
-  background: #333333;
+  border-color: #222 transparent;
+  background: #333;
   color: #333;
 }
 body.ttrss_main #feeds-holder #feedTree .icon {
@@ -681,7 +675,7 @@ body.ttrss_main #feeds-holder #feedTree i.icon.icon-rss_feed {
   color: #ff7c4b;
 }
 body.ttrss_main #feeds-holder #feedTree i.icon.icon-whatshot {
-  color: #69c671;
+  color: #69C671;
 }
 body.ttrss_main #feeds-holder #feedTree i.icon.icon-restore {
   font-weight: bold;
@@ -695,7 +689,7 @@ body.ttrss_main #headlines-wrap-inner {
 }
 body.ttrss_main #headlines-frame {
   padding: 0px;
-  border: 0px #222222;
+  border: 0px #222;
   margin-top: 0px;
   -webkit-overflow-scrolling: touch;
   -webkit-transform: translateZ(0);
@@ -707,11 +701,11 @@ body.ttrss_main #headlines-frame div.feed-title {
   padding: 5px 8px;
 }
 body.ttrss_main #headlines-frame div.feed-title a.title {
-  color: #cccccc;
+  color: #ccc;
   font-weight: bold;
 }
 body.ttrss_main #headlines-frame div.feed-title a {
-  color: #cccccc;
+  color: #ccc;
 }
 body.ttrss_main #headlines-frame div.feed-title a:hover {
   color: #257aa7;
@@ -728,14 +722,14 @@ body.ttrss_main #toolbar-frame {
 }
 body.ttrss_main #toolbar-frame #toolbar {
   background: white;
-  border: 0px solid #222222;
+  border: 0px solid #222;
   border-bottom-width: 1px;
   padding-left: 4px;
   height: 32px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  color: #cccccc;
+  color: #ccc;
   font-size: 12px;
 }
 body.ttrss_main #toolbar-frame #toolbar > * {
@@ -776,7 +770,7 @@ body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .right > * {
   align-self: center;
 }
 body.ttrss_main #toolbar-frame #toolbar #updates-available {
-  color: #69c671;
+  color: #69C671;
   padding-right: 4px;
 }
 body.ttrss_main #toolbar-frame #toolbar #selected_prompt {
@@ -793,7 +787,7 @@ body.ttrss_main #toolbar-frame #toolbar #selected_prompt {
 body.ttrss_main #header {
   border-width: 0px;
   text-align: right;
-  color: #cccccc;
+  color: #ccc;
   padding: 5px 5px 0px 0px;
   margin: 0px;
   position: absolute;
@@ -803,7 +797,7 @@ body.ttrss_main #header {
 }
 body.ttrss_main #content-insert {
   padding: 0px;
-  border-color: #222222;
+  border-color: #222;
   border-width: 0px;
   line-height: 1.5;
   overflow: auto;
@@ -819,22 +813,22 @@ body.ttrss_main img.icon {
 }
 body.ttrss_main .player {
   display: inline-block;
-  color: #cccccc;
+  color: #ccc;
   font-size: 11px;
   font-family: sans-serif;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   padding: 0px 4px 0px 4px;
   margin: 0px 2px 0px 2px;
   width: 50px;
   text-align: center;
-  background: #333333;
+  background: #333;
 }
 body.ttrss_main .player.playing {
   color: #00c000;
   border-color: #00c000;
 }
 body.ttrss_main .player:hover {
-  background: #222222;
+  background: #222;
   cursor: pointer;
 }
 body.ttrss_main #headlines-frame.auto_catchup #headlines-spacer {
@@ -843,13 +837,13 @@ body.ttrss_main #headlines-frame.auto_catchup #headlines-spacer {
 body.ttrss_main #headlines-spacer {
   margin-left: 1px;
   text-align: center;
-  color: #cccccc;
+  color: #ccc;
   font-size: 11px;
   font-style: italic;
 }
 body.ttrss_main #headlines-spacer a,
 body.ttrss_main #headlines-spacer span {
-  color: #cccccc;
+  color: #ccc;
   padding: 10px;
   display: block;
 }
@@ -862,9 +856,9 @@ body.ttrss_main ul#filterDlg_Actions {
   overflow: auto;
   list-style-type: none;
   border-style: solid;
-  border-color: #222222;
+  border-color: #222;
   border-width: 1px 1px 1px 1px;
-  background-color: #333333;
+  background-color: #333;
   margin: 0px 0px 5px 0px;
   padding: 4px;
   min-height: 16px;
@@ -1008,7 +1002,7 @@ body.ttrss_main .hl.published .left i.pub-pic {
   color: #ff7c4b;
 }
 body.ttrss_main .score-high i.icon-score {
-  color: #69c671;
+  color: #69C671;
 }
 body.ttrss_main .score-low i.icon-score {
   color: #500;
@@ -1020,12 +1014,12 @@ body.ttrss_main i.icon-score {
   cursor: pointer;
 }
 body.ttrss_main .panel {
-  border: 1px solid #222222;
-  background: #222222;
+  border: 1px solid #222;
+  background: #222;
   padding: 4px;
 }
 body.ttrss_main .dijitDialog .panel {
-  background: #333333;
+  background: #333;
 }
 body.ttrss_main .panel-scrollable {
   overflow: auto;
@@ -1054,7 +1048,7 @@ body.ttrss_main #prefFilterTestResultList .feed {
 }
 ::selection {
   background: #257aa7;
-  color: #333333;
+  color: #333;
 }
 ::-webkit-scrollbar {
   width: 4px;
@@ -1105,7 +1099,7 @@ video::-webkit-media-controls-overlay-play-button {
   flex-grow: 2;
 }
 .cdm .header span.updated {
-  color: #cccccc;
+  color: #ccc;
   font-weight: normal;
   font-size: 11px;
   white-space: nowrap;
@@ -1117,7 +1111,7 @@ video::-webkit-media-controls-overlay-play-button {
   height: 30px;
   padding-left: 5px;
   font-weight: normal;
-  color: #cccccc;
+  color: #ccc;
   clear: both;
 }
 .cdm .footer > * {
@@ -1155,7 +1149,7 @@ video::-webkit-media-controls-overlay-play-button {
   white-space: normal;
 }
 .cdm.expanded .footer {
-  border: 0px solid #222222;
+  border: 0px solid #222;
   border-bottom-width: 1px;
 }
 .cdm.expanded > hr {
@@ -1183,7 +1177,7 @@ div.cdm.expanded.Unread div.header a.title {
   color: black;
 }
 div.cdm.expanded div.content {
-  color: #cccccc;
+  color: #ccc;
 }
 div.cdm.expanded.Unread div.content {
   color: black;
@@ -1200,11 +1194,11 @@ div.cdm.vgrlf .feed {
   padding: 5px 3px 5px 5px;
 }
 .cdm div.feed-title a.title {
-  color: #cccccc;
+  color: #ccc;
   font-weight: bold;
 }
 .cdm div.feed-title a {
-  color: #cccccc;
+  color: #ccc;
 }
 .cdm div.feed-title a:hover {
   color: #257aa7;
@@ -1217,7 +1211,7 @@ div.cdm.vgrlf .feed {
 .cdm div.header div.feed,
 .cdm div.header div.feed a {
   vertical-align: middle;
-  color: #cccccc;
+  color: #ccc;
   font-weight: normal;
   font-style: italic;
   font-size: 11px;
@@ -1234,7 +1228,7 @@ div.cdm.vgrlf .feed {
 }
 .cdm div.header span.author {
   white-space: nowrap;
-  color: #cccccc;
+  color: #ccc;
   font-size: 11px;
   font-weight: normal;
 }
@@ -1249,10 +1243,10 @@ div#floatingTitle {
   top: 0px;
   right: 0px;
   left: 0px;
-  border: 0px solid #222222;
+  border: 0px solid #222;
   border-bottom-width: 1px;
   background: white;
-  color: #cccccc;
+  color: #ccc;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -1287,7 +1281,7 @@ div#floatingTitle .right i.icon-anchor {
   cursor: pointer;
 }
 div#floatingTitle span.author {
-  color: #cccccc;
+  color: #ccc;
   font-size: 11px;
   font-weight: normal;
 }
@@ -1301,7 +1295,7 @@ div#floatingTitle a.title {
 }
 div#floatingTitle div.feed {
   padding-right: 10px;
-  color: #cccccc;
+  color: #ccc;
   font-weight: normal;
   font-style: italic;
   font-size: 11px;
@@ -1315,11 +1309,11 @@ div#floatingTitle div.feed a {
 div#floatingTitle span.updated {
   padding-right: 10px;
   white-space: nowrap;
-  color: #cccccc;
+  color: #ccc;
   font-size: 11px;
 }
 div#floatingTitle div.feed a {
-  color: #cccccc;
+  color: #ccc;
 }
 div#floatingTitle .collapse,
 div#floatingTitle .excerpt {
@@ -1338,7 +1332,7 @@ div#floatingTitle .feed-title a.title {
 }
 div#floatingTitle .feed-title a.catchup {
   text-align: right;
-  color: #cccccc;
+  color: #ccc;
   padding-right: 10px;
   font-size: 11px;
   white-space: nowrap;
@@ -1350,8 +1344,8 @@ div#floatingTitle.Unread a.title {
   color: black;
 }
 .cdm.expandable {
-  background-color: #222222;
-  border: 0px solid #222222;
+  background-color: #222;
+  border: 0px solid #222;
   border-bottom-width: 1px;
 }
 .cdm.expandable > hr {
@@ -1388,7 +1382,7 @@ div.cdm.expandable.active div.header span.titleWrap {
 }
 div.cdm.expandable div.header a.title {
   font-weight: 600;
-  color: #cccccc;
+  color: #ccc;
   font-size: 14px;
   transition: color 0.2s, background 0.2s;
   text-rendering: optimizelegibility;
@@ -1419,7 +1413,7 @@ div.cdm.expandable:not(.active) .collapse {
   display: none;
 }
 body.ttrss_prefs {
-  background-color: #222222;
+  background-color: #222;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
 }
@@ -1435,7 +1429,7 @@ body.ttrss_prefs #footer_splitter {
   display: none;
 }
 body.ttrss_prefs #footer {
-  background-color: #222222;
+  background-color: #222;
   font-size: 13px;
   border: 0px;
   text-align: center;
@@ -1472,7 +1466,7 @@ body.ttrss_prefs div#filterlistLoading,
 body.ttrss_prefs div#labellistLoading {
   text-align: center;
   padding: 5px;
-  color: #cccccc;
+  color: #ccc;
 }
 body.ttrss_prefs div#feedlistLoading img,
 body.ttrss_prefs div#filterlistLoading img,
@@ -1494,7 +1488,7 @@ body.ttrss_prefs table.prefPluginsList label {
   white-space: nowrap;
 }
 body.ttrss_prefs table.prefPluginsList i.plugin-enabled {
-  color: #69c671;
+  color: #69C671;
 }
 body.ttrss_prefs table.prefPluginsList label img {
   vertical-align: middle;
@@ -1510,7 +1504,7 @@ body.ttrss_prefs table.prefErrorLog tr.errrow td.errno {
 body.ttrss_prefs table.prefErrorLog td.filename,
 body.ttrss_prefs table.prefErrorLog td.login,
 body.ttrss_prefs table.prefErrorLog td.timestamp {
-  color: #cccccc;
+  color: #ccc;
 }
 body.ttrss_prefs hr {
   border-color: #ecf4ff;
@@ -1520,8 +1514,8 @@ body.ttrss_utility.sanity_failed {
   background: #900;
 }
 body.ttrss_utility {
-  background: #222222;
-  color: #cccccc;
+  background: #222;
+  color: #ccc;
   padding: 0px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -1737,8 +1731,8 @@ body.small_margins {
   max-width: none;
 }
 body#sharepopup {
-  color: #cccccc;
-  background: #333333;
+  color: #ccc;
+  background: #333;
   margin: 10px;
 }
 body#sharepopup h1 {
@@ -1770,7 +1764,7 @@ body#sharepopup input {
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
 .flat .dijitCheckBox.dijitCheckBoxChecked {
-  background-color: #69c671;
+  background-color: #69C671;
   border-color: #45b74f;
 }
 .flat .dijitMenu .dijitMenuItem .dijitMenuItemLabel {
@@ -1850,21 +1844,20 @@ body#sharepopup input {
   top: 1px;
 }
 .flat label.dijitButton:hover {
-  background-color: #222222;
+  background-color: #222;
 }
 .flat .dijitTree .dijitTreeNode .dijitTreeRow {
   padding: 4px 0px 4px;
   border-width: 1px;
-  color: #cccccc;
+  color: #ccc;
 }
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
   src: url(../lib/iconfont/MaterialIcons-Regular.eot);
-  src: local('Material Icons'), local('MaterialIcons-Regular'), url(../lib/iconfont/MaterialIcons-Regular.woff2) format('woff2'), url(../lib/iconfont/MaterialIcons-Regular.woff) format('woff'), url(../lib/iconfont/MaterialIcons-Regular.ttf) format('truetype');
-  
   /* For IE6-8 */
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(../lib/iconfont/MaterialIcons-Regular.woff2) format('woff2'), url(../lib/iconfont/MaterialIcons-Regular.woff) format('woff'), url(../lib/iconfont/MaterialIcons-Regular.ttf) format('truetype');
 }
 .material-icons {
   font-family: 'Material Icons';
@@ -1892,7 +1885,7 @@ body#sharepopup input {
 }
 body.flat.ttrss_main.ttrss_prefs #main,
 body.flat.ttrss_main.ttrss_prefs #footer {
-  background: #222222;
+  background: #222;
 }
 body.flat.ttrss_main.ttrss_prefs #footer a {
   color: #fff;
@@ -1926,32 +1919,32 @@ body.flat.ttrss_main a:hover {
 }
 body.flat.ttrss_main #main,
 body.flat.ttrss_main #overlay {
-  color: #cccccc;
-  background: #333333;
+  color: #ccc;
+  background: #333;
 }
 body.flat.ttrss_main #toolbar-frame #toolbar {
-  background: #222222;
+  background: #222;
   color: #e6e6e6;
 }
 body.flat.ttrss_main #feeds-holder {
-  background: #222222;
-  box-shadow: inset -1px 0px 2px -1px #666666;
+  background: #222;
+  box-shadow: inset -1px 0px 2px -1px #666;
 }
 body.flat.ttrss_main #feeds-holder #feedTree .counterNode.aux {
-  background: #222222;
-  color: #cccccc;
-  border-color: #333333;
+  background: #222;
+  color: #ccc;
+  border-color: #333;
 }
 body.flat.ttrss_main #feeds-holder #feedTree .dijitTreeRowSelected {
-  background: #333333;
-  border-color: #333333 transparent;
+  background: #333;
+  border-color: #333 transparent;
   color: #e6e6e6;
 }
 body.flat.ttrss_main #feeds-holder #feedTree .dijitTreeRowSelected .dijitTreeLabel {
   text-shadow: none;
 }
 body.flat.ttrss_main #floatingTitle {
-  background-color: #333333;
+  background-color: #333;
 }
 body.flat.ttrss_main #floatingTitle .feed a {
   color: #e6e6e6;
@@ -1964,14 +1957,14 @@ body.flat.ttrss_main div#floatingTitle.Unread a.title {
 }
 body.flat.ttrss_main #headlines-frame .hl:not(.active):not(.Selected):not(.Unread),
 body.flat.ttrss_main #headlines-frame .cdm.expandable:not(.active):not(.Selected):not(.Unread) {
-  background: #333333;
+  background: #333;
 }
 body.flat.ttrss_main #headlines-frame .hl.Unread:not(.active):not(.Selected),
 body.flat.ttrss_main #headlines-frame .cdm.expandable.Unread:not(.active):not(.Selected) {
-  background: #222222;
+  background: #222;
 }
 body.flat.ttrss_main #headlines-frame .cdm.expanded {
-  background: #333333;
+  background: #333;
 }
 body.flat.ttrss_main #headlines-frame .hl.Unread .title,
 body.flat.ttrss_main #headlines-frame .cdm.Unread .title {
@@ -2007,15 +2000,15 @@ body.flat.ttrss_main #headlines-frame .cdm.expandable.active .title {
   color: #257aa7;
 }
 body.flat.ttrss_main #headlines-frame .cdm.expandable.active {
-  background: #222222 ! important;
+  background: #222 ! important;
 }
 body.flat.ttrss_main #headlines-frame .hl,
 body.flat.ttrss_main #headlines-frame .cdm {
-  color: #cccccc;
+  color: #ccc;
 }
 body.flat.ttrss_main #headlines-frame .hl .title,
 body.flat.ttrss_main #headlines-frame .cdm .title {
-  color: #cccccc;
+  color: #ccc;
 }
 body.flat.ttrss_main #headlines-frame .hl .author,
 body.flat.ttrss_main #headlines-frame .cdm .author {
@@ -2025,15 +2018,15 @@ body.flat.ttrss_main #headlines-frame .hl .updated,
 body.flat.ttrss_main #headlines-frame .cdm .updated,
 body.flat.ttrss_main #headlines-frame .hl .content,
 body.flat.ttrss_main #headlines-frame .cdm .content {
-  color: #cccccc;
+  color: #ccc;
 }
 body.flat.ttrss_main #headlines-frame .hl .feed a,
 body.flat.ttrss_main #headlines-frame .cdm .feed a {
   color: #e6e6e6;
 }
 body.flat.ttrss_main #headlines-frame .cdm .footer {
-  border-color: #222222;
-  color: #cccccc;
+  border-color: #222;
+  color: #ccc;
 }
 body.flat.ttrss_main #headlines-frame .left i.material-icons,
 body.flat.ttrss_main #headlines-frame .left .dijitCheckBox {
@@ -2045,11 +2038,11 @@ body.flat.ttrss_main .dijitToolbar .dijitSelect .dijitButtonNode {
 }
 body.flat.ttrss_main .dijitToolbar .dijitSelect:not(.dijitHover) .dijitButtonContents,
 body.flat.ttrss_main .dijitToolbar .dijitSelect:not(.dijitHover) .dijitButtonNode {
-  background-color: #222222;
+  background-color: #222;
 }
 body.flat.ttrss_main .dijitCheckBox:not(.dijitChecked)::before {
   color: #999999;
-  background: #222222;
+  background: #222;
 }
 body.flat.ttrss_main .insensitive {
   color: #999999;
@@ -2058,20 +2051,20 @@ body.flat.ttrss_main .dijitAccordionInnerContainerSelected .dijitAccordionTitle 
   color: white;
 }
 body.flat.ttrss_main .dijitDialog .dijitDialogPaneContent {
-  background: #222222;
+  background: #222;
 }
 body.flat.ttrss_main .dijitTab:not(.dijitTabChecked) {
-  background: #222222;
+  background: #222;
 }
 body.flat.ttrss_main .dijitTab.dijitTabChecked.dijitTabHover {
   color: #e6e6e6;
 }
 body.flat.ttrss_main label.dijitButton {
-  border: 1px solid #666666;
+  border: 1px solid #666;
 }
 body.flat.ttrss_main label.dijitButton:hover {
   border-color: #2f2f2f;
-  background-color: #333333;
+  background-color: #333;
 }
 body.flat.ttrss_main textarea {
   color: #e6e6e6;
@@ -2080,45 +2073,45 @@ body.flat.ttrss_main code {
   color: #c90 ! important;
 }
 body.flat.ttrss_main .panel {
-  background-color: #222222;
-  border-color: #666666;
+  background-color: #222;
+  border-color: #666;
 }
 body.flat.ttrss_main .dijitDialog .panel {
-  background-color: #333333;
+  background-color: #333;
 }
 body.flat.ttrss_main #headlines-frame blockquote,
 body.flat.ttrss_main #content-insert blockquote {
-  color: #cccccc;
+  color: #ccc;
   border-color: #257aa7;
 }
 body.flat.ttrss_main pre {
-  color: #cccccc;
-  background: #222222 ! important;
+  color: #ccc;
+  background: #222 ! important;
 }
 body.flat.ttrss_main ul#filterDlg_Matches,
 body.flat.ttrss_main ul#filterDlg_Actions {
-  background: #222222;
-  border-color: #666666;
+  background: #222;
+  border-color: #666;
 }
 body.flat.ttrss_main .article-note {
   background: #257aa7;
   border-color: #257aa7;
-  color: #333333;
+  color: #333;
 }
 body.flat.ttrss_main .article-note i.material-icons {
-  color: #333333;
+  color: #333;
 }
 body.flat.ttrss_main ::-webkit-scrollbar {
   width: 4px;
 }
 body.flat.ttrss_main ::-webkit-scrollbar-thumb {
-  background-color: #666666;
+  background-color: #666;
 }
 body.flat.ttrss_main ::-webkit-scrollbar-track {
-  background-color: #222222;
+  background-color: #222;
 }
 body.flat.ttrss_main .alert {
-  background: #222222;
+  background: #222;
   border-color: #133d54;
 }
 /*# sourceMappingURL=night_blue.css.map */

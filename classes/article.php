@@ -624,9 +624,9 @@ class Article extends Handler_Protected {
 		$labels_str = "";
 
 		foreach ($labels as $l) {
-			$labels_str .= sprintf("<div1 class='label'
-				style='color : %s; background-color : %s'><i class='material-icons' style='color : %s'>label</i><div>%s</div></div1>",
-				$l[2], $l[3], $l[2], $l[1]);
+			$labels_str .= sprintf("<div class='label'
+				style='color : %s; background-color : %s'>%s</div>",
+				$l[2], $l[3], $l[1]);
 		}
 
 		return $labels_str;

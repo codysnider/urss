@@ -442,7 +442,7 @@ define(["dojo/_base/declare"], function (declare) {
 									<a class="title" title="${hl.title}" target="_blank" rel="noopener noreferrer" href="${hl.link}">
 										${hl.title}</a>
 									<span class="author">${hl.author}</span>
-									<span class="HLLCTR-${hl.id}">${hl.labels}</span>
+									${hl.labels}
 									${hl.cdm_excerpt ? hl.cdm_excerpt : ""}
 								</span>
 								
@@ -502,7 +502,7 @@ define(["dojo/_base/declare"], function (declare) {
 					<span data-article-id="${hl.id}" class="hl-content hlMenuAttach">
 						<a class="title" href="${hl.link}">${hl.title} <span class="preview">${hl.content_preview}</span></a>
 						<span class="author">${hl.author}</span>
-						<span class="HLLCTR-${hl.id}">${hl.labels}</span>
+						${hl.labels}
 					</span>
 				</div>
                 <span class="feed">

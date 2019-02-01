@@ -10,8 +10,8 @@ body.ttrss_prefs,
   margin: 0;
 }
 body.ttrss_main {
-  background: #ffffff;
-  color: #000000;
+  background: white;
+  color: black;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   overflow: hidden;
@@ -26,7 +26,7 @@ body.ttrss_main div.post {
 body.ttrss_main div.post div.header {
   padding: 5px;
   color: #909090;
-  border: 0px solid #dddddd;
+  border: 0px solid #ddd;
   border-bottom-width: 1px;
   background: #f5f5f5;
 }
@@ -189,7 +189,7 @@ body.ttrss_main .notify.notify_error i.icon-close {
   color: white;
 }
 body.ttrss_main .hl {
-  border: 0px solid #dddddd;
+  border: 0px solid #ddd;
   border-bottom-width: 1px;
   transition: color 0.2s, background 0.2s;
   display: flex;
@@ -229,7 +229,7 @@ body.ttrss_main .hl div.title {
 }
 body.ttrss_main .hl span.author {
   white-space: nowrap;
-  color: #555555;
+  color: #555;
   font-size: 11px;
   font-weight: normal;
 }
@@ -243,13 +243,13 @@ body.ttrss_main .hl span.feed a {
   font-size: 11px;
   font-style: italic;
   font-weight: normal;
-  color: #555555;
+  color: #555;
 }
 body.ttrss_main .hl span.feed a:hover {
   color: #257aa7;
 }
 body.ttrss_main .hl span.updated {
-  color: #555555;
+  color: #555;
   text-align: right;
   font-size: 11px;
   padding-left: 10px;
@@ -312,7 +312,7 @@ body.ttrss_main #content-insert blockquote,
 body.ttrss_main #headlines-frame blockquote,
 body.ttrss_main .dijitContentPane blockquote {
   margin: 5px 0px 5px 0px;
-  color: #555555;
+  color: #555;
   padding-left: 10px;
   border: 0px solid #ccc;
   border-left-width: 4px;
@@ -328,7 +328,7 @@ body.ttrss_main #headlines-frame pre,
 body.ttrss_main .dijitContentPane pre {
   margin: 5px 0px 5px 0px;
   padding: 10px;
-  color: #555555;
+  color: #555;
   font-family: monospace;
   font-size: 12px;
   border: 0px solid #ccc;
@@ -386,11 +386,11 @@ body.ttrss_main .alert-info h4 {
   color: #3a87ad;
 }
 body.ttrss_main div.prefHelp {
-  color: #555555;
+  color: #555;
   padding: 5px;
 }
 body.ttrss_main .insensitive {
-  color: #555555;
+  color: #555;
 }
 body.ttrss_main .small {
   font-size: 11px;
@@ -402,21 +402,15 @@ body.ttrss_main span.preview {
   padding-left: 4px;
 }
 body.ttrss_main .label {
-  display: inline-flex;
+  display: inline-block;
   vertical-align: middle;
   background-color: #fff7d5;
   font-size: 9px;
-  color: #000000;
+  color: black;
   font-weight: normal;
   margin-left: 2px;
-  padding: 1px 4px 1px 1px;
+  padding: 2px 4px;
   white-space: nowrap;
-}
-body.ttrss_main .label i {
-  margin-right: 2px;
-}
-body.ttrss_main .label > * {
-  align-self: center;
 }
 body.ttrss_main i.marked-pic,
 body.ttrss_main i.pub-pic {
@@ -424,7 +418,7 @@ body.ttrss_main i.pub-pic {
   color: #ccc;
 }
 body.ttrss_main div.errorExplained {
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
   margin: 5px 0px 5px 0px;
   padding: 5px;
 }
@@ -433,7 +427,7 @@ body.ttrss_main ul.browseFeedList {
   width: 100%;
   overflow: auto;
   border-width: 0px 1px 1px 1px;
-  border-color: #dddddd;
+  border-color: #ddd;
   border-style: solid;
   margin: 0px 0px 5px 0px;
   background-color: white;
@@ -463,7 +457,7 @@ body.ttrss_main .noborder {
   border-width: 0px;
 }
 body.ttrss_main #overlay {
-  background: #ffffff;
+  background: white;
   left: 0;
   top: 0;
   height: 100%;
@@ -485,14 +479,14 @@ body.ttrss_main div.whiteBox {
   text-align: center;
   padding: 1em 1em 0px 1em;
   font-size: 11px;
-  border: 0px solid #dddddd;
+  border: 0px solid #ddd;
   border-bottom-width: 1px;
 }
 body.ttrss_main div.autocomplete {
   position: absolute;
   width: 250px;
-  background-color: #ffffff;
-  border: 1px solid #dddddd;
+  background-color: white;
+  border: 1px solid #ddd;
   margin: 0px;
   padding: 0px;
 }
@@ -565,9 +559,9 @@ body.ttrss_main div#cmdline {
   left: 5px;
   bottom: 5px;
   font-size: 11px;
-  color: #555555;
+  color: #555;
   font-weight: bold;
-  background-color: #ffffff;
+  background-color: white;
   border: 1px solid #257aa7;
   padding: 3px 5px 3px 5px;
   z-index: 5;
@@ -601,7 +595,7 @@ body.ttrss_main #content-wrap {
 }
 body.ttrss_main #feeds-holder {
   padding: 0px;
-  border: 0px solid #dddddd;
+  border: 0px solid #ddd;
   overflow: hidden;
   background: #f5f5f5;
   box-shadow: inset -1px 0px 2px -1px rgba(0, 0, 0, 0.1);
@@ -653,8 +647,8 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRow {
 }
 body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRowSelected {
   box-shadow: -1px 0px 2px -1px rgba(0, 0, 0, 0.1);
-  border-color: #dddddd transparent;
-  background: #ffffff;
+  border-color: #ddd transparent;
+  background: white;
   color: #333;
 }
 body.ttrss_main #feeds-holder #feedTree .icon {
@@ -680,7 +674,7 @@ body.ttrss_main #feeds-holder #feedTree i.icon.icon-rss_feed {
   color: #ff7c4b;
 }
 body.ttrss_main #feeds-holder #feedTree i.icon.icon-whatshot {
-  color: #69c671;
+  color: #69C671;
 }
 body.ttrss_main #feeds-holder #feedTree i.icon.icon-restore {
   font-weight: bold;
@@ -694,7 +688,7 @@ body.ttrss_main #headlines-wrap-inner {
 }
 body.ttrss_main #headlines-frame {
   padding: 0px;
-  border: 0px #dddddd;
+  border: 0px #ddd;
   margin-top: 0px;
   -webkit-overflow-scrolling: touch;
   -webkit-transform: translateZ(0);
@@ -706,11 +700,11 @@ body.ttrss_main #headlines-frame div.feed-title {
   padding: 5px 8px;
 }
 body.ttrss_main #headlines-frame div.feed-title a.title {
-  color: #555555;
+  color: #555;
   font-weight: bold;
 }
 body.ttrss_main #headlines-frame div.feed-title a {
-  color: #555555;
+  color: #555;
 }
 body.ttrss_main #headlines-frame div.feed-title a:hover {
   color: #257aa7;
@@ -727,14 +721,14 @@ body.ttrss_main #toolbar-frame {
 }
 body.ttrss_main #toolbar-frame #toolbar {
   background: white;
-  border: 0px solid #dddddd;
+  border: 0px solid #ddd;
   border-bottom-width: 1px;
   padding-left: 4px;
   height: 32px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  color: #555555;
+  color: #555;
   font-size: 12px;
 }
 body.ttrss_main #toolbar-frame #toolbar > * {
@@ -775,7 +769,7 @@ body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .right > * {
   align-self: center;
 }
 body.ttrss_main #toolbar-frame #toolbar #updates-available {
-  color: #69c671;
+  color: #69C671;
   padding-right: 4px;
 }
 body.ttrss_main #toolbar-frame #toolbar #selected_prompt {
@@ -792,7 +786,7 @@ body.ttrss_main #toolbar-frame #toolbar #selected_prompt {
 body.ttrss_main #header {
   border-width: 0px;
   text-align: right;
-  color: #555555;
+  color: #555;
   padding: 5px 5px 0px 0px;
   margin: 0px;
   position: absolute;
@@ -802,7 +796,7 @@ body.ttrss_main #header {
 }
 body.ttrss_main #content-insert {
   padding: 0px;
-  border-color: #dddddd;
+  border-color: #ddd;
   border-width: 0px;
   line-height: 1.5;
   overflow: auto;
@@ -818,15 +812,15 @@ body.ttrss_main img.icon {
 }
 body.ttrss_main .player {
   display: inline-block;
-  color: #555555;
+  color: #555;
   font-size: 11px;
   font-family: sans-serif;
-  border: 1px solid #555555;
+  border: 1px solid #555;
   padding: 0px 4px 0px 4px;
   margin: 0px 2px 0px 2px;
   width: 50px;
   text-align: center;
-  background: #ffffff;
+  background: white;
 }
 body.ttrss_main .player.playing {
   color: #00c000;
@@ -842,13 +836,13 @@ body.ttrss_main #headlines-frame.auto_catchup #headlines-spacer {
 body.ttrss_main #headlines-spacer {
   margin-left: 1px;
   text-align: center;
-  color: #555555;
+  color: #555;
   font-size: 11px;
   font-style: italic;
 }
 body.ttrss_main #headlines-spacer a,
 body.ttrss_main #headlines-spacer span {
-  color: #555555;
+  color: #555;
   padding: 10px;
   display: block;
 }
@@ -861,9 +855,9 @@ body.ttrss_main ul#filterDlg_Actions {
   overflow: auto;
   list-style-type: none;
   border-style: solid;
-  border-color: #dddddd;
+  border-color: #ddd;
   border-width: 1px 1px 1px 1px;
-  background-color: #ffffff;
+  background-color: white;
   margin: 0px 0px 5px 0px;
   padding: 4px;
   min-height: 16px;
@@ -1007,7 +1001,7 @@ body.ttrss_main .hl.published .left i.pub-pic {
   color: #ff7c4b;
 }
 body.ttrss_main .score-high i.icon-score {
-  color: #69c671;
+  color: #69C671;
 }
 body.ttrss_main .score-low i.icon-score {
   color: #500;
@@ -1019,12 +1013,12 @@ body.ttrss_main i.icon-score {
   cursor: pointer;
 }
 body.ttrss_main .panel {
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
   background: #f5f5f5;
   padding: 4px;
 }
 body.ttrss_main .dijitDialog .panel {
-  background: #ffffff;
+  background: white;
 }
 body.ttrss_main .panel-scrollable {
   overflow: auto;
@@ -1053,7 +1047,7 @@ body.ttrss_main #prefFilterTestResultList .feed {
 }
 ::selection {
   background: #257aa7;
-  color: #ffffff;
+  color: white;
 }
 ::-webkit-scrollbar {
   width: 4px;
@@ -1104,7 +1098,7 @@ video::-webkit-media-controls-overlay-play-button {
   flex-grow: 2;
 }
 .cdm .header span.updated {
-  color: #555555;
+  color: #555;
   font-weight: normal;
   font-size: 11px;
   white-space: nowrap;
@@ -1116,7 +1110,7 @@ video::-webkit-media-controls-overlay-play-button {
   height: 30px;
   padding-left: 5px;
   font-weight: normal;
-  color: #555555;
+  color: #555;
   clear: both;
 }
 .cdm .footer > * {
@@ -1154,7 +1148,7 @@ video::-webkit-media-controls-overlay-play-button {
   white-space: normal;
 }
 .cdm.expanded .footer {
-  border: 0px solid #dddddd;
+  border: 0px solid #ddd;
   border-bottom-width: 1px;
 }
 .cdm.expanded > hr {
@@ -1182,7 +1176,7 @@ div.cdm.expanded.Unread div.header a.title {
   color: black;
 }
 div.cdm.expanded div.content {
-  color: #555555;
+  color: #555;
 }
 div.cdm.expanded.Unread div.content {
   color: black;
@@ -1199,11 +1193,11 @@ div.cdm.vgrlf .feed {
   padding: 5px 3px 5px 5px;
 }
 .cdm div.feed-title a.title {
-  color: #555555;
+  color: #555;
   font-weight: bold;
 }
 .cdm div.feed-title a {
-  color: #555555;
+  color: #555;
 }
 .cdm div.feed-title a:hover {
   color: #257aa7;
@@ -1216,7 +1210,7 @@ div.cdm.vgrlf .feed {
 .cdm div.header div.feed,
 .cdm div.header div.feed a {
   vertical-align: middle;
-  color: #555555;
+  color: #555;
   font-weight: normal;
   font-style: italic;
   font-size: 11px;
@@ -1233,7 +1227,7 @@ div.cdm.vgrlf .feed {
 }
 .cdm div.header span.author {
   white-space: nowrap;
-  color: #555555;
+  color: #555;
   font-size: 11px;
   font-weight: normal;
 }
@@ -1248,10 +1242,10 @@ div#floatingTitle {
   top: 0px;
   right: 0px;
   left: 0px;
-  border: 0px solid #dddddd;
+  border: 0px solid #ddd;
   border-bottom-width: 1px;
   background: white;
-  color: #555555;
+  color: #555;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -1286,7 +1280,7 @@ div#floatingTitle .right i.icon-anchor {
   cursor: pointer;
 }
 div#floatingTitle span.author {
-  color: #555555;
+  color: #555;
   font-size: 11px;
   font-weight: normal;
 }
@@ -1300,7 +1294,7 @@ div#floatingTitle a.title {
 }
 div#floatingTitle div.feed {
   padding-right: 10px;
-  color: #555555;
+  color: #555;
   font-weight: normal;
   font-style: italic;
   font-size: 11px;
@@ -1314,11 +1308,11 @@ div#floatingTitle div.feed a {
 div#floatingTitle span.updated {
   padding-right: 10px;
   white-space: nowrap;
-  color: #555555;
+  color: #555;
   font-size: 11px;
 }
 div#floatingTitle div.feed a {
-  color: #555555;
+  color: #555;
 }
 div#floatingTitle .collapse,
 div#floatingTitle .excerpt {
@@ -1337,7 +1331,7 @@ div#floatingTitle .feed-title a.title {
 }
 div#floatingTitle .feed-title a.catchup {
   text-align: right;
-  color: #555555;
+  color: #555;
   padding-right: 10px;
   font-size: 11px;
   white-space: nowrap;
@@ -1350,7 +1344,7 @@ div#floatingTitle.Unread a.title {
 }
 .cdm.expandable {
   background-color: #f5f5f5;
-  border: 0px solid #dddddd;
+  border: 0px solid #ddd;
   border-bottom-width: 1px;
 }
 .cdm.expandable > hr {
@@ -1387,7 +1381,7 @@ div.cdm.expandable.active div.header span.titleWrap {
 }
 div.cdm.expandable div.header a.title {
   font-weight: 600;
-  color: #555555;
+  color: #555;
   font-size: 14px;
   transition: color 0.2s, background 0.2s;
   text-rendering: optimizelegibility;
@@ -1471,7 +1465,7 @@ body.ttrss_prefs div#filterlistLoading,
 body.ttrss_prefs div#labellistLoading {
   text-align: center;
   padding: 5px;
-  color: #555555;
+  color: #555;
 }
 body.ttrss_prefs div#feedlistLoading img,
 body.ttrss_prefs div#filterlistLoading img,
@@ -1493,7 +1487,7 @@ body.ttrss_prefs table.prefPluginsList label {
   white-space: nowrap;
 }
 body.ttrss_prefs table.prefPluginsList i.plugin-enabled {
-  color: #69c671;
+  color: #69C671;
 }
 body.ttrss_prefs table.prefPluginsList label img {
   vertical-align: middle;
@@ -1509,7 +1503,7 @@ body.ttrss_prefs table.prefErrorLog tr.errrow td.errno {
 body.ttrss_prefs table.prefErrorLog td.filename,
 body.ttrss_prefs table.prefErrorLog td.login,
 body.ttrss_prefs table.prefErrorLog td.timestamp {
-  color: #555555;
+  color: #555;
 }
 body.ttrss_prefs hr {
   border-color: #ecf4ff;
@@ -1520,7 +1514,7 @@ body.ttrss_utility.sanity_failed {
 }
 body.ttrss_utility {
   background: #f5f5f5;
-  color: #000000;
+  color: black;
   padding: 0px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -1736,8 +1730,8 @@ body.small_margins {
   max-width: none;
 }
 body#sharepopup {
-  color: #000000;
-  background: #ffffff;
+  color: black;
+  background: white;
   margin: 10px;
 }
 body#sharepopup h1 {
@@ -1769,7 +1763,7 @@ body#sharepopup input {
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
 .flat .dijitCheckBox.dijitCheckBoxChecked {
-  background-color: #69c671;
+  background-color: #69C671;
   border-color: #45b74f;
 }
 .flat .dijitMenu .dijitMenuItem .dijitMenuItemLabel {
@@ -1854,16 +1848,15 @@ body#sharepopup input {
 .flat .dijitTree .dijitTreeNode .dijitTreeRow {
   padding: 4px 0px 4px;
   border-width: 1px;
-  color: #555555;
+  color: #555;
 }
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
   src: url(../lib/iconfont/MaterialIcons-Regular.eot);
-  src: local('Material Icons'), local('MaterialIcons-Regular'), url(../lib/iconfont/MaterialIcons-Regular.woff2) format('woff2'), url(../lib/iconfont/MaterialIcons-Regular.woff) format('woff'), url(../lib/iconfont/MaterialIcons-Regular.ttf) format('truetype');
-  
   /* For IE6-8 */
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(../lib/iconfont/MaterialIcons-Regular.woff2) format('woff2'), url(../lib/iconfont/MaterialIcons-Regular.woff) format('woff'), url(../lib/iconfont/MaterialIcons-Regular.ttf) format('truetype');
 }
 .material-icons {
   font-family: 'Material Icons';
@@ -1976,7 +1969,7 @@ body.ttrss_zoom div.post div.content video {
 }
 body.ttrss_zoom div.post div.content blockquote {
   margin: 5px 0px 5px 0px;
-  color: #555555;
+  color: #555;
   padding-left: 10px;
   border: 0px solid #ccc;
   border-left-width: 4px;
@@ -1989,7 +1982,7 @@ body.ttrss_zoom div.post div.content code {
 body.ttrss_zoom div.post div.content pre {
   margin: 5px 0px 5px 0px;
   padding: 10px;
-  color: #555555;
+  color: #555;
   font-family: monospace;
   font-size: 12px;
   border: 0px solid #ccc;
