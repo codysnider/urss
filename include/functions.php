@@ -951,7 +951,11 @@
 		if ($eta_min && time() + $tz_offset - $timestamp < 3600) {
 			return T_sprintf("%d min", date("i", time() + $tz_offset - $timestamp));
 		} else if (date("Y.m.d", $timestamp) == date("Y.m.d", time() + $tz_offset)) {
-			return date("G:i", $timestamp);
+			$format = get_pref('SHORT_DATE_FORMAT', $owner_uid);
+			if (strpos((strtolower($format)), "a") === false)
+				return date("G:i", $timestamp);
+			else
+				return date("g:i a", $timestamp);
 		} else if (date("Y", $timestamp) == date("Y", time() + $tz_offset)) {
 			$format = get_pref('SHORT_DATE_FORMAT', $owner_uid);
 			return date($format, $timestamp);
