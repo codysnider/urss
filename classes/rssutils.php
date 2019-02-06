@@ -1017,12 +1017,17 @@ class RSSUtils {
 							SET score = ? WHERE ref_id = ?");
 					$sth->execute([$score, $ref_id]);
 
-					if ($mark_unread_on_update) {
+					if ($mark_unread_on_update &&
+						!$entry_force_catchup &&
+						!RSSUtils::find_article_filter($article_filters, 'catchup')) {
+
 						Debug::log("article updated, marking unread as requested.", Debug::$LOG_VERBOSE);
 
 						$sth = $pdo->prepare("UPDATE ttrss_user_entries
 							SET last_read = null, unread = true WHERE ref_id = ?");
 						$sth->execute([$ref_id]);
+					} else {
+						Debug::log("article updated, but we're forbidden to mark it unread.", Debug::$LOG_VERBOSE);
 					}
 				}
 
