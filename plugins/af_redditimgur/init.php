@@ -278,6 +278,37 @@ class Af_RedditImgur extends Plugin {
 					$found = true;
 				}
 
+                // imgur via link rel="image_src" href="..."
+                if (!$found && preg_match("/imgur/", $entry->getAttribute("href"))) {
+
+                    Debug::log("handling as imgur page/whatever", Debug::$LOG_VERBOSE);
+
+                    $content = fetch_file_contents(["url" => $entry->getAttribute("href"),
+                        "http_accept" => "text/*"]);
+
+                    if ($content) {
+                        $cdoc = new DOMDocument();
+
+                        if (@$cdoc->loadHTML($content)) {
+                            $cxpath = new DOMXPath($cdoc);
+
+                            $rel_image = $cxpath->query("//link[@rel='image_src']")->item(0);
+
+                            if ($rel_image) {
+
+                                $img = $doc->createElement('img');
+                                $img->setAttribute("src", $rel_image->getAttribute("href"));
+
+                                $br = $doc->createElement('br');
+                                $entry->parentNode->insertBefore($img, $entry);
+                                $entry->parentNode->insertBefore($br, $entry);
+
+                                $found = true;
+                            }
+                        }
+                    }
+                }
+
 				// wtf is this even
 				if (!$found && preg_match("/^https?:\/\/gyazo\.com\/([^\.\/]+$)/", $entry->getAttribute("href"), $matches)) {
 					$img_id = $matches[1];
