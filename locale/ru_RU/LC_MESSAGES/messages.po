@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2019-02-06 13:12+0000\n"
-"Last-Translator: Сергей «Solaris» Сидоров <solariscreator@gmail.com>\n"
+"PO-Revision-Date: 2019-02-06 13:35+0000\n"
+"Last-Translator: Nikolay Korotkiy <sikmir@gmail.com>\n"
 "Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
 "ru/>\n"
 "Language: ru_RU\n"
@@ -2149,6 +2149,8 @@ msgstr "Системные плагины"
 #: classes/pref/prefs.php:727
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr ""
+"Системные плагины включены в <strong>config.php</strong> для всех "
+"пользователей."
 
 #: classes/pref/prefs.php:732
 #: classes/pref/prefs.php:788
@@ -2491,7 +2493,7 @@ msgstr "Пометить похожие статьи как прочитанны
 #: plugins/af_psql_trgm/init.php:166
 msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
 msgstr ""
-"Расширение триграммы PostgreSQL возвращает сходство строк в виде числа с "
+"Расширение PostgreSQL trigram возвращает сходство строк в виде числа с "
 "плавающей запятой (0-1). Установка слишком низкого значения может привести к "
 "ложным срабатываниям, ноль отключает проверку."
 
