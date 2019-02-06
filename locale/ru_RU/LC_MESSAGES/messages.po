@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2018-12-04 03:52+0000\n"
-"Last-Translator: Andrew Dolgov <fox@fakecake.org>\n"
-"Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/ru/>\n"
+"PO-Revision-Date: 2019-02-06 13:35+0000\n"
+"Last-Translator: Сергей «Solaris» Сидоров <solariscreator@gmail.com>\n"
+"Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"ru/>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
@@ -164,7 +166,7 @@ msgstr "Плагин не найден"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
-msgstr ""
+msgstr "Представление как JSON неудачно"
 
 #: index.php:128
 #: index.php:143
@@ -200,7 +202,7 @@ msgstr "Проблема соединения с сервером."
 
 #: index.php:155
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "В журнале событий есть свежие записи."
 
 #: index.php:158
 msgid "Updates are available from Git."
@@ -336,9 +338,8 @@ msgstr "Переключить широкоэкранный режим"
 
 #: index.php:232
 #: include/functions.php:1202
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "Переключить комбинированный режим"
+msgstr "Включить ночной режим"
 
 #: index.php:233
 msgid "Keyboard shortcuts help"
@@ -664,7 +665,7 @@ msgstr "Обратный порядок заголовков"
 
 #: include/functions.php:1184
 msgid "Toggle headline grouping"
-msgstr ""
+msgstr "Включить группировку заголовков"
 
 #: include/functions.php:1185
 msgid "Debug feed update"
@@ -734,11 +735,11 @@ msgstr "Показать диалог помощи"
 
 #: include/functions.php:2456
 msgid "There is no error, the file uploaded with success"
-msgstr ""
+msgstr "Ошибок нет, файл загружен успешно"
 
 #: include/functions.php:2457
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
-msgstr ""
+msgstr "Загружаемый файл превышает upload_max_filesize параметр в php.ini"
 
 #: include/functions.php:2458
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
@@ -746,7 +747,7 @@ msgstr ""
 
 #: include/functions.php:2459
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Файл был загружен только частично"
 
 #: include/functions.php:2460
 msgid "No file was uploaded"
@@ -754,11 +755,11 @@ msgstr "Ни одного файла не загружено"
 
 #: include/functions.php:2461
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "Отсутствует временная папка"
 
 #: include/functions.php:2462
 msgid "Failed to write file to disk."
-msgstr ""
+msgstr "Запись файла на диск неудачна."
 
 #: include/functions.php:2463
 msgid "A PHP extension stopped the file upload."
@@ -1030,6 +1031,8 @@ msgstr "Вы можете опубликовать %s с помощью след
 #: classes/dlg.php:189
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
 msgstr ""
+"Вы используете пароль tt-rss по умолчанию. Пожалуйста, измените его в "
+"настройках (Личные данные / Аутентификация)."
 
 #: classes/dlg.php:193
 msgid "Open Preferences"
@@ -1378,7 +1381,7 @@ msgstr "Подходящих пользователей не найдено."
 
 #: classes/pref/system.php:30
 msgid "Event Log"
-msgstr ""
+msgstr "Журнал событий"
 
 #: classes/pref/system.php:41
 msgid "Refresh"
@@ -1734,7 +1737,7 @@ msgstr "Создать"
 
 #: classes/pref/filters.php:959
 msgid "Regular expression, without outer delimiters (i.e. slashes)"
-msgstr ""
+msgstr "Регулярное выражение, без внешних разделителей (то есть косых черт)"
 
 #: classes/pref/filters.php:965
 msgid "Inverse regular expression matching"
@@ -2046,7 +2049,7 @@ msgstr "Сохранить"
 
 #: classes/pref/prefs.php:283
 msgid "Changing your current password will disable OTP."
-msgstr ""
+msgstr "Изменение текущего пароля приведет к отключению OTP."
 
 #: classes/pref/prefs.php:288
 msgid "Old password"
@@ -2146,6 +2149,8 @@ msgstr "Системные плагины"
 #: classes/pref/prefs.php:727
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr ""
+"Системные плагины включены в <strong>config.php</strong> для всех "
+"пользователей."
 
 #: classes/pref/prefs.php:732
 #: classes/pref/prefs.php:788
@@ -2350,7 +2355,7 @@ msgstr "Искать"
 #: classes/feeds.php:781
 #, php-format
 msgid "in %s"
-msgstr ""
+msgstr "в %s"
 
 #: classes/feeds.php:786
 msgid "Used for word stemming"
@@ -2474,7 +2479,7 @@ msgstr "Конфигурация сохранена"
 #: plugins/af_psql_trgm/init.php:29
 #, php-format
 msgid "Data saved (%s, %d)"
-msgstr ""
+msgstr "Данные сохранены (%s, %d)"
 
 #: plugins/af_psql_trgm/init.php:120
 msgid "Show related articles"
@@ -2488,6 +2493,9 @@ msgstr "Пометить похожие статьи как прочитанны
 #: plugins/af_psql_trgm/init.php:166
 msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
 msgstr ""
+"Расширение PostgreSQL trigram возвращает сходство строк в виде числа с "
+"плавающей запятой (0-1). Установка слишком низкого значения может привести к "
+"ложным срабатываниям, ноль отключает проверку."
 
 #: plugins/af_psql_trgm/init.php:169
 msgid "Global settings"
@@ -2495,11 +2503,11 @@ msgstr "Общие настройки"
 
 #: plugins/af_psql_trgm/init.php:173
 msgid "Minimum similarity:"
-msgstr ""
+msgstr "Минимальное сходство:"
 
 #: plugins/af_psql_trgm/init.php:178
 msgid "Minimum title length:"
-msgstr ""
+msgstr "Минимальная длинна заголовка:"
 
 #: plugins/af_psql_trgm/init.php:183
 msgid "Enable for all feeds:"
@@ -2511,7 +2519,7 @@ msgstr "Сходство (pg_trgm)"
 
 #: plugins/af_comics/init.php:50
 msgid "Feeds supported by af_comics"
-msgstr ""
+msgstr "Фид поддерживается af_comics"
 
 #: plugins/af_comics/init.php:52
 msgid "The following comics are currently supported:"
@@ -2894,7 +2902,9 @@ msgstr[2] "Переместить %d архивированных статьи(�
 
 #: js/Headlines.js:1059
 msgid "Please note that unstarred articles might get purged on next feed update."
-msgstr "Пожалуйста, учтите, что не отмеченные звездочкой статьи могут быть удалены при следующем обновлении каналов"
+msgstr ""
+"Пожалуйста, учтите, что не отмеченные звездочкой статьи могут быть удалены "
+"при следующем обновлении каналов."
 
 #: js/Headlines.js:1088
 #, perl-format

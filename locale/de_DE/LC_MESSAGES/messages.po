@@ -12,9 +12,10 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2019-01-02 09:12+0000\n"
-"Last-Translator: Dennis Mootz <dennis@mootz.eu>\n"
-"Language-Team: German <https://weblate.tt-rss.org/projects/tt-rss/messages/de/>\n"
+"PO-Revision-Date: 2019-02-02 21:35+0000\n"
+"Last-Translator: Patrick Ahles <p.ahles+weblate@gmail.com>\n"
+"Language-Team: German <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -167,7 +168,7 @@ msgstr "Plugin nicht gefunden"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
-msgstr ""
+msgstr "Kodieren von Daten als JSON ist fehlgeschlagen"
 
 #: index.php:128
 #: index.php:143
@@ -340,7 +341,7 @@ msgstr "Breitbild-Modus umschalten"
 #: index.php:232
 #: include/functions.php:1202
 msgid "Toggle night mode"
-msgstr "Nacht-Modus umschalten"
+msgstr "Nachtmodus umschalten"
 
 #: index.php:233
 msgid "Keyboard shortcuts help"
@@ -1377,7 +1378,7 @@ msgstr "Ereignisprotokoll"
 
 #: classes/pref/system.php:41
 msgid "Refresh"
-msgstr "Neuladen"
+msgstr "Aktualisieren"
 
 #: classes/pref/system.php:44
 #: classes/pref/prefs.php:629
@@ -1585,7 +1586,7 @@ msgstr "Inklusive Einstellungen"
 
 #: classes/pref/feeds.php:1313
 msgid "Published OPML"
-msgstr "OPML veröffentlicht"
+msgstr "Veröffentlichtes OPML"
 
 #: classes/pref/feeds.php:1315
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
@@ -1609,7 +1610,9 @@ msgstr "Veröffentlichte & geteilte Artikel / erzeugte Feeds"
 
 #: classes/pref/feeds.php:1330
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "Mit der folgenden URL können sie veröffentlichte Artikel beobachten:"
+msgstr ""
+"Veröffentlichte Artikel können von jedem abonniert werden, die folgende URL "
+"kennen:"
 
 #: classes/pref/feeds.php:1337
 #: classes/feeds.php:34
@@ -1784,7 +1787,7 @@ msgstr[1] "%s (%d Regeln)"
 
 #: classes/pref/filters.php:1127
 msgid "matches any rule"
-msgstr "Erfüllt irgendeine Regel"
+msgstr "erfüllt jeder Regel"
 
 #: classes/pref/filters.php:1130
 #, php-format
@@ -2134,7 +2137,9 @@ msgstr "System-Plugins"
 
 #: classes/pref/prefs.php:727
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
-msgstr "System plugins sind in der <strong>config.php</strong> für alle Benutzer aktiviert."
+msgstr ""
+"System-plugins sind in der <strong>config.php</strong> für alle Benutzer "
+"aktiviert."
 
 #: classes/pref/prefs.php:732
 #: classes/pref/prefs.php:788
@@ -2701,7 +2706,7 @@ msgstr "Fehler erklärt"
 
 #: js/AppBase.js:399
 msgid "Fatal error"
-msgstr "Schwerwiegender Fehler"
+msgstr "Kritischer Fehler"
 
 #: js/Article.js:33
 msgid "Please enter new score for selected articles:"
@@ -3112,7 +3117,7 @@ msgstr "<span onclick=\"App.explainError(3)\">Aktualisierungs-Dienst aktualisier
 
 #: js/AppBase.js:449
 msgid "Unhandled exception"
-msgstr "Schwerwiegender Fehler: (Unhandled Exception)"
+msgstr "Unbehandelte Ausnahme"
 
 #: js/Article.js:236
 msgid "Edit article Tags"
@@ -3128,7 +3133,7 @@ msgstr "Upload fertig."
 
 #: js/CommonDialogs.js:22
 msgid "Upload failed: icon is too big."
-msgstr "Upload schlug fehl. Ikone ist zu groß."
+msgstr "Upload fehlgeschlagen: Ikone ist zu groß."
 
 #: js/CommonDialogs.js:25
 msgid "Upload failed."
