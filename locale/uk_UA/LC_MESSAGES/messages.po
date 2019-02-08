@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2019-01-31 17:36+0000\n"
+"PO-Revision-Date: 2019-02-07 14:36+0000\n"
 "Last-Translator: Андрій Жук <zhouck@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.tt-rss.org/projects/tt-rss/"
 "messages/uk/>\n"
@@ -272,7 +272,7 @@ msgstr "Заголовок"
 #: js/FeedTree.js:55
 #: js/FeedTree.js:83
 msgid "Mark as read"
-msgstr "Як прочитані"
+msgstr "Позначити канал як прочитаний"
 
 #: index.php:197
 msgid "Older than one day"
@@ -309,7 +309,7 @@ msgstr "Підписатися на канал..."
 
 #: index.php:225
 msgid "Edit this feed..."
-msgstr "Редагувати цей канал..."
+msgstr "Змінити цей канал..."
 
 #: index.php:226
 #: classes/pref/feeds.php:768
@@ -562,7 +562,7 @@ msgstr "Прочитано/не прочитано"
 
 #: include/functions.php:1158
 msgid "Edit tags"
-msgstr "Редагувати теги"
+msgstr "Змінити теги"
 
 #: include/functions.php:1159
 msgid "Open in new window"
@@ -658,7 +658,7 @@ msgstr "Підписатися на канал"
 #: js/PrefFeedTree.js:56
 #: js/FeedTree.js:62
 msgid "Edit feed"
-msgstr "Редагувати канал"
+msgstr "Змінити канал"
 
 #: include/functions.php:1183
 msgid "Reverse headlines"
@@ -1265,7 +1265,7 @@ msgstr "Ваш рівень доступу недостатній для від�
 
 #: classes/pref/users.php:26
 msgid "Edit user"
-msgstr "Редагувати користувача"
+msgstr "Змінити користувача"
 
 #: classes/pref/users.php:61
 #: classes/pref/feeds.php:620
@@ -2403,9 +2403,10 @@ msgid "in %s"
 msgstr "в %s"
 
 #: classes/feeds.php:786
-#, fuzzy
 msgid "Used for word stemming"
-msgstr "Використовується для словосполучення"
+msgstr ""
+"Використовується для <a href=https://uk.wikipedia.org/wiki/"
+"%D0%A1%D1%82%D0%B5%D0%BC%D1%96%D0%BD%D0%B3>стемінгу</a>"
 
 #: classes/feeds.php:795
 msgid "Search syntax"
@@ -2915,9 +2916,8 @@ msgid "Edit Feed"
 msgstr "Змінити канал"
 
 #: js/CommonDialogs.js:438
-#, fuzzy
 msgid "Generate new syndication address for this feed?"
-msgstr "Створити нову синдикаційну адресу для цього каналу?"
+msgstr "Створити нову посилання для поширення для цього каналу?"
 
 #: js/Feeds.js:213
 msgid "Your password is at default value"

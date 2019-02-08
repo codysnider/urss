@@ -10,14 +10,16 @@ msgstr ""
 "Project-Id-Version: tt-rss 1.7.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-16 10:16+0300\n"
-"PO-Revision-Date: 2015-06-25 22:05+0300\n"
-"Last-Translator: Henrik Ahlgren <pablo@seestieto.com>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2019-02-07 14:35+0000\n"
+"Last-Translator: Nikolay Korotkiy <sikmir@gmail.com>\n"
+"Language-Team: Finnish <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"fi/>\n"
 "Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -199,7 +201,7 @@ msgstr "Ladataan, odota..."
 #: js/AppBase.js:240
 #: js/AppBase.js:246
 msgid "Communication problem with server."
-msgstr "Palvelimeen ei saada yhteyttä"
+msgstr "Palvelimeen ei saada yhteyttä."
 
 #: index.php:155
 msgid "Recent entries found in event log."
@@ -294,7 +296,7 @@ msgstr "Toiminnot..."
 
 #: index.php:221
 msgid "Preferences..."
-msgstr "Asetukset"
+msgstr "Asetukset…"
 
 #: index.php:222
 msgid "Search..."
@@ -830,11 +832,11 @@ msgstr "Istunnon validointi epäonnistui (käyttäjää ei löydy)"
 
 #: classes/article.php:26
 msgid "Article not found."
-msgstr "Artikkelia ei löytynyt"
+msgstr "Artikkelia ei löytynyt."
 
 #: classes/article.php:214
 msgid "Tags for this article (separated by commas):"
-msgstr "Tämän syötteen avainsanat (pilkulla erotettuina)"
+msgstr "Tämän syötteen avainsanat (pilkulla erotettuina):"
 
 #: classes/article.php:239
 #: classes/pref/labels.php:79
@@ -894,7 +896,7 @@ msgstr "OPML-työkalu"
 
 #: classes/opml.php:37
 msgid "Importing OPML..."
-msgstr "Luetaan OPML-tiedostoa"
+msgstr "Luetaan OPML-tiedostoa…"
 
 #: classes/opml.php:42
 msgid "Return to preferences"
@@ -1071,7 +1073,7 @@ msgstr "Sisältö:"
 
 #: classes/handler/public.php:630
 msgid "Labels:"
-msgstr "Tunnisteet"
+msgstr "Tunnisteet:"
 
 #: classes/handler/public.php:649
 msgid "Shared article will appear in the Published feed."
@@ -1269,7 +1271,7 @@ msgstr "Tunnistautuminen"
 
 #: classes/pref/users.php:64
 msgid "Access level: "
-msgstr "Käyttäjäoikeudet:"
+msgstr "Käyttäjäoikeudet: "
 
 #: classes/pref/users.php:82
 #: classes/pref/feeds.php:646
@@ -1381,7 +1383,7 @@ msgstr "Käyttäjätunnuksia ei määritelty."
 
 #: classes/pref/users.php:442
 msgid "No matching users found."
-msgstr "Hakua vastaavia käyttäjätunnuksia ei löytynyt"
+msgstr "Hakua vastaavia käyttäjätunnuksia ei löytynyt."
 
 #: classes/pref/system.php:30
 msgid "Event Log"
@@ -1471,7 +1473,7 @@ msgstr "Päivitä"
 #: classes/pref/feeds.php:605
 #: classes/pref/feeds.php:838
 msgid "Article purging:"
-msgstr "Artikkeleiden siivous"
+msgstr "Artikkeleiden siivous:"
 
 #: classes/pref/feeds.php:630
 #: classes/pref/feeds.php:859
@@ -1488,7 +1490,7 @@ msgstr "<b>Vinkki:</b> sinun on annettava kirjautumistiedot jos syöte vaatii ki
 #: classes/pref/feeds.php:644
 #: classes/feeds.php:700
 msgid "This feed requires authentication."
-msgstr "Tämä syöte vaatii kirjautumisen"
+msgstr "Tämä syöte vaatii kirjautumisen."
 
 #: classes/pref/feeds.php:660
 #: classes/pref/feeds.php:869
@@ -1977,7 +1979,7 @@ msgstr "Kirjaudu SSL-varmenteella"
 
 #: classes/pref/prefs.php:50
 msgid "Click to register your SSL client certificate with tt-rss"
-msgstr "Napsauta rekisteröidäksesi SSL-varmenne tt-rss:ään "
+msgstr "Napsauta rekisteröidäksesi SSL-varmenne tt-rss:ään"
 
 #: classes/pref/prefs.php:51
 #, fuzzy
@@ -2104,7 +2106,7 @@ msgstr "Tarvitset yhteensopivan autentikointiohjelman. Salasanan vaihtaminen poi
 
 #: classes/pref/prefs.php:360
 msgid "Scan the following code by the Authenticator application:"
-msgstr "Skannaa tämä koodi autentikointiohjelmalla"
+msgstr "Skannaa tämä koodi autentikointiohjelmalla:"
 
 #: classes/pref/prefs.php:397
 msgid "Enter the generated one time password"
@@ -2281,7 +2283,7 @@ msgstr "Syöte:"
 #: classes/feeds.php:149
 #: classes/feeds.php:499
 msgid "Feed not found."
-msgstr "Syötettä ei löydy"
+msgstr "Syötettä ei löydy."
 
 #: classes/feeds.php:209
 #, fuzzy
@@ -2304,15 +2306,15 @@ msgstr "Tuotu %s"
 
 #: classes/feeds.php:391
 msgid "No unread articles found to display."
-msgstr "Lukemattomia artikkeleita ei ole näytettäväksi"
+msgstr "Lukemattomia artikkeleita ei ole näytettäväksi."
 
 #: classes/feeds.php:394
 msgid "No updated articles found to display."
-msgstr "Päivitettyjä artikkeleita ei ole näytettäväksi"
+msgstr "Päivitettyjä artikkeleita ei ole näytettäväksi."
 
 #: classes/feeds.php:397
 msgid "No starred articles found to display."
-msgstr "Tähdellä merkittyjä artikkeleita ei ole näytettäväksi"
+msgstr "Tähdellä merkittyjä artikkeleita ei ole näytettäväksi."
 
 #: classes/feeds.php:401
 #, fuzzy
@@ -2336,7 +2338,7 @@ msgstr "Osassa syötteistä oli päivitysongelmia (napsauta nähdäksesi lisäti
 
 #: classes/feeds.php:585
 msgid "No feed selected."
-msgstr "Yhtään syötettä ei ole valittuna"
+msgstr "Yhtään syötettä ei ole valittuna."
 
 #: classes/feeds.php:647
 #: classes/feeds.php:655
@@ -3394,7 +3396,7 @@ msgstr "Syötä käyttäjätunnus:"
 
 #: js/PrefUsers.js:18
 msgid "Adding user..."
-msgstr "Lisätään käyttäjä"
+msgstr "Lisätään käyttäjä…"
 
 #: js/PrefUsers.js:36
 msgid "User Editor"
@@ -3457,7 +3459,7 @@ msgstr ""
 
 #: plugins/shorten_expanded/init.js:42
 msgid "Click to expand article"
-msgstr "Napsauta nähdäksesi koko artikkelin."
+msgstr "Napsauta nähdäksesi koko artikkelin"
 
 #: plugins/share/share.js:15
 msgid "Trying to change URL..."
