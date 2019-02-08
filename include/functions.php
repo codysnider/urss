@@ -93,7 +93,6 @@
 					"es_LA" => "Español",
 					"de_DE" => "Deutsch",
 					"fr_FR" => "Français",
-					"fi_FI" => "Finnish",
 					"hu_HU" => "Magyar (Hungarian)",
 					"it_IT" => "Italiano",
 					"ja_JP" => "日本語 (Japanese)",
