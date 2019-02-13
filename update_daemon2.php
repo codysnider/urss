@@ -159,9 +159,9 @@
     }
 
     if (isset($options["log"])) {
+        Debug::set_quiet(isset($options['quiet']));
         Debug::set_logfile($options["log"]);
         Debug::log("Logging to " . $options["log"]);
-        Debug::set_quiet(isset($options['quiet']));
     } else {
         if (isset($options['quiet'])) {
             Debug::set_loglevel(Debug::$LOG_DISABLED);
