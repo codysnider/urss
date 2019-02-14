@@ -212,6 +212,12 @@ div.cdm.vgrlf .feed {
 	}
 }
 
+#main:not(.expandable) div#floatingTitle {
+	.collapse {
+		display : none;
+	}
+}
+
 div#floatingTitle {
 	position : absolute;
 	z-index : 5;
@@ -256,6 +262,15 @@ div#floatingTitle {
 		}
 	}
 
+	.excerpt {
+		display : none;
+	}
+
+	.collapse i {
+		color : @color-accent;
+		cursor : pointer;
+	}
+
 	span.author {
 		color : @default-text;
 		font-size : 11px;
@@ -295,10 +310,6 @@ div#floatingTitle {
 
 	div.feed a {
 		color : @default-text;
-	}
-
-	.collapse, .excerpt {
-		display : none;
 	}
 
 	span.titleWrap {

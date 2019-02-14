@@ -556,6 +556,9 @@ define(["dojo/_base/declare"], function (declare) {
 
 				if (!append) {
 
+					// TODO: the below needs to be applied again when switching expanded/expandable on the fly
+					// via hotkeys, not just on feed load
+
 					$("headlines-frame").removeClassName("cdm");
 					$("headlines-frame").removeClassName("normal");
 
@@ -563,6 +566,13 @@ define(["dojo/_base/declare"], function (declare) {
 
 					$("headlines-frame").setAttribute("is-vfeed",
 						reply['headlines']['is_vfeed'] ? 1 : 0);
+
+					// for floating title because it's placed outside of headlines-frame
+					$("main").removeClassName("expandable");
+					$("main").removeClassName("expanded");
+
+					if (App.isCombinedMode())
+						$("main").addClassName(App.getInitParam("cdm_expanded") ? " expanded" : " expandable");
 
 					Article.setActive(0);
 

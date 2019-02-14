@@ -1240,6 +1240,9 @@ div.cdm.vgrlf .feed {
   display: inline-block;
   padding: 1px 4px 1px 4px;
 }
+#main:not(.expandable) div#floatingTitle .collapse {
+  display: none;
+}
 div#floatingTitle {
   position: absolute;
   z-index: 5;
@@ -1283,6 +1286,13 @@ div#floatingTitle .right i.icon-anchor {
   color: #ccc;
   cursor: pointer;
 }
+div#floatingTitle .excerpt {
+  display: none;
+}
+div#floatingTitle .collapse i {
+  color: #257aa7;
+  cursor: pointer;
+}
 div#floatingTitle span.author {
   color: #ccc;
   font-size: 11px;
@@ -1317,10 +1327,6 @@ div#floatingTitle span.updated {
 }
 div#floatingTitle div.feed a {
   color: #ccc;
-}
-div#floatingTitle .collapse,
-div#floatingTitle .excerpt {
-  display: none;
 }
 div#floatingTitle span.titleWrap {
   width: 100%;
