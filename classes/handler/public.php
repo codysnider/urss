@@ -838,6 +838,7 @@ class Handler_Public extends Handler {
 
 	function forgotpass() {
 		startup_gettext();
+		session_start();
 
 		@$hash = clean($_REQUEST["hash"]);
 
@@ -916,8 +917,11 @@ class Handler_Public extends Handler {
 			print "<input class='input input-text' type='email' name='email' value='' required>";
 			print "</fieldset>";
 
+			$_SESSION["pwdreset:testvalue1"] = rand(1,10);
+			$_SESSION["pwdreset:testvalue2"] = rand(1,10);
+
 			print "<fieldset>";
-			print "<label>".__("How much is two plus two:")."</label>";
+			print "<label>".T_sprintf("How much is %d + %d:", $_SESSION["pwdreset:testvalue1"], $_SESSION["pwdreset:testvalue2"])."</label>";
 			print "<input class='input input-text' type='text' name='test' value='' required>";
 			print "</fieldset>";
 
@@ -933,7 +937,7 @@ class Handler_Public extends Handler {
 			$email = clean($_POST["email"]);
 			$test = clean($_POST["test"]);
 
-			if (($test != 4 && $test != 'four') || !$email || !$login) {
+			if ($test != ($_SESSION["pwdreset:testvalue1"] + $_SESSION["pwdreset:testvalue2"]) || !$email || !$login) {
 				print_error(__('Some of the required form parameters are missing or incorrect.'));
 
 				print "<form method=\"GET\" action=\"public.php\">
