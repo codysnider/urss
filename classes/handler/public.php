@@ -1049,23 +1049,38 @@ class Handler_Public extends Handler {
 			exit;
 		}
 
-		?><html>
+		?>
+		<html>
 			<head>
 			<title>Database Updater</title>
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 			<?php echo stylesheet_tag("css/default.css") ?>
-			<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
-			<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">
-			</head>
+			<link rel="shortcut icon" type="image/png" href="images/favicon.png">
+			<link rel="icon" type="image/png" sizes="72x72" href="images/favicon-72px.png">
+			<?php
+				echo stylesheet_tag("css/default.css");
+				echo javascript_tag("lib/prototype.js");
+				echo javascript_tag("lib/dojo/dojo.js");
+				echo javascript_tag("lib/dojo/tt-rss-layer.js");
+			?>
 			<style type="text/css">
 				span.ok { color : #009000; font-weight : bold; }
 				span.err { color : #ff0000; font-weight : bold; }
 			</style>
-		<body class="claro ttrss_utility">
-			<script type='text/javascript'>
-			function confirmOP() {
-				return confirm("Update the database?");
-			}
+		</head>
+		<body class="flat ttrss_utility">
+
+			<script type="text/javascript">
+				require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox', 'dijit/form/Form',
+					'dijit/form/Select','dijit/form/TextBox','dijit/form/ValidationTextBox'],function(parser, ready){
+					ready(function() {
+						parser.parse();
+					});
+				});
+
+				function confirmOP() {
+					return confirm("Update the database?");
+				}
 			</script>
 
 			<div class="container">
@@ -1080,28 +1095,29 @@ class Handler_Public extends Handler {
 				if ($op == "performupdate") {
 					if ($updater->isUpdateRequired()) {
 
-						print "<h2>Performing updates</h2>";
+						print "<h2>" . __("Performing updates") . "</h2>";
 
-						print "<h3>Updating to schema version " . SCHEMA_VERSION . "</h3>";
+						print "<h3>" . T_sprintf("Updating to schema version %d", SCHEMA_VERSION) . "</h3>";
 
 						print "<ul>";
 
 						for ($i = $updater->getSchemaVersion() + 1; $i <= SCHEMA_VERSION; $i++) {
-							print "<li>Performing update up to version $i...";
+							print "<li>" . T_sprintf("Performing update up to version %d...", $i);
 
 							$result = $updater->performUpdateTo($i, true);
 
 							if (!$result) {
-								print "<span class='err'>FAILED!</span></li></ul>";
+								print "<span class='err'>".__("FAILED!")."</span></li></ul>";
 
 								print_warning("One of the updates failed. Either retry the process or perform updates manually.");
-								print "<p><form method=\"GET\" action=\"index.php\">
-								<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
+
+								print "<form method='GET' action='index.php'>
+									<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".__("Return to Tiny Tiny RSS")."</button>
 								</form>";
 
 								return;
 							} else {
-								print "<span class='ok'>OK!</span></li>";
+								print "<span class='ok'>".__("OK!")."</span></li>";
 							}
 						}
 
@@ -1109,25 +1125,21 @@ class Handler_Public extends Handler {
 
 						print_notice("Your Tiny Tiny RSS database is now updated to the latest version.");
 
-						print "<hr/>";
-
-						print "<p><form method=\"GET\" action=\"index.php\">
-						<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
-						</form>";
+						print "<form method='GET' action='index.php'>
+									<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".__("Return to Tiny Tiny RSS")."</button>
+								</form>";
 
 					} else {
-						print "<h2>Your database is up to date.</h2>";
+						print_notice("Tiny Tiny RSS database is up to date.");
 
-						print "<hr/>";
-
-						print "<p><form method=\"GET\" action=\"index.php\">
-						<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
+						print "<form method='GET' action='index.php'>
+							<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".__("Return to Tiny Tiny RSS")."</button>
 						</form>";
 					}
 				} else {
 					if ($updater->isUpdateRequired()) {
 
-						print "<h2>Database update required</h2>";
+						print "<h2>" . __("Database update required") . "</h2>";
 
 						print_notice("<h4>".
 						sprintf("Your Tiny Tiny RSS database needs update to the latest version: %d to %d.",
@@ -1138,19 +1150,16 @@ class Handler_Public extends Handler {
 
 						print "<form method='POST'>
 							<input type='hidden' name='subop' value='performupdate'>
-							<input type='submit' onclick='return confirmOP()' value='".__("Perform updates")."'>
+							<button type='submit' dojoType='dijit.form.Button' class='alt-danger' onclick='return confirmOP()'>".__("Perform updates")."</button>
 						</form>";
 
 					} else {
 
 						print_notice("Tiny Tiny RSS database is up to date.");
 
-						print "<hr/>";
-
-						print "<p><form method=\"GET\" action=\"index.php\">
-							<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
+						print "<form method='GET' action='index.php'>
+							<button dojoType='dijit.form.Button' class='alt-primary' type='submit'>".__("Return to Tiny Tiny RSS")."</button>
 						</form>";
-
 					}
 				}
 			?>
