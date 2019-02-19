@@ -65,7 +65,7 @@ function bwLimitChange(elem) {
 <div class="container">
 
 	<h1><?php echo "Authentication" ?></h1>
-	<div class="content">
+	<div class="content login-form">
 		<form action="public.php?return=<?php echo $return ?>"
 			  dojoType="dijit.form.Form" method="POST">
 

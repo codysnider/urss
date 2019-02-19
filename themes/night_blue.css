@@ -1498,6 +1498,8 @@ body.ttrss_utility div.content {
   border: 1px solid #ddd;
   padding: 20px;
   box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.1);
+}
+body.ttrss_utility div.content:not(.login-form) {
   min-width: 600px;
 }
 body.ttrss_utility p.warning {
