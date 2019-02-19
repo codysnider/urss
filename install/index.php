@@ -1,13 +1,52 @@
+<?php
+	function stylesheet_tag($filename, $id = false) {
+		$timestamp = filemtime($filename);
+
+		$id_part = $id ? "id=\"$id\"" : "";
+
+		return "<link rel=\"stylesheet\" $id_part type=\"text/css\" href=\"$filename?$timestamp\"/>\n";
+	}
+
+	function javascript_tag($filename) {
+		$query = "";
+
+		if (!(strpos($filename, "?") === FALSE)) {
+			$query = substr($filename, strpos($filename, "?")+1);
+			$filename = substr($filename, 0, strpos($filename, "?"));
+		}
+
+		$timestamp = filemtime($filename);
+
+		if ($query) $timestamp .= "&$query";
+
+		return "<script type=\"text/javascript\" charset=\"utf-8\" src=\"$filename?$timestamp\"></script>\n";
+	}
+?>
+
 <html>
 <head>
 	<title>Tiny Tiny RSS - Installer</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" type="text/css" href="../css/default.css?<?php echo time() ?>">
 	<style type="text/css">
-	textarea { font-size : 12px; }
+		textarea { font-size : 12px; }
 	</style>
+	<?php
+		echo stylesheet_tag("../css/default.css");
+		echo javascript_tag("../lib/prototype.js");
+		echo javascript_tag("../lib/dojo/dojo.js");
+		echo javascript_tag("../lib/dojo/tt-rss-layer.js");
+	?>
 </head>
-<body class="claro ttrss_utility">
+<body class="flat ttrss_utility">
+
+<script type="text/javascript">
+	require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox', 'dijit/form/Form',
+		'dijit/form/Select','dijit/form/TextBox','dijit/form/ValidationTextBox'],function(parser, ready){
+		ready(function() {
+			parser.parse();
+		});
+	});
+</script>
 
 <?php
 
@@ -181,62 +220,60 @@
 ?>
 
 <form action="" method="post">
-<input type="hidden" name="op" value="testconfig">
+	<input type="hidden" name="op" value="testconfig">
 
-<h2>Database settings</h2>
+	<h2>Database settings</h2>
 
-<?php
-	$issel_pgsql = $DB_TYPE == "pgsql" ? "selected" : "";
-	$issel_mysql = $DB_TYPE == "mysql" ? "selected" : "";
-?>
+	<?php
+		$issel_pgsql = $DB_TYPE == "pgsql" ? "selected='selected'" : "";
+		$issel_mysql = $DB_TYPE == "mysql" ? "selected='selected'" : "";
+	?>
 
-<fieldset>
-	<label>Database type:</label>
-	<select name="DB_TYPE">
-		<option <?php echo $issel_pgsql ?> value="pgsql">PostgreSQL</option>
-		<option <?php echo $issel_mysql ?> value="mysql">MySQL</option>
-	</select>
-</fieldset>
+	<fieldset>
+		<label>Database type:</label>
+		<select name="DB_TYPE" dojoType="dijit.form.Select">
+			<option <?php echo $issel_pgsql ?> value="pgsql">PostgreSQL</option>
+			<option <?php echo $issel_mysql ?> value="mysql">MySQL</option>
+		</select>
+	</fieldset>
 
-<fieldset>
-	<label>Username:</label>
-	<input class="input input-text" required name="DB_USER" size="20" value="<?php echo $DB_USER ?>"/>
-</fieldset>
+	<fieldset>
+		<label>Username:</label>
+		<input dojoType="dijit.form.TextBox" required name="DB_USER" size="20" value="<?php echo $DB_USER ?>"/>
+	</fieldset>
 
-<fieldset>
-	<label>Password:</label>
-	<input class="input input-text" name="DB_PASS" size="20" type="password" value="<?php echo $DB_PASS ?>"/>
-</fieldset>
+	<fieldset>
+		<label>Password:</label>
+		<input dojoType="dijit.form.TextBox" name="DB_PASS" size="20" type="password" value="<?php echo $DB_PASS ?>"/>
+	</fieldset>
 
-<fieldset>
-	<label>Database name:</label>
-	<input class="input input-text" required name="DB_NAME" size="20" value="<?php echo $DB_NAME ?>"/>
-</fieldset>
+	<fieldset>
+		<label>Database name:</label>
+		<input dojoType="dijit.form.TextBox" required name="DB_NAME" size="20" value="<?php echo $DB_NAME ?>"/>
+	</fieldset>
 
-<fieldset>
-	<label>Host name:</label>
-	<input class="input input-text" name="DB_HOST" size="20" value="<?php echo $DB_HOST ?>"/>
-	<span class="hint">If needed</span>
-</fieldset>
+	<fieldset>
+		<label>Host name:</label>
+		<input dojoType="dijit.form.TextBox" name="DB_HOST" size="20" value="<?php echo $DB_HOST ?>"/>
+		<span class="hint">If needed</span>
+	</fieldset>
 
-<fieldset>
-	<label>Port:</label>
-	<input class="input input-text" name="DB_PORT" type="number" size="20" value="<?php echo $DB_PORT ?>"/>
-	<span class="hint">Usually 3306 for MySQL or 5432 for PostgreSQL</span>
-</fieldset>
+	<fieldset>
+		<label>Port:</label>
+		<input dojoType="dijit.form.TextBox" name="DB_PORT" type="number" size="20" value="<?php echo $DB_PORT ?>"/>
+		<span class="hint">Usually 3306 for MySQL or 5432 for PostgreSQL</span>
+	</fieldset>
 
-<h2>Other settings</h2>
+	<h2>Other settings</h2>
 
-<p>This should be set to the location your Tiny Tiny RSS will be available on.</p>
+	<p>This should be set to the location your Tiny Tiny RSS will be available on.</p>
 
-<fieldset>
-	<label>Tiny Tiny RSS URL:</label>
-	<input class="input input-text" type="url" name="SELF_URL_PATH" placeholder="<?php echo $SELF_URL_PATH; ?>" size="60" value="<?php echo $SELF_URL_PATH ?>"/>
-</fieldset>
+	<fieldset>
+		<label>Tiny Tiny RSS URL:</label>
+		<input dojoType="dijit.form.TextBox" type="url" name="SELF_URL_PATH" placeholder="<?php echo $SELF_URL_PATH; ?>" value="<?php echo $SELF_URL_PATH ?>"/>
+	</fieldset>
 
-
-<p><input type="submit" value="Test configuration"></p>
-
+	<p><button type="submit" dojoType="dijit.form.Button" class="alt-primary">Test configuration</button></p>
 </form>
 
 <?php if ($op == 'testconfig') { ?>
@@ -304,63 +341,68 @@
 		$pdo = pdo_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_TYPE, $DB_PORT);
 
 		if (!$pdo) {
-			print_error("Unable to connect to database using specified parameters.");
+			print_error("Unable to connect to database using specified parameters (driver: $DB_TYPE).");
 			exit;
 		}
 
-		print_notice("Database test succeeded."); ?>
+		print_notice("Database test succeeded.");
+	?>
 
-			<h2>Initialize database</h2>
+	<h2>Initialize database</h2>
 
-			<p>Before you can start using tt-rss, database needs to be initialized. Click on the button below to do that now.</p>
+	<p>Before you can start using tt-rss, database needs to be initialized. Click on the button below to do that now.</p>
 
-			<?php
-				$res = $pdo->query("SELECT true FROM ttrss_feeds");
+	<?php
+		$res = $pdo->query("SELECT true FROM ttrss_feeds");
 
-				if ($res && $res->fetch()) {
-					print_error("Some tt-rss data already exists in this database. If you continue with database initialization your current data will be lost.");
-					$need_confirm = true;
-				} else {
-					$need_confirm = false;
-				}
-			?>
+		if ($res && $res->fetch()) {
+			print_error("Some tt-rss data already exists in this database. If you continue with database initialization your current data <b>WILL BE LOST</b>.");
+			$need_confirm = true;
+		} else {
+			$need_confirm = false;
+		}
+	?>
 
-			<table><tr><td>
-			<form method="post">
-				<input type="hidden" name="op" value="installschema">
+	<table><tr><td>
+	<form method="post">
+		<input type="hidden" name="op" value="installschema">
 
-				<input type="hidden" name="DB_USER" value="<?php echo $DB_USER ?>"/>
-				<input type="hidden" name="DB_PASS" value="<?php echo $DB_PASS ?>"/>
-				<input type="hidden" name="DB_NAME" value="<?php echo $DB_NAME ?>"/>
-				<input type="hidden" name="DB_HOST" value="<?php echo $DB_HOST ?>"/>
-				<input type="hidden" name="DB_PORT" value="<?php echo $DB_PORT ?>"/>
-				<input type="hidden" name="DB_TYPE" value="<?php echo $DB_TYPE ?>"/>
-				<input type="hidden" name="SELF_URL_PATH" value="<?php echo $SELF_URL_PATH ?>"/>
+		<input type="hidden" name="DB_USER" value="<?php echo $DB_USER ?>"/>
+		<input type="hidden" name="DB_PASS" value="<?php echo $DB_PASS ?>"/>
+		<input type="hidden" name="DB_NAME" value="<?php echo $DB_NAME ?>"/>
+		<input type="hidden" name="DB_HOST" value="<?php echo $DB_HOST ?>"/>
+		<input type="hidden" name="DB_PORT" value="<?php echo $DB_PORT ?>"/>
+		<input type="hidden" name="DB_TYPE" value="<?php echo $DB_TYPE ?>"/>
+		<input type="hidden" name="SELF_URL_PATH" value="<?php echo $SELF_URL_PATH ?>"/>
 
-				<?php if ($need_confirm) { ?>
-					<p><input onclick="return confirm('Please read the warning above. Continue?')" type="submit" value="Initialize database" style="color : red"></p>
-				<?php } else { ?>
-					<p><input type="submit" value="Initialize database" style="color : red"></p>
-				<?php } ?>
-			</form>
+		<p>
+		<?php if ($need_confirm) { ?>
+			<button onclick="return confirm('Please read the warning above. Continue?')" type="submit"
+					   class="alt-danger" dojoType="dijit.form.Button">Initialize database</button>
+		<?php } else { ?>
+			<button type="submit" class="alt-danger" dojoType="dijit.form.Button">Initialize database</button>
+		<?php } ?>
+		</p>
+	</form>
 
-			</td><td>
-			<form method="post">
-				<input type="hidden" name="DB_USER" value="<?php echo $DB_USER ?>"/>
-				<input type="hidden" name="DB_PASS" value="<?php echo $DB_PASS ?>"/>
-				<input type="hidden" name="DB_NAME" value="<?php echo $DB_NAME ?>"/>
-				<input type="hidden" name="DB_HOST" value="<?php echo $DB_HOST ?>"/>
-				<input type="hidden" name="DB_PORT" value="<?php echo $DB_PORT ?>"/>
-				<input type="hidden" name="DB_TYPE" value="<?php echo $DB_TYPE ?>"/>
-				<input type="hidden" name="SELF_URL_PATH" value="<?php echo $SELF_URL_PATH ?>"/>
+	</td><td>
+	<form method="post">
+		<input type="hidden" name="DB_USER" value="<?php echo $DB_USER ?>"/>
+		<input type="hidden" name="DB_PASS" value="<?php echo $DB_PASS ?>"/>
+		<input type="hidden" name="DB_NAME" value="<?php echo $DB_NAME ?>"/>
+		<input type="hidden" name="DB_HOST" value="<?php echo $DB_HOST ?>"/>
+		<input type="hidden" name="DB_PORT" value="<?php echo $DB_PORT ?>"/>
+		<input type="hidden" name="DB_TYPE" value="<?php echo $DB_TYPE ?>"/>
+		<input type="hidden" name="SELF_URL_PATH" value="<?php echo $SELF_URL_PATH ?>"/>
 
-				<input type="hidden" name="op" value="skipschema">
-				<p><input type="submit" value="Skip initialization"></p>
-			</form>
+		<input type="hidden" name="op" value="skipschema">
 
-			</td></tr></table>
+		<p><button type="submit" dojoType="dijit.form.Button">Skip initialization</button></p>
+	</form>
 
-			<?php
+	</td></tr></table>
+
+	<?php
 
 		} else if ($op == 'installschema' || $op == 'skipschema') {
 
