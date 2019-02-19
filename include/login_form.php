@@ -21,7 +21,7 @@
 	</script>
 </head>
 
-<body class="flat ttrss_main ttrss_login">
+<body class="flat ttrss_main ttrss_utility">
 
 <script type="text/javascript">
 require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox', 'dijit/form/Form',
@@ -64,86 +64,84 @@ function bwLimitChange(elem) {
 
 <div class="container">
 
-	<div class="center">
-		<div class="login-form">
+	<h1><?php echo "Authentication" ?></h1>
+	<div class="content">
+		<form action="public.php?return=<?php echo $return ?>"
+			  dojoType="dijit.form.Form" method="POST">
 
-			<form action="public.php?return=<?php echo $return ?>"
-				  dojoType="dijit.form.Form" method="POST">
+			<?php print_hidden("op", "login"); ?>
 
-				<?php print_hidden("op", "login"); ?>
+			<?php if ($_SESSION["login_error_msg"]) { ?>
+				<?php echo format_error($_SESSION["login_error_msg"]) ?>
+				<?php $_SESSION["login_error_msg"] = ""; ?>
+			<?php } ?>
 
-				<?php if ($_SESSION["login_error_msg"]) { ?>
-					<?php echo format_error($_SESSION["login_error_msg"]) ?>
-					<?php $_SESSION["login_error_msg"] = ""; ?>
+			<fieldset>
+				<label><?php echo __("Login:") ?></label>
+				<input name="login" id="login" dojoType="dijit.form.TextBox" type="text"
+					   onchange="fetchProfiles()" onfocus="fetchProfiles()" onblur="fetchProfiles()"
+					   required="1" value="<?php echo $_SESSION["fake_login"] ?>" />
+			</fieldset>
+
+			<fieldset>
+				<label><?php echo __("Password:") ?></label>
+
+				<input type="password" name="password" required="1"
+					   dojoType="dijit.form.TextBox"
+					   class="input input-text"
+					   value="<?php echo $_SESSION["fake_password"] ?>"/>
+
+				<?php if (strpos(PLUGINS, "auth_internal") !== FALSE) { ?>
+					<a href="public.php?op=forgotpass"><?php echo __("I forgot my password") ?></a>
 				<?php } ?>
+			</fieldset>
 
-				<fieldset>
-					<label><?php echo __("Login:") ?></label>
-					<input name="login" id="login" dojoType="dijit.form.TextBox" type="text"
-						   onchange="fetchProfiles()" onfocus="fetchProfiles()" onblur="fetchProfiles()"
-						   required="1" value="<?php echo $_SESSION["fake_login"] ?>" />
-				</fieldset>
+			<fieldset>
+				<label><?php echo __("Profile:") ?></label>
 
-				<fieldset>
-					<label><?php echo __("Password:") ?></label>
+				<select disabled='disabled' name="profile" id="profile" dojoType='dijit.form.Select'>
+					<option><?php echo __("Default profile") ?></option>
+				</select>
+			</fieldset>
 
-					<input type="password" name="password" required="1"
-						   dojoType="dijit.form.TextBox"
-						   class="input input-text"
-						   value="<?php echo $_SESSION["fake_password"] ?>"/>
+			<fieldset class="narrow">
+				<label> </label>
 
-					<?php if (strpos(PLUGINS, "auth_internal") !== FALSE) { ?>
-						<a href="public.php?op=forgotpass"><?php echo __("I forgot my password") ?></a>
-					<?php } ?>
-				</fieldset>
+				<label id="bw_limit_label"><input dojoType="dijit.form.CheckBox" name="bw_limit" id="bw_limit"
+					  type="checkbox" onchange="bwLimitChange(this)">
+					<?php echo __("Use less traffic") ?></label>
+			</fieldset>
 
-				<fieldset>
-					<label><?php echo __("Profile:") ?></label>
+			<div dojoType="dijit.Tooltip" connectId="bw_limit_label" position="below" style="display:none">
+				<?php echo __("Does not display images in articles, reduces automatic refreshes."); ?>
+			</div>
 
-					<select disabled='disabled' name="profile" id="profile" dojoType='dijit.form.Select'>
-						<option><?php echo __("Default profile") ?></option>
-					</select>
-				</fieldset>
+			<?php if (SESSION_COOKIE_LIFETIME > 0) { ?>
 
 				<fieldset class="narrow">
 					<label> </label>
-
-					<label id="bw_limit_label"><input dojoType="dijit.form.CheckBox" name="bw_limit" id="bw_limit"
-						  type="checkbox" onchange="bwLimitChange(this)">
-						<?php echo __("Use less traffic") ?></label>
+					<label>
+						<input dojoType="dijit.form.CheckBox" name="remember_me" id="remember_me" type="checkbox">
+						<?php echo __("Remember me") ?>
+					</label>
 				</fieldset>
 
-				<div dojoType="dijit.Tooltip" connectId="bw_limit_label" position="below" style="display:none">
-					<?php echo __("Does not display images in articles, reduces automatic refreshes."); ?>
-				</div>
+			<?php } ?>
 
-				<?php if (SESSION_COOKIE_LIFETIME > 0) { ?>
+			<hr/>
 
-					<fieldset class="narrow">
-						<label> </label>
-						<label>
-							<input dojoType="dijit.form.CheckBox" name="remember_me" id="remember_me" type="checkbox">
-							<?php echo __("Remember me") ?>
-						</label>
-					</fieldset>
+			<fieldset class="align-right">
+				<label> </label>
 
+				<button dojoType="dijit.form.Button" type="submit" class="alt-primary"><?php echo __('Log in') ?></button>
+
+				<?php if (defined('ENABLE_REGISTRATION') && ENABLE_REGISTRATION) { ?>
+					<button onclick="return gotoRegForm()" dojoType="dijit.form.Button">
+						<?php echo __("Create new account") ?></button>
 				<?php } ?>
+			</fieldset>
 
-				<hr/>
-
-				<fieldset class="align-right">
-					<label> </label>
-
-					<button dojoType="dijit.form.Button" type="submit" class="alt-primary"><?php echo __('Log in') ?></button>
-
-					<?php if (defined('ENABLE_REGISTRATION') && ENABLE_REGISTRATION) { ?>
-						<button onclick="return gotoRegForm()" dojoType="dijit.form.Button">
-							<?php echo __("Create new account") ?></button>
-					<?php } ?>
-				</fieldset>
-
-			</form>
-		</div>
+		</form>
 	</div>
 
 	<div class="footer">
