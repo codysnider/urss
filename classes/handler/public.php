@@ -843,16 +843,33 @@ class Handler_Public extends Handler {
 		@$hash = clean($_REQUEST["hash"]);
 
 		header('Content-Type: text/html; charset=utf-8');
-		print "<html><head><title>Tiny Tiny RSS</title>
-		<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
-		<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">";
+		?>
 
-		echo stylesheet_tag("lib/dijit/themes/claro/claro.css");
-		echo stylesheet_tag("css/default.css");
-		echo javascript_tag("lib/prototype.js");
+		<html>
+		<head>
+			<title>Tiny Tiny RSS</title>
+			<link rel="shortcut icon" type="image/png" href="images/favicon.png">
+			<link rel="icon" type="image/png" sizes="72x72" href="images/favicon-72px.png">
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+			<?php
+				echo stylesheet_tag("css/default.css");
+				echo javascript_tag("lib/prototype.js");
+				echo javascript_tag("lib/dojo/dojo.js");
+				echo javascript_tag("lib/dojo/tt-rss-layer.js");
+			?>
+		</head>
+		<body class='flat ttrss_utility'>
+		<div class='container'>
 
-		print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
-			</head><body class='claro ttrss_utility'><div class='container'>";
+		<script type="text/javascript">
+		require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox', 'dijit/form/Form',
+    		'dijit/form/Select','dijit/form/TextBox','dijit/form/ValidationTextBox'],function(parser, ready){
+			ready(function() {
+				parser.parse();
+			});
+		});
+		</script>
+		<?php
 
 		print "<h1>".__("Password recovery")."</h1>";
 		print "<div class='content'>";
@@ -896,8 +913,8 @@ class Handler_Public extends Handler {
 
 			print "<hr/>";
 
-			print "<form method=\"GET\" action=\"index.php\">
-				<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
+			print "<form method='GET' action='index.php'>
+				<button dojoType='dijit.form.Button'>".__("Return to Tiny Tiny RSS")."</button>
 				</form>";
 
 		} else if (!$method) {
@@ -909,12 +926,12 @@ class Handler_Public extends Handler {
 
 			print "<fieldset>";
 			print "<label>".__("Login:")."</label>";
-			print "<input class='input input-text' type='text' name='login' value='' required>";
+			print "<input dojoType='dijit.form.TextBox' type='text' name='login' value='' required>";
 			print "</fieldset>";
 
 			print "<fieldset>";
 			print "<label>".__("Email:")."</label>";
-			print "<input class='input input-text' type='email' name='email' value='' required>";
+			print "<input dojoType='dijit.form.TextBox' type='email' name='email' value='' required>";
 			print "</fieldset>";
 
 			$_SESSION["pwdreset:testvalue1"] = rand(1,10);
@@ -922,12 +939,12 @@ class Handler_Public extends Handler {
 
 			print "<fieldset>";
 			print "<label>".T_sprintf("How much is %d + %d:", $_SESSION["pwdreset:testvalue1"], $_SESSION["pwdreset:testvalue2"])."</label>";
-			print "<input class='input input-text' type='text' name='test' value='' required>";
+			print "<input dojoType='dijit.form.TextBox' type='text' name='test' value='' required>";
 			print "</fieldset>";
 
 			print "<hr/>";
 			print "<fieldset>";
-			print "<button type='submit'>".__("Reset password")."</button>";
+			print "<button dojoType='dijit.form.Button' type='submit' class='alt-danger'>".__("Reset password")."</button>";
 			print "</fieldset>";
 
 			print "</form>";
@@ -940,9 +957,9 @@ class Handler_Public extends Handler {
 			if ($test != ($_SESSION["pwdreset:testvalue1"] + $_SESSION["pwdreset:testvalue2"]) || !$email || !$login) {
 				print_error(__('Some of the required form parameters are missing or incorrect.'));
 
-				print "<form method=\"GET\" action=\"public.php\">
-					<input type=\"hidden\" name=\"op\" value=\"forgotpass\">
-					<input type=\"submit\" value=\"".__("Go back")."\">
+				print "<form method='GET' action='public.php'>
+					<input type='hidden' name='op' value='forgotpass'>
+					<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".__("Go back")."</button>
 					</form>";
 
 			} else {
@@ -995,27 +1012,20 @@ class Handler_Public extends Handler {
 
 						//Pref_Users::resetUserPassword($id, false);
 
-						print "<p>";
-
-						print "<p>"."Completed."."</p>";
 					} else {
 						print_error("User ID not found.");
 					}
 
-					print "<hr/>";
-
-					print "<form method=\"GET\" action=\"index.php\">
-						<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
-						</form>";
+					print "<form method='GET' action='index.php'>
+						<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".__("Return to Tiny Tiny RSS")."</button>
+					</form>";
 
 				} else {
 					print_error(__("Sorry, login and email combination not found."));
 
-					print "<hr/>";
-
-					print "<form method=\"GET\" action=\"public.php\">
-						<input type=\"hidden\" name=\"op\" value=\"forgotpass\">
-						<input type=\"submit\" value=\"".__("Go back")."\">
+					print "<form method='GET' action='public.php'>
+						<input type='hidden' name='op' value='forgotpass'>
+						<input dojoType='dijit.form.Button' type='submit' value=\"".__("Go back")."\">
 						</form>";
 
 				}
