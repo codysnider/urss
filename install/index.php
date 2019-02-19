@@ -2,7 +2,7 @@
 <head>
 	<title>Tiny Tiny RSS - Installer</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" type="text/css" href="../css/default.css">
+	<link rel="stylesheet" type="text/css" href="../css/default.css?<?php echo time() ?>">
 	<style type="text/css">
 	textarea { font-size : 12px; }
 	</style>
@@ -191,7 +191,7 @@
 ?>
 
 <fieldset>
-	<label>Database type</label>
+	<label>Database type:</label>
 	<select name="DB_TYPE">
 		<option <?php echo $issel_pgsql ?> value="pgsql">PostgreSQL</option>
 		<option <?php echo $issel_mysql ?> value="mysql">MySQL</option>
@@ -199,28 +199,28 @@
 </fieldset>
 
 <fieldset>
-	<label>Username</label>
+	<label>Username:</label>
 	<input class="input input-text" required name="DB_USER" size="20" value="<?php echo $DB_USER ?>"/>
 </fieldset>
 
 <fieldset>
-	<label>Password</label>
+	<label>Password:</label>
 	<input class="input input-text" name="DB_PASS" size="20" type="password" value="<?php echo $DB_PASS ?>"/>
 </fieldset>
 
 <fieldset>
-	<label>Database name</label>
+	<label>Database name:</label>
 	<input class="input input-text" required name="DB_NAME" size="20" value="<?php echo $DB_NAME ?>"/>
 </fieldset>
 
 <fieldset>
-	<label>Host name</label>
+	<label>Host name:</label>
 	<input class="input input-text" name="DB_HOST" size="20" value="<?php echo $DB_HOST ?>"/>
 	<span class="hint">If needed</span>
 </fieldset>
 
 <fieldset>
-	<label>Port</label>
+	<label>Port:</label>
 	<input class="input input-text" name="DB_PORT" type="number" size="20" value="<?php echo $DB_PORT ?>"/>
 	<span class="hint">Usually 3306 for MySQL or 5432 for PostgreSQL</span>
 </fieldset>
@@ -230,7 +230,7 @@
 <p>This should be set to the location your Tiny Tiny RSS will be available on.</p>
 
 <fieldset>
-	<label>Tiny Tiny RSS URL</label>
+	<label>Tiny Tiny RSS URL:</label>
 	<input class="input input-text" type="url" name="SELF_URL_PATH" placeholder="<?php echo $SELF_URL_PATH; ?>" size="60" value="<?php echo $SELF_URL_PATH ?>"/>
 </fieldset>
 
@@ -410,10 +410,12 @@
 				<input type="hidden" name="DB_PORT" value="<?php echo $DB_PORT ?>"/>
 				<input type="hidden" name="DB_TYPE" value="<?php echo $DB_TYPE ?>"/>
 				<input type="hidden" name="SELF_URL_PATH" value="<?php echo $SELF_URL_PATH ?>"/>
-			<?php print "<textarea cols=\"80\" rows=\"20\">";
+			<?php print "<textarea rows='20' style='width : 100%'>";
 			echo make_config($DB_TYPE, $DB_HOST, $DB_USER, $DB_NAME, $DB_PASS,
 				$DB_PORT, $SELF_URL_PATH);
 			print "</textarea>"; ?>
+
+			<hr/>
 
 			<?php if (is_writable("..")) { ?>
 				<p>We can also try saving the file automatically now.</p>

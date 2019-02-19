@@ -1657,18 +1657,33 @@ body.ttrss_utility .content {
   padding: 20px;
   box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.1);
 }
-body.ttrss_utility fieldset {
+body.ttrss_utility .content h2:first-of-type {
+  margin-top: 0;
+}
+body.ttrss_utility .content h2,
+body.ttrss_utility .content h3,
+body.ttrss_utility .content h4 {
+  color: #257aa7;
+  font-family: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+body.ttrss_utility .content h2 {
+  font-size: 18px;
+}
+body.ttrss_utility .content h3 {
+  font-size: 16px;
+}
+body.ttrss_utility .content fieldset {
   border-width: 0px;
   padding: 5px 0px;
 }
-body.ttrss_utility fieldset.narrow {
+body.ttrss_utility .content fieldset.narrow {
   padding: 2px 0px;
 }
-body.ttrss_utility fieldset.align-right {
+body.ttrss_utility .content fieldset.align-right {
   text-align: right;
 }
-body.ttrss_utility fieldset > label:first-of-type {
-  width: 120px;
+body.ttrss_utility .content fieldset > label:first-of-type {
+  width: 140px;
   margin-right: 20px;
   display: inline-block;
   text-align: right;
@@ -1688,11 +1703,6 @@ body.ttrss_utility h1 {
   font-family: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   margin: 10px 0 0 0;
-}
-body.ttrss_utility h2,
-body.ttrss_utility h3,
-body.ttrss_utility h4 {
-  color: #257aa7;
 }
 body.ttrss_utility .footer {
   text-align: center;
