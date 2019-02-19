@@ -1722,7 +1722,8 @@ body.ttrss_utility.ttrss_login .container {
 body.ttrss_utility.ttrss_login .container .content {
   padding: 40px;
 }
-body.ttrss_utility.feed_debugger {
+body.ttrss_utility.feed_debugger,
+body.ttrss_utility.ttrss_zoom {
   margin: 2em;
 }
 body#sharepopup {
