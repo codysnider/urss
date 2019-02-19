@@ -831,31 +831,34 @@ class Feeds extends Handler_Protected {
 			<?php echo stylesheet_tag("css/default.css") ?>
 			<title>Feed Debugger</title>
 		</head>
-		<body class="small_margins ttrss_utility claro">
-		<h1>Feed Debugger: <?php echo "$feed_id: " . $this->getFeedTitle($feed_id) ?></h1>
-		<form method="GET" action="">
-			<input type="hidden" name="op" value="feeds">
-			<input type="hidden" name="method" value="update_debugger">
-			<input type="hidden" name="xdebug" value="1">
-			<input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>">
-			<input type="hidden" name="action" value="do_update">
-			<input type="hidden" name="feed_id" value="<?php echo $feed_id ?>">
-			<input type="checkbox" name="force_refetch" value="1" <?php echo $refetch_checked ?>> Force refetch<br/>
-			<input type="checkbox" name="force_rehash" value="1" <?php echo $rehash_checked ?>> Force rehash<br/>
+		<body class="ttrss_utility feed_debugger">
+			<div class="container">
+				<h1>Feed Debugger: <?php echo "$feed_id: " . $this->getFeedTitle($feed_id) ?></h1>
+				<div class="content">
+					<form method="GET" action="">
+						<input type="hidden" name="op" value="feeds">
+						<input type="hidden" name="method" value="update_debugger">
+						<input type="hidden" name="xdebug" value="1">
+						<input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>">
+						<input type="hidden" name="action" value="do_update">
+						<input type="hidden" name="feed_id" value="<?php echo $feed_id ?>">
+						<input type="checkbox" name="force_refetch" value="1" <?php echo $refetch_checked ?>> Force refetch<br/>
+						<input type="checkbox" name="force_rehash" value="1" <?php echo $rehash_checked ?>> Force rehash<br/>
 
-			<p/><button type="submit">Continue</button>
-		</form>
+						<p/><button type="submit">Continue</button>
+					</form>
 
-		<hr>
+					<hr>
 
-		<pre><?php
+					<pre><?php
 
-		if ($do_update) {
-			RSSUtils::update_rss_feed($feed_id, true);
-		}
+					if ($do_update) {
+						RSSUtils::update_rss_feed($feed_id, true);
+					}
 
-		?></pre>
-
+					?></pre>
+				</div>
+			</div>
 		</body>
 		</html>
 		<?php

@@ -429,7 +429,17 @@ class Handler_Public extends Handler {
             }
 
             $rv .= "<body class='flat ttrss_utility ttrss_zoom'>";
-			$rv .= "<div class='post post-$id'>";
+            $rv .= "<div class='container'>";
+
+			if ($line["link"]) {
+				$rv .= "<h1><a target='_blank' rel='noopener noreferrer'
+					title=\"".htmlspecialchars($line['title'])."\"
+					href=\"" .htmlspecialchars($line["link"]) . "\">" .	$line["title"] . "</a></h1>";
+			} else {
+				$rv .= "<h1>" . $line["title"] . "</h1>";
+			}
+
+			$rv .= "<div class='content post'>";
 
 			/* header */
 
@@ -440,51 +450,8 @@ class Handler_Public extends Handler {
 			$parsed_updated = make_local_datetime($line["updated"], true,
 				$owner_uid, true);
 
-			if ($line["link"]) {
-				$rv .= "<div class='title'><a target='_blank' rel='noopener noreferrer'
-					title=\"".htmlspecialchars($line['title'])."\"
-					href=\"" .htmlspecialchars($line["link"]) . "\">" .	$line["title"] . "</a></div>";
-			} else {
-				$rv .= "<div class='title'>" . $line["title"] . "</div>";
-			}
-
-            $rv .= "<div class='date'>$parsed_updated<br/></div>";
-
-			$rv .= "</div>"; # row
-
-			$rv .= "<div class='row'>"; # row
-
-			/* left buttons */
-
-			$rv .= "<div class='buttons left'>";
-			foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_LEFT_BUTTON) as $p) {
-				$rv .= $p->hook_article_left_button($line);
-			}
-			$rv .= "</div>";
-
-			/* comments */
-
-			$rv .= "<div class='comments'>$entry_comments</div>";
-			$rv .= "<div class='author'>".$line['author']."</div>";
-
-			/* tags */
-
-			$tags_str = Article::format_tags_string($line["tags"], $id);
-
-			$rv .= "<i class='material-icons'>label_outline</i><div>";
-
-            $tags_str = strip_tags($tags_str);
-			$rv .= "<span id=\"ATSTR-$id\">$tags_str</span>";
-
-			$rv .= "</div>";
-
-			/* buttons */
-
-			$rv .= "<div class='buttons right'>";
-			foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_BUTTON) as $p) {
-				$rv .= $p->hook_article_button($line);
-			}
-			$rv .= "</div>";
+			$rv .= "<div>".$line['author']."</div>";
+            $rv .= "<div>$parsed_updated</div>";
 
 			$rv .= "</div>"; # row
 

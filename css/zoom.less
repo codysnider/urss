@@ -1,10 +1,4 @@
 body.ttrss_zoom {
-	margin-left : auto;
-	margin-right : auto;
-	padding : 20px;
-	max-width : 800px;
-	background : @color-panel-bg;
-
 	div.post {
 		border : 1px solid #ddd;
 		background : white;
@@ -15,7 +9,6 @@ body.ttrss_zoom {
 		}
 
 		div.header {
-			margin : 10px;
 			padding-bottom : 10px;
 			border: 0px solid #eee;
 			border-bottom-width: 1px;
@@ -27,38 +20,8 @@ body.ttrss_zoom {
 				display : flex;
 				margin-bottom : 4px;
 				flex-wrap : nowrap;
-
-				> * {
-					align-self : center;
-				}
-			}
-
-			.comments {
-				flex-grow : 2;
-			}
-
-			.date {
-				text-align : right;
-				white-space : nowrap;
-				align-self : flex-start;
-			}
-
-			img, i {
-				margin : 0px 4px;
-				vertical-align: middle;
-			}
-
-			.title {
-				flex-grow : 2;
-				align-self : flex-start;
-				font-size : 15px;
-				font-weight : 600;
-				text-rendering: optimizelegibility;
-				font-family : @fonts-ui-bold;
-			}
-
-			div.feed-title {
-				text-align : right;
+				align-items : center;
+				justify-content : space-between;
 			}
 		}
 
@@ -68,16 +31,11 @@ body.ttrss_zoom {
 			hyphens: auto;
 		}
 
-		div.footer {
-			margin-top : 1em;
-			text-align : center;
-		}
-
 		div.content {
 			font-size : 15px;
 			line-height : 1.5;
-			padding : 10px;
-			border-width : 0px;
+			border-width : 0;
+			padding : 0;
 
 			img, video {
 				max-width : 760px;

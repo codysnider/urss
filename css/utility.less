@@ -5,17 +5,75 @@ body.ttrss_utility.sanity_failed {
 body.ttrss_utility {
 	background : @color-panel-bg;
 	color : @default-fg;
-	padding : 0;
-	margin : 0;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
-	display : flex;
-	width : 100%;
-	height : 100%;
-	justify-content : center;
-	align-items : center;
+	margin : 4em;
 
-	form {
+	.content {
+		background : white;
+		border : 1px solid #ddd;
+		padding : 20px;
+		box-shadow : 0px 1px 1px -1px rgba(0,0,0,0.1);
+	}
+
+	fieldset {
+		border-width : 0px;
+		padding : 5px 0px;
+	}
+
+	fieldset.narrow {
+		padding : 2px 0px;
+	}
+
+	fieldset.align-right {
+		text-align : right;
+	}
+
+	fieldset > label:first-of-type {
+		width : 120px;
+		margin-right : 20px;
+		display : inline-block;
+		text-align : right;
+		font-weight : bold;
+	}
+
+	a {
+		color : @color-link;
+		text-decoration : none;
+	}
+
+	a:hover,
+	a:focus {
+		color: darken(@color-link, 20%);
+		text-decoration: underline;
+	}
+
+	h1 {
+		color : gray;
+		font-family: @fonts-ui-bold;
+		font-size : 18px;
+		margin : 10px 0 0 0;
+	}
+
+	h2, h3, h4 {
+		color : @color-accent;
+	}
+
+	.footer {
+		text-align : center;
+		padding-top : 10px;
+
+		a {
+			color : gray;
+		}
+
+		a:hover {
+			color : @color-accent;
+		}
+	}
+
+
+	/* form {
 		margin : 10px 0px 0px 0px;
 		padding : 0px;
 	}
@@ -204,12 +262,28 @@ body.ttrss_utility {
 	span.hint {
 		font-size : 10px;
 		color : gray;
+	} */
+}
+
+body.ttrss_utility.ttrss_login {
+	margin : 0;
+	padding : 0;
+	width : 100%;
+	height : 100%;
+	position : absolute;
+	display : flex;
+	align-items: center;
+	justify-content : center;
+
+	.container {
+		max-width : 600px;
+		margin-left : auto;
+		margin-right : auto;
 	}
 }
 
-body.small_margins {
-	margin : 1em;
-	max-width : none;
+body.ttrss_utility.feed_debugger {
+	margin : 2em;
 }
 
 body#sharepopup {

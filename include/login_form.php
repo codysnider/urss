@@ -21,7 +21,7 @@
 	</script>
 </head>
 
-<body class="flat ttrss_main ttrss_utility">
+<body class="flat ttrss_utility ttrss_login">
 
 <script type="text/javascript">
 require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox', 'dijit/form/Form',
@@ -65,7 +65,7 @@ function bwLimitChange(elem) {
 <div class="container">
 
 	<h1><?php echo "Authentication" ?></h1>
-	<div class="content login-form">
+	<div class="content">
 		<form action="public.php?return=<?php echo $return ?>"
 			  dojoType="dijit.form.Form" method="POST">
 
