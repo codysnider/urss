@@ -1499,6 +1499,10 @@ body.ttrss_utility .content fieldset > label:first-of-type {
   text-align: right;
   font-weight: bold;
 }
+body.ttrss_utility .content fieldset > label.checkbox {
+  display: inline;
+  font-weight: normal;
+}
 body.ttrss_utility a {
   color: #b87d2c;
   text-decoration: none;

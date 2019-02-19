@@ -830,8 +830,23 @@ class Feeds extends Handler_Protected {
 		<head>
 			<?php echo stylesheet_tag("css/default.css") ?>
 			<title>Feed Debugger</title>
+			<?php
+				echo stylesheet_tag("css/default.css");
+				echo javascript_tag("lib/prototype.js");
+				echo javascript_tag("lib/dojo/dojo.js");
+				echo javascript_tag("lib/dojo/tt-rss-layer.js");
+			?>
 		</head>
-		<body class="ttrss_utility feed_debugger">
+		<body class="flat ttrss_utility feed_debugger">
+		<script type="text/javascript">
+			require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox', 'dijit/form/Form',
+				'dijit/form/Select','dijit/form/TextBox','dijit/form/ValidationTextBox'],function(parser, ready){
+				ready(function() {
+					parser.parse();
+				});
+			});
+		</script>
+
 			<div class="container">
 				<h1>Feed Debugger: <?php echo "$feed_id: " . $this->getFeedTitle($feed_id) ?></h1>
 				<div class="content">
@@ -842,10 +857,16 @@ class Feeds extends Handler_Protected {
 						<input type="hidden" name="csrf_token" value="<?php echo $csrf_token ?>">
 						<input type="hidden" name="action" value="do_update">
 						<input type="hidden" name="feed_id" value="<?php echo $feed_id ?>">
-						<input type="checkbox" name="force_refetch" value="1" <?php echo $refetch_checked ?>> Force refetch<br/>
-						<input type="checkbox" name="force_rehash" value="1" <?php echo $rehash_checked ?>> Force rehash<br/>
 
-						<p/><button type="submit">Continue</button>
+						<fieldset>
+							<label class="checkbox"><input dojoType="dijit.form.CheckBox" type="checkbox" name="force_refetch" value="1" <?php echo $refetch_checked ?>> Force refetch</label>
+						</fieldset>
+
+						<fieldset>
+							<label class="checkbox"><input dojoType="dijit.form.CheckBox" type="checkbox" name="force_rehash" value="1" <?php echo $rehash_checked ?>> Force rehash</label>
+						</fieldset>
+
+						<button type="submit" dojoType="dijit.form.Button" class="alt-primary">Continue</button>
 					</form>
 
 					<hr>
