@@ -914,7 +914,7 @@ class Handler_Public extends Handler {
 			print "<hr/>";
 
 			print "<form method='GET' action='index.php'>
-				<button dojoType='dijit.form.Button'>".__("Return to Tiny Tiny RSS")."</button>
+				<button type='submit' class='alt-primary' dojoType='dijit.form.Button'>".__("Return to Tiny Tiny RSS")."</button>
 				</form>";
 
 		} else if (!$method) {
@@ -1025,7 +1025,7 @@ class Handler_Public extends Handler {
 
 					print "<form method='GET' action='public.php'>
 						<input type='hidden' name='op' value='forgotpass'>
-						<input dojoType='dijit.form.Button' type='submit' value=\"".__("Go back")."\">
+						<button dojoType='dijit.form.Button' type='submit'>".__("Go back")."</button>
 						</form>";
 
 				}

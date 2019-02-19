@@ -37,7 +37,7 @@
 		echo javascript_tag("../lib/dojo/tt-rss-layer.js");
 	?>
 </head>
-<body class="flat ttrss_utility">
+<body class="flat ttrss_utility installer">
 
 <script type="text/javascript">
 	require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox', 'dijit/form/Form',
@@ -200,6 +200,10 @@
 
 		if (!defined('_INSTALLER_IGNORE_CONFIG_CHECK')) {
 			print_error("Error: config.php already exists in tt-rss directory; aborting.");
+
+			print "<form method='GET' action='../index.php'>
+				<button type='submit' dojoType='dijit.form.Button' class='alt-primary'>Return to Tiny Tiny RSS</button>
+				</form>";
 			exit;
 		}
 	}
