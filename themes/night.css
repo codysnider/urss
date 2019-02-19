@@ -915,43 +915,51 @@ body.ttrss_main #feedEditDlg img.feedIcon {
   height: auto;
   width: auto;
 }
-body.ttrss_login {
-  padding: 2em;
-  font-size: 14px;
+body.ttrss_login .container {
+  background: #222;
+  color: #ccc;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
-body.ttrss_login fieldset {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  width: 400px;
-  border-width: 0px;
+body.ttrss_login .container .footer {
+  text-align: center;
+  padding: 10px;
 }
-body.ttrss_login label {
+body.ttrss_login .container .center {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+}
+body.ttrss_login .container .center .login-form {
+  background: white;
+  padding: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.1);
+}
+body.ttrss_login .container .center .login-form form {
+  margin: 0px;
+}
+body.ttrss_login fieldset > label:first-of-type {
   width: 120px;
   margin-right: 20px;
   display: inline-block;
   text-align: right;
-  color: gray;
+  font-weight: bold;
 }
-body.ttrss_login div.header {
-  border: 0px solid #b87d2c;
-  border-bottom-width: 1px;
-  margin-bottom: 1em;
-  padding-bottom: 5px;
+body.ttrss_login fieldset {
+  border-width: 0;
+  padding: 5px 0px;
 }
-body.ttrss_login div.footer {
-  margin-top: 1em;
-  padding-top: 5px;
-  border: 0px solid #b87d2c;
-  border-top-width: 1px;
-  text-align: center;
-  color: gray;
-  font-size: 12px;
+body.ttrss_login fieldset.narrow {
+  padding: 2px 0px;
 }
-body.ttrss_login a.forgotpass {
+body.ttrss_login fieldset.align-right {
   text-align: right;
-  font-size: 11px;
-  display: inline-block;
 }
 body.ttrss_login a {
   color: #b87d2c;
@@ -969,12 +977,7 @@ body.ttrss_login div.footer a:hover {
   color: #b87d2c;
 }
 body.ttrss_login div.row {
-  padding: 0px 0px 5px 0px;
-}
-body.ttrss_login div.row-error {
-  color: red;
-  text-align: center;
-  padding: 0px 0px 5px 0px;
+  padding-bottom: 5px;
 }
 body.ttrss_main .dijitDialog h1:first-of-type,
 body.ttrss_main .dijitDialog h2:first-of-type,
