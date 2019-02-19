@@ -39,26 +39,22 @@ body.ttrss_main div.post div.header .row {
   display: flex;
   margin-bottom: 4px;
   flex-wrap: nowrap;
-}
-body.ttrss_main div.post div.header .row > * {
-  align-self: center;
+  align-items: center;
+  justify-content: space-between;
 }
 body.ttrss_main div.post div.header .comments {
   flex-grow: 2;
 }
 body.ttrss_main div.post div.header .date {
-  text-align: right;
   white-space: nowrap;
-  align-self: flex-start;
 }
 body.ttrss_main div.post div.header img,
-body.ttrss_main div.post div.header i {
+body.ttrss_main div.post div.header i.material-icons {
   margin: 0px 4px;
   vertical-align: middle;
 }
 body.ttrss_main div.post div.header .title {
   flex-grow: 2;
-  align-self: flex-start;
   font-size: 15px;
   font-weight: 600;
   text-rendering: optimizelegibility;
@@ -83,9 +79,7 @@ body.ttrss_main div.post div.content iframe {
 }
 body.ttrss_main .inline-player {
   display: flex;
-}
-body.ttrss_main .inline-player > * {
-  align-self: center;
+  align-items: center;
 }
 body.ttrss_main .inline-player audio {
   margin-right: 8px;
@@ -96,9 +90,9 @@ body.ttrss_main .article-note {
   border: 1px solid #e7d796;
   color: #9a8c59;
   display: flex;
+  align-items: center;
 }
 body.ttrss_main .article-note > * {
-  align-self: center;
   padding: 5px;
 }
 body.ttrss_main .article-note.editable {
@@ -146,10 +140,10 @@ body.ttrss_main #notify {
   font-size: 13px;
   z-index: 99;
   display: flex;
+  align-items: center;
   transition: all 0.5s ease-in-out;
 }
 body.ttrss_main #notify > * {
-  align-self: center;
   padding: 4px;
 }
 body.ttrss_main #notify img {
@@ -193,9 +187,9 @@ body.ttrss_main .hl {
   flex-direction: row;
   flex-wrap: nowrap;
   background: #222;
+  align-items: center;
 }
 body.ttrss_main .hl > * {
-  align-self: center;
   white-space: nowrap;
   padding: 4px;
 }
@@ -205,10 +199,7 @@ body.ttrss_main .hl img {
 body.ttrss_main .hl .left,
 body.ttrss_main .hl .right {
   display: flex;
-}
-body.ttrss_main .hl .left > *,
-body.ttrss_main .hl .right > * {
-  align-self: center;
+  align-items: center;
 }
 body.ttrss_main .hl .left i.material-icons,
 body.ttrss_main .hl .right i.material-icons {
@@ -385,9 +376,9 @@ body.ttrss_main ul.browseFeedList {
 }
 body.ttrss_main ul.browseFeedList li {
   display: flex;
+  align-items: center;
 }
 body.ttrss_main ul.browseFeedList li > * {
-  align-self: center;
   margin: 2px;
 }
 body.ttrss_main .browseFeedList span.subscribers {
@@ -682,9 +673,7 @@ body.ttrss_main #toolbar-frame #toolbar {
   flex-wrap: nowrap;
   color: #ccc;
   font-size: 12px;
-}
-body.ttrss_main #toolbar-frame #toolbar > * {
-  align-self: center;
+  align-items: center;
 }
 body.ttrss_main #toolbar-frame #toolbar .dijitSelect,
 body.ttrss_main #toolbar-frame #toolbar .dijitDropDownButton .dijitButtonNode,
@@ -706,19 +695,15 @@ body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines {
 body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .left {
   flex-grow: 2;
   display: flex;
+  align-items: center;
 }
 body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .left img {
   vertical-align: middle;
   margin-right: 8px;
 }
-body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .left > * {
-  align-self: center;
-}
 body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .right {
   display: flex;
-}
-body.ttrss_main #toolbar-frame #toolbar #toolbar-headlines .right > * {
-  align-self: center;
+  align-items: center;
 }
 body.ttrss_main #toolbar-frame #toolbar #updates-available {
   color: #69C671;
@@ -1026,22 +1011,21 @@ video::-webkit-media-controls-overlay-play-button {
 }
 .cdm .header img,
 .cdm .footer img,
-.cdm .footer i {
+.cdm .footer i.material-icons {
   margin: 0px 4px;
   vertical-align: middle;
 }
+.cdm .header {
+  align-items: center;
+}
 .cdm .header > * {
-  align-self: center;
   padding: 4px;
   white-space: nowrap;
 }
 .cdm .header .left,
 .cdm .header .right {
   display: flex;
-}
-.cdm .header .left > *,
-.cdm .header .right > * {
-  align-self: center;
+  align-items: center;
 }
 .cdm .header .left i.material-icons,
 .cdm .header .right i.material-icons {
@@ -1069,9 +1053,7 @@ video::-webkit-media-controls-overlay-play-button {
   font-weight: normal;
   color: #ccc;
   clear: both;
-}
-.cdm .footer > * {
-  align-self: center;
+  align-items: center;
 }
 .cdm .footer .left {
   flex-grow: 2;
@@ -1210,19 +1192,16 @@ div#floatingTitle {
   flex-direction: row;
   flex-wrap: nowrap;
   box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.1);
+  align-items: center;
 }
 div#floatingTitle > * {
-  align-self: center;
   white-space: nowrap;
   padding: 4px;
 }
 div#floatingTitle .left,
 div#floatingTitle .right {
   display: flex;
-}
-div#floatingTitle .left > *,
-div#floatingTitle .right > * {
-  align-self: center;
+  align-items: center;
 }
 div#floatingTitle .left i.material-icons,
 div#floatingTitle .right i.material-icons {
@@ -1242,7 +1221,7 @@ div#floatingTitle .right i.icon-anchor {
 div#floatingTitle .excerpt {
   display: none;
 }
-div#floatingTitle .collapse i {
+div#floatingTitle .collapse i.material-icons {
   color: #b87d2c;
   cursor: pointer;
 }
@@ -1353,7 +1332,7 @@ div.cdm.expandable div.header a.title {
 div.cdm.expandable.Unread div.header a.title {
   color: black;
 }
-div.cdm.expandable.active .collapse i {
+div.cdm.expandable.active .collapse i.material-icons {
   color: #b87d2c;
   cursor: pointer;
 }

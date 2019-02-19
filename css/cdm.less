@@ -6,24 +6,22 @@
 	}
 
 	.header img, .footer img,
-	.footer i {
+	.footer i.material-icons {
 		margin : 0px 4px;
 		vertical-align: middle;
 	}
 
 	.header {
+		align-items : center;
+
 		> * {
-			align-self : center;
 			padding : 4px;
 			white-space : nowrap;
 		}
 
 		.left, .right {
 			display : flex;
-
-			> * {
-				align-self : center;
-			}
+			align-items : center;
 
 			i.material-icons {
 				margin-left : 2px;
@@ -56,10 +54,7 @@
 		font-weight : normal;
 		color : @default-text;
 		clear : both;
-
-		> * {
-			align-self : center;
-		}
+		align-items : center;
 
 		.left {
 			flex-grow : 2;
@@ -232,19 +227,16 @@ div#floatingTitle {
 	flex-direction : row;
 	flex-wrap : nowrap;
 	box-shadow : 0px 1px 1px -1px rgba(0,0,0,0.1);
+	align-items: center;
 
 	> * {
-		align-self: center;
 		white-space : nowrap;
 		padding : 4px;
 	}
 
 	.left, .right {
 		display : flex;
-
-		> * {
-			align-self : center;
-		}
+		align-items : center;
 
 		i.material-icons {
 			margin-left : 2px;
@@ -266,7 +258,7 @@ div#floatingTitle {
 		display : none;
 	}
 
-	.collapse i {
+	.collapse i.material-icons {
 		color : @color-accent;
 		cursor : pointer;
 	}
@@ -407,7 +399,7 @@ div.cdm.expandable.Unread div.header a.title {
 }
 
 div.cdm.expandable.active {
-	.collapse i {
+	.collapse i.material-icons {
 		color : @color-accent;
 		cursor : pointer;
 	}
