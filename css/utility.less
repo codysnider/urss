@@ -5,12 +5,15 @@ body.ttrss_utility.sanity_failed {
 body.ttrss_utility {
 	background : @color-panel-bg;
 	color : @default-fg;
-	padding : 0px;
+	padding : 0;
+	margin : 0;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
-	margin-left : auto;
-	margin-right : auto;
-	max-width : 800px;
+	display : flex;
+	width : 100%;
+	height : 100%;
+	justify-content : center;
+	align-items : center;
 
 	form {
 		margin : 10px 0px 0px 0px;
@@ -18,12 +21,12 @@ body.ttrss_utility {
 	}
 
 	div.content {
-		overflow : hidden;
 		background : white;
+		overflow : hidden;
 		border : 1px solid #ddd;
-		padding : 10px;
-		border-radius : 6px;
+		padding : 20px;
 		box-shadow : 0px 1px 1px -1px rgba(0,0,0,0.1);
+		min-width : 600px;
 	}
 
 	p.warning {
@@ -43,10 +46,6 @@ body.ttrss_utility {
 		font-size : 10px;
 	}
 
-	.floatingLogo {
-		display : none;
-	}
-
 	a {
 		color : @color-link;
 		text-decoration : none;
@@ -58,79 +57,15 @@ body.ttrss_utility {
 		text-decoration: underline;
 	}
 
-	.alert {
-		padding: 8px 35px 8px 14px;
-		margin-bottom: 20px;
-		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-		background-color: #fcf8e3;
-		border: 1px solid #fbeed5;
-		-webkit-border-radius: 4px;
-		-moz-border-radius: 4px;
-		border-radius: 4px;
-	}
-
-	.alert,
-	.alert h4 {
-		color: #c09853;
-	}
-
-	.alert h4 {
-		margin: 0;
-	}
-
-	.alert .close {
-		position: relative;
-		top: -2px;
-		right: -21px;
-		line-height: 20px;
-		cursor :  pointer;
-	}
-
-	.alert-success {
-		color: #468847;
-		background-color: #dff0d8;
-		border-color: #d6e9c6;
-	}
-
-	.alert-success h4 {
-		color: #468847;
-	}
-
-	.alert-danger,
-	.alert-error {
-		color: #b94a48;
-		background-color: #f2dede;
-		border-color: #eed3d7;
-	}
-
-	.alert-danger h4,
-	.alert-error h4 {
-		color: #b94a48;
-	}
-
-	.alert-info {
-		color: #3a87ad;
-		background-color: #d9edf7;
-		border-color: #bce8f1;
-	}
-
-	.alert-info h4 {
-		color: #3a87ad;
-	}
-
 	h1 {
-		color : @color-accent;
-		font-size : 32px;
-		margin : 20px 0px 5px 0px;
-		text-shadow : 0 0 6px #fff;
+		color : gray;
+		font-family: @fonts-ui-bold;
+		font-size : 18px;
+		margin : 10px 0 0 0;
 	}
 
-	h2 {
+	h2, h3, h4 {
 		color : @color-accent;
-		font-size : 14pt;
-		border-width : 0px 0px 1px 0px;
-		border-color : #f0f0f0;
-		border-style : solid;
 	}
 
 	div.content > h2 {
@@ -211,24 +146,15 @@ body.ttrss_utility {
 
 	fieldset {
 		border-width : 0px;
-		padding : 0px 0px 5px 0px;
-		margin : 0px;
+		padding : 5px 0px;
 	}
 
-	fieldset input {
-		font-family : sans-serif;
-		font-size : medium;
-		border-spacing : 2px;
-		border : 1px solid #b5bcc7;
-		padding : 2px;
-	}
-
-	fieldset label {
+	fieldset > label:first-of-type {
 		width : 120px;
 		margin-right : 20px;
 		display : inline-block;
 		text-align : right;
-		color : gray;
+		font-weight : bold;
 	}
 
 	body.otp {

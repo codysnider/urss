@@ -781,9 +781,8 @@ class Handler_Public extends Handler {
 
 				</head>
 				<body class='claro ttrss_utility'>
-				<img class=\"floatingLogo\" src=\"images/logo_small.png\"
-			  		alt=\"Tiny Tiny RSS\"/>
-					<h1>".__("Subscribe to feed...")."</h1><div class='content'>";
+				<div class=\"container\">
+				<h1>".__("Subscribe to feed...")."</h1><div class='content'>";
 
 			$rc = Feeds::subscribe_to_feed($feed_url);
 
@@ -858,7 +857,7 @@ class Handler_Public extends Handler {
 				<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
 				</form></p>";
 
-			print "</div></body></html>";
+			print "</div></div></body></html>";
 
 		} else {
 			render_login_form();
@@ -885,9 +884,8 @@ class Handler_Public extends Handler {
 		echo javascript_tag("lib/prototype.js");
 
 		print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
-			</head><body class='claro ttrss_utility'>";
+			</head><body class='claro ttrss_utility'><div class='container'>";
 
-		print '<div class="floatingLogo"><img src="images/logo_small.png"></div>';
 		print "<h1>".__("Password recovery")."</h1>";
 		print "<div class='content'>";
 
@@ -928,12 +926,14 @@ class Handler_Public extends Handler {
 				print_error("Some of the information provided is missing or incorrect.");
 			}
 
+			print "<hr/>";
+
 			print "<form method=\"GET\" action=\"index.php\">
 				<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
 				</form>";
 
 		} else if (!$method) {
-			print_notice(__("You will need to provide valid account name and email. A password reset link will be sent to your email address."));
+			print_notice(__("You will need to provide valid account name and email. Password reset link will be sent to your email address."));
 
 			print "<form method='POST' action='public.php'>";
 			print "<input type='hidden' name='method' value='do'>";
@@ -954,8 +954,10 @@ class Handler_Public extends Handler {
 			print "<input class='input input-text' type='text' name='test' value='' required>";
 			print "</fieldset>";
 
-			print "<p/>";
+			print "<hr/>";
+			print "<fieldset>";
 			print "<button type='submit'>".__("Reset password")."</button>";
+			print "</fieldset>";
 
 			print "</form>";
 		} else if ($method == 'do') {
@@ -974,13 +976,13 @@ class Handler_Public extends Handler {
 
 			} else {
 
-				print_notice("Password reset instructions are being sent to your email address.");
-
 				$sth = $this->pdo->prepare("SELECT id FROM ttrss_users
 					WHERE login = ? AND email = ?");
 				$sth->execute([$login, $email]);
 
 				if ($row = $sth->fetch()) {
+					print_notice("Password reset instructions are being sent to your email address.");
+
 					$id = $row["id"];
 
 					if ($id) {
@@ -1029,12 +1031,16 @@ class Handler_Public extends Handler {
 						print_error("User ID not found.");
 					}
 
+					print "<hr/>";
+
 					print "<form method=\"GET\" action=\"index.php\">
 						<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
 						</form>";
 
 				} else {
 					print_error(__("Sorry, login and email combination not found."));
+
+					print "<hr/>";
 
 					print "<form method=\"GET\" action=\"public.php\">
 						<input type=\"hidden\" name=\"op\" value=\"forgotpass\">
@@ -1046,6 +1052,7 @@ class Handler_Public extends Handler {
 
 		}
 
+		print "</div>";
 		print "</div>";
 		print "</body>";
 		print "</html>";
@@ -1065,7 +1072,7 @@ class Handler_Public extends Handler {
 			<head>
 			<title>Database Updater</title>
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-			<link rel="stylesheet" type="text/css" href="css/default.css"/>
+			<?php echo stylesheet_tag("css/default.css") ?>
 			<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
 			<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">
 			</head>
@@ -1080,8 +1087,7 @@ class Handler_Public extends Handler {
 			}
 			</script>
 
-			<div class="floatingLogo"><img src="images/logo_small.png"></div>
-
+			<div class="container">
 			<h1><?php echo __("Database Updater") ?></h1>
 
 			<div class="content">
@@ -1122,12 +1128,16 @@ class Handler_Public extends Handler {
 
 						print_notice("Your Tiny Tiny RSS database is now updated to the latest version.");
 
+						print "<hr/>";
+
 						print "<p><form method=\"GET\" action=\"index.php\">
 						<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
 						</form>";
 
 					} else {
 						print "<h2>Your database is up to date.</h2>";
+
+						print "<hr/>";
 
 						print "<p><form method=\"GET\" action=\"index.php\">
 						<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
@@ -1154,6 +1164,8 @@ class Handler_Public extends Handler {
 
 						print_notice("Tiny Tiny RSS database is up to date.");
 
+						print "<hr/>";
+
 						print "<p><form method=\"GET\" action=\"index.php\">
 							<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
 						</form>";
@@ -1162,6 +1174,7 @@ class Handler_Public extends Handler {
 				}
 			?>
 
+			</div>
 			</div>
 			</body>
 			</html>

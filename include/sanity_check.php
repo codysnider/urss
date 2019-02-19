@@ -183,7 +183,6 @@
 				<link rel="stylesheet" type="text/css" href="css/default.css">
 			</head>
 		<body class='sanity_failed claro ttrss_utility'>
-		<div class="floatingLogo"><img src="images/logo_small.png"></div>
 			<div class="content">
 
 			<h1>Startup failed</h1>

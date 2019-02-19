@@ -29,7 +29,6 @@ class Opml extends Handler_Protected {
 				<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
 			</head>
 			<body class='claro ttrss_utility'>
-			<div class=\"floatingLogo\"><img src=\"images/logo_small.png\"></div>
 			<h1>".__('OPML Utility')."</h1><div class='content'>";
 
 		add_feed_category("Imported feeds");

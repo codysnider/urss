@@ -180,8 +180,6 @@
 
 <body class="claro ttrss_utility">
 
-<div class="floatingLogo"><img src="images/logo_small.png"></div>
-
 <h1><?php echo __("Create new account") ?></h1>
 
 <div class="content">

@@ -123,10 +123,6 @@ body.ttrss_main h4 {
   font-weight: 600;
   text-rendering: optimizelegibility;
 }
-body.ttrss_main hr {
-  border: 0px solid #ccc;
-  border-bottom-width: 1px;
-}
 body.ttrss_main a {
   color: #257aa7;
   text-decoration: none;
@@ -336,54 +332,6 @@ body.ttrss_main .dijitContentPane pre {
   display: block;
   max-width: 98%;
   overflow: auto;
-}
-body.ttrss_main .alert {
-  padding: 8px 35px 8px 14px;
-  margin-bottom: 10px;
-  /* text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); */
-  background-color: #fcf8e3;
-  border: 1px solid #fbeed5;
-  border-radius: 4px;
-}
-body.ttrss_main .alert .close {
-  position: relative;
-  top: -2px;
-  right: -21px;
-  line-height: 20px;
-  cursor: pointer;
-}
-body.ttrss_main .alert,
-body.ttrss_main .alert h4 {
-  color: #c09853;
-}
-body.ttrss_main .alert h4 {
-  margin: 0;
-}
-body.ttrss_main .alert-success {
-  color: #468847;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
-}
-body.ttrss_main .alert-success h4 {
-  color: #468847;
-}
-body.ttrss_main .alert-danger,
-body.ttrss_main .alert-error {
-  color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
-}
-body.ttrss_main .alert-danger h4,
-body.ttrss_main .alert-error h4 {
-  color: #b94a48;
-}
-body.ttrss_main .alert-info {
-  color: #3a87ad;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
-}
-body.ttrss_main .alert-info h4 {
-  color: #3a87ad;
 }
 body.ttrss_main div.prefHelp {
   color: #555;
@@ -1051,6 +999,72 @@ body.ttrss_main #prefFilterTestResultList .title {
 body.ttrss_main #prefFilterTestResultList .feed {
   color: #257aa7;
 }
+body.ttrss_main .alert,
+body.ttrss_utility .alert {
+  padding: 8px 35px 8px 14px;
+  margin-bottom: 10px;
+  /* text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); */
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5;
+  border-radius: 4px;
+}
+body.ttrss_main .alert .close,
+body.ttrss_utility .alert .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  line-height: 20px;
+  cursor: pointer;
+}
+body.ttrss_main .alert,
+body.ttrss_utility .alert,
+body.ttrss_main .alert h4,
+body.ttrss_utility .alert h4 {
+  color: #c09853;
+}
+body.ttrss_main .alert h4,
+body.ttrss_utility .alert h4 {
+  margin: 0;
+}
+body.ttrss_main .alert-success,
+body.ttrss_utility .alert-success {
+  color: #468847;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+body.ttrss_main .alert-success h4,
+body.ttrss_utility .alert-success h4 {
+  color: #468847;
+}
+body.ttrss_main .alert-danger,
+body.ttrss_utility .alert-danger,
+body.ttrss_main .alert-error,
+body.ttrss_utility .alert-error {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+}
+body.ttrss_main .alert-danger h4,
+body.ttrss_utility .alert-danger h4,
+body.ttrss_main .alert-error h4,
+body.ttrss_utility .alert-error h4 {
+  color: #b94a48;
+}
+body.ttrss_main .alert-info,
+body.ttrss_utility .alert-info {
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+body.ttrss_main .alert-info h4,
+body.ttrss_utility .alert-info h4 {
+  color: #3a87ad;
+}
+body.ttrss_main hr,
+body.ttrss_utility hr {
+  border: 0px solid #ccc;
+  border-bottom-width: 1px;
+}
 ::selection {
   background: #257aa7;
   color: white;
@@ -1527,24 +1541,27 @@ body.ttrss_utility.sanity_failed {
 body.ttrss_utility {
   background: #f5f5f5;
   color: black;
-  padding: 0px;
+  padding: 0;
+  margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 800px;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 body.ttrss_utility form {
   margin: 10px 0px 0px 0px;
   padding: 0px;
 }
 body.ttrss_utility div.content {
-  overflow: hidden;
   background: white;
+  overflow: hidden;
   border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 6px;
+  padding: 20px;
   box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.1);
+  min-width: 600px;
 }
 body.ttrss_utility p.warning {
   color: red;
@@ -1560,9 +1577,6 @@ body.ttrss_utility div.insensitive-small {
   color: gray;
   font-size: 10px;
 }
-body.ttrss_utility .floatingLogo {
-  display: none;
-}
 body.ttrss_utility a {
   color: #257aa7;
   text-decoration: none;
@@ -1572,68 +1586,16 @@ body.ttrss_utility a:focus {
   color: #133d54;
   text-decoration: underline;
 }
-body.ttrss_utility .alert {
-  padding: 8px 35px 8px 14px;
-  margin-bottom: 20px;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-  background-color: #fcf8e3;
-  border: 1px solid #fbeed5;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-}
-body.ttrss_utility .alert,
-body.ttrss_utility .alert h4 {
-  color: #c09853;
-}
-body.ttrss_utility .alert h4 {
-  margin: 0;
-}
-body.ttrss_utility .alert .close {
-  position: relative;
-  top: -2px;
-  right: -21px;
-  line-height: 20px;
-  cursor: pointer;
-}
-body.ttrss_utility .alert-success {
-  color: #468847;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
-}
-body.ttrss_utility .alert-success h4 {
-  color: #468847;
-}
-body.ttrss_utility .alert-danger,
-body.ttrss_utility .alert-error {
-  color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
-}
-body.ttrss_utility .alert-danger h4,
-body.ttrss_utility .alert-error h4 {
-  color: #b94a48;
-}
-body.ttrss_utility .alert-info {
-  color: #3a87ad;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
-}
-body.ttrss_utility .alert-info h4 {
-  color: #3a87ad;
-}
 body.ttrss_utility h1 {
-  color: #257aa7;
-  font-size: 32px;
-  margin: 20px 0px 5px 0px;
-  text-shadow: 0 0 6px #fff;
+  color: gray;
+  font-family: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  margin: 10px 0 0 0;
 }
-body.ttrss_utility h2 {
+body.ttrss_utility h2,
+body.ttrss_utility h3,
+body.ttrss_utility h4 {
   color: #257aa7;
-  font-size: 14pt;
-  border-width: 0px 0px 1px 0px;
-  border-color: #f0f0f0;
-  border-style: solid;
 }
 body.ttrss_utility div.content > h2 {
   margin-top: 0px;
@@ -1700,22 +1662,14 @@ body.ttrss_utility div.autocomplete ul li {
 }
 body.ttrss_utility fieldset {
   border-width: 0px;
-  padding: 0px 0px 5px 0px;
-  margin: 0px;
+  padding: 5px 0px;
 }
-body.ttrss_utility fieldset input {
-  font-family: sans-serif;
-  font-size: medium;
-  border-spacing: 2px;
-  border: 1px solid #b5bcc7;
-  padding: 2px;
-}
-body.ttrss_utility fieldset label {
+body.ttrss_utility fieldset > label:first-of-type {
   width: 120px;
   margin-right: 20px;
   display: inline-block;
   text-align: right;
-  color: gray;
+  font-weight: bold;
 }
 body.ttrss_utility body.otp {
   margin: 1em;

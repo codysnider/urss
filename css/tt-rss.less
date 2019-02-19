@@ -138,11 +138,6 @@ body.ttrss_main {
 		//font-family : @fonts-ui;
 	}
 
-	hr {
-		border: 0px solid #ccc;
-		border-bottom-width: 1px;
-	}
-
 	a {
 		color: @color-link;
 		text-decoration: none;
@@ -384,64 +379,6 @@ body.ttrss_main {
 		display: block;
 		max-width: 98%;
 		overflow: auto;
-	}
-
-	.alert {
-		padding: 8px 35px 8px 14px;
-		margin-bottom: 10px;
-		/* text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); */
-		background-color: #fcf8e3;
-		border: 1px solid #fbeed5;
-		border-radius: 4px;
-
-		.close {
-			position: relative;
-			top: -2px;
-			right: -21px;
-			line-height: 20px;
-			cursor : pointer;
-		}
-	}
-
-	.alert,
-	.alert h4 {
-		color: #c09853;
-	}
-
-	.alert h4 {
-		margin: 0;
-	}
-
-	.alert-success {
-		color: #468847;
-		background-color: #dff0d8;
-		border-color: #d6e9c6;
-	}
-
-	.alert-success h4 {
-		color: #468847;
-	}
-
-	.alert-danger,
-	.alert-error {
-		color: #b94a48;
-		background-color: #f2dede;
-		border-color: #eed3d7;
-	}
-
-	.alert-danger h4,
-	.alert-error h4 {
-		color: #b94a48;
-	}
-
-	.alert-info {
-		color: #3a87ad;
-		background-color: #d9edf7;
-		border-color: #bce8f1;
-
-		h4 {
-			color: #3a87ad;
-		}
 	}
 
 	div.prefHelp {
@@ -1266,6 +1203,72 @@ body.ttrss_main {
 
 }
 
+body.ttrss_main, body.ttrss_utility {
+	.alert {
+		padding: 8px 35px 8px 14px;
+		margin-bottom: 10px;
+		/* text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); */
+		background-color: #fcf8e3;
+		border: 1px solid #fbeed5;
+		border-radius: 4px;
+
+		.close {
+			position: relative;
+			top: -2px;
+			right: -21px;
+			line-height: 20px;
+			cursor : pointer;
+		}
+	}
+
+	.alert,
+	.alert h4 {
+		color: #c09853;
+	}
+
+	.alert h4 {
+		margin: 0;
+	}
+
+	.alert-success {
+		color: #468847;
+		background-color: #dff0d8;
+		border-color: #d6e9c6;
+	}
+
+	.alert-success h4 {
+		color: #468847;
+	}
+
+	.alert-danger,
+	.alert-error {
+		color: #b94a48;
+		background-color: #f2dede;
+		border-color: #eed3d7;
+	}
+
+	.alert-danger h4,
+	.alert-error h4 {
+		color: #b94a48;
+	}
+
+	.alert-info {
+		color: #3a87ad;
+		background-color: #d9edf7;
+		border-color: #bce8f1;
+
+		h4 {
+			color: #3a87ad;
+		}
+	}
+
+	hr {
+		border: 0px solid #ccc;
+		border-bottom-width: 1px;
+	}
+
+}
+
 ::selection {
 	background : @color-accent;
 	color : @default-bg;
@@ -1286,3 +1289,4 @@ body.ttrss_main {
 video::-webkit-media-controls-overlay-play-button {
 	display: none;
 }
+

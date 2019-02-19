@@ -150,8 +150,6 @@
 
 ?>
 
-<div class="floatingLogo"><img src="../images/logo_small.png"></div>
-
 <h1>Tiny Tiny RSS Installer</h1>
 
 <div class='content'>
