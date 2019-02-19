@@ -858,11 +858,11 @@ class Feeds extends Handler_Protected {
 						<input type="hidden" name="action" value="do_update">
 						<input type="hidden" name="feed_id" value="<?php echo $feed_id ?>">
 
-						<fieldset>
+						<fieldset class="narrow">
 							<label class="checkbox"><input dojoType="dijit.form.CheckBox" type="checkbox" name="force_refetch" value="1" <?php echo $refetch_checked ?>> Force refetch</label>
 						</fieldset>
 
-						<fieldset>
+						<fieldset class="narrow">
 							<label class="checkbox"><input dojoType="dijit.form.CheckBox" type="checkbox" name="force_rehash" value="1" <?php echo $rehash_checked ?>> Force rehash</label>
 						</fieldset>
 
