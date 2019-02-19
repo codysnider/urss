@@ -1718,6 +1718,9 @@ body.ttrss_utility.ttrss_login .container {
   margin-left: auto;
   margin-right: auto;
 }
+body.ttrss_utility.ttrss_login .container .content {
+  padding: 40px;
+}
 body.ttrss_utility.feed_debugger {
   margin: 2em;
 }
