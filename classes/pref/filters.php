@@ -346,7 +346,7 @@ class Pref_Filters extends Handler_Protected {
 			print_hidden("method", "editSave");
 			print_hidden("csrf_token", $_SESSION['csrf_token']);
 
-			print "<div class='dlgSecHoriz'>".__("Caption")."</div>";
+			print "<div class='dlgSec'>".__("Caption")."</div>";
 			print "<div class='dlgSecCont'>";
 
 			print "<input required=\"true\" dojoType=\"dijit.form.ValidationTextBox\" style=\"width : 20em;\" name=\"title\" value=\"$title\">";
@@ -849,7 +849,7 @@ class Pref_Filters extends Handler_Protected {
 		print_hidden("method", "add");
 		print_hidden("csrf_token", $_SESSION['csrf_token']);
 
-		print "<div class='dlgSecHoriz'>".__("Caption")."</div>";
+		print "<div class='dlgSec'>".__("Caption")."</div>";
 
 		print "<div class='dlgSecCont'>";
 		print "<input required=\"true\" dojoType=\"dijit.form.ValidationTextBox\" style=\"width : 20em;\" name=\"title\" value=\"\">";
@@ -992,33 +992,34 @@ class Pref_Filters extends Handler_Protected {
 			".__("Regular expression, without outer delimiters (i.e. slashes)")."
 		</div>";
 
-		print "<hr/>";
-		print "<input id=\"filterDlg_inverse\" dojoType=\"dijit.form.CheckBox\"
-			 name=\"inverse\" $inverse_checked/>";
-		print "<label for=\"filterDlg_inverse\">".__("Inverse regular expression matching")."</label>";
+		print "<fieldset>";
+		print "<label class='checkbox'><input id=\"filterDlg_inverse\" dojoType=\"dijit.form.CheckBox\"
+			 name=\"inverse\" $inverse_checked/> ".
+		 	__("Inverse regular expression matching")."</label>";
+		print "</fieldset>";
 
-		print "<hr/>" .  __("on field") . " ";
+		print "<fieldset>";
+		print "<label style='display : inline'>".  __("on field") . "</label> ";
 		print_select_hash("filter_type", $filter_type, $filter_types,
 			'dojoType="dijit.form.Select"');
+		print "<label style='padding-left : 10px; display : inline'>" . __("in") . "</label> ";
 
-		print "<hr/>";
+		print "</fieldset>";
 
-		print __("in") . " ";
-
+		print "<fieldset>";
 		print "<span id='filterDlg_feeds'>";
 		print_feed_multi_select("feed_id",
 			$feed_id,
-			'dojoType="dijit.form.MultiSelect"');
+			'style="width : 500px; height : 300px" dojoType="dijit.form.MultiSelect"');
 		print "</span>";
+
+		print "</fieldset>";
 
 		print "</div>";
 
-		print "<div class=\"dlgButtons\">";
+		print "<div class='dlgButtons'>";
 
-		print "<div style=\"float : left\">
-			<a class=\"visibleLink\" target=\"_blank\" href=\"http://tt-rss.org/wiki/ContentFilters\">".__("Wiki: Filters")."</a>
-		</div>";
-
+		print "<a style='float : left' target='_blank' href='http://tt-rss.org/wiki/ContentFilters'>".__("Wiki: Filters")."</a>";
 
 		print "<button dojoType=\"dijit.form.Button\" class=\"alt-primary \" type=\"submit\" onclick=\"return dijit.byId('filterNewRuleDlg').execute()\">".
 			($rule ? __("Save rule") : __('Add rule'))."</button> ";

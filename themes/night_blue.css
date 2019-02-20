@@ -433,6 +433,9 @@ body.ttrss_main .dijitDialog .dlgSecHoriz {
 body.ttrss_main .dijitDialog .dlgSecCont {
   margin: 10px 20px;
 }
+body.ttrss_main .dijitDialog .dlgSecHoriz + .dlgSecCont {
+  margin: 10px 0px;
+}
 body.ttrss_main .dijitDialog div.dlgSecCont fieldset > label,
 body.ttrss_main .dijitDialog div.dlgSecSimple fieldset > label {
   font-weight: bold;

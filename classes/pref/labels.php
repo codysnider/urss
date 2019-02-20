@@ -39,7 +39,7 @@ class Pref_Labels extends Handler_Protected {
 
 			print "<table cellspacing=\"0\">";
 
-			print "<tr><td>".__("Foreground:")."</td><td>".__("Background:").
+			print "<tr><th style='text-align : left'>".__("Foreground:")."</th><th style='text-align : left'>".__("Background:").
 				"</td></tr>";
 
 			print "<tr><td style='padding-right : 10px'>";
