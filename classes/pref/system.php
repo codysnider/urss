@@ -81,6 +81,20 @@ class Pref_System extends Handler_Protected {
 
 		print "</div>";
 
+		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+			title=\"<i class='material-icons'>info</i> ".__('PHP Information')."\">";
+
+		ob_start();
+		phpinfo();
+		$info = ob_get_contents();
+		ob_end_clean();
+
+		print "<div class='phpinfo'>";
+		print preg_replace( '%^.*<body>(.*)</body>.*$%ms','$1', $info);
+		print "</div>";
+
+		print "</div>";
+
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB,
 			"hook_prefs_tab", "prefSystem");
 

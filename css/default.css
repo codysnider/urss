@@ -1450,6 +1450,19 @@ body.ttrss_prefs hr {
   border-color: #ecf4ff;
   max-width: 100%;
 }
+body.ttrss_prefs .phpinfo table {
+  border-collapse: collapse;
+}
+body.ttrss_prefs .phpinfo td.e,
+body.ttrss_prefs .phpinfo td.v {
+  border: 1px solid #ccc;
+}
+body.ttrss_prefs .phpinfo td.e {
+  font-weight: bold;
+}
+body.ttrss_prefs .phpinfo td.v {
+  font-family: monospace;
+}
 body.ttrss_utility.sanity_failed {
   background: #900;
 }
