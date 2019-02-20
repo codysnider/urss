@@ -540,7 +540,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
 				placeHolder=\"".__("Feed Title")."\"
-				style=\"font-size : 16px; width: 460px\" name=\"title\" value=\"$title\">";
+				style=\"font-size : 16px; width: 500px\" name=\"title\" value=\"$title\">";
 
 			print "</fieldset>";
 
