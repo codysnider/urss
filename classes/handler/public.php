@@ -61,8 +61,7 @@ class Handler_Public extends Handler {
 				PluginHost::feed_to_pfeed_id($feed));
 
 			if ($handler) {
-				$qfh_ret = $handler->get_headlines(PluginHost::feed_to_pfeed_id($feed),
-					$options);
+				$qfh_ret = $handler->get_headlines(PluginHost::feed_to_pfeed_id($feed), $params);
 			}
 
 		} else {
@@ -382,26 +381,6 @@ class Handler_Public extends Handler {
 			}
 
 			$line['content'] = rewrite_cached_urls($line['content']);
-
-			$num_comments = (int) $line["num_comments"];
-			$entry_comments = "";
-
-			if ($num_comments > 0) {
-				if ($line["comments"]) {
-					$comments_url = htmlspecialchars($line["comments"]);
-				} else {
-					$comments_url = htmlspecialchars($line["link"]);
-				}
-				$entry_comments = "<a class=\"comments\"
-					target='_blank' rel=\"noopener noreferrer\" href=\"$comments_url\">$num_comments ".
-					_ngettext("comment", "comments", $num_comments)."</a>";
-
-			} else {
-				if ($line["comments"] && $line["link"] != $line["comments"]) {
-					$entry_comments = "<a class=\"comments\" target='_blank' rel=\"noopener noreferrer\" href=\"".
-						htmlspecialchars($line["comments"])."\">".__("comments")."</a>";
-				}
-			}
 
 			$enclosures = Article::get_article_enclosures($line["id"]);
 
@@ -965,34 +944,35 @@ class Handler_Public extends Handler {
 		} else if (!$method) {
 			print_notice(__("You will need to provide valid account name and email. Password reset link will be sent to your email address."));
 
-			print "<form method='POST' action='public.php'>";
-			print "<input type='hidden' name='method' value='do'>";
-			print "<input type='hidden' name='op' value='forgotpass'>";
-
-			print "<fieldset>";
-			print "<label>".__("Login:")."</label>";
-			print "<input dojoType='dijit.form.TextBox' type='text' name='login' value='' required>";
-			print "</fieldset>";
-
-			print "<fieldset>";
-			print "<label>".__("Email:")."</label>";
-			print "<input dojoType='dijit.form.TextBox' type='email' name='email' value='' required>";
-			print "</fieldset>";
+			print "<form method='POST' action='public.php'>
+				<input type='hidden' name='method' value='do'>
+				<input type='hidden' name='op' value='forgotpass'>
+	
+				<fieldset>
+				<label>".__("Login:")."</label>
+				<input dojoType='dijit.form.TextBox' type='text' name='login' value='' required>
+				</fieldset>
+	
+				<fieldset>
+				<label>".__("Email:")."</label>
+				<input dojoType='dijit.form.TextBox' type='email' name='email' value='' required>
+				</fieldset>";
 
 			$_SESSION["pwdreset:testvalue1"] = rand(1,10);
 			$_SESSION["pwdreset:testvalue2"] = rand(1,10);
 
-			print "<fieldset>";
-			print "<label>".T_sprintf("How much is %d + %d:", $_SESSION["pwdreset:testvalue1"], $_SESSION["pwdreset:testvalue2"])."</label>";
-			print "<input dojoType='dijit.form.TextBox' type='text' name='test' value='' required>";
-			print "</fieldset>";
-
-			print "<hr/>";
-			print "<fieldset>";
-			print "<button dojoType='dijit.form.Button' type='submit' class='alt-danger'>".__("Reset password")."</button>";
-			print "</fieldset>";
-
-			print "</form>";
+			print "<fieldset>
+				<label>".T_sprintf("How much is %d + %d:", $_SESSION["pwdreset:testvalue1"], $_SESSION["pwdreset:testvalue2"])."</label>
+				<input dojoType='dijit.form.TextBox' type='text' name='test' value='' required>
+				</fieldset>
+	
+				<hr/>
+				<fieldset>
+				<button dojoType='dijit.form.Button' type='submit' class='alt-danger'>".__("Reset password")."</button>
+				<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>
+				</fieldset>
+	
+				</form>";
 		} else if ($method == 'do') {
 
 			$login = clean($_POST["login"]);
