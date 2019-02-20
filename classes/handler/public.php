@@ -737,92 +737,112 @@ class Handler_Public extends Handler {
 			$feed_url = trim(clean($_REQUEST["feed_url"]));
 
 			header('Content-Type: text/html; charset=utf-8');
-			print "<html>
-				<head>
-					<title>Tiny Tiny RSS</title>";
-			print stylesheet_tag("css/default.css");
+			?>
+			<html>
+			<head>
+				<title>Tiny Tiny RSS</title>
+				<?php
+					echo stylesheet_tag("css/default.css");
+					echo javascript_tag("lib/prototype.js");
+					echo javascript_tag("lib/dojo/dojo.js");
+					echo javascript_tag("lib/dojo/tt-rss-layer.js");
+				?>
+				<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+				<link rel="shortcut icon" type="image/png" href="images/favicon.png">
+				<link rel="icon" type="image/png" sizes="72x72" href="images/favicon-72px.png">
+			</head>
+			<body class='flat ttrss_utility'>
+			<script type="text/javascript">
+				require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox', 'dijit/form/Form',
+					'dijit/form/Select','dijit/form/TextBox','dijit/form/ValidationTextBox'],function(parser, ready){
+					ready(function() {
+						parser.parse();
+					});
+				});
+			</script>
+			<div class="container">
+			<h1><?php echo __("Subscribe to feed...") ?></h1>
+			<div class='content'>
+			<?php
 
-            print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
-                <link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
-                <link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">
+			if (!$feed_url) {
+				print_error("No feed to subscribe to.");
+			} else {
 
-				</head>
-				<body class='claro ttrss_utility'>
-				<div class=\"container\">
-				<h1>".__("Subscribe to feed...")."</h1><div class='content'>";
+				$rc = Feeds::subscribe_to_feed($feed_url);
+				$feed_urls = false;
 
-			$rc = Feeds::subscribe_to_feed($feed_url);
-
-			switch ($rc['code']) {
-			case 0:
-				print_warning(T_sprintf("Already subscribed to <b>%s</b>.", $feed_url));
-				break;
-			case 1:
-				print_notice(T_sprintf("Subscribed to <b>%s</b>.", $feed_url));
-				break;
-			case 2:
-				print_error(T_sprintf("Could not subscribe to <b>%s</b>.", $feed_url));
-				break;
-			case 3:
-				print_error(T_sprintf("No feeds found in <b>%s</b>.", $feed_url));
-				break;
-			case 4:
-				print_notice(__("Multiple feed URLs found."));
-				$feed_urls = $rc["feeds"];
-				break;
-			case 5:
-				print_error(T_sprintf("Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL.", $feed_url));
-				break;
-			}
-
-			if ($feed_urls) {
-
-				print "<form action=\"public.php\">";
-				print "<input type=\"hidden\" name=\"op\" value=\"subscribe\">";
-
-				print "<select name=\"feed_url\">";
-
-				foreach ($feed_urls as $url => $name) {
-					$url = htmlspecialchars($url);
-					$name = htmlspecialchars($name);
-
-					print "<option value=\"$url\">$name</option>";
+				switch ($rc['code']) {
+					case 0:
+						print_warning(T_sprintf("Already subscribed to <b>%s</b>.", $feed_url));
+						break;
+					case 1:
+						print_notice(T_sprintf("Subscribed to <b>%s</b>.", $feed_url));
+						break;
+					case 2:
+						print_error(T_sprintf("Could not subscribe to <b>%s</b>.", $feed_url));
+						break;
+					case 3:
+						print_error(T_sprintf("No feeds found in <b>%s</b>.", $feed_url));
+						break;
+					case 4:
+						$feed_urls = $rc["feeds"];
+						break;
+					case 5:
+						print_error(T_sprintf("Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL.", $feed_url));
+						break;
 				}
 
-				print "<input type=\"submit\" value=\"".__("Subscribe to selected feed").
-					"\">";
+				if ($feed_urls) {
 
-				print "</form>";
-			}
+					print "<form action='public.php'>";
+					print "<input type='hidden' name='op' value='subscribe'>";
 
-			$tp_uri = get_self_url_prefix() . "/prefs.php";
-			$tt_uri = get_self_url_prefix();
+					print "<fieldset>";
+					print "<label style='display : inline'>" . __("Multiple feed URLs found:") . "</label>";
+					print "<select name='feed_url' dojoType='dijit.form.Select'>";
 
-			if ($rc['code'] <= 2){
-			    $sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE
+					foreach ($feed_urls as $url => $name) {
+						$url = htmlspecialchars($url);
+						$name = htmlspecialchars($name);
+
+						print "<option value=\"$url\">$name</option>";
+					}
+
+					print "</select>";
+					print "<button class='alt-primary' dojoType='dijit.form.Button' type='submit'>".__("Subscribe to selected feed")."</button>";
+					print "</fieldset>";
+
+					print "</form>";
+				}
+
+				$tp_uri = get_self_url_prefix() . "/prefs.php";
+
+				if ($rc['code'] <= 2){
+					$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE
 					feed_url = ? AND owner_uid = ?");
-			    $sth->execute([$feed_url, $_SESSION['uid']]);
-			    $row = $sth->fetch();
+					$sth->execute([$feed_url, $_SESSION['uid']]);
+					$row = $sth->fetch();
 
-				$feed_id = $row["id"];
-			} else {
-				$feed_id = 0;
-			}
-			print "<p>";
+					$feed_id = $row["id"];
+				} else {
+					$feed_id = 0;
+				}
+				print "<p>";
 
-			if ($feed_id) {
-				print "<form method=\"GET\" style='display: inline'
-					action=\"$tp_uri\">
-					<input type=\"hidden\" name=\"tab\" value=\"feedConfig\">
-					<input type=\"hidden\" name=\"method\" value=\"editfeed\">
-					<input type=\"hidden\" name=\"methodparam\" value=\"$feed_id\">
-					<input type=\"submit\" value=\"".__("Edit subscription options")."\">
+				if ($feed_id) {
+					print "<form method='GET' style='float : left' action=\"$tp_uri\">
+					<input type='hidden' name='tab' value='feedConfig'>
+					<input type='hidden' name='method' value='editfeed'>
+					<input type='hidden' name='methodparam' value='$feed_id'>
+					<button dojoType='dijit.form.Button' class='alt-info' type='submit'>".__("Edit subscription options")."</button>
 					</form>";
+				}
 			}
 
-			print "<form style='display: inline' method=\"GET\" action=\"$tt_uri\">
-				<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
-				</form></p>";
+			print "<form method='get' action='index.php'>
+					<button type='submit' dojoType='dijit.form.Button'>".__("Return to Tiny Tiny RSS")."</button>
+				</form>";
 
 			print "</div></div></body></html>";
 
