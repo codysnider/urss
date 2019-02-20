@@ -545,15 +545,37 @@ class Handler_Public extends Handler {
 		}
 
 		header('Content-Type: text/html; charset=utf-8');
-		print "<html><head><title>Tiny Tiny RSS</title>
-		<link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
-		<link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">";
+		?>
+		<html>
+		<head>
+			<title><?php echo __("Share with Tiny Tiny RSS") ?> ?></title>
+			<?php
+			echo stylesheet_tag("css/default.css");
+			echo javascript_tag("lib/prototype.js");
+			echo javascript_tag("lib/dojo/dojo.js");
+			echo javascript_tag("lib/dojo/tt-rss-layer.js");
+			echo javascript_tag("lib/scriptaculous/scriptaculous.js?load=effects,controls")
+			?>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+			<link rel="shortcut icon" type="image/png" href="images/favicon.png">
+			<link rel="icon" type="image/png" sizes="72x72" href="images/favicon-72px.png">
+		</head>
+		<body class='flat ttrss_utility share_popup'>
+		<script type="text/javascript">
+			require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox', 'dijit/form/Form',
+				'dijit/form/Select','dijit/form/TextBox','dijit/form/ValidationTextBox'],function(parser, ready){
+				ready(function() {
+					parser.parse();
 
-		echo stylesheet_tag("css/default.css");
-		echo javascript_tag("lib/prototype.js");
-		echo javascript_tag("lib/scriptaculous/scriptaculous.js?load=effects,controls");
-		print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
-			</head><body id='sharepopup' class='ttrss_utility'>";
+					new Ajax.Autocompleter('labels_value', 'labels_choices',
+						"backend.php?op=rpc&method=completeLabels",
+						{ tokens: ',', paramName: "search" });
+				});
+			});
+		</script>
+		<div class="content">
+
+		<?php
 
 		$action = clean($_REQUEST["action"]);
 
@@ -578,50 +600,43 @@ class Handler_Public extends Handler {
 				$url = htmlspecialchars(clean($_REQUEST["url"]));
 
 				?>
-
-				<table height='100%' width='100%' class="panel"><tr><td colspan='2'>
-				<h1><?php echo __("Share with Tiny Tiny RSS") ?></h1>
-				</td></tr>
-
 				<form id='share_form' name='share_form'>
 
-				<input type="hidden" name="op" value="sharepopup">
-				<input type="hidden" name="action" value="share">
+					<input type="hidden" name="op" value="sharepopup">
+					<input type="hidden" name="action" value="share">
 
-				<tr><td align='right'><?php echo __("Title:") ?></td>
-				<td width='80%'><input name='title' value="<?php echo $title ?>"></td></tr>
-				<tr><td align='right'><?php echo __("URL:") ?></td>
-				<td><input name='url' value="<?php echo $url ?>"></td></tr>
-				<tr><td align='right'><?php echo __("Content:") ?></td>
-				<td><input name='content' value=""></td></tr>
-				<tr><td align='right'><?php echo __("Labels:") ?></td>
-				<td><input name='labels' id="labels_value"
-					placeholder='Alpha, Beta, Gamma' value="">
-				</td></tr>
+					<fieldset>
+						<label><?php echo __("Title:") ?></label>
+						<input style='width : 270px' dojoType='dijit.form.TextBox' name='title' value="<?php echo $title ?>">
+					</fieldset>
 
-				<tr><td>
-					<div class="autocomplete" id="labels_choices"
-						style="display : block"></div></td></tr>
+					<fieldset>
+						<label><?php echo __("URL:") ?></label>
+						<input style='width : 270px' name='url' dojoType='dijit.form.TextBox' value="<?php echo $url ?>">
+					</fieldset>
 
-				<script type='text/javascript'>document.forms[0].title.focus();</script>
+					<fieldset>
+						<label><?php echo __("Content:") ?></label>
+						<input style='width : 270px' name='content' dojoType='dijit.form.TextBox' value="">
+					</fieldset>
 
-				<script type='text/javascript'>
-					new Ajax.Autocompleter('labels_value', 'labels_choices',
-				   "backend.php?op=rpc&method=completeLabels",
-				   { tokens: ',', paramName: "search" });
-				</script>
+					<fieldset>
+						<label><?php echo __("Labels:") ?></label>
+						<input style='width : 270px' name='labels' dojoType='dijit.form.TextBox' id="labels_value"
+						   placeholder='Alpha, Beta, Gamma' value="">
+						<div class="autocomplete" id="labels_choices"
+							 style="display : block"></div>
+					</fieldset>
 
-				<tr><td colspan='2'>
-					<div style='float : right' class='insensitive-small'>
-					<?php echo __("Shared article will appear in the Published feed.") ?>
-					</div>
-					<button type="submit"><?php echo __('Share') ?></button>
-					<button onclick="return window.close()"><?php echo __('Cancel') ?></button>
-					</td>
+					<hr/>
+
+					<fieldset>
+						<button dojoType='dijit.form.Button' class="alt-primary" type="submit"><?php echo __('Share') ?></button>
+						<button dojoType='dijit.form.Button' onclick="return window.close()"><?php echo __('Cancel') ?></button>
+						<span class="insensitive small"><?php echo __("Shared article will appear in the Published feed.") ?></span>
+					</fieldset>
 
 				</form>
-				</td></tr></table>
-				</body></html>
 				<?php
 
 			}
@@ -629,34 +644,44 @@ class Handler_Public extends Handler {
 		} else {
 
 			$return = urlencode($_SERVER["REQUEST_URI"])
+
 			?>
 
-			<form action="public.php?return=<?php echo $return ?>"
-				method="POST" id="loginForm" name="loginForm">
+			<?php print_error("Not logged in"); ?>
 
-			<input type="hidden" name="op" value="login">
+			<form action="public.php?return=<?php echo $return ?>" method="post">
 
-			<table height='100%' width='100%'><tr><td colspan='2'>
-			<h1><?php echo __("Not logged in") ?></h1></td></tr>
+				<input type="hidden" name="op" value="login">
 
-			<tr><td align="right"><?php echo __("Login:") ?></td>
-			<td align="right"><input name="login"
-				value="<?php echo $_SESSION["fake_login"] ?>"></td></tr>
-				<tr><td align="right"><?php echo __("Password:") ?></td>
-				<td align="right"><input type="password" name="password"
-				value="<?php echo $_SESSION["fake_password"] ?>"></td></tr>
-			<tr><td colspan='2'>
-				<button type="submit">
-					<?php echo __('Log in') ?></button>
+				<fieldset>
+					<label><?php echo __("Login:") ?></label>
+					<input name="login" id="login" dojoType="dijit.form.TextBox" type="text"
+						   onchange="fetchProfiles()" onfocus="fetchProfiles()" onblur="fetchProfiles()"
+						   required="1" value="<?php echo $_SESSION["fake_login"] ?>" />
+				</fieldset>
 
-				<button onclick="return window.close()">
-					<?php echo __('Cancel') ?></button>
-			</td></tr>
-			</table>
+				<fieldset>
+					<label><?php echo __("Password:") ?></label>
+
+					<input type="password" name="password" required="1"
+						   dojoType="dijit.form.TextBox"
+						   class="input input-text"
+						   value="<?php echo $_SESSION["fake_password"] ?>"/>
+				</fieldset>
+
+				<hr/>
+
+				<fieldset>
+					<label> </label>
+
+					<button dojoType="dijit.form.Button" type="submit" class="alt-primary"><?php echo __('Log in') ?></button>
+				</fieldset>
 
 			</form>
 			<?php
 		}
+
+		print "</div></body></html>";
 	}
 
 	function login() {

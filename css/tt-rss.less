@@ -374,14 +374,6 @@ body.ttrss_main {
 		padding : 5px;
 	}
 
-	.insensitive {
-		color : @default-text;
-	}
-
-	.small {
-		font-size : 11px;
-	}
-
 	span.preview {
 		color : #999;
 		font-weight : normal;
@@ -483,35 +475,6 @@ body.ttrss_main {
 		border: 0px solid @border-default;
 		border-bottom-width: 1px;
 	}
-
-	div.autocomplete {
-		position : absolute;
-		width : 250px;
-		background-color : @default-bg;
-		border :1px solid @border-default;
-		margin : 0px;
-		padding : 0px;
-
-		ul {
-			list-style-type : none;
-			margin : 0px;
-			padding : 0px;
-		}
-
-		ul li.selected {
-			background-color : darken(@default-bg, 10%);
-		}
-
-		ul li {
-			list-style-type : none;
-			display : block;
-			margin : 0;
-			padding : 2px;
-			height : 32px;
-			cursor : pointer;
-		}
-	}
-
 
 	div#headlines-frame.wide {
 		.title {
@@ -1163,6 +1126,41 @@ body.ttrss_main, body.ttrss_utility {
 	hr {
 		border: 0px solid #ccc;
 		border-bottom-width: 1px;
+	}
+
+	.insensitive {
+		color : @default-text;
+	}
+
+	.small {
+		font-size : 11px;
+	}
+
+	div.autocomplete {
+		position : absolute;
+		width : 250px;
+		background-color : @default-bg;
+		border :1px solid @border-default;
+		margin : 0px;
+		padding : 0px;
+
+		ul {
+			list-style-type : none;
+			margin : 0px;
+			padding : 0px;
+		}
+
+		ul li.selected {
+			background-color : darken(@default-bg, 10%);
+		}
+
+		ul li {
+			list-style-type : none;
+			display : block;
+			margin : 0;
+			padding : 2px;
+			cursor : pointer;
+		}
 	}
 
 }

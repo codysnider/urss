@@ -328,12 +328,6 @@ body.ttrss_main div.prefHelp {
   color: #555;
   padding: 5px;
 }
-body.ttrss_main .insensitive {
-  color: #555;
-}
-body.ttrss_main .small {
-  font-size: 11px;
-}
 body.ttrss_main span.preview {
   color: #999;
   font-weight: normal;
@@ -420,30 +414,6 @@ body.ttrss_main div.whiteBox {
   font-size: 11px;
   border: 0px solid #ddd;
   border-bottom-width: 1px;
-}
-body.ttrss_main div.autocomplete {
-  position: absolute;
-  width: 250px;
-  background-color: white;
-  border: 1px solid #ddd;
-  margin: 0px;
-  padding: 0px;
-}
-body.ttrss_main div.autocomplete ul {
-  list-style-type: none;
-  margin: 0px;
-  padding: 0px;
-}
-body.ttrss_main div.autocomplete ul li.selected {
-  background-color: #e6e6e6;
-}
-body.ttrss_main div.autocomplete ul li {
-  list-style-type: none;
-  display: block;
-  margin: 0;
-  padding: 2px;
-  height: 32px;
-  cursor: pointer;
 }
 body.ttrss_main div#headlines-frame.wide .title {
   overflow: visible;
@@ -985,6 +955,41 @@ body.ttrss_main hr,
 body.ttrss_utility hr {
   border: 0px solid #ccc;
   border-bottom-width: 1px;
+}
+body.ttrss_main .insensitive,
+body.ttrss_utility .insensitive {
+  color: #555;
+}
+body.ttrss_main .small,
+body.ttrss_utility .small {
+  font-size: 11px;
+}
+body.ttrss_main div.autocomplete,
+body.ttrss_utility div.autocomplete {
+  position: absolute;
+  width: 250px;
+  background-color: white;
+  border: 1px solid #ddd;
+  margin: 0px;
+  padding: 0px;
+}
+body.ttrss_main div.autocomplete ul,
+body.ttrss_utility div.autocomplete ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+body.ttrss_main div.autocomplete ul li.selected,
+body.ttrss_utility div.autocomplete ul li.selected {
+  background-color: #e6e6e6;
+}
+body.ttrss_main div.autocomplete ul li,
+body.ttrss_utility div.autocomplete ul li {
+  list-style-type: none;
+  display: block;
+  margin: 0;
+  padding: 2px;
+  cursor: pointer;
 }
 ::selection {
   background: #257aa7;
@@ -1569,21 +1574,15 @@ body.ttrss_utility.feed_debugger,
 body.ttrss_utility.ttrss_zoom {
   margin: 2em;
 }
-body#sharepopup {
-  color: black;
+body.ttrss_utility.share_popup {
+  margin: 0;
+  padding: 0;
   background: white;
-  margin: 10px;
 }
-body#sharepopup h1 {
-  font-size: 14px;
-  margin: 0px;
-  color: #257aa7;
-}
-body#sharepopup form {
-  height: 100%;
-}
-body#sharepopup input {
-  width: 100%;
+body.ttrss_utility.share_popup .content {
+  padding: 15px;
+  border-width: 0;
+  box-shadow: none;
 }
 .flat li {
   padding: 2px;
