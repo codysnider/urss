@@ -1,14 +1,27 @@
 <?php
 class Pref_Feeds extends Handler_Protected {
-	public static $feed_languages = array("English", "Danish", "Dutch", "Finnish", "French", "German", "Hungarian", "Italian", "Norwegian",
-		"Portuguese", "Russian", "Spanish", "Swedish", "Turkish", "Simple");
-
 	function csrf_ignore($method) {
 		$csrf_ignored = array("index", "getfeedtree", "add", "editcats", "editfeed",
 			"savefeedorder", "uploadicon", "feedswitherrors", "inactivefeeds",
 			"batchsubscribe");
 
 		return array_search($method, $csrf_ignored) !== false;
+	}
+
+	public static function get_ts_languages() {
+		$rv = [];
+
+		if (DB_TYPE == "pgsql") {
+			$dbh = Db::pdo();
+
+			$res = $dbh->query("SELECT cfgname FROM pg_ts_config");
+
+			while ($row = $res->fetch()) {
+				array_push($rv, ucfirst($row['cfgname']));
+			}
+		}
+
+		return $rv;
 	}
 
 	function batch_edit_cbox($elem, $label = false) {
@@ -590,7 +603,7 @@ class Pref_Feeds extends Handler_Protected {
 				print "<fieldset>";
 
 				print "<label>" . __('Language:') . "</label> ";
-				print_select("feed_language", $feed_language, $this::$feed_languages,
+				print_select("feed_language", $feed_language, $this::get_ts_languages(),
 					'dojoType="dijit.form.Select"');
 
 				print "</fieldset>";
@@ -859,7 +872,7 @@ class Pref_Feeds extends Handler_Protected {
 			print "<fieldset>";
 
 			print "<label>" . __('Language:') . "</label> ";
-			print_select("feed_language", "", $this::$feed_languages,
+			print_select("feed_language", "", $this::get_ts_languages(),
 				'disabled="1" dojoType="dijit.form.Select"');
 
 			$this->batch_edit_cbox("feed_language");

@@ -785,16 +785,19 @@ class Feeds extends Handler_Protected {
 
 		print "<div class=\"dlgSecCont\">";
 
+		print "<fieldset>";
 		print "<input dojoType=\"dijit.form.ValidationTextBox\"
-			style=\"font-size : 16px; width : 20em;\"
+			style=\"font-size : 16px; width : 540px;\"
 			required=\"1\" name=\"query\" type=\"search\" value=''>";
+		print "<span style='float : right'>".T_sprintf('in %s', $this->getFeedTitle($active_feed_id, $is_cat))."</span>";
+		print "</fieldset>";
 
-		print "<hr/><span style='float : right'>".T_sprintf('in %s', $this->getFeedTitle($active_feed_id, $is_cat))."</span>";
 
 		if (DB_TYPE == "pgsql") {
-			print "<hr/>";
-			print_select("search_language", "", Pref_Feeds::$feed_languages,
+			print "<fieldset>";
+			print_select("search_language", "", Pref_Feeds::get_ts_languages(),
 				"dojoType='dijit.form.Select' title=\"".__('Used for word stemming')."\"");
+			print "</fieldset>";
 		}
 
 		print "</div>";
