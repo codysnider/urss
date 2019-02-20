@@ -113,9 +113,13 @@ class Af_Readability extends Plugin {
 		$key = array_search($feed_id, $enabled_feeds);
 		$checked = $key !== FALSE ? "checked" : "";
 
-		print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"af_readability_enabled\"
+		print "<fieldset>";
+
+		print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"af_readability_enabled\"
 			name=\"af_readability_enabled\"
-			$checked>&nbsp;<label for=\"af_readability_enabled\">".__('Inline article content')."</label>";
+			$checked>&nbsp;".__('Inline article content')."</label>";
+
+		print "</fieldset>";
 
 		print "</div>";
 	}

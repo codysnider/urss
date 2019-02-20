@@ -223,9 +223,13 @@ class Af_Psql_Trgm extends Plugin {
 		$key = array_search($feed_id, $enabled_feeds);
 		$checked = $key !== FALSE ? "checked" : "";
 
-		print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"trgm_similarity_enabled\"
+		print "<fieldset>";
+
+		print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"trgm_similarity_enabled\"
 			name=\"trgm_similarity_enabled\"
-			$checked>&nbsp;<label for=\"trgm_similarity_enabled\">".__('Mark similar articles as read')."</label>";
+			$checked> ".__('Mark similar articles as read')."</label>";
+
+		print "</fieldset>";
 
 		print "</div>";
 	}

@@ -523,29 +523,34 @@ class Pref_Feeds extends Handler_Protected {
 
 			/* Title */
 
+			print "<fieldset>";
+
 			print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
-			placeHolder=\"".__("Feed Title")."\"
-			style=\"font-size : 16px; width: 20em\" name=\"title\" value=\"$title\">";
+				placeHolder=\"".__("Feed Title")."\"
+				style=\"font-size : 16px; width: 460px\" name=\"title\" value=\"$title\">";
+
+			print "</fieldset>";
 
 			/* Feed URL */
 
 			$feed_url = htmlspecialchars($row["feed_url"]);
 
-			print "<hr/>";
+			print "<fieldset>";
 
-			print __('URL:') . " ";
+			print "<label>" . __('URL:') . "</label> ";
 			print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
-			placeHolder=\"".__("Feed URL")."\"
-			regExp='^(http|https)://.*' style=\"width : 20em\"
-			name=\"feed_url\" value=\"$feed_url\">";
+				placeHolder=\"".__("Feed URL")."\"
+				regExp='^(http|https)://.*' style=\"width : 300px\"
+				name=\"feed_url\" value=\"$feed_url\">";
 
 			$last_error = $row["last_error"];
 
 			if ($last_error) {
 				print "&nbsp;<i class=\"material-icons\" 
 					title=\"".htmlspecialchars($last_error)."\">error</i>";
-
 			}
+
+			print "</fieldset>";
 
 			/* Category */
 
@@ -553,36 +558,42 @@ class Pref_Feeds extends Handler_Protected {
 
 				$cat_id = $row["cat_id"];
 
-				print "<hr/>";
+				print "<fieldset>";
 
-				print __('Place in category:') . " ";
+				print "<label>" . __('Place in category:') . "</label> ";
 
 				print_feed_cat_select("cat_id", $cat_id,
 					'dojoType="dijit.form.Select"');
+
+				print "</fieldset>";
 			}
 
 			/* Site URL  */
 
 			$site_url = htmlspecialchars($row["site_url"]);
 
-			print "<hr/>";
+			print "<fieldset>";
 
-			print __('Site URL:') . " ";
+			print "<label>" . __('Site URL:') . "</label> ";
 			print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
-			placeHolder=\"".__("Site URL")."\"
-			regExp='^(http|https)://.*' style=\"width : 15em\"
-			name=\"site_url\" value=\"$site_url\">";
+				placeHolder=\"".__("Site URL")."\"
+				regExp='^(http|https)://.*' style=\"width : 300px\"
+				name=\"site_url\" value=\"$site_url\">";
+
+			print "</fieldset>";
 
 			/* FTS Stemming Language */
 
 			if (DB_TYPE == "pgsql") {
 				$feed_language = $row["feed_language"];
 
-				print "<hr/>";
+				print "<fieldset>";
 
-				print __('Language:') . " ";
+				print "<label>" . __('Language:') . "</label> ";
 				print_select("feed_language", $feed_language, $this::$feed_languages,
 					'dojoType="dijit.form.Select"');
+
+				print "</fieldset>";
 			}
 
 			print "</div>";
@@ -594,19 +605,26 @@ class Pref_Feeds extends Handler_Protected {
 
 			$update_interval = $row["update_interval"];
 
+			print "<fieldset>";
+
 			print_select_hash("update_interval", $update_interval, $update_intervals,
 				'dojoType="dijit.form.Select"');
+
+			print "</fieldset>";
 
 			/* Purge intl */
 
 			$purge_interval = $row["purge_interval"];
 
-			print "<hr/>";
-			print __('Article purging:') . " ";
+			print "<fieldset>";
+
+			print "<label>" . __('Article purging:') . "</label> ";
 
 			print_select_hash("purge_interval", $purge_interval, $purge_intervals,
 				'dojoType="dijit.form.Select" ' .
 				((FORCE_ARTICLE_PURGE == 0) ? "" : 'disabled="1"'));
+
+			print "</fieldset>";
 
 			print "</div>";
 
@@ -620,19 +638,26 @@ class Pref_Feeds extends Handler_Protected {
 			print "<div class=\"dlgSec\">".__("Authentication")."</div>";
 			print "<div class=\"dlgSecCont\">";
 
+			print "<fieldset>";
+
 			print "<input dojoType=\"dijit.form.TextBox\" id=\"feedEditDlg_login\"
-			placeHolder=\"".__("Login")."\"
-			autocomplete=\"new-password\"
-			name=\"auth_login\" value=\"$auth_login\"><hr/>";
+				placeHolder=\"".__("Login")."\"
+				autocomplete=\"new-password\"
+				name=\"auth_login\" value=\"$auth_login\">";
+
+			print "</fieldset>";
+			print "<fieldset>";
 
 			print "<input dojoType=\"dijit.form.TextBox\" type=\"password\" name=\"auth_pass\"
-			autocomplete=\"new-password\"
-			placeHolder=\"".__("Password")."\"
-			value=\"$auth_pass\">";
+				autocomplete=\"new-password\"
+				placeHolder=\"".__("Password")."\"
+				value=\"$auth_pass\">";
 
 			print "<div dojoType=\"dijit.Tooltip\" connectId=\"feedEditDlg_login\" position=\"below\">
-			".__('<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds.')."
-			</div>";
+				".__('<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds.')."
+				</div>";
+
+			print "</fieldset>";
 
 			print "</div></div>";
 
@@ -656,8 +681,12 @@ class Pref_Feeds extends Handler_Protected {
 				$checked = "";
 			}
 
-			print "<input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" name=\"private\" id=\"private\"
-			$checked>&nbsp;<label for=\"private\">".__('Hide from Popular feeds')."</label>";
+			print "<fieldset class='narrow'>";
+
+			print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" name=\"private\" id=\"private\"
+				$checked> ".__('Hide from Popular feeds')."</label>";
+
+			print "</fieldset>";
 
 			$include_in_digest = $row["include_in_digest"];
 
@@ -667,10 +696,13 @@ class Pref_Feeds extends Handler_Protected {
 				$checked = "";
 			}
 
-			print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"include_in_digest\"
-			name=\"include_in_digest\"
-			$checked>&nbsp;<label for=\"include_in_digest\">".__('Include in e-mail digest')."</label>";
+			print "<fieldset class='narrow'>";
 
+			print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"include_in_digest\"
+				name=\"include_in_digest\"
+				$checked> ".__('Include in e-mail digest')."</label>";
+
+			print "</fieldset>";
 
 			$always_display_enclosures = $row["always_display_enclosures"];
 
@@ -680,9 +712,13 @@ class Pref_Feeds extends Handler_Protected {
 				$checked = "";
 			}
 
-			print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"always_display_enclosures\"
-			name=\"always_display_enclosures\"
-			$checked>&nbsp;<label for=\"always_display_enclosures\">".__('Always display image attachments')."</label>";
+			print "<fieldset class='narrow'>";
+
+			print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"always_display_enclosures\"
+				name=\"always_display_enclosures\"
+				$checked> ".__('Always display image attachments')."</label>";
+
+			print "</fieldset>";
 
 			$hide_images = $row["hide_images"];
 
@@ -692,10 +728,13 @@ class Pref_Feeds extends Handler_Protected {
 				$checked = "";
 			}
 
-			print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"hide_images\"
-		name=\"hide_images\"
-			$checked>&nbsp;<label for=\"hide_images\">".
-				__('Do not embed media')."</label>";
+			print "<fieldset class='narrow'>";
+
+			print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"hide_images\"
+				name=\"hide_images\"
+				$checked> ".__('Do not embed media')."</label>";
+
+			print "</fieldset>";
 
 			$cache_images = $row["cache_images"];
 
@@ -705,10 +744,13 @@ class Pref_Feeds extends Handler_Protected {
 				$checked = "";
 			}
 
-			print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"cache_images\"
-		name=\"cache_images\"
-			$checked>&nbsp;<label for=\"cache_images\">".
-				__('Cache media')."</label>";
+			print "<fieldset class='narrow'>";
+
+			print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"cache_images\"
+				name=\"cache_images\"
+				$checked> ". __('Cache media')."</label>";
+
+			print "</fieldset>";
 
 			$mark_unread_on_update = $row["mark_unread_on_update"];
 
@@ -718,9 +760,13 @@ class Pref_Feeds extends Handler_Protected {
 				$checked = "";
 			}
 
-			print "<hr/><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"mark_unread_on_update\"
-			name=\"mark_unread_on_update\"
-			$checked>&nbsp;<label for=\"mark_unread_on_update\">".__('Mark updated articles as unread')."</label>";
+			print "<fieldset class='narrow'>";
+
+			print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"mark_unread_on_update\"
+				name=\"mark_unread_on_update\"
+				$checked> ".__('Mark updated articles as unread')."</label>";
+
+			print "</fieldset>";
 
 			print "</div>";
 
@@ -756,7 +802,6 @@ class Pref_Feeds extends Handler_Protected {
 
 			PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_EDIT_FEED,
 				"hook_prefs_edit_feed", $feed_id);
-
 
 			print "</div></div>";
 
@@ -796,25 +841,30 @@ class Pref_Feeds extends Handler_Protected {
 
 		if (get_pref('ENABLE_FEED_CATS')) {
 
-			print __('Place in category:') . " ";
+			print "<fieldset>";
+
+			print "<label>" . __('Place in category:') . "</label> ";
 
 			print_feed_cat_select("cat_id", false,
 				'disabled="1" dojoType="dijit.form.Select"');
 
 			$this->batch_edit_cbox("cat_id");
 
+			print "</fieldset>";
 		}
 
 		/* FTS Stemming Language */
 
 		if (DB_TYPE == "pgsql") {
-			print "<hr/>";
+			print "<fieldset>";
 
-			print __('Language:') . " ";
+			print "<label>" . __('Language:') . "</label> ";
 			print_select("feed_language", "", $this::$feed_languages,
 				'disabled="1" dojoType="dijit.form.Select"');
 
 			$this->batch_edit_cbox("feed_language");
+
+			print "</fieldset>";
 		}
 
 		print "</div>";
@@ -824,28 +874,36 @@ class Pref_Feeds extends Handler_Protected {
 
 		/* Update Interval */
 
+		print "<fieldset>";
+
 		print_select_hash("update_interval", "", $update_intervals,
 			'disabled="1" dojoType="dijit.form.Select"');
 
 		$this->batch_edit_cbox("update_interval");
 
+		print "</fieldset>";
+
 		/* Purge intl */
 
 		if (FORCE_ARTICLE_PURGE == 0) {
 
-			print "<br/>";
+			print "<fieldset>";
 
-			print __('Article purging:') . " ";
+			print "<label>" . __('Article purging:') . "</label> ";
 
 			print_select_hash("purge_interval", "", $purge_intervals,
 				'disabled="1" dojoType="dijit.form.Select"');
 
 			$this->batch_edit_cbox("purge_interval");
+
+			print "</fieldset>";
 		}
 
 		print "</div>";
 		print "<div class=\"dlgSec\">".__("Authentication")."</div>";
 		print "<div class=\"dlgSecCont\">";
+
+		print "<fieldset>";
 
 		print "<input dojoType=\"dijit.form.TextBox\"
 			placeHolder=\"".__("Login")."\" disabled=\"1\"
@@ -854,60 +912,74 @@ class Pref_Feeds extends Handler_Protected {
 
 		$this->batch_edit_cbox("auth_login");
 
-		print "<hr/> <input dojoType=\"dijit.form.TextBox\" type=\"password\" name=\"auth_pass\"
+		print "</fieldset>";
+		print "<fieldset>";
+
+		print "<input dojoType=\"dijit.form.TextBox\" type=\"password\" name=\"auth_pass\"
 			autocomplete=\"new-password\"
 			placeHolder=\"".__("Password")."\" disabled=\"1\"
 			value=\"\">";
 
 		$this->batch_edit_cbox("auth_pass");
 
+		print "</fieldset>";
+
 		print "</div>";
 		print "<div class=\"dlgSec\">".__("Options")."</div>";
 		print "<div class=\"dlgSecCont\">";
 
-		print "<input disabled=\"1\" type=\"checkbox\" name=\"private\" id=\"private\"
-			dojoType=\"dijit.form.CheckBox\">&nbsp;<label id=\"private_l\" class='insensitive' for=\"private\">".__('Hide from Popular feeds')."</label>";
+		print "<fieldset class='narrow'>";
+		print "<label class='checkbox'><input disabled=\"1\" type=\"checkbox\" name=\"private\" id=\"private\"
+			dojoType=\"dijit.form.CheckBox\">&nbsp;".__('Hide from Popular feeds')."</label>";
 
 		print "&nbsp;"; $this->batch_edit_cbox("private", "private_l");
 
-		print "<br/><input disabled=\"1\" type=\"checkbox\" id=\"include_in_digest\"
+		print "</fieldset><fieldset class='narrow'>";
+
+		print "<label class='checkbox'><input disabled=\"1\" type=\"checkbox\" id=\"include_in_digest\"
 			name=\"include_in_digest\"
-			dojoType=\"dijit.form.CheckBox\">&nbsp;<label id=\"include_in_digest_l\" class='insensitive' for=\"include_in_digest\">".__('Include in e-mail digest')."</label>";
+			dojoType=\"dijit.form.CheckBox\">&nbsp;".__('Include in e-mail digest')."</label>";
 
 		print "&nbsp;"; $this->batch_edit_cbox("include_in_digest", "include_in_digest_l");
 
-		print "<br/><input disabled=\"1\" type=\"checkbox\" id=\"always_display_enclosures\"
+		print "</fieldset><fieldset class='narrow'>";
+
+		print "<label class='checkbox'><input disabled=\"1\" type=\"checkbox\" id=\"always_display_enclosures\"
 			name=\"always_display_enclosures\"
-			dojoType=\"dijit.form.CheckBox\">&nbsp;<label id=\"always_display_enclosures_l\" class='insensitive' for=\"always_display_enclosures\">".__('Always display image attachments')."</label>";
+			dojoType=\"dijit.form.CheckBox\">&nbsp;".__('Always display image attachments')."</label>";
 
 		print "&nbsp;"; $this->batch_edit_cbox("always_display_enclosures", "always_display_enclosures_l");
 
-		print "<br/><input disabled=\"1\" type=\"checkbox\" id=\"hide_images\"
+		print "</fieldset><fieldset class='narrow'>";
+
+		print "<label class='checkbox'><input disabled=\"1\" type=\"checkbox\" id=\"hide_images\"
 			name=\"hide_images\"
-			dojoType=\"dijit.form.CheckBox\">&nbsp;<label class='insensitive' id=\"hide_images_l\"
-			for=\"hide_images\">".
-		__('Do not embed media')."</label>";
+			dojoType=\"dijit.form.CheckBox\">&nbsp;". __('Do not embed media')."</label>";
 
 		print "&nbsp;"; $this->batch_edit_cbox("hide_images", "hide_images_l");
 
-		print "<br/><input disabled=\"1\" type=\"checkbox\" id=\"cache_images\"
+		print "</fieldset><fieldset class='narrow'>";
+
+		print "<label class='checkbox'><input disabled=\"1\" type=\"checkbox\" id=\"cache_images\"
 			name=\"cache_images\"
-			dojoType=\"dijit.form.CheckBox\">&nbsp;<label class='insensitive' id=\"cache_images_l\"
-			for=\"cache_images\">".
-		__('Cache media')."</label>";
+			dojoType=\"dijit.form.CheckBox\">&nbsp;".__('Cache media')."</label>";
 
 		print "&nbsp;"; $this->batch_edit_cbox("cache_images", "cache_images_l");
 
-		print "<br/><input disabled=\"1\" type=\"checkbox\" id=\"mark_unread_on_update\"
+		print "</fieldset><fieldset class='narrow'>";
+
+		print "<label class='checkbox'><input disabled=\"1\" type=\"checkbox\" id=\"mark_unread_on_update\"
 			name=\"mark_unread_on_update\"
-			dojoType=\"dijit.form.CheckBox\">&nbsp;<label id=\"mark_unread_on_update_l\" class='insensitive' for=\"mark_unread_on_update\">".__('Mark updated articles as unread')."</label>";
+			dojoType=\"dijit.form.CheckBox\">&nbsp;".__('Mark updated articles as unread')."</label>";
 
 		print "&nbsp;"; $this->batch_edit_cbox("mark_unread_on_update", "mark_unread_on_update_l");
+
+		print "</fieldset>";
 
 		print "</div>";
 
 		print "<div class='dlgButtons'>
-			<button dojoType=\"dijit.form.Button\"
+			<button dojoType=\"dijit.form.Button\" type='submit' class='alt-primary'
 				onclick=\"return dijit.byId('feedEditDlg').execute()\">".
 				__('Save')."</button>
 			<button dojoType=\"dijit.form.Button\"

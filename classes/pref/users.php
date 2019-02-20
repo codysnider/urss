@@ -61,6 +61,8 @@ class Pref_Users extends Handler_Protected {
 				print "<div class=\"dlgSec\">".__("Authentication")."</div>";
 				print "<div class=\"dlgSecCont\">";
 
+				print "<fieldset>";
+
 				print __('Access level: ') . " ";
 
 				if (!$sel_disabled) {
@@ -72,10 +74,13 @@ class Pref_Users extends Handler_Protected {
 					print_hidden("access_level", "$access_level");
 				}
 
-				print "<hr/>";
+				print "</fieldset>";
+				print "<fieldset>";
 
 				print "<input dojoType=\"dijit.form.TextBox\" type=\"password\" size=\"20\" placeholder=\"Change password\"
-				name=\"password\">";
+					name=\"password\">";
+
+				print "</fieldset>";
 
 				print "</div>";
 

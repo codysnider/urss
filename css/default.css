@@ -422,41 +422,44 @@ body.ttrss_main div#headlines-frame.wide .title {
 body.ttrss_main div#headlines-frame.wide .hl .feed {
   display: none;
 }
-body.ttrss_main div.dlgSec {
-  font-size: 14px;
-  font-weight: bold;
-  clear: both;
-  margin: 8px;
-  position: relative;
-  top: 8px;
+body.ttrss_main .dijitDialog .dlgSec,
+body.ttrss_main .dijitDialog .dlgSecHoriz {
+  font-size: 16px;
+  font-weight: 600;
+  color: #555;
+  font-family: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-body.ttrss_main div.dlgSecHoriz {
-  font-size: 14px;
-  font-weight: bold;
-  clear: both;
-  margin-bottom: 8px;
-  margin-top: 8px;
+body.ttrss_main .dijitDialog .dlgSecCont {
+  margin: 10px 20px;
 }
-body.ttrss_main div.dlgSecCont {
-  position: relative;
-  left: 150px;
-  top: -20px;
-  float: left;
+body.ttrss_main .dijitDialog div.dlgSecCont fieldset > label,
+body.ttrss_main .dijitDialog div.dlgSecSimple fieldset > label {
+  font-weight: bold;
+  margin-right: 10px;
+  display: inline-block;
+  min-width: 140px;
+  text-align: right;
+}
+body.ttrss_main .dijitDialog div.dlgSecCont fieldset > label.checkbox,
+body.ttrss_main .dijitDialog div.dlgSecSimple fieldset > label.checkbox {
   font-weight: normal;
+  display: inline;
 }
-body.ttrss_main div.dlgSecCont > * {
-  position: relative;
-  top: -2px;
+body.ttrss_main .dijitDialog div.dlgSecCont fieldset,
+body.ttrss_main .dijitDialog div.dlgSecSimple fieldset {
+  border-width: 0px;
+  padding: 5px 0px;
 }
-body.ttrss_main div.dlgSecCont hr,
-body.ttrss_main div.dlgSecSimple hr {
-  height: 0px;
-  line-height: 0px;
-  border: 0px solid transparent;
-  margin: 2px;
+body.ttrss_main .dijitDialog div.dlgSecCont fieldset.narrow,
+body.ttrss_main .dijitDialog div.dlgSecSimple fieldset.narrow {
+  padding: 2px 0px;
+}
+body.ttrss_main .dijitDialog div.dlgSecCont fieldset.align-right,
+body.ttrss_main .dijitDialog div.dlgSecSimple fieldset.align-right {
+  text-align: right;
 }
 body.ttrss_main .dijitDialog .dlgButtons {
-  margin-top: 4px;
+  margin-top: 5px;
   text-align: right;
   clear: both;
 }
@@ -1510,7 +1513,7 @@ body.ttrss_utility .content fieldset.align-right {
   text-align: right;
 }
 body.ttrss_utility .content fieldset > label:first-of-type {
-  width: 140px;
+  min-width: 140px;
   margin-right: 20px;
   display: inline-block;
   text-align: right;

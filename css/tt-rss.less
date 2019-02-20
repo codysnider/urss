@@ -487,47 +487,52 @@ body.ttrss_main {
 		}
 	}
 
-
-	div.dlgSec {
-		font-size : 14px;
-		font-weight : bold;
-		clear : both;
-		margin : 8px;
-		position : relative;
-		top : 8px;
-	}
-
-	div.dlgSecHoriz {
-		font-size : 14px;
-		font-weight : bold;
-		clear : both;
-		margin-bottom : 8px;
-		margin-top : 8px;
-	}
-
-	div.dlgSecCont {
-		position : relative;
-		left : 150px;
-		top : -20px;
-		float : left;
-		font-weight : normal;
-
-		> * {
-			position : relative;
-			top : -2px;
-		}
-	}
-
-	div.dlgSecCont hr, div.dlgSecSimple hr {
-		height : 0px;
-		line-height : 0px;
-		border : 0px solid transparent;
-		margin : 2px;
-	}
-
 	.dijitDialog {
+
+		.dlgSec, .dlgSecHoriz {
+			font-size : 16px;
+			font-weight : 600;
+			color : @default-text;
+			font-family: @fonts-ui-bold;
+		}
+
+		.dlgSecCont {
+			margin : 10px 20px;
+		}
+
+		div.dlgSecCont, div.dlgSecSimple {
+
+			fieldset {
+				> label {
+					font-weight : bold;
+					margin-right : 10px;
+					display : inline-block;
+					min-width : 140px;
+					text-align : right;
+				}
+
+				> label.checkbox {
+					font-weight : normal;
+					display : inline;
+				}
+			}
+
+			fieldset {
+				border-width : 0px;
+				padding : 5px 0px;
+			}
+
+			fieldset.narrow {
+				padding : 2px 0px;
+			}
+
+			fieldset.align-right {
+				text-align : right;
+			}
+		}
+
 		.dlgButtons {
-			margin-top : 4px;
+			margin-top : 5px;
 			text-align: right;
 			clear: both;
 		}

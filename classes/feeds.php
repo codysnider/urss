@@ -652,45 +652,55 @@ class Feeds extends Handler_Protected {
 			<img style='display : none'
 				id='feed_add_spinner' src='images/indicator_white.gif'></div>";
 
-		print "<input style=\"font-size : 16px; width : 20em;\"
+		print "<fieldset>";
+
+		print "<input style=\"font-size : 16px; width : 400px;\"
 			placeHolder=\"".__("Feed or site URL")."\"
 			dojoType=\"dijit.form.ValidationTextBox\" required=\"1\" name=\"feed\" id=\"feedDlg_feedUrl\">";
 
-		print "<hr/>";
+		print "</fieldset>";
+
+		print "<fieldset>";
 
 		if (get_pref('ENABLE_FEED_CATS')) {
-			print __('Place in category:') . " ";
+			print "<label>" . __('Place in category:') . "</label> ";
 			print_feed_cat_select("cat", false, 'dojoType="dijit.form.Select"');
 		}
+
+		print "</fieldset>";
 
 		print "</div>";
 
 		print '<div id="feedDlg_feedsContainer" style="display : none">
 
 				<div class="dlgSec">' . __('Available feeds') . '</div>
-				<div class="dlgSecCont">'.
-				'<select id="feedDlg_feedContainerSelect"
-					dojoType="dijit.form.Select" size="3">
-					<script type="dojo/method" event="onChange" args="value">
-						dijit.byId("feedDlg_feedUrl").attr("value", value);
-					</script>
-				</select>'.
-				'</div></div>';
+				<div class="dlgSecCont">
+					<fieldset>
+						<select id="feedDlg_feedContainerSelect"
+							dojoType="dijit.form.Select" size="3">
+							<script type="dojo/method" event="onChange" args="value">
+								dijit.byId("feedDlg_feedUrl").attr("value", value);
+							</script>
+						</select>
+					</fieldset>
+				</div></div>';
 
 		print "<div id='feedDlg_loginContainer' style='display : none'>
 
 				<div class=\"dlgSec\">".__("Authentication")."</div>
-				<div class=\"dlgSecCont\">".
-
-				" <input dojoType=\"dijit.form.TextBox\" name='login'\"
-					placeHolder=\"".__("Login")."\"
-					autocomplete=\"new-password\"
-					style=\"width : 10em;\"> ".
-				" <input
-					placeHolder=\"".__("Password")."\"
-					dojoType=\"dijit.form.TextBox\" type='password'
-					autocomplete=\"new-password\"
-					style=\"width : 10em;\" name='pass'\">
+				<div class=\"dlgSecCont\">
+				<fieldset>
+					<input dojoType=\"dijit.form.TextBox\" name='login'\"
+						placeHolder=\"".__("Login")."\"
+						autocomplete=\"new-password\"
+						style=\"width : 10em;\">
+				</fieldset><fieldset>						
+					<input
+						placeHolder=\"".__("Password")."\"
+						dojoType=\"dijit.form.TextBox\" type='password'
+						autocomplete=\"new-password\"
+						style=\"width : 10em;\" name='pass'\">
+				</fieldset>
 			</div></div>";
 
 
