@@ -1475,6 +1475,32 @@ body.ttrss_prefs .phpinfo td.e {
 body.ttrss_prefs .phpinfo td.v {
   font-family: monospace;
 }
+body.ttrss_prefs fieldset,
+body.ttrss_utility fieldset {
+  border-width: 0px;
+  padding: 5px 0px;
+}
+body.ttrss_prefs fieldset.narrow,
+body.ttrss_utility fieldset.narrow {
+  padding: 2px 0px;
+}
+body.ttrss_prefs fieldset.align-right,
+body.ttrss_utility fieldset.align-right {
+  text-align: right;
+}
+body.ttrss_prefs fieldset > label:first-of-type,
+body.ttrss_utility fieldset > label:first-of-type {
+  min-width: 140px;
+  margin-right: 20px;
+  display: inline-block;
+  text-align: right;
+  font-weight: bold;
+}
+body.ttrss_prefs fieldset > label.checkbox,
+body.ttrss_utility fieldset > label.checkbox {
+  display: inline;
+  font-weight: normal;
+}
 body.ttrss_utility.sanity_failed {
   background: #900;
 }
@@ -1505,27 +1531,6 @@ body.ttrss_utility .content h2 {
 }
 body.ttrss_utility .content h3 {
   font-size: 16px;
-}
-body.ttrss_utility .content fieldset {
-  border-width: 0px;
-  padding: 5px 0px;
-}
-body.ttrss_utility .content fieldset.narrow {
-  padding: 2px 0px;
-}
-body.ttrss_utility .content fieldset.align-right {
-  text-align: right;
-}
-body.ttrss_utility .content fieldset > label:first-of-type {
-  min-width: 140px;
-  margin-right: 20px;
-  display: inline-block;
-  text-align: right;
-  font-weight: bold;
-}
-body.ttrss_utility .content fieldset > label.checkbox {
-  display: inline;
-  font-weight: normal;
 }
 body.ttrss_utility a {
   color: #b87d2c;

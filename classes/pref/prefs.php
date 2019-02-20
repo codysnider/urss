@@ -178,13 +178,16 @@ class Pref_Prefs extends Handler_Protected {
 
 		$_SESSION["prefs_op_result"] = "";
 
-		print "<div dojoType=\"dijit.layout.AccordionContainer\" region=\"center\">";
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType='dijit.layout.AccordionContainer' region='center'>";
+		print "<div dojoType='dijit.layout.AccordionPane' 
 			title=\"<i class='material-icons'>person</i> ".__('Personal data / Authentication')."\">";
 
-		print "<form dojoType=\"dijit.form.Form\" id=\"changeUserdataForm\">";
+		print "<div dojoType='dijit.layout.TabContainer'>";
+		print "<div dojoType='dijit.layout.ContentPane' title=\"".__('Personal data')."\">";
 
-		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
+		print "<form dojoType='dijit.form.Form' id='changeUserdataForm'>";
+
+		print "<script type='dojo/method' event='onSubmit' args='evt'>
 		evt.preventDefault();
 		if (this.validate()) {
 			Notify.progress('Saving data...', true);
@@ -198,10 +201,6 @@ class Pref_Prefs extends Handler_Protected {
 		}
 		</script>";
 
-		print "<table width=\"100%\" class=\"prefPrefsList\">";
-
-		print "<h2>" . __("Personal data") . "</h2>";
-
 		$sth = $this->pdo->prepare("SELECT email,full_name,otp_enabled,
 			access_level FROM ttrss_users
 			WHERE id = ?");
@@ -212,29 +211,37 @@ class Pref_Prefs extends Handler_Protected {
 		$full_name = htmlspecialchars($row["full_name"]);
 		$otp_enabled = sql_bool_to_bool($row["otp_enabled"]);
 
-		print "<tr><td width=\"40%\">".__('Full name')."</td>";
-		print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" name=\"full_name\" required=\"1\"
-			value=\"$full_name\"></td></tr>";
+		print "<fieldset>";
+		print "<label>".__('Full name:')."</label>";
+		print "<input dojoType='dijit.form.ValidationTextBox' name='full_name' required='1' value='$full_name'>";
+		print "</fieldset>";
 
-		print "<tr><td width=\"40%\">".__('E-mail')."</td>";
-		print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" name=\"email\" required=\"1\" value=\"$email\"></td></tr>";
+		print "<fieldset>";
+		print "<label>".__('E-mail:')."</label>";
+		print "<input dojoType='dijit.form.ValidationTextBox' name='email' required='1' value='$email'>";
+		print "</fieldset>";
 
 		if (!SINGLE_USER_MODE && !$_SESSION["hide_hello"]) {
 
 			$access_level = $row["access_level"];
-			print "<tr><td width=\"40%\">".__('Access level')."</td>";
-			print "<td>" . $access_level_names[$access_level] . "</td></tr>";
+			print "<fieldset>";
+			print "<label>".__('Access level:')."</label>";
+			print $access_level_names[$access_level];
+			print "</fieldset>";
 		}
-
-		print "</table>";
 
 		print_hidden("op", "pref-prefs");
 		print_hidden("method", "changeemail");
 
-		print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"alt-primary\">".
+		print "<hr/>";
+
+		print "<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".
 			__("Save data")."</button>";
 
 		print "</form>";
+
+		print "</div>"; # content pane
+		print "<div dojoType='dijit.layout.ContentPane' title=\"".__('Password')."\">";
 
 		if ($_SESSION["auth_module"]) {
 			$authenticator = PluginHost::getInstance()->get_plugin($_SESSION["auth_module"]);
@@ -244,13 +251,11 @@ class Pref_Prefs extends Handler_Protected {
 
 		if ($authenticator && method_exists($authenticator, "change_password")) {
 
-			print "<h2>" . __("Password") . "</h2>";
-
 			print "<div style='display : none' id='pwd_change_infobox'></div>";
 
-			print "<form dojoType=\"dijit.form.Form\">";
+			print "<form dojoType='dijit.form.Form'>";
 
-			print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
+			print "<script type='dojo/method' event='onSubmit' args='evt'>
 			evt.preventDefault();
 			if (this.validate()) {
 				Notify.progress('Changing password...', true);
@@ -283,92 +288,91 @@ class Pref_Prefs extends Handler_Protected {
 				print_notice(__("Changing your current password will disable OTP."));
 			}
 
-			print "<table width=\"100%\" class=\"prefPrefsList\">";
+			print "<fieldset>";
+			print "<label>".__("Old password:")."</label>";
+			print "<input dojoType='dijit.form.ValidationTextBox' type='password' required='1' name='old_password'>";
+			print "</fieldset>";
 
-			print "<tr><td width=\"40%\">".__("Old password")."</td>";
-			print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" type=\"password\" required=\"1\" name=\"old_password\"></td></tr>";
+			print "<fieldset>";
+			print "<label>".__("New password:")."</label>";
+			print "<input dojoType='dijit.form.ValidationTextBox' type='password' required='1' name='new_password'>";
+			print "</fieldset>";
 
-			print "<tr><td width=\"40%\">".__("New password")."</td>";
-
-			print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" type=\"password\" required=\"1\"
-				name=\"new_password\"></td></tr>";
-
-			print "<tr><td width=\"40%\">".__("Confirm password")."</td>";
-
-			print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" type=\"password\" required=\"1\" name=\"confirm_password\"></td></tr>";
-
-			print "</table>";
+			print "<fieldset>";
+			print "<label>".__("Confirm password:")."</label>";
+			print "<input dojoType='dijit.form.ValidationTextBox' type='password' required='1' name='confirm_password'>";
+			print "</fieldset>";
 
 			print_hidden("op", "pref-prefs");
 			print_hidden("method", "changepassword");
 
-			print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"alt-primary\">".
+			print "<hr/>";
+
+			print "<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".
 				__("Change password")."</button>";
 
 			print "</form>";
 
-			if ($_SESSION["auth_module"] == "auth_internal") {
+			print "</div>"; # content pane
+			print "<div dojoType='dijit.layout.ContentPane' title=\"".__('One time passwords / Authenticator')."\">";
 
-				print "<h2>" . __("One time passwords / Authenticator") . "</h2>";
+			if ($_SESSION["auth_module"] == "auth_internal") {
 
 				if ($otp_enabled) {
 
-					print_notice(__("One time passwords are currently enabled. Enter your current password below to disable."));
+					print_warning("One time passwords are currently enabled. Enter your current password below to disable.");
 
-					print "<form dojoType=\"dijit.form.Form\">";
+					print "<form dojoType='dijit.form.Form'>";
 
-				print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
-				evt.preventDefault();
-				if (this.validate()) {
-					Notify.progress('Disabling OTP', true);
+					print "<script type='dojo/method' event='onSubmit' args='evt'>
+					evt.preventDefault();
+					if (this.validate()) {
+						Notify.progress('Disabling OTP', true);
+	
+						new Ajax.Request('backend.php', {
+							parameters: dojo.objectToQuery(this.getValues()),
+							onComplete: function(transport) {
+								Notify.close();
+								if (transport.responseText.indexOf('ERROR: ') == 0) {
+									Notify.error(transport.responseText.replace('ERROR: ', ''));
+								} else {
+									window.location.reload();
+								}
+						}});
+						this.reset();
+					}
+					</script>";
 
-					new Ajax.Request('backend.php', {
-						parameters: dojo.objectToQuery(this.getValues()),
-						onComplete: function(transport) {
-							Notify.close();
-							if (transport.responseText.indexOf('ERROR: ') == 0) {
-								Notify.error(transport.responseText.replace('ERROR: ', ''));
-							} else {
-								window.location.reload();
-							}
-					}});
-					this.reset();
-				}
-				</script>";
+					print "<fieldset>";
+					print "<label>".__("Your password:")."</label>";
+					print "<input dojoType='dijit.form.ValidationTextBox' type='password' required='1' name='password'>";
+					print "</fieldset>";
 
-				print "<table width=\"100%\" class=\"prefPrefsList\">";
+					print_hidden("op", "pref-prefs");
+					print_hidden("method", "otpdisable");
 
-				print "<tr><td width=\"40%\">".__("Enter your password")."</td>";
+					print "<hr/>";
 
-				print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" type=\"password\" required=\"1\"
-					name=\"password\"></td></tr>";
+					print "<button dojoType='dijit.form.Button' type='submit'>".
+						__("Disable OTP")."</button>";
 
-				print "</table>";
-
-				print_hidden("op", "pref-prefs");
-				print_hidden("method", "otpdisable");
-
-				print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".
-					__("Disable OTP")."</button>";
-
-				print "</form>";
+					print "</form>";
 
 				} else if (function_exists("imagecreatefromstring")) {
 
-					print "<p>" . __("You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP.") . "</p>";
-
-					print "<p>".__("Scan the following code by the Authenticator application:")."</p>";
+					print_warning("You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP.");
+					print_notice("Scan the following code by the Authenticator application:");
 
 					$csrf_token = $_SESSION["csrf_token"];
 
-					print "<img src=\"backend.php?op=pref-prefs&method=otpqrcode&csrf_token=$csrf_token\">";
+					print "<img alt='otp qr-code' src='backend.php?op=pref-prefs&method=otpqrcode&csrf_token=$csrf_token'>";
 
-					print "<form dojoType=\"dijit.form.Form\" id=\"changeOtpForm\">";
+					print "<form dojoType='dijit.form.Form' id='changeOtpForm'>";
 
 					print_hidden("op", "pref-prefs");
 					print_hidden("method", "otpenable");
 
-					print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
+					print "<script type='dojo/method' event='onSubmit' args='evt'>
 					evt.preventDefault();
 					if (this.validate()) {
 						Notify.progress('Saving data...', true);
@@ -387,38 +391,32 @@ class Pref_Prefs extends Handler_Protected {
 					}
 					</script>";
 
-					print "<table width=\"100%\" class=\"prefPrefsList\">";
+					print "<fieldset>";
+					print "<label>".__("Your password:")."</label>";
+					print "<input dojoType='dijit.form.ValidationTextBox' type='password' required='1'
+						name='password'>";
+					print "</fieldset>";
 
-					print "<tr><td width=\"40%\">".__("Enter your password")."</td>";
+					print "<fieldset>";
+					print "<label>".__("One time password:")."</label>";
+					print "<input dojoType='dijit.form.ValidationTextBox' autocomplete='off'
+						required='1' name='otp'>";
+					print "</fieldset>";
 
-					print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" type=\"password\" required=\"1\"
-						name=\"password\"></td></tr>";
-
-					print "<tr><td width=\"40%\">".__("Enter the generated one time password")."</td>";
-
-					print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" autocomplete=\"off\"
-						required=\"1\"
-						name=\"otp\"></td></tr>";
-
-					print "<tr><td colspan=\"2\">";
-
-					print "</td></tr><tr><td colspan=\"2\">";
-
-					print "</td></tr>";
-					print "</table>";
-
-					print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"alt-primary\">".
+					print "<hr/>";
+					print "<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".
 						__("Enable OTP")."</button>";
 
 					print "</form>";
 
 				} else {
-
-					print_notice(__("PHP GD functions are required for OTP support."));
-
+					print_notice("PHP GD functions are required for OTP support.");
 				}
-
 			}
+
+			print "</div>"; # content pane
+			print "</div>"; # tab container
+
 		}
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB_SECTION,
@@ -426,12 +424,12 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "</div>"; #pane
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" selected=\"true\" 
+		print "<div dojoType='dijit.layout.AccordionPane' selected='true' 
 			title=\"<i class='material-icons'>settings</i> ".__('Preferences')."\">";
 
-		print "<form dojoType=\"dijit.form.Form\" id=\"changeSettingsForm\">";
+		print "<form dojoType='dijit.form.Form' id='changeSettingsForm'>";
 
-		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt, quit\">
+		print "<script type='dojo/method' event='onSubmit' args='evt, quit'>
 		if (evt) evt.preventDefault();
 		if (this.validate()) {
 			console.log(dojo.objectToQuery(this.getValues()));
