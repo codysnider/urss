@@ -466,7 +466,7 @@
 			<?php if (is_writable("..")) { ?>
 				<p>We can also try saving the file automatically now.</p>
 
-				<p><input type="submit" value="Save configuration"></p>
+				<p><button type="submit" dojoType='dijit.form.Button' class='alt-primary'>Save configuration</button></p>
 				</form>
 			<?php } else {
 				print_error("Unfortunately, parent directory is not writable, so we're unable to save config.php automatically.");
