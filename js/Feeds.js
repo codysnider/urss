@@ -212,7 +212,7 @@ define(["dojo/_base/declare"], function (declare) {
 				const dialog = new dijit.Dialog({
 					title: __("Your password is at default value"),
 					href: "backend.php?op=dlg&method=defaultpasswordwarning",
-					id: 'infoBox',
+					id: 'defaultPasswordDlg',
 					style: "width: 600px",
 					onCancel: function () {
 						return true;
