@@ -1713,48 +1713,42 @@ class Pref_Feeds extends Handler_Protected {
 		print_hidden("op", "pref-feeds");
 		print_hidden("method", "batchaddfeeds");
 
-		print "<table width='100%'><tr><td>
-			".__("Add one valid RSS feed per line (no feed detection is done)")."
-		</td><td align='right'>";
-		if (get_pref('ENABLE_FEED_CATS')) {
-			print __('Place in category:') . " ";
-			print_feed_cat_select("cat", false, 'dojoType="dijit.form.Select"');
-		}
-		print "</td></tr><tr><td colspan='2'>";
+		print "<div class='dlgSecHoriz'>".__("One valid feed per line (no detection is done)")."</div>";
+
+		print "<div class='dlgSecCont'>";
+
 		print "<textarea
 			style='font-size : 12px; width : 98%; height: 200px;'
-			placeHolder=\"".__("Feeds to subscribe, One per line")."\"
-			dojoType=\"dijit.form.SimpleTextarea\" required=\"1\" name=\"feeds\"></textarea>";
+			dojoType='dijit.form.SimpleTextarea' name='feeds'></textarea>";
 
-		print "</td></tr><tr><td colspan='2'>";
+		if (get_pref('ENABLE_FEED_CATS')) {
+			print "<fieldset>";
+			print "<label>" . __('Place in category:') . "</label> ";
+			print_feed_cat_select("cat", false, 'dojoType="dijit.form.Select"');
+			print "</fieldset>";
+		}
 
-		print "<div id='feedDlg_loginContainer' style='display : none'>
-				" .
-				" <input dojoType=\"dijit.form.TextBox\" name='login'\"
-					placeHolder=\"".__("Login")."\"
-					style=\"width : 10em;\"> ".
-				" <input
-					placeHolder=\"".__("Password")."\"
-					dojoType=\"dijit.form.TextBox\" type='password'
-					autocomplete=\"new-password\"
-					style=\"width : 10em;\" name='pass'\">".
-				"</div>";
+		print "<div id='feedDlg_loginContainer' style='display : none'>";
 
-		print "</td></tr><tr><td colspan='2'>";
+		print "<div class='dlgSec'>" . __("Authentication") . "</div>";
+		print "<div class='dlgSecCont'>";
 
-		print "<div style=\"clear : both\">
-			<input type=\"checkbox\" name=\"need_auth\" dojoType=\"dijit.form.CheckBox\" id=\"feedDlg_loginCheck\"
-					onclick='displayIfChecked(this, \"feedDlg_loginContainer\")'>
-				<label for=\"feedDlg_loginCheck\">".
-				__('Feeds require authentication.')."</div>";
+		print "<input dojoType='dijit.form.TextBox' name='login' placeHolder=\"".__("Login")."\">
+			<input placeHolder=\"".__("Password")."\" dojoType=\"dijit.form.TextBox\" type='password'
+				autocomplete='new-password' name='pass''></div>";
 
-		print "</form>";
+		print "</div>";
+		print "</div>";
 
-		print "</td></tr></table>";
+		print "<fieldset class='narrow'>
+			<label class='checkbox'><input type='checkbox' name='need_auth' dojoType='dijit.form.CheckBox'
+					onclick='displayIfChecked(this, \"feedDlg_loginContainer\")'> ".
+				__('Feeds require authentication.')."</label></div>";
+		print "</fieldset>";
 
-		print "<div class=\"dlgButtons\">
-			<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('batchSubDlg').execute()\">".__('Subscribe')."</button>
-			<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('batchSubDlg').hide()\">".__('Cancel')."</button>
+		print "<div class='dlgButtons'>
+			<button dojoType='dijit.form.Button' type='submit' class='alt-primary' onclick=\"return dijit.byId('batchSubDlg').execute()\">".__('Subscribe')."</button>
+			<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('batchSubDlg').hide()\">".__('Cancel')."</button>
 			</div>";
 	}
 
