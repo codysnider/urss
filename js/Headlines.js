@@ -275,20 +275,6 @@ define(["dojo/_base/declare"], function (declare) {
 							break;
 						}
 					}
-
-					if (Feeds.infscroll_disabled) {
-						const row = $$("#headlines-frame div[id*=RROW]").last();
-
-						if (row && $("headlines-frame").scrollTop >
-							(row.offsetTop + row.offsetHeight - 50)) {
-
-							console.log("we seem to be at an end");
-
-							if (App.getInitParam("on_catchup_show_next_feed") == "1") {
-								Feeds.openNextUnread();
-							}
-						}
-					}
 				}
 			} catch (e) {
 				console.warn("scrollHandler", e);
