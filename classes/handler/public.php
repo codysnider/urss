@@ -844,9 +844,7 @@ class Handler_Public extends Handler {
 				}
 			}
 
-			print "<form method='get' action='index.php'>
-					<button type='submit' dojoType='dijit.form.Button'>".__("Return to Tiny Tiny RSS")."</button>
-				</form>";
+			print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
 
 			print "</div></div></body></html>";
 
@@ -935,11 +933,7 @@ class Handler_Public extends Handler {
 				print_error("Some of the information provided is missing or incorrect.");
 			}
 
-			print "<hr/>";
-
-			print "<form method='GET' action='index.php'>
-				<button type='submit' class='alt-primary' dojoType='dijit.form.Button'>".__("Return to Tiny Tiny RSS")."</button>
-				</form>";
+			print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
 
 		} else if (!$method) {
 			print_notice(__("You will need to provide valid account name and email. Password reset link will be sent to your email address."));
@@ -988,6 +982,10 @@ class Handler_Public extends Handler {
 					</form>";
 
 			} else {
+
+				// prevent submitting this form multiple times
+				$_SESSION["pwdreset:testvalue1"] = rand(1, 1000);
+				$_SESSION["pwdreset:testvalue2"] = rand(1, 1000);
 
 				$sth = $this->pdo->prepare("SELECT id FROM ttrss_users
 					WHERE login = ? AND email = ?");
@@ -1041,9 +1039,7 @@ class Handler_Public extends Handler {
 						print_error("User ID not found.");
 					}
 
-					print "<form method='GET' action='index.php'>
-						<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".__("Return to Tiny Tiny RSS")."</button>
-					</form>";
+					print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
 
 				} else {
 					print_error(__("Sorry, login and email combination not found."));
@@ -1136,9 +1132,7 @@ class Handler_Public extends Handler {
 
 								print_warning("One of the updates failed. Either retry the process or perform updates manually.");
 
-								print "<form method='GET' action='index.php'>
-									<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".__("Return to Tiny Tiny RSS")."</button>
-								</form>";
+								print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
 
 								return;
 							} else {
@@ -1150,16 +1144,12 @@ class Handler_Public extends Handler {
 
 						print_notice("Your Tiny Tiny RSS database is now updated to the latest version.");
 
-						print "<form method='GET' action='index.php'>
-									<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".__("Return to Tiny Tiny RSS")."</button>
-								</form>";
+						print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
 
 					} else {
 						print_notice("Tiny Tiny RSS database is up to date.");
 
-						print "<form method='GET' action='index.php'>
-							<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".__("Return to Tiny Tiny RSS")."</button>
-						</form>";
+						print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
 					}
 				} else {
 					if ($updater->isUpdateRequired()) {
@@ -1182,9 +1172,7 @@ class Handler_Public extends Handler {
 
 						print_notice("Tiny Tiny RSS database is up to date.");
 
-						print "<form method='GET' action='index.php'>
-							<button dojoType='dijit.form.Button' class='alt-primary' type='submit'>".__("Return to Tiny Tiny RSS")."</button>
-						</form>";
+						print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
 					}
 				}
 			?>
