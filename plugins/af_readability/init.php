@@ -176,9 +176,9 @@ class Af_Readability extends Plugin {
 				$tmp = $tmpdoc->saveHTML();
 			}
 
-			$r = new Readability(new Configuration());
-
 			try {
+				$r = new Readability(new Configuration());
+
 				if ($r->parse($tmp)) {
 
 					$tmpxpath = new DOMXPath($r->getDOMDOcument());
