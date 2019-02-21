@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-20 15:53+0300\n"
+"POT-Creation-Date: 2019-02-21 12:37+0300\n"
 "Last-Translator: Brendan <brendan@tucows.com>\n"
 "Language-Team: OpenSRS brendan@tucows.com>\n"
 "Language: da_DK\n"
@@ -349,7 +349,7 @@ msgstr "Log af"
 #: prefs.php:33
 #: prefs.php:130
 #: include/functions.php:1201
-#: classes/pref/prefs.php:430
+#: classes/pref/prefs.php:428
 msgid "Preferences"
 msgstr "Præferencer"
 
@@ -792,7 +792,7 @@ msgstr "Profil:"
 
 #: include/login_form.php:103
 #: classes/handler/public.php:280
-#: classes/pref/prefs.php:1050
+#: classes/pref/prefs.php:1030
 #: classes/rpc.php:69
 msgid "Default profile"
 msgstr "Standardprofil"
@@ -844,7 +844,7 @@ msgstr ""
 #: classes/pref/feeds.php:830
 #: classes/pref/feeds.php:997
 #: classes/pref/filters.php:511
-#: classes/pref/prefs.php:1001
+#: classes/pref/prefs.php:981
 #: plugins/nsfw/init.php:86
 #: plugins/note/init.php:56
 #: plugins/af_readability/init.php:81
@@ -866,7 +866,7 @@ msgstr "Gem"
 #: classes/pref/filters.php:950
 #: classes/pref/filters.php:1028
 #: classes/pref/filters.php:1121
-#: classes/pref/prefs.php:1003
+#: classes/pref/prefs.php:983
 #: classes/feeds.php:720
 #: classes/feeds.php:772
 #: classes/feeds.php:814
@@ -988,7 +988,7 @@ msgstr "Emne i hjælp ikke fundet."
 #: classes/pref/feeds.php:1557
 #: classes/pref/feeds.php:1620
 #: classes/pref/filters.php:175
-#: classes/pref/prefs.php:1107
+#: classes/pref/prefs.php:1083
 #: plugins/af_psql_trgm/init.php:111
 #: plugins/import_export/init.php:447
 #: plugins/import_export/init.php:491
@@ -1220,7 +1220,7 @@ msgstr "Opret etiket"
 #: classes/pref/filters.php:778
 #: classes/pref/filters.php:865
 #: classes/pref/filters.php:895
-#: classes/pref/prefs.php:1012
+#: classes/pref/prefs.php:992
 msgid "Select"
 msgstr "Vælg"
 
@@ -1234,7 +1234,7 @@ msgstr "Vælg"
 #: classes/pref/filters.php:781
 #: classes/pref/filters.php:868
 #: classes/pref/filters.php:898
-#: classes/pref/prefs.php:1015
+#: classes/pref/prefs.php:995
 #: classes/feeds.php:62
 msgid "All"
 msgstr "Alle"
@@ -1249,7 +1249,7 @@ msgstr "Alle"
 #: classes/pref/filters.php:783
 #: classes/pref/filters.php:870
 #: classes/pref/filters.php:900
-#: classes/pref/prefs.php:1017
+#: classes/pref/prefs.php:997
 #: classes/feeds.php:65
 msgid "None"
 msgstr "Ingen"
@@ -1412,7 +1412,7 @@ msgid "Refresh"
 msgstr "Opdater"
 
 #: classes/pref/system.php:44
-#: classes/pref/prefs.php:629
+#: classes/pref/prefs.php:612
 msgid "Clear"
 msgstr "Ryd"
 
@@ -1501,7 +1501,7 @@ msgstr "Artikeltømning:"
 #: classes/pref/feeds.php:666
 #: classes/pref/feeds.php:933
 #: classes/pref/feeds.php:1737
-#: classes/pref/prefs.php:247
+#: classes/pref/prefs.php:244
 #: classes/feeds.php:699
 msgid "Password"
 msgstr "Adgangskode"
@@ -1563,7 +1563,7 @@ msgid "Replace"
 msgstr "Erstat"
 
 #: classes/pref/feeds.php:814
-#: classes/pref/prefs.php:693
+#: classes/pref/prefs.php:673
 msgid "Plugins"
 msgstr "Plugins"
 
@@ -1870,8 +1870,9 @@ msgid "Automatically mark articles as read"
 msgstr ""
 
 #: classes/pref/prefs.php:27
-msgid "This option enables marking articles as read automatically while you scroll article list."
-msgstr ""
+#, fuzzy
+msgid "Mark articles as read while you scroll"
+msgstr "Marker ovenstående som læst"
 
 #: classes/pref/prefs.php:28
 msgid "Automatically expand articles in combined mode"
@@ -1882,7 +1883,7 @@ msgid "Combined feed display"
 msgstr "Visning af kombineret feed"
 
 #: classes/pref/prefs.php:29
-msgid "Display expanded list of feed articles, instead of separate displays for headlines and article content"
+msgid "Show combined list of articles, instead of separate panels"
 msgstr ""
 
 #: classes/pref/prefs.php:30
@@ -1898,10 +1899,6 @@ msgstr ""
 msgid "Default feed update interval"
 msgstr "Opdateringsinterval for standardfeed"
 
-#: classes/pref/prefs.php:32
-msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
-msgstr ""
-
 #: classes/pref/prefs.php:33
 #, fuzzy
 msgid "Mark articles in e-mail digest as read"
@@ -1912,7 +1909,7 @@ msgid "Enable e-mail digest"
 msgstr "Aktiver e-mail-digest"
 
 #: classes/pref/prefs.php:34
-msgid "This option enables sending daily digest of new (and unread) headlines on your configured e-mail address"
+msgid "Send daily digest of new (and unread) headlines to your e-mail address"
 msgstr ""
 
 #: classes/pref/prefs.php:35
@@ -1920,8 +1917,9 @@ msgid "Try to send digests around specified time"
 msgstr ""
 
 #: classes/pref/prefs.php:35
-msgid "Uses UTC timezone"
-msgstr "Bruger UTC-tidszone"
+#, fuzzy
+msgid "Time in UTC"
+msgstr "Tidszone"
 
 #: classes/pref/prefs.php:36
 msgid "Enable API access"
@@ -1958,7 +1956,7 @@ msgid "Long date format"
 msgstr "Langt datoformat"
 
 #: classes/pref/prefs.php:42
-msgid "The syntax used is identical to the PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
+msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
 msgstr ""
 
 #: classes/pref/prefs.php:43
@@ -1967,12 +1965,13 @@ msgid "On catchup show next feed"
 msgstr "Åbn næste feed"
 
 #: classes/pref/prefs.php:43
-msgid "Automatically open next feed with unread articles after marking one as read"
+msgid "Automatically opens next unread feed after marking one as read"
 msgstr ""
 
 #: classes/pref/prefs.php:44
-msgid "Purge articles after this number of days (0 - disables)"
-msgstr ""
+#, fuzzy
+msgid "Purge articles older than"
+msgstr "Tøm ulæste artikler"
 
 #: classes/pref/prefs.php:45
 msgid "Purge unread articles"
@@ -2025,11 +2024,6 @@ msgstr ""
 msgid "Customize stylesheet"
 msgstr "Tilpas designark"
 
-#: classes/pref/prefs.php:53
-#, fuzzy
-msgid "Customize CSS stylesheet to your liking"
-msgstr "Tilpas designark"
-
 #: classes/pref/prefs.php:54
 msgid "Time zone"
 msgstr "Tidszone"
@@ -2050,10 +2044,6 @@ msgstr "Sprog"
 msgid "Theme"
 msgstr "Tema"
 
-#: classes/pref/prefs.php:57
-msgid "Select one of the available CSS themes"
-msgstr ""
-
 #: classes/pref/prefs.php:129
 msgid "The configuration was saved."
 msgstr "Konfigurationen blev gemt."
@@ -2070,195 +2060,186 @@ msgstr ""
 msgid "Personal data / Authentication"
 msgstr "Personlige oplysninger / Godkendelse"
 
-#: classes/pref/prefs.php:203
+#: classes/pref/prefs.php:186
 msgid "Personal data"
 msgstr "Personlige oplysninger"
 
 #: classes/pref/prefs.php:215
-msgid "Full name"
+#, fuzzy
+msgid "Full name:"
 msgstr "Fulde navn"
 
-#: classes/pref/prefs.php:219
-msgid "E-mail"
+#: classes/pref/prefs.php:220
+#, fuzzy
+msgid "E-mail:"
 msgstr "E-mail"
 
-#: classes/pref/prefs.php:225
-msgid "Access level"
-msgstr "Adgangsniveau"
+#: classes/pref/prefs.php:228
+#, fuzzy
+msgid "Access level:"
+msgstr "Adgangsniveau: "
 
-#: classes/pref/prefs.php:235
+#: classes/pref/prefs.php:239
 msgid "Save data"
 msgstr "Gem data"
 
-#: classes/pref/prefs.php:283
+#: classes/pref/prefs.php:288
 msgid "Changing your current password will disable OTP."
 msgstr ""
 
-#: classes/pref/prefs.php:288
-msgid "Old password"
+#: classes/pref/prefs.php:292
+#, fuzzy
+msgid "Old password:"
 msgstr "Tidligere adgangskode"
 
-#: classes/pref/prefs.php:291
-msgid "New password"
+#: classes/pref/prefs.php:297
+#, fuzzy
+msgid "New password:"
 msgstr "Ny adgangskode"
 
-#: classes/pref/prefs.php:296
-msgid "Confirm password"
+#: classes/pref/prefs.php:302
+#, fuzzy
+msgid "Confirm password:"
 msgstr "Bekræft adgangskode"
 
-#: classes/pref/prefs.php:306
+#: classes/pref/prefs.php:312
 msgid "Change password"
 msgstr "Skift adgangskode"
 
-#: classes/pref/prefs.php:312
+#: classes/pref/prefs.php:317
 msgid "One time passwords / Authenticator"
 msgstr "Engangsadgangskoder / Godkender"
 
-#: classes/pref/prefs.php:316
-msgid "One time passwords are currently enabled. Enter your current password below to disable."
-msgstr ""
+#: classes/pref/prefs.php:347
+#: classes/pref/prefs.php:395
+#, fuzzy
+msgid "Your password:"
+msgstr "Bekræft adgangskode"
 
-#: classes/pref/prefs.php:341
-#: classes/pref/prefs.php:392
-msgid "Enter your password"
-msgstr "Indtast din adgangskode"
-
-#: classes/pref/prefs.php:352
+#: classes/pref/prefs.php:357
 msgid "Disable OTP"
 msgstr "Deaktiver OTP"
 
-#: classes/pref/prefs.php:358
-msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
-msgstr ""
-
-#: classes/pref/prefs.php:360
-msgid "Scan the following code by the Authenticator application:"
-msgstr ""
-
-#: classes/pref/prefs.php:397
+#: classes/pref/prefs.php:401
 #, fuzzy
-msgid "Enter the generated one time password"
+msgid "One time password:"
 msgstr "Forkert engangsadgangskode"
 
-#: classes/pref/prefs.php:411
+#: classes/pref/prefs.php:408
 msgid "Enable OTP"
 msgstr "Aktiver OTP"
 
-#: classes/pref/prefs.php:417
-msgid "PHP GD functions are required for OTP support."
-msgstr ""
-
-#: classes/pref/prefs.php:463
+#: classes/pref/prefs.php:461
 msgid "Some preferences are only available in default profile."
 msgstr ""
 
-#: classes/pref/prefs.php:549
+#: classes/pref/prefs.php:530
 msgid "Customize"
 msgstr "Tilpas"
 
-#: classes/pref/prefs.php:563
+#: classes/pref/prefs.php:544
 #, fuzzy
 msgid "default"
 msgstr "Standard"
 
-#: classes/pref/prefs.php:625
+#: classes/pref/prefs.php:608
 msgid "Register"
 msgstr "Registrer"
 
-#: classes/pref/prefs.php:635
+#: classes/pref/prefs.php:619
 #, php-format
-msgid "Current server time: %s (UTC)"
+msgid "Current server time: %s"
 msgstr ""
 
-#: classes/pref/prefs.php:667
+#: classes/pref/prefs.php:647
 msgid "Save configuration"
 msgstr "Gem konfiguration"
 
-#: classes/pref/prefs.php:671
+#: classes/pref/prefs.php:651
 msgid "Save and exit preferences"
 msgstr "Gem og luk præferencer"
 
-#: classes/pref/prefs.php:676
+#: classes/pref/prefs.php:656
 msgid "Manage profiles"
 msgstr "Administrer profiler"
 
-#: classes/pref/prefs.php:679
+#: classes/pref/prefs.php:659
 msgid "Reset to defaults"
 msgstr "Nulstil til standardindstillinger"
 
-#: classes/pref/prefs.php:726
+#: classes/pref/prefs.php:706
 msgid "System plugins"
 msgstr "Systemplugins"
 
-#: classes/pref/prefs.php:727
+#: classes/pref/prefs.php:707
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr ""
 
-#: classes/pref/prefs.php:732
-#: classes/pref/prefs.php:788
+#: classes/pref/prefs.php:712
+#: classes/pref/prefs.php:768
 msgid "Plugin"
 msgstr "Plugin"
 
-#: classes/pref/prefs.php:733
-#: classes/pref/prefs.php:789
+#: classes/pref/prefs.php:713
+#: classes/pref/prefs.php:769
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: classes/pref/prefs.php:734
-#: classes/pref/prefs.php:790
+#: classes/pref/prefs.php:714
+#: classes/pref/prefs.php:770
 msgid "Version"
 msgstr "Version"
 
-#: classes/pref/prefs.php:735
-#: classes/pref/prefs.php:791
+#: classes/pref/prefs.php:715
+#: classes/pref/prefs.php:771
 msgid "Author"
 msgstr "Forfatter"
 
-#: classes/pref/prefs.php:766
-#: classes/pref/prefs.php:825
+#: classes/pref/prefs.php:746
+#: classes/pref/prefs.php:805
 msgid "more info"
 msgstr "flere oplysninger"
 
-#: classes/pref/prefs.php:775
-#: classes/pref/prefs.php:834
+#: classes/pref/prefs.php:755
+#: classes/pref/prefs.php:814
 msgid "Clear data"
 msgstr "Ryd data"
 
-#: classes/pref/prefs.php:784
+#: classes/pref/prefs.php:764
 msgid "User plugins"
 msgstr "Brugerplugins"
 
-#: classes/pref/prefs.php:853
+#: classes/pref/prefs.php:833
 msgid "Enable selected plugins"
 msgstr "Aktiver valgte plugins"
 
-#: classes/pref/prefs.php:929
+#: classes/pref/prefs.php:909
 msgid "Incorrect one time password"
 msgstr "Forkert engangsadgangskode"
 
-#: classes/pref/prefs.php:934
-#: classes/pref/prefs.php:965
+#: classes/pref/prefs.php:914
+#: classes/pref/prefs.php:945
 msgid "Incorrect password"
 msgstr "Forkert adgangskode"
 
-#: classes/pref/prefs.php:989
+#: classes/pref/prefs.php:969
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
 msgstr ""
 
-#: classes/pref/prefs.php:1026
+#: classes/pref/prefs.php:1006
 msgid "Create profile"
 msgstr "Opret profil"
 
+#: classes/pref/prefs.php:1025
 #: classes/pref/prefs.php:1045
-#: classes/pref/prefs.php:1067
 msgid "(active)"
 msgstr "(aktiv)"
 
-#: classes/pref/prefs.php:1101
+#: classes/pref/prefs.php:1077
 msgid "Remove selected profiles"
 msgstr "Fjern valgte profiler"
 
-#: classes/pref/prefs.php:1103
+#: classes/pref/prefs.php:1079
 msgid "Activate profile"
 msgstr "Aktiver profil"
 
@@ -3526,6 +3507,23 @@ msgstr "Prøver at ændre webadresse ..."
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "Delte webadresser er ryddet."
+
+#~ msgid "Uses UTC timezone"
+#~ msgstr "Bruger UTC-tidszone"
+
+#, fuzzy
+#~ msgid "Customize CSS stylesheet to your liking"
+#~ msgstr "Tilpas designark"
+
+#~ msgid "Access level"
+#~ msgstr "Adgangsniveau"
+
+#~ msgid "Enter your password"
+#~ msgstr "Indtast din adgangskode"
+
+#, fuzzy
+#~ msgid "Enter the generated one time password"
+#~ msgstr "Forkert engangsadgangskode"
 
 #~ msgid "Not logged in"
 #~ msgstr "Ikke logget på"

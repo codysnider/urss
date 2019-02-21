@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss unstable\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-20 15:53+0300\n"
+"POT-Creation-Date: 2019-02-21 12:37+0300\n"
 "PO-Revision-Date: 2018-12-05 18:43+0000\n"
 "Last-Translator: ncaq net (エヌユル) <ncaq@ncaq.net>\n"
 "Language-Team: Japanese <https://weblate.tt-rss.org/projects/tt-rss/messages/ja/>\n"
@@ -355,7 +355,7 @@ msgstr "ログアウト"
 #: prefs.php:33
 #: prefs.php:130
 #: include/functions.php:1201
-#: classes/pref/prefs.php:430
+#: classes/pref/prefs.php:428
 msgid "Preferences"
 msgstr "設定"
 
@@ -793,7 +793,7 @@ msgstr "プロファイル:"
 
 #: include/login_form.php:103
 #: classes/handler/public.php:280
-#: classes/pref/prefs.php:1050
+#: classes/pref/prefs.php:1030
 #: classes/rpc.php:69
 msgid "Default profile"
 msgstr "標準のプロファイル"
@@ -846,7 +846,7 @@ msgstr "この記事のタグ (カンマで区切ります):"
 #: classes/pref/feeds.php:830
 #: classes/pref/feeds.php:997
 #: classes/pref/filters.php:511
-#: classes/pref/prefs.php:1001
+#: classes/pref/prefs.php:981
 #: plugins/nsfw/init.php:86
 #: plugins/note/init.php:56
 #: plugins/af_readability/init.php:81
@@ -868,7 +868,7 @@ msgstr "保存"
 #: classes/pref/filters.php:950
 #: classes/pref/filters.php:1028
 #: classes/pref/filters.php:1121
-#: classes/pref/prefs.php:1003
+#: classes/pref/prefs.php:983
 #: classes/feeds.php:720
 #: classes/feeds.php:772
 #: classes/feeds.php:814
@@ -990,7 +990,7 @@ msgstr "ヘルプのトピックが見つかりません。"
 #: classes/pref/feeds.php:1557
 #: classes/pref/feeds.php:1620
 #: classes/pref/filters.php:175
-#: classes/pref/prefs.php:1107
+#: classes/pref/prefs.php:1083
 #: plugins/af_psql_trgm/init.php:111
 #: plugins/import_export/init.php:447
 #: plugins/import_export/init.php:491
@@ -1221,7 +1221,7 @@ msgstr "ラベル <b>%s</b> を作成しました"
 #: classes/pref/filters.php:778
 #: classes/pref/filters.php:865
 #: classes/pref/filters.php:895
-#: classes/pref/prefs.php:1012
+#: classes/pref/prefs.php:992
 msgid "Select"
 msgstr "選択"
 
@@ -1235,7 +1235,7 @@ msgstr "選択"
 #: classes/pref/filters.php:781
 #: classes/pref/filters.php:868
 #: classes/pref/filters.php:898
-#: classes/pref/prefs.php:1015
+#: classes/pref/prefs.php:995
 #: classes/feeds.php:62
 msgid "All"
 msgstr "すべて"
@@ -1250,7 +1250,7 @@ msgstr "すべて"
 #: classes/pref/filters.php:783
 #: classes/pref/filters.php:870
 #: classes/pref/filters.php:900
-#: classes/pref/prefs.php:1017
+#: classes/pref/prefs.php:997
 #: classes/feeds.php:65
 msgid "None"
 msgstr "なし"
@@ -1413,7 +1413,7 @@ msgid "Refresh"
 msgstr "再描画"
 
 #: classes/pref/system.php:44
-#: classes/pref/prefs.php:629
+#: classes/pref/prefs.php:612
 msgid "Clear"
 msgstr "消去"
 
@@ -1501,7 +1501,7 @@ msgstr "記事の削除:"
 #: classes/pref/feeds.php:666
 #: classes/pref/feeds.php:933
 #: classes/pref/feeds.php:1737
-#: classes/pref/prefs.php:247
+#: classes/pref/prefs.php:244
 #: classes/feeds.php:699
 msgid "Password"
 msgstr "パスワード"
@@ -1562,7 +1562,7 @@ msgid "Replace"
 msgstr "置き換え"
 
 #: classes/pref/feeds.php:814
-#: classes/pref/prefs.php:693
+#: classes/pref/prefs.php:673
 msgid "Plugins"
 msgstr "プラグイン"
 
@@ -1869,8 +1869,9 @@ msgid "Automatically mark articles as read"
 msgstr "自動的に記事を既読にする"
 
 #: classes/pref/prefs.php:27
-msgid "This option enables marking articles as read automatically while you scroll article list."
-msgstr "記事のリストをスクロールした際、自動的に記事を既読にする。"
+#, fuzzy
+msgid "Mark articles as read while you scroll"
+msgstr "すべての記事を既読にしますか?"
 
 #: classes/pref/prefs.php:28
 msgid "Automatically expand articles in combined mode"
@@ -1881,7 +1882,8 @@ msgid "Combined feed display"
 msgstr "フィード表示の組み合わせ"
 
 #: classes/pref/prefs.php:29
-msgid "Display expanded list of feed articles, instead of separate displays for headlines and article content"
+#, fuzzy
+msgid "Show combined list of articles, instead of separate panels"
 msgstr "ヘッドラインと記事の内容を分けて表示するのではなく、展開された記事のリストを表示する。"
 
 #: classes/pref/prefs.php:30
@@ -1896,10 +1898,6 @@ msgstr "一度に表示する記事数"
 msgid "Default feed update interval"
 msgstr "標準の更新間隔"
 
-#: classes/pref/prefs.php:32
-msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
-msgstr "更新方法に関わらない、フィードの更新チェックの最短間隔"
-
 #: classes/pref/prefs.php:33
 msgid "Mark articles in e-mail digest as read"
 msgstr "電子メールのダイジェストに含まれる記事を既読として設定する"
@@ -1909,7 +1907,8 @@ msgid "Enable e-mail digest"
 msgstr "電子メールでのダイジェストを有効にする"
 
 #: classes/pref/prefs.php:34
-msgid "This option enables sending daily digest of new (and unread) headlines on your configured e-mail address"
+#, fuzzy
+msgid "Send daily digest of new (and unread) headlines to your e-mail address"
 msgstr "設定された電子メールアドレスに毎日新しい(かつ未読の)ヘッドラインのダイジェストを送る"
 
 #: classes/pref/prefs.php:35
@@ -1917,8 +1916,9 @@ msgid "Try to send digests around specified time"
 msgstr "指定された時刻前後にダイジェストの送信を試みる"
 
 #: classes/pref/prefs.php:35
-msgid "Uses UTC timezone"
-msgstr "UTC タイムゾーンを使用する"
+#, fuzzy
+msgid "Time in UTC"
+msgstr "タイムゾーン"
 
 #: classes/pref/prefs.php:36
 msgid "Enable API access"
@@ -1953,7 +1953,8 @@ msgid "Long date format"
 msgstr "完全な日付の形式"
 
 #: classes/pref/prefs.php:42
-msgid "The syntax used is identical to the PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
+#, fuzzy
+msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
 msgstr "日付の構文は PHP の <a href='http://php.net/manual/function.date.php'>date()</a> 関数と同じです。"
 
 #: classes/pref/prefs.php:43
@@ -1961,12 +1962,14 @@ msgid "On catchup show next feed"
 msgstr "キャッチアップ時に次のフィードを表示する"
 
 #: classes/pref/prefs.php:43
-msgid "Automatically open next feed with unread articles after marking one as read"
+#, fuzzy
+msgid "Automatically opens next unread feed after marking one as read"
 msgstr "フィードを既読にした後で自動的に未読記事のある次のフィードを開く"
 
 #: classes/pref/prefs.php:44
-msgid "Purge articles after this number of days (0 - disables)"
-msgstr "この日数よりあとの古い投稿を削除する (0 は無効です)"
+#, fuzzy
+msgid "Purge articles older than"
+msgstr "未読記事を削除する"
 
 #: classes/pref/prefs.php:45
 msgid "Purge unread articles"
@@ -2018,10 +2021,6 @@ msgstr "記事を読み込む際、最も一般的な HTML タグ以外を除去
 msgid "Customize stylesheet"
 msgstr "スタイルシートのカスタマイズ"
 
-#: classes/pref/prefs.php:53
-msgid "Customize CSS stylesheet to your liking"
-msgstr "あなたの好みの CSS スタイルシートにカスタマイズします。"
-
 #: classes/pref/prefs.php:54
 msgid "Time zone"
 msgstr "タイムゾーン"
@@ -2042,10 +2041,6 @@ msgstr "言語"
 msgid "Theme"
 msgstr "テーマ"
 
-#: classes/pref/prefs.php:57
-msgid "Select one of the available CSS themes"
-msgstr "CSS テーマを選択してください"
-
 #: classes/pref/prefs.php:129
 msgid "The configuration was saved."
 msgstr "設定を保存しました。"
@@ -2062,195 +2057,187 @@ msgstr "あなたの設定は標準値に設定されました。"
 msgid "Personal data / Authentication"
 msgstr "個人データ / 認証"
 
-#: classes/pref/prefs.php:203
+#: classes/pref/prefs.php:186
 msgid "Personal data"
 msgstr "個人データ"
 
 #: classes/pref/prefs.php:215
-msgid "Full name"
+#, fuzzy
+msgid "Full name:"
 msgstr "フルネーム"
 
-#: classes/pref/prefs.php:219
-msgid "E-mail"
+#: classes/pref/prefs.php:220
+#, fuzzy
+msgid "E-mail:"
 msgstr "電子メール"
 
-#: classes/pref/prefs.php:225
-msgid "Access level"
-msgstr "アクセスレベル"
+#: classes/pref/prefs.php:228
+#, fuzzy
+msgid "Access level:"
+msgstr "アクセスレベル: "
 
-#: classes/pref/prefs.php:235
+#: classes/pref/prefs.php:239
 msgid "Save data"
 msgstr "保存"
 
-#: classes/pref/prefs.php:283
+#: classes/pref/prefs.php:288
 msgid "Changing your current password will disable OTP."
 msgstr "現在のパスワードを変更すると OTP が無効化されます。"
 
-#: classes/pref/prefs.php:288
-msgid "Old password"
+#: classes/pref/prefs.php:292
+#, fuzzy
+msgid "Old password:"
 msgstr "現在のパスワード"
 
-#: classes/pref/prefs.php:291
-msgid "New password"
+#: classes/pref/prefs.php:297
+#, fuzzy
+msgid "New password:"
 msgstr "新しいパスワード"
 
-#: classes/pref/prefs.php:296
-msgid "Confirm password"
+#: classes/pref/prefs.php:302
+#, fuzzy
+msgid "Confirm password:"
 msgstr "新しいパスワード(確認)"
 
-#: classes/pref/prefs.php:306
+#: classes/pref/prefs.php:312
 msgid "Change password"
 msgstr "パスワードを変更する"
 
-#: classes/pref/prefs.php:312
+#: classes/pref/prefs.php:317
 msgid "One time passwords / Authenticator"
 msgstr "ワンタイムパスワード / Authenticator"
 
-#: classes/pref/prefs.php:316
-msgid "One time passwords are currently enabled. Enter your current password below to disable."
-msgstr "ワンタイムパスワードが現在有効です。無効にするには以下に現在のパスワードを入力してください。"
+#: classes/pref/prefs.php:347
+#: classes/pref/prefs.php:395
+#, fuzzy
+msgid "Your password:"
+msgstr "新しいパスワード(確認)"
 
-#: classes/pref/prefs.php:341
-#: classes/pref/prefs.php:392
-msgid "Enter your password"
-msgstr "パスワードの入力"
-
-#: classes/pref/prefs.php:352
+#: classes/pref/prefs.php:357
 msgid "Disable OTP"
 msgstr "OTP を無効にする"
 
-#: classes/pref/prefs.php:358
-msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
-msgstr "この機能を使用するには互換性のある Authenticator が必要です。現在のパスワードを変更すると OTP が無効化されます。"
+#: classes/pref/prefs.php:401
+#, fuzzy
+msgid "One time password:"
+msgstr "ワンタイムパスワードが正しくありません"
 
-#: classes/pref/prefs.php:360
-msgid "Scan the following code by the Authenticator application:"
-msgstr "認証アプリケーションで以下のコードをスキャンしてください:"
-
-#: classes/pref/prefs.php:397
-msgid "Enter the generated one time password"
-msgstr "生成されたワンタイムパスワードを入力してください"
-
-#: classes/pref/prefs.php:411
+#: classes/pref/prefs.php:408
 msgid "Enable OTP"
 msgstr "OTP を有効にする"
 
-#: classes/pref/prefs.php:417
-msgid "PHP GD functions are required for OTP support."
-msgstr "OTP には PHP GD 機能が必要です。"
-
-#: classes/pref/prefs.php:463
+#: classes/pref/prefs.php:461
 msgid "Some preferences are only available in default profile."
 msgstr "いくつかの設定は標準プロファイルでのみ有効です。"
 
-#: classes/pref/prefs.php:549
+#: classes/pref/prefs.php:530
 msgid "Customize"
 msgstr "カスタマイズ"
 
-#: classes/pref/prefs.php:563
+#: classes/pref/prefs.php:544
 #, fuzzy
 msgid "default"
 msgstr "標準"
 
-#: classes/pref/prefs.php:625
+#: classes/pref/prefs.php:608
 msgid "Register"
 msgstr "登録"
 
-#: classes/pref/prefs.php:635
-#, php-format
-msgid "Current server time: %s (UTC)"
+#: classes/pref/prefs.php:619
+#, fuzzy, php-format
+msgid "Current server time: %s"
 msgstr "現在のサーバー時刻: %s (UTC)"
 
-#: classes/pref/prefs.php:667
+#: classes/pref/prefs.php:647
 msgid "Save configuration"
 msgstr "設定を保存する"
 
-#: classes/pref/prefs.php:671
+#: classes/pref/prefs.php:651
 msgid "Save and exit preferences"
 msgstr "設定を保存して終了する"
 
-#: classes/pref/prefs.php:676
+#: classes/pref/prefs.php:656
 msgid "Manage profiles"
 msgstr "プロファイルを管理する"
 
-#: classes/pref/prefs.php:679
+#: classes/pref/prefs.php:659
 msgid "Reset to defaults"
 msgstr "標準に戻す"
 
-#: classes/pref/prefs.php:726
+#: classes/pref/prefs.php:706
 msgid "System plugins"
 msgstr "システムプラグイン"
 
-#: classes/pref/prefs.php:727
+#: classes/pref/prefs.php:707
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr ""
 
-#: classes/pref/prefs.php:732
-#: classes/pref/prefs.php:788
+#: classes/pref/prefs.php:712
+#: classes/pref/prefs.php:768
 msgid "Plugin"
 msgstr "プラグイン"
 
-#: classes/pref/prefs.php:733
-#: classes/pref/prefs.php:789
+#: classes/pref/prefs.php:713
+#: classes/pref/prefs.php:769
 msgid "Description"
 msgstr "説明"
 
-#: classes/pref/prefs.php:734
-#: classes/pref/prefs.php:790
+#: classes/pref/prefs.php:714
+#: classes/pref/prefs.php:770
 msgid "Version"
 msgstr "バージョン"
 
-#: classes/pref/prefs.php:735
-#: classes/pref/prefs.php:791
+#: classes/pref/prefs.php:715
+#: classes/pref/prefs.php:771
 msgid "Author"
 msgstr "作者"
 
-#: classes/pref/prefs.php:766
-#: classes/pref/prefs.php:825
+#: classes/pref/prefs.php:746
+#: classes/pref/prefs.php:805
 msgid "more info"
 msgstr "その他情報"
 
-#: classes/pref/prefs.php:775
-#: classes/pref/prefs.php:834
+#: classes/pref/prefs.php:755
+#: classes/pref/prefs.php:814
 msgid "Clear data"
 msgstr "データの消去"
 
-#: classes/pref/prefs.php:784
+#: classes/pref/prefs.php:764
 msgid "User plugins"
 msgstr "ユーザープラグイン"
 
-#: classes/pref/prefs.php:853
+#: classes/pref/prefs.php:833
 msgid "Enable selected plugins"
 msgstr "選択したプラグインを有効にする"
 
-#: classes/pref/prefs.php:929
+#: classes/pref/prefs.php:909
 msgid "Incorrect one time password"
 msgstr "ワンタイムパスワードが正しくありません"
 
-#: classes/pref/prefs.php:934
-#: classes/pref/prefs.php:965
+#: classes/pref/prefs.php:914
+#: classes/pref/prefs.php:945
 msgid "Incorrect password"
 msgstr "パスワードが正しくありません"
 
-#: classes/pref/prefs.php:989
+#: classes/pref/prefs.php:969
 #, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
 msgstr "現在選択されているテーマの色、フォント、レイアウトをこのカスタム CSS 宣言で上書きできます。<a target=\"_blank\" class=\"visibleLink\" href=\"%s\">このファイル</a>がベースラインとして使えます。"
 
-#: classes/pref/prefs.php:1026
+#: classes/pref/prefs.php:1006
 msgid "Create profile"
 msgstr "プロファイルを作成する"
 
+#: classes/pref/prefs.php:1025
 #: classes/pref/prefs.php:1045
-#: classes/pref/prefs.php:1067
 msgid "(active)"
 msgstr "(有効)"
 
-#: classes/pref/prefs.php:1101
+#: classes/pref/prefs.php:1077
 msgid "Remove selected profiles"
 msgstr "選択したプロファイルを削除しますか"
 
-#: classes/pref/prefs.php:1103
+#: classes/pref/prefs.php:1079
 msgid "Activate profile"
 msgstr "プロファイルを有効にする"
 
@@ -3498,6 +3485,45 @@ msgstr "URL の変更をしようとしています..."
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "共有された URL を消去しました。"
+
+#~ msgid "This option enables marking articles as read automatically while you scroll article list."
+#~ msgstr "記事のリストをスクロールした際、自動的に記事を既読にする。"
+
+#~ msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
+#~ msgstr "更新方法に関わらない、フィードの更新チェックの最短間隔"
+
+#~ msgid "Uses UTC timezone"
+#~ msgstr "UTC タイムゾーンを使用する"
+
+#~ msgid "Purge articles after this number of days (0 - disables)"
+#~ msgstr "この日数よりあとの古い投稿を削除する (0 は無効です)"
+
+#~ msgid "Customize CSS stylesheet to your liking"
+#~ msgstr "あなたの好みの CSS スタイルシートにカスタマイズします。"
+
+#~ msgid "Select one of the available CSS themes"
+#~ msgstr "CSS テーマを選択してください"
+
+#~ msgid "Access level"
+#~ msgstr "アクセスレベル"
+
+#~ msgid "One time passwords are currently enabled. Enter your current password below to disable."
+#~ msgstr "ワンタイムパスワードが現在有効です。無効にするには以下に現在のパスワードを入力してください。"
+
+#~ msgid "Enter your password"
+#~ msgstr "パスワードの入力"
+
+#~ msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
+#~ msgstr "この機能を使用するには互換性のある Authenticator が必要です。現在のパスワードを変更すると OTP が無効化されます。"
+
+#~ msgid "Scan the following code by the Authenticator application:"
+#~ msgstr "認証アプリケーションで以下のコードをスキャンしてください:"
+
+#~ msgid "Enter the generated one time password"
+#~ msgstr "生成されたワンタイムパスワードを入力してください"
+
+#~ msgid "PHP GD functions are required for OTP support."
+#~ msgstr "OTP には PHP GD 機能が必要です。"
 
 #~ msgid "Not logged in"
 #~ msgstr "ログインしていません"

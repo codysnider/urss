@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-20 15:53+0300\n"
+"POT-Creation-Date: 2019-02-21 12:37+0300\n"
 "PO-Revision-Date: 2019-02-21 09:36+0000\n"
 "Last-Translator: Ptsa Daniel <ptsa1987@gmail.com>\n"
-"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/"
-"tt-rss/messages/zh_Hans/>\n"
+"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/tt-rss/messages/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -350,7 +349,7 @@ msgstr "注销"
 #: prefs.php:33
 #: prefs.php:130
 #: include/functions.php:1201
-#: classes/pref/prefs.php:430
+#: classes/pref/prefs.php:428
 msgid "Preferences"
 msgstr "偏好设置"
 
@@ -786,7 +785,7 @@ msgstr "偏好："
 
 #: include/login_form.php:103
 #: classes/handler/public.php:280
-#: classes/pref/prefs.php:1050
+#: classes/pref/prefs.php:1030
 #: classes/rpc.php:69
 msgid "Default profile"
 msgstr "默认偏好设置"
@@ -838,7 +837,7 @@ msgstr "本文的标签，请用逗号分开："
 #: classes/pref/feeds.php:830
 #: classes/pref/feeds.php:997
 #: classes/pref/filters.php:511
-#: classes/pref/prefs.php:1001
+#: classes/pref/prefs.php:981
 #: plugins/nsfw/init.php:86
 #: plugins/note/init.php:56
 #: plugins/af_readability/init.php:81
@@ -860,7 +859,7 @@ msgstr "保存"
 #: classes/pref/filters.php:950
 #: classes/pref/filters.php:1028
 #: classes/pref/filters.php:1121
-#: classes/pref/prefs.php:1003
+#: classes/pref/prefs.php:983
 #: classes/feeds.php:720
 #: classes/feeds.php:772
 #: classes/feeds.php:814
@@ -982,7 +981,7 @@ msgstr "未找到帮助主题。"
 #: classes/pref/feeds.php:1557
 #: classes/pref/feeds.php:1620
 #: classes/pref/filters.php:175
-#: classes/pref/prefs.php:1107
+#: classes/pref/prefs.php:1083
 #: plugins/af_psql_trgm/init.php:111
 #: plugins/import_export/init.php:447
 #: plugins/import_export/init.php:491
@@ -1207,7 +1206,7 @@ msgstr "创建预定义标签 <b>%s</b>"
 #: classes/pref/filters.php:778
 #: classes/pref/filters.php:865
 #: classes/pref/filters.php:895
-#: classes/pref/prefs.php:1012
+#: classes/pref/prefs.php:992
 msgid "Select"
 msgstr "选择"
 
@@ -1221,7 +1220,7 @@ msgstr "选择"
 #: classes/pref/filters.php:781
 #: classes/pref/filters.php:868
 #: classes/pref/filters.php:898
-#: classes/pref/prefs.php:1015
+#: classes/pref/prefs.php:995
 #: classes/feeds.php:62
 msgid "All"
 msgstr "全部"
@@ -1236,7 +1235,7 @@ msgstr "全部"
 #: classes/pref/filters.php:783
 #: classes/pref/filters.php:870
 #: classes/pref/filters.php:900
-#: classes/pref/prefs.php:1017
+#: classes/pref/prefs.php:997
 #: classes/feeds.php:65
 msgid "None"
 msgstr "无"
@@ -1397,7 +1396,7 @@ msgid "Refresh"
 msgstr "刷新"
 
 #: classes/pref/system.php:44
-#: classes/pref/prefs.php:629
+#: classes/pref/prefs.php:612
 msgid "Clear"
 msgstr "清空"
 
@@ -1481,7 +1480,7 @@ msgstr "文章清理："
 #: classes/pref/feeds.php:666
 #: classes/pref/feeds.php:933
 #: classes/pref/feeds.php:1737
-#: classes/pref/prefs.php:247
+#: classes/pref/prefs.php:244
 #: classes/feeds.php:699
 msgid "Password"
 msgstr "密码"
@@ -1540,7 +1539,7 @@ msgid "Replace"
 msgstr "替换"
 
 #: classes/pref/feeds.php:814
-#: classes/pref/prefs.php:693
+#: classes/pref/prefs.php:673
 msgid "Plugins"
 msgstr "插件"
 
@@ -1840,8 +1839,9 @@ msgid "Automatically mark articles as read"
 msgstr "自动标记文章为已读"
 
 #: classes/pref/prefs.php:27
-msgid "This option enables marking articles as read automatically while you scroll article list."
-msgstr "在滚动页面的同时自动将文章标记为已读。"
+#, fuzzy
+msgid "Mark articles as read while you scroll"
+msgstr "将所有文章标记为已读？"
 
 #: classes/pref/prefs.php:28
 msgid "Automatically expand articles in combined mode"
@@ -1852,7 +1852,8 @@ msgid "Combined feed display"
 msgstr "合并信息源，使之连续显示"
 
 #: classes/pref/prefs.php:29
-msgid "Display expanded list of feed articles, instead of separate displays for headlines and article content"
+#, fuzzy
+msgid "Show combined list of articles, instead of separate panels"
 msgstr "将文章列表展开显示，而不是将标题和内容分别显示"
 
 #: classes/pref/prefs.php:30
@@ -1867,10 +1868,6 @@ msgstr "同时显示的文章数量"
 msgid "Default feed update interval"
 msgstr "默认更新间隔"
 
-#: classes/pref/prefs.php:32
-msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
-msgstr "全局最短更新间隔，适用于所有更新方法"
-
 #: classes/pref/prefs.php:33
 msgid "Mark articles in e-mail digest as read"
 msgstr "将邮件摘要中的文章标记为已读"
@@ -1880,7 +1877,8 @@ msgid "Enable e-mail digest"
 msgstr "启用电子邮件摘要"
 
 #: classes/pref/prefs.php:34
-msgid "This option enables sending daily digest of new (and unread) headlines on your configured e-mail address"
+#, fuzzy
+msgid "Send daily digest of new (and unread) headlines to your e-mail address"
 msgstr "每天将更新的和未读的文章标题通过邮件发送摘要到您设置的邮箱中"
 
 #: classes/pref/prefs.php:35
@@ -1888,8 +1886,9 @@ msgid "Try to send digests around specified time"
 msgstr "在特定时间发送摘要"
 
 #: classes/pref/prefs.php:35
-msgid "Uses UTC timezone"
-msgstr "使用UTC时区"
+#, fuzzy
+msgid "Time in UTC"
+msgstr "时区"
 
 #: classes/pref/prefs.php:36
 msgid "Enable API access"
@@ -1924,7 +1923,8 @@ msgid "Long date format"
 msgstr "长时间格式"
 
 #: classes/pref/prefs.php:42
-msgid "The syntax used is identical to the PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
+#, fuzzy
+msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
 msgstr "所使用的语法与 PHP <a href='http://php.net/manual/function.date.php'>date()</a> 函数相同."
 
 #: classes/pref/prefs.php:43
@@ -1932,12 +1932,14 @@ msgid "On catchup show next feed"
 msgstr "自动显示下一个信息源"
 
 #: classes/pref/prefs.php:43
-msgid "Automatically open next feed with unread articles after marking one as read"
+#, fuzzy
+msgid "Automatically opens next unread feed after marking one as read"
 msgstr "标记未读文章为已读后，自动显示下一个信息源的文章"
 
 #: classes/pref/prefs.php:44
-msgid "Purge articles after this number of days (0 - disables)"
-msgstr "清除多少天之前的文章？（0为不启用）"
+#, fuzzy
+msgid "Purge articles older than"
+msgstr "清除未读文章"
 
 #: classes/pref/prefs.php:45
 msgid "Purge unread articles"
@@ -1988,10 +1990,6 @@ msgstr "仅加载几个最常用的 HTML 标签."
 msgid "Customize stylesheet"
 msgstr "自定义样式"
 
-#: classes/pref/prefs.php:53
-msgid "Customize CSS stylesheet to your liking"
-msgstr "自定义 CSS 样式"
-
 #: classes/pref/prefs.php:54
 msgid "Time zone"
 msgstr "时区"
@@ -2012,10 +2010,6 @@ msgstr "语言"
 msgid "Theme"
 msgstr "主题"
 
-#: classes/pref/prefs.php:57
-msgid "Select one of the available CSS themes"
-msgstr "选择一个可用的 CSS 主题"
-
 #: classes/pref/prefs.php:129
 msgid "The configuration was saved."
 msgstr "设置已保存。"
@@ -2032,193 +2026,185 @@ msgstr "你的偏好设置已经重置为默认值。"
 msgid "Personal data / Authentication"
 msgstr "个人数据 / 用户认证"
 
-#: classes/pref/prefs.php:203
+#: classes/pref/prefs.php:186
 msgid "Personal data"
 msgstr "个人数据"
 
 #: classes/pref/prefs.php:215
-msgid "Full name"
+#, fuzzy
+msgid "Full name:"
 msgstr "姓名"
 
-#: classes/pref/prefs.php:219
-msgid "E-mail"
-msgstr "电子邮件"
+#: classes/pref/prefs.php:220
+#, fuzzy
+msgid "E-mail:"
+msgstr "电子邮件："
 
-#: classes/pref/prefs.php:225
-msgid "Access level"
-msgstr "访问级别"
+#: classes/pref/prefs.php:228
+#, fuzzy
+msgid "Access level:"
+msgstr "访问级别: "
 
-#: classes/pref/prefs.php:235
+#: classes/pref/prefs.php:239
 msgid "Save data"
 msgstr "保存信息"
 
-#: classes/pref/prefs.php:283
+#: classes/pref/prefs.php:288
 msgid "Changing your current password will disable OTP."
 msgstr "更改当前密码会使 OTP 动态口令失效。"
 
-#: classes/pref/prefs.php:288
-msgid "Old password"
+#: classes/pref/prefs.php:292
+#, fuzzy
+msgid "Old password:"
 msgstr "原密码"
 
-#: classes/pref/prefs.php:291
-msgid "New password"
+#: classes/pref/prefs.php:297
+#, fuzzy
+msgid "New password:"
 msgstr "新密码"
 
-#: classes/pref/prefs.php:296
-msgid "Confirm password"
+#: classes/pref/prefs.php:302
+#, fuzzy
+msgid "Confirm password:"
 msgstr "确认密码"
 
-#: classes/pref/prefs.php:306
+#: classes/pref/prefs.php:312
 msgid "Change password"
 msgstr "更改密码"
 
-#: classes/pref/prefs.php:312
+#: classes/pref/prefs.php:317
 msgid "One time passwords / Authenticator"
 msgstr "动态口令"
 
-#: classes/pref/prefs.php:316
-msgid "One time passwords are currently enabled. Enter your current password below to disable."
-msgstr "动态口令已经启用。输入你当前的密码来禁用。"
+#: classes/pref/prefs.php:347
+#: classes/pref/prefs.php:395
+#, fuzzy
+msgid "Your password:"
+msgstr "确认密码"
 
-#: classes/pref/prefs.php:341
-#: classes/pref/prefs.php:392
-msgid "Enter your password"
-msgstr "输入您的密码"
-
-#: classes/pref/prefs.php:352
+#: classes/pref/prefs.php:357
 msgid "Disable OTP"
 msgstr "禁用 OTP 动态口令"
 
-#: classes/pref/prefs.php:358
-msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
-msgstr "更改当前密码会自动禁用 OTP 动态口令。"
+#: classes/pref/prefs.php:401
+#, fuzzy
+msgid "One time password:"
+msgstr "一次性密码不正确"
 
-#: classes/pref/prefs.php:360
-msgid "Scan the following code by the Authenticator application:"
-msgstr "使用认证应用扫描下面编码:"
-
-#: classes/pref/prefs.php:397
-msgid "Enter the generated one time password"
-msgstr "请填写生成的 OTP 动态口令"
-
-#: classes/pref/prefs.php:411
+#: classes/pref/prefs.php:408
 msgid "Enable OTP"
 msgstr "启用 OTP 动态口令"
 
-#: classes/pref/prefs.php:417
-msgid "PHP GD functions are required for OTP support."
-msgstr "OTP 动态口令需要开启 PHP GD."
-
-#: classes/pref/prefs.php:463
+#: classes/pref/prefs.php:461
 msgid "Some preferences are only available in default profile."
 msgstr "部分设置仅支持默认偏好."
 
-#: classes/pref/prefs.php:549
+#: classes/pref/prefs.php:530
 msgid "Customize"
 msgstr "自定义"
 
-#: classes/pref/prefs.php:563
+#: classes/pref/prefs.php:544
 msgid "default"
 msgstr "默认"
 
-#: classes/pref/prefs.php:625
+#: classes/pref/prefs.php:608
 msgid "Register"
 msgstr "注册"
 
-#: classes/pref/prefs.php:635
-#, php-format
-msgid "Current server time: %s (UTC)"
+#: classes/pref/prefs.php:619
+#, fuzzy, php-format
+msgid "Current server time: %s"
 msgstr "当前服务器系统时间: %s (UTC)"
 
-#: classes/pref/prefs.php:667
+#: classes/pref/prefs.php:647
 msgid "Save configuration"
 msgstr "保存设置"
 
-#: classes/pref/prefs.php:671
+#: classes/pref/prefs.php:651
 msgid "Save and exit preferences"
 msgstr "保存并退出设置"
 
-#: classes/pref/prefs.php:676
+#: classes/pref/prefs.php:656
 msgid "Manage profiles"
 msgstr "管理偏好文件"
 
-#: classes/pref/prefs.php:679
+#: classes/pref/prefs.php:659
 msgid "Reset to defaults"
 msgstr "恢复到默认"
 
-#: classes/pref/prefs.php:726
+#: classes/pref/prefs.php:706
 msgid "System plugins"
 msgstr "系统插件"
 
-#: classes/pref/prefs.php:727
+#: classes/pref/prefs.php:707
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr "在 <strong>config.php</strong> 中启用的系统插件适用于所有用户."
 
-#: classes/pref/prefs.php:732
-#: classes/pref/prefs.php:788
+#: classes/pref/prefs.php:712
+#: classes/pref/prefs.php:768
 msgid "Plugin"
 msgstr "插件"
 
-#: classes/pref/prefs.php:733
-#: classes/pref/prefs.php:789
+#: classes/pref/prefs.php:713
+#: classes/pref/prefs.php:769
 msgid "Description"
 msgstr "描述"
 
-#: classes/pref/prefs.php:734
-#: classes/pref/prefs.php:790
+#: classes/pref/prefs.php:714
+#: classes/pref/prefs.php:770
 msgid "Version"
 msgstr "版本"
 
-#: classes/pref/prefs.php:735
-#: classes/pref/prefs.php:791
+#: classes/pref/prefs.php:715
+#: classes/pref/prefs.php:771
 msgid "Author"
 msgstr "作者"
 
-#: classes/pref/prefs.php:766
-#: classes/pref/prefs.php:825
+#: classes/pref/prefs.php:746
+#: classes/pref/prefs.php:805
 msgid "more info"
 msgstr "更多信息"
 
-#: classes/pref/prefs.php:775
-#: classes/pref/prefs.php:834
+#: classes/pref/prefs.php:755
+#: classes/pref/prefs.php:814
 msgid "Clear data"
 msgstr "清空数据"
 
-#: classes/pref/prefs.php:784
+#: classes/pref/prefs.php:764
 msgid "User plugins"
 msgstr "用户插件"
 
-#: classes/pref/prefs.php:853
+#: classes/pref/prefs.php:833
 msgid "Enable selected plugins"
 msgstr "启用选择的插件"
 
-#: classes/pref/prefs.php:929
+#: classes/pref/prefs.php:909
 msgid "Incorrect one time password"
 msgstr "一次性密码不正确"
 
-#: classes/pref/prefs.php:934
-#: classes/pref/prefs.php:965
+#: classes/pref/prefs.php:914
+#: classes/pref/prefs.php:945
 msgid "Incorrect password"
 msgstr "密码错误"
 
-#: classes/pref/prefs.php:989
+#: classes/pref/prefs.php:969
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
 msgstr "您可以通过自定义 CSS 来更改颜色，字体和版式。"
 
-#: classes/pref/prefs.php:1026
+#: classes/pref/prefs.php:1006
 msgid "Create profile"
 msgstr "创建偏好文件"
 
+#: classes/pref/prefs.php:1025
 #: classes/pref/prefs.php:1045
-#: classes/pref/prefs.php:1067
 msgid "(active)"
 msgstr "（当前使用的）"
 
-#: classes/pref/prefs.php:1101
+#: classes/pref/prefs.php:1077
 msgid "Remove selected profiles"
 msgstr "移除选中的偏好文件"
 
-#: classes/pref/prefs.php:1103
+#: classes/pref/prefs.php:1079
 msgid "Activate profile"
 msgstr "启用偏好文件"
 
@@ -3422,6 +3408,48 @@ msgstr "无法更改网址。"
 msgid "Shared URLs cleared."
 msgstr "分享的 URL 已被清除。"
 
+#~ msgid "This option enables marking articles as read automatically while you scroll article list."
+#~ msgstr "在滚动页面的同时自动将文章标记为已读。"
+
+#~ msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
+#~ msgstr "全局最短更新间隔，适用于所有更新方法"
+
+#~ msgid "Uses UTC timezone"
+#~ msgstr "使用UTC时区"
+
+#~ msgid "Purge articles after this number of days (0 - disables)"
+#~ msgstr "清除多少天之前的文章？（0为不启用）"
+
+#~ msgid "Customize CSS stylesheet to your liking"
+#~ msgstr "自定义 CSS 样式"
+
+#~ msgid "Select one of the available CSS themes"
+#~ msgstr "选择一个可用的 CSS 主题"
+
+#~ msgid "E-mail"
+#~ msgstr "电子邮件"
+
+#~ msgid "Access level"
+#~ msgstr "访问级别"
+
+#~ msgid "One time passwords are currently enabled. Enter your current password below to disable."
+#~ msgstr "动态口令已经启用。输入你当前的密码来禁用。"
+
+#~ msgid "Enter your password"
+#~ msgstr "输入您的密码"
+
+#~ msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
+#~ msgstr "更改当前密码会自动禁用 OTP 动态口令。"
+
+#~ msgid "Scan the following code by the Authenticator application:"
+#~ msgstr "使用认证应用扫描下面编码:"
+
+#~ msgid "Enter the generated one time password"
+#~ msgstr "请填写生成的 OTP 动态口令"
+
+#~ msgid "PHP GD functions are required for OTP support."
+#~ msgstr "OTP 动态口令需要开启 PHP GD."
+
 #~ msgid "Not logged in"
 #~ msgstr "未登录"
 
@@ -3848,9 +3876,6 @@ msgstr "分享的 URL 已被清除。"
 
 #~ msgid "Change password to"
 #~ msgstr "更改密码为："
-
-#~ msgid "E-mail: "
-#~ msgstr "电子邮件："
 
 #~ msgid "Login field cannot be blank."
 #~ msgstr "请填写登录信息。"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-20 15:53+0300\n"
+"POT-Creation-Date: 2019-02-21 12:37+0300\n"
 "PO-Revision-Date: 2009-11-19 09:40+0100\n"
 "Last-Translator: Alfred Galitó <bratac@bratac.cat>\n"
 "Language-Team: Català <bratac@bratac.cat>\n"
@@ -365,7 +365,7 @@ msgstr "Surt"
 #: prefs.php:33
 #: prefs.php:130
 #: include/functions.php:1201
-#: classes/pref/prefs.php:430
+#: classes/pref/prefs.php:428
 msgid "Preferences"
 msgstr "Preferències"
 
@@ -839,7 +839,7 @@ msgstr "Fitxer:"
 
 #: include/login_form.php:103
 #: classes/handler/public.php:280
-#: classes/pref/prefs.php:1050
+#: classes/pref/prefs.php:1030
 #: classes/rpc.php:69
 #, fuzzy
 msgid "Default profile"
@@ -897,7 +897,7 @@ msgstr "Etiquetes per aquest article (separades per comes):"
 #: classes/pref/feeds.php:830
 #: classes/pref/feeds.php:997
 #: classes/pref/filters.php:511
-#: classes/pref/prefs.php:1001
+#: classes/pref/prefs.php:981
 #: plugins/nsfw/init.php:86
 #: plugins/note/init.php:56
 #: plugins/af_readability/init.php:81
@@ -919,7 +919,7 @@ msgstr "Desa"
 #: classes/pref/filters.php:950
 #: classes/pref/filters.php:1028
 #: classes/pref/filters.php:1121
-#: classes/pref/prefs.php:1003
+#: classes/pref/prefs.php:983
 #: classes/feeds.php:720
 #: classes/feeds.php:772
 #: classes/feeds.php:814
@@ -1046,7 +1046,7 @@ msgstr "No s'ha trobat el tema a l'ajuda."
 #: classes/pref/feeds.php:1557
 #: classes/pref/feeds.php:1620
 #: classes/pref/filters.php:175
-#: classes/pref/prefs.php:1107
+#: classes/pref/prefs.php:1083
 #: plugins/af_psql_trgm/init.php:111
 #: plugins/import_export/init.php:447
 #: plugins/import_export/init.php:491
@@ -1287,7 +1287,7 @@ msgstr "S'ha creat l'etiqueta <b>%s</b> "
 #: classes/pref/filters.php:778
 #: classes/pref/filters.php:865
 #: classes/pref/filters.php:895
-#: classes/pref/prefs.php:1012
+#: classes/pref/prefs.php:992
 #, fuzzy
 msgid "Select"
 msgstr "Selecciona:"
@@ -1302,7 +1302,7 @@ msgstr "Selecciona:"
 #: classes/pref/filters.php:781
 #: classes/pref/filters.php:868
 #: classes/pref/filters.php:898
-#: classes/pref/prefs.php:1015
+#: classes/pref/prefs.php:995
 #: classes/feeds.php:62
 msgid "All"
 msgstr "Tot"
@@ -1317,7 +1317,7 @@ msgstr "Tot"
 #: classes/pref/filters.php:783
 #: classes/pref/filters.php:870
 #: classes/pref/filters.php:900
-#: classes/pref/prefs.php:1017
+#: classes/pref/prefs.php:997
 #: classes/feeds.php:65
 msgid "None"
 msgstr "Cap"
@@ -1485,7 +1485,7 @@ msgid "Refresh"
 msgstr "Actualitza"
 
 #: classes/pref/system.php:44
-#: classes/pref/prefs.php:629
+#: classes/pref/prefs.php:612
 msgid "Clear"
 msgstr ""
 
@@ -1576,7 +1576,7 @@ msgstr "Neteja d'articles:"
 #: classes/pref/feeds.php:666
 #: classes/pref/feeds.php:933
 #: classes/pref/feeds.php:1737
-#: classes/pref/prefs.php:247
+#: classes/pref/prefs.php:244
 #: classes/feeds.php:699
 #, fuzzy
 msgid "Password"
@@ -1641,7 +1641,7 @@ msgid "Replace"
 msgstr ""
 
 #: classes/pref/feeds.php:814
-#: classes/pref/prefs.php:693
+#: classes/pref/prefs.php:673
 msgid "Plugins"
 msgstr ""
 
@@ -1981,8 +1981,8 @@ msgstr "En mode combinat expandeix els articles automàticament."
 
 #: classes/pref/prefs.php:27
 #, fuzzy
-msgid "This option enables marking articles as read automatically while you scroll article list."
-msgstr "Aquesta opció permet marcar els articles com a llegits automàticament en mode combinat (excepte en el canal d'articles Frescos) mentre desplaceu la barra."
+msgid "Mark articles as read while you scroll"
+msgstr "Esteu segur que voleu marcar tots els articles com a llegits?"
 
 #: classes/pref/prefs.php:28
 msgid "Automatically expand articles in combined mode"
@@ -1993,7 +1993,8 @@ msgid "Combined feed display"
 msgstr "Mostra els canals combinats"
 
 #: classes/pref/prefs.php:29
-msgid "Display expanded list of feed articles, instead of separate displays for headlines and article content"
+#, fuzzy
+msgid "Show combined list of articles, instead of separate panels"
 msgstr "Affiche les articles sous la forme d'une liste étendue, au lieu de deux listes séparées (une pour les en-têtes et une pour le contenu)"
 
 #: classes/pref/prefs.php:30
@@ -2010,10 +2011,6 @@ msgstr "No s'han trobat articles per a mostrar."
 msgid "Default feed update interval"
 msgstr "Interval per defecte"
 
-#: classes/pref/prefs.php:32
-msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
-msgstr ""
-
 #: classes/pref/prefs.php:33
 msgid "Mark articles in e-mail digest as read"
 msgstr "Marca tots els articles enviat en el resum via adreça electrònica com a llegits"
@@ -2024,7 +2021,8 @@ msgid "Enable e-mail digest"
 msgstr "Habilita el resum diari de capçaleres per correu electrònic."
 
 #: classes/pref/prefs.php:34
-msgid "This option enables sending daily digest of new (and unread) headlines on your configured e-mail address"
+#, fuzzy
+msgid "Send daily digest of new (and unread) headlines to your e-mail address"
 msgstr "Aquesta opció habilita l'enviament diari d'un resum de les capçaleres noves (i no llegides) a l'adreça electrònica especificada en la configuració de l'usuari."
 
 #: classes/pref/prefs.php:35
@@ -2032,7 +2030,7 @@ msgid "Try to send digests around specified time"
 msgstr ""
 
 #: classes/pref/prefs.php:35
-msgid "Uses UTC timezone"
+msgid "Time in UTC"
 msgstr ""
 
 #: classes/pref/prefs.php:36
@@ -2071,7 +2069,7 @@ msgid "Long date format"
 msgstr "Format llarg de data"
 
 #: classes/pref/prefs.php:42
-msgid "The syntax used is identical to the PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
+msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
 msgstr ""
 
 #: classes/pref/prefs.php:43
@@ -2079,13 +2077,13 @@ msgid "On catchup show next feed"
 msgstr "Salta automàticament al canal següent"
 
 #: classes/pref/prefs.php:43
-msgid "Automatically open next feed with unread articles after marking one as read"
+msgid "Automatically opens next unread feed after marking one as read"
 msgstr ""
 
 #: classes/pref/prefs.php:44
 #, fuzzy
-msgid "Purge articles after this number of days (0 - disables)"
-msgstr "Purga els articles vells al cap d'aquest nombre de dies (0 - desactiva la purga)"
+msgid "Purge articles older than"
+msgstr "Purga els articles per llegir"
 
 #: classes/pref/prefs.php:45
 msgid "Purge unread articles"
@@ -2139,10 +2137,6 @@ msgstr "Elimina les etiquetes HTML més freqüents en llegir els articles."
 msgid "Customize stylesheet"
 msgstr "URL de la fulla d'estils personalitzada."
 
-#: classes/pref/prefs.php:53
-msgid "Customize CSS stylesheet to your liking"
-msgstr ""
-
 #: classes/pref/prefs.php:54
 msgid "Time zone"
 msgstr ""
@@ -2165,10 +2159,6 @@ msgstr "Idioma:"
 msgid "Theme"
 msgstr "Interfícies"
 
-#: classes/pref/prefs.php:57
-msgid "Select one of the available CSS themes"
-msgstr ""
-
 #: classes/pref/prefs.php:129
 msgid "The configuration was saved."
 msgstr "S'ha desat la configuració"
@@ -2187,211 +2177,200 @@ msgstr ""
 msgid "Personal data / Authentication"
 msgstr "Autenticació"
 
-#: classes/pref/prefs.php:203
+#: classes/pref/prefs.php:186
 msgid "Personal data"
 msgstr "Dades personals"
 
 #: classes/pref/prefs.php:215
-msgid "Full name"
+msgid "Full name:"
 msgstr ""
 
-#: classes/pref/prefs.php:219
-msgid "E-mail"
-msgstr "Adreça electrònica"
+#: classes/pref/prefs.php:220
+#, fuzzy
+msgid "E-mail:"
+msgstr "Adreça electrònica:"
 
-#: classes/pref/prefs.php:225
-msgid "Access level"
-msgstr "Nivell d'accés"
+#: classes/pref/prefs.php:228
+#, fuzzy
+msgid "Access level:"
+msgstr "Nivell d'accés:"
 
-#: classes/pref/prefs.php:235
+#: classes/pref/prefs.php:239
 #, fuzzy
 msgid "Save data"
 msgstr "Desa"
 
-#: classes/pref/prefs.php:283
+#: classes/pref/prefs.php:288
 msgid "Changing your current password will disable OTP."
 msgstr ""
 
-#: classes/pref/prefs.php:288
-msgid "Old password"
+#: classes/pref/prefs.php:292
+#, fuzzy
+msgid "Old password:"
 msgstr "Contrasenya antiga"
 
-#: classes/pref/prefs.php:291
-msgid "New password"
+#: classes/pref/prefs.php:297
+#, fuzzy
+msgid "New password:"
 msgstr "Nova contrasenya"
 
-#: classes/pref/prefs.php:296
-msgid "Confirm password"
+#: classes/pref/prefs.php:302
+#, fuzzy
+msgid "Confirm password:"
 msgstr "Confirmeu la contrasenya"
 
-#: classes/pref/prefs.php:306
+#: classes/pref/prefs.php:312
 msgid "Change password"
 msgstr "Canvia la contrasenya"
 
-#: classes/pref/prefs.php:312
+#: classes/pref/prefs.php:317
 msgid "One time passwords / Authenticator"
 msgstr ""
 
-#: classes/pref/prefs.php:316
-msgid "One time passwords are currently enabled. Enter your current password below to disable."
-msgstr ""
-
-#: classes/pref/prefs.php:341
-#: classes/pref/prefs.php:392
+#: classes/pref/prefs.php:347
+#: classes/pref/prefs.php:395
 #, fuzzy
-msgid "Enter your password"
-msgstr "El nom d'usuari o la contrasenya és incorrecte"
+msgid "Your password:"
+msgstr "Confirmeu la contrasenya"
 
-#: classes/pref/prefs.php:352
+#: classes/pref/prefs.php:357
 #, fuzzy
 msgid "Disable OTP"
 msgstr "(Desactivat)"
 
-#: classes/pref/prefs.php:358
-msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
-msgstr ""
-
-#: classes/pref/prefs.php:360
-msgid "Scan the following code by the Authenticator application:"
-msgstr ""
-
-#: classes/pref/prefs.php:397
+#: classes/pref/prefs.php:401
 #, fuzzy
-msgid "Enter the generated one time password"
-msgstr "Si us plau, escriviu una nota per aquest article:"
+msgid "One time password:"
+msgstr "El nom d'usuari o la contrasenya és incorrecte"
 
-#: classes/pref/prefs.php:411
+#: classes/pref/prefs.php:408
 #, fuzzy
 msgid "Enable OTP"
 msgstr "Activat"
 
-#: classes/pref/prefs.php:417
-msgid "PHP GD functions are required for OTP support."
-msgstr ""
-
-#: classes/pref/prefs.php:463
+#: classes/pref/prefs.php:461
 msgid "Some preferences are only available in default profile."
 msgstr ""
 
-#: classes/pref/prefs.php:549
+#: classes/pref/prefs.php:530
 #, fuzzy
 msgid "Customize"
 msgstr "URL de la fulla d'estils personalitzada."
 
-#: classes/pref/prefs.php:563
+#: classes/pref/prefs.php:544
 #, fuzzy
 msgid "default"
 msgstr "Per defecte"
 
-#: classes/pref/prefs.php:625
+#: classes/pref/prefs.php:608
 #, fuzzy
 msgid "Register"
 msgstr "Registrat"
 
-#: classes/pref/prefs.php:635
+#: classes/pref/prefs.php:619
 #, php-format
-msgid "Current server time: %s (UTC)"
+msgid "Current server time: %s"
 msgstr ""
 
-#: classes/pref/prefs.php:667
+#: classes/pref/prefs.php:647
 msgid "Save configuration"
 msgstr "Desa la configuració"
 
-#: classes/pref/prefs.php:671
+#: classes/pref/prefs.php:651
 #, fuzzy
 msgid "Save and exit preferences"
 msgstr "Surt de les preferències"
 
-#: classes/pref/prefs.php:676
+#: classes/pref/prefs.php:656
 #, fuzzy
 msgid "Manage profiles"
 msgstr "Crea un filtre"
 
-#: classes/pref/prefs.php:679
+#: classes/pref/prefs.php:659
 msgid "Reset to defaults"
 msgstr "Torna als paràmetres per defecte"
 
-#: classes/pref/prefs.php:726
+#: classes/pref/prefs.php:706
 msgid "System plugins"
 msgstr ""
 
-#: classes/pref/prefs.php:727
+#: classes/pref/prefs.php:707
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr ""
 
-#: classes/pref/prefs.php:732
-#: classes/pref/prefs.php:788
+#: classes/pref/prefs.php:712
+#: classes/pref/prefs.php:768
 msgid "Plugin"
 msgstr ""
 
-#: classes/pref/prefs.php:733
-#: classes/pref/prefs.php:789
+#: classes/pref/prefs.php:713
+#: classes/pref/prefs.php:769
 #, fuzzy
 msgid "Description"
 msgstr "description"
 
-#: classes/pref/prefs.php:734
-#: classes/pref/prefs.php:790
+#: classes/pref/prefs.php:714
+#: classes/pref/prefs.php:770
 msgid "Version"
 msgstr ""
 
-#: classes/pref/prefs.php:735
-#: classes/pref/prefs.php:791
+#: classes/pref/prefs.php:715
+#: classes/pref/prefs.php:771
 msgid "Author"
 msgstr ""
 
-#: classes/pref/prefs.php:766
-#: classes/pref/prefs.php:825
+#: classes/pref/prefs.php:746
+#: classes/pref/prefs.php:805
 msgid "more info"
 msgstr ""
 
-#: classes/pref/prefs.php:775
-#: classes/pref/prefs.php:834
+#: classes/pref/prefs.php:755
+#: classes/pref/prefs.php:814
 #, fuzzy
 msgid "Clear data"
 msgstr "Esborra les dades del canal"
 
-#: classes/pref/prefs.php:784
+#: classes/pref/prefs.php:764
 msgid "User plugins"
 msgstr ""
 
-#: classes/pref/prefs.php:853
+#: classes/pref/prefs.php:833
 #, fuzzy
 msgid "Enable selected plugins"
 msgstr "Habilita les icones dels canals."
 
-#: classes/pref/prefs.php:929
+#: classes/pref/prefs.php:909
 #, fuzzy
 msgid "Incorrect one time password"
 msgstr "El nom d'usuari o la contrasenya és incorrecte"
 
-#: classes/pref/prefs.php:934
-#: classes/pref/prefs.php:965
+#: classes/pref/prefs.php:914
+#: classes/pref/prefs.php:945
 #, fuzzy
 msgid "Incorrect password"
 msgstr "El nom d'usuari o la contrasenya és incorrecte"
 
-#: classes/pref/prefs.php:989
+#: classes/pref/prefs.php:969
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
 msgstr ""
 
-#: classes/pref/prefs.php:1026
+#: classes/pref/prefs.php:1006
 #, fuzzy
 msgid "Create profile"
 msgstr "Crea un filtre"
 
+#: classes/pref/prefs.php:1025
 #: classes/pref/prefs.php:1045
-#: classes/pref/prefs.php:1067
 #, fuzzy
 msgid "(active)"
 msgstr "Adaptatiu"
 
-#: classes/pref/prefs.php:1101
+#: classes/pref/prefs.php:1077
 #, fuzzy
 msgid "Remove selected profiles"
 msgstr "Esteu segur que voleu suprimir els filtres seleccionats?"
 
-#: classes/pref/prefs.php:1103
+#: classes/pref/prefs.php:1079
 #, fuzzy
 msgid "Activate profile"
 msgstr "Esteu segur que voleu suprimir els filtres seleccionats?"
@@ -3748,6 +3727,28 @@ msgid "Shared URLs cleared."
 msgstr ""
 
 #, fuzzy
+#~ msgid "This option enables marking articles as read automatically while you scroll article list."
+#~ msgstr "Aquesta opció permet marcar els articles com a llegits automàticament en mode combinat (excepte en el canal d'articles Frescos) mentre desplaceu la barra."
+
+#, fuzzy
+#~ msgid "Purge articles after this number of days (0 - disables)"
+#~ msgstr "Purga els articles vells al cap d'aquest nombre de dies (0 - desactiva la purga)"
+
+#~ msgid "E-mail"
+#~ msgstr "Adreça electrònica"
+
+#~ msgid "Access level"
+#~ msgstr "Nivell d'accés"
+
+#, fuzzy
+#~ msgid "Enter your password"
+#~ msgstr "El nom d'usuari o la contrasenya és incorrecte"
+
+#, fuzzy
+#~ msgid "Enter the generated one time password"
+#~ msgstr "Si us plau, escriviu una nota per aquest article:"
+
+#, fuzzy
 #~ msgid "Not logged in"
 #~ msgstr "Última connexió el"
 
@@ -4083,9 +4084,6 @@ msgstr ""
 
 #~ msgid "Change password to"
 #~ msgstr "Nova contrasenya"
-
-#~ msgid "E-mail: "
-#~ msgstr "Adreça electrònica:"
 
 #~ msgid "Login field cannot be blank."
 #~ msgstr "El nom del camp no es pot deixar en blanc."

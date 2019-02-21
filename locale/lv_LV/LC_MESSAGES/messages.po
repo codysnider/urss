@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-20 15:53+0300\n"
+"POT-Creation-Date: 2019-02-21 12:37+0300\n"
 "PO-Revision-Date: 2014-11-01 23:36+0300\n"
 "Last-Translator: Valdis Vītoliņš <valdis.vitolins@odo.lv>\n"
 "Language-Team: \n"
@@ -355,7 +355,7 @@ msgstr "Atteikties"
 #: prefs.php:33
 #: prefs.php:130
 #: include/functions.php:1201
-#: classes/pref/prefs.php:430
+#: classes/pref/prefs.php:428
 msgid "Preferences"
 msgstr "Iestatījumi"
 
@@ -794,7 +794,7 @@ msgstr "Profils:"
 
 #: include/login_form.php:103
 #: classes/handler/public.php:280
-#: classes/pref/prefs.php:1050
+#: classes/pref/prefs.php:1030
 #: classes/rpc.php:69
 msgid "Default profile"
 msgstr "Noklusētais profils"
@@ -847,7 +847,7 @@ msgstr "Šī raksta iezīmes (atdalītas ar komatiem):"
 #: classes/pref/feeds.php:830
 #: classes/pref/feeds.php:997
 #: classes/pref/filters.php:511
-#: classes/pref/prefs.php:1001
+#: classes/pref/prefs.php:981
 #: plugins/nsfw/init.php:86
 #: plugins/note/init.php:56
 #: plugins/af_readability/init.php:81
@@ -869,7 +869,7 @@ msgstr "Saglabāt"
 #: classes/pref/filters.php:950
 #: classes/pref/filters.php:1028
 #: classes/pref/filters.php:1121
-#: classes/pref/prefs.php:1003
+#: classes/pref/prefs.php:983
 #: classes/feeds.php:720
 #: classes/feeds.php:772
 #: classes/feeds.php:814
@@ -991,7 +991,7 @@ msgstr "Palīdzības tēma netika atrasta."
 #: classes/pref/feeds.php:1557
 #: classes/pref/feeds.php:1620
 #: classes/pref/filters.php:175
-#: classes/pref/prefs.php:1107
+#: classes/pref/prefs.php:1083
 #: plugins/af_psql_trgm/init.php:111
 #: plugins/import_export/init.php:447
 #: plugins/import_export/init.php:491
@@ -1221,7 +1221,7 @@ msgstr "Izveidoju etiķeti <b>%s</b>"
 #: classes/pref/filters.php:778
 #: classes/pref/filters.php:865
 #: classes/pref/filters.php:895
-#: classes/pref/prefs.php:1012
+#: classes/pref/prefs.php:992
 msgid "Select"
 msgstr "Iezīmēt"
 
@@ -1235,7 +1235,7 @@ msgstr "Iezīmēt"
 #: classes/pref/filters.php:781
 #: classes/pref/filters.php:868
 #: classes/pref/filters.php:898
-#: classes/pref/prefs.php:1015
+#: classes/pref/prefs.php:995
 #: classes/feeds.php:62
 msgid "All"
 msgstr "Visus"
@@ -1250,7 +1250,7 @@ msgstr "Visus"
 #: classes/pref/filters.php:783
 #: classes/pref/filters.php:870
 #: classes/pref/filters.php:900
-#: classes/pref/prefs.php:1017
+#: classes/pref/prefs.php:997
 #: classes/feeds.php:65
 msgid "None"
 msgstr "Nevienu"
@@ -1413,7 +1413,7 @@ msgid "Refresh"
 msgstr "Atjaunot"
 
 #: classes/pref/system.php:44
-#: classes/pref/prefs.php:629
+#: classes/pref/prefs.php:612
 msgid "Clear"
 msgstr "Attīrīt"
 
@@ -1502,7 +1502,7 @@ msgstr "Dzēšu rakstu:"
 #: classes/pref/feeds.php:666
 #: classes/pref/feeds.php:933
 #: classes/pref/feeds.php:1737
-#: classes/pref/prefs.php:247
+#: classes/pref/prefs.php:244
 #: classes/feeds.php:699
 msgid "Password"
 msgstr "Parole"
@@ -1563,7 +1563,7 @@ msgid "Replace"
 msgstr "Aizvietot"
 
 #: classes/pref/feeds.php:814
-#: classes/pref/prefs.php:693
+#: classes/pref/prefs.php:673
 msgid "Plugins"
 msgstr "Spraudņi"
 
@@ -1871,8 +1871,9 @@ msgid "Automatically mark articles as read"
 msgstr "Automātiski atzīmēt rakstus kā izlasītus"
 
 #: classes/pref/prefs.php:27
-msgid "This option enables marking articles as read automatically while you scroll article list."
-msgstr "Šī iespēja ļauj automātiski atzīmēt rakstu kā lasītu, jums pārtinot tā saturu."
+#, fuzzy
+msgid "Mark articles as read while you scroll"
+msgstr "Vai atzīmēt visus rakstus kā lasītus?"
 
 #: classes/pref/prefs.php:28
 msgid "Automatically expand articles in combined mode"
@@ -1883,7 +1884,8 @@ msgid "Combined feed display"
 msgstr "Kombinēts barotņu skatījums"
 
 #: classes/pref/prefs.php:29
-msgid "Display expanded list of feed articles, instead of separate displays for headlines and article content"
+#, fuzzy
+msgid "Show combined list of articles, instead of separate panels"
 msgstr "Atsevišķa virsraksta un satura vietā parāda paplašinātu barotnes rakstu sarakstu"
 
 #: classes/pref/prefs.php:30
@@ -1898,10 +1900,6 @@ msgstr "Vienlaicīgi parādīto rakstu skaits"
 msgid "Default feed update interval"
 msgstr "Noklusētais barotnes atjaunošanas intervāls"
 
-#: classes/pref/prefs.php:32
-msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
-msgstr "Īsākais periods, pēc kura barotno tiks pārbaudīti jaunumi, neatkarīgi no atjaunošanas veida"
-
 #: classes/pref/prefs.php:33
 msgid "Mark articles in e-mail digest as read"
 msgstr "Atzīmēt īssavilkuma rakstus e-pastā kā lasītus"
@@ -1911,7 +1909,8 @@ msgid "Enable e-mail digest"
 msgstr "Ieslēgt īssavilkuma sūtīšanu pa e-pastu"
 
 #: classes/pref/prefs.php:34
-msgid "This option enables sending daily digest of new (and unread) headlines on your configured e-mail address"
+#, fuzzy
+msgid "Send daily digest of new (and unread) headlines to your e-mail address"
 msgstr "Šī iespēja ļauj nosūtīt ikdienas jauno (vai nelasīto) rakstu īssavilkumu uz norādīto e-pasta adresi"
 
 #: classes/pref/prefs.php:35
@@ -1919,8 +1918,9 @@ msgid "Try to send digests around specified time"
 msgstr "Censties nosūtīt īssavilkumus ap norādīto laiku"
 
 #: classes/pref/prefs.php:35
-msgid "Uses UTC timezone"
-msgstr "Izmanto UTC laika zonu"
+#, fuzzy
+msgid "Time in UTC"
+msgstr "Laika zona"
 
 #: classes/pref/prefs.php:36
 msgid "Enable API access"
@@ -1955,7 +1955,8 @@ msgid "Long date format"
 msgstr "Garais datumu formāts"
 
 #: classes/pref/prefs.php:42
-msgid "The syntax used is identical to the PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
+#, fuzzy
+msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
 msgstr "Izmantotā sintakse ir identiska PHP <a href='http://php.net/manual/function.date.php'>date()</a> funkcijai."
 
 #: classes/pref/prefs.php:43
@@ -1963,12 +1964,14 @@ msgid "On catchup show next feed"
 msgstr "Pēc noķeršanas rādīt nākamo barotni"
 
 #: classes/pref/prefs.php:43
-msgid "Automatically open next feed with unread articles after marking one as read"
+#, fuzzy
+msgid "Automatically opens next unread feed after marking one as read"
 msgstr "Automātiski atver nākamo barotni, kad vienā visi raksti ir atzīmēti kā lasīti"
 
 #: classes/pref/prefs.php:44
-msgid "Purge articles after this number of days (0 - disables)"
-msgstr "Dzēst rakstus pēc norādītā dienu skaita (0 – atceļ)"
+#, fuzzy
+msgid "Purge articles older than"
+msgstr "Dzēst nelasītos rakstus"
 
 #: classes/pref/prefs.php:45
 msgid "Purge unread articles"
@@ -2020,10 +2023,6 @@ msgstr "Lasot rakstus, atmest visus, izņemot pašus svarīgākos HTML tagus."
 msgid "Customize stylesheet"
 msgstr "Pielāgot stilu lapu"
 
-#: classes/pref/prefs.php:53
-msgid "Customize CSS stylesheet to your liking"
-msgstr "Pielāgot CSS stilu lapu"
-
 #: classes/pref/prefs.php:54
 msgid "Time zone"
 msgstr "Laika zona"
@@ -2044,10 +2043,6 @@ msgstr "Valoda"
 msgid "Theme"
 msgstr "Tēma"
 
-#: classes/pref/prefs.php:57
-msgid "Select one of the available CSS themes"
-msgstr "Izvēlieties vienu no pieejamām CSS tēmām"
-
 #: classes/pref/prefs.php:129
 msgid "The configuration was saved."
 msgstr "Iestatījumi ir saglabāti."
@@ -2064,195 +2059,187 @@ msgstr "Jūsu izvēles tagad ir iestatītas uz noklusētajām vērtībām."
 msgid "Personal data / Authentication"
 msgstr "Personīgie dati/autentifikācija"
 
-#: classes/pref/prefs.php:203
+#: classes/pref/prefs.php:186
 msgid "Personal data"
 msgstr "Personīgie dati"
 
 #: classes/pref/prefs.php:215
-msgid "Full name"
+#, fuzzy
+msgid "Full name:"
 msgstr "Vārds un uzvārds"
 
-#: classes/pref/prefs.php:219
-msgid "E-mail"
-msgstr "E-pasts"
+#: classes/pref/prefs.php:220
+#, fuzzy
+msgid "E-mail:"
+msgstr "E-pasts:"
 
-#: classes/pref/prefs.php:225
-msgid "Access level"
-msgstr "Pieejas līmenis"
+#: classes/pref/prefs.php:228
+#, fuzzy
+msgid "Access level:"
+msgstr "Pieejas līmenis:"
 
-#: classes/pref/prefs.php:235
+#: classes/pref/prefs.php:239
 msgid "Save data"
 msgstr "Saglabāt datus"
 
-#: classes/pref/prefs.php:283
+#: classes/pref/prefs.php:288
 msgid "Changing your current password will disable OTP."
 msgstr "Jūsu tekošās paroles maiņa izslēgs VLP."
 
-#: classes/pref/prefs.php:288
-msgid "Old password"
+#: classes/pref/prefs.php:292
+#, fuzzy
+msgid "Old password:"
 msgstr "Vecā parole"
 
-#: classes/pref/prefs.php:291
-msgid "New password"
+#: classes/pref/prefs.php:297
+#, fuzzy
+msgid "New password:"
 msgstr "Jaunā parole"
 
-#: classes/pref/prefs.php:296
-msgid "Confirm password"
+#: classes/pref/prefs.php:302
+#, fuzzy
+msgid "Confirm password:"
 msgstr "Apstipriniet paroli"
 
-#: classes/pref/prefs.php:306
+#: classes/pref/prefs.php:312
 msgid "Change password"
 msgstr "Nomainīt paroli"
 
-#: classes/pref/prefs.php:312
+#: classes/pref/prefs.php:317
 msgid "One time passwords / Authenticator"
 msgstr "Vienreizlietojamā parole/autentifikācija"
 
-#: classes/pref/prefs.php:316
-msgid "One time passwords are currently enabled. Enter your current password below to disable."
-msgstr "Vienreiz lietojamās paroles (VLP) šobrīd ir ieslēgtas. Lai izslēgtu, ievadiet jūsu pašreizējo paroli."
+#: classes/pref/prefs.php:347
+#: classes/pref/prefs.php:395
+#, fuzzy
+msgid "Your password:"
+msgstr "Apstipriniet paroli"
 
-#: classes/pref/prefs.php:341
-#: classes/pref/prefs.php:392
-msgid "Enter your password"
-msgstr "Ievadiet savu paroli"
-
-#: classes/pref/prefs.php:352
+#: classes/pref/prefs.php:357
 msgid "Disable OTP"
 msgstr "Atslēgt vienreizlietojamo paroli"
 
-#: classes/pref/prefs.php:358
-msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
-msgstr "Lai to lietotu, jums būs nepieciešams savietojams autentifikators. Jūsu paroles maiņa automātiski atslēgs vienreizlietojamo paroli."
+#: classes/pref/prefs.php:401
+#, fuzzy
+msgid "One time password:"
+msgstr "Nepareiza vienreiz lietojamā parole"
 
-#: classes/pref/prefs.php:360
-msgid "Scan the following code by the Authenticator application:"
-msgstr "Ar autentifikācijas moduli noskenējiet sekojošo kodu:"
-
-#: classes/pref/prefs.php:397
-msgid "Enter the generated one time password"
-msgstr "Ievadiet vienreiz lietojamo paroli:"
-
-#: classes/pref/prefs.php:411
+#: classes/pref/prefs.php:408
 msgid "Enable OTP"
 msgstr "Ieslēgt vienreizlietojamo paroli"
 
-#: classes/pref/prefs.php:417
-msgid "PHP GD functions are required for OTP support."
-msgstr "Lai ieslēgtu VLP, ir nepieciešams PHP GD atbalsts."
-
-#: classes/pref/prefs.php:463
+#: classes/pref/prefs.php:461
 msgid "Some preferences are only available in default profile."
 msgstr "Dažas izvēles ir pieejamas tikai noklusētajā profilā."
 
-#: classes/pref/prefs.php:549
+#: classes/pref/prefs.php:530
 msgid "Customize"
 msgstr "Pielāgot"
 
-#: classes/pref/prefs.php:563
+#: classes/pref/prefs.php:544
 #, fuzzy
 msgid "default"
 msgstr "Noklusētais"
 
-#: classes/pref/prefs.php:625
+#: classes/pref/prefs.php:608
 msgid "Register"
 msgstr "Reģistrēt"
 
-#: classes/pref/prefs.php:635
-#, php-format
-msgid "Current server time: %s (UTC)"
+#: classes/pref/prefs.php:619
+#, fuzzy, php-format
+msgid "Current server time: %s"
 msgstr "Tekošā laika zona ir: %s (UTC)"
 
-#: classes/pref/prefs.php:667
+#: classes/pref/prefs.php:647
 msgid "Save configuration"
 msgstr "Saglabāt iestatījumus"
 
-#: classes/pref/prefs.php:671
+#: classes/pref/prefs.php:651
 msgid "Save and exit preferences"
 msgstr "Saglabāt un iziet no iestatījumiem"
 
-#: classes/pref/prefs.php:676
+#: classes/pref/prefs.php:656
 msgid "Manage profiles"
 msgstr "Pārvaldīt profilus"
 
-#: classes/pref/prefs.php:679
+#: classes/pref/prefs.php:659
 msgid "Reset to defaults"
 msgstr "Atstatīt uz noklusētajiem"
 
-#: classes/pref/prefs.php:726
+#: classes/pref/prefs.php:706
 msgid "System plugins"
 msgstr "Sistēmas spraudņi"
 
-#: classes/pref/prefs.php:727
+#: classes/pref/prefs.php:707
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr ""
 
-#: classes/pref/prefs.php:732
-#: classes/pref/prefs.php:788
+#: classes/pref/prefs.php:712
+#: classes/pref/prefs.php:768
 msgid "Plugin"
 msgstr "Spraudnis"
 
-#: classes/pref/prefs.php:733
-#: classes/pref/prefs.php:789
+#: classes/pref/prefs.php:713
+#: classes/pref/prefs.php:769
 msgid "Description"
 msgstr "Apraksts"
 
-#: classes/pref/prefs.php:734
-#: classes/pref/prefs.php:790
+#: classes/pref/prefs.php:714
+#: classes/pref/prefs.php:770
 msgid "Version"
 msgstr "Versija"
 
-#: classes/pref/prefs.php:735
-#: classes/pref/prefs.php:791
+#: classes/pref/prefs.php:715
+#: classes/pref/prefs.php:771
 msgid "Author"
 msgstr "Autors"
 
-#: classes/pref/prefs.php:766
-#: classes/pref/prefs.php:825
+#: classes/pref/prefs.php:746
+#: classes/pref/prefs.php:805
 msgid "more info"
 msgstr "papildu info"
 
-#: classes/pref/prefs.php:775
-#: classes/pref/prefs.php:834
+#: classes/pref/prefs.php:755
+#: classes/pref/prefs.php:814
 msgid "Clear data"
 msgstr "Dzēst datus"
 
-#: classes/pref/prefs.php:784
+#: classes/pref/prefs.php:764
 msgid "User plugins"
 msgstr "Lietotāja spraudņi"
 
-#: classes/pref/prefs.php:853
+#: classes/pref/prefs.php:833
 msgid "Enable selected plugins"
 msgstr "Ieslēgt izvēlētos spraudņus"
 
-#: classes/pref/prefs.php:929
+#: classes/pref/prefs.php:909
 msgid "Incorrect one time password"
 msgstr "Nepareiza vienreiz lietojamā parole"
 
-#: classes/pref/prefs.php:934
-#: classes/pref/prefs.php:965
+#: classes/pref/prefs.php:914
+#: classes/pref/prefs.php:945
 msgid "Incorrect password"
 msgstr "Nepareiza parole"
 
-#: classes/pref/prefs.php:989
+#: classes/pref/prefs.php:969
 #, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
 msgstr "Jūs varat aizstāt krāsas, fontus un izklājumu, šobrīd izmantotā CSS vietā izmantojot savus pielāgojumus. Paraugu varat ņemt no <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">šī faila</a>."
 
-#: classes/pref/prefs.php:1026
+#: classes/pref/prefs.php:1006
 msgid "Create profile"
 msgstr "Izveidot profilu"
 
+#: classes/pref/prefs.php:1025
 #: classes/pref/prefs.php:1045
-#: classes/pref/prefs.php:1067
 msgid "(active)"
 msgstr "(aktīvs)"
 
-#: classes/pref/prefs.php:1101
+#: classes/pref/prefs.php:1077
 msgid "Remove selected profiles"
 msgstr "Dzēst iezīmētos profilus"
 
-#: classes/pref/prefs.php:1103
+#: classes/pref/prefs.php:1079
 msgid "Activate profile"
 msgstr "Aktivizēt profilu"
 
@@ -3515,6 +3502,48 @@ msgstr "Mēģinu mainīt vietrādi..."
 msgid "Shared URLs cleared."
 msgstr "Kopīgotie vietrāži attīrīti."
 
+#~ msgid "This option enables marking articles as read automatically while you scroll article list."
+#~ msgstr "Šī iespēja ļauj automātiski atzīmēt rakstu kā lasītu, jums pārtinot tā saturu."
+
+#~ msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
+#~ msgstr "Īsākais periods, pēc kura barotno tiks pārbaudīti jaunumi, neatkarīgi no atjaunošanas veida"
+
+#~ msgid "Uses UTC timezone"
+#~ msgstr "Izmanto UTC laika zonu"
+
+#~ msgid "Purge articles after this number of days (0 - disables)"
+#~ msgstr "Dzēst rakstus pēc norādītā dienu skaita (0 – atceļ)"
+
+#~ msgid "Customize CSS stylesheet to your liking"
+#~ msgstr "Pielāgot CSS stilu lapu"
+
+#~ msgid "Select one of the available CSS themes"
+#~ msgstr "Izvēlieties vienu no pieejamām CSS tēmām"
+
+#~ msgid "E-mail"
+#~ msgstr "E-pasts"
+
+#~ msgid "Access level"
+#~ msgstr "Pieejas līmenis"
+
+#~ msgid "One time passwords are currently enabled. Enter your current password below to disable."
+#~ msgstr "Vienreiz lietojamās paroles (VLP) šobrīd ir ieslēgtas. Lai izslēgtu, ievadiet jūsu pašreizējo paroli."
+
+#~ msgid "Enter your password"
+#~ msgstr "Ievadiet savu paroli"
+
+#~ msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
+#~ msgstr "Lai to lietotu, jums būs nepieciešams savietojams autentifikators. Jūsu paroles maiņa automātiski atslēgs vienreizlietojamo paroli."
+
+#~ msgid "Scan the following code by the Authenticator application:"
+#~ msgstr "Ar autentifikācijas moduli noskenējiet sekojošo kodu:"
+
+#~ msgid "Enter the generated one time password"
+#~ msgstr "Ievadiet vienreiz lietojamo paroli:"
+
+#~ msgid "PHP GD functions are required for OTP support."
+#~ msgstr "Lai ieslēgtu VLP, ir nepieciešams PHP GD atbalsts."
+
 #~ msgid "Not logged in"
 #~ msgstr "Nav pieteicies"
 
@@ -3928,9 +3957,6 @@ msgstr "Kopīgotie vietrāži attīrīti."
 
 #~ msgid "Change password to"
 #~ msgstr "Nomainīt paroli uz"
-
-#~ msgid "E-mail: "
-#~ msgstr "E-pasts:"
 
 #~ msgid "Login field cannot be blank."
 #~ msgstr "Pieteikšanās lauks nevar būt tukšs."

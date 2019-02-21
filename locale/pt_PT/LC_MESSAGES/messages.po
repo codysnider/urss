@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss 1.2.14.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-20 15:53+0300\n"
+"POT-Creation-Date: 2019-02-21 12:37+0300\n"
 "PO-Revision-Date: 2016-01-09 14:25-0200\n"
 "Last-Translator: Duarte Velez Grilo <duartegrilo@gmail.com>\n"
 "Language-Team: Portuguese/Portugal <duartegrilo@gmail.com>\n"
@@ -357,7 +357,7 @@ msgstr "Sair"
 #: prefs.php:33
 #: prefs.php:130
 #: include/functions.php:1201
-#: classes/pref/prefs.php:430
+#: classes/pref/prefs.php:428
 msgid "Preferences"
 msgstr "Preferências"
 
@@ -797,7 +797,7 @@ msgstr "Perfil:"
 
 #: include/login_form.php:103
 #: classes/handler/public.php:280
-#: classes/pref/prefs.php:1050
+#: classes/pref/prefs.php:1030
 #: classes/rpc.php:69
 msgid "Default profile"
 msgstr "Perfil padrão"
@@ -850,7 +850,7 @@ msgstr "Tags para esse artigo (separadas por vírgula):"
 #: classes/pref/feeds.php:830
 #: classes/pref/feeds.php:997
 #: classes/pref/filters.php:511
-#: classes/pref/prefs.php:1001
+#: classes/pref/prefs.php:981
 #: plugins/nsfw/init.php:86
 #: plugins/note/init.php:56
 #: plugins/af_readability/init.php:81
@@ -872,7 +872,7 @@ msgstr "Salvar"
 #: classes/pref/filters.php:950
 #: classes/pref/filters.php:1028
 #: classes/pref/filters.php:1121
-#: classes/pref/prefs.php:1003
+#: classes/pref/prefs.php:983
 #: classes/feeds.php:720
 #: classes/feeds.php:772
 #: classes/feeds.php:814
@@ -994,7 +994,7 @@ msgstr "Tópico de ajuda não encontrado."
 #: classes/pref/feeds.php:1557
 #: classes/pref/feeds.php:1620
 #: classes/pref/filters.php:175
-#: classes/pref/prefs.php:1107
+#: classes/pref/prefs.php:1083
 #: plugins/af_psql_trgm/init.php:111
 #: plugins/import_export/init.php:447
 #: plugins/import_export/init.php:491
@@ -1225,7 +1225,7 @@ msgstr "Marcador <b>%s</b> criado"
 #: classes/pref/filters.php:778
 #: classes/pref/filters.php:865
 #: classes/pref/filters.php:895
-#: classes/pref/prefs.php:1012
+#: classes/pref/prefs.php:992
 msgid "Select"
 msgstr "Selecione"
 
@@ -1239,7 +1239,7 @@ msgstr "Selecione"
 #: classes/pref/filters.php:781
 #: classes/pref/filters.php:868
 #: classes/pref/filters.php:898
-#: classes/pref/prefs.php:1015
+#: classes/pref/prefs.php:995
 #: classes/feeds.php:62
 msgid "All"
 msgstr "Tudo"
@@ -1254,7 +1254,7 @@ msgstr "Tudo"
 #: classes/pref/filters.php:783
 #: classes/pref/filters.php:870
 #: classes/pref/filters.php:900
-#: classes/pref/prefs.php:1017
+#: classes/pref/prefs.php:997
 #: classes/feeds.php:65
 msgid "None"
 msgstr "Nenhum"
@@ -1417,7 +1417,7 @@ msgid "Refresh"
 msgstr "Atualizar"
 
 #: classes/pref/system.php:44
-#: classes/pref/prefs.php:629
+#: classes/pref/prefs.php:612
 msgid "Clear"
 msgstr "Limpar"
 
@@ -1506,7 +1506,7 @@ msgstr "Apagando artigo:"
 #: classes/pref/feeds.php:666
 #: classes/pref/feeds.php:933
 #: classes/pref/feeds.php:1737
-#: classes/pref/prefs.php:247
+#: classes/pref/prefs.php:244
 #: classes/feeds.php:699
 msgid "Password"
 msgstr "Senha"
@@ -1567,7 +1567,7 @@ msgid "Replace"
 msgstr "Substituir"
 
 #: classes/pref/feeds.php:814
-#: classes/pref/prefs.php:693
+#: classes/pref/prefs.php:673
 msgid "Plugins"
 msgstr ""
 
@@ -1878,8 +1878,9 @@ msgid "Automatically mark articles as read"
 msgstr "Marcar artigos como lidos automaticamente"
 
 #: classes/pref/prefs.php:27
-msgid "This option enables marking articles as read automatically while you scroll article list."
-msgstr "Esta opção ativa a marcação de artigos como lidos automaticamente enquanto você roda a lista."
+#, fuzzy
+msgid "Mark articles as read while you scroll"
+msgstr "Marcar todos os artigos como lidos?"
 
 #: classes/pref/prefs.php:28
 msgid "Automatically expand articles in combined mode"
@@ -1890,7 +1891,8 @@ msgid "Combined feed display"
 msgstr "Mostrar no modo combinado"
 
 #: classes/pref/prefs.php:29
-msgid "Display expanded list of feed articles, instead of separate displays for headlines and article content"
+#, fuzzy
+msgid "Show combined list of articles, instead of separate panels"
 msgstr "Mostrar a lista de assinaturas com título e conteúdo junto ao invés de uma caixa com os títulos e outra com o conteúdo"
 
 #: classes/pref/prefs.php:30
@@ -1905,10 +1907,6 @@ msgstr "Quantidade de artigos a exibir de uma vez"
 msgid "Default feed update interval"
 msgstr "Intervalo de atualização padrão"
 
-#: classes/pref/prefs.php:32
-msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
-msgstr "Intervalo mais curto em que um feed será verificado por update, não importando o mecanismo selecionado."
-
 #: classes/pref/prefs.php:33
 msgid "Mark articles in e-mail digest as read"
 msgstr "Marcar artigos do resumo por e-mail como lidos"
@@ -1918,7 +1916,8 @@ msgid "Enable e-mail digest"
 msgstr "Habilitar resumo por e-mail"
 
 #: classes/pref/prefs.php:34
-msgid "This option enables sending daily digest of new (and unread) headlines on your configured e-mail address"
+#, fuzzy
+msgid "Send daily digest of new (and unread) headlines to your e-mail address"
 msgstr "Esta opção habilita o envio diário de um resumo com os títulos dos artigos novos (e não lidos) no seu e-mail configurado"
 
 #: classes/pref/prefs.php:35
@@ -1926,8 +1925,9 @@ msgid "Try to send digests around specified time"
 msgstr "Tenta enviar resumos ao redor da hora especificada"
 
 #: classes/pref/prefs.php:35
-msgid "Uses UTC timezone"
-msgstr "Usa horário UTC"
+#, fuzzy
+msgid "Time in UTC"
+msgstr "Fuso horário"
 
 #: classes/pref/prefs.php:36
 msgid "Enable API access"
@@ -1962,7 +1962,8 @@ msgid "Long date format"
 msgstr "Formato de data longo"
 
 #: classes/pref/prefs.php:42
-msgid "The syntax used is identical to the PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
+#, fuzzy
+msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
 msgstr "O formato de data é idêntico à função <a href='http://php.net/manual/function.date.php'>date()</a> do PHP."
 
 #: classes/pref/prefs.php:43
@@ -1970,12 +1971,14 @@ msgid "On catchup show next feed"
 msgstr ""
 
 #: classes/pref/prefs.php:43
-msgid "Automatically open next feed with unread articles after marking one as read"
+#, fuzzy
+msgid "Automatically opens next unread feed after marking one as read"
 msgstr "Abrir a próxima assinatura com artigos não lidos automaticamente depois de marcar como lido"
 
 #: classes/pref/prefs.php:44
-msgid "Purge articles after this number of days (0 - disables)"
-msgstr "Apagar artigos depois de quantos dias (0 = nunca)"
+#, fuzzy
+msgid "Purge articles older than"
+msgstr "Apagar artigos não lidos"
 
 #: classes/pref/prefs.php:45
 msgid "Purge unread articles"
@@ -2027,10 +2030,6 @@ msgstr "Remover todas as tags HTML exceto as mais comuns ao ler artigos."
 msgid "Customize stylesheet"
 msgstr "Personalize a folha de estilo"
 
-#: classes/pref/prefs.php:53
-msgid "Customize CSS stylesheet to your liking"
-msgstr "Personalize a folha de estilo de acordo com seu gosto"
-
 #: classes/pref/prefs.php:54
 msgid "Time zone"
 msgstr "Fuso horário"
@@ -2051,10 +2050,6 @@ msgstr "Língua"
 msgid "Theme"
 msgstr "Tema"
 
-#: classes/pref/prefs.php:57
-msgid "Select one of the available CSS themes"
-msgstr "Selecione um dos temas CSS disponíveis"
-
 #: classes/pref/prefs.php:129
 msgid "The configuration was saved."
 msgstr "A configuração foi salva"
@@ -2071,195 +2066,187 @@ msgstr "Sua configuração foi ajustada para os valores padrão."
 msgid "Personal data / Authentication"
 msgstr "Dados pessoais / Autenticação"
 
-#: classes/pref/prefs.php:203
+#: classes/pref/prefs.php:186
 msgid "Personal data"
 msgstr "Dados pessoais"
 
 #: classes/pref/prefs.php:215
-msgid "Full name"
+#, fuzzy
+msgid "Full name:"
 msgstr "Nome completo"
 
-#: classes/pref/prefs.php:219
-msgid "E-mail"
-msgstr "E-mail"
+#: classes/pref/prefs.php:220
+#, fuzzy
+msgid "E-mail:"
+msgstr "E-mail:"
 
-#: classes/pref/prefs.php:225
-msgid "Access level"
-msgstr "Nível de acesso"
+#: classes/pref/prefs.php:228
+#, fuzzy
+msgid "Access level:"
+msgstr "Nível de acesso:"
 
-#: classes/pref/prefs.php:235
+#: classes/pref/prefs.php:239
 msgid "Save data"
 msgstr "Salvar"
 
-#: classes/pref/prefs.php:283
+#: classes/pref/prefs.php:288
 msgid "Changing your current password will disable OTP."
 msgstr "Trocar sua senha atual vai desabilitar a senha descartável."
 
-#: classes/pref/prefs.php:288
-msgid "Old password"
+#: classes/pref/prefs.php:292
+#, fuzzy
+msgid "Old password:"
 msgstr "Senha antiga"
 
-#: classes/pref/prefs.php:291
-msgid "New password"
+#: classes/pref/prefs.php:297
+#, fuzzy
+msgid "New password:"
 msgstr "Senha nova"
 
-#: classes/pref/prefs.php:296
-msgid "Confirm password"
+#: classes/pref/prefs.php:302
+#, fuzzy
+msgid "Confirm password:"
 msgstr "Confirmar senha"
 
-#: classes/pref/prefs.php:306
+#: classes/pref/prefs.php:312
 msgid "Change password"
 msgstr "Mudar senha"
 
-#: classes/pref/prefs.php:312
+#: classes/pref/prefs.php:317
 msgid "One time passwords / Authenticator"
 msgstr "Senhas descartáveis / Autenticador"
 
-#: classes/pref/prefs.php:316
-msgid "One time passwords are currently enabled. Enter your current password below to disable."
-msgstr "Senhas descartáveis estão ativas. Entre sua senha atual para desabilitar."
+#: classes/pref/prefs.php:347
+#: classes/pref/prefs.php:395
+#, fuzzy
+msgid "Your password:"
+msgstr "Confirmar senha"
 
-#: classes/pref/prefs.php:341
-#: classes/pref/prefs.php:392
-msgid "Enter your password"
-msgstr "Entre sua senha"
-
-#: classes/pref/prefs.php:352
+#: classes/pref/prefs.php:357
 msgid "Disable OTP"
 msgstr "Desabilitar OTP"
 
-#: classes/pref/prefs.php:358
-msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
-msgstr "Você precisa de um autenticador compatível para usar esse recurso. Trocar a sua senha principal vai desativar automaticamente o uso de senhas descartáveis."
+#: classes/pref/prefs.php:401
+#, fuzzy
+msgid "One time password:"
+msgstr "Senha provisória é inválida"
 
-#: classes/pref/prefs.php:360
-msgid "Scan the following code by the Authenticator application:"
-msgstr "Leia o código abaixo com a aplicação autenticadora."
-
-#: classes/pref/prefs.php:397
-msgid "Enter the generated one time password"
-msgstr "Entre a senha provisória gerada"
-
-#: classes/pref/prefs.php:411
+#: classes/pref/prefs.php:408
 msgid "Enable OTP"
 msgstr "Habilitar OTP"
 
-#: classes/pref/prefs.php:417
-msgid "PHP GD functions are required for OTP support."
-msgstr "É necessário ter o PHP GD para suporte OTP."
-
-#: classes/pref/prefs.php:463
+#: classes/pref/prefs.php:461
 msgid "Some preferences are only available in default profile."
 msgstr "Algumas opções só estão disponíveis no perfil padrão."
 
-#: classes/pref/prefs.php:549
+#: classes/pref/prefs.php:530
 msgid "Customize"
 msgstr "Personalizar"
 
-#: classes/pref/prefs.php:563
+#: classes/pref/prefs.php:544
 #, fuzzy
 msgid "default"
 msgstr "Padrão"
 
-#: classes/pref/prefs.php:625
+#: classes/pref/prefs.php:608
 msgid "Register"
 msgstr "Registrar"
 
-#: classes/pref/prefs.php:635
-#, php-format
-msgid "Current server time: %s (UTC)"
+#: classes/pref/prefs.php:619
+#, fuzzy, php-format
+msgid "Current server time: %s"
 msgstr "Hora atual no servidor: %s (UTC)"
 
-#: classes/pref/prefs.php:667
+#: classes/pref/prefs.php:647
 msgid "Save configuration"
 msgstr "Salvar configuração"
 
-#: classes/pref/prefs.php:671
+#: classes/pref/prefs.php:651
 msgid "Save and exit preferences"
 msgstr "Salvar e sair das preferências"
 
-#: classes/pref/prefs.php:676
+#: classes/pref/prefs.php:656
 msgid "Manage profiles"
 msgstr "Gerenciar perfis"
 
-#: classes/pref/prefs.php:679
+#: classes/pref/prefs.php:659
 msgid "Reset to defaults"
 msgstr "Reiniciar para o padrão"
 
-#: classes/pref/prefs.php:726
+#: classes/pref/prefs.php:706
 msgid "System plugins"
 msgstr "Plugins de sistema"
 
-#: classes/pref/prefs.php:727
+#: classes/pref/prefs.php:707
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr ""
 
-#: classes/pref/prefs.php:732
-#: classes/pref/prefs.php:788
+#: classes/pref/prefs.php:712
+#: classes/pref/prefs.php:768
 msgid "Plugin"
 msgstr "Plugin"
 
-#: classes/pref/prefs.php:733
-#: classes/pref/prefs.php:789
+#: classes/pref/prefs.php:713
+#: classes/pref/prefs.php:769
 msgid "Description"
 msgstr "Descrição"
 
-#: classes/pref/prefs.php:734
-#: classes/pref/prefs.php:790
+#: classes/pref/prefs.php:714
+#: classes/pref/prefs.php:770
 msgid "Version"
 msgstr "Versão"
 
-#: classes/pref/prefs.php:735
-#: classes/pref/prefs.php:791
+#: classes/pref/prefs.php:715
+#: classes/pref/prefs.php:771
 msgid "Author"
 msgstr "Autor"
 
-#: classes/pref/prefs.php:766
-#: classes/pref/prefs.php:825
+#: classes/pref/prefs.php:746
+#: classes/pref/prefs.php:805
 msgid "more info"
 msgstr "Mais informações"
 
-#: classes/pref/prefs.php:775
-#: classes/pref/prefs.php:834
+#: classes/pref/prefs.php:755
+#: classes/pref/prefs.php:814
 msgid "Clear data"
 msgstr "Limpar dados"
 
-#: classes/pref/prefs.php:784
+#: classes/pref/prefs.php:764
 msgid "User plugins"
 msgstr "Plugins de usuário"
 
-#: classes/pref/prefs.php:853
+#: classes/pref/prefs.php:833
 msgid "Enable selected plugins"
 msgstr "Habilitar plugins selecionados"
 
-#: classes/pref/prefs.php:929
+#: classes/pref/prefs.php:909
 msgid "Incorrect one time password"
 msgstr "Senha provisória é inválida"
 
-#: classes/pref/prefs.php:934
-#: classes/pref/prefs.php:965
+#: classes/pref/prefs.php:914
+#: classes/pref/prefs.php:945
 msgid "Incorrect password"
 msgstr "Senha inválida"
 
-#: classes/pref/prefs.php:989
+#: classes/pref/prefs.php:969
 #, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
 msgstr "Você pode alterar cores, fontes e layout do tema atual com um CSS personalizado.  <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">Esse arquivo</a> pode ser usado como referência."
 
-#: classes/pref/prefs.php:1026
+#: classes/pref/prefs.php:1006
 msgid "Create profile"
 msgstr "Criar perfil"
 
+#: classes/pref/prefs.php:1025
 #: classes/pref/prefs.php:1045
-#: classes/pref/prefs.php:1067
 msgid "(active)"
 msgstr "(ativo)"
 
-#: classes/pref/prefs.php:1101
+#: classes/pref/prefs.php:1077
 msgid "Remove selected profiles"
 msgstr "Remover os perfis selecionados?"
 
-#: classes/pref/prefs.php:1103
+#: classes/pref/prefs.php:1079
 msgid "Activate profile"
 msgstr "Ativar perfil"
 
@@ -3524,6 +3511,48 @@ msgstr "Tentando mudar a URL..."
 msgid "Shared URLs cleared."
 msgstr ""
 
+#~ msgid "This option enables marking articles as read automatically while you scroll article list."
+#~ msgstr "Esta opção ativa a marcação de artigos como lidos automaticamente enquanto você roda a lista."
+
+#~ msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
+#~ msgstr "Intervalo mais curto em que um feed será verificado por update, não importando o mecanismo selecionado."
+
+#~ msgid "Uses UTC timezone"
+#~ msgstr "Usa horário UTC"
+
+#~ msgid "Purge articles after this number of days (0 - disables)"
+#~ msgstr "Apagar artigos depois de quantos dias (0 = nunca)"
+
+#~ msgid "Customize CSS stylesheet to your liking"
+#~ msgstr "Personalize a folha de estilo de acordo com seu gosto"
+
+#~ msgid "Select one of the available CSS themes"
+#~ msgstr "Selecione um dos temas CSS disponíveis"
+
+#~ msgid "E-mail"
+#~ msgstr "E-mail"
+
+#~ msgid "Access level"
+#~ msgstr "Nível de acesso"
+
+#~ msgid "One time passwords are currently enabled. Enter your current password below to disable."
+#~ msgstr "Senhas descartáveis estão ativas. Entre sua senha atual para desabilitar."
+
+#~ msgid "Enter your password"
+#~ msgstr "Entre sua senha"
+
+#~ msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
+#~ msgstr "Você precisa de um autenticador compatível para usar esse recurso. Trocar a sua senha principal vai desativar automaticamente o uso de senhas descartáveis."
+
+#~ msgid "Scan the following code by the Authenticator application:"
+#~ msgstr "Leia o código abaixo com a aplicação autenticadora."
+
+#~ msgid "Enter the generated one time password"
+#~ msgstr "Entre a senha provisória gerada"
+
+#~ msgid "PHP GD functions are required for OTP support."
+#~ msgstr "É necessário ter o PHP GD para suporte OTP."
+
 #~ msgid "Not logged in"
 #~ msgstr "Não logado"
 
@@ -3912,9 +3941,6 @@ msgstr ""
 
 #~ msgid "Change password to"
 #~ msgstr "Mudar senha para"
-
-#~ msgid "E-mail: "
-#~ msgstr "E-mail:"
 
 #~ msgid "Login field cannot be blank."
 #~ msgstr "O campo de Login não pode ser vazio."

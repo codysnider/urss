@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-20 15:53+0300\n"
+"POT-Creation-Date: 2019-02-21 12:37+0300\n"
 "PO-Revision-Date: 2014-02-17 23:12+0800\n"
 "Last-Translator: Yuan Chiu <me@yuaner.tw>\n"
 "Language-Team: Yuan Chiu <me@yuaner.tw>\n"
@@ -357,7 +357,7 @@ msgstr "登出"
 #: prefs.php:33
 #: prefs.php:130
 #: include/functions.php:1201
-#: classes/pref/prefs.php:430
+#: classes/pref/prefs.php:428
 msgid "Preferences"
 msgstr "偏好設定"
 
@@ -806,7 +806,7 @@ msgstr "偏好："
 
 #: include/login_form.php:103
 #: classes/handler/public.php:280
-#: classes/pref/prefs.php:1050
+#: classes/pref/prefs.php:1030
 #: classes/rpc.php:69
 msgid "Default profile"
 msgstr "預設偏好設定"
@@ -861,7 +861,7 @@ msgstr "本文的標籤，請用逗號分開："
 #: classes/pref/feeds.php:830
 #: classes/pref/feeds.php:997
 #: classes/pref/filters.php:511
-#: classes/pref/prefs.php:1001
+#: classes/pref/prefs.php:981
 #: plugins/nsfw/init.php:86
 #: plugins/note/init.php:56
 #: plugins/af_readability/init.php:81
@@ -883,7 +883,7 @@ msgstr "儲存"
 #: classes/pref/filters.php:950
 #: classes/pref/filters.php:1028
 #: classes/pref/filters.php:1121
-#: classes/pref/prefs.php:1003
+#: classes/pref/prefs.php:983
 #: classes/feeds.php:720
 #: classes/feeds.php:772
 #: classes/feeds.php:814
@@ -1007,7 +1007,7 @@ msgstr "未找到幫助主題。"
 #: classes/pref/feeds.php:1557
 #: classes/pref/feeds.php:1620
 #: classes/pref/filters.php:175
-#: classes/pref/prefs.php:1107
+#: classes/pref/prefs.php:1083
 #: plugins/af_psql_trgm/init.php:111
 #: plugins/import_export/init.php:447
 #: plugins/import_export/init.php:491
@@ -1238,7 +1238,7 @@ msgstr "建立預定義標籤 <b>%s</b>"
 #: classes/pref/filters.php:778
 #: classes/pref/filters.php:865
 #: classes/pref/filters.php:895
-#: classes/pref/prefs.php:1012
+#: classes/pref/prefs.php:992
 msgid "Select"
 msgstr "選擇"
 
@@ -1252,7 +1252,7 @@ msgstr "選擇"
 #: classes/pref/filters.php:781
 #: classes/pref/filters.php:868
 #: classes/pref/filters.php:898
-#: classes/pref/prefs.php:1015
+#: classes/pref/prefs.php:995
 #: classes/feeds.php:62
 msgid "All"
 msgstr "全部"
@@ -1267,7 +1267,7 @@ msgstr "全部"
 #: classes/pref/filters.php:783
 #: classes/pref/filters.php:870
 #: classes/pref/filters.php:900
-#: classes/pref/prefs.php:1017
+#: classes/pref/prefs.php:997
 #: classes/feeds.php:65
 msgid "None"
 msgstr "無"
@@ -1430,7 +1430,7 @@ msgid "Refresh"
 msgstr "重新整理"
 
 #: classes/pref/system.php:44
-#: classes/pref/prefs.php:629
+#: classes/pref/prefs.php:612
 msgid "Clear"
 msgstr "清空"
 
@@ -1518,7 +1518,7 @@ msgstr "文章清理："
 #: classes/pref/feeds.php:666
 #: classes/pref/feeds.php:933
 #: classes/pref/feeds.php:1737
-#: classes/pref/prefs.php:247
+#: classes/pref/prefs.php:244
 #: classes/feeds.php:699
 msgid "Password"
 msgstr "密碼"
@@ -1579,7 +1579,7 @@ msgid "Replace"
 msgstr "替換"
 
 #: classes/pref/feeds.php:814
-#: classes/pref/prefs.php:693
+#: classes/pref/prefs.php:673
 msgid "Plugins"
 msgstr "擴充套件"
 
@@ -1894,8 +1894,9 @@ msgid "Automatically mark articles as read"
 msgstr "自動標記文章為已讀"
 
 #: classes/pref/prefs.php:27
-msgid "This option enables marking articles as read automatically while you scroll article list."
-msgstr "當勾起此選向後，在捲動頁面的同時自動將文章標記為已讀。"
+#, fuzzy
+msgid "Mark articles as read while you scroll"
+msgstr "將所有文章標記為已讀？"
 
 #: classes/pref/prefs.php:28
 msgid "Automatically expand articles in combined mode"
@@ -1906,7 +1907,8 @@ msgid "Combined feed display"
 msgstr "合併顯示模式"
 
 #: classes/pref/prefs.php:29
-msgid "Display expanded list of feed articles, instead of separate displays for headlines and article content"
+#, fuzzy
+msgid "Show combined list of articles, instead of separate panels"
 msgstr "將文章列表展開顯示，而不是將標題和內容分別顯示"
 
 #: classes/pref/prefs.php:30
@@ -1921,10 +1923,6 @@ msgstr "同時顯示的文章數量"
 msgid "Default feed update interval"
 msgstr "預設摘要更新間隔"
 
-#: classes/pref/prefs.php:32
-msgid "Shortest interval at which a feed will be checked for updates regardless of update method"
-msgstr ""
-
 #: classes/pref/prefs.php:33
 msgid "Mark articles in e-mail digest as read"
 msgstr "將郵件摘要中的文章標記為已讀"
@@ -1934,7 +1932,8 @@ msgid "Enable e-mail digest"
 msgstr "啟用電子郵件摘要"
 
 #: classes/pref/prefs.php:34
-msgid "This option enables sending daily digest of new (and unread) headlines on your configured e-mail address"
+#, fuzzy
+msgid "Send daily digest of new (and unread) headlines to your e-mail address"
 msgstr "每天將更新的和未讀的文章標題透過郵件發送摘要到您設定的郵箱中"
 
 #: classes/pref/prefs.php:35
@@ -1942,8 +1941,9 @@ msgid "Try to send digests around specified time"
 msgstr "在指定的時間發送摘要"
 
 #: classes/pref/prefs.php:35
-msgid "Uses UTC timezone"
-msgstr "採用UTC時區"
+#, fuzzy
+msgid "Time in UTC"
+msgstr "所在時區"
 
 #: classes/pref/prefs.php:36
 msgid "Enable API access"
@@ -1979,7 +1979,7 @@ msgid "Long date format"
 msgstr "較長的日期時間格式"
 
 #: classes/pref/prefs.php:42
-msgid "The syntax used is identical to the PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
+msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
 msgstr ""
 
 #: classes/pref/prefs.php:43
@@ -1987,12 +1987,13 @@ msgid "On catchup show next feed"
 msgstr "自動顯示下一個摘要"
 
 #: classes/pref/prefs.php:43
-msgid "Automatically open next feed with unread articles after marking one as read"
+msgid "Automatically opens next unread feed after marking one as read"
 msgstr ""
 
 #: classes/pref/prefs.php:44
-msgid "Purge articles after this number of days (0 - disables)"
-msgstr "清除多少天之前的文章？（0為不啟用）"
+#, fuzzy
+msgid "Purge articles older than"
+msgstr "清除未讀文章"
 
 #: classes/pref/prefs.php:45
 msgid "Purge unread articles"
@@ -2044,10 +2045,6 @@ msgstr "僅載入几個最常用的 HTML 標籤"
 msgid "Customize stylesheet"
 msgstr "自訂樣式"
 
-#: classes/pref/prefs.php:53
-msgid "Customize CSS stylesheet to your liking"
-msgstr "自訂 CSS 樣式"
-
 #: classes/pref/prefs.php:54
 msgid "Time zone"
 msgstr "所在時區"
@@ -2069,10 +2066,6 @@ msgstr "語言："
 msgid "Theme"
 msgstr "佈景主題"
 
-#: classes/pref/prefs.php:57
-msgid "Select one of the available CSS themes"
-msgstr "選擇一個可以套用的CSS佈景"
-
 #: classes/pref/prefs.php:129
 msgid "The configuration was saved."
 msgstr "設定已儲存。"
@@ -2089,199 +2082,190 @@ msgstr ""
 msgid "Personal data / Authentication"
 msgstr "個人資料與驗證"
 
-#: classes/pref/prefs.php:203
+#: classes/pref/prefs.php:186
 msgid "Personal data"
 msgstr "個人資訊"
 
 #: classes/pref/prefs.php:215
-msgid "Full name"
+#, fuzzy
+msgid "Full name:"
 msgstr "姓名"
 
-#: classes/pref/prefs.php:219
-msgid "E-mail"
-msgstr "電子郵件"
+#: classes/pref/prefs.php:220
+#, fuzzy
+msgid "E-mail:"
+msgstr "電子郵件："
 
-#: classes/pref/prefs.php:225
-msgid "Access level"
-msgstr "帳號等級"
+#: classes/pref/prefs.php:228
+#, fuzzy
+msgid "Access level:"
+msgstr "帳號等級："
 
-#: classes/pref/prefs.php:235
+#: classes/pref/prefs.php:239
 msgid "Save data"
 msgstr "儲存資料"
 
-#: classes/pref/prefs.php:283
+#: classes/pref/prefs.php:288
 msgid "Changing your current password will disable OTP."
 msgstr ""
 
-#: classes/pref/prefs.php:288
-msgid "Old password"
+#: classes/pref/prefs.php:292
+#, fuzzy
+msgid "Old password:"
 msgstr "原始密碼"
 
-#: classes/pref/prefs.php:291
-msgid "New password"
+#: classes/pref/prefs.php:297
+#, fuzzy
+msgid "New password:"
 msgstr "新密碼"
 
-#: classes/pref/prefs.php:296
-msgid "Confirm password"
+#: classes/pref/prefs.php:302
+#, fuzzy
+msgid "Confirm password:"
 msgstr "確認密碼"
 
-#: classes/pref/prefs.php:306
+#: classes/pref/prefs.php:312
 msgid "Change password"
 msgstr "更改密碼"
 
-#: classes/pref/prefs.php:312
+#: classes/pref/prefs.php:317
 msgid "One time passwords / Authenticator"
 msgstr ""
 
-#: classes/pref/prefs.php:316
-msgid "One time passwords are currently enabled. Enter your current password below to disable."
-msgstr ""
+#: classes/pref/prefs.php:347
+#: classes/pref/prefs.php:395
+#, fuzzy
+msgid "Your password:"
+msgstr "確認密碼"
 
-#: classes/pref/prefs.php:341
-#: classes/pref/prefs.php:392
-msgid "Enter your password"
-msgstr "輸入您的密碼"
-
-#: classes/pref/prefs.php:352
+#: classes/pref/prefs.php:357
 #, fuzzy
 msgid "Disable OTP"
 msgstr "禁用更新"
 
-#: classes/pref/prefs.php:358
-msgid "You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP."
-msgstr ""
-
-#: classes/pref/prefs.php:360
-msgid "Scan the following code by the Authenticator application:"
-msgstr ""
-
-#: classes/pref/prefs.php:397
+#: classes/pref/prefs.php:401
 #, fuzzy
-msgid "Enter the generated one time password"
-msgstr "請填寫類別名稱："
+msgid "One time password:"
+msgstr "使用者名或密碼錯誤"
 
-#: classes/pref/prefs.php:411
+#: classes/pref/prefs.php:408
 #, fuzzy
 msgid "Enable OTP"
 msgstr "已啟用"
 
-#: classes/pref/prefs.php:417
-msgid "PHP GD functions are required for OTP support."
-msgstr ""
-
-#: classes/pref/prefs.php:463
+#: classes/pref/prefs.php:461
 msgid "Some preferences are only available in default profile."
 msgstr ""
 
-#: classes/pref/prefs.php:549
+#: classes/pref/prefs.php:530
 msgid "Customize"
 msgstr "自訂"
 
-#: classes/pref/prefs.php:563
+#: classes/pref/prefs.php:544
 #, fuzzy
 msgid "default"
 msgstr "預設"
 
-#: classes/pref/prefs.php:625
+#: classes/pref/prefs.php:608
 msgid "Register"
 msgstr "註冊"
 
-#: classes/pref/prefs.php:635
-#, php-format
-msgid "Current server time: %s (UTC)"
+#: classes/pref/prefs.php:619
+#, fuzzy, php-format
+msgid "Current server time: %s"
 msgstr "目前伺服器上的時間: %s (UTC)"
 
-#: classes/pref/prefs.php:667
+#: classes/pref/prefs.php:647
 msgid "Save configuration"
 msgstr "儲存設定"
 
-#: classes/pref/prefs.php:671
+#: classes/pref/prefs.php:651
 msgid "Save and exit preferences"
 msgstr "儲存並離開偏好設定"
 
-#: classes/pref/prefs.php:676
+#: classes/pref/prefs.php:656
 msgid "Manage profiles"
 msgstr "管理偏好文件"
 
-#: classes/pref/prefs.php:679
+#: classes/pref/prefs.php:659
 msgid "Reset to defaults"
 msgstr "恢復到預設"
 
-#: classes/pref/prefs.php:726
+#: classes/pref/prefs.php:706
 msgid "System plugins"
 msgstr "系統擴充套件"
 
-#: classes/pref/prefs.php:727
+#: classes/pref/prefs.php:707
 msgid "System plugins are enabled in <strong>config.php</strong> for all users."
 msgstr ""
 
-#: classes/pref/prefs.php:732
-#: classes/pref/prefs.php:788
+#: classes/pref/prefs.php:712
+#: classes/pref/prefs.php:768
 msgid "Plugin"
 msgstr "擴充套件"
 
-#: classes/pref/prefs.php:733
-#: classes/pref/prefs.php:789
+#: classes/pref/prefs.php:713
+#: classes/pref/prefs.php:769
 msgid "Description"
 msgstr "描述"
 
-#: classes/pref/prefs.php:734
-#: classes/pref/prefs.php:790
+#: classes/pref/prefs.php:714
+#: classes/pref/prefs.php:770
 msgid "Version"
 msgstr "版本"
 
-#: classes/pref/prefs.php:735
-#: classes/pref/prefs.php:791
+#: classes/pref/prefs.php:715
+#: classes/pref/prefs.php:771
 msgid "Author"
 msgstr "作者"
 
-#: classes/pref/prefs.php:766
-#: classes/pref/prefs.php:825
+#: classes/pref/prefs.php:746
+#: classes/pref/prefs.php:805
 msgid "more info"
 msgstr "更多資訊"
 
-#: classes/pref/prefs.php:775
-#: classes/pref/prefs.php:834
+#: classes/pref/prefs.php:755
+#: classes/pref/prefs.php:814
 msgid "Clear data"
 msgstr "清空摘要資料"
 
-#: classes/pref/prefs.php:784
+#: classes/pref/prefs.php:764
 msgid "User plugins"
 msgstr "使用者擴充套件"
 
-#: classes/pref/prefs.php:853
+#: classes/pref/prefs.php:833
 msgid "Enable selected plugins"
 msgstr "啟用所選取的擴充套件"
 
-#: classes/pref/prefs.php:929
+#: classes/pref/prefs.php:909
 #, fuzzy
 msgid "Incorrect one time password"
 msgstr "使用者名或密碼錯誤"
 
-#: classes/pref/prefs.php:934
-#: classes/pref/prefs.php:965
+#: classes/pref/prefs.php:914
+#: classes/pref/prefs.php:945
 msgid "Incorrect password"
 msgstr "密碼錯誤"
 
-#: classes/pref/prefs.php:989
+#: classes/pref/prefs.php:969
 #, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
 msgstr "您可以透過自訂 CSS 來更改顏色，字體和版式。具體可參考 <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">本文件</a>。"
 
-#: classes/pref/prefs.php:1026
+#: classes/pref/prefs.php:1006
 msgid "Create profile"
 msgstr "建立偏好文件"
 
+#: classes/pref/prefs.php:1025
 #: classes/pref/prefs.php:1045
-#: classes/pref/prefs.php:1067
 msgid "(active)"
 msgstr "（當前使用的）"
 
-#: classes/pref/prefs.php:1101
+#: classes/pref/prefs.php:1077
 msgid "Remove selected profiles"
 msgstr "移除選取的偏好文件"
 
-#: classes/pref/prefs.php:1103
+#: classes/pref/prefs.php:1079
 msgid "Activate profile"
 msgstr "啟用偏好文件"
 
@@ -3560,6 +3544,34 @@ msgstr "無法建立使用者 <b>%s</b> "
 msgid "Shared URLs cleared."
 msgstr ""
 
+#~ msgid "This option enables marking articles as read automatically while you scroll article list."
+#~ msgstr "當勾起此選向後，在捲動頁面的同時自動將文章標記為已讀。"
+
+#~ msgid "Uses UTC timezone"
+#~ msgstr "採用UTC時區"
+
+#~ msgid "Purge articles after this number of days (0 - disables)"
+#~ msgstr "清除多少天之前的文章？（0為不啟用）"
+
+#~ msgid "Customize CSS stylesheet to your liking"
+#~ msgstr "自訂 CSS 樣式"
+
+#~ msgid "Select one of the available CSS themes"
+#~ msgstr "選擇一個可以套用的CSS佈景"
+
+#~ msgid "E-mail"
+#~ msgstr "電子郵件"
+
+#~ msgid "Access level"
+#~ msgstr "帳號等級"
+
+#~ msgid "Enter your password"
+#~ msgstr "輸入您的密碼"
+
+#, fuzzy
+#~ msgid "Enter the generated one time password"
+#~ msgstr "請填寫類別名稱："
+
 #~ msgid "Not logged in"
 #~ msgstr "沒有登入"
 
@@ -3926,9 +3938,6 @@ msgstr ""
 
 #~ msgid "Change password to"
 #~ msgstr "更改密碼為："
-
-#~ msgid "E-mail: "
-#~ msgstr "電子郵件："
 
 #~ msgid "Login field cannot be blank."
 #~ msgstr "請填寫登錄信息。"
