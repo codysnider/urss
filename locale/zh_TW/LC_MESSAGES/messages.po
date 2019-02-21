@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 12:37+0300\n"
+"POT-Creation-Date: 2019-02-21 14:06+0300\n"
 "PO-Revision-Date: 2014-02-17 23:12+0800\n"
 "Last-Translator: Yuan Chiu <me@yuaner.tw>\n"
 "Language-Team: Yuan Chiu <me@yuaner.tw>\n"
@@ -178,7 +178,7 @@ msgstr ""
 #: prefs.php:113
 #: classes/backend.php:5
 #: classes/pref/labels.php:287
-#: classes/pref/feeds.php:1314
+#: classes/pref/feeds.php:1318
 #: classes/pref/filters.php:808
 #: js/AppBase.js:143
 #: js/CommonDialogs.js:277
@@ -317,8 +317,8 @@ msgid "Edit this feed..."
 msgstr "編輯摘要"
 
 #: index.php:226
-#: classes/pref/feeds.php:826
-#: classes/pref/feeds.php:1287
+#: classes/pref/feeds.php:828
+#: classes/pref/feeds.php:1291
 #: js/PrefFeedTree.js:62
 msgid "Unsubscribe"
 msgstr "取消訂閱"
@@ -371,8 +371,8 @@ msgstr "退出偏好設定"
 
 #: prefs.php:133
 #: classes/pref/feeds.php:127
-#: classes/pref/feeds.php:1222
-#: classes/pref/feeds.php:1276
+#: classes/pref/feeds.php:1226
+#: classes/pref/feeds.php:1280
 msgid "Feeds"
 msgstr "摘要"
 
@@ -383,7 +383,7 @@ msgstr "過濾器"
 
 #: prefs.php:141
 #: classes/pref/labels.php:91
-#: classes/feeds.php:1423
+#: classes/feeds.php:1424
 msgid "Labels"
 msgstr "預定義標籤"
 
@@ -412,14 +412,14 @@ msgstr "新使用者註冊功能被管理員禁用。"
 #: register.php:332
 #: register.php:342
 #: register.php:354
-#: classes/handler/public.php:848
-#: classes/handler/public.php:941
-#: classes/handler/public.php:972
-#: classes/handler/public.php:1045
-#: classes/handler/public.php:1140
-#: classes/handler/public.php:1154
-#: classes/handler/public.php:1161
-#: classes/handler/public.php:1186
+#: classes/handler/public.php:847
+#: classes/handler/public.php:936
+#: classes/handler/public.php:966
+#: classes/handler/public.php:1042
+#: classes/handler/public.php:1135
+#: classes/handler/public.php:1147
+#: classes/handler/public.php:1152
+#: classes/handler/public.php:1175
 msgid "Return to Tiny Tiny RSS"
 msgstr "返回 Tiny Tiny RSS"
 
@@ -436,7 +436,7 @@ msgid "Check availability"
 msgstr "檢查可用性"
 
 #: register.php:225
-#: classes/handler/public.php:957
+#: classes/handler/public.php:951
 msgid "Email:"
 msgstr "電子郵箱："
 
@@ -484,7 +484,7 @@ msgstr "全部摘要"
 #: classes/opml.php:508
 #: classes/digest.php:124
 #: classes/pref/feeds.php:246
-#: classes/feeds.php:1435
+#: classes/feeds.php:1436
 msgid "Uncategorized"
 msgstr "未分類"
 
@@ -646,7 +646,7 @@ msgstr "取消選擇所有文章"
 
 #: include/functions.php:1181
 #: classes/pref/feeds.php:534
-#: classes/pref/feeds.php:850
+#: classes/pref/feeds.php:852
 msgid "Feed"
 msgstr "摘要"
 
@@ -659,7 +659,7 @@ msgid "Un/hide read feeds"
 msgstr "隱藏（顯示）已讀信息"
 
 #: include/functions.php:1184
-#: classes/pref/feeds.php:1279
+#: classes/pref/feeds.php:1283
 msgid "Subscribe to feed"
 msgstr "訂閱摘要"
 
@@ -714,7 +714,7 @@ msgid "Go to"
 msgstr "跳到……"
 
 #: include/functions.php:1196
-#: classes/feeds.php:1296
+#: classes/feeds.php:1297
 msgid "All articles"
 msgstr "全部文章"
 
@@ -787,7 +787,7 @@ msgstr ""
 
 #: include/login_form.php:80
 #: classes/handler/public.php:636
-#: classes/handler/public.php:952
+#: classes/handler/public.php:946
 msgid "Login:"
 msgstr "登入："
 
@@ -858,8 +858,8 @@ msgstr "本文的標籤，請用逗號分開："
 #: classes/article.php:239
 #: classes/pref/labels.php:79
 #: classes/pref/users.php:108
-#: classes/pref/feeds.php:830
-#: classes/pref/feeds.php:997
+#: classes/pref/feeds.php:832
+#: classes/pref/feeds.php:1001
 #: classes/pref/filters.php:511
 #: classes/pref/prefs.php:981
 #: plugins/nsfw/init.php:86
@@ -876,9 +876,9 @@ msgstr "儲存"
 #: classes/handler/public.php:614
 #: classes/pref/labels.php:81
 #: classes/pref/users.php:110
-#: classes/pref/feeds.php:831
-#: classes/pref/feeds.php:1000
-#: classes/pref/feeds.php:1757
+#: classes/pref/feeds.php:833
+#: classes/pref/feeds.php:1004
+#: classes/pref/feeds.php:1755
 #: classes/pref/filters.php:514
 #: classes/pref/filters.php:950
 #: classes/pref/filters.php:1028
@@ -886,7 +886,7 @@ msgstr "儲存"
 #: classes/pref/prefs.php:983
 #: classes/feeds.php:720
 #: classes/feeds.php:772
-#: classes/feeds.php:814
+#: classes/feeds.php:815
 #: plugins/note/init.php:58
 #: plugins/mail/init.php:179
 msgid "Cancel"
@@ -1004,8 +1004,8 @@ msgstr "未找到幫助主題。"
 #: classes/dlg.php:155
 #: classes/dlg.php:186
 #: classes/dlg.php:202
-#: classes/pref/feeds.php:1557
-#: classes/pref/feeds.php:1620
+#: classes/pref/feeds.php:1561
+#: classes/pref/feeds.php:1624
 #: classes/pref/filters.php:175
 #: classes/pref/prefs.php:1083
 #: plugins/af_psql_trgm/init.php:111
@@ -1128,80 +1128,80 @@ msgstr "訂閱選取的摘要"
 msgid "Edit subscription options"
 msgstr "編輯訂閱選項"
 
-#: classes/handler/public.php:898
+#: classes/handler/public.php:896
 msgid "Password recovery"
 msgstr "密碼救援"
 
-#: classes/handler/public.php:945
+#: classes/handler/public.php:939
 #, fuzzy
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
 msgstr "你需要提供有效的電子郵件以及帳號名稱，新密碼將以電子郵件寄給你。"
 
-#: classes/handler/public.php:965
+#: classes/handler/public.php:959
 #, fuzzy, php-format
 msgid "How much is %d + %d:"
 msgstr "二加二等於几："
 
-#: classes/handler/public.php:971
+#: classes/handler/public.php:965
 #: classes/pref/users.php:376
 msgid "Reset password"
 msgstr "重設密碼"
 
-#: classes/handler/public.php:983
+#: classes/handler/public.php:977
 msgid "Some of the required form parameters are missing or incorrect."
 msgstr ""
 
-#: classes/handler/public.php:987
-#: classes/handler/public.php:1053
+#: classes/handler/public.php:981
+#: classes/handler/public.php:1049
 msgid "Go back"
 msgstr "回去"
 
-#: classes/handler/public.php:1025
+#: classes/handler/public.php:1023
 #, fuzzy
 msgid "[tt-rss] Password reset request"
 msgstr "[tt-rss] 密碼更換提醒"
 
-#: classes/handler/public.php:1049
+#: classes/handler/public.php:1045
 msgid "Sorry, login and email combination not found."
 msgstr "對不起，沒有找到符合的帳號密碼。"
 
-#: classes/handler/public.php:1072
+#: classes/handler/public.php:1068
 msgid "Your access level is insufficient to run this script."
 msgstr "此帳號等級不足，無法運行腳本。"
 
-#: classes/handler/public.php:1112
+#: classes/handler/public.php:1108
 msgid "Database Updater"
 msgstr "資料庫更新管理器"
 
-#: classes/handler/public.php:1123
+#: classes/handler/public.php:1119
 #, fuzzy
 msgid "Performing updates"
 msgstr "正在更新……"
 
-#: classes/handler/public.php:1125
+#: classes/handler/public.php:1121
 #, fuzzy, php-format
 msgid "Updating to schema version %d"
 msgstr "正在更新到 %d 版本……"
 
-#: classes/handler/public.php:1130
+#: classes/handler/public.php:1126
 #, fuzzy, php-format
 msgid "Performing update up to version %d..."
 msgstr "正在更新……"
 
-#: classes/handler/public.php:1135
+#: classes/handler/public.php:1131
 msgid "FAILED!"
 msgstr ""
 
-#: classes/handler/public.php:1145
+#: classes/handler/public.php:1139
 msgid "OK!"
 msgstr "OK！"
 
-#: classes/handler/public.php:1167
+#: classes/handler/public.php:1157
 #, fuzzy
 msgid "Database update required"
 msgstr "資料庫更新管理器"
 
-#: classes/handler/public.php:1178
+#: classes/handler/public.php:1168
 msgid "Perform updates"
 msgstr "執行更新"
 
@@ -1230,9 +1230,9 @@ msgstr "建立預定義標籤 <b>%s</b>"
 
 #: classes/pref/labels.php:263
 #: classes/pref/users.php:360
-#: classes/pref/feeds.php:1267
-#: classes/pref/feeds.php:1509
-#: classes/pref/feeds.php:1570
+#: classes/pref/feeds.php:1271
+#: classes/pref/feeds.php:1513
+#: classes/pref/feeds.php:1574
 #: classes/pref/filters.php:362
 #: classes/pref/filters.php:422
 #: classes/pref/filters.php:778
@@ -1244,9 +1244,9 @@ msgstr "選擇"
 
 #: classes/pref/labels.php:266
 #: classes/pref/users.php:363
-#: classes/pref/feeds.php:1270
-#: classes/pref/feeds.php:1512
-#: classes/pref/feeds.php:1573
+#: classes/pref/feeds.php:1274
+#: classes/pref/feeds.php:1516
+#: classes/pref/feeds.php:1577
 #: classes/pref/filters.php:365
 #: classes/pref/filters.php:425
 #: classes/pref/filters.php:781
@@ -1259,9 +1259,9 @@ msgstr "全部"
 
 #: classes/pref/labels.php:268
 #: classes/pref/users.php:365
-#: classes/pref/feeds.php:1272
-#: classes/pref/feeds.php:1514
-#: classes/pref/feeds.php:1575
+#: classes/pref/feeds.php:1276
+#: classes/pref/feeds.php:1518
+#: classes/pref/feeds.php:1579
 #: classes/pref/filters.php:367
 #: classes/pref/filters.php:427
 #: classes/pref/filters.php:783
@@ -1274,7 +1274,7 @@ msgstr "無"
 
 #: classes/pref/labels.php:275
 #: classes/pref/users.php:374
-#: classes/pref/feeds.php:809
+#: classes/pref/feeds.php:811
 #: classes/pref/filters.php:504
 #: classes/pref/filters.php:800
 #: classes/feeds.php:771
@@ -1296,8 +1296,9 @@ msgid "Edit user"
 msgstr "編輯過濾器"
 
 #: classes/pref/users.php:61
-#: classes/pref/feeds.php:651
-#: classes/pref/feeds.php:916
+#: classes/pref/feeds.php:653
+#: classes/pref/feeds.php:920
+#: classes/pref/feeds.php:1737
 #: classes/feeds.php:690
 #: plugins/auth_internal/init.php:58
 msgid "Authentication"
@@ -1308,8 +1309,8 @@ msgid "Access level: "
 msgstr "帳號等級："
 
 #: classes/pref/users.php:87
-#: classes/pref/feeds.php:684
-#: classes/pref/feeds.php:941
+#: classes/pref/feeds.php:686
+#: classes/pref/feeds.php:945
 #: classes/pref/filters.php:461
 #: classes/pref/filters.php:917
 msgid "Options"
@@ -1376,10 +1377,10 @@ msgid "[tt-rss] Password change notification"
 msgstr "[tt-rss] 密碼更換提醒"
 
 #: classes/pref/users.php:350
-#: classes/pref/feeds.php:1263
+#: classes/pref/feeds.php:1267
 #: classes/pref/filters.php:774
 #: classes/feeds.php:742
-#: classes/feeds.php:813
+#: classes/feeds.php:814
 #: js/Feeds.js:540
 msgid "Search"
 msgstr "搜尋"
@@ -1394,9 +1395,9 @@ msgid "Edit"
 msgstr "編輯"
 
 #: classes/pref/users.php:408
-#: classes/pref/feeds.php:657
-#: classes/pref/feeds.php:922
-#: classes/pref/feeds.php:1734
+#: classes/pref/feeds.php:659
+#: classes/pref/feeds.php:926
+#: classes/pref/feeds.php:1740
 #: classes/feeds.php:694
 msgid "Login"
 msgstr "登入"
@@ -1483,8 +1484,8 @@ msgid "Feed URL"
 msgstr "摘要 URL"
 
 #: classes/pref/feeds.php:576
-#: classes/pref/feeds.php:859
-#: classes/pref/feeds.php:1720
+#: classes/pref/feeds.php:861
+#: classes/pref/feeds.php:1730
 #: classes/feeds.php:666
 msgid "Place in category:"
 msgstr "加入到類別："
@@ -1500,183 +1501,190 @@ msgid "Site URL"
 msgstr "摘要 URL"
 
 #: classes/pref/feeds.php:605
-#: classes/pref/feeds.php:874
+#: classes/pref/feeds.php:876
+#: classes/feeds.php:798
 #, fuzzy
 msgid "Language:"
 msgstr "語言："
 
 #: classes/pref/feeds.php:614
-#: classes/pref/feeds.php:885
+#: classes/pref/feeds.php:887
 msgid "Update"
 msgstr "更新列表"
 
-#: classes/pref/feeds.php:634
-#: classes/pref/feeds.php:905
+#: classes/pref/feeds.php:623
+#: classes/pref/feeds.php:894
+#, fuzzy
+msgid "Interval:"
+msgstr "界面"
+
+#: classes/pref/feeds.php:636
+#: classes/pref/feeds.php:909
 msgid "Article purging:"
 msgstr "文章清理："
 
-#: classes/pref/feeds.php:666
-#: classes/pref/feeds.php:933
-#: classes/pref/feeds.php:1737
+#: classes/pref/feeds.php:668
+#: classes/pref/feeds.php:937
+#: classes/pref/feeds.php:1741
 #: classes/pref/prefs.php:244
 #: classes/feeds.php:699
 msgid "Password"
 msgstr "密碼"
 
-#: classes/pref/feeds.php:670
+#: classes/pref/feeds.php:672
 msgid "<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds."
 msgstr "<b>提示：</b>如果您的摘要需要驗證，那麼您需要填寫登入資料。Twitter 摘要除外。"
 
-#: classes/pref/feeds.php:682
+#: classes/pref/feeds.php:684
 #: classes/feeds.php:711
 msgid "This feed requires authentication."
 msgstr "這個摘要需要認證"
 
-#: classes/pref/feeds.php:700
-#: classes/pref/feeds.php:946
+#: classes/pref/feeds.php:702
+#: classes/pref/feeds.php:950
 msgid "Hide from Popular feeds"
 msgstr "從最受歡迎的摘要中隱藏"
 
-#: classes/pref/feeds.php:716
-#: classes/pref/feeds.php:954
+#: classes/pref/feeds.php:718
+#: classes/pref/feeds.php:958
 msgid "Include in e-mail digest"
 msgstr "包含電子郵件摘要"
 
-#: classes/pref/feeds.php:732
-#: classes/pref/feeds.php:962
+#: classes/pref/feeds.php:734
+#: classes/pref/feeds.php:966
 msgid "Always display image attachments"
 msgstr "始終顯示圖片附件"
 
-#: classes/pref/feeds.php:748
-#: classes/pref/feeds.php:970
+#: classes/pref/feeds.php:750
+#: classes/pref/feeds.php:974
 #, fuzzy
 msgid "Do not embed media"
 msgstr "不要包含圖片"
 
-#: classes/pref/feeds.php:764
-#: classes/pref/feeds.php:978
+#: classes/pref/feeds.php:766
+#: classes/pref/feeds.php:982
 msgid "Cache media"
 msgstr ""
 
-#: classes/pref/feeds.php:780
-#: classes/pref/feeds.php:986
+#: classes/pref/feeds.php:782
+#: classes/pref/feeds.php:990
 msgid "Mark updated articles as unread"
 msgstr "將已更新的文章標記為未讀"
 
-#: classes/pref/feeds.php:786
+#: classes/pref/feeds.php:788
 msgid "Icon"
 msgstr "圖示"
 
-#: classes/pref/feeds.php:800
-#: classes/pref/feeds.php:1371
+#: classes/pref/feeds.php:802
+#: classes/pref/feeds.php:1375
 #: plugins/import_export/init.php:72
 #, fuzzy
 msgid "Choose file..."
 msgstr "建立過濾器"
 
-#: classes/pref/feeds.php:807
+#: classes/pref/feeds.php:809
 msgid "Replace"
 msgstr "替換"
 
-#: classes/pref/feeds.php:814
+#: classes/pref/feeds.php:816
 #: classes/pref/prefs.php:673
 msgid "Plugins"
 msgstr "擴充套件"
 
-#: classes/pref/feeds.php:1238
+#: classes/pref/feeds.php:1242
 msgid "Feeds with errors"
 msgstr "有錯誤的摘要"
 
-#: classes/pref/feeds.php:1245
+#: classes/pref/feeds.php:1249
 msgid "Inactive feeds"
 msgstr "不活躍的摘要"
 
-#: classes/pref/feeds.php:1281
+#: classes/pref/feeds.php:1285
 msgid "Edit selected feeds"
 msgstr "編輯選定的摘要"
 
-#: classes/pref/feeds.php:1283
-#: classes/pref/feeds.php:1297
+#: classes/pref/feeds.php:1287
+#: classes/pref/feeds.php:1301
 #: classes/pref/filters.php:796
 msgid "Reset sort order"
 msgstr "重新排序"
 
-#: classes/pref/feeds.php:1285
+#: classes/pref/feeds.php:1289
 #: js/PrefFeedTree.js:347
 msgid "Batch subscribe"
 msgstr ""
 
-#: classes/pref/feeds.php:1292
+#: classes/pref/feeds.php:1296
 msgid "Categories"
 msgstr "類別"
 
-#: classes/pref/feeds.php:1295
+#: classes/pref/feeds.php:1299
 msgid "Add category"
 msgstr "新增類別"
 
-#: classes/pref/feeds.php:1299
+#: classes/pref/feeds.php:1303
 msgid "Remove selected"
 msgstr "移除所選擇的"
 
-#: classes/pref/feeds.php:1357
+#: classes/pref/feeds.php:1361
 msgid "OPML"
 msgstr "OPML"
 
-#: classes/pref/feeds.php:1359
+#: classes/pref/feeds.php:1363
 msgid "Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings."
 msgstr ""
 
-#: classes/pref/feeds.php:1360
+#: classes/pref/feeds.php:1364
 msgid "Only main settings profile can be migrated using OPML."
 msgstr ""
 
-#: classes/pref/feeds.php:1377
+#: classes/pref/feeds.php:1381
 #, fuzzy
 msgid "Import OPML"
 msgstr "正在匯入 OPML ……"
 
-#: classes/pref/feeds.php:1387
+#: classes/pref/feeds.php:1391
 #, fuzzy
 msgid "Export OPML"
 msgstr "正在匯入 OPML ……"
 
-#: classes/pref/feeds.php:1391
+#: classes/pref/feeds.php:1395
 msgid "Include settings"
 msgstr "包含設定"
 
-#: classes/pref/feeds.php:1398
+#: classes/pref/feeds.php:1402
 #, fuzzy
 msgid "Published OPML"
 msgstr "已發布"
 
-#: classes/pref/feeds.php:1400
+#: classes/pref/feeds.php:1404
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
 msgstr "您可以公開發布您的 OPML 。網上的任何人都可以透過如下 URL 訂閱該文件。"
 
-#: classes/pref/feeds.php:1402
+#: classes/pref/feeds.php:1406
 msgid "Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds."
 msgstr ""
 
-#: classes/pref/feeds.php:1404
+#: classes/pref/feeds.php:1408
 msgid "Public OPML URL"
 msgstr "公開的 OPML URL"
 
-#: classes/pref/feeds.php:1405
+#: classes/pref/feeds.php:1409
 #, fuzzy
 msgid "Display published OPML URL"
 msgstr "公開的 OPML URL"
 
-#: classes/pref/feeds.php:1413
+#: classes/pref/feeds.php:1417
 #, fuzzy
 msgid "Published & shared articles / Generated feeds"
 msgstr "已發布的文章和產生的摘要"
 
-#: classes/pref/feeds.php:1415
+#: classes/pref/feeds.php:1419
 #, fuzzy
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
 msgstr "您可以公開發布您的 OPML 。網上的任何人都可以透過如下 URL 訂閱該文件。"
 
-#: classes/pref/feeds.php:1422
+#: classes/pref/feeds.php:1426
 #: classes/feeds.php:34
 #: classes/feeds.php:35
 #: classes/feeds.php:99
@@ -1685,41 +1693,37 @@ msgstr "您可以公開發布您的 OPML 。網上的任何人都可以透過如
 msgid "Show as feed"
 msgstr "本摘要"
 
-#: classes/pref/feeds.php:1423
+#: classes/pref/feeds.php:1427
 msgid "Display URL"
 msgstr "顯示 URL"
 
-#: classes/pref/feeds.php:1426
+#: classes/pref/feeds.php:1430
 msgid "Clear all generated URLs"
 msgstr "清空所有產生的 URL"
 
-#: classes/pref/feeds.php:1505
+#: classes/pref/feeds.php:1509
 msgid "These feeds have not been updated with new content for 3 months (oldest first):"
 msgstr "以下摘要已經有三個月沒有內容更新了（最舊的在最上）："
 
-#: classes/pref/feeds.php:1535
-#: classes/pref/feeds.php:1596
+#: classes/pref/feeds.php:1539
+#: classes/pref/feeds.php:1600
 msgid "Click to edit feed"
 msgstr "點擊以編輯摘要"
 
-#: classes/pref/feeds.php:1553
-#: classes/pref/feeds.php:1616
+#: classes/pref/feeds.php:1557
+#: classes/pref/feeds.php:1620
 msgid "Unsubscribe from selected feeds"
 msgstr "取消訂閱選取的摘要"
 
-#: classes/pref/feeds.php:1717
-msgid "Add one valid RSS feed per line (no feed detection is done)"
+#: classes/pref/feeds.php:1720
+msgid "One valid feed per line (no detection is done)"
 msgstr ""
 
-#: classes/pref/feeds.php:1726
-msgid "Feeds to subscribe, One per line"
-msgstr ""
-
-#: classes/pref/feeds.php:1749
+#: classes/pref/feeds.php:1750
 msgid "Feeds require authentication."
 msgstr ""
 
-#: classes/pref/feeds.php:1756
+#: classes/pref/feeds.php:1754
 #: classes/feeds.php:714
 #: classes/feeds.php:770
 msgid "Subscribe"
@@ -2325,7 +2329,7 @@ msgid "Never"
 msgstr "從未"
 
 #: classes/feeds.php:258
-#: classes/feeds.php:1298
+#: classes/feeds.php:1299
 msgid "Archived articles"
 msgstr "已儲存的文章"
 
@@ -2375,7 +2379,6 @@ msgstr "部分摘要更新錯誤（點擊了解詳情）"
 msgid "No feed selected."
 msgstr "沒有選取的摘要。"
 
-#: classes/feeds.php:648
 #: classes/feeds.php:658
 #, fuzzy
 msgid "Feed or site URL"
@@ -2401,45 +2404,41 @@ msgstr "摘要存檔"
 msgid "limit:"
 msgstr "限制："
 
-#: classes/feeds.php:784
-msgid "Look for"
-msgstr "查找"
+#: classes/feeds.php:791
+#, fuzzy, php-format
+msgid "Search %s..."
+msgstr "搜尋"
 
-#: classes/feeds.php:792
-#, php-format
-msgid "in %s"
-msgstr ""
-
-#: classes/feeds.php:799
+#: classes/feeds.php:800
 msgid "Used for word stemming"
 msgstr ""
 
-#: classes/feeds.php:809
+#: classes/feeds.php:810
 #, fuzzy
 msgid "Search syntax"
 msgstr "搜尋"
 
-#: classes/feeds.php:1290
+#: classes/feeds.php:1291
 msgid "Starred articles"
 msgstr "加星標文章"
 
-#: classes/feeds.php:1292
+#: classes/feeds.php:1293
 msgid "Published articles"
 msgstr "已發布文章"
 
-#: classes/feeds.php:1294
+#: classes/feeds.php:1295
 msgid "Fresh articles"
 msgstr "最新更新的文章"
 
-#: classes/feeds.php:1300
+#: classes/feeds.php:1301
 msgid "Recently read"
 msgstr "閱讀紀錄"
 
-#: classes/feeds.php:1421
+#: classes/feeds.php:1422
 msgid "Special"
 msgstr "特殊區域"
 
-#: classes/feeds.php:1679
+#: classes/feeds.php:1680
 #, php-format
 msgid "Search results: %s"
 msgstr "搜尋結果： %s"
@@ -3543,6 +3542,9 @@ msgstr "無法建立使用者 <b>%s</b> "
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr ""
+
+#~ msgid "Look for"
+#~ msgstr "查找"
 
 #~ msgid "This option enables marking articles as read automatically while you scroll article list."
 #~ msgstr "當勾起此選向後，在捲動頁面的同時自動將文章標記為已讀。"
