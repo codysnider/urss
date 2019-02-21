@@ -24,24 +24,24 @@ class Pref_Prefs extends Handler_Protected {
 		$this->pref_help = array(
 			"ALLOW_DUPLICATE_POSTS" => array(__("Allow duplicate articles"), ""),
 			"BLACKLISTED_TAGS" => array(__("Blacklisted tags"), __("When auto-detecting tags in articles these tags will not be applied (comma-separated list).")),
-			"CDM_AUTO_CATCHUP" => array(__("Automatically mark articles as read"), __("This option enables marking articles as read automatically while you scroll article list.")),
+			"CDM_AUTO_CATCHUP" => array(__("Automatically mark articles as read"), __("Mark articles as read while you scroll")),
 			"CDM_EXPANDED" => array(__("Automatically expand articles in combined mode"), ""),
-			"COMBINED_DISPLAY_MODE" => array(__("Combined feed display"), __("Display expanded list of feed articles, instead of separate displays for headlines and article content")),
+			"COMBINED_DISPLAY_MODE" => array(__("Combined feed display"), __("Show combined list of articles, instead of separate panels")),
 			"CONFIRM_FEED_CATCHUP" => array(__("Confirm marking feed as read"), ""),
 			"DEFAULT_ARTICLE_LIMIT" => array(__("Amount of articles to display at once"), ""),
-			"DEFAULT_UPDATE_INTERVAL" => array(__("Default feed update interval"), __("Shortest interval at which a feed will be checked for updates regardless of update method")),
+			"DEFAULT_UPDATE_INTERVAL" => array(__("Default feed update interval")),
 			"DIGEST_CATCHUP" => array(__("Mark articles in e-mail digest as read"), ""),
-			"DIGEST_ENABLE" => array(__("Enable e-mail digest"), __("This option enables sending daily digest of new (and unread) headlines on your configured e-mail address")),
-			"DIGEST_PREFERRED_TIME" => array(__("Try to send digests around specified time"), __("Uses UTC timezone")),
+			"DIGEST_ENABLE" => array(__("Enable e-mail digest"), __("Send daily digest of new (and unread) headlines to your e-mail address")),
+			"DIGEST_PREFERRED_TIME" => array(__("Try to send digests around specified time"), __("Time in UTC")),
 			"ENABLE_API_ACCESS" => array(__("Enable API access"), __("Allows external clients to access this account through the API")),
 			"ENABLE_FEED_CATS" => array(__("Enable feed categories"), ""),
 			"FEEDS_SORT_BY_UNREAD" => array(__("Sort feeds by unread articles count"), ""),
 			"FRESH_ARTICLE_MAX_AGE" => array(__("Maximum age of fresh articles (in hours)"), ""),
 			"HIDE_READ_FEEDS" => array(__("Hide feeds with no unread articles"), ""),
 			"HIDE_READ_SHOWS_SPECIAL" => array(__("Show special feeds when hiding read feeds"), ""),
-			"LONG_DATE_FORMAT" => array(__("Long date format"), __("The syntax used is identical to the PHP <a href='http://php.net/manual/function.date.php'>date()</a> function.")),
-			"ON_CATCHUP_SHOW_NEXT_FEED" => array(__("On catchup show next feed"), __("Automatically open next feed with unread articles after marking one as read")),
-			"PURGE_OLD_DAYS" => array(__("Purge articles after this number of days (0 - disables)"), ""),
+			"LONG_DATE_FORMAT" => array(__("Long date format"), __("Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function.")),
+			"ON_CATCHUP_SHOW_NEXT_FEED" => array(__("On catchup show next feed"), __("Automatically opens next unread feed after marking one as read")),
+			"PURGE_OLD_DAYS" => array(__("Purge articles older than"), "<strong>days</strong> (0 disables purging)"),
 			"PURGE_UNREAD_ARTICLES" => array(__("Purge unread articles"), ""),
 			"REVERSE_HEADLINES" => array(__("Reverse headline order (oldest first)"), ""),
 			"SHORT_DATE_FORMAT" => array(__("Short date format"), ""),
@@ -50,11 +50,11 @@ class Pref_Prefs extends Handler_Protected {
 			"SSL_CERT_SERIAL" => array(__("Login with an SSL certificate"), __("Click to register your SSL client certificate with tt-rss")),
 			"STRIP_IMAGES" => array(__("Do not embed media in articles"), ""),
 			"STRIP_UNSAFE_TAGS" => array(__("Strip unsafe tags from articles"), __("Strip all but most common HTML tags when reading articles.")),
-			"USER_STYLESHEET" => array(__("Customize stylesheet"), __("Customize CSS stylesheet to your liking")),
+			"USER_STYLESHEET" => array(__("Customize stylesheet")),
 			"USER_TIMEZONE" => array(__("Time zone"), ""),
 			"VFEED_GROUP_BY_FEED" => array(__("Group headlines in virtual feeds"), __("Special feeds, labels, and categories are grouped by originating feeds")),
 			"USER_LANGUAGE" => array(__("Language")),
-			"USER_CSS_THEME" => array(__("Theme"), __("Select one of the available CSS themes"))
+			"USER_CSS_THEME" => array(__("Theme"))
 		);
 	}
 
@@ -478,8 +478,6 @@ class Pref_Prefs extends Handler_Protected {
 			ORDER BY ttrss_prefs_sections.order_id,pref_name");
 		$sth->execute([":uid" => $_SESSION['uid'], ":profile" => $profile]);
 
-		$lnum = 0;
-
 		$active_section = "";
 
 		$listed_boolean_prefs = array();
@@ -506,31 +504,16 @@ class Pref_Prefs extends Handler_Protected {
 
 			if ($active_section != $line["section_id"]) {
 
-				if ($active_section != "") {
-					print "</table>";
-				}
-
-				print "<table width=\"100%\" class=\"prefPrefsList\">";
-
 				$active_section = $line["section_id"];
 
-				print "<tr><td colspan=\"3\"><h2>".$section_name."</h2></td></tr>";
-
-				$lnum = 0;
+				print "<h2>".$section_name."</h2>";
 			}
 
-			print "<tr>";
+			print "<fieldset class='prefs-set'>";
 
-			print "<td width=\"40%\" class=\"prefName\" id=\"$pref_name\">";
-			print "<label for='CB_$pref_name'>";
-			print $short_desc;
+			print "<label for='CB_$pref_name' style='width : 300px'>";
+			print "$short_desc:";
 			print "</label>";
-
-			if ($help_text) print "<div class=\"prefHelp\">".__($help_text)."</div>";
-
-			print "</td>";
-
-			print "<td class=\"prefValue\">";
 
 			if ($pref_name == "USER_LANGUAGE") {
 				print_select_hash($pref_name, $value, get_translations(),
@@ -567,7 +550,6 @@ class Pref_Prefs extends Handler_Protected {
 
 				print "</select>";
 
-
 			} else if ($pref_name == "DEFAULT_UPDATE_INTERVAL") {
 
 				global $update_intervals_nodefault;
@@ -603,9 +585,14 @@ class Pref_Prefs extends Handler_Protected {
 					$disabled = "";
 				}
 
-				print "<input dojoType=\"dijit.form.ValidationTextBox\"
-					required=\"1\" $regexp $disabled
-					name=\"$pref_name\" value=\"$value\">";
+				if ($type_name == 'integer')
+					print "<input dojoType=\"dijit.form.NumberSpinner\"
+						required=\"1\" $disabled
+						name=\"$pref_name\" value=\"$value\">";
+				else
+					print "<input dojoType=\"dijit.form.TextBox\"
+						required=\"1\" $regexp $disabled
+						name=\"$pref_name\" value=\"$value\">";
 
 			} else if ($pref_name == "SSL_CERT_SERIAL") {
 
@@ -616,21 +603,20 @@ class Pref_Prefs extends Handler_Protected {
 				$cert_serial = htmlspecialchars(get_ssl_certificate_id());
 				$has_serial = ($cert_serial) ? "false" : "true";
 
-				print "<br/>";
-
-				print " <button dojoType=\"dijit.form.Button\" disabled=\"$has_serial\"
+				print " <button dojoType='dijit.form.Button' class='alt-primary' disabled=\"$has_serial\"
 					onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '$cert_serial')\">" .
 					__('Register') . "</button>";
 
-				print " <button dojoType=\"dijit.form.Button\"
+				print " <button dojoType='dijit.form.Button' class='alt-danger'
 					onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '')\">" .
 					__('Clear') . "</button>";
 
 			} else if ($pref_name == 'DIGEST_PREFERRED_TIME') {
 				print "<input dojoType=\"dijit.form.ValidationTextBox\"
 					id=\"$pref_name\" regexp=\"[012]?\d:\d\d\" placeHolder=\"12:00\"
-					name=\"$pref_name\" value=\"$value\"><div class=\"insensitive\">".
-					T_sprintf("Current server time: %s (UTC)", date("H:i")) . "</div>";
+					name=\"$pref_name\" value=\"$value\">";
+					//<div class='help-text insensitive'>" . T_sprintf("Server time: %s (UTC)", date("H:i")) . "</div>";
+					$help_text .= ". " . T_sprintf("Current server time: %s", date("H:i"));
 			} else {
 				$regexp = ($type_name == 'integer') ? 'regexp="^\d*$"' : '';
 
@@ -639,14 +625,10 @@ class Pref_Prefs extends Handler_Protected {
 					name=\"$pref_name\" value=\"$value\">";
 			}
 
-			print "</td>";
+			if ($help_text) print "<div class='help-text insensitive'><label for='CB_$pref_name'>".__($help_text)."</label></div>";
 
-			print "</tr>";
-
-			$lnum++;
+			print "</fieldset>";
 		}
-
-		print "</table>";
 
 		$listed_boolean_prefs = htmlspecialchars(join(",", $listed_boolean_prefs));
 
@@ -725,12 +707,12 @@ class Pref_Prefs extends Handler_Protected {
             format_notice(__("System plugins are enabled in <strong>config.php</strong> for all users.")).
             "</td></tr>";
 
-		print "<tr class=\"title\">
-				<td width=\"5%\">&nbsp;</td>
-				<td width='10%'>".__('Plugin')."</td>
-				<td width=''>".__('Description')."</td>
-				<td width='5%'>".__('Version')."</td>
-				<td width='10%'>".__('Author')."</td></tr>";
+		print "<tr>
+				<th width=\"5%\">&nbsp;</th>
+				<th width='10%'>".__('Plugin')."</th>
+				<th width=''>".__('Description')."</th>
+				<th width='5%'>".__('Version')."</th>
+				<th width='10%'>".__('Author')."</th></tr>";
 
 		$system_enabled = array_map("trim", explode(",", PLUGINS));
 		$user_enabled = array_map("trim", explode(",", get_pref("_ENABLED_PLUGINS")));
@@ -781,12 +763,12 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "<tr><td colspan='4'><h2>".__("User plugins")."</h2></td></tr>";
 
-		print "<tr class=\"title\">
-				<td width=\"5%\">&nbsp;</td>
-				<td width='10%'>".__('Plugin')."</td>
-				<td width=''>".__('Description')."</td>
-				<td width='5%'>".__('Version')."</td>
-				<td width='10%'>".__('Author')."</td></tr>";
+		print "<tr>
+				<th width=\"5%\">&nbsp;</th>
+				<th width='10%'>".__('Plugin')."</th>
+				<th width=''>".__('Description')."</th>
+				<th width='5%'>".__('Version')."</th>
+				<th width='10%'>".__('Author')."</th></tr>";
 
 
 		foreach ($tmppluginhost->get_plugins() as $name => $plugin) {
@@ -1049,8 +1031,6 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "</tr>";
 
-		$lnum = 1;
-
 		while ($line = $sth->fetch()) {
 
 			$profile_id = $line["id"];
@@ -1085,8 +1065,6 @@ class Pref_Prefs extends Handler_Protected {
 			</span> $is_active</td>";
 
 			print "</tr>";
-
-			++$lnum;
 		}
 
 		print "</table>";

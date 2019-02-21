@@ -1369,6 +1369,19 @@ body.ttrss_prefs {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
 }
+body.ttrss_prefs h1,
+body.ttrss_prefs h2,
+body.ttrss_prefs h3,
+body.ttrss_prefs h4 {
+  font-family: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  color: #ccc;
+}
+body.ttrss_prefs .dijitContentPane h1:first-of-type,
+body.ttrss_prefs .dijitContentPane h2:first-of-type,
+body.ttrss_prefs .dijitContentPane h3:first-of-type {
+  margin-top: 0px;
+}
 body.ttrss_prefs #footer,
 body.ttrss_prefs #header {
   padding: 8px;
@@ -1405,14 +1418,6 @@ body.ttrss_prefs .dijitAccordionTitleSelected i.material-icons {
 body.ttrss_prefs .dijitDialog #pref-profiles-list .dijitInlineEditBoxDisplayMode {
   padding: 0px;
 }
-body.ttrss_prefs tr.title td {
-  border: 0px solid #ecf4ff;
-  border-bottom-width: 1px;
-  color: #b87d2c;
-}
-body.ttrss_prefs .prefPrefsList td {
-  padding-bottom: 4px;
-}
 body.ttrss_prefs div#feedlistLoading,
 body.ttrss_prefs div#filterlistLoading,
 body.ttrss_prefs div#labellistLoading {
@@ -1431,6 +1436,10 @@ body.ttrss_prefs #errorButton {
 body.ttrss_prefs .user-css-editor {
   height: 300px;
   width: 575px;
+}
+body.ttrss_prefs fieldset.prefs-set .help-text {
+  display: inline-block;
+  margin-left: 10px;
 }
 body.ttrss_prefs table.prefPluginsList td label,
 body.ttrss_prefs table.prefUserList td {

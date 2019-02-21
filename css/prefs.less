@@ -3,6 +3,20 @@ body.ttrss_prefs {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
 
+	h1, h2, h3, h4 {
+		font-family : @fonts-ui-bold;
+		font-weight : 600;
+		color : @default-text;
+	}
+
+	.dijitContentPane {
+		h1:first-of-type,
+		h2:first-of-type,
+		h3:first-of-type {
+			margin-top: 0px;
+		}
+	}
+
 	#footer, #header {
 		padding : 8px;
 		font-size : 13px;
@@ -47,16 +61,6 @@ body.ttrss_prefs {
 		padding : 0px;
 	}
 
-	tr.title td {
-		border: 0px solid #ecf4ff;
-		border-bottom-width: 1px;
-		color : @color-link;
-	}
-
-	.prefPrefsList td {
-		padding-bottom : 4px;
-	}
-
 	div#feedlistLoading, div#filterlistLoading, div#labellistLoading {
 		text-align : center;
 		padding : 5px;
@@ -74,6 +78,13 @@ body.ttrss_prefs {
 	.user-css-editor {
 		height : 300px;
 		width : 575px;
+	}
+
+	fieldset.prefs-set {
+		.help-text {
+			display : inline-block;
+			margin-left : 10px;
+		}
 	}
 
 	table.prefPluginsList td label, table.prefUserList td {
