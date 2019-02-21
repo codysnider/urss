@@ -2,8 +2,10 @@
 
 class Pref_Prefs extends Handler_Protected {
 
-	private $pref_help = array();
-	private $pref_sections = array();
+	private $pref_help = [];
+	private $pref_item_map = [];
+	private $pref_blacklist = [];
+	private $profile_blacklist = [];
 
 	function csrf_ignore($method) {
 		$csrf_ignored = array("index", "updateself", "customizecss", "editprefprofiles");
@@ -14,48 +16,102 @@ class Pref_Prefs extends Handler_Protected {
 	function __construct($args) {
 		parent::__construct($args);
 
-		$this->pref_sections = array(
-			1 => __('General'),
-			2 => __('Interface'),
-			3 => __('Advanced'),
-			4 => __('Digest')
-		);
+		$this->pref_item_map = [
+			__('General') => [
+				'USER_LANGUAGE',
+				'USER_TIMEZONE',
+				'BLOCK_SEPARATOR',
+				'USER_CSS_THEME',
+				'BLOCK_SEPARATOR',
+				'ENABLE_API_ACCESS',
+			],
+			__('Feeds') => [
+				'DEFAULT_UPDATE_INTERVAL',
+				'FRESH_ARTICLE_MAX_AGE',
+				'BLOCK_SEPARATOR',
+				'ENABLE_FEED_CATS',
+				'BLOCK_SEPARATOR',
+				'CONFIRM_FEED_CATCHUP',
+				'ON_CATCHUP_SHOW_NEXT_FEED',
+				'BLOCK_SEPARATOR',
+				'HIDE_READ_FEEDS',
+				'HIDE_READ_SHOWS_SPECIAL',
+			],
+			__('Articles') => [
+				'PURGE_OLD_DAYS',
+				'PURGE_UNREAD_ARTICLES',
+				'BLOCK_SEPARATOR',
+				'COMBINED_DISPLAY_MODE',
+				'CDM_EXPANDED',
+				'BLOCK_SEPARATOR',
+				'CDM_AUTO_CATCHUP',
+				'VFEED_GROUP_BY_FEED',
+				'BLOCK_SEPARATOR',
+				'SHOW_CONTENT_PREVIEW',
+				'STRIP_IMAGES',
+			],
+			__('Digest') => [
+				'DIGEST_ENABLE',
+				'DIGEST_CATCHUP',
+				'DIGEST_PREFERRED_TIME',
+			],
+			__('Advanced') => [
+				'BLACKLISTED_TAGS',
+				'BLOCK_SEPARATOR',
+				'LONG_DATE_FORMAT',
+				'SHORT_DATE_FORMAT',
+				'BLOCK_SEPARATOR',
+				'SSL_CERT_SERIAL',
+			]
+		];
 
-		$this->pref_help = array(
+		$this->pref_help = [
 			"ALLOW_DUPLICATE_POSTS" => array(__("Allow duplicate articles"), ""),
-			"BLACKLISTED_TAGS" => array(__("Blacklisted tags"), __("When auto-detecting tags in articles these tags will not be applied (comma-separated list).")),
-			"CDM_AUTO_CATCHUP" => array(__("Automatically mark articles as read"), __("Mark articles as read while you scroll")),
-			"CDM_EXPANDED" => array(__("Automatically expand articles in combined mode"), ""),
-			"COMBINED_DISPLAY_MODE" => array(__("Combined feed display"), __("Show combined list of articles, instead of separate panels")),
-			"CONFIRM_FEED_CATCHUP" => array(__("Confirm marking feed as read"), ""),
-			"DEFAULT_ARTICLE_LIMIT" => array(__("Amount of articles to display at once"), ""),
-			"DEFAULT_UPDATE_INTERVAL" => array(__("Default feed update interval")),
-			"DIGEST_CATCHUP" => array(__("Mark articles in e-mail digest as read"), ""),
-			"DIGEST_ENABLE" => array(__("Enable e-mail digest"), __("Send daily digest of new (and unread) headlines to your e-mail address")),
-			"DIGEST_PREFERRED_TIME" => array(__("Try to send digests around specified time"), __("Time in UTC")),
-			"ENABLE_API_ACCESS" => array(__("Enable API access"), __("Allows external clients to access this account through the API")),
-			"ENABLE_FEED_CATS" => array(__("Enable feed categories"), ""),
+			"BLACKLISTED_TAGS" => array(__("Blacklisted tags"), __("Never apply these tags automatically (comma-separated list).")),
+			"CDM_AUTO_CATCHUP" => array(__("Mark read on scroll"), __("Mark articles as read as you scroll past them")),
+			"CDM_EXPANDED" => array(__("Always expand articles")),
+			"COMBINED_DISPLAY_MODE" => array(__("Combined mode"), __("Show flat list of articles instead of separate panels")),
+			"CONFIRM_FEED_CATCHUP" => array(__("Confirm marking feed as read")),
+			"DEFAULT_ARTICLE_LIMIT" => array(__("Amount of articles to display at once")),
+			"DEFAULT_UPDATE_INTERVAL" => array(__("Default update interval")),
+			"DIGEST_CATCHUP" => array(__("Mark sent articles as read")),
+			"DIGEST_ENABLE" => array(__("Enable digest"), __("Send daily digest of new (and unread) headlines to your e-mail address")),
+			"DIGEST_PREFERRED_TIME" => array(__("Try to send around this time"), __("Time in UTC")),
+			"ENABLE_API_ACCESS" => array(__("Enable API"), __("Allows accessing this account through the API")),
+			"ENABLE_FEED_CATS" => array(__("Enable categories")),
 			"FEEDS_SORT_BY_UNREAD" => array(__("Sort feeds by unread articles count"), ""),
-			"FRESH_ARTICLE_MAX_AGE" => array(__("Maximum age of fresh articles (in hours)"), ""),
-			"HIDE_READ_FEEDS" => array(__("Hide feeds with no unread articles"), ""),
-			"HIDE_READ_SHOWS_SPECIAL" => array(__("Show special feeds when hiding read feeds"), ""),
+			"FRESH_ARTICLE_MAX_AGE" => array(__("Maximum age of fresh articles"), "<strong>" . __("hours") . "</strong>"),
+			"HIDE_READ_FEEDS" => array(__("Hide read feeds")),
+			"HIDE_READ_SHOWS_SPECIAL" => array(__("Always show special feeds"), __("While hiding read feeds")),
 			"LONG_DATE_FORMAT" => array(__("Long date format"), __("Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function.")),
 			"ON_CATCHUP_SHOW_NEXT_FEED" => array(__("On catchup show next feed"), __("Automatically opens next unread feed after marking one as read")),
-			"PURGE_OLD_DAYS" => array(__("Purge articles older than"), "<strong>days</strong> (0 disables purging)"),
-			"PURGE_UNREAD_ARTICLES" => array(__("Purge unread articles"), ""),
-			"REVERSE_HEADLINES" => array(__("Reverse headline order (oldest first)"), ""),
-			"SHORT_DATE_FORMAT" => array(__("Short date format"), ""),
-			"SHOW_CONTENT_PREVIEW" => array(__("Show content preview in headlines list"), ""),
+			"PURGE_OLD_DAYS" => array(__("Purge articles older than"), __("<strong>days</strong> (0 disables)")),
+			"PURGE_UNREAD_ARTICLES" => array(__("Purge unread articles")),
+			"REVERSE_HEADLINES" => array(__("Reverse headline order (oldest first)")),
+			"SHORT_DATE_FORMAT" => array(__("Short date format")),
+			"SHOW_CONTENT_PREVIEW" => array(__("Show content preview in headlines")),
 			"SORT_HEADLINES_BY_FEED_DATE" => array(__("Sort headlines by feed date"), __("Use feed-specified date to sort headlines instead of local import date.")),
-			"SSL_CERT_SERIAL" => array(__("Login with an SSL certificate")),
-			"STRIP_IMAGES" => array(__("Do not embed media in articles"), ""),
+			"SSL_CERT_SERIAL" => array(__("SSL client certificate")),
+			"STRIP_IMAGES" => array(__("Do not embed media")),
 			"STRIP_UNSAFE_TAGS" => array(__("Strip unsafe tags from articles"), __("Strip all but most common HTML tags when reading articles.")),
 			"USER_STYLESHEET" => array(__("Customize stylesheet")),
-			"USER_TIMEZONE" => array(__("Time zone"), ""),
-			"VFEED_GROUP_BY_FEED" => array(__("Group headlines in virtual feeds"), __("Special feeds, labels, and categories are grouped by originating feeds")),
+			"USER_TIMEZONE" => array(__("Time zone")),
+			"VFEED_GROUP_BY_FEED" => array(__("Group by feed"), __("Group multiple-feed output by originating feed")),
 			"USER_LANGUAGE" => array(__("Language")),
 			"USER_CSS_THEME" => array(__("Theme"))
-		);
+		];
+
+		$this->pref_blacklist = ["ALLOW_DUPLICATE_POSTS", "STRIP_UNSAFE_TAGS", "REVERSE_HEADLINES",
+			"SORT_HEADLINES_BY_FEED_DATE", "DEFAULT_ARTICLE_LIMIT",
+			"FEEDS_SORT_BY_UNREAD", "USER_STYLESHEET"];
+
+		/* "FEEDS_SORT_BY_UNREAD", "HIDE_READ_FEEDS", "REVERSE_HEADLINES" */
+
+		$this->profile_blacklist = ["ALLOW_DUPLICATE_POSTS", "PURGE_OLD_DAYS",
+			"PURGE_UNREAD_ARTICLES", "DIGEST_ENABLE", "DIGEST_CATCHUP",
+			"BLACKLISTED_TAGS", "ENABLE_API_ACCESS", "UPDATE_POST_ON_CHECKSUM_CHANGE",
+			"DEFAULT_UPDATE_INTERVAL", "USER_TIMEZONE", "SORT_HEADLINES_BY_FEED_DATE",
+			"SSL_CERT_SERIAL", "DIGEST_PREFERRED_TIME"];
 	}
 
 	function changepassword() {
@@ -162,19 +218,6 @@ class Pref_Prefs extends Handler_Protected {
 	function index() {
 
 		global $access_level_names;
-
-		$prefs_blacklist = array("ALLOW_DUPLICATE_POSTS", "STRIP_UNSAFE_TAGS", "REVERSE_HEADLINES",
-			"SORT_HEADLINES_BY_FEED_DATE", "DEFAULT_ARTICLE_LIMIT",
-			"FEEDS_SORT_BY_UNREAD", "CDM_EXPANDED");
-
-		/* "FEEDS_SORT_BY_UNREAD", "HIDE_READ_FEEDS", "REVERSE_HEADLINES" */
-
-		$profile_blacklist = array("ALLOW_DUPLICATE_POSTS", "PURGE_OLD_DAYS",
-					"PURGE_UNREAD_ARTICLES", "DIGEST_ENABLE", "DIGEST_CATCHUP",
-					"BLACKLISTED_TAGS", "ENABLE_API_ACCESS", "UPDATE_POST_ON_CHECKSUM_CHANGE",
-					"DEFAULT_UPDATE_INTERVAL", "USER_TIMEZONE", "SORT_HEADLINES_BY_FEED_DATE",
-					"SSL_CERT_SERIAL", "DIGEST_PREFERRED_TIME");
-
 
 		$_SESSION["prefs_op_result"] = "";
 
@@ -465,6 +508,8 @@ class Pref_Prefs extends Handler_Protected {
 			initialize_user_prefs($_SESSION["uid"]);
 		}
 
+		$prefs_available = [];
+
 		$sth = $this->pdo->prepare("SELECT DISTINCT
 			ttrss_user_prefs.pref_name,value,type_name,
 			ttrss_prefs_sections.order_id,
@@ -478,162 +523,173 @@ class Pref_Prefs extends Handler_Protected {
 			ORDER BY ttrss_prefs_sections.order_id,pref_name");
 		$sth->execute([":uid" => $_SESSION['uid'], ":profile" => $profile]);
 
-		$active_section = "";
-
-		$listed_boolean_prefs = array();
+		$listed_boolean_prefs = [];
 
 		while ($line = $sth->fetch()) {
 
-			if (in_array($line["pref_name"], $prefs_blacklist)) {
+			if (in_array($line["pref_name"], $this->pref_blacklist)) {
 				continue;
 			}
 
-			$type_name = $line["type_name"];
+			if ($profile && in_array($line["pref_name"], $this->profile_blacklist)) {
+				continue;
+			}
+
 			$pref_name = $line["pref_name"];
-			$section_name = $this->getSectionName($line["section_id"]);
-			$value = $line["value"];
-
 			$short_desc = $this->getShortDesc($pref_name);
-			$help_text = $this->getHelpText($pref_name);
 
-			if (!$short_desc) continue;
-
-			if ($profile && in_array($line["pref_name"], $profile_blacklist)) {
+			if (!$short_desc)
 				continue;
-			}
 
-			if ($active_section != $line["section_id"]) {
+			$prefs_available[$pref_name] = [
+				'type_name' => $line["type_name"],
+				'value' => $line['value'],
+				'help_text' => $this->getHelpText($pref_name),
+				'short_desc' => $short_desc
+			];
+		}
 
-				$active_section = $line["section_id"];
+		foreach (array_keys($this->pref_item_map) as $section) {
 
-				print "<h2>".$section_name."</h2>";
-			}
+			print "<h2>$section</h2>";
 
-			print "<fieldset class='prefs-set'>";
+			foreach ($this->pref_item_map[$section] as $pref_name) {
 
-			print "<label for='CB_$pref_name' style='width : 300px'>";
-			print "$short_desc:";
-			print "</label>";
-
-			if ($pref_name == "USER_LANGUAGE") {
-				print_select_hash($pref_name, $value, get_translations(),
-					"style='width : 220px; margin : 0px' dojoType='dijit.form.Select'");
-
-			} else if ($pref_name == "USER_TIMEZONE") {
-
-				$timezones = explode("\n", file_get_contents("lib/timezones.txt"));
-
-				print_select($pref_name, $value, $timezones, 'dojoType="dijit.form.FilteringSelect"');
-			} else if ($pref_name == "USER_STYLESHEET") {
-
-				print "<button dojoType=\"dijit.form.Button\" class='alt-info'
-					onclick=\"Helpers.customizeCSS()\">" . __('Customize') . "</button>";
-
-			} else if ($pref_name == "USER_CSS_THEME") {
-
-				$themes = array_merge(glob("themes/*.php"), glob("themes/*.css"), glob("themes.local/*.css"));
-				$themes = array_map("basename", $themes);
-				$themes = array_filter($themes, "theme_exists");
-				asort($themes);
-
-				if (!theme_exists($value)) $value = "default.php";
-
-				print "<select name='$pref_name' id='$pref_name' dojoType='dijit.form.Select'>";
-
-				$issel = $value == "default.php" ? "selected='selected'" : "";
-				print "<option $issel value='default.php'>".__("default")."</option>";
-
-				foreach ($themes as $theme) {
-					$issel = $value == $theme ? "selected='selected'" : "";
-					print "<option $issel value='$theme'>$theme</option>";
+				if ($pref_name == 'BLOCK_SEPARATOR' && !$profile) {
+					print "<hr/>";
+					continue;
 				}
 
-				print "</select>";
+				if ($item = $prefs_available[$pref_name]) {
 
-				print " <a href='#' onclick='window.open(\"https://tt-rss.org/wiki/Themes\")'>
-					".__("More themes...")."</a>";
+					print "<fieldset class='prefs-set'>";
 
-			} else if ($pref_name == "DEFAULT_UPDATE_INTERVAL") {
+					print "<label for='CB_$pref_name' style='width : 300px'>";
+					print $item['short_desc'] . ":";
+					print "</label>";
 
-				global $update_intervals_nodefault;
+					$value = $item['value'];
+					$type_name = $item['type_name'];
 
-				print_select_hash($pref_name, $value, $update_intervals_nodefault,
-					'dojoType="dijit.form.Select"');
+					if ($pref_name == "USER_LANGUAGE") {
+						print_select_hash($pref_name, $value, get_translations(),
+							"style='width : 220px; margin : 0px' dojoType='dijit.form.Select'");
 
-			} else if ($type_name == "bool") {
+					} else if ($pref_name == "USER_TIMEZONE") {
 
-				array_push($listed_boolean_prefs, $pref_name);
+						$timezones = explode("\n", file_get_contents("lib/timezones.txt"));
 
-				$checked = ($value == "true") ? "checked=\"checked\"" : "";
+						print_select($pref_name, $value, $timezones, 'dojoType="dijit.form.FilteringSelect"');
+					} else if ($pref_name == "USER_CSS_THEME") {
 
-				if ($pref_name == "PURGE_UNREAD_ARTICLES" && FORCE_ARTICLE_PURGE != 0) {
-					$disabled = "disabled=\"1\"";
-					$checked = "checked=\"checked\"";
-				} else {
-					$disabled = "";
+						$themes = array_merge(glob("themes/*.php"), glob("themes/*.css"), glob("themes.local/*.css"));
+						$themes = array_map("basename", $themes);
+						$themes = array_filter($themes, "theme_exists");
+						asort($themes);
+
+						if (!theme_exists($value)) $value = "default.php";
+
+						print "<select name='$pref_name' id='$pref_name' dojoType='dijit.form.Select'>";
+
+						$issel = $value == "default.php" ? "selected='selected'" : "";
+						print "<option $issel value='default.php'>".__("default")."</option>";
+
+						foreach ($themes as $theme) {
+							$issel = $value == $theme ? "selected='selected'" : "";
+							print "<option $issel value='$theme'>$theme</option>";
+						}
+
+						print "</select>";
+
+						print " <button dojoType=\"dijit.form.Button\" class='alt-info'
+							onclick=\"Helpers.customizeCSS()\">" . __('Customize') . "</button>";
+
+						print " <button dojoType='dijit.form.Button' onclick='window.open(\"https://tt-rss.org/wiki/Themes\")'>
+							<i class='material-icons'>open_in_new</i> ".__("More themes...")."</button>";
+
+					} else if ($pref_name == "DEFAULT_UPDATE_INTERVAL") {
+
+						global $update_intervals_nodefault;
+
+						print_select_hash($pref_name, $value, $update_intervals_nodefault,
+							'dojoType="dijit.form.Select"');
+
+					} else if ($type_name == "bool") {
+
+						array_push($listed_boolean_prefs, $pref_name);
+
+						$checked = ($value == "true") ? "checked=\"checked\"" : "";
+
+						if ($pref_name == "PURGE_UNREAD_ARTICLES" && FORCE_ARTICLE_PURGE != 0) {
+							$disabled = "disabled=\"1\"";
+							$checked = "checked=\"checked\"";
+						} else {
+							$disabled = "";
+						}
+
+						print "<input type='checkbox' name='$pref_name' $checked $disabled
+							dojoType='dijit.form.CheckBox' id='CB_$pref_name' value='1'>";
+
+					} else if (array_search($pref_name, array('FRESH_ARTICLE_MAX_AGE',
+							'PURGE_OLD_DAYS', 'LONG_DATE_FORMAT', 'SHORT_DATE_FORMAT')) !== false) {
+
+						$regexp = ($type_name == 'integer') ? 'regexp="^\d*$"' : '';
+
+						if ($pref_name == "PURGE_OLD_DAYS" && FORCE_ARTICLE_PURGE != 0) {
+							$disabled = "disabled='1'";
+							$value = FORCE_ARTICLE_PURGE;
+						} else {
+							$disabled = "";
+						}
+
+						if ($type_name == 'integer')
+							print "<input dojoType=\"dijit.form.NumberSpinner\"
+								required='1' $disabled
+								name=\"$pref_name\" value=\"$value\">";
+						else
+							print "<input dojoType=\"dijit.form.TextBox\"
+								required='1' $regexp $disabled
+								name=\"$pref_name\" value=\"$value\">";
+
+					} else if ($pref_name == "SSL_CERT_SERIAL") {
+
+						print "<input dojoType='dijit.form.ValidationTextBox'
+							id='SSL_CERT_SERIAL' readonly='1'
+							name=\"$pref_name\" value=\"$value\">";
+
+						$cert_serial = htmlspecialchars(get_ssl_certificate_id());
+						$has_serial = ($cert_serial) ? "false" : "true";
+
+						print "<button dojoType='dijit.form.Button' disabled='$has_serial'
+							onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '$cert_serial')\">" .
+							__('Register') . "</button>";
+
+						print "<button dojoType='dijit.form.Button' class='alt-danger'
+							onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '')\">" .
+							__('Clear') . "</button>";
+
+						print "<button dojoType='dijit.form.Button' class='alt-info' 
+							onclick='window.open(\"https://tt-rss.org/wiki/SSL+Certificate+Authentication\")'>
+							<i class='material-icons'>help</i> ".__("More info...")."</button>";
+
+					} else if ($pref_name == 'DIGEST_PREFERRED_TIME') {
+						print "<input dojoType=\"dijit.form.ValidationTextBox\"
+							id=\"$pref_name\" regexp=\"[012]?\d:\d\d\" placeHolder=\"12:00\"
+							name=\"$pref_name\" value=\"$value\">";
+
+						$item['help_text'] .= ". " . T_sprintf("Current server time: %s", date("H:i"));
+					} else {
+						$regexp = ($type_name == 'integer') ? 'regexp="^\d*$"' : '';
+
+						print "<input dojoType=\"dijit.form.ValidationTextBox\" $regexp name=\"$pref_name\" value=\"$value\">";
+					}
+
+					if ($item['help_text'])
+						print "<div class='help-text insensitive'><label for='CB_$pref_name'>".$item['help_text']."</label></div>";
+
+					print "</fieldset>";
 				}
-
-				print "<input type='checkbox' name='$pref_name' $checked $disabled
-					dojoType='dijit.form.CheckBox' id='CB_$pref_name' value='1'>";
-
-			} else if (array_search($pref_name, array('FRESH_ARTICLE_MAX_AGE',
-					'PURGE_OLD_DAYS', 'LONG_DATE_FORMAT', 'SHORT_DATE_FORMAT')) !== false) {
-
-				$regexp = ($type_name == 'integer') ? 'regexp="^\d*$"' : '';
-
-				if ($pref_name == "PURGE_OLD_DAYS" && FORCE_ARTICLE_PURGE != 0) {
-					$disabled = "disabled=\"1\"";
-					$value = FORCE_ARTICLE_PURGE;
-				} else {
-					$disabled = "";
-				}
-
-				if ($type_name == 'integer')
-					print "<input dojoType=\"dijit.form.NumberSpinner\"
-						required=\"1\" $disabled
-						name=\"$pref_name\" value=\"$value\">";
-				else
-					print "<input dojoType=\"dijit.form.TextBox\"
-						required=\"1\" $regexp $disabled
-						name=\"$pref_name\" value=\"$value\">";
-
-			} else if ($pref_name == "SSL_CERT_SERIAL") {
-
-				print "<input dojoType=\"dijit.form.ValidationTextBox\"
-					id=\"SSL_CERT_SERIAL\" readonly=\"1\"
-					name=\"$pref_name\" value=\"$value\">";
-
-				$cert_serial = htmlspecialchars(get_ssl_certificate_id());
-				$has_serial = ($cert_serial) ? "false" : "true";
-
-				print "<button dojoType='dijit.form.Button' disabled=\"$has_serial\"
-					onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '$cert_serial')\">" .
-					__('Register') . "</button>";
-
-				print "<button dojoType='dijit.form.Button' class='alt-danger'
-					onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '')\">" .
-					__('Clear') . "</button>";
-
-				print "<button dojoType='dijit.form.Button' class='alt-info' onclick='window.open(\"https://tt-rss.org/wiki/SSL+Certificate+Authentication\")'>
-					<i class='material-icons'>help</i> ".__("More info...")."</button>";
-
-			} else if ($pref_name == 'DIGEST_PREFERRED_TIME') {
-				print "<input dojoType=\"dijit.form.ValidationTextBox\"
-					id=\"$pref_name\" regexp=\"[012]?\d:\d\d\" placeHolder=\"12:00\"
-					name=\"$pref_name\" value=\"$value\">";
-					//<div class='help-text insensitive'>" . T_sprintf("Server time: %s (UTC)", date("H:i")) . "</div>";
-					$help_text .= ". " . T_sprintf("Current server time: %s", date("H:i"));
-			} else {
-				$regexp = ($type_name == 'integer') ? 'regexp="^\d*$"' : '';
-
-				print "<input dojoType=\"dijit.form.ValidationTextBox\"
-					$regexp
-					name=\"$pref_name\" value=\"$value\">";
 			}
-
-			if ($help_text) print "<div class='help-text insensitive'><label for='CB_$pref_name'>".__($help_text)."</label></div>";
-
-			print "</fieldset>";
 		}
 
 		$listed_boolean_prefs = htmlspecialchars(join(",", $listed_boolean_prefs));
@@ -1106,14 +1162,6 @@ class Pref_Prefs extends Handler_Protected {
 		if (isset($this->pref_help[$pref_name])) {
 			return $this->pref_help[$pref_name][1];
 		}
-		return "";
-	}
-
-	private function getSectionName($id) {
-		if (isset($this->pref_sections[$id])) {
-			return $this->pref_sections[$id];
-		}
-
 		return "";
 	}
 }
