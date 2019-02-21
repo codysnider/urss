@@ -620,6 +620,8 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<fieldset>";
 
+			print "<label>".__("Interval:")."</label> ";
+
 			print_select_hash("update_interval", $update_interval, $update_intervals,
 				'dojoType="dijit.form.Select"');
 
@@ -888,6 +890,8 @@ class Pref_Feeds extends Handler_Protected {
 		/* Update Interval */
 
 		print "<fieldset>";
+
+		print "<label>".__("Interval:")."</label> ";
 
 		print_select_hash("update_interval", "", $update_intervals,
 			'disabled="1" dojoType="dijit.form.Select"');
