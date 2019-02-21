@@ -645,7 +645,7 @@ class Feeds extends Handler_Protected {
 		print_notice("Provided URL is a HTML page referencing multiple feeds, please select required feed from the dropdown menu below.");
 		print "<p></div>";
 
-		print "<div class=\"dlgSec\">".__("Feed or site URL")."</div>";
+		//print "<div class=\"dlgSec\">".__("Feed or site URL")."</div>";
 		print "<div class=\"dlgSecCont\">";
 
 		print "<div style='float : right'>
@@ -654,7 +654,7 @@ class Feeds extends Handler_Protected {
 
 		print "<fieldset>";
 
-		print "<input style=\"font-size : 16px; width : 400px;\"
+		print "<input style=\"font-size : 16px; width : 540px;\"
 			placeHolder=\"".__("Feed or site URL")."\"
 			dojoType=\"dijit.form.ValidationTextBox\" required=\"1\" name=\"feed\" id=\"feedDlg_feedUrl\">";
 
@@ -781,20 +781,21 @@ class Feeds extends Handler_Protected {
 
 		print "<form onsubmit='return false;'>";
 
-		print "<div class=\"dlgSec\">".__('Look for')."</div>";
+		//print "<div class=\"dlgSec\">".__('Look for')."</div>";
 
 		print "<div class=\"dlgSecCont\">";
 
 		print "<fieldset>";
 		print "<input dojoType=\"dijit.form.ValidationTextBox\"
 			style=\"font-size : 16px; width : 540px;\"
+			placeHolder=\"".T_sprintf("Search %s...", $this->getFeedTitle($active_feed_id, $is_cat))."\"
 			required=\"1\" name=\"query\" type=\"search\" value=''>";
-		print "<span style='float : right'>".T_sprintf('in %s', $this->getFeedTitle($active_feed_id, $is_cat))."</span>";
 		print "</fieldset>";
 
 
 		if (DB_TYPE == "pgsql") {
 			print "<fieldset>";
+			print "<label>" . __("Language:") . "</label>";
 			print_select("search_language", "", Pref_Feeds::get_ts_languages(),
 				"dojoType='dijit.form.Select' title=\"".__('Used for word stemming')."\"");
 			print "</fieldset>";
