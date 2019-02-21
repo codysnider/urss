@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-21 14:06+0300\n"
-"PO-Revision-Date: 2019-02-21 09:36+0000\n"
+"PO-Revision-Date: 2019-02-22 03:35+0000\n"
 "Last-Translator: Dario Di Ludovico <dario@diludovico.it>\n"
-"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/it/>\n"
+"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"it/>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1479,9 +1480,8 @@ msgstr "Aggiorna"
 
 #: classes/pref/feeds.php:623
 #: classes/pref/feeds.php:894
-#, fuzzy
 msgid "Interval:"
-msgstr "Interfaccia"
+msgstr "Intervallo:"
 
 #: classes/pref/feeds.php:636
 #: classes/pref/feeds.php:909
@@ -1672,9 +1672,10 @@ msgid "Unsubscribe from selected feeds"
 msgstr "Annulla la sottoscrizione ai notiziari selezionati"
 
 #: classes/pref/feeds.php:1720
-#, fuzzy
 msgid "One valid feed per line (no detection is done)"
-msgstr "Inserisci un indirizzo valido di notiziario per riga (non viene fatta una ricerca automatica)"
+msgstr ""
+"Inserisci un indirizzo valido di notiziario per riga (non viene fatta una "
+"ricerca automatica)"
 
 #: classes/pref/feeds.php:1750
 msgid "Feeds require authentication."
@@ -1849,9 +1850,8 @@ msgid "Automatically mark articles as read"
 msgstr "Segnare automaticamente gli articoli come letti"
 
 #: classes/pref/prefs.php:27
-#, fuzzy
 msgid "Mark articles as read while you scroll"
-msgstr "Segnare tutti gli articoli come letti?"
+msgstr "Segnare gli articoli come letti mentre li scorri"
 
 #: classes/pref/prefs.php:28
 msgid "Automatically expand articles in combined mode"
@@ -1862,9 +1862,8 @@ msgid "Combined feed display"
 msgstr "Visualizzazione combinata di notiziari"
 
 #: classes/pref/prefs.php:29
-#, fuzzy
 msgid "Show combined list of articles, instead of separate panels"
-msgstr "Visualizza un elenco espanso di articoli di notiziario, invece di visualizzazioni separate per titolo e contenuto dell'articolo"
+msgstr "Visualizza un elenco espanso di articoli, invece di riquadri separati"
 
 #: classes/pref/prefs.php:30
 msgid "Confirm marking feed as read"
@@ -1887,16 +1886,15 @@ msgid "Enable e-mail digest"
 msgstr "Attiva e-mail digest"
 
 #: classes/pref/prefs.php:34
-#, fuzzy
 msgid "Send daily digest of new (and unread) headlines to your e-mail address"
-msgstr "Questa opzione attiva l'invio di un digest giornaliero dei sommari nuovi (e non letti) all'indirizzo email configurato"
+msgstr ""
+"Invia un sommario di articoli nuovi (e non letti) al tuo indirizzo email"
 
 #: classes/pref/prefs.php:35
 msgid "Try to send digests around specified time"
 msgstr "Prova a mandare i digest più o meno a quest'ora"
 
 #: classes/pref/prefs.php:35
-#, fuzzy
 msgid "Time in UTC"
 msgstr "Fuso orario"
 
@@ -1933,23 +1931,23 @@ msgid "Long date format"
 msgstr "Formato data lunga"
 
 #: classes/pref/prefs.php:42
-#, fuzzy
 msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
-msgstr "La sintassi usata è identica alla funzione <a href='http://php.net/manual/function.date.php'>date()</a> di PHP."
+msgstr ""
+"La sintassi è identica alla funzione <a href='http://php.net/manual/"
+"function.date.php'>date()</a> di PHP."
 
 #: classes/pref/prefs.php:43
 msgid "On catchup show next feed"
 msgstr "Su lettura passare al prossimo notiziario"
 
 #: classes/pref/prefs.php:43
-#, fuzzy
 msgid "Automatically opens next unread feed after marking one as read"
-msgstr "Apri automaticamente il notiziario successivo quando ne segni uno come letto"
+msgstr ""
+"Apri automaticamente il notiziario successivo quando ne segni uno come letto"
 
 #: classes/pref/prefs.php:44
-#, fuzzy
 msgid "Purge articles older than"
-msgstr "Eliminare articoli non letti"
+msgstr "Eliminare articoli più vecchi di"
 
 #: classes/pref/prefs.php:45
 msgid "Purge unread articles"
@@ -2041,19 +2039,16 @@ msgid "Personal data"
 msgstr "Dati personali"
 
 #: classes/pref/prefs.php:215
-#, fuzzy
 msgid "Full name:"
-msgstr "Nome completo"
+msgstr "Nome completo:"
 
 #: classes/pref/prefs.php:220
-#, fuzzy
 msgid "E-mail:"
 msgstr "Email:"
 
 #: classes/pref/prefs.php:228
-#, fuzzy
 msgid "Access level:"
-msgstr "Livello di accesso: "
+msgstr "Livello di accesso:"
 
 #: classes/pref/prefs.php:239
 msgid "Save data"
@@ -2064,19 +2059,16 @@ msgid "Changing your current password will disable OTP."
 msgstr "Cambiare la password attuale disabiliterà le password usa e getta (OTP)."
 
 #: classes/pref/prefs.php:292
-#, fuzzy
 msgid "Old password:"
-msgstr "Vecchia password"
+msgstr "Vecchia password:"
 
 #: classes/pref/prefs.php:297
-#, fuzzy
 msgid "New password:"
-msgstr "Nuova password"
+msgstr "Nuova password:"
 
 #: classes/pref/prefs.php:302
-#, fuzzy
 msgid "Confirm password:"
-msgstr "Conferma password"
+msgstr "Conferma password:"
 
 #: classes/pref/prefs.php:312
 msgid "Change password"
@@ -2088,18 +2080,16 @@ msgstr "Password usa e getta(OTP) / Autenticatore"
 
 #: classes/pref/prefs.php:347
 #: classes/pref/prefs.php:395
-#, fuzzy
 msgid "Your password:"
-msgstr "Conferma password"
+msgstr "La tua password:"
 
 #: classes/pref/prefs.php:357
 msgid "Disable OTP"
 msgstr "Disattivare password usa e getta (OTP)"
 
 #: classes/pref/prefs.php:401
-#, fuzzy
 msgid "One time password:"
-msgstr "Password usa e getta sbagliata"
+msgstr "Password usa e getta:"
 
 #: classes/pref/prefs.php:408
 msgid "Enable OTP"
@@ -2122,9 +2112,9 @@ msgid "Register"
 msgstr "Registro"
 
 #: classes/pref/prefs.php:619
-#, fuzzy, php-format
+#, php-format
 msgid "Current server time: %s"
-msgstr "Ora attuale del server: %s (UTC)"
+msgstr "Ora attuale del server: %s"
 
 #: classes/pref/prefs.php:647
 msgid "Save configuration"
@@ -2345,9 +2335,9 @@ msgid "limit:"
 msgstr "Limite:"
 
 #: classes/feeds.php:791
-#, fuzzy, php-format
+#, php-format
 msgid "Search %s..."
-msgstr "Cerca..."
+msgstr "Cerca %s..."
 
 #: classes/feeds.php:800
 msgid "Used for word stemming"
