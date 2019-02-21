@@ -42,9 +42,7 @@ class Share extends Plugin {
 	function hook_prefs_tab_section($id) {
 		if ($id == "prefFeedsPublishedGenerated") {
 
-			print "<hr/>";
-
-			print "<p>" . __("You can disable all articles shared by unique URLs here.") . "</p>";
+			print "<h3>" . __("You can disable all articles shared by unique URLs here.") . "</h3>";
 
 			print "<button class=\"alt-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Plugins.Share.clearKeys()\">".
 				__('Unshare all articles')."</button> ";

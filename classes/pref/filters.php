@@ -1019,12 +1019,13 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<div class='dlgButtons'>";
 
-		print "<a style='float : left' target='_blank' href='http://tt-rss.org/wiki/ContentFilters'>".__("Wiki: Filters")."</a>";
+		print "<button dojoType='dijit.form.Button' style='float : left' class='alt-info' onclick='window.open(\"https://tt-rss.org/wiki/ContentFilters\")'>
+			<i class='material-icons'>help</i> ".__("More info...")."</button>";
 
-		print "<button dojoType=\"dijit.form.Button\" class=\"alt-primary \" type=\"submit\" onclick=\"return dijit.byId('filterNewRuleDlg').execute()\">".
+		print "<button dojoType='dijit.form.Button' class='alt-primary' type='submit' onclick=\"return dijit.byId('filterNewRuleDlg').execute()\">".
 			($rule ? __("Save rule") : __('Add rule'))."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('filterNewRuleDlg').hide()\">".
+		print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('filterNewRuleDlg').hide()\">".
 			__('Cancel')."</button>";
 
 		print "</div>";

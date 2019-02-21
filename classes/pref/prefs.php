@@ -47,7 +47,7 @@ class Pref_Prefs extends Handler_Protected {
 			"SHORT_DATE_FORMAT" => array(__("Short date format"), ""),
 			"SHOW_CONTENT_PREVIEW" => array(__("Show content preview in headlines list"), ""),
 			"SORT_HEADLINES_BY_FEED_DATE" => array(__("Sort headlines by feed date"), __("Use feed-specified date to sort headlines instead of local import date.")),
-			"SSL_CERT_SERIAL" => array(__("Login with an SSL certificate"), __("Click to register your SSL client certificate with tt-rss")),
+			"SSL_CERT_SERIAL" => array(__("Login with an SSL certificate")),
 			"STRIP_IMAGES" => array(__("Do not embed media in articles"), ""),
 			"STRIP_UNSAFE_TAGS" => array(__("Strip unsafe tags from articles"), __("Strip all but most common HTML tags when reading articles.")),
 			"USER_STYLESHEET" => array(__("Customize stylesheet")),
@@ -550,6 +550,9 @@ class Pref_Prefs extends Handler_Protected {
 
 				print "</select>";
 
+				print " <a href='#' onclick='window.open(\"https://tt-rss.org/wiki/Themes\")'>
+					".__("More themes...")."</a>";
+
 			} else if ($pref_name == "DEFAULT_UPDATE_INTERVAL") {
 
 				global $update_intervals_nodefault;
@@ -603,13 +606,16 @@ class Pref_Prefs extends Handler_Protected {
 				$cert_serial = htmlspecialchars(get_ssl_certificate_id());
 				$has_serial = ($cert_serial) ? "false" : "true";
 
-				print " <button dojoType='dijit.form.Button' class='alt-primary' disabled=\"$has_serial\"
+				print "<button dojoType='dijit.form.Button' disabled=\"$has_serial\"
 					onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '$cert_serial')\">" .
 					__('Register') . "</button>";
 
-				print " <button dojoType='dijit.form.Button' class='alt-danger'
+				print "<button dojoType='dijit.form.Button' class='alt-danger'
 					onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '')\">" .
 					__('Clear') . "</button>";
+
+				print "<button dojoType='dijit.form.Button' class='alt-info' onclick='window.open(\"https://tt-rss.org/wiki/SSL+Certificate+Authentication\")'>
+					<i class='material-icons'>help</i> ".__("More info...")."</button>";
 
 			} else if ($pref_name == 'DIGEST_PREFERRED_TIME') {
 				print "<input dojoType=\"dijit.form.ValidationTextBox\"
@@ -761,7 +767,7 @@ class Pref_Prefs extends Handler_Protected {
 			}
 		}
 
-		print "<tr><td colspan='4'><h2>".__("User plugins")."</h2></td></tr>";
+		print "<tr><td colspan='4'><br/><h2>".__("User plugins")."</h2></td></tr>";
 
 		print "<tr>
 				<th width=\"5%\">&nbsp;</th>
@@ -829,7 +835,11 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "</div>"; #content-pane
 		print '<div dojoType="dijit.layout.ContentPane" region="bottom">';
-		print "<button dojoType=\"dijit.form.Button\" type=\"submit\">".
+
+		print "<button dojoType='dijit.form.Button' style='float : left' class='alt-info' onclick='window.open(\"https://tt-rss.org/wiki/Plugins\")'>
+			<i class='material-icons'>help</i> ".__("More info...")."</button>";
+
+		print "<button dojoType='dijit.form.Button' class='alt-primary' type='submit'>".
 			__("Enable selected plugins")."</button>";
 		print "</div>"; #pane
 

@@ -177,12 +177,15 @@ class Dlg extends Handler_Protected {
 		print "</div>";
 		print "</div>";
 
-		print "<div align='center'>";
+		print "<div class='dlgButtons'>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.genUrlChangeKey('$feed_id', '$is_cat')\">".
+		print "<button dojoType='dijit.form.Button' style='float : left' class='alt-info' onclick='window.open(\"https://tt-rss.org/wiki/GeneratedFeeds\")'>
+			<i class='material-icons'>help</i> ".__("More info...")."</button>";
+
+		print "<button dojoType='dijit.form.Button' onclick=\"return CommonDialogs.genUrlChangeKey('$feed_id', '$is_cat')\">".
 			__('Generate new URL')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return CommonDialogs.closeInfoBox()\">".
+		print "<button dojoType='dijit.form.Button' onclick=\"return CommonDialogs.closeInfoBox()\">".
 			__('Close this window')."</button>";
 
 		print "</div>";

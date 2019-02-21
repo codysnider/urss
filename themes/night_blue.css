@@ -52,6 +52,7 @@ body.ttrss_main div.post div.header img,
 body.ttrss_main div.post div.header i.material-icons {
   margin: 0px 4px;
   vertical-align: middle;
+  color: #777;
 }
 body.ttrss_main div.post div.header .title {
   flex-grow: 2;
@@ -208,6 +209,9 @@ body.ttrss_main .hl .right i.material-icons {
   transition: color 0.2s linear;
   user-select: none;
   font-size: 21px;
+}
+body.ttrss_main .hl .right i.material-icons {
+  color: #777;
 }
 body.ttrss_main .hl div.title {
   cursor: pointer;
@@ -1014,6 +1018,9 @@ body.ttrss_utility div.autocomplete ul li {
 video::-webkit-media-controls-overlay-play-button {
   display: none;
 }
+.cdm i.material-icons {
+  color: #777;
+}
 .cdm .header,
 .cdm .footer {
   display: flex;
@@ -1726,7 +1733,6 @@ body.ttrss_utility.share_popup .content {
   /* Preferred icon size */
   display: inline-block;
   line-height: 1;
-  color: #777;
   text-transform: none;
   letter-spacing: normal;
   word-wrap: normal;

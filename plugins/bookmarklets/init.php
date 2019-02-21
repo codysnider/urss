@@ -20,7 +20,7 @@ class Bookmarklets extends Plugin {
 		print "<div dojoType=\"dijit.layout.AccordionPane\" 
 			title=\"<i class='material-icons'>bookmark</i> ".__('Bookmarklets')."\">";
 
-		print __("Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it.");
+		print "<h3>" . __("Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it.") . "</h3>";
 
 		$bm_subscribe_url = str_replace('%s', '', Pref_Feeds::subscribe_to_feed_url());
 
@@ -32,12 +32,15 @@ class Bookmarklets extends Plugin {
 		print "<a href=\"$bm_url\">" . __('Subscribe in Tiny Tiny RSS'). "</a>";
 		print "</label></p>";
 
-		print "<p>" . __("Use this bookmarklet to publish arbitrary pages using Tiny Tiny RSS") . "</p>";
+		print "<h3>" . __("Use this bookmarklet to publish arbitrary pages using Tiny Tiny RSS") . "</h3>";
 
-		print "<p><label class='dijitButton'>";
+		print "<label class='dijitButton'>";
 		$bm_url = htmlspecialchars("javascript:(function(){var d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),f='".get_self_url_prefix()."/public.php?op=sharepopup',l=d.location,e=encodeURIComponent,g=f+'&title='+((e(s))?e(s):e(document.title))+'&url='+e(l.href);function a(){if(!w.open(g,'t','toolbar=0,resizable=0,scrollbars=1,status=1,width=500,height=250')){l.href=g;}}a();})()");
 		print "<a href=\"$bm_url\">" . __('Share with Tiny Tiny RSS'). "</a>";
-		print "</label></p>";
+		print "</label>";
+
+		print "<button dojoType='dijit.form.Button' class='alt-info' onclick='window.open(\"https://tt-rss.org/wiki/ShareAnything\")'>
+					<i class='material-icons'>help</i> ".__("More info...")."</button>";
 
 		print "</div>"; #pane
 

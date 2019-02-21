@@ -1357,42 +1357,39 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "</div>"; # feeds pane
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
-			title=\"<i class='material-icons'>import_export</i> ".__('OPML')."\">";
+		print "<div dojoType='dijit.layout.AccordionPane' 
+			title='<i class=\"material-icons\">import_export</i> ".__('OPML')."'>";
 
-		print __("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.") .
-			__("Only main settings profile can be migrated using OPML.");
+		print "<h3>" . __("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.") . "</h3>";
 
-		print "<p/>";
+		print_notice("Only main settings profile can be migrated using OPML.");
 
 		print "<iframe id=\"upload_iframe\"
 			name=\"upload_iframe\" onload=\"Helpers.OPML.onImportComplete(this)\"
 			style=\"width: 400px; height: 100px; display: none;\"></iframe>";
 
-		print "<form  name=\"opml_form\" style='display : block' target=\"upload_iframe\"
-			enctype=\"multipart/form-data\" method=\"POST\"
-			action=\"backend.php\">
-			<label class=\"dijitButton\">".__("Choose file...")."
-				<input style=\"display : none\" id=\"opml_file\" name=\"opml_file\" type=\"file\">&nbsp;
+		print "<form  name='opml_form' style='display : inline-block' target='upload_iframe'
+			enctype='multipart/form-data' method='POST'
+			action='backend.php'>
+			<label class='dijitButton'>".__("Choose file...")."
+				<input style='display : none' id='opml_file' name='opml_file' type='file'>&nbsp;
 			</label>
-			<input type=\"hidden\" name=\"op\" value=\"dlg\">
-			<input type=\"hidden\" name=\"method\" value=\"importOpml\">
-			<button dojoType=\"dijit.form.Button\" onclick=\"return Helpers.OPML.import();\" type=\"submit\">" .
+			<input type='hidden' name='op' value='dlg'>
+			<input type='hidden' name='method' value='importOpml'>
+			<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return Helpers.OPML.import();\" type=\"submit\">" .
 			__('Import OPML') . "</button>";
 
 		print "</form>";
 
-		print "<hr>";
+		print "<form dojoType='dijit.form.Form' id='opmlExportForm' style='display : inline-block'>";
 
-		print "<form dojoType=\"dijit.form.Form\" id=\"opmlExportForm\">";
-
-		print "<button dojoType=\"dijit.form.Button\"
-			onclick=\"Helpers.OPML.export()\" >" .
+		print "<button dojoType='dijit.form.Button'
+			onclick='Helpers.OPML.export()' >" .
 			__('Export OPML') . "</button>";
 
-		print "<label>";
+		print " <label class='checkbox'>";
 		print_checkbox("include_settings", true, "1", "");
-		print "&nbsp;" . __("Include settings");
+		print " " . __("Include settings");
 		print "</label>";
 
 		print "</form>";
@@ -1405,7 +1402,7 @@ class Pref_Feeds extends Handler_Protected {
 			" " .
 			__("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.") . "</p>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return App.displayDlg('".__("Public OPML URL")."','pubOPMLUrl')\">".
+		print "<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return App.displayDlg('".__("Public OPML URL")."','pubOPMLUrl')\">".
 			__('Display published OPML URL')."</button> ";
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB_SECTION,
@@ -1416,20 +1413,16 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div dojoType=\"dijit.layout.AccordionPane\" 
 			title=\"<i class='material-icons'>share</i> ".__('Published & shared articles / Generated feeds')."\">";
 
-		print __('Published articles can be subscribed by anyone who knows the following URL:');
+		print "<h3>" . __('Published articles can be subscribed by anyone who knows the following URL:') . "</h3>";
 
 		$rss_url = '-2::' . htmlspecialchars(get_self_url_prefix() .
 				"/public.php?op=rss&id=-2&view-mode=all_articles");;
 
-		print "<p>";
-
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return App.displayDlg('".__("Show as feed")."','generatedFeed', '$rss_url')\">".
+		print "<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return App.displayDlg('".__("Show as feed")."','generatedFeed', '$rss_url')\">".
 			__('Display URL')."</button> ";
 
 		print "<button class=\"alt-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Helpers.clearFeedAccessKeys()\">".
 			__('Clear all generated URLs')."</button> ";
-
-		print "</p>";
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB_SECTION,
 			"hook_prefs_tab_section", "prefFeedsPublishedGenerated");

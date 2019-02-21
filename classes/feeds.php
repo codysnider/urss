@@ -806,9 +806,8 @@ class Feeds extends Handler_Protected {
 		print "<div class=\"dlgButtons\">";
 
 		if (count(PluginHost::getInstance()->get_hooks(PluginHost::HOOK_SEARCH)) == 0) {
-			print "<div style=\"float : left\">
-				<a class=\"visibleLink\" target=\"_blank\" href=\"http://tt-rss.org/wiki/SearchSyntax\">".__("Search syntax")."</a>
-				</div>";
+			print "<button dojoType='dijit.form.Button' style='float : left' class='alt-info' onclick='window.open(\"https://tt-rss.org/wiki/SearchSyntax\")'>
+				<i class='material-icons'>help</i> ".__("Search syntax")."</button>";
 		}
 
 		print "<button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"alt-primary\" onclick=\"dijit.byId('searchDlg').execute()\">".__('Search')."</button>
