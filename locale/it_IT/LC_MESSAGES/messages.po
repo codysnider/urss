@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 15:53+0300\n"
-"PO-Revision-Date: 2019-01-19 12:35+0000\n"
+"PO-Revision-Date: 2019-02-21 09:36+0000\n"
 "Last-Translator: Dario Di Ludovico <dario@diludovico.it>\n"
-"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/it/>\n"
+"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"it/>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -494,7 +495,7 @@ msgstr "Nessun notiziario trovato."
 
 #: include/functions.php:84
 msgid "Detect automatically"
-msgstr ""
+msgstr "Rileva automaticamente"
 
 #: include/functions.php:952
 #, php-format
@@ -1091,9 +1092,8 @@ msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "Impossibile sottoscrivere <b>%s</b>.<br>Impossibile scaricare l'URL del notiziario."
 
 #: classes/handler/public.php:806
-#, fuzzy
 msgid "Multiple feed URLs found:"
-msgstr "Trovati più URL di notiziari."
+msgstr "Trovati più URL di notiziari:"
 
 #: classes/handler/public.php:817
 msgid "Subscribe to selected feed"
@@ -1108,14 +1108,15 @@ msgid "Password recovery"
 msgstr "Recupera password"
 
 #: classes/handler/public.php:945
-#, fuzzy
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
-msgstr "Dovrai fornire un nome utente e una email collegata validi. Verrà spedito un link per resettare la password."
+msgstr ""
+"Dovrai fornire un nome utente e una email valida. Verrà inviato un link per "
+"resettare la password."
 
 #: classes/handler/public.php:965
-#, fuzzy, php-format
+#, php-format
 msgid "How much is %d + %d:"
-msgstr "Quanto fa due più due:"
+msgstr "Quanto fa %d più %d:"
 
 #: classes/handler/public.php:971
 #: classes/pref/users.php:376
@@ -1148,32 +1149,30 @@ msgid "Database Updater"
 msgstr "Aggiornatore database"
 
 #: classes/handler/public.php:1123
-#, fuzzy
 msgid "Performing updates"
-msgstr "Esecuzione aggiornamenti..."
+msgstr "Aggiornamenti in corso"
 
 #: classes/handler/public.php:1125
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to schema version %d"
-msgstr "Aggiornamento alla versione %d..."
+msgstr "Aggiornamento alla versione %d"
 
 #: classes/handler/public.php:1130
-#, fuzzy, php-format
+#, php-format
 msgid "Performing update up to version %d..."
-msgstr "Esecuzione aggiornamenti..."
+msgstr "Esecuzione dell'aggiornamento alla versione %d..."
 
 #: classes/handler/public.php:1135
 msgid "FAILED!"
-msgstr ""
+msgstr "FALLITO!"
 
 #: classes/handler/public.php:1145
 msgid "OK!"
-msgstr "OK"
+msgstr "OK!"
 
 #: classes/handler/public.php:1167
-#, fuzzy
 msgid "Database update required"
-msgstr "Aggiornatore database"
+msgstr "Necessario aggiornamento del database"
 
 #: classes/handler/public.php:1178
 msgid "Perform updates"
@@ -1423,9 +1422,8 @@ msgid "Date"
 msgstr "Data"
 
 #: classes/pref/system.php:85
-#, fuzzy
 msgid "PHP Information"
-msgstr "Esegui azione"
+msgstr "Informazioni PHP"
 
 #: classes/pref/feeds.php:28
 msgid "Check to enable field"
@@ -2886,9 +2884,10 @@ msgid "New articles found, reload feed to continue."
 msgstr "Nuovi articoli ricevuti, ricarica il notiziario per continuare."
 
 #: js/Headlines.js:696
-#, fuzzy
 msgid "Could not update headlines (invalid object received - see error console for details)"
-msgstr "Non ho potuto mostrare l'articolo (ricevuto oggetto non valido - esamina la console degli errori per i dettagli)"
+msgstr ""
+"Impossibile aggiornare gli articoli (ricevuto oggetto non valido - esamina "
+"la console degli errori per i dettagli)"
 
 #: js/Headlines.js:953
 #, perl-format

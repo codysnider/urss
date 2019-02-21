@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 15:53+0300\n"
-"PO-Revision-Date: 2019-01-19 12:35+0000\n"
+"PO-Revision-Date: 2019-02-21 09:36+0000\n"
 "Last-Translator: Ptsa Daniel <ptsa1987@gmail.com>\n"
-"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/tt-rss/messages/zh_Hans/>\n"
+"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/"
+"tt-rss/messages/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -492,7 +493,7 @@ msgstr "未找到信息源。"
 
 #: include/functions.php:84
 msgid "Detect automatically"
-msgstr ""
+msgstr "自动检测"
 
 #: include/functions.php:952
 #, php-format
@@ -1089,9 +1090,8 @@ msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "无法订阅 <b>%s</b>。<br>无法下载信息源的 URL。"
 
 #: classes/handler/public.php:806
-#, fuzzy
 msgid "Multiple feed URLs found:"
-msgstr "发现了多个信息源。"
+msgstr "发现了多个信息源:"
 
 #: classes/handler/public.php:817
 msgid "Subscribe to selected feed"
@@ -1106,14 +1106,13 @@ msgid "Password recovery"
 msgstr "找回密码"
 
 #: classes/handler/public.php:945
-#, fuzzy
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
 msgstr "你需要提供合法的用户名和Email地址。密码重置链接将会发送到你的Email中。"
 
 #: classes/handler/public.php:965
-#, fuzzy, php-format
+#, php-format
 msgid "How much is %d + %d:"
-msgstr "二加二等于几："
+msgstr "%d+%d 等于几:"
 
 #: classes/handler/public.php:971
 #: classes/pref/users.php:376
@@ -1146,32 +1145,30 @@ msgid "Database Updater"
 msgstr "数据库更新管理器"
 
 #: classes/handler/public.php:1123
-#, fuzzy
 msgid "Performing updates"
-msgstr "正在更新……"
+msgstr "执行更新"
 
 #: classes/handler/public.php:1125
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to schema version %d"
-msgstr "正在更新到 %d 版本……"
+msgstr "正在更新到 %d 版本"
 
 #: classes/handler/public.php:1130
-#, fuzzy, php-format
+#, php-format
 msgid "Performing update up to version %d..."
-msgstr "正在更新……"
+msgstr "正在更新版本%d ……"
 
 #: classes/handler/public.php:1135
 msgid "FAILED!"
-msgstr ""
+msgstr "失败!"
 
 #: classes/handler/public.php:1145
 msgid "OK!"
 msgstr "OK！"
 
 #: classes/handler/public.php:1167
-#, fuzzy
 msgid "Database update required"
-msgstr "数据库更新管理器"
+msgstr "需要更新数据库"
 
 #: classes/handler/public.php:1178
 msgid "Perform updates"
@@ -1421,9 +1418,8 @@ msgid "Date"
 msgstr "日期"
 
 #: classes/pref/system.php:85
-#, fuzzy
 msgid "PHP Information"
-msgstr "执行操作"
+msgstr "PHP信息"
 
 #: classes/pref/feeds.php:28
 msgid "Check to enable field"
@@ -2878,7 +2874,6 @@ msgid "New articles found, reload feed to continue."
 msgstr "找到新文章，点击重新加载。"
 
 #: js/Headlines.js:696
-#, fuzzy
 msgid "Could not update headlines (invalid object received - see error console for details)"
 msgstr "无法显示文章（收到无效对象 - 有关详细信息，请参阅错误控制台）"
 
