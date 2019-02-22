@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2019-02-07 14:36+0000\n"
 "Last-Translator: Андрій Жук <zhouck@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.tt-rss.org/projects/tt-rss/messages/uk/>\n"
@@ -1876,7 +1876,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "Показувати розгорнутий список статей каналу, замість показування окремо заголовків та вмісту статей"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "Підтверджувати позначення каналу прочитаним"
 
 #: classes/pref/prefs.php:75
@@ -1966,13 +1967,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "Використовується синтаксис, ідентичний до функції PHP <a href='http://php.net/manual/function.date.php'>date()</a>."
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "Показувати наступний канал при відмітці прочитаним поточного"
 
 #: classes/pref/prefs.php:87
 #, fuzzy
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr "Автоматично відкривати новий канал з непрочитаними статтями після позначення поточного прочитаним"
+msgid "After marking one as read"
+msgstr "Підтверджувати позначення каналу прочитаним"
 
 #: classes/pref/prefs.php:88
 #, fuzzy
@@ -3465,6 +3467,10 @@ msgstr "Не вдається змінити посилання."
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "Публічні посилання видалені."
+
+#, fuzzy
+#~ msgid "Automatically opens next unread feed after marking one as read"
+#~ msgstr "Автоматично відкривати новий канал з непрочитаними статтями після позначення поточного прочитаним"
 
 #~ msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
 #~ msgstr "Інші підказки з інтерфейсу доступні у вікі Tiny Tiny RSS."

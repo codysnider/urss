@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "Last-Translator: Brendan <brendan@tucows.com>\n"
 "Language-Team: OpenSRS brendan@tucows.com>\n"
 "Language: es_LA\n"
@@ -1894,7 +1894,7 @@ msgstr ""
 
 #: classes/pref/prefs.php:74
 #, fuzzy
-msgid "Confirm marking feed as read"
+msgid "Confirm marking feeds as read"
 msgstr "Marcar fuente como leída"
 
 #: classes/pref/prefs.php:75
@@ -1982,12 +1982,13 @@ msgstr ""
 
 #: classes/pref/prefs.php:87
 #, fuzzy
-msgid "On catchup show next feed"
+msgid "Automatically show next feed"
 msgstr "Abrir la fuente siguiente"
 
 #: classes/pref/prefs.php:87
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr ""
+#, fuzzy
+msgid "After marking one as read"
+msgstr "Marcar fuente como leída"
 
 #: classes/pref/prefs.php:88
 #, fuzzy

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2019-02-21 09:36+0000\n"
 "Last-Translator: Ptsa Daniel <ptsa1987@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/tt-rss/messages/zh_Hans/>\n"
@@ -1864,7 +1864,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "将文章列表展开显示，而不是将标题和内容分别显示"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "标记信息源为已读之前弹出确认"
 
 #: classes/pref/prefs.php:75
@@ -1953,13 +1954,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "所使用的语法与 PHP <a href='http://php.net/manual/function.date.php'>date()</a> 函数相同."
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "自动显示下一个信息源"
 
 #: classes/pref/prefs.php:87
 #, fuzzy
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr "标记未读文章为已读后，自动显示下一个信息源的文章"
+msgid "After marking one as read"
+msgstr "标记信息源为已读之前弹出确认"
 
 #: classes/pref/prefs.php:88
 #, fuzzy
@@ -3431,6 +3433,10 @@ msgstr "无法更改网址。"
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "分享的 URL 已被清除。"
+
+#, fuzzy
+#~ msgid "Automatically opens next unread feed after marking one as read"
+#~ msgstr "标记未读文章为已读后，自动显示下一个信息源的文章"
 
 #~ msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
 #~ msgstr "在 Tiny Tiny RSS 的维基上可以找到其他界面技巧。"

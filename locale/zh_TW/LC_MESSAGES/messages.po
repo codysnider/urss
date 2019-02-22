@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2014-02-17 23:12+0800\n"
 "Last-Translator: Yuan Chiu <me@yuaner.tw>\n"
 "Language-Team: Yuan Chiu <me@yuaner.tw>\n"
@@ -1917,7 +1917,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "將文章列表展開顯示，而不是將標題和內容分別顯示"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "標記摘要為已讀之前彈出確認"
 
 #: classes/pref/prefs.php:75
@@ -2005,12 +2006,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr ""
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "自動顯示下一個摘要"
 
 #: classes/pref/prefs.php:87
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr ""
+#, fuzzy
+msgid "After marking one as read"
+msgstr "標記摘要為已讀之前彈出確認"
 
 #: classes/pref/prefs.php:88
 #, fuzzy

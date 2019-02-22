@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2019-02-22 03:35+0000\n"
 "Last-Translator: Dario Di Ludovico <dario@diludovico.it>\n"
 "Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/it/>\n"
@@ -1867,7 +1867,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "Visualizza un elenco espanso di articoli, invece di riquadri separati"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "Richiedere conferma segnatura del notiziario come letto"
 
 #: classes/pref/prefs.php:75
@@ -1953,12 +1954,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "La sintassi è identica alla funzione <a href='http://php.net/manual/function.date.php'>date()</a> di PHP."
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "Su lettura passare al prossimo notiziario"
 
 #: classes/pref/prefs.php:87
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr "Apri automaticamente il notiziario successivo quando ne segni uno come letto"
+#, fuzzy
+msgid "After marking one as read"
+msgstr "Richiedere conferma segnatura del notiziario come letto"
 
 #: classes/pref/prefs.php:88
 msgid "Purge articles older than"
@@ -3431,6 +3434,9 @@ msgstr "Impossibile cambiare URL..."
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "ULR condivisi cancellati."
+
+#~ msgid "Automatically opens next unread feed after marking one as read"
+#~ msgstr "Apri automaticamente il notiziario successivo quando ne segni uno come letto"
 
 #~ msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
 #~ msgstr "Nel wiki di Tiny Tiny RSS sono disponibili altri suggerimenti per l'interfaccia."

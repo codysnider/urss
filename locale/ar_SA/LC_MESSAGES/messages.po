@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TinyTinyRSS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2014-08-13 19:15+0300\n"
 "Last-Translator: عبد الناصر سعيد الثبيتي <abdunnasir@althobaity.com>\n"
 "Language-Team: Arabic <abdunnasir@althobaity.com>\n"
@@ -1897,7 +1897,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "إعرض قائمة موسَّعة لبنود الخلاصات عوضاً عن عرض العناوين مستقلة عن محتوى البنود"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "تأكيد تعليم الخلاصة مقروءة"
 
 #: classes/pref/prefs.php:75
@@ -1987,13 +1988,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "النحو المستخدم مماثل لدالة PHP <a href='http://php.net/manual/function.date.php'>date()</a> ."
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "عند اللَّحَاق إعرض الخلاصة التالية"
 
 #: classes/pref/prefs.php:87
 #, fuzzy
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr "فتح الخلاصة التالية ذات البنود غير المقروءة تلقائياً بعد تعليم خلاصة ما مقروءة"
+msgid "After marking one as read"
+msgstr "تأكيد تعليم الخلاصة مقروءة"
 
 #: classes/pref/prefs.php:88
 #, fuzzy
@@ -3516,6 +3518,10 @@ msgstr "المحاولة جارية لتغيير العنوان..."
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "تم مسح عناوين URL المشارَكة."
+
+#, fuzzy
+#~ msgid "Automatically opens next unread feed after marking one as read"
+#~ msgstr "فتح الخلاصة التالية ذات البنود غير المقروءة تلقائياً بعد تعليم خلاصة ما مقروءة"
 
 #~ msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
 #~ msgstr "توجد تلميحات أخرى عن الواجهة على ويكي Tiny Tiny RSS."

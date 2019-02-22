@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss unstable\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2014-11-04 12:05+0900\n"
 "Last-Translator: YoungMin Park <tfympark1@gmail.com>\n"
 "Language-Team: YoungMin Park <tfympark1@gmail.com>\n"
@@ -1894,7 +1894,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "제목하고 내용을 분리해서 표시하지 않고, 피드 내용의 펼쳐진 목록을 보여줍니다."
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "피드를 읽음표시 할 때 물어봄"
 
 #: classes/pref/prefs.php:75
@@ -1981,12 +1982,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr ""
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "다시 볼 때 다음 피드를 표시"
 
 #: classes/pref/prefs.php:87
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr ""
+#, fuzzy
+msgid "After marking one as read"
+msgstr "피드를 읽음표시 할 때 물어봄"
 
 #: classes/pref/prefs.php:88
 #, fuzzy

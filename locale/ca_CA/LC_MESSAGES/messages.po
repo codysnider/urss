@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2009-11-19 09:40+0100\n"
 "Last-Translator: Alfred Galitó <bratac@bratac.cat>\n"
 "Language-Team: Català <bratac@bratac.cat>\n"
@@ -2001,7 +2001,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "Affiche les articles sous la forme d'une liste étendue, au lieu de deux listes séparées (une pour les en-têtes et une pour le contenu)"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "Demana la confirmació quan es marqui un canal com a llegit"
 
 #: classes/pref/prefs.php:75
@@ -2088,12 +2089,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr ""
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "Salta automàticament al canal següent"
 
 #: classes/pref/prefs.php:87
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr ""
+#, fuzzy
+msgid "After marking one as read"
+msgstr "Demana la confirmació quan es marqui un canal com a llegit"
 
 #: classes/pref/prefs.php:88
 #, fuzzy

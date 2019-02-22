@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss 1.7.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2019-02-07 14:35+0000\n"
 "Last-Translator: Nikolay Korotkiy <sikmir@gmail.com>\n"
 "Language-Team: Finnish <https://weblate.tt-rss.org/projects/tt-rss/messages/fi/>\n"
@@ -1900,7 +1900,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "Näytä artikkeliluettelo laajennettuna erillisten otsikko- ja artikkelinäkymien sijasta"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "Varmista syötteen merkitseminen luetuksi"
 
 #: classes/pref/prefs.php:75
@@ -1989,13 +1990,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "Syntaksi on sama kuin PHP:n <a href='http://php.net/manual/function.date.php'>date()</a>-funktiossa."
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "Näytä automaattisesti seuraava syöte"
 
 #: classes/pref/prefs.php:87
 #, fuzzy
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr "Avaa automaattisesti seuraava lukemattomia artikkeleita sisältävä syöte kun edellinen on merkitty luetuksi"
+msgid "After marking one as read"
+msgstr "Varmista syötteen merkitseminen luetuksi"
 
 #: classes/pref/prefs.php:88
 #, fuzzy
@@ -3521,6 +3523,10 @@ msgstr "Vaihdetaan osoitetta..."
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "Jaetut osoitteet poistettiin."
+
+#, fuzzy
+#~ msgid "Automatically opens next unread feed after marking one as read"
+#~ msgstr "Avaa automaattisesti seuraava lukemattomia artikkeleita sisältävä syöte kun edellinen on merkitty luetuksi"
 
 #~ msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
 #~ msgstr "Lisää käyttövinkkejä löydät Tiny Tiny RSS -wikistä."

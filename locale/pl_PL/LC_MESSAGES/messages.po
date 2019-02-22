@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2013-08-02 08:25+0100\n"
 "Last-Translator: Mirosław Lach <m.wordpress@lach.waw.pl>\n"
 "Language-Team: \n"
@@ -1902,7 +1902,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "Wyświetl rozwiniętą listę artykułów z kanału zamiast osobnych okien dla nagłówków i treści"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "Potwierdź oznaczanie kanału jako przeczytanego"
 
 #: classes/pref/prefs.php:75
@@ -1991,13 +1992,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "Składnia jest identyczna ze składnią PHPowej funkcji <a href='http://php.net/manual/function.date.php'>date()</a>."
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "Przejdź do następnego kanału po zakończeniu lektury ostatniego artykułu"
 
 #: classes/pref/prefs.php:87
 #, fuzzy
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr "Automatycznie otwórz kolejny kanał z nieprzeczytanymi artykułami po oznaczeniu poprzedniego jako przeczytany"
+msgid "After marking one as read"
+msgstr "Potwierdź oznaczanie kanału jako przeczytanego"
 
 #: classes/pref/prefs.php:88
 #, fuzzy
@@ -3540,6 +3542,10 @@ msgstr "Próbuję zmienić adres..."
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "Udostępniane adresy zostały wyczyszczone."
+
+#, fuzzy
+#~ msgid "Automatically opens next unread feed after marking one as read"
+#~ msgstr "Automatycznie otwórz kolejny kanał z nieprzeczytanymi artykułami po oznaczeniu poprzedniego jako przeczytany"
 
 #~ msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
 #~ msgstr "Inne wskazówki dotyczące interfejsu znajdziesz na wiki Tiny Tiny RSS."

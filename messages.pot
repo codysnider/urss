@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1684,7 +1684,7 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr ""
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+msgid "Confirm marking feeds as read"
 msgstr ""
 
 #: classes/pref/prefs.php:75
@@ -1762,11 +1762,11 @@ msgid ""
 msgstr ""
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+msgid "Automatically show next feed"
 msgstr ""
 
 #: classes/pref/prefs.php:87
-msgid "Automatically opens next unread feed after marking one as read"
+msgid "After marking one as read"
 msgstr ""
 
 #: classes/pref/prefs.php:88

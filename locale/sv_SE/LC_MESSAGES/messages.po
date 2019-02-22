@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS sv_SE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2018-12-27 20:12+0000\n"
 "Last-Translator: Dennis Öberg <deob83@gmail.com>\n"
 "Language-Team: Swedish <https://weblate.tt-rss.org/projects/tt-rss/messages/sv/>\n"
@@ -1878,7 +1878,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "Visa expanderad lista med artiklar, istället för olika visningar för rubriker och artikeltext"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "Bekräfta markera flöde som läst"
 
 #: classes/pref/prefs.php:75
@@ -1967,13 +1968,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "Den syntax som används är identisk med <a href='http://php.net/manual/function.date.php'>date()</a>-funktinen i PHP."
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "Visa nästa flöde när vi är ikapp"
 
 #: classes/pref/prefs.php:87
 #, fuzzy
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr "Öppna automatiskt nästa flöde som har olästa artiklar efter att du markerat ett som läst"
+msgid "After marking one as read"
+msgstr "Bekräfta markera flöde som läst"
 
 #: classes/pref/prefs.php:88
 #, fuzzy
@@ -3458,6 +3460,10 @@ msgstr "Kunde inte ändra URL."
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "Delade URLer rensade."
+
+#, fuzzy
+#~ msgid "Automatically opens next unread feed after marking one as read"
+#~ msgstr "Öppna automatiskt nästa flöde som har olästa artiklar efter att du markerat ett som läst"
 
 #~ msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
 #~ msgstr "Fler tips finns i wikin."

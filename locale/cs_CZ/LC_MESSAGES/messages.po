@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TT-RSS CZech\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2018-12-23 18:12+0000\n"
 "Last-Translator: Marek Pavelka <mara.pavelka@gmail.com>\n"
 "Language-Team: Czech <https://weblate.tt-rss.org/projects/tt-rss/messages/cs/>\n"
@@ -1876,7 +1876,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "Zobrazit rozbalený seznam článků kanálu namísto odděleného zobrazení pro nadpisy a obsah článku"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "Potvrdit označení kanálu jako přečteného"
 
 #: classes/pref/prefs.php:75
@@ -1965,13 +1966,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "Použitá syntaxe je shodná s funkcí PHP <a href='http://php.net/manual/function.date.php'>date()</a>."
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "Při zjištění nového stavu zobrazit další kanál"
 
 #: classes/pref/prefs.php:87
 #, fuzzy
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr "Automaticky otevřít další kanál s nepřečtenými články po označení nějakého jako přečteného"
+msgid "After marking one as read"
+msgstr "Potvrdit označení kanálu jako přečteného"
 
 #: classes/pref/prefs.php:88
 #, fuzzy
@@ -3464,6 +3466,10 @@ msgstr "Nelze změnit URL."
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "Sdílené URL vymazány."
+
+#, fuzzy
+#~ msgid "Automatically opens next unread feed after marking one as read"
+#~ msgstr "Automaticky otevřít další kanál s nepřečtenými články po označení nějakého jako přečteného"
 
 #~ msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
 #~ msgstr "Další tipy k používání rozhraní jsou dostupné ve wiki Tiny Tiny RSS."

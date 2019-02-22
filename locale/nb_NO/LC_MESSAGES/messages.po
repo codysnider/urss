@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS 1.3.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2009-05-02 00:10+0100\n"
 "Last-Translator: Christian Lomsdalen <christian@vindstille.net>\n"
 "Language-Team: Norwegian Bokmål <christian@vindstille.net>\n"
@@ -1999,7 +1999,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "Viser en utvidet liste over nyhetsstrømsartikler isteden for en separat visning av titler og artikler."
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "Bekreft markeringen av nyhetsstrøm som lest"
 
 #: classes/pref/prefs.php:75
@@ -2086,12 +2087,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr ""
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "Ved oppdatering vis neste nyhetsstrøm"
 
 #: classes/pref/prefs.php:87
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr ""
+#, fuzzy
+msgid "After marking one as read"
+msgstr "Bekreft markeringen av nyhetsstrøm som lest"
 
 #: classes/pref/prefs.php:88
 #, fuzzy

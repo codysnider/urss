@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss unstable\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2018-12-05 18:43+0000\n"
 "Last-Translator: ncaq net (エヌユル) <ncaq@ncaq.net>\n"
 "Language-Team: Japanese <https://weblate.tt-rss.org/projects/tt-rss/messages/ja/>\n"
@@ -1893,7 +1893,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "ヘッドラインと記事の内容を分けて表示するのではなく、展開された記事のリストを表示する。"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "フィードを既読にする際確認する"
 
 #: classes/pref/prefs.php:75
@@ -1983,13 +1984,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "日付の構文は PHP の <a href='http://php.net/manual/function.date.php'>date()</a> 関数と同じです。"
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
+#, fuzzy
+msgid "Automatically show next feed"
 msgstr "キャッチアップ時に次のフィードを表示する"
 
 #: classes/pref/prefs.php:87
 #, fuzzy
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr "フィードを既読にした後で自動的に未読記事のある次のフィードを開く"
+msgid "After marking one as read"
+msgstr "フィードを既読にする際確認する"
 
 #: classes/pref/prefs.php:88
 #, fuzzy
@@ -3507,6 +3509,10 @@ msgstr "URL の変更をしようとしています..."
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "共有された URL を消去しました。"
+
+#, fuzzy
+#~ msgid "Automatically opens next unread feed after marking one as read"
+#~ msgstr "フィードを既読にした後で自動的に未読記事のある次のフィードを開く"
 
 #~ msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
 #~ msgstr "インタフェースに関する他のヒントが Tiny Tiny RSS の Wiki にあります。"

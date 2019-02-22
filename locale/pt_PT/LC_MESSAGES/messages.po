@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss 1.2.14.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:38+0300\n"
+"POT-Creation-Date: 2019-02-22 06:58+0300\n"
 "PO-Revision-Date: 2016-01-09 14:25-0200\n"
 "Last-Translator: Duarte Velez Grilo <duartegrilo@gmail.com>\n"
 "Language-Team: Portuguese/Portugal <duartegrilo@gmail.com>\n"
@@ -1902,7 +1902,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "Mostrar a lista de assinaturas com título e conteúdo junto ao invés de uma caixa com os títulos e outra com o conteúdo"
 
 #: classes/pref/prefs.php:74
-msgid "Confirm marking feed as read"
+#, fuzzy
+msgid "Confirm marking feeds as read"
 msgstr "Confirme marcando o Feed como lido"
 
 #: classes/pref/prefs.php:75
@@ -1992,13 +1993,14 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "O formato de data é idêntico à função <a href='http://php.net/manual/function.date.php'>date()</a> do PHP."
 
 #: classes/pref/prefs.php:87
-msgid "On catchup show next feed"
-msgstr ""
+#, fuzzy
+msgid "Automatically show next feed"
+msgstr "Marcar artigos como lidos automaticamente"
 
 #: classes/pref/prefs.php:87
 #, fuzzy
-msgid "Automatically opens next unread feed after marking one as read"
-msgstr "Abrir a próxima assinatura com artigos não lidos automaticamente depois de marcar como lido"
+msgid "After marking one as read"
+msgstr "Confirme marcando o Feed como lido"
 
 #: classes/pref/prefs.php:88
 #, fuzzy
@@ -3533,6 +3535,10 @@ msgstr "Tentando mudar a URL..."
 msgid "Shared URLs cleared."
 msgstr ""
 
+#, fuzzy
+#~ msgid "Automatically opens next unread feed after marking one as read"
+#~ msgstr "Abrir a próxima assinatura com artigos não lidos automaticamente depois de marcar como lido"
+
 #~ msgid "Other interface tips are available in the Tiny Tiny RSS wiki."
 #~ msgstr "Outras dicas de interface estão disponíveis no wiki to Tiny Tiny RSS."
 
@@ -3548,9 +3554,6 @@ msgstr ""
 
 #~ msgid "When auto-detecting tags in articles these tags will not be applied (comma-separated list)."
 #~ msgstr "Durante a detecção automática de tags essas não serão aplicadas (lista separada por vírgulas)."
-
-#~ msgid "Automatically mark articles as read"
-#~ msgstr "Marcar artigos como lidos automaticamente"
 
 #~ msgid "Automatically expand articles in combined mode"
 #~ msgstr "Expandir artigos automaticamente no modo combinado"
