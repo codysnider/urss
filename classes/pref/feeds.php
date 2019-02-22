@@ -683,6 +683,8 @@ class Pref_Feeds extends Handler_Protected {
 
 			print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Options').'">';
 
+			print "<section class='narrow'>";
+
 			$private = $row["private"];
 
 			if ($private) {
@@ -798,6 +800,8 @@ class Pref_Feeds extends Handler_Protected {
 			<button class='alt-danger' dojoType='dijit.form.Button' onclick=\"return CommonDialogs.removeFeedIcon($feed_id);\"
 				type='submit'>".__('Remove')."</button>
 			</form>";
+
+			print "</section>";
 
 			print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Plugins').'">';
 

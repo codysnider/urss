@@ -441,7 +441,10 @@ body.ttrss_main .dijitDialog .dlgSecCont {
 }
 body.ttrss_main .dijitDialog header.horizontal + section,
 body.ttrss_main .dijitDialog .dlgSecHoriz + .dlgSecCont {
-  margin: 10px 0px;
+  margin: 10px 0;
+}
+body.ttrss_main .dijitDialog section.narrow {
+  margin: 0;
 }
 body.ttrss_main .dijitDialog section fieldset > label,
 body.ttrss_main .dijitDialog div.dlgSecCont fieldset > label,
