@@ -163,31 +163,38 @@ class Af_Psql_Trgm extends Plugin {
 			print_hidden("method", "save");
 			print_hidden("plugin", "af_psql_trgm");
 
-			print "<p>" . __("PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking.") . "</p>";
-			print_notice("Enable the plugin for specific feeds in the feed editor.");
+			print "<h2>" . __("Global settings") . "</h2>";
 
-			print "<h3>" . __("Global settings") . "</h3>";
+			print_notice("Enable for specific feeds in the feed editor.");
 
-			print "<table>";
+			print "<fieldset>";
 
-			print "<tr><td width=\"40%\">" . __("Minimum similarity:") . "</td>";
-			print "<td>
-				<input dojoType=\"dijit.form.ValidationTextBox\"
-				placeholder=\"0.75\"
-				required=\"1\" name=\"similarity\" value=\"$similarity\"></td></tr>";
-			print "<tr><td width=\"40%\">" . __("Minimum title length:") . "</td>";
-			print "<td>
-				<input dojoType=\"dijit.form.ValidationTextBox\"
+			print "<label>" . __("Minimum similarity:") . "</label> ";
+			print "<input dojoType=\"dijit.form.NumberSpinner\"
+				placeholder=\"0.75\" id='psql_trgm_similarity'
+				required=\"1\" name=\"similarity\" value=\"$similarity\">";
+
+			print "<div dojoType='dijit.Tooltip' connectId='psql_trgm_similarity' position='below'>" .
+				__("PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking.") .
+				"</div>";
+
+			print "</fieldset><fieldset>";
+
+			print "<label>" . __("Minimum title length:") . "</label> ";
+			print "<input dojoType=\"dijit.form.NumberSpinner\"
 				placeholder=\"32\"
-				required=\"1\" name=\"min_title_length\" value=\"$min_title_length\"></td></tr>";
-			print "<tr><td width=\"40%\">" . __("Enable for all feeds:") . "</td>";
-			print "<td>";
+				required=\"1\" name=\"min_title_length\" value=\"$min_title_length\">";
+
+			print "</fieldset><fieldset>";
+
+			print "<label class='checkbox'>";
 			print_checkbox("enable_globally", $enable_globally);
-			print "</td></tr>";
+			print " " . __("Enable for all feeds:");
+			print "</label>";
 
-			print "</table>";
+			print "</fieldset>";
 
-			print "<p>"; print_button("submit", __("Save"));
+			print_button("submit", __("Save"), "class='alt-primary'");
 			print "</form>";
 
 			$enabled_feeds = $this->host->get($this, "enabled_feeds");

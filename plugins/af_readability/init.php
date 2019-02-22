@@ -44,18 +44,20 @@ class Af_Readability extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType='dijit.layout.AccordionPane' 
 			title=\"<i class='material-icons'>extension</i> ".__('Readability settings (af_readability)')."\">";
 
 		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
 			print_error("This plugin requires PHP version 5.6.");
-		}
+		} else {
 
-		print_notice("Enable the plugin for specific feeds in the feed editor.");
+			print "<h2>" . __("Global settings") . "</h2>";
 
-		print "<form dojoType=\"dijit.form.Form\">";
+			print_notice("Enable for specific feeds in the feed editor.");
 
-		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
+			print "<form dojoType='dijit.form.Form'>";
+
+			print "<script type='dojo/method' event='onSubmit' args='evt'>
 			evt.preventDefault();
 			if (this.validate()) {
 				console.log(dojo.objectToQuery(this.getValues()));
@@ -69,35 +71,40 @@ class Af_Readability extends Plugin {
 			}
 			</script>";
 
-		print_hidden("op", "pluginhandler");
-		print_hidden("method", "save");
-		print_hidden("plugin", "af_readability");
+			print_hidden("op", "pluginhandler");
+			print_hidden("method", "save");
+			print_hidden("plugin", "af_readability");
 
-		$enable_share_anything = $this->host->get($this, "enable_share_anything");
+			$enable_share_anything = $this->host->get($this, "enable_share_anything");
 
-		print_checkbox("enable_share_anything", $enable_share_anything);
-		print "&nbsp;<label for=\"enable_share_anything\">" . __("Use Readability for pages shared via bookmarklet.") . "</label>";
+			print "<fieldset>";
+			print "<label class='checkbox'> ";
+			print_checkbox("enable_share_anything", $enable_share_anything);
+			print " " . __("Use Readability for pages shared via bookmarklet.");
+			print "</label>";
+			print "</fieldset>";
 
-		print "<p>"; print_button("submit", __("Save"));
-		print "</form>";
+			print print_button("submit", __("Save"), "class='alt-primary'");
+			print "</form>";
 
-		$enabled_feeds = $this->host->get($this, "enabled_feeds");
-		if (!is_array($enabled_feeds)) $enabled_feeds = array();
+			$enabled_feeds = $this->host->get($this, "enabled_feeds");
+			if (!is_array($enabled_feeds)) $enabled_feeds = array();
 
-		$enabled_feeds = $this->filter_unknown_feeds($enabled_feeds);
-		$this->host->set($this, "enabled_feeds", $enabled_feeds);
+			$enabled_feeds = $this->filter_unknown_feeds($enabled_feeds);
+			$this->host->set($this, "enabled_feeds", $enabled_feeds);
 
-		if (count($enabled_feeds) > 0) {
-			print "<h3>" . __("Currently enabled for (click to edit):") . "</h3>";
+			if (count($enabled_feeds) > 0) {
+				print "<h3>" . __("Currently enabled for (click to edit):") . "</h3>";
 
-			print "<ul class='panel panel-scrollable list list-unstyled'>";
-			foreach ($enabled_feeds as $f) {
-				print "<li>" .
-					"<i class='material-icons'>rss_feed</i> <a href='#'
+				print "<ul class='panel panel-scrollable list list-unstyled'>";
+				foreach ($enabled_feeds as $f) {
+					print "<li><i class='material-icons'>rss_feed</i> <a href='#'
 						onclick='CommonDialogs.editFeed($f)'>".
-					Feeds::getFeedTitle($f) . "</a></li>";
+						Feeds::getFeedTitle($f) . "</a></li>";
+				}
+				print "</ul>";
 			}
-			print "</ul>";
+
 		}
 
 		print "</div>";
@@ -115,9 +122,8 @@ class Af_Readability extends Plugin {
 
 		print "<fieldset>";
 
-		print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"af_readability_enabled\"
-			name=\"af_readability_enabled\"
-			$checked>&nbsp;".__('Inline article content')."</label>";
+		print "<label class='checkbox'><input dojoType='dijit.form.CheckBox' type='checkbox' id='af_readability_enabled'
+			name='af_readability_enabled' $checked>&nbsp;".__('Inline article content')."</label>";
 
 		print "</fieldset>";
 
