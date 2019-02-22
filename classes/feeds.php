@@ -658,7 +658,7 @@ class Feeds extends Handler_Protected {
 		print "<fieldset>";
 
 		if (get_pref('ENABLE_FEED_CATS')) {
-			print "<label>" . __('Place in category:') . "</label> ";
+			print "<label class='inline'>" . __('Place in category:') . "</label> ";
 			print_feed_cat_select("cat", false, 'dojoType="dijit.form.Select"');
 		}
 
@@ -681,7 +681,6 @@ class Feeds extends Handler_Protected {
 			</div>';
 
 		print "<div id='feedDlg_loginContainer' style='display : none'>
-				<header>".__("Authentication")."</header>
 				<section>
 				<fieldset>
 					<input dojoType=\"dijit.form.TextBox\" name='login'\"
@@ -786,7 +785,7 @@ class Feeds extends Handler_Protected {
 
 		if (DB_TYPE == "pgsql") {
 			print "<fieldset>";
-			print "<label>" . __("Language:") . "</label>";
+			print "<label class='inline'>" . __("Language:") . "</label>";
 			print_select("search_language", "", Pref_Feeds::get_ts_languages(),
 				"dojoType='dijit.form.Select' title=\"".__('Used for word stemming')."\"");
 			print "</fieldset>";

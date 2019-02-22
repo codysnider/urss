@@ -458,6 +458,11 @@ body.ttrss_main .dijitDialog div.dlgSecSimple fieldset > label.checkbox {
   font-weight: normal;
   display: inline;
 }
+body.ttrss_main .dijitDialog section fieldset > label.inline,
+body.ttrss_main .dijitDialog div.dlgSecCont fieldset > label.inline,
+body.ttrss_main .dijitDialog div.dlgSecSimple fieldset > label.inline {
+  display: inline;
+}
 body.ttrss_main .dijitDialog section fieldset,
 body.ttrss_main .dijitDialog div.dlgSecCont fieldset,
 body.ttrss_main .dijitDialog div.dlgSecSimple fieldset {
