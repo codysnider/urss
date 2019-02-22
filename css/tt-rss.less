@@ -496,6 +496,7 @@ body.ttrss_main {
 
 	.dijitDialog {
 
+		header,
 		.dlgSec, .dlgSecHoriz {
 			font-size : 16px;
 			font-weight : 600;
@@ -503,14 +504,17 @@ body.ttrss_main {
 			font-family: @fonts-ui-bold;
 		}
 
+		section,
 		.dlgSecCont {
 			margin : 10px 20px;
 		}
 
+		header.horizontal + section,
 		.dlgSecHoriz + .dlgSecCont {
 			margin : 10px 0px;
 		}
 
+		section,
 		div.dlgSecCont, div.dlgSecSimple {
 
 			fieldset {
@@ -542,10 +546,14 @@ body.ttrss_main {
 			}
 		}
 
+		footer,
 		.dlgButtons {
 			margin-top : 5px;
 			text-align: right;
-			clear: both;
+		}
+
+		footer.text-center {
+			text-align: center;
 		}
 	}
 

@@ -81,9 +81,9 @@ class MailTo extends Plugin {
 
 		print "<p>";
 
-		print "<div style='text-align : center'>";
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('emailArticleDlg').hide()\">".__('Close this dialog')."</button>";
-		print "</div>";
+		print "<footer class='text-center'>";
+		print "<button dojoType='dijit.form.Button' onclick=\"dijit.byId('emailArticleDlg').hide()\">".__('Close this dialog')."</button>";
+		print "</footer>";
 
 		//return;
 	}

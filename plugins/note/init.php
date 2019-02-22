@@ -42,21 +42,18 @@ class Note extends Plugin {
 			print_hidden("method", "setNote");
 			print_hidden("plugin", "note");
 
-			print "<table width='100%'><tr><td>";
-			print "<textarea dojoType=\"dijit.form.SimpleTextarea\"
+			print "<textarea dojoType='dijit.form.SimpleTextarea'
 				style='font-size : 12px; width : 98%; height: 100px;'
-				placeHolder='body#ttrssMain { font-size : 14px; };'
 				name='note'>$note</textarea>";
-			print "</td></tr></table>";
 
 		}
 
-		print "<div class='dlgButtons'>";
+		print "<footer class='text-center'>";
 		print "<button dojoType=\"dijit.form.Button\"
 			onclick=\"dijit.byId('editNoteDlg').execute()\">".__('Save')."</button> ";
 		print "<button dojoType=\"dijit.form.Button\"
 			onclick=\"dijit.byId('editNoteDlg').hide()\">".__('Cancel')."</button>";
-		print "</div>";
+		print "</footer>";
 
 	}
 

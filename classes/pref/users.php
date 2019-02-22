@@ -44,26 +44,29 @@ class Pref_Users extends Handler_Protected {
 
 				$sel_disabled = ($id == $_SESSION["uid"] || $login == "admin") ? "disabled" : "";
 
-				print "<div class=\"dlgSec\">".__("User")."</div>";
-				print "<div class=\"dlgSecCont\">";
+				print "<header>".__("User")."</header>";
+				print "<section>";
 
 				if ($sel_disabled) {
 					print_hidden("login", "$login");
 				}
 
-				print "<input size=\"30\" style=\"font-size : 16px\"
-					dojoType=\"dijit.form.ValidationTextBox\" required=\"1\"
+				print "<fieldset>";
+				print "<label>" . __("Login:") . "</label>";
+				print "<input style='font-size : 16px'
+					dojoType='dijit.form.ValidationTextBox' required='1'
 					$sel_disabled
-					name=\"login\" value=\"$login\">";
+					name='login' value=\"$login\">";
+				print "</fieldset>";
 
-				print "</div>";
+				print "</section>";
 
-				print "<div class=\"dlgSec\">".__("Authentication")."</div>";
-				print "<div class=\"dlgSecCont\">";
+				print "<header>".__("Authentication")."</header>";
+				print "<section>";
 
 				print "<fieldset>";
 
-				print __('Access level: ') . " ";
+				print "<label>" . __('Access level: ') . "</label> ";
 
 				if (!$sel_disabled) {
 					print_select_hash("access_level", $access_level, $access_level_names,
@@ -77,20 +80,24 @@ class Pref_Users extends Handler_Protected {
 				print "</fieldset>";
 				print "<fieldset>";
 
-				print "<input dojoType=\"dijit.form.TextBox\" type=\"password\" size=\"20\" placeholder=\"Change password\"
+				print "<label>" . __("New password:") . "</label> ";
+				print "<input dojoType='dijit.form.TextBox' type='password' size='20' placeholder='Change password'
 					name=\"password\">";
 
 				print "</fieldset>";
 
-				print "</div>";
+				print "</section>";
 
-				print "<div class=\"dlgSec\">".__("Options")."</div>";
-				print "<div class=\"dlgSecCont\">";
+				print "<header>".__("Options")."</header>";
+				print "<section>";
 
-				print "<input dojoType=\"dijit.form.TextBox\" size=\"30\" name=\"email\" placeholder=\"E-mail\"
-				value=\"$email\">";
+				print "<fieldset>";
+				print "<label>" . __("E-mail:") . "</label> ";
+				print "<input dojoType='dijit.form.TextBox' size='30' name='email'
+					value=\"$email\">";
+				print "</fieldset>";
 
-				print "</div>";
+				print "</section>";
 
 				print "</table>";
 
@@ -103,11 +110,12 @@ class Pref_Users extends Handler_Protected {
 			print '</div>';
 			print '</div>';
 
-			print "<div class=\"dlgButtons\">
+			print "<footer>
 				<button dojoType=\"dijit.form.Button\" class=\"alt-primary\" type=\"submit\" onclick=\"dijit.byId('userEditDlg').execute()\">".
 				__('Save')."</button>
 				<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('userEditDlg').hide()\">".
-				__('Cancel')."</button></div>";
+				__('Cancel')."</button>
+				</footer>";
 
 			print "</form>";
 

@@ -437,24 +437,23 @@ class Import_Export extends Plugin implements IHandler {
 
 		print "<p style='text-align : center' id='export_status_message'>You need to prepare exported data first by clicking the button below.</p>";
 
-		print "<div align='center'>";
-		print "<button dojoType=\"dijit.form.Button\"
+		print "<footer class='text-center'>";
+		print "<button dojoType='dijit.form.Button'
+			type='submit' class='alt-primary'
 			onclick=\"dijit.byId('dataExportDlg').prepare()\">".
 			__('Prepare data')."</button>";
 
-		print "<button dojoType=\"dijit.form.Button\"
+		print "<button dojoType='dijit.form.Button'
 			onclick=\"dijit.byId('dataExportDlg').hide()\">".
 			__('Close this window')."</button>";
 
-		print "</div>";
-
-
+		print "</footer>";
 	}
 
 	function dataImport() {
 		header("Content-Type: text/html"); # required for iframe
 
-		print "<div style='text-align : center'>";
+		print "<footer class='text-center'>";
 
 		if ($_FILES['export_file']['error'] != 0) {
 			print_error(T_sprintf("Upload failed with error code %d (%s)",
@@ -486,7 +485,7 @@ class Import_Export extends Plugin implements IHandler {
 			}
 		}
 
-		print "<button dojoType=\"dijit.form.Button\"
+		print "<button dojoType='dijit.form.Button'
 			onclick=\"dijit.byId('dataImportDlg').hide()\">".
 			__('Close this window')."</button>";
 

@@ -100,16 +100,16 @@ class Share extends Plugin {
 				$sth->execute([$uuid, $param, $_SESSION['uid']]);
 			}
 
-			print "<div class='dlgSec'>" . __("You can share this article by the following unique URL:") . "</div>";
+			print "<header>" . __("You can share this article by the following unique URL:") . "</header>";
 
 			$url_path = get_self_url_prefix();
 			$url_path .= "/public.php?op=share&key=$uuid";
 
-			print "<div class='dlgSecCont'>
+			print "<section>
 				<div class='panel text-center'>
 				<a id='gen_article_url' href='$url_path' target='_blank' rel='noopener noreferrer'>$url_path</a>
 				</div>
-				</div>";
+				</section>";
 
 			/* if (!label_find_id(__('Shared'), $_SESSION["uid"]))
 				label_create(__('Shared'), $_SESSION["uid"]);
@@ -121,7 +121,7 @@ class Share extends Plugin {
 			print "Article not found.";
 		}
 
-		print "<div align='center'>";
+		print "<footer class='text-center'>";
 
 		print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('shareArticleDlg').unshare()\">".
 			__('Unshare article')."</button>";
@@ -132,7 +132,7 @@ class Share extends Plugin {
 		print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('shareArticleDlg').hide()\">".
 			__('Close this window')."</button>";
 
-		print "</div>";
+		print "</footer>";
 	}
 
 	function api_version() {

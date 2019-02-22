@@ -107,9 +107,9 @@ class Af_Psql_Trgm extends Plugin {
 
 		}
 
-		print "<div style='text-align : center'>";
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('trgmRelatedDlg').hide()\">".__('Close this window')."</button>";
-		print "</div>";
+		print "<footer class='text-center'>";
+		print "<button dojoType='dijit.form.Button' onclick=\"dijit.byId('trgmRelatedDlg').hide()\">".__('Close this window')."</button>";
+		print "</footer>";
 
 
 	}
@@ -214,8 +214,8 @@ class Af_Psql_Trgm extends Plugin {
 	}
 
 	function hook_prefs_edit_feed($feed_id) {
-		print "<div class=\"dlgSec\">".__("Similarity (pg_trgm)")."</div>";
-		print "<div class=\"dlgSecCont\">";
+		print "<header>".__("Similarity (pg_trgm)")."</header>";
+		print "<section>";
 
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
 		if (!array($enabled_feeds)) $enabled_feeds = array();
@@ -225,13 +225,12 @@ class Af_Psql_Trgm extends Plugin {
 
 		print "<fieldset>";
 
-		print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"trgm_similarity_enabled\"
-			name=\"trgm_similarity_enabled\"
-			$checked> ".__('Mark similar articles as read')."</label>";
+		print "<label class='checkbox'><input dojoType='dijit.form.CheckBox' type='checkbox' id='trgm_similarity_enabled'
+			name='trgm_similarity_enabled' $checked> ".__('Mark similar articles as read')."</label>";
 
 		print "</fieldset>";
 
-		print "</div>";
+		print "</section>";
 	}
 
 	function hook_prefs_save_feed($feed_id) {

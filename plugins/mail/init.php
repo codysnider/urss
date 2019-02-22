@@ -162,22 +162,21 @@ class Mail extends Plugin {
 
 		print "</td><td>";
 
-		print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"true\"
-				style=\"width : 30em;\"
-				name=\"subject\" value=\"$subject\" id=\"subject\">";
+		print "<input dojoType='dijit.form.ValidationTextBox' required='true'
+				style='width : 30em;' name='subject' value=\"$subject\" id='subject'>";
 
 		print "</td></tr>";
 
-		print "<tr><td colspan='2'><textarea dojoType=\"dijit.form.SimpleTextarea\"
+		print "<tr><td colspan='2'><textarea dojoType='dijit.form.SimpleTextarea'
 			style='height : 200px; font-size : 12px; width : 98%' rows=\"20\"
 			name='content'>$content</textarea>";
 
 		print "</td></tr></table>";
 
-		print "<div class='dlgButtons'>";
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('emailArticleDlg').execute()\">".__('Send e-mail')."</button> ";
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('emailArticleDlg').hide()\">".__('Cancel')."</button>";
-		print "</div>";
+		print "<footer>";
+		print "<button dojoType='dijit.form.Button' onclick=\"dijit.byId('emailArticleDlg').execute()\">".__('Send e-mail')."</button> ";
+		print "<button dojoType='dijit.form.Button' onclick=\"dijit.byId('emailArticleDlg').hide()\">".__('Cancel')."</button>";
+		print "</footer>";
 
 		//return;
 	}

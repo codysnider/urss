@@ -104,8 +104,8 @@ class Af_Readability extends Plugin {
 	}
 
 	function hook_prefs_edit_feed($feed_id) {
-		print "<div class=\"dlgSec\">".__("Readability")."</div>";
-		print "<div class=\"dlgSecCont\">";
+		print "<header>".__("Readability")."</header>";
+		print "<section>";
 
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
 		if (!is_array($enabled_feeds)) $enabled_feeds = array();
@@ -121,7 +121,7 @@ class Af_Readability extends Plugin {
 
 		print "</fieldset>";
 
-		print "</div>";
+		print "</section>";
 	}
 
 	function hook_prefs_save_feed($feed_id) {

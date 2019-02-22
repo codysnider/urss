@@ -1039,35 +1039,34 @@ class Pref_Prefs extends Handler_Protected {
 		print_hidden("key", "USER_STYLESHEET");
 
 		print "<textarea class='panel user-css-editor' dojoType='dijit.form.SimpleTextarea'
-			style='font-size : 12px;'
-			name='value'>$value</textarea>";
+			style='font-size : 12px;' name='value'>$value</textarea>";
 
-		print "<div class='dlgButtons'>";
-		print "<button dojoType=\"dijit.form.Button\"
+		print "<footer>";
+		print "<button dojoType='dijit.form.Button'
 			onclick=\"dijit.byId('cssEditDlg').execute()\">".__('Save')."</button> ";
-		print "<button dojoType=\"dijit.form.Button\"
+		print "<button dojoType='dijit.form.Button'
 			onclick=\"dijit.byId('cssEditDlg').hide()\">".__('Cancel')."</button>";
-		print "</div>";
+		print "</footer>";
 
 	}
 
 	function editPrefProfiles() {
-		print "<div dojoType=\"dijit.Toolbar\">";
+		print "<div dojoType='dijit.Toolbar'>";
 
-		print "<div dojoType=\"dijit.form.DropDownButton\">".
+		print "<div dojoType='dijit.form.DropDownButton'>".
 				"<span>" . __('Select')."</span>";
-		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
+		print "<div dojoType='dijit.Menu' style='display: none'>";
 		print "<div onclick=\"Tables.select('pref-profiles-list', true)\"
-			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
+			dojoType='dijit.MenuItem'>".__('All')."</div>";
 		print "<div onclick=\"Tables.select('pref-profiles-list', false)\"
-			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
+			dojoType='dijit.MenuItem'>".__('None')."</div>";
 		print "</div></div>";
 
-		print "<div style=\"float : right\">";
+		print "<div style='float : right'>";
 
-		print "<input name=\"newprofile\" dojoType=\"dijit.form.ValidationTextBox\"
-				required=\"1\">
-			<button dojoType=\"dijit.form.Button\"
+		print "<input name='newprofile' dojoType='dijit.form.ValidationTextBox'
+				required='1'>
+			<button dojoType='dijit.form.Button'
 			onclick=\"dijit.byId('profileEditDlg').addProfile()\">".
 				__('Create profile')."</button></div>";
 
@@ -1113,10 +1112,10 @@ class Pref_Prefs extends Handler_Protected {
 				$is_active = "";
 			}
 
-			print "<td><span dojoType=\"dijit.InlineEditBox\"
-				width=\"300px\" autoSave=\"false\"
-				profile-id=\"$profile_id\">" . $edit_title .
-				"<script type=\"dojo/method\" event=\"onChange\" args=\"item\">
+			print "<td><span dojoType='dijit.InlineEditBox'
+				width='300px' autoSave='false'
+				profile-id='$profile_id'>" . $edit_title .
+				"<script type='dojo/method' event='onChange' args='item'>
 					var elem = this;
 					dojo.xhrPost({
 						url: 'backend.php',
@@ -1137,17 +1136,14 @@ class Pref_Prefs extends Handler_Protected {
 		print "</form>";
 		print "</div>";
 
-		print "<div class='dlgButtons'>
-			<div style='float : left'>
-			<button class=\"alt-danger\" dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('profileEditDlg').removeSelected()\">".
+		print "<footer>
+			<button style='float : left' class='alt-danger' dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('profileEditDlg').removeSelected()\">".
 			__('Remove selected profiles')."</button>
-			<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('profileEditDlg').activateProfile()\">".
+			<button dojoType='dijit.form.Button' class='alt-primary' type='submit' onclick=\"dijit.byId('profileEditDlg').activateProfile()\">".
 			__('Activate profile')."</button>
-			</div>";
-
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('profileEditDlg').hide()\">".
-			__('Close this window')."</button>";
-		print "</div>";
+			<button dojoType='dijit.form.Button' onclick=\"dijit.byId('profileEditDlg').hide()\">".
+			__('Cancel')."</button>";
+		print "</footer>";
 
 	}
 

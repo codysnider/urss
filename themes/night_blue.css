@@ -427,6 +427,7 @@ body.ttrss_main div#headlines-frame.wide .title {
 body.ttrss_main div#headlines-frame.wide .hl .feed {
   display: none;
 }
+body.ttrss_main .dijitDialog header,
 body.ttrss_main .dijitDialog .dlgSec,
 body.ttrss_main .dijitDialog .dlgSecHoriz {
   font-size: 16px;
@@ -434,12 +435,15 @@ body.ttrss_main .dijitDialog .dlgSecHoriz {
   color: #ccc;
   font-family: "Segoe WP Semibold", "Segoe UI Semibold", "Segoe UI Web Semibold", "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+body.ttrss_main .dijitDialog section,
 body.ttrss_main .dijitDialog .dlgSecCont {
   margin: 10px 20px;
 }
+body.ttrss_main .dijitDialog header.horizontal + section,
 body.ttrss_main .dijitDialog .dlgSecHoriz + .dlgSecCont {
   margin: 10px 0px;
 }
+body.ttrss_main .dijitDialog section fieldset > label,
 body.ttrss_main .dijitDialog div.dlgSecCont fieldset > label,
 body.ttrss_main .dijitDialog div.dlgSecSimple fieldset > label {
   font-weight: bold;
@@ -448,28 +452,35 @@ body.ttrss_main .dijitDialog div.dlgSecSimple fieldset > label {
   min-width: 140px;
   text-align: right;
 }
+body.ttrss_main .dijitDialog section fieldset > label.checkbox,
 body.ttrss_main .dijitDialog div.dlgSecCont fieldset > label.checkbox,
 body.ttrss_main .dijitDialog div.dlgSecSimple fieldset > label.checkbox {
   font-weight: normal;
   display: inline;
 }
+body.ttrss_main .dijitDialog section fieldset,
 body.ttrss_main .dijitDialog div.dlgSecCont fieldset,
 body.ttrss_main .dijitDialog div.dlgSecSimple fieldset {
   border-width: 0px;
   padding: 5px 0px;
 }
+body.ttrss_main .dijitDialog section fieldset.narrow,
 body.ttrss_main .dijitDialog div.dlgSecCont fieldset.narrow,
 body.ttrss_main .dijitDialog div.dlgSecSimple fieldset.narrow {
   padding: 2px 0px;
 }
+body.ttrss_main .dijitDialog section fieldset.align-right,
 body.ttrss_main .dijitDialog div.dlgSecCont fieldset.align-right,
 body.ttrss_main .dijitDialog div.dlgSecSimple fieldset.align-right {
   text-align: right;
 }
+body.ttrss_main .dijitDialog footer,
 body.ttrss_main .dijitDialog .dlgButtons {
   margin-top: 5px;
   text-align: right;
-  clear: both;
+}
+body.ttrss_main .dijitDialog footer.text-center {
+  text-align: center;
 }
 body.ttrss_main i.icon-label {
   color: #fff7d5;

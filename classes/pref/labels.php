@@ -22,9 +22,9 @@ class Pref_Labels extends Handler_Protected {
 
 			print "<form onsubmit='return false;'>";
 
-			print "<div class=\"dlgSec\">".__("Caption")."</div>";
+			print "<header>".__("Caption")."</header>";
 
-			print "<div class=\"dlgSecCont\">";
+			print "<section>";
 
 			$fg_color = $line['fg_color'];
 			$bg_color = $line['bg_color'] ? $line['bg_color'] : '#fff7d5';
@@ -33,53 +33,47 @@ class Pref_Labels extends Handler_Protected {
 				id='labelEdit_caption' name='caption' dojoType='dijit.form.ValidationTextBox'
 				required='true' value=\"".htmlspecialchars($line['caption'])."\">";
 
-			print "</div>";
-			print "<div class=\"dlgSec\">" . __("Colors") . "</div>";
-			print "<div class=\"dlgSecCont\">";
+			print "</section>";
 
-			print "<table cellspacing=\"0\">";
+			print "<header>" . __("Colors") . "</header>";
+			print "<section>";
 
-			print "<tr><th style='text-align : left'>".__("Foreground:")."</th><th style='text-align : left'>".__("Background:").
-				"</td></tr>";
-
+			print "<table>";
+			print "<tr><th style='text-align : left'>".__("Foreground:")."</th><th style='text-align : left'>".__("Background:")."</th></tr>";
 			print "<tr><td style='padding-right : 10px'>";
 
-			print "<input dojoType=\"dijit.form.TextBox\"
-			style=\"display : none\" id=\"labelEdit_fgColor\"
-			name=\"fg_color\" value=\"$fg_color\">";
-			print "<input dojoType=\"dijit.form.TextBox\"
-			style=\"display : none\" id=\"labelEdit_bgColor\"
-			name=\"bg_color\" value=\"$bg_color\">";
+			print "<input dojoType='dijit.form.TextBox'
+				style='display : none' id='labelEdit_fgColor'
+				name='fg_color' value='$fg_color'>";
+			print "<input dojoType='dijit.form.TextBox'
+				style='display : none' id='labelEdit_bgColor'
+				name='bg_color' value='$bg_color'>";
 
-			print "<div dojoType=\"dijit.ColorPalette\">
-			<script type=\"dojo/method\" event=\"onChange\" args=\"fg_color\">
+			print "<div dojoType='dijit.ColorPalette'>
+			<script type='dojo/method' event='onChange' args='fg_color'>
 				dijit.byId('labelEdit_fgColor').attr('value', fg_color);
 				dijit.byId('labelEdit_caption').domNode.setStyle({color: fg_color});
 			</script>
 			</div>";
-			print "</div>";
 
 			print "</td><td>";
 
-			print "<div dojoType=\"dijit.ColorPalette\">
-			<script type=\"dojo/method\" event=\"onChange\" args=\"bg_color\">
+			print "<div dojoType='dijit.ColorPalette'>
+			<script type='dojo/method' event='onChange' args='bg_color'>
 				dijit.byId('labelEdit_bgColor').attr('value', bg_color);
 				dijit.byId('labelEdit_caption').domNode.setStyle({backgroundColor: bg_color});
 			</script>
 			</div>";
-			print "</div>";
 
 			print "</td></tr></table>";
-			print "</div>";
+			print "</section>";
 
-#			print "</form>";
-
-			print "<div class=\"dlgButtons\">";
-			print "<button dojoType=\"dijit.form.Button\" type=\"submit\" class=\"alt-primary\" onclick=\"dijit.byId('labelEditDlg').execute()\">".
+			print "<footer>";
+			print "<button dojoType='dijit.form.Button' type='submit' class='alt-primary' onclick=\"dijit.byId('labelEditDlg').execute()\">".
 				__('Save')."</button>";
-			print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('labelEditDlg').hide()\">".
+			print "<button dojoType='dijit.form.Button' onclick=\"dijit.byId('labelEditDlg').hide()\">".
 				__('Cancel')."</button>";
-			print "</div>";
+			print "</footer>";
 
 			print "</form>";
 		}

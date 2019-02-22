@@ -211,8 +211,6 @@ class Article extends Handler_Protected {
 
 	function editArticleTags() {
 
-		print __("Tags for this article (separated by commas):")."<br>";
-
 		$param = clean($_REQUEST['param']);
 
 		$tags = Article::get_article_tags($param);
@@ -223,23 +221,22 @@ class Article extends Handler_Protected {
 		print_hidden("op", "article");
 		print_hidden("method", "setArticleTags");
 
-		print "<table width='100%'><tr><td>";
+		print "<header class='horizontal'>" . __("Tags for this article (separated by commas):")."</header>";
 
-		print "<textarea dojoType=\"dijit.form.SimpleTextarea\" rows='4'
-			style='height : 100px; font-size : 12px; width : 98%' id=\"tags_str\"
+		print "<section>";
+		print "<textarea dojoType='dijit.form.SimpleTextarea' rows='4'
+			style='height : 100px; font-size : 12px; width : 98%' id='tags_str'
 			name='tags_str'>$tags_str</textarea>
-		<div class=\"autocomplete\" id=\"tags_choices\"
-				style=\"display:none\"></div>";
+		<div class='autocomplete' id='tags_choices'
+				style='display:none'></div>";
+		print "</section>";
 
-		print "</td></tr></table>";
-
-		print "<div class='dlgButtons'>";
-
-		print "<button dojoType=\"dijit.form.Button\"
-			onclick=\"dijit.byId('editTagsDlg').execute()\">".__('Save')."</button> ";
-		print "<button dojoType=\"dijit.form.Button\"
+		print "<footer>";
+		print "<button dojoType='dijit.form.Button'
+			type='submit' class='alt-primary' onclick=\"dijit.byId('editTagsDlg').execute()\">".__('Save')."</button> ";
+		print "<button dojoType='dijit.form.Button'
 			onclick=\"dijit.byId('editTagsDlg').hide()\">".__('Cancel')."</button>";
-		print "</div>";
+		print "</footer>";
 
 	}
 
