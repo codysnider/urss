@@ -44,7 +44,7 @@ class Share extends Plugin {
 
 			print "<h3>" . __("You can disable all articles shared by unique URLs here.") . "</h3>";
 
-			print "<button class=\"alt-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Plugins.Share.clearKeys()\">".
+			print "<button class='alt-danger' dojoType='dijit.form.Button' onclick=\"return Plugins.Share.clearKeys()\">".
 				__('Unshare all articles')."</button> ";
 
 			print "</p>";
@@ -100,14 +100,16 @@ class Share extends Plugin {
 				$sth->execute([$uuid, $param, $_SESSION['uid']]);
 			}
 
-			print __("You can share this article by the following unique URL:") . "<br/>";
+			print "<div class='dlgSec'>" . __("You can share this article by the following unique URL:") . "</div>";
 
 			$url_path = get_self_url_prefix();
 			$url_path .= "/public.php?op=share&key=$uuid";
 
-			print "<div class='panel text-center'>";
-			print "<a id='gen_article_url' href='$url_path' target='_blank' rel='noopener noreferrer'>$url_path</a>";
-			print "</div>";
+			print "<div class='dlgSecCont'>
+				<div class='panel text-center'>
+				<a id='gen_article_url' href='$url_path' target='_blank' rel='noopener noreferrer'>$url_path</a>
+				</div>
+				</div>";
 
 			/* if (!label_find_id(__('Shared'), $_SESSION["uid"]))
 				label_create(__('Shared'), $_SESSION["uid"]);
@@ -121,13 +123,13 @@ class Share extends Plugin {
 
 		print "<div align='center'>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('shareArticleDlg').unshare()\">".
+		print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('shareArticleDlg').unshare()\">".
 			__('Unshare article')."</button>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('shareArticleDlg').newurl()\">".
+		print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('shareArticleDlg').newurl()\">".
 			__('Generate new URL')."</button>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return dijit.byId('shareArticleDlg').hide()\">".
+		print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('shareArticleDlg').hide()\">".
 			__('Close this window')."</button>";
 
 		print "</div>";
