@@ -502,7 +502,7 @@ class Pref_Feeds extends Handler_Protected {
 			$rc = 2;
 		}
 
-		if is_file($icon_file) @unlink($icon_file);
+		@unlink($icon_file);
 
 		print "<script type=\"text/javascript\">";
 		print "parent.CommonDialogs.uploadIconHandler($rc);";
