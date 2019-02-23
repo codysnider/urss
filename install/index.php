@@ -22,7 +22,7 @@
 		return "<script type=\"text/javascript\" charset=\"utf-8\" src=\"$filename?$timestamp\"></script>\n";
 	}
 ?>
-
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Tiny Tiny RSS - Installer</title>

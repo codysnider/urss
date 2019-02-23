@@ -176,6 +176,7 @@
 		}
 
 		if (count($errors) > 0 && $_SERVER['REQUEST_URI']) { ?>
+			<!DOCTYPE html>
 			<html>
 			<head>
 			<title>Startup failed</title>

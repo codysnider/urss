@@ -48,7 +48,9 @@ class Auth_Internal extends Plugin implements IAuthModule {
 							}
 						} else {
 							$return = urlencode($_REQUEST["return"]);
-							?><html>
+							?>
+							<!DOCTYPE html>
+							<html>
 								<head>
 									<title>Tiny Tiny RSS</title>
 									<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

@@ -525,6 +525,7 @@ class Handler_Public extends Handler {
 
 		header('Content-Type: text/html; charset=utf-8');
 		?>
+		<!DOCTYPE html>
 		<html>
 		<head>
 			<title><?php echo __("Share with Tiny Tiny RSS") ?> ?></title>
@@ -742,6 +743,7 @@ class Handler_Public extends Handler {
 
 			header('Content-Type: text/html; charset=utf-8');
 			?>
+			<!DOCTYPE html>
 			<html>
 			<head>
 				<title>Tiny Tiny RSS</title>
@@ -866,7 +868,7 @@ class Handler_Public extends Handler {
 
 		header('Content-Type: text/html; charset=utf-8');
 		?>
-
+		<!DOCTYPE html>
 		<html>
 		<head>
 			<title>Tiny Tiny RSS</title>
@@ -1071,6 +1073,7 @@ class Handler_Public extends Handler {
 		}
 
 		?>
+		<!DOCTYPE html>
 		<html>
 			<head>
 			<title>Database Updater</title>

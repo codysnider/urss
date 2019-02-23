@@ -830,6 +830,7 @@ class Feeds extends Handler_Protected {
 		$rehash_checked = isset($_REQUEST["force_rehash"]) ? "checked" : "";
 
 		?>
+		<!DOCTYPE html>
 		<html>
 		<head>
 			<?php echo stylesheet_tag("css/default.css") ?>

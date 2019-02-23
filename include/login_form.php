@@ -1,4 +1,5 @@
 <?php startup_gettext(); ?>
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Tiny Tiny RSS : Login</title>

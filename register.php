@@ -89,7 +89,7 @@
 		return;
 	}
 ?>
-
+<!DOCTYPE html>
 <html>
 <head>
 <title>Create new account</title>
