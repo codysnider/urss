@@ -591,7 +591,7 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRowSelected {
 }
 body.ttrss_main #feeds-holder #feedTree .icon {
   position: relative;
-  top: -2px;
+  top: -4px;
 }
 body.ttrss_main #feeds-holder #feedTree i.icon {
   left: -2px;
@@ -1508,6 +1508,10 @@ body.ttrss_prefs .phpinfo td.e {
 }
 body.ttrss_prefs .phpinfo td.v {
   font-family: monospace;
+}
+body.ttrss_prefs #feedTree .icon {
+  position: relative;
+  top: -4px;
 }
 body.ttrss_prefs fieldset,
 body.ttrss_utility fieldset {
