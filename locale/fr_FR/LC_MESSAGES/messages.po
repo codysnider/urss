@@ -13,9 +13,10 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-22 06:58+0300\n"
-"PO-Revision-Date: 2019-02-02 21:35+0000\n"
+"PO-Revision-Date: 2019-02-23 05:03+0000\n"
 "Last-Translator: Glandos <bugs-ttrss@antipoul.fr>\n"
-"Language-Team: French <https://weblate.tt-rss.org/projects/tt-rss/messages/fr/>\n"
+"Language-Team: French <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"fr/>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -167,7 +168,7 @@ msgstr "Greffon non trouvé"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
-msgstr "L’encodage des données en JSON a échoué"
+msgstr "Encodage des données en JSON échoué"
 
 #: index.php:128
 #: index.php:143
@@ -498,7 +499,7 @@ msgstr "Aucun flux trouvé."
 
 #: include/functions.php:84
 msgid "Detect automatically"
-msgstr ""
+msgstr "Détection automatique"
 
 #: include/functions.php:952
 #, php-format
@@ -977,9 +978,8 @@ msgstr "Ctrl"
 #: classes/pref/prefs.php:673
 #: classes/pref/prefs.php:896
 #: plugins/bookmarklets/init.php:43
-#, fuzzy
 msgid "More info..."
-msgstr "plus d’info"
+msgstr "Plus d’info…"
 
 #: classes/backend.php:157
 #: classes/dlg.php:30
@@ -1099,9 +1099,8 @@ msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "Impossible de s’abonner à <b>%s</b>.<br>Impossible de télécharger l’URL du flux."
 
 #: classes/handler/public.php:806
-#, fuzzy
 msgid "Multiple feed URLs found:"
-msgstr "Plusieurs flux trouvés."
+msgstr "Plusieurs flux trouvés :"
 
 #: classes/handler/public.php:817
 msgid "Subscribe to selected feed"
@@ -1116,14 +1115,15 @@ msgid "Password recovery"
 msgstr "Récupération de mot de passe"
 
 #: classes/handler/public.php:939
-#, fuzzy
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
-msgstr "Vous devrez fournir un nom et une adresse email valides. Un lien pour réinitialiser votre mot de passe sera envoyé à votre adresse email."
+msgstr ""
+"Vous devrez fournir un nom et une adresse courriel valides. Un lien pour "
+"réinitialiser votre mot de passe sera envoyé à votre adresse courriel."
 
 #: classes/handler/public.php:959
-#, fuzzy, php-format
+#, php-format
 msgid "How much is %d + %d:"
-msgstr "Combien font 2 plus 2 :"
+msgstr "Combien font %d plus %d :"
 
 #: classes/handler/public.php:965
 #: classes/pref/users.php:376
@@ -1156,32 +1156,30 @@ msgid "Database Updater"
 msgstr "Outil de mise à jour de la base de données"
 
 #: classes/handler/public.php:1119
-#, fuzzy
 msgid "Performing updates"
-msgstr "Exécution des mises à jour..."
+msgstr "Application des mises-à-jour"
 
 #: classes/handler/public.php:1121
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to schema version %d"
-msgstr "Passage à la version %d..."
+msgstr "Mise-à-jour du schéma à la version %d"
 
 #: classes/handler/public.php:1126
-#, fuzzy, php-format
+#, php-format
 msgid "Performing update up to version %d..."
-msgstr "Exécution des mises à jour..."
+msgstr "Application de la mise-à-jour jusqu'à la version %d…"
 
 #: classes/handler/public.php:1131
 msgid "FAILED!"
-msgstr ""
+msgstr "ÉCHEC !"
 
 #: classes/handler/public.php:1139
 msgid "OK!"
 msgstr "OK !"
 
 #: classes/handler/public.php:1157
-#, fuzzy
 msgid "Database update required"
-msgstr "Outil de mise à jour de la base de données"
+msgstr "Mise-à-jour de la base de données requise"
 
 #: classes/handler/public.php:1168
 msgid "Perform updates"
@@ -1432,9 +1430,8 @@ msgid "Date"
 msgstr "Date"
 
 #: classes/pref/system.php:85
-#, fuzzy
 msgid "PHP Information"
-msgstr "Exécuter l’action"
+msgstr "Informations PHP"
 
 #: classes/pref/feeds.php:28
 msgid "Check to enable field"
@@ -1492,9 +1489,8 @@ msgstr "Mettre à jour"
 
 #: classes/pref/feeds.php:623
 #: classes/pref/feeds.php:894
-#, fuzzy
 msgid "Interval:"
-msgstr "Interface"
+msgstr "Intervalle :"
 
 #: classes/pref/feeds.php:636
 #: classes/pref/feeds.php:909
@@ -1682,9 +1678,10 @@ msgid "Unsubscribe from selected feeds"
 msgstr "Se désabonner des flux sélectionnés"
 
 #: classes/pref/feeds.php:1713
-#, fuzzy
 msgid "One valid feed per line (no detection is done)"
-msgstr "Ajoutez un flux RSS valide par ligne (aucune détection de flux n’est réalisée)"
+msgstr ""
+"Ajoutez un flux RSS valide par ligne (aucune détection de flux n’est "
+"réalisée)"
 
 #: classes/pref/feeds.php:1743
 msgid "Feeds require authentication."
@@ -1827,9 +1824,8 @@ msgstr[0] "%s (+%d action)"
 msgstr[1] "%s (+%d actions)"
 
 #: classes/pref/prefs.php:40
-#, fuzzy
 msgid "Articles"
-msgstr "Article"
+msgstr "Articles"
 
 #: classes/pref/prefs.php:53
 msgid "Digest"
@@ -1850,34 +1846,31 @@ msgstr "Tags exclus"
 #: classes/pref/prefs.php:70
 msgid "Never apply these tags automatically (comma-separated list)."
 msgstr ""
+"Ne jamais ajouter ces tags automatiquement (liste séparée par des virgules)."
 
 #: classes/pref/prefs.php:71
-#, fuzzy
 msgid "Mark read on scroll"
-msgstr "Marquer tous les articles comme lus ?"
+msgstr "Marquer comme lu lors du défilement"
 
 #: classes/pref/prefs.php:71
-#, fuzzy
 msgid "Mark articles as read as you scroll past them"
-msgstr "Marquer tous les articles comme lus ?"
+msgstr "Marque les articles comme lus après les avoir faits défiler en entier"
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Always expand articles"
-msgstr "Cliquer pour développer l’article"
+msgstr "Toujours développer les articles"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Combined mode"
-msgstr "Basculer le mode combiné"
+msgstr "Mode combiné"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Show flat list of articles instead of separate panels"
-msgstr "Affiche les articles sous la forme d’une liste étendue, au lieu de deux listes séparées (une pour les en-têtes et une pour le contenu)"
+msgstr ""
+"Affiche tous les articles en enfilade, au lieu d'utiliser des panneaux "
+"séparés"
 
 #: classes/pref/prefs.php:74
-#, fuzzy
 msgid "Confirm marking feeds as read"
 msgstr "Demander confirmation pour marquer un flux comme lu"
 
@@ -1886,44 +1879,38 @@ msgid "Amount of articles to display at once"
 msgstr "Nombre d’articles à afficher"
 
 #: classes/pref/prefs.php:76
-#, fuzzy
 msgid "Default update interval"
 msgstr "Fréquence de mise à jour par défaut"
 
 #: classes/pref/prefs.php:77
-#, fuzzy
 msgid "Mark sent articles as read"
-msgstr "Marquer tous les articles comme lus ?"
+msgstr "Marquer les articles envoyés comme lus"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Enable digest"
-msgstr "Activer la synthèse quotidienne par courrier électronique"
+msgstr "Activer la synthèse"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Send daily digest of new (and unread) headlines to your e-mail address"
-msgstr "Cette option active l’envoi d’une synthèse quotidienne (digest) des en-têtes nouveaux et non lus à l’adresse électronique donnée"
+msgstr ""
+"Envoi d’une synthèse quotidienne des titres nouveaux et non lus à votre "
+"adresse courriel"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Try to send around this time"
-msgstr "Essayer d’envoyer le résumé à l’heure précisée"
+msgstr "Essayer d’envoyer à"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Time in UTC"
-msgstr "Fuseau horaire"
+msgstr "Heure en UTC"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Enable API"
-msgstr "Activer les mots de passe à usage unique"
+msgstr "Activer l’API"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Allows accessing this account through the API"
-msgstr "Autoriser les clients à accéder à ce compte via l’API"
+msgstr "Autoriser l’accès à ce compte via l’API"
 
 #: classes/pref/prefs.php:81
 msgid "Enable categories"
@@ -1934,56 +1921,50 @@ msgid "Sort feeds by unread articles count"
 msgstr "Trier les flux par nombre d’articles non lus"
 
 #: classes/pref/prefs.php:83
-#, fuzzy
 msgid "Maximum age of fresh articles"
-msgstr "Ancienneté maximale pour un nouvel article (en heures)"
+msgstr "Ancienneté maximale pour un nouvel article"
 
 #: classes/pref/prefs.php:83
-#, fuzzy
 msgid "hours"
-msgstr "4 heures"
+msgstr "heures"
 
 #: classes/pref/prefs.php:84
-#, fuzzy
 msgid "Hide read feeds"
-msgstr "Masquer/afficher les flux lus"
+msgstr "Masquer les flux lus"
 
 #: classes/pref/prefs.php:85
 msgid "Always show special feeds"
-msgstr ""
+msgstr "Toujours afficher les flux spéciaux"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "While hiding read feeds"
-msgstr "Afficher les flux spéciaux en masquant les flux lus"
+msgstr "Lorsque les flux lus sont masqués"
 
 #: classes/pref/prefs.php:86
 msgid "Long date format"
 msgstr "Format de date long"
 
 #: classes/pref/prefs.php:86
-#, fuzzy
 msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
-msgstr "La syntaxe utilisée est la même que pour la fonction PHP <a href='http://php.net/manual/function.date.php'>date()</a>."
+msgstr ""
+"La syntaxe est identique à la fonction PHP <a href='http://php.net/manual/"
+"function.date.php'>date()</a>."
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "Automatically show next feed"
-msgstr "Sauter automatiquement au flux suivant"
+msgstr "Afficher automatiquement le flux suivant"
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "After marking one as read"
-msgstr "Demander confirmation pour marquer un flux comme lu"
+msgstr "Après en avoir marqué un comme lu"
 
 #: classes/pref/prefs.php:88
-#, fuzzy
 msgid "Purge articles older than"
-msgstr "Purger les articles non lus"
+msgstr "Purger les articles plus vieux que"
 
 #: classes/pref/prefs.php:88
 msgid "<strong>days</strong> (0 disables)"
-msgstr ""
+msgstr "<strong>jours</strong> (0 pour désactiver)"
 
 #: classes/pref/prefs.php:89
 msgid "Purge unread articles"
@@ -1998,9 +1979,8 @@ msgid "Short date format"
 msgstr "Format de date court"
 
 #: classes/pref/prefs.php:92
-#, fuzzy
 msgid "Show content preview in headlines"
-msgstr "Donner un aperçu du contenu dans la liste des en-têtes"
+msgstr "Afficher l’aperçu du contenu avec les en-têtes"
 
 #: classes/pref/prefs.php:93
 msgid "Sort headlines by feed date"
@@ -2011,9 +1991,8 @@ msgid "Use feed-specified date to sort headlines instead of local import date."
 msgstr "Utiliser les dates spécifiées dans le flux pour trier les en-têtes au lieu des dates importées localement."
 
 #: classes/pref/prefs.php:94
-#, fuzzy
 msgid "SSL client certificate"
-msgstr "Connexion avec un certificat SSL"
+msgstr "Certificat SSL client"
 
 #: classes/pref/prefs.php:96
 msgid "Strip unsafe tags from articles"
@@ -2033,13 +2012,12 @@ msgid "Time zone"
 msgstr "Fuseau horaire"
 
 #: classes/pref/prefs.php:99
-#, fuzzy
 msgid "Group by feed"
-msgstr "Top 25 des flux"
+msgstr "Grouper par flux"
 
 #: classes/pref/prefs.php:99
 msgid "Group multiple-feed output by originating feed"
-msgstr ""
+msgstr "Regroupe les flux multiples selon le flux d’origine"
 
 #: classes/pref/prefs.php:100
 msgid "Language"
@@ -2070,19 +2048,16 @@ msgid "Personal data"
 msgstr "Données personelles"
 
 #: classes/pref/prefs.php:258
-#, fuzzy
 msgid "Full name:"
-msgstr "Nom complet"
+msgstr "Nom complet :"
 
 #: classes/pref/prefs.php:263
-#, fuzzy
 msgid "E-mail:"
-msgstr "Adresse email : "
+msgstr "Adresse courriel :"
 
 #: classes/pref/prefs.php:271
-#, fuzzy
 msgid "Access level:"
-msgstr "Permissions : "
+msgstr "Permissions :"
 
 #: classes/pref/prefs.php:282
 msgid "Save data"
@@ -2093,19 +2068,16 @@ msgid "Changing your current password will disable OTP."
 msgstr "Changer votre mot de passe actuel désactivera les mots de passe à usage unique."
 
 #: classes/pref/prefs.php:335
-#, fuzzy
 msgid "Old password:"
-msgstr "Ancien mot de passe"
+msgstr "Ancien mot de passe :"
 
 #: classes/pref/prefs.php:340
-#, fuzzy
 msgid "New password:"
-msgstr "Nouveau mot de passe"
+msgstr "Nouveau mot de passe :"
 
 #: classes/pref/prefs.php:345
-#, fuzzy
 msgid "Confirm password:"
-msgstr "Confirmation du mot de passe"
+msgstr "Confirmation du mot de passe :"
 
 #: classes/pref/prefs.php:355
 msgid "Change password"
@@ -2117,18 +2089,16 @@ msgstr "Mots de passe à usage unique / Identificateur"
 
 #: classes/pref/prefs.php:390
 #: classes/pref/prefs.php:438
-#, fuzzy
 msgid "Your password:"
-msgstr "Confirmation du mot de passe"
+msgstr "Votre mot de passe :"
 
 #: classes/pref/prefs.php:400
 msgid "Disable OTP"
 msgstr "Désactiver les mots de passe à usage unique"
 
 #: classes/pref/prefs.php:444
-#, fuzzy
 msgid "One time password:"
-msgstr "Mot de passe à usage unique incorrect"
+msgstr "Mot de passe à usage unique :"
 
 #: classes/pref/prefs.php:451
 msgid "Enable OTP"
@@ -2147,18 +2117,17 @@ msgid "Customize"
 msgstr "Personnaliser"
 
 #: classes/pref/prefs.php:608
-#, fuzzy
 msgid "More themes..."
-msgstr "Autres actions..."
+msgstr "Plus de thèmes…"
 
 #: classes/pref/prefs.php:665
 msgid "Register"
 msgstr "S’inscrire"
 
 #: classes/pref/prefs.php:680
-#, fuzzy, php-format
+#, php-format
 msgid "Current server time: %s"
-msgstr "Heure du serveur : %s (GMT)"
+msgstr "Heure actuelle du serveur : %s"
 
 #: classes/pref/prefs.php:709
 msgid "Save configuration"
@@ -2379,9 +2348,9 @@ msgid "limit:"
 msgstr "limite :"
 
 #: classes/feeds.php:791
-#, fuzzy, php-format
+#, php-format
 msgid "Search %s..."
-msgstr "Rechercher…"
+msgstr "Rechercher %s…"
 
 #: classes/feeds.php:800
 msgid "Used for word stemming"
@@ -2902,9 +2871,10 @@ msgid "New articles found, reload feed to continue."
 msgstr "Nouveaux articles trouvés, rechargez le flux pour continuer."
 
 #: js/Headlines.js:682
-#, fuzzy
 msgid "Could not update headlines (invalid object received - see error console for details)"
-msgstr "Impossible d’afficher l’article (objet reçu invalide − voir la console d’erreur pour plus de détails)"
+msgstr ""
+"Impossible de mettre à jour les en-têtes (objet reçu invalide − voir la "
+"console d’erreur pour plus de détails)"
 
 #: js/Headlines.js:939
 #, perl-format

@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-22 06:58+0300\n"
-"PO-Revision-Date: 2019-02-22 03:35+0000\n"
+"PO-Revision-Date: 2019-02-23 05:03+0000\n"
 "Last-Translator: Dario Di Ludovico <dario@diludovico.it>\n"
-"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/it/>\n"
+"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"it/>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -974,9 +975,8 @@ msgstr "Ctrl"
 #: classes/pref/prefs.php:673
 #: classes/pref/prefs.php:896
 #: plugins/bookmarklets/init.php:43
-#, fuzzy
 msgid "More info..."
-msgstr "Ulteriori informazioni"
+msgstr "Ulteriori informazioni..."
 
 #: classes/backend.php:157
 #: classes/dlg.php:30
@@ -1817,9 +1817,8 @@ msgstr[0] "%s (+%d azione)"
 msgstr[1] "%s (+%d azioni)"
 
 #: classes/pref/prefs.php:40
-#, fuzzy
 msgid "Articles"
-msgstr "Articolo"
+msgstr "Articoli"
 
 #: classes/pref/prefs.php:53
 msgid "Digest"
@@ -1840,78 +1839,68 @@ msgstr "Etichette in lista nera"
 #: classes/pref/prefs.php:70
 msgid "Never apply these tags automatically (comma-separated list)."
 msgstr ""
+"Non applicare queste etichette automaticamente (lista separata da virgole)."
 
 #: classes/pref/prefs.php:71
-#, fuzzy
 msgid "Mark read on scroll"
 msgstr "Segnare gli articoli come letti mentre li scorri"
 
 #: classes/pref/prefs.php:71
-#, fuzzy
 msgid "Mark articles as read as you scroll past them"
 msgstr "Segnare gli articoli come letti mentre li scorri"
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Always expand articles"
-msgstr "Fare clic per espandere l'articolo"
+msgstr "Espandere sempre gli articoli"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Combined mode"
-msgstr "Attiva/disattiva modalità combinata"
+msgstr "Modalità combinata"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Show flat list of articles instead of separate panels"
 msgstr "Visualizza un elenco espanso di articoli, invece di riquadri separati"
 
 #: classes/pref/prefs.php:74
-#, fuzzy
 msgid "Confirm marking feeds as read"
-msgstr "Richiedere conferma segnatura del notiziario come letto"
+msgstr "Conferma la lettura dei notiziari"
 
 #: classes/pref/prefs.php:75
 msgid "Amount of articles to display at once"
 msgstr "Numero di articoli da visualizzare per volta"
 
 #: classes/pref/prefs.php:76
-#, fuzzy
 msgid "Default update interval"
-msgstr "Intervallo predefinito di aggiornamento notiziari"
+msgstr "Intervallo predefinito di aggiornamento"
 
 #: classes/pref/prefs.php:77
-#, fuzzy
 msgid "Mark sent articles as read"
-msgstr "Segnare tutti gli articoli come letti?"
+msgstr "Segnare gli articoli inviati come letti"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Enable digest"
-msgstr "Attiva e-mail digest"
+msgstr "Attiva sommario"
 
 #: classes/pref/prefs.php:78
 msgid "Send daily digest of new (and unread) headlines to your e-mail address"
 msgstr "Invia un sommario di articoli nuovi (e non letti) al tuo indirizzo email"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Try to send around this time"
-msgstr "Prova a mandare i digest più o meno a quest'ora"
+msgstr "Prova ad inviare a quest'orario"
 
 #: classes/pref/prefs.php:79
 msgid "Time in UTC"
 msgstr "Fuso orario"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Enable API"
-msgstr "Attiva OTP"
+msgstr "Attiva API"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Allows accessing this account through the API"
-msgstr "Permetti a client esterni di accedere a questo account attraverso le API"
+msgstr ""
+"Permetti a client esterni di accedere a questo account attraverso le API"
 
 #: classes/pref/prefs.php:81
 msgid "Enable categories"
@@ -1922,28 +1911,24 @@ msgid "Sort feeds by unread articles count"
 msgstr "Ordinare i notiziari per numero di articoli non letti"
 
 #: classes/pref/prefs.php:83
-#, fuzzy
 msgid "Maximum age of fresh articles"
-msgstr "Età massima degli articoli nuovi (in ore)"
+msgstr "Età massima degli articoli nuovi"
 
 #: classes/pref/prefs.php:83
-#, fuzzy
 msgid "hours"
-msgstr "4 ore"
+msgstr "ore"
 
 #: classes/pref/prefs.php:84
-#, fuzzy
 msgid "Hide read feeds"
-msgstr "Visualizza/Nascondi notiziari letti"
+msgstr "Nascondi notiziari letti"
 
 #: classes/pref/prefs.php:85
 msgid "Always show special feeds"
-msgstr ""
+msgstr "Mostra sempre i notiziari speciali"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "While hiding read feeds"
-msgstr "Mostrare i notiziari speciali quando vengono nascosti i notiziari letti"
+msgstr "Quando vengono nascosti i notiziari letti"
 
 #: classes/pref/prefs.php:86
 msgid "Long date format"
@@ -1954,14 +1939,12 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "La sintassi è identica alla funzione <a href='http://php.net/manual/function.date.php'>date()</a> di PHP."
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "Automatically show next feed"
-msgstr "Su lettura passare al prossimo notiziario"
+msgstr "Passa automaticamente al prossimo notiziario"
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "After marking one as read"
-msgstr "Richiedere conferma segnatura del notiziario come letto"
+msgstr "Dopo averne marcato uno come letto"
 
 #: classes/pref/prefs.php:88
 msgid "Purge articles older than"
@@ -1969,7 +1952,7 @@ msgstr "Eliminare articoli più vecchi di"
 
 #: classes/pref/prefs.php:88
 msgid "<strong>days</strong> (0 disables)"
-msgstr ""
+msgstr "<strong>giorni </strong> (0 per disattivare)"
 
 #: classes/pref/prefs.php:89
 msgid "Purge unread articles"
@@ -1984,7 +1967,6 @@ msgid "Short date format"
 msgstr "Formato data corta"
 
 #: classes/pref/prefs.php:92
-#, fuzzy
 msgid "Show content preview in headlines"
 msgstr "Mostrare l'anteprima del contenuto nell'elenco dei titoli"
 
@@ -1997,7 +1979,6 @@ msgid "Use feed-specified date to sort headlines instead of local import date."
 msgstr "Usare per l'ordinamento dei titoli la data specificata dal notiziario invece della data di importazione in locale."
 
 #: classes/pref/prefs.php:94
-#, fuzzy
 msgid "SSL client certificate"
 msgstr "Accesso con un certificato SSL"
 
@@ -2019,13 +2000,12 @@ msgid "Time zone"
 msgstr "Fuso orario"
 
 #: classes/pref/prefs.php:99
-#, fuzzy
 msgid "Group by feed"
-msgstr "Primi 25 notiziari"
+msgstr "Raggruppa per notiziario"
 
 #: classes/pref/prefs.php:99
 msgid "Group multiple-feed output by originating feed"
-msgstr ""
+msgstr "Raggruppa il risultato per il notiziario di origine"
 
 #: classes/pref/prefs.php:100
 msgid "Language"
@@ -2125,9 +2105,8 @@ msgid "Customize"
 msgstr "Personalizza"
 
 #: classes/pref/prefs.php:608
-#, fuzzy
 msgid "More themes..."
-msgstr "Altre azioni..."
+msgstr "Altri temi..."
 
 #: classes/pref/prefs.php:665
 msgid "Register"

@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-22 06:58+0300\n"
-"PO-Revision-Date: 2019-01-25 12:35+0000\n"
-"Last-Translator: Jan Hasebos <davywebshowjan@gmail.com>\n"
-"Language-Team: Dutch <https://weblate.tt-rss.org/projects/tt-rss/messages/nl/>\n"
+"PO-Revision-Date: 2019-02-23 05:02+0000\n"
+"Last-Translator: Patrick Ahles <p.ahles+weblate@gmail.com>\n"
+"Language-Team: Dutch <https://weblate.tt-rss.org/projects/tt-rss/messages/nl/"
+">\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -496,7 +497,7 @@ msgstr "Geen feeds gevonden."
 
 #: include/functions.php:84
 msgid "Detect automatically"
-msgstr ""
+msgstr "Detecteer automatisch"
 
 #: include/functions.php:952
 #, php-format
@@ -975,9 +976,8 @@ msgstr "Ctrl"
 #: classes/pref/prefs.php:673
 #: classes/pref/prefs.php:896
 #: plugins/bookmarklets/init.php:43
-#, fuzzy
 msgid "More info..."
-msgstr "meer info"
+msgstr "Meer info..."
 
 #: classes/backend.php:157
 #: classes/dlg.php:30
@@ -1097,9 +1097,8 @@ msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "Kon niet abonneren op <b>%s</b>.<br>Kon de feed URL niet downloaden."
 
 #: classes/handler/public.php:806
-#, fuzzy
 msgid "Multiple feed URLs found:"
-msgstr "Meerdere feed-URL's gevonden."
+msgstr "Meerdere feed-URL's gevonden:"
 
 #: classes/handler/public.php:817
 msgid "Subscribe to selected feed"
@@ -1114,14 +1113,15 @@ msgid "Password recovery"
 msgstr "Wachtwoordherstel"
 
 #: classes/handler/public.php:939
-#, fuzzy
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
-msgstr "Je moet een geldige naam en emailadres opgeven. Een link om je wachtwoord aan te passen wordt naar je emailadres verzonden."
+msgstr ""
+"Je moet een geldige naam en emailadres opgeven. Een link om je wachtwoord "
+"aan te passen wordt naar je emailadres verzonden."
 
 #: classes/handler/public.php:959
-#, fuzzy, php-format
+#, php-format
 msgid "How much is %d + %d:"
-msgstr "Hoeveel is twee plus twee:"
+msgstr "Hoeveel is %d + %d:"
 
 #: classes/handler/public.php:965
 #: classes/pref/users.php:376
@@ -1154,32 +1154,30 @@ msgid "Database Updater"
 msgstr "Database-updater"
 
 #: classes/handler/public.php:1119
-#, fuzzy
 msgid "Performing updates"
-msgstr "Uitvoeren van updates..."
+msgstr "Uitvoeren van updates"
 
 #: classes/handler/public.php:1121
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to schema version %d"
-msgstr "Updaten naar versie %d..."
+msgstr "Updaten naar schema-versie %d"
 
 #: classes/handler/public.php:1126
-#, fuzzy, php-format
+#, php-format
 msgid "Performing update up to version %d..."
-msgstr "Uitvoeren van updates..."
+msgstr "Uitvoeren van updates naar versie %d..."
 
 #: classes/handler/public.php:1131
 msgid "FAILED!"
-msgstr ""
+msgstr "MISLUKT!"
 
 #: classes/handler/public.php:1139
 msgid "OK!"
 msgstr "OK!"
 
 #: classes/handler/public.php:1157
-#, fuzzy
 msgid "Database update required"
-msgstr "Database-updater"
+msgstr "Database-update nodig"
 
 #: classes/handler/public.php:1168
 msgid "Perform updates"
@@ -1430,9 +1428,8 @@ msgid "Date"
 msgstr "Datum"
 
 #: classes/pref/system.php:85
-#, fuzzy
 msgid "PHP Information"
-msgstr "Actie uitvoeren"
+msgstr "PHP-informatie"
 
 #: classes/pref/feeds.php:28
 msgid "Check to enable field"
@@ -1490,9 +1487,8 @@ msgstr "Bijwerken"
 
 #: classes/pref/feeds.php:623
 #: classes/pref/feeds.php:894
-#, fuzzy
 msgid "Interval:"
-msgstr "Interface"
+msgstr "Interval:"
 
 #: classes/pref/feeds.php:636
 #: classes/pref/feeds.php:909
@@ -1680,9 +1676,8 @@ msgid "Unsubscribe from selected feeds"
 msgstr "Abonnement opzeggen voor geselecteerde feeds"
 
 #: classes/pref/feeds.php:1713
-#, fuzzy
 msgid "One valid feed per line (no detection is done)"
-msgstr "Een geldige RSS feed per regel toevoegen (er wordt geen feed detectie uitgevoerd)"
+msgstr "Een geldige feed per regel (er wordt geen detectie uitgevoerd)"
 
 #: classes/pref/feeds.php:1743
 msgid "Feeds require authentication."
@@ -1825,9 +1820,8 @@ msgstr[0] "Actie toevoegen"
 msgstr[1] "Actie toevoegen"
 
 #: classes/pref/prefs.php:40
-#, fuzzy
 msgid "Articles"
-msgstr "Artikel"
+msgstr "Artikelen"
 
 #: classes/pref/prefs.php:53
 msgid "Digest"
@@ -1847,81 +1841,71 @@ msgstr "Op de zwarte lijst geplaatste tags"
 
 #: classes/pref/prefs.php:70
 msgid "Never apply these tags automatically (comma-separated list)."
-msgstr ""
+msgstr "Deze tags nooit automatisch toekennen (kommagescheiden lijst)."
 
 #: classes/pref/prefs.php:71
-#, fuzzy
 msgid "Mark read on scroll"
-msgstr "Markeer alle artikelen als gelezen?"
+msgstr "Markeer als gelezen bij scrollen"
 
 #: classes/pref/prefs.php:71
-#, fuzzy
 msgid "Mark articles as read as you scroll past them"
-msgstr "Markeer alle artikelen als gelezen?"
+msgstr "Markeer artikelen als gelezen als je erlangs scrollt"
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Always expand articles"
-msgstr "Klik om artikel uit te klappen"
+msgstr "Altijd artikelen uitklappen"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Combined mode"
-msgstr "In/uitschakelen gecombineerde modus"
+msgstr "Gecombineerde modus"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Show flat list of articles instead of separate panels"
-msgstr "Uitgeklapte lijst van artikelen weergeven in plaats van afzonderlijke weergave van kopteksten en artikelinhoud"
+msgstr ""
+"Platte lijst van artikelen weergeven in plaats van afzonderlijke weergave "
+"van kopteksten en artikelinhoud"
 
 #: classes/pref/prefs.php:74
-#, fuzzy
 msgid "Confirm marking feeds as read"
-msgstr "Bevestig feed markeren als gelezen"
+msgstr "Bevestig feeds markeren als gelezen"
 
 #: classes/pref/prefs.php:75
 msgid "Amount of articles to display at once"
 msgstr "Aantal tegelijkertijd weer te geven artikelen"
 
 #: classes/pref/prefs.php:76
-#, fuzzy
 msgid "Default update interval"
-msgstr "Standaard feed update interval"
+msgstr "Standaard update-interval"
 
 #: classes/pref/prefs.php:77
-#, fuzzy
 msgid "Mark sent articles as read"
-msgstr "Markeer alle artikelen als gelezen?"
+msgstr "Markeer verstuurde artikelen als gelezen"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Enable digest"
 msgstr "Schakel e-mailsamenvatting in"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Send daily digest of new (and unread) headlines to your e-mail address"
-msgstr "Deze optie schakelt het verzenden van een dagelijkse samenvatting van nieuwe (en ongelezen) kopteksten naar het door u ingestelde e-mailadres in"
+msgstr ""
+"Verstuur een dagelijkse samenvatting van nieuwe (en ongelezen) kopteksten "
+"naar uw e-mailadres"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Try to send around this time"
-msgstr "Tracht samenvattingen te verzenden rond een bepaalde tijd"
+msgstr "Probeer te versturen rond deze tijd"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Time in UTC"
-msgstr "Gebruiker's tijdzone"
+msgstr "Tijd in UTC"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Enable API"
-msgstr "Inschakelen EW"
+msgstr "Inschakelen API"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Allows accessing this account through the API"
-msgstr "Laat externe clienten toe tot dit account via de API"
+msgstr "Laat toegang tot dit account toe via de API"
 
 #: classes/pref/prefs.php:81
 msgid "Enable categories"
@@ -1932,56 +1916,50 @@ msgid "Sort feeds by unread articles count"
 msgstr "Sorteer feeds op aantal ongelezen artikelen"
 
 #: classes/pref/prefs.php:83
-#, fuzzy
 msgid "Maximum age of fresh articles"
-msgstr "Maximum leeftijd van nieuwe artikelen (uren)"
+msgstr "Maximum leeftijd van nieuwe artikelen"
 
 #: classes/pref/prefs.php:83
-#, fuzzy
 msgid "hours"
-msgstr "Elke 4 uur"
+msgstr "uren"
 
 #: classes/pref/prefs.php:84
-#, fuzzy
 msgid "Hide read feeds"
 msgstr "Toon/Verberg gelezen feeds"
 
 #: classes/pref/prefs.php:85
 msgid "Always show special feeds"
-msgstr ""
+msgstr "Laat speciale feeds altijd zien"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "While hiding read feeds"
-msgstr "Toon speciale feeds bij verbergen gelezen feeds"
+msgstr "Terwijl gelezen feeds verborgen zijn"
 
 #: classes/pref/prefs.php:86
 msgid "Long date format"
 msgstr "Lang datumformaat"
 
 #: classes/pref/prefs.php:86
-#, fuzzy
 msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
-msgstr "De gebruikte syntax is gelijk aan de PHP <a href='http://php.net/manual/function.date.php'>date()</a> functie."
+msgstr ""
+"De gebruikte syntax is gelijk aan de PHP <a href='http://php.net/manual/"
+"function.date.php'>date()</a> functie."
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "Automatically show next feed"
-msgstr "Toon volgende feed na bijwerken"
+msgstr "Toon volgende feed automatisch"
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "After marking one as read"
-msgstr "Bevestig feed markeren als gelezen"
+msgstr "Na markeren van een feed als gelezen"
 
 #: classes/pref/prefs.php:88
-#, fuzzy
 msgid "Purge articles older than"
-msgstr "Ongelezen artikelen permanent verwijderen"
+msgstr "Verwijder artikelen permanent indien ouder dan"
 
 #: classes/pref/prefs.php:88
 msgid "<strong>days</strong> (0 disables)"
-msgstr ""
+msgstr "<strong>dagen</strong> (0 zet dit uit)"
 
 #: classes/pref/prefs.php:89
 msgid "Purge unread articles"
@@ -1996,7 +1974,6 @@ msgid "Short date format"
 msgstr "Korte datumformaat"
 
 #: classes/pref/prefs.php:92
-#, fuzzy
 msgid "Show content preview in headlines"
 msgstr "Toon voorbeeld van inhoud in lijst van kopteksten"
 
@@ -2009,9 +1986,8 @@ msgid "Use feed-specified date to sort headlines instead of local import date."
 msgstr "Door feed gespecificeerde data gebruiken om kopteksten te sorteren in plaats van lokaal geïmporteerde data."
 
 #: classes/pref/prefs.php:94
-#, fuzzy
 msgid "SSL client certificate"
-msgstr "Aanmelden met een SSL-certificaat"
+msgstr "SSL-clientcertificaat"
 
 #: classes/pref/prefs.php:96
 msgid "Strip unsafe tags from articles"
@@ -2032,11 +2008,11 @@ msgstr "Gebruiker's tijdzone"
 
 #: classes/pref/prefs.php:99
 msgid "Group by feed"
-msgstr ""
+msgstr "Groepeer op feed"
 
 #: classes/pref/prefs.php:99
 msgid "Group multiple-feed output by originating feed"
-msgstr ""
+msgstr "Groepeer meervoudige feedoutput op originele feed"
 
 #: classes/pref/prefs.php:100
 msgid "Language"
@@ -2067,19 +2043,16 @@ msgid "Personal data"
 msgstr "Persoonlijke gegevens"
 
 #: classes/pref/prefs.php:258
-#, fuzzy
 msgid "Full name:"
-msgstr "Volledige naam"
+msgstr "Volledige naam:"
 
 #: classes/pref/prefs.php:263
-#, fuzzy
 msgid "E-mail:"
-msgstr "E-mail: "
+msgstr "E-mail:"
 
 #: classes/pref/prefs.php:271
-#, fuzzy
 msgid "Access level:"
-msgstr "Toegangsniveau: "
+msgstr "Toegangsniveau:"
 
 #: classes/pref/prefs.php:282
 msgid "Save data"
@@ -2090,19 +2063,16 @@ msgid "Changing your current password will disable OTP."
 msgstr "Je wachtwoord wijzigen schakelt Eenmalig Wachtwoord uit."
 
 #: classes/pref/prefs.php:335
-#, fuzzy
 msgid "Old password:"
-msgstr "Oud wachtwoord"
+msgstr "Oud wachtwoord:"
 
 #: classes/pref/prefs.php:340
-#, fuzzy
 msgid "New password:"
-msgstr "Nieuw wachtwoord"
+msgstr "Nieuw wachtwoord:"
 
 #: classes/pref/prefs.php:345
-#, fuzzy
 msgid "Confirm password:"
-msgstr "Bevestig wachtwoord"
+msgstr "Bevestig wachtwoord:"
 
 #: classes/pref/prefs.php:355
 msgid "Change password"
@@ -2114,18 +2084,16 @@ msgstr "Eenmalig wachtwoord / Authenticator"
 
 #: classes/pref/prefs.php:390
 #: classes/pref/prefs.php:438
-#, fuzzy
 msgid "Your password:"
-msgstr "Bevestig wachtwoord"
+msgstr "Je wachtwoord:"
 
 #: classes/pref/prefs.php:400
 msgid "Disable OTP"
 msgstr "Eenmalig Wachtwoord uitschakelen"
 
 #: classes/pref/prefs.php:444
-#, fuzzy
 msgid "One time password:"
-msgstr "Onjuist Eenmalig Wachtwoord"
+msgstr "Eenmalig wachtwoord:"
 
 #: classes/pref/prefs.php:451
 msgid "Enable OTP"
@@ -2144,18 +2112,17 @@ msgid "Customize"
 msgstr "Aanpassen"
 
 #: classes/pref/prefs.php:608
-#, fuzzy
 msgid "More themes..."
-msgstr "Meer acties…"
+msgstr "Meer thema's…"
 
 #: classes/pref/prefs.php:665
 msgid "Register"
 msgstr "Registreren"
 
 #: classes/pref/prefs.php:680
-#, fuzzy, php-format
+#, php-format
 msgid "Current server time: %s"
-msgstr "Huidige servertijd: %s (UTC)"
+msgstr "Huidige servertijd: %s"
 
 #: classes/pref/prefs.php:709
 msgid "Save configuration"
@@ -2376,9 +2343,9 @@ msgid "limit:"
 msgstr "beperking:"
 
 #: classes/feeds.php:791
-#, fuzzy, php-format
+#, php-format
 msgid "Search %s..."
-msgstr "Zoeken..."
+msgstr "Zoeken %s..."
 
 #: classes/feeds.php:800
 msgid "Used for word stemming"
@@ -2899,9 +2866,10 @@ msgid "New articles found, reload feed to continue."
 msgstr "Nieuwe artikelen gevonden, herlaad feed om verder te gaan."
 
 #: js/Headlines.js:682
-#, fuzzy
 msgid "Could not update headlines (invalid object received - see error console for details)"
-msgstr "Kon artikel niet weergeven (ongelding object ontvangen - zie error console voor details)"
+msgstr ""
+"Kon koptekst niet weergeven (ongeldig object ontvangen - zie error console "
+"voor details)"
 
 #: js/Headlines.js:939
 #, perl-format
