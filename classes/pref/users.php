@@ -20,7 +20,7 @@ class Pref_Users extends Handler_Protected {
 		function edit() {
 			global $access_level_names;
 
-			print "<form id=\"user_edit_form\" onsubmit='return false' dojoType=\"dijit.form.Form\">";
+			print "<form id='user_edit_form' onsubmit='return false' dojoType='dijit.form.Form'>";
 
 			print '<div dojoType="dijit.layout.TabContainer" style="height : 400px">
         		<div dojoType="dijit.layout.ContentPane" title="'.__('Edit user').'">';
@@ -55,8 +55,7 @@ class Pref_Users extends Handler_Protected {
 				print "<label>" . __("Login:") . "</label>";
 				print "<input style='font-size : 16px'
 					dojoType='dijit.form.ValidationTextBox' required='1'
-					$sel_disabled
-					name='login' value=\"$login\">";
+					$sel_disabled name='login' value=\"$login\">";
 				print "</fieldset>";
 
 				print "</section>";
@@ -82,7 +81,7 @@ class Pref_Users extends Handler_Protected {
 
 				print "<label>" . __("New password:") . "</label> ";
 				print "<input dojoType='dijit.form.TextBox' type='password' size='20' placeholder='Change password'
-					name=\"password\">";
+					name='password'>";
 
 				print "</fieldset>";
 
@@ -111,9 +110,9 @@ class Pref_Users extends Handler_Protected {
 			print '</div>';
 
 			print "<footer>
-				<button dojoType=\"dijit.form.Button\" class=\"alt-primary\" type=\"submit\" onclick=\"dijit.byId('userEditDlg').execute()\">".
+				<button dojoType='dijit.form.Button' class='alt-primary' type='submit' onclick=\"dijit.byId('userEditDlg').execute()\">".
 				__('Save')."</button>
-				<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('userEditDlg').hide()\">".
+				<button dojoType='dijit.form.Button' onclick=\"dijit.byId('userEditDlg').hide()\">".
 				__('Cancel')."</button>
 				</footer>";
 
@@ -352,9 +351,9 @@ class Pref_Users extends Handler_Protected {
 			}
 
 			print "<div style='float : right; padding-right : 4px;'>
-				<input dojoType=\"dijit.form.TextBox\" id=\"user_search\" size=\"20\" type=\"search\"
+				<input dojoType='dijit.form.TextBox' id='user_search' size='20' type='search'
 					value=\"$user_search\">
-				<button dojoType=\"dijit.form.Button\" oncl1ick=\"Users.reload()\">".
+				<button dojoType='dijit.form.Button' onclick='Users.reload()'>".
 					__('Search')."</button>
 				</div>";
 
@@ -364,23 +363,23 @@ class Pref_Users extends Handler_Protected {
 				$sort = "login";
 			}
 
-			print "<div dojoType=\"dijit.form.DropDownButton\">".
+			print "<div dojoType='dijit.form.DropDownButton'>".
 					"<span>" . __('Select')."</span>";
-			print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
+			print "<div dojoType='dijit.Menu' style='display: none'>";
 			print "<div onclick=\"Tables.select('prefUserList', true)\"
-				dojoType=\"dijit.MenuItem\">".__('All')."</div>";
+				dojoType='dijit.MenuItem'>".__('All')."</div>";
 			print "<div onclick=\"Tables.select('prefUserList', false)\"
-				dojoType=\"dijit.MenuItem\">".__('None')."</div>";
+				dojoType='dijit.MenuItem'>".__('None')."</div>";
 			print "</div></div>";
 
-			print "<button dojoType=\"dijit.form.Button\" onclick=\"Users.add()\">".__('Create user')."</button>";
+			print "<button dojoType='dijit.form.Button' onclick='Users.add()'>".__('Create user')."</button>";
 
 			print "
-				<button dojoType=\"dijit.form.Button\" onclick=\"Users.editSelected()\">".
+				<button dojoType='dijit.form.Button' onclick='Users.editSelected()'>".
 				__('Edit')."</button dojoType=\"dijit.form.Button\">
-				<button dojoType=\"dijit.form.Button\" onclick=\"Users.removeSelected()\">".
+				<button dojoType='dijit.form.Button' onclick='Users.removeSelected()'>".
 				__('Remove')."</button dojoType=\"dijit.form.Button\">
-				<button dojoType=\"dijit.form.Button\" onclick=\"Users.resetSelected()\">".
+				<button dojoType='dijit.form.Button' onclick='Users.resetSelected()'>".
 				__('Reset password')."</button dojoType=\"dijit.form.Button\">";
 
 			PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB_SECTION,
@@ -408,16 +407,15 @@ class Pref_Users extends Handler_Protected {
 				ORDER BY $sort");
 			$sth->execute([":search" => $user_search ? "%$user_search%" : ""]);
 
-			print "<p><table width=\"100%\" cellspacing=\"0\"
-				class=\"prefUserList\" id=\"prefUserList\">";
+			print "<p><table width='100%' cellspacing='0' class='prefUserList' id='prefUserList'>";
 
-			print "<tr class=\"title\">
-						<td align='center' width=\"5%\">&nbsp;</td>
-						<td width='20%'><a href=\"#\" onclick=\"Users.reload('login')\">".__('Login')."</a></td>
-						<td width='20%'><a href=\"#\" onclick=\"Users.reload('access_level')\">".__('Access Level')."</a></td>
-						<td width='10%'><a href=\"#\" onclick=\"Users.reload('num_feeds')\">".__('Subscribed feeds')."</a></td>
-						<td width='20%'><a href=\"#\" onclick=\"Users.reload('created')\">".__('Registered')."</a></td>
-						<td width='20%'><a href=\"#\" onclick=\"Users.reload('last_login')\">".__('Last login')."</a></td></tr>";
+			print "<tr class='title'>
+						<td align='center' width='5%'>&nbsp;</td>
+						<td width='20%'><a href='#' onclick=\"Users.reload('login')\">".__('Login')."</a></td>
+						<td width='20%'><a href='#' onclick=\"Users.reload('access_level')\">".__('Access Level')."</a></td>
+						<td width='10%'><a href='#' onclick=\"Users.reload('num_feeds')\">".__('Subscribed feeds')."</a></td>
+						<td width='20%'><a href='#' onclick=\"Users.reload('created')\">".__('Registered')."</a></td>
+						<td width='20%'><a href='#' onclick=\"Users.reload('last_login')\">".__('Last login')."</a></td></tr>";
 
 			$lnum = 0;
 
@@ -425,14 +423,14 @@ class Pref_Users extends Handler_Protected {
 
 				$uid = $line["id"];
 
-				print "<tr data-row-id=\"$uid\" onclick='Users.edit($uid)'>";
+				print "<tr data-row-id='$uid' onclick='Users.edit($uid)'>";
 
 				$line["login"] = htmlspecialchars($line["login"]);
 				$line["created"] = make_local_datetime($line["created"], false);
 				$line["last_login"] = make_local_datetime($line["last_login"], false);
 
 				print "<td align='center'><input onclick='Tables.onRowChecked(this); event.stopPropagation();'
-					dojoType=\"dijit.form.CheckBox\" type=\"checkbox\"></td>";
+					dojoType='dijit.form.CheckBox' type='checkbox'></td>";
 
 				print "<td title='".__('Click to edit')."'><i class='material-icons'>person</i> " . $line["login"] . "</td>";
 
