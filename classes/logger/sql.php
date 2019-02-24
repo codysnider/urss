@@ -12,6 +12,9 @@ class Logger_SQL {
 
 			$owner_uid = $_SESSION["uid"] ? $_SESSION["uid"] : null;
 
+			if (DB_TYPE == "mysql")
+				$context = substr($context, 0, 65534);
+
 			$sth = $this->pdo->prepare("INSERT INTO ttrss_error_log
 				(errno, errstr, filename, lineno, context, owner_uid, created_at) VALUES
 				(?, ?, ?, ?, ?, ?, NOW())");
