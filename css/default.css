@@ -590,7 +590,9 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRowSelected {
   color: #333;
 }
 body.ttrss_main #feeds-holder #feedTree i.icon {
+  position: relative;
   left: -2px;
+  top: -4px;
 }
 body.ttrss_main #feeds-holder #feedTree i.icon.icon-inbox {
   color: #555;
