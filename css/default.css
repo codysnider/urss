@@ -589,10 +589,8 @@ body.ttrss_main #feeds-holder #feedTree .dijitTreeNode .dijitTreeRowSelected {
   background: white;
   color: #333;
 }
-body.ttrss_main #feeds-holder #feedTree i.icon {
-  position: relative;
-  left: -2px;
-  top: -4px;
+body.ttrss_main #feeds-holder #feedTree .dijitIcon.feed-icon {
+  margin-right: 2px;
 }
 body.ttrss_main #feeds-holder #feedTree i.icon.icon-inbox {
   color: #555;
@@ -1631,9 +1629,8 @@ body.ttrss_utility.share_popup .content {
 .flat li {
   padding: 2px;
 }
-.flat #feedTree .icon {
-  position: relative;
-  top: -4px;
+.flat #feedTree .dijitTreeContent .dijitInline {
+  vertical-align: baseline;
 }
 .flat .tabLabel > i.material-icons {
   position: relative;
