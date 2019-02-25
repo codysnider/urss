@@ -1981,7 +1981,7 @@
 		return true;
 	}
 
-	function add_feed_category($feed_cat, $parent_cat_id = false) {
+	function add_feed_category($feed_cat, $parent_cat_id = false, $order_id = 0) {
 
 		if (!$feed_cat) return false;
 
@@ -2004,9 +2004,9 @@
 
 		if (!$sth->fetch()) {
 
-			$sth = $pdo->prepare("INSERT INTO ttrss_feed_categories (owner_uid,title,parent_cat)
-					VALUES (?, ?, ?)");
-			$sth->execute([$_SESSION['uid'], $feed_cat, $parent_cat_id]);
+			$sth = $pdo->prepare("INSERT INTO ttrss_feed_categories (owner_uid,title,parent_cat,order_id)
+					VALUES (?, ?, ?, ?)");
+			$sth->execute([$_SESSION['uid'], $feed_cat, $parent_cat_id, (int)$order_id]);
 
 			if (!$tr_in_progress) $pdo->commit();
 
