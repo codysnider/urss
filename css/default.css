@@ -1458,18 +1458,18 @@ body.ttrss_prefs .user-css-editor {
   height: 300px;
   width: 575px;
 }
-body.ttrss_prefs fieldset.prefs-set label:first-of-type {
+body.ttrss_prefs fieldset.prefs label:first-of-type {
   min-width: 300px;
 }
-body.ttrss_prefs fieldset.prefs-set label.plugin-desc {
+body.ttrss_prefs fieldset.prefs label.plugin-desc {
   width: 600px;
   margin-right: 150px;
   display: inline-block;
 }
-body.ttrss_prefs fieldset.prefs-set label.plugin-desc .dijitCheckBox {
+body.ttrss_prefs fieldset.prefs label.plugin-desc .dijitCheckBox {
   margin-right: 10px;
 }
-body.ttrss_prefs fieldset.prefs-set .help-text {
+body.ttrss_prefs fieldset.prefs .help-text {
   display: inline-block;
   margin-left: 10px;
 }

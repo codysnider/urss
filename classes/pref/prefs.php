@@ -562,7 +562,7 @@ class Pref_Prefs extends Handler_Protected {
 
 				if ($item = $prefs_available[$pref_name]) {
 
-					print "<fieldset class='prefs-set'>";
+					print "<fieldset class='prefs'>";
 
 					print "<label for='CB_$pref_name'>";
 					print $item['short_desc'] . ":";
@@ -783,7 +783,7 @@ class Pref_Prefs extends Handler_Protected {
 					$checked = "";
 				}
 
-				print "<fieldset class='prefs-set'>
+				print "<fieldset class='prefs'>
 					<label>$name:</label>
 					<label class='checkbox plugin-desc' id='PLABEL-$name'>
 						<input disabled='1'
@@ -822,7 +822,7 @@ class Pref_Prefs extends Handler_Protected {
 					$checked = "checked='1'";
 				}
 
-				print "<fieldset class='prefs-set'>
+				print "<fieldset class='prefs'>
 					<label>$name:</label>
 					<label class='checkbox plugin-desc' id='PLABEL-$name'>
 						<input name='plugins[]' value='$name' dojoType='dijit.form.CheckBox' $checked $disabled type='checkbox'>
