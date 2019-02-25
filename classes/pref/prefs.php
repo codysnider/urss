@@ -564,7 +564,7 @@ class Pref_Prefs extends Handler_Protected {
 
 					print "<fieldset class='prefs-set'>";
 
-					print "<label for='CB_$pref_name' style='width : 300px'>";
+					print "<label for='CB_$pref_name'>";
 					print $item['short_desc'] . ":";
 					print "</label>";
 
@@ -763,18 +763,8 @@ class Pref_Prefs extends Handler_Protected {
 			print_warning("Your PHP configuration has open_basedir restrictions enabled. Some plugins relying on CURL for functionality may not work correctly.");
 		}
 
-		print "<table width='100%' class='prefPluginsList'>";
-
-		print "<tr><td colspan='5'><h2>".__("System plugins")."</h2>".
-            format_notice(__("System plugins are enabled in <strong>config.php</strong> for all users.")).
-            "</td></tr>";
-
-		print "<tr>
-				<th width=\"5%\">&nbsp;</th>
-				<th width='10%'>".__('Plugin')."</th>
-				<th width=''>".__('Description')."</th>
-				<th width='5%'>".__('Version')."</th>
-				<th width='10%'>".__('Author')."</th></tr>";
+		print "<h2>".__("System plugins")."</h2>";
+		print_notice("System plugins are enabled in <strong>config.php</strong> for all users.");
 
 		$system_enabled = array_map("trim", explode(",", PLUGINS));
 		$user_enabled = array_map("trim", explode(",", get_pref("_ENABLED_PLUGINS")));
@@ -793,101 +783,72 @@ class Pref_Prefs extends Handler_Protected {
 					$checked = "";
 				}
 
-				print "<tr>";
+				print "<fieldset class='prefs-set'>
+					<label>$name:</label>
+					<label class='checkbox plugin-desc' id='PLABEL-$name'>
+						<input disabled='1'
+							dojoType='dijit.form.CheckBox' $checked type='checkbox'>
+						".htmlspecialchars($about[1]);
 
-				print "<td align='center'><input disabled='1'
-						dojoType=\"dijit.form.CheckBox\" $checked
-						type=\"checkbox\"></td>";
-
-				$icon_class = $checked ? "plugin-enabled" : "plugin-disabled";
-
-				print "<td><label><i class='material-icons $icon_class'>extension</i> $name</label></td>";
-				print "<td>" . htmlspecialchars($about[1]);
-				if (@$about[4]) {
-					print " &mdash; <a target=\"_blank\" rel=\"noopener noreferrer\" class=\"visibleLink\"
-						href=\"".htmlspecialchars($about[4])."\">".__("more info")."</a>";
-				}
-				print "</td>";
-				print "<td>" . htmlspecialchars(sprintf("%.2f", $about[0])) . "</td>";
-				print "<td>" . htmlspecialchars($about[2]) . "</td>";
-
-				if (count($tmppluginhost->get_all($plugin)) > 0) {
-					if (in_array($name, $system_enabled)) {
-						print "<td><a href='#' onclick=\"Helpers.clearPluginData('$name')\"
-							class='visibleLink'>".__("Clear data")."</a></td>";
+					if (@$about[4]) {
+						print "<button dojoType='dijit.form.Button' style='float : left' class='alt-info' 
+							onclick='window.open(\"".htmlspecialchars($about[4])."\")'>
+								<i class='material-icons'>open_in_new</i> ".__("More info...")."</button>";
 					}
-				}
 
-				print "</tr>";
+					print "<div dojoType='dijit.Tooltip' connectId='PLABEL-$name' position='after'>".
+						htmlspecialchars(T_sprintf("v%.2f, by %s", $about[0], $about[2])).
+						"</div>";
+
+				print "</fieldset>";
 
 			}
 		}
 
-		print "<tr><td colspan='4'><br/><h2>".__("User plugins")."</h2></td></tr>";
-
-		print "<tr>
-				<th width=\"5%\">&nbsp;</th>
-				<th width='10%'>".__('Plugin')."</th>
-				<th width=''>".__('Description')."</th>
-				<th width='5%'>".__('Version')."</th>
-				<th width='10%'>".__('Author')."</th></tr>";
-
+		print "<h2>".__("User plugins")."</h2>";
 
 		foreach ($tmppluginhost->get_plugins() as $name => $plugin) {
 			$about = $plugin->about();
 
 			if (!$about[3]) {
 
+				$checked = "";
+				$disabled = "";
+
 				if (in_array($name, $system_enabled)) {
 					$checked = "checked='1'";
 					$disabled = "disabled='1'";
-					$rowclass = '';
 				} else if (in_array($name, $user_enabled)) {
 					$checked = "checked='1'";
-					$disabled = "";
-					$rowclass = "Selected";
-				} else {
-					$checked = "";
-					$disabled = "";
-					$rowclass = '';
 				}
 
-				print "<tr class='$rowclass'>";
-
-				$icon_class = $checked ? "plugin-enabled" : "plugin-disabled";
-
-				print "<td align='center'><input id='FPCHK-$name' name='plugins[]' value='$name' onclick='Tables.onRowChecked(this);'
-					dojoType=\"dijit.form.CheckBox\" $checked $disabled
-					type=\"checkbox\"></td>";
-
-				print "<td><label for='FPCHK-$name'><i class='material-icons $icon_class'>extension</i> $name</label></td>";
-				print "<td><label for='FPCHK-$name'>" . htmlspecialchars($about[1]) . "</label>";
-				if (@$about[4]) {
-					print " &mdash; <a target=\"_blank\" rel=\"noopener noreferrer\" class=\"visibleLink\"
-						href=\"".htmlspecialchars($about[4])."\">".__("more info")."</a>";
-				}
-				print "</td>";
-
-				print "<td>" . htmlspecialchars(sprintf("%.2f", $about[0])) . "</td>";
-				print "<td>" . htmlspecialchars($about[2]) . "</td>";
+				print "<fieldset class='prefs-set'>
+					<label>$name:</label>
+					<label class='checkbox plugin-desc' id='PLABEL-$name'>
+						<input name='plugins[]' value='$name' dojoType='dijit.form.CheckBox' $checked $disabled type='checkbox'>
+						".htmlspecialchars($about[1])."</label>";
 
 				if (count($tmppluginhost->get_all($plugin)) > 0) {
 					if (in_array($name, $system_enabled) || in_array($name, $user_enabled)) {
-						print "<td><a href='#' onclick=\"Helpers.clearPluginData('$name')\" class='visibleLink'>".__("Clear data")."</a></td>";
+						print " <button dojoType='dijit.form.Button' 
+							onclick=\"Helpers.clearPluginData('$name')\">
+								<i class='material-icons'>clear</i> ".__("Clear data")."</button>";
 					}
 				}
 
-				print "</tr>";
+				if (@$about[4]) {
+					print " <button dojoType='dijit.form.Button' class='alt-info'
+							onclick='window.open(\"".htmlspecialchars($about[4])."\")'>
+								<i class='material-icons'>open_in_new</i> ".__("More info...")."</button>";
+				}
 
+				print "<div dojoType='dijit.Tooltip' connectId='PLABEL-$name' position='after'>".
+					htmlspecialchars(T_sprintf("v%.2f, by %s", $about[0], $about[2])).
+					"</div>";
 
-
+				print "</fieldset>";
 			}
-
 		}
-
-		print "</table>";
-
-		//print "<p>" . __("You will need to reload Tiny Tiny RSS for plugin changes to take effect.") . "</p>";
 
 		print "</div>"; #content-pane
 		print '<div dojoType="dijit.layout.ContentPane" region="bottom">';
@@ -903,7 +864,6 @@ class Pref_Prefs extends Handler_Protected {
 		print "</div>"; #border-container
 
 		print "</form>";
-
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB,
 			"hook_prefs_tab", "prefPrefs");

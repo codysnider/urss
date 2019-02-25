@@ -81,28 +81,24 @@ body.ttrss_prefs {
 	}
 
 	fieldset.prefs-set {
+		label:first-of-type {
+			min-width : 300px;
+		}
+
+		label.plugin-desc {
+			width : 600px;
+			margin-right : 100px;
+			display : inline-block;
+
+			.dijitCheckBox {
+				margin-right : 10px;
+			}
+		}
+
 		.help-text {
 			display : inline-block;
 			margin-left : 10px;
 		}
-	}
-
-	table.prefPluginsList td label, table.prefUserList td {
-		cursor : pointer;
-	}
-
-	table.prefPluginsList{
-		label {
-			white-space : nowrap;
-		}
-
-		i.plugin-enabled {
-			color : @color-checked;
-		}
-	}
-
-	table.prefPluginsList label img {
-		vertical-align : middle;
 	}
 
 	table.prefErrorLog tr.errrow td {

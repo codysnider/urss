@@ -1459,22 +1459,20 @@ body.ttrss_prefs .user-css-editor {
   height: 300px;
   width: 575px;
 }
+body.ttrss_prefs fieldset.prefs-set label:first-of-type {
+  min-width: 300px;
+}
+body.ttrss_prefs fieldset.prefs-set label.plugin-desc {
+  width: 600px;
+  margin-right: 100px;
+  display: inline-block;
+}
+body.ttrss_prefs fieldset.prefs-set label.plugin-desc .dijitCheckBox {
+  margin-right: 10px;
+}
 body.ttrss_prefs fieldset.prefs-set .help-text {
   display: inline-block;
   margin-left: 10px;
-}
-body.ttrss_prefs table.prefPluginsList td label,
-body.ttrss_prefs table.prefUserList td {
-  cursor: pointer;
-}
-body.ttrss_prefs table.prefPluginsList label {
-  white-space: nowrap;
-}
-body.ttrss_prefs table.prefPluginsList i.plugin-enabled {
-  color: #69C671;
-}
-body.ttrss_prefs table.prefPluginsList label img {
-  vertical-align: middle;
 }
 body.ttrss_prefs table.prefErrorLog tr.errrow td {
   font-size: 10px;
@@ -1632,6 +1630,10 @@ body.ttrss_utility.share_popup .content {
 }
 .flat #feedTree .dijitTreeContent .dijitInline {
   vertical-align: baseline;
+}
+.flat .dijitButton i.material-icons {
+  position: relative;
+  top: -1px;
 }
 .flat .tabLabel > i.material-icons {
   position: relative;
