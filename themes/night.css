@@ -1464,7 +1464,7 @@ body.ttrss_prefs fieldset.prefs-set label:first-of-type {
 }
 body.ttrss_prefs fieldset.prefs-set label.plugin-desc {
   width: 600px;
-  margin-right: 100px;
+  margin-right: 150px;
   display: inline-block;
 }
 body.ttrss_prefs fieldset.prefs-set label.plugin-desc .dijitCheckBox {

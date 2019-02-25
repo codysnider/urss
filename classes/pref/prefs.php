@@ -788,10 +788,10 @@ class Pref_Prefs extends Handler_Protected {
 					<label class='checkbox plugin-desc' id='PLABEL-$name'>
 						<input disabled='1'
 							dojoType='dijit.form.CheckBox' $checked type='checkbox'>
-						".htmlspecialchars($about[1]);
+						".htmlspecialchars($about[1]). "</label>";
 
 					if (@$about[4]) {
-						print "<button dojoType='dijit.form.Button' style='float : left' class='alt-info' 
+						print "<button dojoType='dijit.form.Button' class='alt-info' 
 							onclick='window.open(\"".htmlspecialchars($about[4])."\")'>
 								<i class='material-icons'>open_in_new</i> ".__("More info...")."</button>";
 					}

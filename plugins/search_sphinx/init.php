@@ -5,7 +5,8 @@ class Search_Sphinx extends Plugin {
 		return array(1.0,
 			"Delegate searching for articles to Sphinx (don't forget to set options in config.php)",
 			"hoelzro",
-			true);
+			true,
+			"https://git.tt-rss.org/fox/tt-rss/wiki/SphinxSearch");
 	}
 
 	function init($host) {
