@@ -81,11 +81,20 @@ body.ttrss_prefs {
 	}
 
 	fieldset.prefs {
+		min-height : 30px;
+
 		label:first-of-type {
 			min-width : 300px;
 		}
 
-		label.plugin-desc {
+		.help-text {
+			display : inline-block;
+			margin-left : 10px;
+		}
+	}
+
+	fieldset.plugin {
+		label.description {
 			width : 600px;
 			margin-right : 150px;
 			display : inline-block;
@@ -93,11 +102,6 @@ body.ttrss_prefs {
 			.dijitCheckBox {
 				margin-right : 10px;
 			}
-		}
-
-		.help-text {
-			display : inline-block;
-			margin-left : 10px;
 		}
 	}
 

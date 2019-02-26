@@ -1459,20 +1459,23 @@ body.ttrss_prefs .user-css-editor {
   height: 300px;
   width: 575px;
 }
+body.ttrss_prefs fieldset.prefs {
+  min-height: 30px;
+}
 body.ttrss_prefs fieldset.prefs label:first-of-type {
   min-width: 300px;
-}
-body.ttrss_prefs fieldset.prefs label.plugin-desc {
-  width: 600px;
-  margin-right: 150px;
-  display: inline-block;
-}
-body.ttrss_prefs fieldset.prefs label.plugin-desc .dijitCheckBox {
-  margin-right: 10px;
 }
 body.ttrss_prefs fieldset.prefs .help-text {
   display: inline-block;
   margin-left: 10px;
+}
+body.ttrss_prefs fieldset.plugin label.description {
+  width: 600px;
+  margin-right: 150px;
+  display: inline-block;
+}
+body.ttrss_prefs fieldset.plugin label.description .dijitCheckBox {
+  margin-right: 10px;
 }
 body.ttrss_prefs table.prefErrorLog tr.errrow td {
   font-size: 10px;
