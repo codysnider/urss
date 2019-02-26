@@ -5,7 +5,9 @@ class Bookmarklets extends Plugin {
   function about() {
     return array(1.0,
 		 "Easy feed subscription and web page sharing using bookmarklets",
-		 "fox");
+		 "fox",
+	     false,
+		 "https://git.tt-rss.org/fox/tt-rss/wiki/ShareAnything");
   }
 
   function init($host) {
