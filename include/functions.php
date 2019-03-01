@@ -141,7 +141,6 @@
 			}
 
 			_bindtextdomain("messages", "locale");
-
 			_textdomain("messages");
 			_bind_textdomain_codeset("messages", "UTF-8");
 		}
@@ -2403,18 +2402,23 @@
 				return __((parseInt(n) > 1) ? msg2 : msg1);
 			}';
 
-		$l10n = _get_reader();
+		global $text_domains;
 
-		for ($i = 0; $i < $l10n->total; $i++) {
-			$orig = $l10n->get_original_string($i);
-			if(strpos($orig, "\000") !== FALSE) { // Plural forms
-				$key = explode(chr(0), $orig);
-				print T_js_decl($key[0], _ngettext($key[0], $key[1], 1)); // Singular
-				print T_js_decl($key[1], _ngettext($key[0], $key[1], 2)); // Plural
-			} else {
-				$translation = __($orig);
-				print T_js_decl($orig, $translation);
+		foreach (array_keys($text_domains) as $domain) {
+			$l10n = _get_reader($domain);
+
+			for ($i = 0; $i < $l10n->total; $i++) {
+				$orig = $l10n->get_original_string($i);
+				if(strpos($orig, "\000") !== FALSE) { // Plural forms
+					$key = explode(chr(0), $orig);
+					print T_js_decl($key[0], _ngettext($key[0], $key[1], 1)); // Singular
+					print T_js_decl($key[1], _ngettext($key[0], $key[1], 2)); // Plural
+				} else {
+					$translation = _dgettext($domain,$orig);
+					print T_js_decl($orig, $translation);
+				}
 			}
+
 		}
 	}
 
