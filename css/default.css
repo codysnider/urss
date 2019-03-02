@@ -932,6 +932,26 @@ body.ttrss_utility .alert .close {
   line-height: 20px;
   cursor: pointer;
 }
+body.ttrss_main .pull-right,
+body.ttrss_utility .pull-right {
+  float: right;
+}
+body.ttrss_main .pull-left,
+body.ttrss_utility .pull-left {
+  float: left;
+}
+body.ttrss_main .text-error,
+body.ttrss_utility .text-error {
+  color: #b94a48;
+}
+body.ttrss_main .text-info,
+body.ttrss_utility .text-info {
+  color: #3a87ad;
+}
+body.ttrss_main .text-success,
+body.ttrss_utility .text-success {
+  color: #468847;
+}
 body.ttrss_main .alert,
 body.ttrss_utility .alert,
 body.ttrss_main .alert h4,

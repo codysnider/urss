@@ -1,4 +1,18 @@
 <?php
+/* gettext helpers for plugins */
+
+function P__($plugin, $msgid) {
+	return P_gettext($plugin, $msgid);
+}
+
+function P_gettext($plugin, $msgid) {
+	return _dgettext(PLuginHost::object_to_domain($plugin), $msgid);
+}
+
+function P_ngettext($plugin, $singular, $plural, $number) {
+	return _dngettext(PLuginHost::object_to_domain($plugin), $singular, $plural, $number);
+}
+
 class PluginHost {
 	private $pdo;
 	private $hooks = array();
@@ -62,6 +76,10 @@ class PluginHost {
 	const KIND_ALL = 1;
 	const KIND_SYSTEM = 2;
 	const KIND_USER = 3;
+
+	static function object_to_domain($plugin) {
+		return strtolower(get_class($plugin));
+	}
 
 	function __construct() {
 		$this->pdo = Db::pdo();
@@ -209,6 +227,11 @@ class PluginHost {
 					if ($plugin_api < PluginHost::API_VERSION) {
 						user_error("Plugin $class is not compatible with current API version (need: " . PluginHost::API_VERSION . ", got: $plugin_api)", E_USER_WARNING);
 						continue;
+					}
+
+					if (file_exists(dirname($file) . "/locale")) {
+						_bindtextdomain($class, dirname($file) . "/locale");
+						_bind_textdomain_codeset($class, "UTF-8");
 					}
 
 					$this->last_registered = $class;
