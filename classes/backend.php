@@ -11,9 +11,10 @@ class Backend extends Handler {
 
 		$rv = Digest::prepare_headlines_digest($_SESSION['uid'], 1, 1000);
 
-		$rv[3] = "<pre>" . $rv[3] . "</pre>";
-
-		print_r($rv);
+		print "<h1>HTML</h1>";
+		print $rv[0];
+		print "<h1>Plain text</h1>";
+		print "<pre>".$rv[3]."</pre>";
 	}
 
 	private function display_main_help() {

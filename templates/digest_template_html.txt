@@ -6,7 +6,8 @@
 
 <ul>
 <!-- $BeginBlock article -->
-<li><a href="${ARTICLE_LINK}">${ARTICLE_TITLE}</a> - ${ARTICLE_UPDATED}
+<li><a href="${ARTICLE_LINK}">${ARTICLE_TITLE}</a> &mdash; <strong>${ARTICLE_UPDATED}</strong>
+<div style='font-style : italic'>${ARTICLE_LABELS}</div>
 <div style='color : gray'>${ARTICLE_EXCERPT}</div>
 <!-- $EndBlock article -->
 </ul>
