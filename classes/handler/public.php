@@ -712,8 +712,10 @@ class Handler_Public extends Handler {
 				user_error("Failed login attempt for $login from {$_SERVER['REMOTE_ADDR']}", E_USER_WARNING);
 			}
 
-			if (clean($_REQUEST['return'])) {
-				header("Location: " . clean($_REQUEST['return']));
+			$return = clean($_REQUEST['return']);
+
+			if ($return && !is_absolute_url($return)) {
+				header("Location: " . $return);
 			} else {
 				header("Location: " . get_self_url_prefix());
 			}
