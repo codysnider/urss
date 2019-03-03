@@ -772,7 +772,21 @@ class Handler_Public extends Handler {
 			<?php
 
 			if (!$feed_url) {
-				print_error("No feed to subscribe to.");
+				?>
+				<form method="post">
+					<input type="hidden" name="op" value="subscribe">
+					<fieldset>
+						<label>Feed or site URL:</label>
+						<input style="width: 300px" dojoType="dijit.form.ValidationTextBox" required="1" name="feed_url">
+					</fieldset>
+
+					<button class="alt-primary" dojoType="dijit.form.Button" type="submit">
+						<?php echo __("Subscribe") ?>
+					</button>
+
+					<a href="index.php"><?php echo __("Return to Tiny Tiny RSS") ?></a>
+				</form>
+				<?php
 			} else {
 
 				$rc = Feeds::subscribe_to_feed($feed_url);
@@ -816,8 +830,10 @@ class Handler_Public extends Handler {
 					}
 
 					print "</select>";
-					print "<button class='alt-primary' dojoType='dijit.form.Button' type='submit'>".__("Subscribe to selected feed")."</button>";
 					print "</fieldset>";
+
+					print "<button class='alt-primary' dojoType='dijit.form.Button' type='submit'>".__("Subscribe to selected feed")."</button>";
+					print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
 
 					print "</form>";
 				}
@@ -834,19 +850,17 @@ class Handler_Public extends Handler {
 				} else {
 					$feed_id = 0;
 				}
-				print "<p>";
 
 				if ($feed_id) {
-					print "<form method='GET' style='float : left' action=\"$tp_uri\">
+					print "<form method='GET' action=\"$tp_uri\">
 					<input type='hidden' name='tab' value='feedConfig'>
 					<input type='hidden' name='method' value='editfeed'>
 					<input type='hidden' name='methodparam' value='$feed_id'>
 					<button dojoType='dijit.form.Button' class='alt-info' type='submit'>".__("Edit subscription options")."</button>
+					<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>
 					</form>";
 				}
 			}
-
-			print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
 
 			print "</div></div></body></html>";
 
