@@ -1525,6 +1525,7 @@ body.ttrss_prefs .phpinfo td.e {
 }
 body.ttrss_prefs .phpinfo td.v {
   font-family: monospace;
+  word-break: break-all;
 }
 body.ttrss_prefs fieldset,
 body.ttrss_utility fieldset {
