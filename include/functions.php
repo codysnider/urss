@@ -2562,9 +2562,3 @@
 
 		return $ts;
 	}
-
-	function is_absolute_url($url) {
-		$parts = parse_url($url);
-
-		return $parts['host'] != '';
-	}
