@@ -7,14 +7,18 @@ class Backend extends Handler {
 	}
 
 	function digestTest() {
-		header("Content-type: text/html");
+		if (isset($_SESSION['uid'])) {
+			header("Content-type: text/html");
 
-		$rv = Digest::prepare_headlines_digest($_SESSION['uid'], 1, 1000);
+			$rv = Digest::prepare_headlines_digest($_SESSION['uid'], 1, 1000);
 
-		print "<h1>HTML</h1>";
-		print $rv[0];
-		print "<h1>Plain text</h1>";
-		print "<pre>".$rv[3]."</pre>";
+			print "<h1>HTML</h1>";
+			print $rv[0];
+			print "<h1>Plain text</h1>";
+			print "<pre>".$rv[3]."</pre>";
+		} else {
+			print error_json(6);
+		}
 	}
 
 	private function display_main_help() {
