@@ -20,7 +20,7 @@ class Toggle_Sidebar extends Plugin {
 
 		<button dojoType="dijit.form.Button" onclick="Feeds.toggle()">
 			<i class="material-icons"
-               title="<?php echo __('Toggle feedlist') ?>">fullscreen</i>
+               title="<?php echo __('Toggle feedlist') ?>">menu</i>
 		</button>
 
 		<?php
