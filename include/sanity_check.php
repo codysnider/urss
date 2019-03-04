@@ -14,6 +14,12 @@
 	 * If you come crying when stuff inevitably breaks, you will be mocked and told
 	 * to get out. */
 
+	function make_self_url() {
+		$proto = is_server_https() ? 'https' : 'http';
+
+		return $proto . '://' . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+	}
+
 	function make_self_url_path() {
 		$proto = is_server_https() ? 'https' : 'http';
 		$url_path = $proto . '://' . $_SERVER["HTTP_HOST"] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);

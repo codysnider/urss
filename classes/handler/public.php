@@ -623,7 +623,7 @@ class Handler_Public extends Handler {
 
 		} else {
 
-			$return = urlencode($_SERVER["REQUEST_URI"])
+			$return = urlencode(make_self_url());
 
 			?>
 
@@ -712,7 +712,9 @@ class Handler_Public extends Handler {
 				user_error("Failed login attempt for $login from {$_SERVER['REMOTE_ADDR']}", E_USER_WARNING);
 			}
 
-			if (clean($_REQUEST['return'])) {
+			$return = clean($_REQUEST['return']);
+
+			if ($_REQUEST['return'] && mb_strpos($return, SELF_URL_PATH) === 0) {
 				header("Location: " . clean($_REQUEST['return']));
 			} else {
 				header("Location: " . get_self_url_prefix());

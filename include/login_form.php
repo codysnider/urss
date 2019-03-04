@@ -61,7 +61,7 @@ function bwLimitChange(elem) {
 }
 </script>
 
-<?php $return = urlencode($_SERVER["REQUEST_URI"]) ?>
+<?php $return = urlencode(make_self_url()) ?>
 
 <div class="container">
 
