@@ -737,7 +737,7 @@
 		}
 	}
 
-	function make_password($length = 8) {
+	function make_password($length = 12) {
 
 		$password = "";
 		$possible = "0123456789abcdfghjkmnpqrstvwxyzABCDFGHJKMNPQRSTVWXYZ";

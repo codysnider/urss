@@ -231,7 +231,7 @@ class Pref_Users extends Handler_Protected {
 
 		function add() {
 			$login = trim(clean($_REQUEST["login"]));
-			$tmp_user_pwd = make_password(8);
+			$tmp_user_pwd = make_password();
 			$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
 			$pwd_hash = encrypt_password($tmp_user_pwd, $salt, true);
 
@@ -283,7 +283,7 @@ class Pref_Users extends Handler_Protected {
 				$login = $row["login"];
 
 				$new_salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
-				$tmp_user_pwd = make_password(8);
+				$tmp_user_pwd = make_password();
 
 				$pwd_hash = encrypt_password($tmp_user_pwd, $new_salt, true);
 

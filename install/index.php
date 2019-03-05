@@ -55,21 +55,28 @@
 		//
 	}
 
-	function make_password($length = 8) {
-
+	function make_password($length = 12) {
 		$password = "";
 		$possible = "0123456789abcdfghjkmnpqrstvwxyzABCDFGHJKMNPQRSTVWXYZ*%+^";
 
-	$i = 0;
+		$i = 0;
 
 		while ($i < $length) {
-			$char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
+
+			try {
+				$idx = function_exists("random_int") ? random_int(0, strlen($possible) - 1) : mt_rand(0, strlen($possible) - 1);
+			} catch (Exception $e) {
+				$idx = mt_rand(0, strlen($possible) - 1);
+			}
+
+			$char = substr($possible, $idx, 1);
 
 			if (!strstr($password, $char)) {
 				$password .= $char;
 				$i++;
 			}
 		}
+
 		return $password;
 	}
 
