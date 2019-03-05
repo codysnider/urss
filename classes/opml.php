@@ -195,7 +195,7 @@ class Opml extends Handler_Protected {
 					WHERE filter_id = ?");
 				$tmph->execute([$line['id']]);
 
-				while ($tmp_line = $tmph->fetch()) {
+				while ($tmp_line = $tmph->fetch(PDO::FETCH_ASSOC)) {
 					unset($tmp_line["id"]);
 					unset($tmp_line["filter_id"]);
 
@@ -243,7 +243,7 @@ class Opml extends Handler_Protected {
 					WHERE filter_id = ?");
 				$tmph->execute([$line['id']]);
 
-				while ($tmp_line = $tmph->fetch()) {
+				while ($tmp_line = $tmph->fetch(PDO::FETCH_ASSOC)) {
 					unset($tmp_line["id"]);
 					unset($tmp_line["filter_id"]);
 
@@ -395,7 +395,7 @@ class Opml extends Handler_Protected {
 				$filter_id = $row['id'];
 
 				if ($filter_id) {
-					$this->opml_notice(T_sprintf("Adding filter..."));
+					$this->opml_notice(T_sprintf("Adding filter %s...", $title));
 
 					foreach ($filter["rules"] as $rule) {
 						$feed_id = null;
@@ -412,8 +412,6 @@ class Opml extends Handler_Protected {
 						            array_push($match_on, ($is_cat ? "CAT:" : "") . $name);
                                 } else {
 
-						            $match_id = false;
-
                                     if (!$is_cat) {
                                         $tsth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
                                     		WHERE title = ? AND owner_uid = ?");
@@ -422,6 +420,8 @@ class Opml extends Handler_Protected {
 
                                         if ($row = $tsth->fetch()) {
                                             $match_id = $row['id'];
+
+											array_push($match_on, $match_id);
                                         }
                                     } else {
                                         $tsth = $this->pdo->prepare("SELECT id FROM ttrss_feed_categories
@@ -430,10 +430,10 @@ class Opml extends Handler_Protected {
 
 										if ($row = $tsth->fetch()) {
 											$match_id = $row['id'];
+
+											array_push($match_on, "CAT:$match_id");
 										}
                                     }
-
-                                    if ($match_id) array_push($match_on, $match_id);
                                 }
                             }
 
