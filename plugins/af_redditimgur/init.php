@@ -37,9 +37,9 @@ class Af_RedditImgur extends Plugin {
 			print_error("Readability requires PHP version 5.6.");
 		}
 
-		print "<form dojoType=\"dijit.form.Form\">";
+		print "<form dojoType='dijit.form.Form'>";
 
-		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
+		print "<script type='dojo/method' event='onSubmit' args='evt'>
 			evt.preventDefault();
 			if (this.validate()) {
 				console.log(dojo.objectToQuery(this.getValues()));
@@ -57,14 +57,19 @@ class Af_RedditImgur extends Plugin {
 		print_hidden("method", "save");
 		print_hidden("plugin", "af_redditimgur");
 
+		print "<fieldset class='narrow'>";
+		print "<label class='checkbox'>";
 		print_checkbox("enable_readability", $enable_readability);
-		print "&nbsp;<label for=\"enable_readability\">" . __("Extract missing content using Readability") . "</label>";
+		print " " . __("Extract missing content using Readability") . "</label>";
+		print "</fieldset>";
 
-		print "<br/>";
-
+		print "<fieldset class='narrow'>";
+		print "<label class='checkbox'>";
 		print_checkbox("enable_content_dupcheck", $enable_content_dupcheck);
-		print "&nbsp;<label for=\"enable_content_dupcheck\">" . __("Enable additional duplicate checking") . "</label>";
-		print "<p>"; print_button("submit", __("Save"));
+		print " " . __("Enable additional duplicate checking") . "</label>";
+		print "</fieldset>";
+
+		print_button("submit", __("Save"), 'class="alt-primary"');
 		print "</form>";
 
 		print "</div>";
