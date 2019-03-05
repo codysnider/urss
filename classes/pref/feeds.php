@@ -815,7 +815,7 @@ class Pref_Feeds extends Handler_Protected {
 			print "<footer>
 				<button style='float : left' class='alt-danger' dojoType='dijit.form.Button' onclick='return CommonDialogs.unsubscribeFeed($feed_id, \"$title\")'>".
 					__('Unsubscribe')."</button>
-				<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('feedEditDlg').execute()\">".__('Save')."</button>
+				<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return dijit.byId('feedEditDlg').execute()\">".__('Save')."</button>
 				<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('feedEditDlg').hide()\">".__('Cancel')."</button>
 				</footer>";
 		}
