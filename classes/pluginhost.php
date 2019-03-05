@@ -1,26 +1,4 @@
 <?php
-/* gettext helpers for plugins */
-
-function P__($plugin, $msgid) {
-	return P_gettext($plugin, $msgid);
-}
-
-function P_gettext($plugin, $msgid) {
-	return _dgettext(PLuginHost::object_to_domain($plugin), $msgid);
-}
-
-function P_ngettext($plugin, $singular, $plural, $number) {
-	return _dngettext(PLuginHost::object_to_domain($plugin), $singular, $plural, $number);
-}
-
-function P_sprintf() {
-	$args = func_get_args();
-	$plugin = array_shift($args);
-	$msgid = array_shift($args);
-
-	return vsprintf(P__($plugin, $msgid), $args);
-}
-
 class PluginHost {
 	private $pdo;
 	private $hooks = array();

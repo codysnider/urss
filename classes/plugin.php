@@ -40,4 +40,21 @@ abstract class Plugin {
 	function api_version() {
 		return Plugin::API_VERSION_COMPAT;
 	}
+
+	/* gettext-related helpers */
+
+	function __($msgid) {
+		return _dgettext(PluginHost::object_to_domain($this), $msgid);
+	}
+
+	function _ngettext($singular, $plural, $number) {
+		return _dngettext(PluginHost::object_to_domain($this), $singular, $plural, $number);
+	}
+
+	function T_sprintf() {
+		$args = func_get_args();
+		$msgid = array_shift($args);
+
+		return vsprintf($this->__($msgid), $args);
+	}
 }
