@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-22 06:58+0300\n"
-"PO-Revision-Date: 2019-02-07 14:36+0000\n"
+"PO-Revision-Date: 2019-03-02 12:03+0000\n"
 "Last-Translator: Андрій Жук <zhouck@gmail.com>\n"
-"Language-Team: Ukrainian <https://weblate.tt-rss.org/projects/tt-rss/messages/uk/>\n"
+"Language-Team: Ukrainian <https://weblate.tt-rss.org/projects/tt-rss/"
+"messages/uk/>\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.3\n"
 
 #: backend.php:73
@@ -494,7 +496,7 @@ msgstr "Канали не знайдені."
 
 #: include/functions.php:84
 msgid "Detect automatically"
-msgstr ""
+msgstr "Визначати автоматично"
 
 #: include/functions.php:952
 #, php-format
@@ -973,9 +975,8 @@ msgstr "Ctrl"
 #: classes/pref/prefs.php:673
 #: classes/pref/prefs.php:896
 #: plugins/bookmarklets/init.php:43
-#, fuzzy
 msgid "More info..."
-msgstr "більше інформації"
+msgstr "Більше інформації..."
 
 #: classes/backend.php:157
 #: classes/dlg.php:30
@@ -1095,9 +1096,8 @@ msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "Не вдалося підписатися на <b>%s</b>.<br>Не вдалося завантажити канал за посиланням."
 
 #: classes/handler/public.php:806
-#, fuzzy
 msgid "Multiple feed URLs found:"
-msgstr "Декілька посилань на канали знайдено."
+msgstr "Декілька посилань на канали знайдено:"
 
 #: classes/handler/public.php:817
 msgid "Subscribe to selected feed"
@@ -1112,14 +1112,14 @@ msgid "Password recovery"
 msgstr "Відновлення пароля"
 
 #: classes/handler/public.php:939
-#, fuzzy
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
-msgstr "Вкажіть коректне ім’я та пароль. Пароль прийде на вашу електронну адресу."
+msgstr ""
+"Вкажіть коректне ім’я та пароль. Пароль прийде на вашу електронну адресу."
 
 #: classes/handler/public.php:959
-#, fuzzy, php-format
+#, php-format
 msgid "How much is %d + %d:"
-msgstr "Скільки буде два плюс два:"
+msgstr "Скільки буде %d плюс %d:"
 
 #: classes/handler/public.php:965
 #: classes/pref/users.php:376
@@ -1152,32 +1152,30 @@ msgid "Database Updater"
 msgstr "Оновлювач бази даних"
 
 #: classes/handler/public.php:1119
-#, fuzzy
 msgid "Performing updates"
-msgstr "Виконати оновлення"
+msgstr "Йде оновлення"
 
 #: classes/handler/public.php:1121
 #, php-format
 msgid "Updating to schema version %d"
-msgstr ""
+msgstr "Оновлення до версії %d"
 
 #: classes/handler/public.php:1126
 #, php-format
 msgid "Performing update up to version %d..."
-msgstr ""
+msgstr "Йде оновлення до версії %d..."
 
 #: classes/handler/public.php:1131
 msgid "FAILED!"
-msgstr ""
+msgstr "ПОМИЛКА!"
 
 #: classes/handler/public.php:1139
 msgid "OK!"
-msgstr ""
+msgstr "Успішно!"
 
 #: classes/handler/public.php:1157
-#, fuzzy
 msgid "Database update required"
-msgstr "Оновлювач бази даних"
+msgstr "Необхідне оновлення бази даних"
 
 #: classes/handler/public.php:1168
 msgid "Perform updates"
@@ -1428,9 +1426,8 @@ msgid "Date"
 msgstr "Дата"
 
 #: classes/pref/system.php:85
-#, fuzzy
 msgid "PHP Information"
-msgstr "Виконати дію"
+msgstr "Інформація про PHP"
 
 #: classes/pref/feeds.php:28
 msgid "Check to enable field"
@@ -1489,9 +1486,8 @@ msgstr "Оновити"
 
 #: classes/pref/feeds.php:623
 #: classes/pref/feeds.php:894
-#, fuzzy
 msgid "Interval:"
-msgstr "Інтерфейс"
+msgstr "Інтервал:"
 
 #: classes/pref/feeds.php:636
 #: classes/pref/feeds.php:909
@@ -1679,9 +1675,8 @@ msgid "Unsubscribe from selected feeds"
 msgstr "Відписатися від обраних каналів"
 
 #: classes/pref/feeds.php:1713
-#, fuzzy
 msgid "One valid feed per line (no detection is done)"
-msgstr "Додайте по одному RSS каналу на рядок (перевірка каналів не робиться)"
+msgstr "Один коректний канал на рядок (перевірка каналів не робиться)"
 
 #: classes/pref/feeds.php:1743
 msgid "Feeds require authentication."
@@ -1826,9 +1821,8 @@ msgstr[1] ""
 msgstr[2] ""
 
 #: classes/pref/prefs.php:40
-#, fuzzy
 msgid "Articles"
-msgstr "Стаття"
+msgstr "Статті"
 
 #: classes/pref/prefs.php:53
 msgid "Digest"
@@ -1848,35 +1842,29 @@ msgstr "Чорний список тегів"
 
 #: classes/pref/prefs.php:70
 msgid "Never apply these tags automatically (comma-separated list)."
-msgstr ""
+msgstr "Ніколи не застосовувати ці теги автоматично (список розділений комами)."
 
 #: classes/pref/prefs.php:71
-#, fuzzy
 msgid "Mark read on scroll"
-msgstr "Позначити всі статті прочитаними?"
+msgstr "Позначати статті прочитаними при прокручуванні"
 
 #: classes/pref/prefs.php:71
-#, fuzzy
 msgid "Mark articles as read as you scroll past them"
-msgstr "Позначити всі статті прочитаними?"
+msgstr "Позначати статті прочитаними, коли ви прокручуєте нижче за них"
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Always expand articles"
-msgstr "Клацніть, щоб розгорнути статтю"
+msgstr "Завжди розгортати статті"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Combined mode"
-msgstr "Перемкнути комбінований режим"
+msgstr "Комбінований режим"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Show flat list of articles instead of separate panels"
-msgstr "Показувати розгорнутий список статей каналу, замість показування окремо заголовків та вмісту статей"
+msgstr "Показувати плаский список статей замість показу окремих панелей"
 
 #: classes/pref/prefs.php:74
-#, fuzzy
 msgid "Confirm marking feeds as read"
 msgstr "Підтверджувати позначення каналу прочитаним"
 
@@ -1885,72 +1873,62 @@ msgid "Amount of articles to display at once"
 msgstr "Кількість статей, що показуються на сторінці"
 
 #: classes/pref/prefs.php:76
-#, fuzzy
 msgid "Default update interval"
-msgstr "Типовий інтервал оновлення каналу"
+msgstr "Типовий інтервал оновлення"
 
 #: classes/pref/prefs.php:77
-#, fuzzy
 msgid "Mark sent articles as read"
-msgstr "Позначити всі статті прочитаними?"
+msgstr "Позначати відправлені статті прочитаними"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Enable digest"
 msgstr "Включити дайджест електронною поштою"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Send daily digest of new (and unread) headlines to your e-mail address"
-msgstr "Ця опція дозволяє надсилати щоденний дайджест нових (та непрочитаних) заголовків на визначені електронні адреси"
+msgstr ""
+"Ця опція дозволяє надсилати щоденний дайджест нових (та непрочитаних) "
+"заголовків на ваші електронні адреси"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Try to send around this time"
-msgstr "Пробувати надсилати дайджест близько вказаного часу"
+msgstr "Спробувати надсилати дайджест близько вказаного часу"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Time in UTC"
-msgstr "Часова зона"
+msgstr "Час в UTC"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Enable API"
-msgstr "Увімкнути OTP"
+msgstr "Увімкнути API"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Allows accessing this account through the API"
-msgstr "Дозволяє зовнішнім клієнтам мати доступ до цього облікового запису через API"
+msgstr "Дозволяє мати доступ до цього облікового запису через API"
 
 #: classes/pref/prefs.php:81
-#, fuzzy
 msgid "Enable categories"
-msgstr "Дозволити категорії каналів"
+msgstr "Дозволити категорії"
 
 #: classes/pref/prefs.php:82
 msgid "Sort feeds by unread articles count"
 msgstr "Сортувати канали по кількості непрочитаних статей"
 
 #: classes/pref/prefs.php:83
-#, fuzzy
 msgid "Maximum age of fresh articles"
 msgstr "Найдовший вік нових статей (в годинах)"
 
 #: classes/pref/prefs.php:83
-#, fuzzy
 msgid "hours"
-msgstr "Раз на 4 години"
+msgstr "годин"
 
 #: classes/pref/prefs.php:84
-#, fuzzy
 msgid "Hide read feeds"
 msgstr "Сховати/показати прочитані канали"
 
 #: classes/pref/prefs.php:85
 msgid "Always show special feeds"
-msgstr ""
+msgstr "Завжди показувати спеціальні канали"
 
 #: classes/pref/prefs.php:85
 #, fuzzy
@@ -1962,14 +1940,14 @@ msgid "Long date format"
 msgstr "Довгий формат дати"
 
 #: classes/pref/prefs.php:86
-#, fuzzy
 msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
-msgstr "Використовується синтаксис, ідентичний до функції PHP <a href='http://php.net/manual/function.date.php'>date()</a>."
+msgstr ""
+"Використовується синтаксис, ідентичний до функції PHP <a href='http://php."
+"net/manual/function.date.php'>date()</a>."
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "Automatically show next feed"
-msgstr "Показувати наступний канал при відмітці прочитаним поточного"
+msgstr "Автоматично показувати наступний канал"
 
 #: classes/pref/prefs.php:87
 #, fuzzy
@@ -1977,13 +1955,12 @@ msgid "After marking one as read"
 msgstr "Підтверджувати позначення каналу прочитаним"
 
 #: classes/pref/prefs.php:88
-#, fuzzy
 msgid "Purge articles older than"
-msgstr "Витирати непрочитані статті"
+msgstr "Витирати статті старші за"
 
 #: classes/pref/prefs.php:88
 msgid "<strong>days</strong> (0 disables)"
-msgstr ""
+msgstr "<strong>днів</strong>(0 щоб вимкнути)"
 
 #: classes/pref/prefs.php:89
 msgid "Purge unread articles"
@@ -1998,9 +1975,8 @@ msgid "Short date format"
 msgstr "Короткий формат дати"
 
 #: classes/pref/prefs.php:92
-#, fuzzy
 msgid "Show content preview in headlines"
-msgstr "Показати передогляд вмісту в списку заголовків"
+msgstr "Показувати передогляд вмісту в списку заголовків"
 
 #: classes/pref/prefs.php:93
 msgid "Sort headlines by feed date"
@@ -2011,9 +1987,8 @@ msgid "Use feed-specified date to sort headlines instead of local import date."
 msgstr "Використовувати вказану для каналу дату для сортування заголовків замість дати імпорту."
 
 #: classes/pref/prefs.php:94
-#, fuzzy
 msgid "SSL client certificate"
-msgstr "Вхід з SSL сертифікатом"
+msgstr "Вхід із клієнтським SSL сертифікатом"
 
 #: classes/pref/prefs.php:96
 msgid "Strip unsafe tags from articles"
@@ -2034,11 +2009,11 @@ msgstr "Часова зона"
 
 #: classes/pref/prefs.php:99
 msgid "Group by feed"
-msgstr ""
+msgstr "Кращі 25 каналів"
 
 #: classes/pref/prefs.php:99
 msgid "Group multiple-feed output by originating feed"
-msgstr ""
+msgstr "Групувати мульти-канали за основним каналом"
 
 #: classes/pref/prefs.php:100
 msgid "Language"
@@ -2069,19 +2044,16 @@ msgid "Personal data"
 msgstr "Персональні дані"
 
 #: classes/pref/prefs.php:258
-#, fuzzy
 msgid "Full name:"
-msgstr "Повне ім’я"
+msgstr "Повне ім’я:"
 
 #: classes/pref/prefs.php:263
-#, fuzzy
 msgid "E-mail:"
-msgstr "Пошта (@)"
+msgstr "Пошта (@):"
 
 #: classes/pref/prefs.php:271
-#, fuzzy
 msgid "Access level:"
-msgstr "Рівень доступу: "
+msgstr "Рівень доступу:"
 
 #: classes/pref/prefs.php:282
 msgid "Save data"
@@ -2092,19 +2064,16 @@ msgid "Changing your current password will disable OTP."
 msgstr "Зміна вашого поточного паролю вимкне OTP."
 
 #: classes/pref/prefs.php:335
-#, fuzzy
 msgid "Old password:"
-msgstr "Старий пароль"
+msgstr "Старий пароль:"
 
 #: classes/pref/prefs.php:340
-#, fuzzy
 msgid "New password:"
-msgstr "Новий пароль"
+msgstr "Новий пароль:"
 
 #: classes/pref/prefs.php:345
-#, fuzzy
 msgid "Confirm password:"
-msgstr "Підтвердження пароля"
+msgstr "Підтвердження пароля:"
 
 #: classes/pref/prefs.php:355
 msgid "Change password"
@@ -2116,18 +2085,16 @@ msgstr "Одноразовий пароль / Автентифікатор"
 
 #: classes/pref/prefs.php:390
 #: classes/pref/prefs.php:438
-#, fuzzy
 msgid "Your password:"
-msgstr "Підтвердження пароля"
+msgstr "Ваш пароль:"
 
 #: classes/pref/prefs.php:400
 msgid "Disable OTP"
 msgstr "Вимкнути OTP"
 
 #: classes/pref/prefs.php:444
-#, fuzzy
 msgid "One time password:"
-msgstr "Неправильний одноразовий пароль"
+msgstr "Одноразовий пароль:"
 
 #: classes/pref/prefs.php:451
 msgid "Enable OTP"
@@ -2146,18 +2113,17 @@ msgid "Customize"
 msgstr "Змінити користувацькі стилі"
 
 #: classes/pref/prefs.php:608
-#, fuzzy
 msgid "More themes..."
-msgstr "Більше каналів"
+msgstr "Більше тем..."
 
 #: classes/pref/prefs.php:665
 msgid "Register"
 msgstr "Реєстрація"
 
 #: classes/pref/prefs.php:680
-#, fuzzy, php-format
+#, php-format
 msgid "Current server time: %s"
-msgstr "Поточний час сервера: %s (UTC)"
+msgstr "Поточний час сервера: %s"
 
 #: classes/pref/prefs.php:709
 msgid "Save configuration"
@@ -2378,9 +2344,9 @@ msgid "limit:"
 msgstr "межа:"
 
 #: classes/feeds.php:791
-#, fuzzy, php-format
+#, php-format
 msgid "Search %s..."
-msgstr "Пошук..."
+msgstr "Пошук %s..."
 
 #: classes/feeds.php:800
 msgid "Used for word stemming"
@@ -2907,6 +2873,8 @@ msgstr "Знайдено нові статті, перезавантажте к�
 #: js/Headlines.js:682
 msgid "Could not update headlines (invalid object received - see error console for details)"
 msgstr ""
+"Не вдається оновити заголовки (отримано неправильний об’єкт — дивіться "
+"консоль помилок для деталей)"
 
 #: js/Headlines.js:939
 #, perl-format
