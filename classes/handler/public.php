@@ -1051,8 +1051,6 @@ class Handler_Public extends Handler {
 
 						$sth->execute([$resetpass_token_full, $login, $email]);
 
-						//Pref_Users::resetUserPassword($id, false);
-
 					} else {
 						print_error("User ID not found.");
 					}

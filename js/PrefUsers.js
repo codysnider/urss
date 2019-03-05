@@ -70,7 +70,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 				xhrPost("backend.php", {op: "pref-users", method: "resetPass", id: id}, (transport) => {
 					Notify.close();
-					alert(transport.responseText);
+					Notify.info(transport.responseText, true);
 				});
 
 			}
