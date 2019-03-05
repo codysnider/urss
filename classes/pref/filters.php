@@ -1121,11 +1121,11 @@ class Pref_Filters extends Handler_Protected {
 	private function getFilterName($id) {
 
 		$sth = $this->pdo->prepare(
-			"SELECT title,match_any_rule,COUNT(DISTINCT r.id) AS num_rules,COUNT(DISTINCT a.id) AS num_actions
+			"SELECT title,match_any_rule,f.inverse AS inverse,COUNT(DISTINCT r.id) AS num_rules,COUNT(DISTINCT a.id) AS num_actions
 				FROM ttrss_filters2 AS f LEFT JOIN ttrss_filters2_rules AS r
 					ON (r.filter_id = f.id)
 						LEFT JOIN ttrss_filters2_actions AS a
-							ON (a.filter_id = f.id) WHERE f.id = ? GROUP BY f.title, f.match_any_rule");
+							ON (a.filter_id = f.id) WHERE f.id = ? GROUP BY f.title, f.match_any_rule, f.inverse");
 		$sth->execute([$id]);
 
 		if ($row = $sth->fetch()) {
@@ -1134,6 +1134,7 @@ class Pref_Filters extends Handler_Protected {
 			$num_rules = $row["num_rules"];
 			$num_actions = $row["num_actions"];
 			$match_any_rule = $row["match_any_rule"];
+			$inverse = $row["inverse"];
 
 			if (!$title) $title = __("[No caption]");
 
@@ -1152,6 +1153,7 @@ class Pref_Filters extends Handler_Protected {
 			}
 
 			if ($match_any_rule) $title .= " (" . __("matches any rule") . ")";
+			if ($inverse) $title .= " (" . __("inverse") . ")";
 
 			if ($num_actions > 0)
 				$actions = sprintf(_ngettext("%s (+%d action)", "%s (+%d actions)", (int) $num_actions), $actions, $num_actions);
