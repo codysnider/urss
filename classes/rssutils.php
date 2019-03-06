@@ -19,6 +19,11 @@ class RSSUtils {
 		return preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $str);
 	}
 
+	static function cleanup_feed_browser() {
+		$pdo = Db::pdo();
+		$pdo->query("DELETE FROM ttrss_feedbrowser_cache");
+	}
+
 	static function update_daemon_common($limit = DAEMON_FEED_LIMIT) {
 		$schema_version = get_schema_version();
 
@@ -1494,6 +1499,7 @@ class RSSUtils {
 		RSSUtils::expire_lock_files();
 		RSSUtils::expire_error_log();
 		RSSUtils::expire_feed_archive();
+		RSSUtils::cleanup_feed_browser();
 
 		Article::purge_orphans();
 		RSSUtils::cleanup_counters_cache();
