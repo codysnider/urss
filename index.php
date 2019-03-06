@@ -180,10 +180,11 @@
                 <!-- <option value="noscores"><?php echo __('Ignore Scoring') ?></option> -->
             </select>
 
-            <select title="<?php echo __('Sort articles') ?>"
+			<select title="<?php echo __('Sort articles') ?>"
                 onchange="App.onViewModeChanged()"
                 dojoType="dijit.form.Select" name="order_by">
-                <option selected="selected" value="default"><?php echo __('Default') ?></option>
+
+				<option selected="selected" value="default"><?php echo __('Default') ?></option>
                 <option value="feed_dates"><?php echo __('Newest first') ?></option>
                 <option value="date_reverse"><?php echo __('Oldest first') ?></option>
                 <option value="title"><?php echo __('Title') ?></option>
@@ -214,8 +215,8 @@
                     }
                 ?>
 
-                <div dojoType="dijit.form.DropDownButton">
-                    <span><?php echo __('Actions...') ?></span>
+                <div dojoType="dijit.form.DropDownButton" class="action-button" title="<?php echo __('Actions...') ?>">
+					<span><i class="material-icons">menu</i></span>
                     <div dojoType="dijit.Menu" style="display: none">
                         <div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcPrefs')"><?php echo __('Preferences...') ?></div>
                         <div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcSearch')"><?php echo __('Search...') ?></div>

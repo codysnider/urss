@@ -181,6 +181,12 @@ body.ttrss_main .notify.notify_error i.icon-notify,
 body.ttrss_main .notify.notify_error i.icon-close {
   color: white;
 }
+body.ttrss_main .action-chooser .action-button .dijitButtonText {
+  vertical-align: unset;
+}
+body.ttrss_main .action-chooser .action-button .dijitArrowButtonInner {
+  display: none;
+}
 body.ttrss_main .hl {
   border: 0px solid #ddd;
   border-bottom-width: 1px;
