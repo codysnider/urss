@@ -19,7 +19,8 @@ class Mailer {
 		$from_combined = $from_name ? "$from_name <$from_address>" : $from_address;
 		$to_combined = $to_name ? "$to_name <$to_address>" : $to_address;
 
-		Logger::get()->log("Sending mail from $from_combined to $to_combined <$to_address> [$subject]: $message");
+		if (defined('_LOG_SENT_MAIL') && _LOG_SENT_MAIL)
+			Logger::get()->log("Sending mail from $from_combined to $to_combined <$to_address> [$subject]: $message");
 
 		// HOOK_SEND_MAIL plugin instructions:
 		// 1. return 1 or true if mail is handled
