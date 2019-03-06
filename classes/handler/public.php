@@ -959,12 +959,12 @@ class Handler_Public extends Handler {
 			print "<form method='POST' action='public.php'>
 				<input type='hidden' name='method' value='do'>
 				<input type='hidden' name='op' value='forgotpass'>
-	
+
 				<fieldset>
 				<label>".__("Login:")."</label>
 				<input dojoType='dijit.form.TextBox' type='text' name='login' value='' required>
 				</fieldset>
-	
+
 				<fieldset>
 				<label>".__("Email:")."</label>
 				<input dojoType='dijit.form.TextBox' type='email' name='email' value='' required>
@@ -977,13 +977,13 @@ class Handler_Public extends Handler {
 				<label>".T_sprintf("How much is %d + %d:", $_SESSION["pwdreset:testvalue1"], $_SESSION["pwdreset:testvalue2"])."</label>
 				<input dojoType='dijit.form.TextBox' type='text' name='test' value='' required>
 				</fieldset>
-	
+
 				<hr/>
 				<fieldset>
 				<button dojoType='dijit.form.Button' type='submit' class='alt-danger'>".__("Reset password")."</button>
 				<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>
 				</fieldset>
-	
+
 				</form>";
 		} else if ($method == 'do') {
 
@@ -1036,7 +1036,7 @@ class Handler_Public extends Handler {
 
 						$mailer = new Mailer();
 
-						$rc = $mailer->mail(["to_name" => $login, 
+						$rc = $mailer->mail(["to_name" => $login,
 							"to_address" => $email,
 							"subject" => __("[tt-rss] Password reset request"),
 							"message" => $message]);
@@ -1133,25 +1133,32 @@ class Handler_Public extends Handler {
 				if ($op == "performupdate") {
 					if ($updater->isUpdateRequired()) {
 
-						print "<h2>" . __("Performing updates") . "</h2>";
-
-						print "<h3>" . T_sprintf("Updating to schema version %d", SCHEMA_VERSION) . "</h3>";
+						print "<h2>" . T_sprintf("Performing updates to schema version %d", SCHEMA_VERSION) . "</h2>";
 
 						for ($i = $updater->getSchemaVersion() + 1; $i <= SCHEMA_VERSION; $i++) {
-							print_notice(T_sprintf("Performing update up to version %d...", $i));
+							print "<ul>";
 
+							print "<li class='text-info'>" . T_sprintf("Updating to version %d", $i) . "</li>";
+
+							print "<li>";
 							$result = $updater->performUpdateTo($i, true);
+							print "</li>";
 
 							if (!$result) {
-								print "<span class='err'>".__("FAILED!")."</span></li></ul>";
+								print "</ul>";
 
-								print_warning("One of the updates failed. Either retry the process or perform updates manually.");
+								print_error("One of the updates failed. Either retry the process or perform updates manually.");
 
-								print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
+								print "<form method='POST'>
+									<input type='hidden' name='subop' value='performupdate'>
+									<button type='submit' dojoType='dijit.form.Button' class='alt-danger' onclick='return confirmOP()'>".__("Try again")."</button>
+									<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>
+								</form>";
 
 								return;
 							} else {
-								print "<span class='ok'>".__("OK!")."</span></li>";
+								print "<li class='text-success'>" . __("Completed.") . "</li>";
+								print "</ul>";
 							}
 						}
 

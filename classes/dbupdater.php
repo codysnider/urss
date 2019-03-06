@@ -52,7 +52,7 @@ class DbUpdater {
 							$this->pdo->query($line); // PDO returns errors as exceptions now
 						} catch (PDOException $e) {
 							if ($html_output) {
-								print_error("Error: " . implode(", ", $this->pdo->errorInfo()));
+								print "<div class='text-error'>Error: " . implode(", ", $this->pdo->errorInfo()) . "</div>";
 							} else {
 								Debug::log("Error: " . implode(", ", $this->pdo->errorInfo()));
 							}
