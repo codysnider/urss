@@ -1177,7 +1177,7 @@ class Handler_Public extends Handler {
 						print "<h2>".T_sprintf("Tiny Tiny RSS database needs update to the latest version (%d to %d).",
 							$updater->getSchemaVersion(), SCHEMA_VERSION)."</h2>";
 
-						if (DB_TYPE != "mysql") {
+						if (DB_TYPE == "mysql") {
 							print_error("<strong>READ THIS:</strong> Due to MySQL limitations, your database is not completely protected while updating. ".
 								"Errors may put it in an inconsistent state requiring manual rollback. <strong>BACKUP YOUR DATABASE BEFORE CONTINUING.</strong>");
 						} else {
