@@ -1288,6 +1288,20 @@ class RSSUtils {
 		}
 	}
 
+	static function expire_feed_archive() {
+		Debug::log("Removing old archived feeds...");
+
+		$pdo = Db::pdo();
+
+		if (DB_TYPE == "pgsql") {
+			$pdo->query("DELETE FROM ttrss_archived_feeds
+				WHERE created < NOW() - INTERVAL '1 month'");
+		} else {
+			$pdo->query("DELETE FROM ttrss_archived_feeds
+				WHERE created < DATE_SUB(NOW(), INTERVAL 1 MONTH)");
+		}
+	}
+
 	static function expire_lock_files() {
 		Debug::log("Removing old lock files...", Debug::$LOG_VERBOSE);
 
@@ -1526,6 +1540,7 @@ class RSSUtils {
 		RSSUtils::expire_cached_files();
 		RSSUtils::expire_lock_files();
 		RSSUtils::expire_error_log();
+		RSSUtils::expire_feed_archive();
 
 		$count = RSSUtils::update_feedbrowser_cache();
 		Debug::log("Feedbrowser updated, $count feeds processed.");

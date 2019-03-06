@@ -69,6 +69,7 @@ create table ttrss_feed_categories(id integer not null primary key auto_incremen
 
 create table ttrss_archived_feeds (id integer not null primary key,
 	owner_uid integer not null,
+	created datetime not null,
 	title varchar(200) not null,
 	feed_url text not null,
 	site_url varchar(250) not null default '',
@@ -285,7 +286,7 @@ create table ttrss_tags (id integer primary key auto_increment,
 
 create table ttrss_version (schema_version int not null) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert into ttrss_version values (135);
+insert into ttrss_version values (136);
 
 create table ttrss_enclosures (id integer primary key auto_increment,
 	content_url text not null,

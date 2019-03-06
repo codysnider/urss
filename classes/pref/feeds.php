@@ -1635,8 +1635,8 @@ class Pref_Feeds extends Handler_Protected {
 					$new_feed_id = (int)$row['id'] + 1;
 
 					$sth = $pdo->prepare("INSERT INTO ttrss_archived_feeds
-						(id, owner_uid, title, feed_url, site_url)
-							SELECT ?, owner_uid, title, feed_url, site_url from ttrss_feeds
+						(id, owner_uid, title, feed_url, site_url, created)
+							SELECT ?, owner_uid, title, feed_url, site_url, NOW() from ttrss_feeds
 							WHERE id = ?");
 					$sth->execute([$new_feed_id, $id]);
 

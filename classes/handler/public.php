@@ -1137,10 +1137,8 @@ class Handler_Public extends Handler {
 
 						print "<h3>" . T_sprintf("Updating to schema version %d", SCHEMA_VERSION) . "</h3>";
 
-						print "<ul>";
-
 						for ($i = $updater->getSchemaVersion() + 1; $i <= SCHEMA_VERSION; $i++) {
-							print "<li>" . T_sprintf("Performing update up to version %d...", $i);
+							print_notice(T_sprintf("Performing update up to version %d...", $i));
 
 							$result = $updater->performUpdateTo($i, true);
 
@@ -1156,8 +1154,6 @@ class Handler_Public extends Handler {
 								print "<span class='ok'>".__("OK!")."</span></li>";
 							}
 						}
-
-						print "</ul>";
 
 						print_notice("Your Tiny Tiny RSS database is now updated to the latest version.");
 

@@ -109,6 +109,7 @@ insert into ttrss_feeds (owner_uid, title, feed_url) values
 
 create table ttrss_archived_feeds (id integer not null primary key,
 	owner_uid integer not null references ttrss_users(id) on delete cascade,
+	created timestamp not null,
 	title varchar(200) not null,
 	feed_url text not null,
 	site_url varchar(250) not null default '');
@@ -267,7 +268,7 @@ create index ttrss_tags_post_int_id_idx on ttrss_tags(post_int_id);
 
 create table ttrss_version (schema_version int not null);
 
-insert into ttrss_version values (135);
+insert into ttrss_version values (136);
 
 create table ttrss_enclosures (id serial not null primary key,
 	content_url text not null,
