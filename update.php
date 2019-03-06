@@ -22,7 +22,6 @@
 	init_plugins();
 
 	$longopts = array("feeds",
-			"feedbrowser",
 			"daemon",
 			"daemon-loop",
 			"task:",
@@ -78,7 +77,6 @@
 		print "Tiny Tiny RSS data update script.\n\n";
 		print "Options:\n";
 		print "  --feeds              - update feeds\n";
-		print "  --feedbrowser        - update feedbrowser\n";
 		print "  --daemon             - start single-process update daemon\n";
 		print "  --task N             - create lockfile using this task id\n";
 		print "  --cleanup-tags       - perform tags table maintenance\n";
@@ -179,11 +177,6 @@
 		RSSUtils::housekeeping_common(true);
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_UPDATE_TASK, "hook_update_task", $op);
-	}
-
-	if (isset($options["feedbrowser"])) {
-		$count = RSSUtils::update_feedbrowser_cache();
-		print "Finished, $count feeds processed.\n";
 	}
 
 	if (isset($options["daemon"])) {

@@ -19,53 +19,6 @@ class RSSUtils {
 		return preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $str);
 	}
 
-	static function update_feedbrowser_cache() {
-
-		$pdo = Db::pdo();
-
-		$sth = $pdo->query("SELECT feed_url, site_url, title, COUNT(id) AS subscribers
-			FROM ttrss_feeds WHERE feed_url NOT IN (SELECT feed_url FROM ttrss_feeds
-				WHERE private IS true OR auth_login != '' OR auth_pass != '' OR feed_url LIKE '%:%@%/%')
-				GROUP BY feed_url, site_url, title ORDER BY subscribers DESC LIMIT 1000");
-
-		$pdo->beginTransaction();
-
-		$pdo->query("DELETE FROM ttrss_feedbrowser_cache");
-
-		$count = 0;
-
-		while ($line = $sth->fetch()) {
-
-			$subscribers = $line["subscribers"];
-			$feed_url = $line["feed_url"];
-			$title = $line["title"];
-			$site_url = $line["site_url"];
-
-			$tmph = $pdo->prepare("SELECT subscribers FROM
-				ttrss_feedbrowser_cache WHERE feed_url = ?");
-			$tmph->execute([$feed_url]);
-
-			if (!$tmph->fetch()) {
-
-				$tmph = $pdo->prepare("INSERT INTO ttrss_feedbrowser_cache
-					(feed_url, site_url, title, subscribers)
-					VALUES
-					(?, ?, ?, ?)");
-
-				$tmph->execute([$feed_url, $site_url, $title, $subscribers]);
-
-				++$count;
-
-			}
-
-		}
-
-		$pdo->commit();
-
-		return $count;
-
-	}
-
 	static function update_daemon_common($limit = DAEMON_FEED_LIMIT) {
 		$schema_version = get_schema_version();
 
@@ -1541,9 +1494,6 @@ class RSSUtils {
 		RSSUtils::expire_lock_files();
 		RSSUtils::expire_error_log();
 		RSSUtils::expire_feed_archive();
-
-		$count = RSSUtils::update_feedbrowser_cache();
-		Debug::log("Feedbrowser updated, $count feeds processed.");
 
 		Article::purge_orphans();
 		RSSUtils::cleanup_counters_cache();

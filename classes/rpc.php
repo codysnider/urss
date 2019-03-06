@@ -347,20 +347,6 @@ class RPC extends Handler_Protected {
 		print "</ul>";
 	}
 
-	function updateFeedBrowser() {
-		if (defined('_DISABLE_FEED_BROWSER') && _DISABLE_FEED_BROWSER) return;
-
-		$search = clean($_REQUEST["search"]);
-		$limit = clean($_REQUEST["limit"]);
-		$mode = (int) clean($_REQUEST["mode"]);
-
-		require_once "feedbrowser.php";
-
-		print json_encode(array("content" =>
-			make_feed_browser($search, $limit, $mode),
-				"mode" => $mode));
-	}
-
 	// Silent
 	function massSubscribe() {
 

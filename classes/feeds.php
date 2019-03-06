@@ -6,7 +6,7 @@ class Feeds extends Handler_Protected {
     private $params;
 
     function csrf_ignore($method) {
-		$csrf_ignored = array("index", "feedbrowser", "quickaddfeed", "search");
+		$csrf_ignored = array("index", "quickaddfeed", "search");
 
 		return array_search($method, $csrf_ignored) !== false;
 	}
@@ -707,63 +707,10 @@ class Feeds extends Handler_Protected {
 		print "<button dojoType='dijit.form.Button' class='alt-primary' type='submit' 
 				onclick=\"return dijit.byId('feedAddDlg').execute()\">".__('Subscribe')."</button>";
 
-		if (!(defined('_DISABLE_FEED_BROWSER') && _DISABLE_FEED_BROWSER)) {
-			print "<button dojoType='dijit.form.Button' onclick=\"return CommonDialogs.feedBrowser()\">".__('More feeds')."</button>";
-		}
-
 		print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('feedAddDlg').hide()\">".__('Cancel')."</button>";
 		print "</footer>";
 
 		print "</form>";
-	}
-
-	function feedBrowser() {
-		if (defined('_DISABLE_FEED_BROWSER') && _DISABLE_FEED_BROWSER) return;
-
-		$browser_search = $_REQUEST["search"];
-
-		print_hidden("op", "rpc");
-		print_hidden("method", "updateFeedBrowser");
-
-		print "<div dojoType=\"dijit.Toolbar\">
-			<div style='float : right'>
-			<img style='display : none'
-				id='feed_browser_spinner' src='images/indicator_white.gif'>
-			<input name='search' dojoType='dijit.form.TextBox' size='20' type='search'
-				onchange=\"dijit.byId('feedBrowserDlg').update()\" value=\"$browser_search\">
-			<button dojoType='dijit.form.Button' onclick=\"dijit.byId('feedBrowserDlg').update()\">".__('Search')."</button>
-		</div>";
-
-		print " <select name='mode' dojoType='dijit.form.Select' onchange=\"dijit.byId('feedBrowserDlg').update()\">
-			<option value='1'>" . __('Popular feeds') . "</option>
-			<option value='2'>" . __('Feed archive') . "</option>
-			</select> ";
-
-		print __("limit:");
-
-		print " <select dojoType='dijit.form.Select' name='limit' onchange=\"dijit.byId('feedBrowserDlg').update()\">";
-
-		foreach (array(25, 50, 100, 200) as $l) {
-			//$issel = ($l == $limit) ? "selected=\"1\"" : "";
-			print "<option value=\"$l\">$l</option>";
-		}
-
-		print "</select> ";
-
-		print "</div>";
-
-		require_once "feedbrowser.php";
-
-		print "<ul class='browseFeedList' id='browseFeedList'>";
-		print make_feed_browser("", 25);
-		print "</ul>";
-
-		print "<footer class='text-center'>
-			<button dojoType='dijit.form.Button' type='submit' class='alt-primary' onclick=\"dijit.byId('feedBrowserDlg').execute()\">".__('Subscribe')."</button>
-			<button dojoType='dijit.form.Button' style='display : none' id='feed_archive_remove' onclick=\"dijit.byId('feedBrowserDlg').removeFromArchive()\">".__('Remove')."</button>
-			<button dojoType='dijit.form.Button' onclick=\"dijit.byId('feedBrowserDlg').hide()\" >".__('Cancel')."</button>
-		</footer>";
-
 	}
 
 	function search() {
