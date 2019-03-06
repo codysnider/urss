@@ -685,21 +685,6 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<section class='narrow'>";
 
-			$private = $row["private"];
-
-			if ($private) {
-				$checked = "checked=\"1\"";
-			} else {
-				$checked = "";
-			}
-
-			print "<fieldset class='narrow'>";
-
-			print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" name=\"private\" id=\"private\"
-				$checked> ".__('Hide from Popular feeds')."</label>";
-
-			print "</fieldset>";
-
 			$include_in_digest = $row["include_in_digest"];
 
 			if ($include_in_digest) {
@@ -929,13 +914,6 @@ class Pref_Feeds extends Handler_Protected {
 		print "<section>";
 
 		print "<fieldset class='narrow'>";
-		print "<label class='checkbox'><input disabled='1' type='checkbox' name='private' id='private'
-			dojoType='dijit.form.CheckBox'>&nbsp;".__('Hide from Popular feeds')."</label>";
-
-		print "&nbsp;"; $this->batch_edit_cbox("private", "private_l");
-
-		print "</fieldset><fieldset class='narrow'>";
-
 		print "<label class='checkbox'><input disabled='1' type='checkbox' id='include_in_digest'
 			name='include_in_digest' dojoType='dijit.form.CheckBox'>&nbsp;".__('Include in e-mail digest')."</label>";
 
