@@ -57,6 +57,7 @@ class DbUpdater {
 								Debug::log("Error: " . implode(", ", $this->pdo->errorInfo()));
 							}
 
+							$this->pdo->rollBack();
 							return false;
 						}
 					}
