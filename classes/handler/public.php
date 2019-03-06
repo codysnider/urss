@@ -1174,14 +1174,15 @@ class Handler_Public extends Handler {
 				} else {
 					if ($updater->isUpdateRequired()) {
 
-						print "<h2>" . __("Database update required") . "</h2>";
+						print "<h2>".T_sprintf("Tiny Tiny RSS database needs update to the latest version (%d to %d).",
+							$updater->getSchemaVersion(), SCHEMA_VERSION)."</h2>";
 
-						print_notice("<h4>".
-						sprintf("Your Tiny Tiny RSS database needs update to the latest version: %d to %d.",
-							$updater->getSchemaVersion(), SCHEMA_VERSION).
-						"</h4>");
-
-						print_warning("Please backup your database before proceeding.");
+						if (DB_TYPE != "mysql") {
+							print_error("<strong>READ THIS:</strong> Due to MySQL limitations, your database is not completely protected while updating. ".
+								"Errors may put it in an inconsistent state requiring manual rollback. <strong>BACKUP YOUR DATABASE BEFORE CONTINUING.</strong>");
+						} else {
+							print_warning("Please backup your database before proceeding.");
+						}
 
 						print "<form method='POST'>
 							<input type='hidden' name='subop' value='performupdate'>

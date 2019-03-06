@@ -961,6 +961,10 @@ body.ttrss_main .text-success,
 body.ttrss_utility .text-success {
   color: #468847;
 }
+body.ttrss_main .text-warning,
+body.ttrss_utility .text-warning {
+  color: #a47e3c;
+}
 body.ttrss_main .alert,
 body.ttrss_utility .alert,
 body.ttrss_main .alert h4,
