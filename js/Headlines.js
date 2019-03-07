@@ -173,8 +173,10 @@ define(["dojo/_base/declare"], function (declare) {
 						Headlines.select('none');
 						Article.setActive(id);
 
-						if (App.getInitParam("cdm_expanded") && !in_body) {
-							Article.openInNewWindow(id);
+						if (App.getInitParam("cdm_expanded")) {
+							if (!in_body)
+								Article.openInNewWindow(id);
+
 							Headlines.toggleUnread(id, 0);
 						} else {
 							Article.cdmScrollToId(id);
