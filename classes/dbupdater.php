@@ -45,7 +45,7 @@ class DbUpdater {
 					if ($html_output)
 						print "<pre>$line</pre>";
 					else
-						print "\t$line\n";
+						print " * $line\n";
 
 					if (strpos($line, "--") !== 0 && $line) {
 						try {

@@ -1133,7 +1133,7 @@ class Handler_Public extends Handler {
 				if ($op == "performupdate") {
 					if ($updater->isUpdateRequired()) {
 
-						print "<h2>" . T_sprintf("Performing updates to schema version %d", SCHEMA_VERSION) . "</h2>";
+						print "<h2>" . T_sprintf("Performing updates to version %d", SCHEMA_VERSION) . "</h2>";
 
 						for ($i = $updater->getSchemaVersion() + 1; $i <= SCHEMA_VERSION; $i++) {
 							print "<ul>";

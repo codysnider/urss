@@ -111,7 +111,7 @@
 		$schema_version = get_schema_version();
 
 		if ($schema_version != SCHEMA_VERSION) {
-			die("Schema version is wrong, please upgrade the database.\n");
+			die("Schema version is wrong, please upgrade the database (--update-schema).\n");
 		}
 	}
 
@@ -326,20 +326,30 @@
 
 		if ($updater->isUpdateRequired()) {
 			Debug::log("schema update required, version " . $updater->getSchemaVersion() . " to " . SCHEMA_VERSION);
+
+			if (DB_TYPE == "mysql")
+				Debug::Log("READ THIS: Due to MySQL limitations, your database is not completely protected while updating.\n".
+					"Errors may put it in an inconsistent state requiring manual rollback.\nBACKUP YOUR DATABASE BEFORE CONTINUING.");
+
 			Debug::log("WARNING: please backup your database before continuing.");
 			Debug::log("Type 'yes' to continue.");
 
 			if (read_stdin() != 'yes')
 				exit;
 
+			print "Performing updates to version " . SCHEMA_VERSION . "...\n";
+
 			for ($i = $updater->getSchemaVersion() + 1; $i <= SCHEMA_VERSION; $i++) {
-				Debug::log("performing update up to version $i...");
+				Debug::log(" * Updating to version $i...");
 
 				$result = $updater->performUpdateTo($i, false);
 
-				Debug::log($result ? "OK!" : "FAILED!");
-
-				if (!$result) return;
+				if ($result) {
+					print " * Completed.";
+				} else {
+					print "One of the updates failed. Either retry the process or perform updates manually.";
+					return;
+				}
 
 			}
 		} else {
