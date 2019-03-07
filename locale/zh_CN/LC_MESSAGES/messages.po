@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-22 06:58+0300\n"
-"PO-Revision-Date: 2019-02-21 09:36+0000\n"
+"PO-Revision-Date: 2019-03-07 01:51+0000\n"
 "Last-Translator: Ptsa Daniel <ptsa1987@gmail.com>\n"
-"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/tt-rss/messages/zh_Hans/>\n"
+"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/"
+"tt-rss/messages/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -972,9 +973,8 @@ msgstr "Ctrl"
 #: classes/pref/prefs.php:673
 #: classes/pref/prefs.php:896
 #: plugins/bookmarklets/init.php:43
-#, fuzzy
 msgid "More info..."
-msgstr "更多信息"
+msgstr "更多信息..."
 
 #: classes/backend.php:157
 #: classes/dlg.php:30
@@ -1481,9 +1481,8 @@ msgstr "更新列表"
 
 #: classes/pref/feeds.php:623
 #: classes/pref/feeds.php:894
-#, fuzzy
 msgid "Interval:"
-msgstr "界面"
+msgstr "间隔:"
 
 #: classes/pref/feeds.php:636
 #: classes/pref/feeds.php:909
@@ -1671,9 +1670,8 @@ msgid "Unsubscribe from selected feeds"
 msgstr "取消订阅选中的信息源"
 
 #: classes/pref/feeds.php:1713
-#, fuzzy
 msgid "One valid feed per line (no detection is done)"
-msgstr "每行添加一条RSS源"
+msgstr "每行添加一条RSS源（未进行检测）"
 
 #: classes/pref/feeds.php:1743
 msgid "Feeds require authentication."
@@ -1836,35 +1834,29 @@ msgstr "被列入黑名单的标签"
 
 #: classes/pref/prefs.php:70
 msgid "Never apply these tags automatically (comma-separated list)."
-msgstr ""
+msgstr "不要自动应用这些标签（以逗号分隔的列表）。"
 
 #: classes/pref/prefs.php:71
-#, fuzzy
 msgid "Mark read on scroll"
-msgstr "将所有文章标记为已读？"
+msgstr "滚动时标记为已读"
 
 #: classes/pref/prefs.php:71
-#, fuzzy
 msgid "Mark articles as read as you scroll past them"
-msgstr "将所有文章标记为已读？"
+msgstr "滚动时标记文章为已读"
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Always expand articles"
-msgstr "点击展开文章"
+msgstr "始终展开文章"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Combined mode"
-msgstr "切换合并模式"
+msgstr "合并模式"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Show flat list of articles instead of separate panels"
 msgstr "将文章列表展开显示，而不是将标题和内容分别显示"
 
 #: classes/pref/prefs.php:74
-#, fuzzy
 msgid "Confirm marking feeds as read"
 msgstr "标记信息源为已读之前弹出确认"
 
@@ -1873,7 +1865,6 @@ msgid "Amount of articles to display at once"
 msgstr "同时显示的文章数量"
 
 #: classes/pref/prefs.php:76
-#, fuzzy
 msgid "Default update interval"
 msgstr "默认更新间隔"
 
@@ -1883,32 +1874,26 @@ msgid "Mark sent articles as read"
 msgstr "将所有文章标记为已读？"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Enable digest"
 msgstr "启用电子邮件摘要"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Send daily digest of new (and unread) headlines to your e-mail address"
 msgstr "每天将更新的和未读的文章标题通过邮件发送摘要到您设置的邮箱中"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Try to send around this time"
 msgstr "在特定时间发送摘要"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Time in UTC"
-msgstr "时区"
+msgstr "UTC时区"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Enable API"
-msgstr "启用 OTP 动态口令"
+msgstr "启用API"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Allows accessing this account through the API"
 msgstr "允许外部客户端通过 API 来访问该账户"
 
@@ -1921,23 +1906,20 @@ msgid "Sort feeds by unread articles count"
 msgstr "以未读文章数量排序信息源"
 
 #: classes/pref/prefs.php:83
-#, fuzzy
 msgid "Maximum age of fresh articles"
 msgstr "最新更新文章的保鲜期（以小时为单位）"
 
 #: classes/pref/prefs.php:83
-#, fuzzy
 msgid "hours"
-msgstr "每4小时"
+msgstr "小时"
 
 #: classes/pref/prefs.php:84
-#, fuzzy
 msgid "Hide read feeds"
 msgstr "显示/隐藏 已读信息"
 
 #: classes/pref/prefs.php:85
 msgid "Always show special feeds"
-msgstr ""
+msgstr "始终显示特殊信息源"
 
 #: classes/pref/prefs.php:85
 #, fuzzy
