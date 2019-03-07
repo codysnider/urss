@@ -153,35 +153,38 @@ define(["dojo/_base/declare"], function (declare) {
 		click: function (event, id, in_body) {
 			in_body = in_body || false;
 
-			if (App.isCombinedMode()) {
+			if (event.shiftKey && Article.getActive()) {
+				Headlines.select('none');
 
-				if (!in_body && (event.ctrlKey || id == Article.getActive() || App.getInitParam("cdm_expanded"))) {
-					Article.openInNewWindow(id);
-					Headlines.toggleUnread(id, 0);
-					return false;
-				}
+				const ids = Headlines.getRange(Article.getActive(), id);
 
-				if (Article.getActive() != id) {
-					Article.setActive(id);
+				console.log(Article.getActive(), id, ids);
 
-					if (!App.getInitParam("cdm_expanded"))
-						Article.cdmScrollToId(id);
-				} else if (in_body) {
-					Headlines.toggleUnread(id, 0);
-				}
+				for (let i = 0; i < ids.length; i++)
+					Headlines.select('all', ids[i]);
 
-				return in_body;
-
+			} else if (event.ctrlKey) {
+				Headlines.select('invert', id);
 			} else {
-				if (event.ctrlKey) {
-					Article.openInNewWindow(id);
-					Headlines.toggleUnread(id, 0);
+				if (App.isCombinedMode()) {
+
+					if (Article.getActive() != id) {
+						Article.setActive(id);
+
+						if (!App.getInitParam("cdm_expanded"))
+							Article.cdmScrollToId(id);
+
+					} else if (in_body) {
+						Headlines.toggleUnread(id, 0);
+					}
+
+					return in_body;
 				} else {
 					Article.view(id);
 				}
-
-				return false;
 			}
+
+			return false;
 		},
 		initScrollHandler: function () {
 			$("headlines-frame").onscroll = (event) => {
@@ -996,6 +999,30 @@ define(["dojo/_base/declare"], function (declare) {
 			} else {
 				row.removeClassName("Selected");
 			}
+		},
+		getRange: function (start, stop) {
+			const rows = $$("#headlines-frame > div[id*=RROW]");
+			const results = [];
+			let collecting = false;
+
+			for (let i = 0; i < rows.length; i++) {
+				const row = rows[i];
+				const id = row.getAttribute('data-article-id');
+
+				if (id == start || id == stop) {
+					if (!collecting) {
+						collecting = true;
+					} else {
+						results.push(id);
+						break;
+					}
+				}
+
+				if (collecting)
+					results.push(id);
+			}
+
+			return results;
 		},
 		select: function (mode, articleId) {
 			// mode = all,none,unread,invert,marked,published
