@@ -1001,6 +1001,9 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 		},
 		getRange: function (start, stop) {
+			if (start == stop)
+				return [start];
+
 			const rows = $$("#headlines-frame > div[id*=RROW]");
 			const results = [];
 			let collecting = false;
