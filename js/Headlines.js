@@ -171,11 +171,17 @@ define(["dojo/_base/declare"], function (declare) {
 					if (Article.getActive() != id) {
 						Article.setActive(id);
 
-						if (!App.getInitParam("cdm_expanded"))
+						if (App.getInitParam("cdm_expanded")) {
+							Article.openInNewWindow(id);
+							Headlines.toggleUnread(id, 0);
+						} else {
 							Article.cdmScrollToId(id);
+						}
 
 					} else if (in_body) {
 						Headlines.toggleUnread(id, 0);
+					} else {
+						Article.openInNewWindow(id);
 					}
 
 					return in_body;
