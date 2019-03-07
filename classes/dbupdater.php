@@ -41,20 +41,20 @@ class DbUpdater {
 				$this->pdo->beginTransaction();
 
 				foreach ($lines as $line) {
-
-					if ($html_output)
-						print "<pre>$line</pre>";
-					else
-						print " * $line\n";
-
 					if (strpos($line, "--") !== 0 && $line) {
+
+						if ($html_output)
+							print "<pre>$line</pre>";
+						else
+							Debug::log("> $line");
+
 						try {
 							$this->pdo->query($line); // PDO returns errors as exceptions now
 						} catch (PDOException $e) {
 							if ($html_output) {
-								print "<div class='text-error'>Error: " . implode(", ", $this->pdo->errorInfo()) . "</div>";
+								print "<div class='text-error'>Error: " . $e->getMessage() . "</div>";
 							} else {
-								Debug::log("Error: " . implode(", ", $this->pdo->errorInfo()));
+								Debug::log("Error: " . $e->getMessage());
 							}
 
 							$this->pdo->rollBack();
