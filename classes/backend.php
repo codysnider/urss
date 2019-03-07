@@ -154,10 +154,7 @@ class Backend extends Handler {
 			print "</ul>";
 		}
 
-		print "<footer>";
-		print "<button dojoType='dijit.form.Button' style='float : left' class='alt-info' onclick='window.open(\"https://tt-rss.org/wiki/InterfaceTips\")'>
-			<i class='material-icons'>help</i> ".__("More info...")."</button>";
-
+		print "<footer class='text-center'>";
 		print "<button dojoType='dijit.form.Button'
 			onclick=\"return dijit.byId('helpDlg').hide()\">".__('Close this window')."</button>";
 		print "</footer>";
