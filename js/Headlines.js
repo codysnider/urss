@@ -169,9 +169,11 @@ define(["dojo/_base/declare"], function (declare) {
 				if (App.isCombinedMode()) {
 
 					if (Article.getActive() != id) {
+
+						Headlines.select('none');
 						Article.setActive(id);
 
-						if (App.getInitParam("cdm_expanded")) {
+						if (App.getInitParam("cdm_expanded") && !in_body) {
 							Article.openInNewWindow(id);
 							Headlines.toggleUnread(id, 0);
 						} else {
@@ -186,6 +188,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 					return in_body;
 				} else {
+					Headlines.select('none');
 					Article.view(id);
 				}
 			}
