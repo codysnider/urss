@@ -1013,8 +1013,8 @@ body.ttrss_utility hr {
   border: 0px solid #ccc;
   border-bottom-width: 1px;
 }
-body.ttrss_main .insensitive,
-body.ttrss_utility .insensitive {
+body.ttrss_main .text-muted,
+body.ttrss_utility .text-muted {
   color: #555;
 }
 body.ttrss_main .small,

@@ -148,7 +148,7 @@ class Pref_Filters extends Handler_Protected {
 
 				$tmp = "<li><span class='title'>" . $line["title"] . "</span><br/>" .
 					"<span class='feed'>" . $line['feed_title'] . "</span>, <span class='date'>" . mb_substr($line["date_entered"], 0, 16) . "</span>" .
-					"<div class='preview insensitive'>" . $content_preview . "</div>" .
+					"<div class='preview text-muted'>" . $content_preview . "</div>" .
 					"</li>";
 
 				array_push($rv, $tmp);

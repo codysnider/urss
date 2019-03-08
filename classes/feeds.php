@@ -408,7 +408,7 @@ class Feeds extends Handler_Protected {
 				if (!$offset && $message) {
 					$reply['content'] = "<div class='whiteBox'>$message";
 
-					$reply['content'] .= "<p><span class=\"insensitive\">";
+					$reply['content'] .= "<p><span class=\"text-muted\">";
 
 					$sth = $this->pdo->prepare("SELECT " . SUBSTRING_FOR_DATE . "(MAX(last_updated), 1, 19) AS last_updated FROM ttrss_feeds
                         WHERE owner_uid = ?");
@@ -428,7 +428,7 @@ class Feeds extends Handler_Protected {
 
 					if ($num_errors > 0) {
 						$reply['content'] .= "<br/>";
-						$reply['content'] .= "<a class=\"insensitive\" href=\"#\" onclick=\"CommonDialogs.showFeedsWithErrors()\">" .
+						$reply['content'] .= "<a class=\"text-muted\" href=\"#\" onclick=\"CommonDialogs.showFeedsWithErrors()\">" .
 							__('Some feeds have update errors (click for details)') . "</a>";
 					}
 					$reply['content'] .= "</span></p></div>";
@@ -585,7 +585,7 @@ class Feeds extends Handler_Protected {
 
 		$reply['headlines']['content'] = "<div class='whiteBox'>".__('No feed selected.');
 
-		$reply['headlines']['content'] .= "<p><span class=\"insensitive\">";
+		$reply['headlines']['content'] .= "<p><span class=\"text-muted\">";
 
 		$sth = $this->pdo->prepare("SELECT ".SUBSTRING_FOR_DATE."(MAX(last_updated), 1, 19) AS last_updated FROM ttrss_feeds
 			WHERE owner_uid = ?");
@@ -605,7 +605,7 @@ class Feeds extends Handler_Protected {
 
 		if ($num_errors > 0) {
 			$reply['headlines']['content'] .= "<br/>";
-			$reply['headlines']['content'] .= "<a class=\"insensitive\" href=\"#\" onclick=\"CommonDialogs.showFeedsWithErrors()\">".
+			$reply['headlines']['content'] .= "<a class=\"text-muted\" href=\"#\" onclick=\"CommonDialogs.showFeedsWithErrors()\">".
 				__('Some feeds have update errors (click for details)')."</a>";
 		}
 		$reply['headlines']['content'] .= "</span></p>";

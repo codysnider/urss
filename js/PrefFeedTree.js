@@ -275,9 +275,9 @@ define(["dojo/_base/declare", "dojo/dom-construct", "lib/CheckBoxTree"], functio
 
 						if ($(label))
 							if (checkbox.checked)
-								$(label).removeClassName('insensitive');
+								$(label).removeClassName('text-muted');
 							else
-								$(label).addClassName('insensitive');
+								$(label).addClassName('text-muted');
 
 					},
 					execute: function () {

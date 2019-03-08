@@ -98,7 +98,7 @@ class Af_Psql_Trgm extends Plugin {
 
 				print "</div>";
 
-				print "<div style='text-align : right' class='insensitive'>" . smart_date_time(strtotime($line["updated"])) . "</div>";
+				print "<div style='text-align : right' class='text-muted'>" . smart_date_time(strtotime($line["updated"])) . "</div>";
 
 				print "</li>";
 			}

@@ -1487,7 +1487,7 @@ class Pref_Feeds extends Handler_Protected {
 				"onclick=\"CommonDialogs.editFeed(".$line["id"].")\">".
 				htmlspecialchars($line["title"])."</a>";
 
-			print "</td><td class='insensitive' align='right'>";
+			print "</td><td class='text-muted' align='right'>";
 			print make_local_datetime($line['last_article'], false);
 			print "</td>";
 			print "</tr>";
@@ -1544,7 +1544,7 @@ class Pref_Feeds extends Handler_Protected {
 				"onclick=\"CommonDialogs.editFeed(".$line["id"].")\">".
 				htmlspecialchars($line["title"])."</a>: ";
 
-			print "<span class=\"insensitive\">";
+			print "<span class=\"text-muted\">";
 			print htmlspecialchars($line["last_error"]);
 			print "</span>";
 

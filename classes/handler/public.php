@@ -613,7 +613,7 @@ class Handler_Public extends Handler {
 					<fieldset>
 						<button dojoType='dijit.form.Button' class="alt-primary" type="submit"><?php echo __('Share') ?></button>
 						<button dojoType='dijit.form.Button' onclick="return window.close()"><?php echo __('Cancel') ?></button>
-						<span class="insensitive small"><?php echo __("Shared article will appear in the Published feed.") ?></span>
+						<span class="text-muted small"><?php echo __("Shared article will appear in the Published feed.") ?></span>
 					</fieldset>
 
 				</form>

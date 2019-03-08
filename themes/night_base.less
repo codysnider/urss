@@ -12,7 +12,7 @@
 
 @default-text: #ccc;
 
-@fg-insensitive: darken(@default-text, 20%);
+@fg-text-muted: darken(@default-text, 20%);
 @fg-light : lighten(@default-text, 10%);
 
 body.flat.ttrss_main.ttrss_prefs {
@@ -26,7 +26,7 @@ body.flat.ttrss_main.ttrss_prefs {
 
 	td.filename,
 	div.prefHelp {
-		color : @fg-insensitive;
+		color : @fg-text-muted;
 	}
 }
 
@@ -157,7 +157,7 @@ body.flat.ttrss_main {
 			}
 
 			.author {
-				color : @fg-insensitive;
+				color : @fg-text-muted;
 			}
 
 			.updated, .content {
@@ -198,12 +198,12 @@ body.flat.ttrss_main {
 	}
 
 	.dijitCheckBox:not(.dijitChecked)::before {
-		color : @fg-insensitive;
+		color : @fg-text-muted;
 		background: @color-panel-bg;
 	}
 
-	.insensitive {
-		color : @fg-insensitive;
+	.text-muted {
+		color : @fg-text-muted;
 	}
 
 	.dijitAccordionInnerContainerSelected .dijitAccordionTitle {

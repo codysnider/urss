@@ -1014,8 +1014,8 @@ body.ttrss_utility hr {
   border: 0px solid #ccc;
   border-bottom-width: 1px;
 }
-body.ttrss_main .insensitive,
-body.ttrss_utility .insensitive {
+body.ttrss_main .text-muted,
+body.ttrss_utility .text-muted {
   color: #ccc;
 }
 body.ttrss_main .small,
@@ -1969,7 +1969,7 @@ body.flat.ttrss_main .dijitCheckBox:not(.dijitChecked)::before {
   color: #999999;
   background: #222;
 }
-body.flat.ttrss_main .insensitive {
+body.flat.ttrss_main .text-muted {
   color: #999999;
 }
 body.flat.ttrss_main .dijitAccordionInnerContainerSelected .dijitAccordionTitle {
