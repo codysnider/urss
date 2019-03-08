@@ -168,19 +168,40 @@ define(["dojo/_base/declare"], function (declare) {
 			} else {
 				if (App.isCombinedMode()) {
 
-					if (Article.getActive() != id) {
+					if (event.altKey && !in_body) {
+
+						Article.openInNewWindow(id);
+						Headlines.toggleUnread(id, 0);
+
+					} else if (Article.getActive() != id) {
+
+						Headlines.select('none');
 						Article.setActive(id);
 
-						if (!App.getInitParam("cdm_expanded"))
+						if (App.getInitParam("cdm_expanded")) {
+							if (!in_body)
+								Article.openInNewWindow(id);
+
+							Headlines.toggleUnread(id, 0);
+						} else {
 							Article.cdmScrollToId(id);
+						}
 
 					} else if (in_body) {
 						Headlines.toggleUnread(id, 0);
+					} else { /* !in body */
+						Article.openInNewWindow(id);
 					}
 
 					return in_body;
 				} else {
-					Article.view(id);
+					if (event.altKey) {
+						Article.openInNewWindow(id);
+						Headlines.toggleUnread(id, 0);
+					} else {
+						Headlines.select('none');
+						Article.view(id);
+					}
 				}
 			}
 

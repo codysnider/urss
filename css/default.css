@@ -196,6 +196,7 @@ body.ttrss_main .hl {
   flex-wrap: nowrap;
   background: #f5f5f5;
   align-items: center;
+  user-select: none;
 }
 body.ttrss_main .hl > * {
   white-space: nowrap;
@@ -1367,6 +1368,9 @@ div#floatingTitle.Unread a.title {
   color: #999;
   font-weight: normal;
   cursor: pointer;
+}
+.cdm.expandable:not(.active) {
+  user-select: none;
 }
 .cdm.expandable.Unread {
   background: white;
