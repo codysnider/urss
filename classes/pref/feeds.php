@@ -1693,7 +1693,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "</fieldset>";
 
 		print "<footer>
-			<button dojoType='dijit.form.Button' type='submit' class='alt-primary' onclick=\"return dijit.byId('batchSubDlg').execute()\">".__('Subscribe')."</button>
+			<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".__('Subscribe')."</button>
 			<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('batchSubDlg').hide()\">".__('Cancel')."</button>
 			</footer>";
 	}
@@ -1704,6 +1704,13 @@ class Pref_Feeds extends Handler_Protected {
 		$login = clean($_REQUEST['login']);
 		$pass = trim(clean($_REQUEST['pass']));
 
+		$csth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
+						WHERE feed_url = ? AND owner_uid = ?");
+
+		$isth = $this->pdo->prepare("INSERT INTO ttrss_feeds
+							(owner_uid,feed_url,title,cat_id,auth_login,auth_pass,update_method,auth_pass_encrypted)
+						VALUES (?, ?, '[Unknown]', ?, ?, ?, 0, false)");
+
 		foreach ($feeds as $feed) {
 			$feed = trim($feed);
 
@@ -1711,16 +1718,10 @@ class Pref_Feeds extends Handler_Protected {
 
 				$this->pdo->beginTransaction();
 
-				$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
-						WHERE feed_url = ? AND owner_uid = ?");
-				$sth->execute([$feed, $_SESSION['uid']]);
+				$csth->execute([$feed, $_SESSION['uid']]);
 
-				if (!$sth->fetch()) {
-					$sth = $this->pdo->prepare("INSERT INTO ttrss_feeds
-							(owner_uid,feed_url,title,cat_id,auth_login,auth_pass,update_method,auth_pass_encrypted)
-						VALUES (?, ?, '[Unknown]', ?, ?, ?, 0, false)");
-
-					$sth->execute([$_SESSION['uid'], $feed, $cat_id ? $cat_id : null, $login, $pass]);
+				if (!$csth->fetch()) {
+					$isth->execute([$_SESSION['uid'], $feed, $cat_id ? $cat_id : null, $login, $pass]);
 				}
 
 				$this->pdo->commit();
