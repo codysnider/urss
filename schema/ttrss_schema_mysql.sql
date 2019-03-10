@@ -133,7 +133,8 @@ create table ttrss_feeds (id integer not null auto_increment primary key,
 	feed_language varchar(100) not null default '',
 	foreign key (owner_uid) references ttrss_users(id) ON DELETE CASCADE,
 	foreign key (cat_id) references ttrss_feed_categories(id) ON DELETE SET NULL,
-	foreign key (parent_feed) references ttrss_feeds(id) ON DELETE SET NULL) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+	foreign key (parent_feed) references ttrss_feeds(id) ON DELETE SET NULL,
+	unique(feed_url(255), owner_uid)) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 insert into ttrss_feeds (owner_uid, title, feed_url) values
 	(1, 'Tiny Tiny RSS: Forum', 'http://tt-rss.org/forum/rss.php');
@@ -286,7 +287,7 @@ create table ttrss_tags (id integer primary key auto_increment,
 
 create table ttrss_version (schema_version int not null) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert into ttrss_version values (136);
+insert into ttrss_version values (137);
 
 create table ttrss_enclosures (id integer primary key auto_increment,
 	content_url text not null,
