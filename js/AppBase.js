@@ -60,13 +60,11 @@ define(["dojo/_base/declare"], function (declare) {
 
 			const hotkeys_map = App.getInitParam("hotkeys");
 			const keycode = event.which;
-			const keychar = String.fromCharCode(keycode).toLowerCase();
+			const keychar = String.fromCharCode(keycode);
 
 			if (keycode == 27) { // escape and drop prefix
 				this.hotkey_prefix = false;
 			}
-
-			if (keycode == 16 || keycode == 17) return; // ignore lone shift / ctrl
 
 			if (!this.hotkey_prefix && hotkeys_map[0].indexOf(keychar) != -1) {
 
@@ -87,13 +85,19 @@ define(["dojo/_base/declare"], function (declare) {
 
 			Element.hide("cmdline");
 
-			let hotkey_name = keychar.search(/[a-zA-Z0-9]/) != -1 ? keychar : "(" + keycode + ")";
+			let hotkey_name = "";
 
-			// ensure ^*char notation
-			if (event.shiftKey) hotkey_name = "*" + hotkey_name;
-			if (event.ctrlKey) hotkey_name = "^" + hotkey_name;
-			if (event.altKey) hotkey_name = "+" + hotkey_name;
-			if (event.metaKey) hotkey_name = "%" + hotkey_name;
+			if (event.type == "keydown") {
+				hotkey_name = "(" + keycode + ")";
+
+				// ensure ^*char notation
+				if (event.shiftKey) hotkey_name = "*" + hotkey_name;
+				if (event.ctrlKey) hotkey_name = "^" + hotkey_name;
+				if (event.altKey) hotkey_name = "+" + hotkey_name;
+				if (event.metaKey) hotkey_name = "%" + hotkey_name;
+			} else {
+				hotkey_name = keychar ? keychar : "(" + keycode + ")";
+			}
 
 			const hotkey_full = this.hotkey_prefix ? this.hotkey_prefix + " " + hotkey_name : hotkey_name;
 			this.hotkey_prefix = false;

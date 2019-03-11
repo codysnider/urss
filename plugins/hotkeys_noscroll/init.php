@@ -16,8 +16,8 @@ class Hotkeys_Noscroll extends Plugin {
 
 	function hook_hotkey_map($hotkeys) {
 
-		$hotkeys["(40)|down"] = "next_article_noscroll";
-		$hotkeys["(38)|up"] = "prev_article_noscroll";
+		$hotkeys["(40)|Down"] = "next_article_noscroll";
+		$hotkeys["(38)|Up"] = "prev_article_noscroll";
 		$hotkeys["n"] = "next_article_noscroll";
 		$hotkeys["p"] = "prev_article_noscroll";
 
