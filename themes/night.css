@@ -1651,8 +1651,7 @@ body.ttrss_utility.ttrss_login .container .content {
   padding: 40px;
 }
 body.ttrss_utility.installer,
-body.ttrss_utility.feed_debugger,
-body.ttrss_utility.ttrss_zoom {
+body.ttrss_utility.feed_debugger {
   margin: 2em;
 }
 body.ttrss_utility.share_popup {
