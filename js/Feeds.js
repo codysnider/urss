@@ -196,6 +196,7 @@ define(["dojo/_base/declare"], function (declare) {
 			App.setLoadingProgress(50);
 
 			document.onkeydown = (event) => { return App.hotkeyHandler(event) };
+			document.onkeypress = (event) => { return App.hotkeyHandler(event) };
 			window.onresize = () => { Headlines.scrollHandler(); }
 
 			if (!this.getActive()) {

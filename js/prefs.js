@@ -78,6 +78,7 @@ require(["dojo/_base/kernel",
 					this.enableCsrfSupport();
 
 					document.onkeydown = (event) => { return App.hotkeyHandler(event) };
+					document.onkeypress = (event) => { return App.hotkeyHandler(event) };
 					App.setLoadingProgress(50);
 					Notify.close();
 
