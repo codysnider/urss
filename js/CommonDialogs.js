@@ -7,25 +7,6 @@ define(["dojo/_base/declare"], function (declare) {
 			const dialog = dijit.byId("infoBox");
 			if (dialog)	dialog.hide();
 		},
-		uploadIconHandler: function(rc) {
-			switch (rc) {
-				case 0:
-					Notify.info("Upload complete.");
-
-					if (App.isPrefs())
-						dijit.byId("feedTree").reload();
-					else
-						Feeds.reload();
-
-					break;
-				case 1:
-					Notify.error("Upload failed: icon is too big.");
-					break;
-				case 2:
-					Notify.error("Upload failed.");
-					break;
-			}
-		},
 		removeFeedIcon: function(id) {
 			if (confirm(__("Remove stored feed icon?"))) {
 				Notify.progress("Removing feed icon...", true);
@@ -40,6 +21,11 @@ define(["dojo/_base/declare"], function (declare) {
 					else
 						Feeds.reload();
 
+					const icon = $$(".feed-editor-icon")[0];
+
+					if (icon)
+						icon.src = icon.src.replace(/\?[0-9]+$/, "?" + new Date().getTime());
+
 				});
 			}
 
@@ -52,7 +38,35 @@ define(["dojo/_base/declare"], function (declare) {
 				alert(__("Please select an image file to upload."));
 			} else if (confirm(__("Upload new icon for this feed?"))) {
 				Notify.progress("Uploading, please wait...", true);
-				return true;
+
+				const xhr = new XMLHttpRequest();
+
+				xhr.open( 'POST', 'backend.php', true );
+				xhr.onload = function () {
+					switch (parseInt(this.responseText)) {
+						case 0:
+							Notify.info("Upload complete.");
+
+							if (App.isPrefs())
+								dijit.byId("feedTree").reload();
+							else
+								Feeds.reload();
+
+							const icon = $$(".feed-editor-icon")[0];
+
+							if (icon)
+								icon.src = icon.src.replace(/\?[0-9]+$/, "?" + new Date().getTime());
+
+							break;
+						case 1:
+							Notify.error("Upload failed: icon is too big.");
+							break;
+						case 2:
+							Notify.error("Upload failed.");
+							break;
+					}
+				};
+				xhr.send(new FormData($("feed_icon_upload_form")));
 			}
 
 			return false;

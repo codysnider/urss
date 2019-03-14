@@ -473,6 +473,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		$icon_file = $tmp_file;
 		$feed_id = clean($_REQUEST["feed_id"]);
+		$rc = 2; // failed
 
 		if (is_file($icon_file) && $feed_id) {
 			if (filesize($icon_file) < 65535) {
@@ -492,21 +493,15 @@ class Pref_Feeds extends Handler_Protected {
 
 						$rc = 0;
 					}
-				} else {
-					$rc = 2;
 				}
 			} else {
 				$rc = 1;
 			}
-		} else {
-			$rc = 2;
 		}
 
 		if (is_file($icon_file)) @unlink($icon_file);
 
-		print "<script type=\"text/javascript\">";
-		print "parent.CommonDialogs.uploadIconHandler($rc);";
-		print "</script>";
+		print $rc;
 		return;
 	}
 
@@ -766,20 +761,16 @@ class Pref_Feeds extends Handler_Protected {
 
 			/* Icon */
 
-			print "<img class='feedIcon' src=\"".Feeds::getFeedIcon($feed_id)."\">";
+			print "<img class='feedIcon feed-editor-icon' src=\"".Feeds::getFeedIcon($feed_id)."\">";
 
-			print "<iframe name='icon_upload_iframe'
-				style='width: 400px; height: 100px; display: none;'></iframe>";
-
-			print "<form style='display : block' target='icon_upload_iframe'
-			enctype='multipart/form-data' method='POST'
-			action='backend.php'>
+			print "<form onsubmit='return false;' id='feed_icon_upload_form'
+				enctype='multipart/form-data' method='POST'>
 			<label class='dijitButton'>".__("Choose file...")."
 				<input style='display: none' id='icon_file' size='10' name='icon_file' type='file'>
 			</label>
 			<input type='hidden' name='op' value='pref-feeds'>
-			<input type='hidden' name='feed_id' value=\"$feed_id\">
-			<input type='hidden' name='method' value=\"uploadicon\">
+			<input type='hidden' name='feed_id' value='$feed_id'>
+			<input type='hidden' name='method' value='uploadicon'>
 			<button dojoType='dijit.form.Button' onclick=\"return CommonDialogs.uploadFeedIcon();\"
 				type='submit'>".__('Replace')."</button>
 			<button class='alt-danger' dojoType='dijit.form.Button' onclick=\"return CommonDialogs.removeFeedIcon($feed_id);\"
