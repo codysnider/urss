@@ -14,6 +14,7 @@ class Af_Comics extends Plugin {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_FETCH_FEED, $this);
+		$host->add_hook($host::HOOK_FEED_BASIC_INFO, $this);
 		$host->add_hook($host::HOOK_SUBSCRIBE_FEED, $this);
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
@@ -164,6 +165,16 @@ class Af_Comics extends Plugin {
 			return '<?xml version="1.0" encoding="utf-8"?>'; // Get is_html() to return false.
 
 		return $contents;
+	}
+
+	function hook_feed_basic_info($basic_info, $fetch_url, $owner_uid, $feed, $auth_login, $auth_pass) {
+		if ($auth_login || $auth_pass)
+			return $basic_info;
+
+		if (preg_match('#^https?://www\.gocomics\.com/([-a-z0-9]+)$#i', $fetch_url, $matches))
+			$basic_info = array('title' => ucfirst($matches[1]), 'site_url' => $matches[0]);
+
+		return $basic_info;
 	}
 
 	function api_version() {
