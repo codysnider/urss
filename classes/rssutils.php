@@ -263,7 +263,7 @@ class RSSUtils {
 
 		$pdo = Db::pdo();
 
-		$sth = $pdo->prepare("SELECT title FROM ttrss_feeds WHERE id = ?");
+		$sth = $pdo->prepare("SELECT title, site_url FROM ttrss_feeds WHERE id = ?");
 		$sth->execute([$feed]);
 
 		if (!$row = $sth->fetch()) {
@@ -273,11 +273,12 @@ class RSSUtils {
 		}
 
 		$title = $row["title"];
+		$site_url = $row["site_url"];
 
 		// feed was batch-subscribed or something, we need to get basic info
 		// this is not optimal currently as it fetches stuff separately TODO: optimize
-		if ($title == "[Unknown]") {
-			Debug::log("setting basic feed info for $feed...");
+		if ($title == "[Unknown]" || !$title || !$site_url) {
+			Debug::log("setting basic feed info for $feed [$title, $site_url]...");
 			RSSUtils::set_basic_feed_info($feed);
 		}
 
