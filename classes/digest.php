@@ -192,8 +192,8 @@ class Digest
 			$tpl_t->setVariable('ARTICLE_LINK', $line["link"]);
 			$tpl_t->setVariable('ARTICLE_UPDATED', $updated);
 			$tpl_t->setVariable('ARTICLE_LABELS', $article_labels_formatted, true);
-//			$tpl_t->setVariable('ARTICLE_EXCERPT',
-//				truncate_string(strip_tags($line["excerpt"]), 100));
+			$tpl_t->setVariable('ARTICLE_EXCERPT',
+				truncate_string(strip_tags($line["excerpt"]), 300), true);
 
 			$tpl_t->addBlock('article');
 
