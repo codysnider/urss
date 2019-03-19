@@ -388,26 +388,29 @@ class Handler_Public extends Handler {
 
             $rv .= "<!DOCTYPE html>
                     <html><head>
-                    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>
+                    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
                     <title>".$line["title"]."</title>".
                     stylesheet_tag("css/default.css")."
-                    <link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
-                    <link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">";
+                    <link rel='shortcut icon' type='image/png' href='images/favicon.png'>
+                    <link rel='icon' type='image/png' sizes='72x72' href='images/favicon-72px.png'>";
 
-            $rv .= "<meta property=\"og:title\" content=\"".htmlspecialchars(html_entity_decode($line["title"], ENT_NOQUOTES | ENT_HTML401))."\"/>\n";
-            //$rv .= "<meta property=\"og:site_name\" content=\"".htmlspecialchars($line["feed_title"])."\"/>\n";
-            $rv .= "<meta property=\"og:description\" content=\"".
+            $rv .= "<meta property='og:title' content=\"".htmlspecialchars(html_entity_decode($line["title"], ENT_NOQUOTES | ENT_HTML401))."\"/>\n";
+            $rv .= "<meta property='og:description' content=\"".
                 htmlspecialchars(
-                	preg_replace("/[\r\n\t]/", "",
-						truncate_string(strip_tags(html_entity_decode($line["content"], ENT_NOQUOTES | ENT_HTML401)),
-						500, "...")))."\"/>\n";
+                	truncate_string(
+                		preg_replace("/[\r\n\t]/", "",
+							preg_replace("/ {1,}/", " ",
+								strip_tags(html_entity_decode($line["content"], ENT_NOQUOTES | ENT_HTML401))
+							)
+					), 500, "...")
+				)."\"/>\n";
 
             $rv .= "</head>";
 
             $og_image = $this->get_article_image($enclosures, $line['content'], $line["site_url"]);
 
             if ($og_image) {
-                $rv .= "<meta property=\"og:image\" content=\"" . htmlspecialchars($og_image) . "\"/>";
+                $rv .= "<meta property='og:image' content=\"" . htmlspecialchars($og_image) . "\"/>";
             }
 
             $rv .= "<body class='flat ttrss_utility ttrss_zoom'>";
@@ -442,7 +445,7 @@ class Handler_Public extends Handler {
 			/* content */
 
 			$lang = $line['lang'] ? $line['lang'] : "en";
-			$rv .= "<div class=\"content\" lang=\"$lang\">";
+			$rv .= "<div class='content' lang='$lang'>";
 
 			/* content body */
 
