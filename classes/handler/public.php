@@ -394,10 +394,13 @@ class Handler_Public extends Handler {
                     <link rel=\"shortcut icon\" type=\"image/png\" href=\"images/favicon.png\">
                     <link rel=\"icon\" type=\"image/png\" sizes=\"72x72\" href=\"images/favicon-72px.png\">";
 
-            $rv .= "<meta property=\"og:title\" content=\"".htmlspecialchars($line["title"])."\"/>\n";
-            $rv .= "<meta property=\"og:site_name\" content=\"".htmlspecialchars($line["feed_title"])."\"/>\n";
+            $rv .= "<meta property=\"og:title\" content=\"".htmlspecialchars(html_entity_decode($line["title"], ENT_NOQUOTES | ENT_HTML401))."\"/>\n";
+            //$rv .= "<meta property=\"og:site_name\" content=\"".htmlspecialchars($line["feed_title"])."\"/>\n";
             $rv .= "<meta property=\"og:description\" content=\"".
-                htmlspecialchars(truncate_string(strip_tags($line["content"]), 500, "..."))."\"/>\n";
+                htmlspecialchars(
+                	preg_replace("/[\r\n\t]/", "",
+						truncate_string(strip_tags(html_entity_decode($line["content"], ENT_NOQUOTES | ENT_HTML401)),
+						500, "...")))."\"/>\n";
 
             $rv .= "</head>";
 
