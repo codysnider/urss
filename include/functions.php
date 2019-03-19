@@ -1528,7 +1528,7 @@
 		$doc->loadHTML($charset_hack . $res);
 		$xpath = new DOMXPath($doc);
 
-		$entries = $xpath->query('(//img[@src]|//video[@poster]|//video/source[@src]|//audio/source[@src])');
+		$entries = $xpath->query('(//img[@src]|//picture/source[@src]|//video[@poster]|//video/source[@src]|//audio/source[@src])');
 
 		$need_saving = false;
 
@@ -1544,6 +1544,8 @@
 
 					// this is strictly cosmetic
 					if ($entry->tagName == 'img') {
+						$suffix = ".png";
+					} else if ($entry->parentNode && $entry->parentNode->tagName == "picture") {
 						$suffix = ".png";
 					} else if ($entry->parentNode && $entry->parentNode->tagName == "video") {
 						$suffix = ".mp4";
@@ -1592,7 +1594,7 @@
 
 		$rewrite_base_url = $site_url ? $site_url : get_self_url_prefix();
 
-		$entries = $xpath->query('(//a[@href]|//img[@src]|//video/source[@src]|//audio/source[@src])');
+		$entries = $xpath->query('(//a[@href]|//img[@src]|//video/source[@src]|//audio/source[@src]|//picture/source[@src])');
 
 		foreach ($entries as $entry) {
 
@@ -1686,7 +1688,7 @@
 			'dt', 'em', 'footer', 'figure', 'figcaption',
 			'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hr', 'html', 'i',
 			'img', 'ins', 'kbd', 'li', 'main', 'mark', 'nav', 'noscript',
-			'ol', 'p', 'pre', 'q', 'ruby', 'rp', 'rt', 's', 'samp', 'section',
+			'ol', 'p', 'picture', 'pre', 'q', 'ruby', 'rp', 'rt', 's', 'samp', 'section',
 			'small', 'source', 'span', 'strike', 'strong', 'sub', 'summary',
 			'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'time',
 			'tr', 'track', 'tt', 'u', 'ul', 'var', 'wbr', 'video', 'xml:namespace' );

@@ -170,7 +170,7 @@ class Af_Zz_ImgProxy extends Plugin {
 				}
 			}
 
-			$vids = $xpath->query("//video");
+			$vids = $xpath->query("(//video|//picture)");
 
 			foreach ($vids as $vid) {
 				if ($vid->hasAttribute("poster")) {
