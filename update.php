@@ -24,6 +24,7 @@
 	$longopts = array("feeds",
 			"daemon",
 			"daemon-loop",
+			"send-digests",
 			"task:",
 			"cleanup-tags",
 			"quiet",
@@ -87,6 +88,7 @@
 		print "  --update-schema      - update database schema\n";
 		print "  --gen-search-idx     - generate basic PostgreSQL fulltext search index\n";
 		print "  --convert-filters    - convert type1 filters to type2\n";
+		print "  --send-digests       - send pending email digests\n";
 		print "  --force-update       - force update of all feeds\n";
 		print "  --list-plugins       - list all available plugins\n";
 		print "  --debug-feed N       - perform debug update of feed N\n";
@@ -430,6 +432,10 @@
 		$rc = RSSUtils::update_rss_feed($feed) != false ? 0 : 1;
 
 		exit($rc);
+	}
+
+	if (isset($options["send-digests"])) {
+		Digest::send_headlines_digests();
 	}
 
 	PluginHost::getInstance()->run_commands($options);

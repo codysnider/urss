@@ -697,17 +697,17 @@ class Article extends Handler_Protected {
 
 		$ids_qmarks = arr_qmarks($ids);
 
-		if ($cmode == 0) {
+		if ($cmode == 1) {
 			$sth = $pdo->prepare("UPDATE ttrss_user_entries SET
-			unread = false,last_read = NOW()
-				WHERE ref_id IN ($ids_qmarks) AND owner_uid = ?");
-		} else if ($cmode == 1) {
-			$sth = $pdo->prepare("UPDATE ttrss_user_entries SET
-			unread = true
-				WHERE ref_id IN ($ids_qmarks) AND owner_uid = ?");
-		} else {
+				unread = true
+					WHERE ref_id IN ($ids_qmarks) AND owner_uid = ?");
+		} else if ($cmode == 2) {
 			$sth = $pdo->prepare("UPDATE ttrss_user_entries SET
 				unread = NOT unread,last_read = NOW()
+					WHERE ref_id IN ($ids_qmarks) AND owner_uid = ?");
+		} else {
+			$sth = $pdo->prepare("UPDATE ttrss_user_entries SET
+				unread = false,last_read = NOW()
 					WHERE ref_id IN ($ids_qmarks) AND owner_uid = ?");
 		}
 
