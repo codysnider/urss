@@ -25,12 +25,8 @@ class Af_Tumblr_1280 extends Plugin {
 		if (!function_exists("curl_init") || ini_get("open_basedir"))
 			return $article;
 
-		$charset_hack = '<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		</head>';
-
 		$doc = new DOMDocument();
-		$doc->loadHTML($charset_hack . $article["content"]);
+		$doc->loadHTML('<?xml encoding="UTF-8">' . $article["content"]);
 
 		$found = false;
 

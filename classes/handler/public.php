@@ -329,7 +329,7 @@ class Handler_Public extends Handler {
 		if (!$og_image) {
 			$tmpdoc = new DOMDocument();
 
-			if (@$tmpdoc->loadHTML(mb_substr($content, 0, 131070))) {
+			if (@$tmpdoc->loadHTML('<?xml encoding="UTF-8">' . mb_substr($content, 0, 131070))) {
 				$tmpxpath = new DOMXPath($tmpdoc);
 				$imgs = $tmpxpath->query("//img");
 

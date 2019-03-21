@@ -172,14 +172,10 @@ class Af_Readability extends Plugin {
 			if (!$tmpdoc->loadHTML($tmp))
 				return false;
 
+			// this is the worst hack yet :(
 			if (strtolower($tmpdoc->encoding) != 'utf-8') {
-				$tmpxpath = new DOMXPath($tmpdoc);
-
-				foreach ($tmpxpath->query("//meta") as $elem) {
-					$elem->parentNode->removeChild($elem);
-				}
-
-				$tmp = $tmpdoc->saveHTML();
+				$tmp = preg_replace("/<meta.*?charset.*?\/>/i", "", $tmp);
+				$tmp = mb_convert_encoding($tmp, 'utf-8', $tmpdoc->encoding);
 			}
 
 			try {
@@ -210,7 +206,6 @@ class Af_Readability extends Plugin {
 			} catch (Exception $e) {
 				return false;
 			}
-
 		}
 
 		return false;
