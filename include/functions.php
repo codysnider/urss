@@ -562,7 +562,7 @@
 			libxml_use_internal_errors(true);
 
 			$doc = new DOMDocument();
-			$doc->loadHTML($html);
+			$doc->loadHTML('<?xml encoding="UTF-8">' . $html);
 			$xpath = new DOMXPath($doc);
 
 			$base = $xpath->query('/html/head/base[@href]');
@@ -1518,14 +1518,10 @@
 	// plugins work on original source URLs used before caching
 
 	function rewrite_cached_urls($str) {
-		$charset_hack = '<head>
-				<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-			</head>';
-
 		$res = trim($str); if (!$res) return '';
 
 		$doc = new DOMDocument();
-		$doc->loadHTML($charset_hack . $res);
+		$doc->loadHTML('<?xml encoding="UTF-8">' . $res);
 		$xpath = new DOMXPath($doc);
 
 		$entries = $xpath->query('(//img[@src]|//picture/source[@src]|//video[@poster]|//video/source[@src]|//audio/source[@src])');
@@ -1580,16 +1576,10 @@
 
 		$res = trim($str); if (!$res) return '';
 
-		$charset_hack = '<head>
-				<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-			</head>';
-
-		$res = trim($res); if (!$res) return '';
-
 		libxml_use_internal_errors(true);
 
 		$doc = new DOMDocument();
-		$doc->loadHTML($charset_hack . $res);
+		$doc->loadHTML('<?xml encoding="UTF-8">' . $res);
 		$xpath = new DOMXPath($doc);
 
 		$rewrite_base_url = $site_url ? $site_url : get_self_url_prefix();
@@ -2115,7 +2105,7 @@
 		libxml_use_internal_errors(true);
 
 		$doc = new DOMDocument();
-		$doc->loadHTML($content);
+		$doc->loadHTML('<?xml encoding="UTF-8">' . $content);
 		$xpath = new DOMXPath($doc);
 		$entries = $xpath->query('/html/head/link[@rel="alternate" and '.
 			'(contains(@type,"rss") or contains(@type,"atom"))]|/html/head/link[@rel="feed"]');
@@ -2136,7 +2126,7 @@
 	}
 
 	function is_html($content) {
-		return preg_match("/<html|DOCTYPE html/i", substr($content, 0, 100)) !== 0;
+		return preg_match("/<html|DOCTYPE html/i", substr($content, 0, 8192)) !== 0;
 	}
 
 	function url_is_html($url, $login = false, $pass = false) {

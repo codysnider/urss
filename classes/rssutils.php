@@ -1200,12 +1200,8 @@ class RSSUtils {
 	static function cache_media($html, $site_url) {
 		libxml_use_internal_errors(true);
 
-		$charset_hack = '<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		</head>';
-
 		$doc = new DOMDocument();
-		$doc->loadHTML($charset_hack . $html);
+		$doc->loadHTML('<?xml encoding="UTF-8">' . $html);
 		$xpath = new DOMXPath($doc);
 
 		$entries = $xpath->query('(//img[@src])|(//video/source[@src])|(//audio/source[@src])');

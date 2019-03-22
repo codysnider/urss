@@ -19,11 +19,7 @@ class Af_Fsckportal extends Plugin {
 
 			$doc = new DOMDocument();
 
-			$charset_hack = '<head>
-				<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-			</head>';
-
-			@$doc->loadHTML($charset_hack . $article["content"]);
+			@$doc->loadHTML('<?xml encoding="UTF-8">' . $article["content"]);
 
 			if ($doc) {
 				$xpath = new DOMXPath($doc);

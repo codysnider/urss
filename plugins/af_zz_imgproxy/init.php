@@ -155,7 +155,7 @@ class Af_Zz_ImgProxy extends Plugin {
 		$proxy_all = $this->host->get($this, "proxy_all");
 
 		$doc = new DOMDocument();
-		if (@$doc->loadHTML($article["content"])) {
+		if (@$doc->loadHTML('<?xml encoding="UTF-8">' . $article["content"])) {
 			$xpath = new DOMXPath($doc);
 			$imgs = $xpath->query("//img[@src]");
 

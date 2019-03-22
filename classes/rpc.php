@@ -287,7 +287,7 @@ class RPC extends Handler_Protected {
 	/* GET["cmode"] = 0 - mark as read, 1 - as unread, 2 - toggle */
 	function catchupSelected() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
-		$cmode = sprintf("%d", clean($_REQUEST["cmode"]));
+		$cmode = (int)clean($_REQUEST["cmode"]);
 
 		Article::catchupArticlesById($ids, $cmode);
 

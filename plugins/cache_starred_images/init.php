@@ -190,12 +190,8 @@ class Cache_Starred_Images extends Plugin implements IHandler {
             return;
         }
 
-		$charset_hack = '<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		</head>';
-
 		$doc = new DOMDocument();
-		$doc->loadHTML($charset_hack . $content);
+		$doc->loadHTML('<?xml encoding="UTF-8">' . $content);
 		$xpath = new DOMXPath($doc);
 
 		$entries = $xpath->query('(//img[@src])|(//video/source[@src])');
