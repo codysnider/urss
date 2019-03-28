@@ -2206,7 +2206,8 @@
 					FROM ttrss_tags, ttrss_user_entries, ttrss_entries
 					WHERE post_int_id = int_id AND $interval_query AND
 					ref_id = ttrss_entries.id AND tag_cache != '' LIMIT ?");
-			$sth->execute([$limit]);
+            $sth->bindValue(1, $limit_part, PDO::PARAM_INT);
+            $sth->execute();
 
 			$ids = array();
 
