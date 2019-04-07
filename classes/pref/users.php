@@ -313,7 +313,7 @@ class Pref_Users extends Handler_Protected {
 
 			print "<div dojoType='dijit.layout.BorderContainer' gutters='false'>";
 			print "<div style='padding : 0px' dojoType='dijit.layout.ContentPane' region='top'>";
-			print "<div dojoType='dijit.Toolbar'>";
+			print "<div dojoType='fox.Toolbar'>";
 
 			$user_search = trim(clean($_REQUEST["search"]));
 

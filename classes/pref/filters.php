@@ -354,7 +354,7 @@ class Pref_Filters extends Handler_Protected {
 			print "<header class='horizontal'>".__("Match")."</header>";
 			print "<section>";
 
-			print "<div dojoType=\"dijit.Toolbar\">";
+			print "<div dojoType=\"fox.Toolbar\">";
 
 			print "<div dojoType=\"dijit.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
@@ -414,7 +414,7 @@ class Pref_Filters extends Handler_Protected {
 
 			print "<section>";
 
-			print "<div dojoType=\"dijit.Toolbar\">";
+			print "<div dojoType=\"fox.Toolbar\">";
 
 			print "<div dojoType=\"dijit.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
@@ -757,7 +757,7 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<div dojoType='dijit.layout.BorderContainer' gutters='false'>";
 		print "<div style='padding : 0px' dojoType='dijit.layout.ContentPane' region='top'>";
-		print "<div dojoType='dijit.Toolbar'>";
+		print "<div dojoType='fox.Toolbar'>";
 
 		if (array_key_exists("search", $_REQUEST)) {
 			$_SESSION["prefs_filter_search"] = $filter_search;
@@ -856,7 +856,7 @@ class Pref_Filters extends Handler_Protected {
 		print "<header class='horizontal'>".__("Match")."</header >";
 		print "<section>";
 
-		print "<div dojoType='dijit.Toolbar'>";
+		print "<div dojoType='fox.Toolbar'>";
 
 		print "<div dojoType='dijit.form.DropDownButton'>".
 				"<span>" . __('Select')."</span>";
@@ -885,7 +885,7 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<section>";
 
-		print "<div dojoType='dijit.Toolbar'>";
+		print "<div dojoType='fox.Toolbar'>";
 
 		print "<div dojoType='dijit.form.DropDownButton'>".
 				"<span>" . __('Select')."</span>";

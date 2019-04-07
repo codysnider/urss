@@ -1021,7 +1021,7 @@ class Pref_Prefs extends Handler_Protected {
 	}
 
 	function editPrefProfiles() {
-		print "<div dojoType='dijit.Toolbar'>";
+		print "<div dojoType='fox.Toolbar'>";
 
 		print "<div dojoType='dijit.form.DropDownButton'>".
 				"<span>" . __('Select')."</span>";

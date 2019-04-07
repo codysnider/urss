@@ -145,7 +145,7 @@
 
     <div dojoType="dijit.layout.BorderContainer" region="center" id="content-wrap">
         <div id="toolbar-frame" dojoType="dijit.layout.ContentPane" region="top">
-            <div id="toolbar" dojoType="dijit.Toolbar">
+            <div id="toolbar" dojoType="fox.Toolbar">
 
             <i class="material-icons net-alert" style="display : none"
                 title="<?php echo __("Communication problem with server.") ?>">error_outline</i>

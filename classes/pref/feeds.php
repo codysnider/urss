@@ -1208,7 +1208,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print '<div dojoType="dijit.layout.BorderContainer" gutters="false">';
 
-		print "<div region='top' dojoType=\"dijit.Toolbar\">"; #toolbar
+		print "<div region='top' dojoType=\"fox.Toolbar\">"; #toolbar
 
 		print "<div style='float : right; padding-right : 4px;'>
 			<input dojoType=\"dijit.form.TextBox\" id=\"feed_search\" size=\"20\" type=\"search\"
@@ -1449,7 +1449,7 @@ class Pref_Feeds extends Handler_Protected {
 			ORDER BY last_article");
 		$sth->execute([$_SESSION['uid']]);
 
-		print "<div dojoType='dijit.Toolbar'>";
+		print "<div dojoType='fox.Toolbar'>";
 		print "<div dojoType='dijit.form.DropDownButton'>".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType='dijit.Menu' style='display: none'>";
@@ -1506,7 +1506,7 @@ class Pref_Feeds extends Handler_Protected {
 			FROM ttrss_feeds WHERE last_error != '' AND owner_uid = ?");
 		$sth->execute([$_SESSION['uid']]);
 
-		print "<div dojoType=\"dijit.Toolbar\">";
+		print "<div dojoType=\"fox.Toolbar\">";
 		print "<div dojoType=\"dijit.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
