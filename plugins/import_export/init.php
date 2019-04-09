@@ -50,32 +50,32 @@ class Import_Export extends Plugin implements IHandler {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType='dijit.layout.AccordionPane' 
 			title=\"<i class='material-icons'>import_export</i> ".__('Import and export')."\">";
 
 		print_notice(__("You can export and import your Starred and Archived articles for safekeeping or when migrating between tt-rss instances of same version."));
 
 		print "<p>";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"return exportData()\">".
+		print "<button dojoType='dijit.form.Button' class='alt-primary' onclick='return exportData()'>".
 			__('Export my data')."</button> ";
 
 		print "<hr>";
 
-		print "<iframe id=\"data_upload_iframe\"
-			name=\"data_upload_iframe\" onload=\"dataImportComplete(this)\"
-			style=\"width: 400px; height: 100px; display: none;\"></iframe>";
+		print "<iframe id='data_upload_iframe'
+			name='data_upload_iframe' onload='dataImportComplete(this)'
+			style='width: 400px; height: 100px; display: none;'></iframe>";
 
-		print "<form name=\"import_form\" style='display : block' target=\"data_upload_iframe\"
-			enctype=\"multipart/form-data\" method=\"POST\"
-			action=\"backend.php\">
-			<label class=\"dijitButton\">".__("Choose file...")."
-				<input style=\"display : none\" id=\"export_file\" name=\"export_file\" type=\"file\">&nbsp;
+		print "<form name='import_form' style='display : block' target='data_upload_iframe'
+			enctype='multipart/form-data' method='POST'
+			action='backend.php'>
+			<label class='dijitButton'>".__("Choose file...")."
+				<input style='display : none' id='export_file' name='export_file' type='file'>&nbsp;
 			</label>
-			<input type=\"hidden\" name=\"op\" value=\"pluginhandler\">
-			<input type=\"hidden\" name=\"plugin\" value=\"import_export\">
-			<input type=\"hidden\" name=\"method\" value=\"dataimport\">
-			<button dojoType=\"dijit.form.Button\" onclick=\"return importData();\" type=\"submit\">" .
+			<input type='hidden' name='op' value='pluginhandler'>
+			<input type='hidden' name='plugin' value='import_export'>
+			<input type='hidden' name='method' value='dataimport'>
+			<button dojoType='dijit.form.Button' onclick='return importData();' class='alt-primary' type='submit'>" .
 			__('Import') . "</button>";
 
 		print "</form>";
@@ -435,6 +435,8 @@ class Import_Export extends Plugin implements IHandler {
 
 	function exportData() {
 
+		print "<form onsubmit='return false'>";
+
 		print "<p style='text-align : center' id='export_status_message'>You need to prepare exported data first by clicking the button below.</p>";
 
 		print "<footer class='text-center'>";
@@ -448,6 +450,8 @@ class Import_Export extends Plugin implements IHandler {
 			__('Close this window')."</button>";
 
 		print "</footer>";
+
+		print "</form>";
 	}
 
 	function dataImport() {
