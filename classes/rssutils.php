@@ -308,7 +308,12 @@ class RSSUtils {
 			$fetch_url = $row["feed_url"];
 
 			$feed_language = mb_strtolower($row["feed_language"]);
-			if (!$feed_language) $feed_language = 'english';
+
+			if (!$feed_language)
+				$feed_language = mb_strtolower(get_pref('DEFAULT_SEARCH_LANGUAGE', $owner_uid));
+
+			if (!$feed_language)
+				$feed_language = 'simple';
 
 		} else {
 			return false;

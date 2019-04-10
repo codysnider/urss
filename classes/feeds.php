@@ -733,7 +733,7 @@ class Feeds extends Handler_Protected {
 		if (DB_TYPE == "pgsql") {
 			print "<fieldset>";
 			print "<label class='inline'>" . __("Language:") . "</label>";
-			print_select("search_language", "", Pref_Feeds::get_ts_languages(),
+			print_select("search_language", get_pref('DEFAULT_SEARCH_LANGUAGE'), Pref_Feeds::get_ts_languages(),
 				"dojoType='dijit.form.Select' title=\"".__('Used for word stemming')."\"");
 			print "</fieldset>";
 		}

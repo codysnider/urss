@@ -28,6 +28,7 @@ class Pref_Prefs extends Handler_Protected {
 			__('Feeds') => [
 				'DEFAULT_UPDATE_INTERVAL',
 				'FRESH_ARTICLE_MAX_AGE',
+				'DEFAULT_SEARCH_LANGUAGE',
 				'BLOCK_SEPARATOR',
 				'ENABLE_FEED_CATS',
 				'BLOCK_SEPARATOR',
@@ -68,6 +69,7 @@ class Pref_Prefs extends Handler_Protected {
 		$this->pref_help = [
 			"ALLOW_DUPLICATE_POSTS" => array(__("Allow duplicate articles"), ""),
 			"BLACKLISTED_TAGS" => array(__("Blacklisted tags"), __("Never apply these tags automatically (comma-separated list).")),
+			"DEFAULT_SEARCH_LANGUAGE" => array(__("Default language"), __("Used for full-text search")),
 			"CDM_AUTO_CATCHUP" => array(__("Mark read on scroll"), __("Mark articles as read as you scroll past them")),
 			"CDM_EXPANDED" => array(__("Always expand articles")),
 			"COMBINED_DISPLAY_MODE" => array(__("Combined mode"), __("Show flat list of articles instead of separate panels")),
@@ -560,6 +562,10 @@ class Pref_Prefs extends Handler_Protected {
 					continue;
 				}
 
+				if ($pref_name == "DEFAULT_SEARCH_LANGUAGE" && DB_TYPE != "pgsql") {
+					continue;
+				}
+
 				if ($item = $prefs_available[$pref_name]) {
 
 					print "<fieldset class='prefs'>";
@@ -612,6 +618,10 @@ class Pref_Prefs extends Handler_Protected {
 						global $update_intervals_nodefault;
 
 						print_select_hash($pref_name, $value, $update_intervals_nodefault,
+							'dojoType="dijit.form.Select"');
+					} else if ($pref_name == "DEFAULT_SEARCH_LANGUAGE") {
+
+						print_select($pref_name, $value, Pref_Feeds::get_ts_languages(),
 							'dojoType="dijit.form.Select"');
 
 					} else if ($type_name == "bool") {
