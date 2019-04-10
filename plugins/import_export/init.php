@@ -400,6 +400,21 @@ class Import_Export extends Plugin implements IHandler {
 
 								if ($res) {
 
+									if (DB_TYPE == "pgsql") {
+										$ts_lang = get_pref('DEFAULT_SEARCH_LANGUAGE', $owner_uid);
+										// TODO: maybe use per-feed setting if available?
+
+										$sth = $this->pdo->prepare("UPDATE ttrss_entries
+											SET tsvector_combined = to_tsvector(:ts_lang, :ts_content)
+											WHERE id = :id");
+
+										$sth->execute([
+											"id" => $ref_id,
+											"ts_lang" => $ts_lang,
+											"ts_content" => mb_substr(strip_tags($article['title'] . " " . $article['content']), 0, 900000)
+										]);
+									}
+
 									$label_cache = json_decode($article['label_cache'], true);
 
 									if (is_array($label_cache) && $label_cache["no-labels"] != 1) {
