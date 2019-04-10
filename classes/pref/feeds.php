@@ -595,6 +595,9 @@ class Pref_Feeds extends Handler_Protected {
 			if (DB_TYPE == "pgsql") {
 				$feed_language = $row["feed_language"];
 
+				if (!$feed_language)
+					$feed_language = get_pref('DEFAULT_SEARCH_LANGUAGE');
+
 				print "<fieldset>";
 
 				print "<label>" . __('Language:') . "</label> ";
