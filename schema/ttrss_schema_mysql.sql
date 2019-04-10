@@ -287,7 +287,7 @@ create table ttrss_tags (id integer primary key auto_increment,
 
 create table ttrss_version (schema_version int not null) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert into ttrss_version values (137);
+insert into ttrss_version values (138);
 
 create table ttrss_enclosures (id integer primary key auto_increment,
 	content_url text not null,
