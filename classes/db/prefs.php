@@ -90,8 +90,8 @@ class Db_Prefs {
 
 			return $this->convert($value, $type_name);
 
-		} else {
-			user_error("Fatal error, unknown preferences key: $pref_name (owner: $user_id)", $die_on_error ? E_USER_ERROR : E_USER_WARNING);
+		} else if ($die_on_error) {
+			user_error("Fatal error, unknown preferences key: $pref_name (owner: $user_id)", E_USER_ERROR);
 			return null;
 		}
 	}
