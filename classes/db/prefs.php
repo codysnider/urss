@@ -93,6 +93,8 @@ class Db_Prefs {
 		} else if ($die_on_error) {
 			user_error("Fatal error, unknown preferences key: $pref_name (owner: $user_id)", E_USER_ERROR);
 			return null;
+		} else {
+			return null;
 		}
 	}
 
