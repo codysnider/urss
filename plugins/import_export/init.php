@@ -404,6 +404,9 @@ class Import_Export extends Plugin implements IHandler {
 										$ts_lang = get_pref('DEFAULT_SEARCH_LANGUAGE', $owner_uid);
 										// TODO: maybe use per-feed setting if available?
 
+										if (!$ts_lang)
+											$ts_lang = 'simple';
+
 										$sth = $this->pdo->prepare("UPDATE ttrss_entries
 											SET tsvector_combined = to_tsvector(:ts_lang, :ts_content)
 											WHERE id = :id");
