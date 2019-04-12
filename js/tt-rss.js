@@ -416,6 +416,9 @@ require(["dojo/_base/kernel",
 							dijit.byId("feedTree").collapseCat(Feeds.getActive());
 						}
 					};
+					this.hotkey_actions["goto_read"] = function () {
+						Feeds.open({feed: -6});
+					};
 					this.hotkey_actions["goto_all"] = function () {
 						Feeds.open({feed: -4});
 					};
