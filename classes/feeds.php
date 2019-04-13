@@ -54,7 +54,7 @@ class Feeds extends Handler_Protected {
 		$reply .= "<span class=\"right\">";
 		$reply .= "<span id='selected_prompt'></span>";
 		$reply .= "&nbsp;";
-		$reply .= "<select dojoType=\"dijit.form.Select\"
+		$reply .= "<select dojoType=\"fox.form.Select\"
 			onchange=\"Headlines.onActionChanged(this)\">";
 
 		$reply .= "<option value=\"0\" disabled='1'>".__('Select...')."</option>";
@@ -659,7 +659,7 @@ class Feeds extends Handler_Protected {
 
 		if (get_pref('ENABLE_FEED_CATS')) {
 			print "<label class='inline'>" . __('Place in category:') . "</label> ";
-			print_feed_cat_select("cat", false, 'dojoType="dijit.form.Select"');
+			print_feed_cat_select("cat", false, 'dojoType="fox.form.Select"');
 		}
 
 		print "</fieldset>";
@@ -671,7 +671,7 @@ class Feeds extends Handler_Protected {
 				<section>
 					<fieldset>
 						<select id="feedDlg_feedContainerSelect"
-							dojoType="dijit.form.Select" size="3">
+							dojoType="fox.form.Select" size="3">
 							<script type="dojo/method" event="onChange" args="value">
 								dijit.byId("feedDlg_feedUrl").attr("value", value);
 							</script>
@@ -734,7 +734,7 @@ class Feeds extends Handler_Protected {
 			print "<fieldset>";
 			print "<label class='inline'>" . __("Language:") . "</label>";
 			print_select("search_language", get_pref('DEFAULT_SEARCH_LANGUAGE'), Pref_Feeds::get_ts_languages(),
-				"dojoType='dijit.form.Select' title=\"".__('Used for word stemming')."\"");
+				"dojoType='fox.form.Select' title=\"".__('Used for word stemming')."\"");
 			print "</fieldset>";
 		}
 

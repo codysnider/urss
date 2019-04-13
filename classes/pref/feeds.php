@@ -571,7 +571,7 @@ class Pref_Feeds extends Handler_Protected {
 				print "<label>" . __('Place in category:') . "</label> ";
 
 				print_feed_cat_select("cat_id", $cat_id,
-					'dojoType="dijit.form.Select"');
+					'dojoType="fox.form.Select"');
 
 				print "</fieldset>";
 			}
@@ -602,7 +602,7 @@ class Pref_Feeds extends Handler_Protected {
 
 				print "<label>" . __('Language:') . "</label> ";
 				print_select("feed_language", $feed_language, $this::get_ts_languages(),
-					'dojoType="dijit.form.Select"');
+					'dojoType="fox.form.Select"');
 
 				print "</fieldset>";
 			}
@@ -621,7 +621,7 @@ class Pref_Feeds extends Handler_Protected {
 			print "<label>".__("Interval:")."</label> ";
 
 			print_select_hash("update_interval", $update_interval, $update_intervals,
-				'dojoType="dijit.form.Select"');
+				'dojoType="fox.form.Select"');
 
 			print "</fieldset>";
 
@@ -634,7 +634,7 @@ class Pref_Feeds extends Handler_Protected {
 			print "<label>" . __('Article purging:') . "</label> ";
 
 			print_select_hash("purge_interval", $purge_interval, $purge_intervals,
-				'dojoType="dijit.form.Select" ' .
+				'dojoType="fox.form.Select" ' .
 				((FORCE_ARTICLE_PURGE == 0) ? "" : 'disabled="1"'));
 
 			print "</fieldset>";
@@ -826,7 +826,7 @@ class Pref_Feeds extends Handler_Protected {
 			print "<label>" . __('Place in category:') . "</label> ";
 
 			print_feed_cat_select("cat_id", false,
-				'disabled="1" dojoType="dijit.form.Select"');
+				'disabled="1" dojoType="fox.form.Select"');
 
 			$this->batch_edit_cbox("cat_id");
 
@@ -840,7 +840,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<label>" . __('Language:') . "</label> ";
 			print_select("feed_language", "", $this::get_ts_languages(),
-				'disabled="1" dojoType="dijit.form.Select"');
+				'disabled="1" dojoType="fox.form.Select"');
 
 			$this->batch_edit_cbox("feed_language");
 
@@ -859,7 +859,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "<label>".__("Interval:")."</label> ";
 
 		print_select_hash("update_interval", "", $update_intervals,
-			'disabled="1" dojoType="dijit.form.Select"');
+			'disabled="1" dojoType="fox.form.Select"');
 
 		$this->batch_edit_cbox("update_interval");
 
@@ -874,7 +874,7 @@ class Pref_Feeds extends Handler_Protected {
 			print "<label>" . __('Article purging:') . "</label> ";
 
 			print_select_hash("purge_interval", "", $purge_intervals,
-				'disabled="1" dojoType="dijit.form.Select"');
+				'disabled="1" dojoType="fox.form.Select"');
 
 			$this->batch_edit_cbox("purge_interval");
 
@@ -1217,7 +1217,7 @@ class Pref_Feeds extends Handler_Protected {
 				__('Search')."</button>
 			</div>";
 
-		print "<div dojoType=\"dijit.form.DropDownButton\">".
+		print "<div dojoType=\"fox.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"dijit.byId('feedTree').model.setAllChecked(true)\"
@@ -1226,7 +1226,7 @@ class Pref_Feeds extends Handler_Protected {
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
 		print "</div></div>";
 
-		print "<div dojoType=\"dijit.form.DropDownButton\">".
+		print "<div dojoType=\"fox.form.DropDownButton\">".
 				"<span>" . __('Feeds')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"CommonDialogs.quickAddFeed()\"
@@ -1242,7 +1242,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "</div></div>";
 
 		if (get_pref('ENABLE_FEED_CATS')) {
-			print "<div dojoType=\"dijit.form.DropDownButton\">".
+			print "<div dojoType=\"fox.form.DropDownButton\">".
 					"<span>" . __('Categories')."</span>";
 			print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 			print "<div onclick=\"dijit.byId('feedTree').createCategory()\"
@@ -1450,7 +1450,7 @@ class Pref_Feeds extends Handler_Protected {
 		$sth->execute([$_SESSION['uid']]);
 
 		print "<div dojoType='fox.Toolbar'>";
-		print "<div dojoType='dijit.form.DropDownButton'>".
+		print "<div dojoType='fox.form.DropDownButton'>".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType='dijit.Menu' style='display: none'>";
 		print "<div onclick=\"Tables.select('inactive-feeds-list', true)\"
@@ -1507,7 +1507,7 @@ class Pref_Feeds extends Handler_Protected {
 		$sth->execute([$_SESSION['uid']]);
 
 		print "<div dojoType=\"fox.Toolbar\">";
-		print "<div dojoType=\"dijit.form.DropDownButton\">".
+		print "<div dojoType=\"fox.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"Tables.select('error-feeds-list', true)\"
@@ -1662,7 +1662,7 @@ class Pref_Feeds extends Handler_Protected {
 		if (get_pref('ENABLE_FEED_CATS')) {
 			print "<fieldset>";
 			print "<label>" . __('Place in category:') . "</label> ";
-			print_feed_cat_select("cat", false, 'dojoType="dijit.form.Select"');
+			print_feed_cat_select("cat", false, 'dojoType="fox.form.Select"');
 			print "</fieldset>";
 		}
 

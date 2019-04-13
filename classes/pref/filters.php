@@ -356,7 +356,7 @@ class Pref_Filters extends Handler_Protected {
 
 			print "<div dojoType=\"fox.Toolbar\">";
 
-			print "<div dojoType=\"dijit.form.DropDownButton\">".
+			print "<div dojoType=\"fox.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 			print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 			print "<div onclick=\"dijit.byId('filterEditDlg').selectRules(true)\"
@@ -416,7 +416,7 @@ class Pref_Filters extends Handler_Protected {
 
 			print "<div dojoType=\"fox.Toolbar\">";
 
-			print "<div dojoType=\"dijit.form.DropDownButton\">".
+			print "<div dojoType=\"fox.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 			print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 			print "<div onclick=\"dijit.byId('filterEditDlg').selectActions(true)\"
@@ -772,7 +772,7 @@ class Pref_Filters extends Handler_Protected {
 				__('Search')."</button>
 			</div>";
 
-		print "<div dojoType=\"dijit.form.DropDownButton\">".
+		print "<div dojoType=\"fox.form.DropDownButton\">".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"dijit.byId('filterTree').model.setAllChecked(true)\"
@@ -858,7 +858,7 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<div dojoType='fox.Toolbar'>";
 
-		print "<div dojoType='dijit.form.DropDownButton'>".
+		print "<div dojoType='fox.form.DropDownButton'>".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType='dijit.Menu' style='display: none'>";
 		print "<div onclick=\"dijit.byId('filterEditDlg').selectRules(true)\"
@@ -887,7 +887,7 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<div dojoType='fox.Toolbar'>";
 
-		print "<div dojoType='dijit.form.DropDownButton'>".
+		print "<div dojoType='fox.form.DropDownButton'>".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType='dijit.Menu' style='display: none'>";
 		print "<div onclick=\"dijit.byId('filterEditDlg').selectActions(true)\"
@@ -993,7 +993,7 @@ class Pref_Filters extends Handler_Protected {
 		print "<fieldset>";
 		print "<label style='display : inline'>".  __("on field") . "</label> ";
 		print_select_hash("filter_type", $filter_type, $filter_types,
-			'dojoType="dijit.form.Select"');
+			'dojoType="fox.form.Select"');
 		print "<label style='padding-left : 10px; display : inline'>" . __("in") . "</label> ";
 
 		print "</fieldset>";
@@ -1042,7 +1042,7 @@ class Pref_Filters extends Handler_Protected {
 
 		print "<section>";
 
-		print "<select name='action_id' dojoType='dijit.form.Select'
+		print "<select name='action_id' dojoType='fox.form.Select'
 			onchange='Filters.filterDlgCheckAction(this)'>";
 
 		$res = $this->pdo->query("SELECT id,description FROM ttrss_filter_actions
@@ -1073,7 +1073,7 @@ class Pref_Filters extends Handler_Protected {
 
 		print_label_select("action_param_label", $action_param,
 			"id='filterDlg_actionParamLabel' style=\"$label_param_hidden\"
-			dojoType='dijit.form.Select'");
+			dojoType='fox.form.Select'");
 
 		$filter_actions = PluginHost::getInstance()->get_filter_actions();
 		$filter_action_hash = array();
@@ -1096,7 +1096,7 @@ class Pref_Filters extends Handler_Protected {
 		}
 
 		print_select_hash("filterDlg_actionParamPlugin", $action_param, $filter_action_hash,
-			"style=\"$plugin_param_hidden\" dojoType='dijit.form.Select' $filter_plugin_disabled",
+			"style=\"$plugin_param_hidden\" dojoType='fox.form.Select' $filter_plugin_disabled",
 			"action_param_plugin");
 
 		print "</span>";

@@ -69,10 +69,10 @@ class Pref_Users extends Handler_Protected {
 
 				if (!$sel_disabled) {
 					print_select_hash("access_level", $access_level, $access_level_names,
-						"dojoType=\"dijit.form.Select\" $sel_disabled");
+						"dojoType=\"fox.form.Select\" $sel_disabled");
 				} else {
 					print_select_hash("", $access_level, $access_level_names,
-						"dojoType=\"dijit.form.Select\" $sel_disabled");
+						"dojoType=\"fox.form.Select\" $sel_disabled");
 					print_hidden("access_level", "$access_level");
 				}
 
@@ -336,7 +336,7 @@ class Pref_Users extends Handler_Protected {
 				$sort = "login";
 			}
 
-			print "<div dojoType='dijit.form.DropDownButton'>".
+			print "<div dojoType='fox.form.DropDownButton'>".
 					"<span>" . __('Select')."</span>";
 			print "<div dojoType='dijit.Menu' style='display: none'>";
 			print "<div onclick=\"Tables.select('prefUserList', true)\"

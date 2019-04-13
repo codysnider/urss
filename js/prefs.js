@@ -54,7 +54,10 @@ require(["dojo/_base/kernel",
 	"fox/PrefFeedTree",
 	"fox/PrefFilterTree",
 	"fox/PrefLabelTree",
-	"fox/Toolbar"], function (dojo, declare, ready, parser, AppBase) {
+	"fox/Toolbar",
+	"fox/form/Select",
+	"fox/form/ComboButton",
+	"fox/form/DropDownButton"], function (dojo, declare, ready, parser, AppBase) {
 
 	ready(function () {
 		try {
