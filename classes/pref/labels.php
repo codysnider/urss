@@ -251,9 +251,9 @@ class Pref_Labels extends Handler_Protected {
 
 		print "<div dojoType='dijit.layout.BorderContainer' gutters='false'>";
 		print "<div style='padding : 0px' dojoType='dijit.layout.ContentPane' region='top'>";
-		print "<div dojoType='dijit.Toolbar'>";
+		print "<div dojoType='fox.Toolbar'>";
 
-		print "<div dojoType='dijit.form.DropDownButton'>".
+		print "<div dojoType='fox.form.DropDownButton'>".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"dijit.byId('labelTree').model.setAllChecked(true)\"

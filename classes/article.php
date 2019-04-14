@@ -534,7 +534,7 @@ class Article extends Handler_Protected {
 				$rv .= "<br clear='both'/>";
 			}
 
-			$rv .= "<div class=\"attachments\" dojoType=\"dijit.form.DropDownButton\">".
+			$rv .= "<div class=\"attachments\" dojoType=\"fox.form.DropDownButton\">".
 				"<span>" . __('Attachments')."</span>";
 
 			$rv .= "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";

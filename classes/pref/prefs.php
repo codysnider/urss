@@ -579,7 +579,7 @@ class Pref_Prefs extends Handler_Protected {
 
 					if ($pref_name == "USER_LANGUAGE") {
 						print_select_hash($pref_name, $value, get_translations(),
-							"style='width : 220px; margin : 0px' dojoType='dijit.form.Select'");
+							"style='width : 220px; margin : 0px' dojoType='fox.form.Select'");
 
 					} else if ($pref_name == "USER_TIMEZONE") {
 
@@ -595,7 +595,7 @@ class Pref_Prefs extends Handler_Protected {
 
 						if (!theme_exists($value)) $value = "default.php";
 
-						print "<select name='$pref_name' id='$pref_name' dojoType='dijit.form.Select'>";
+						print "<select name='$pref_name' id='$pref_name' dojoType='fox.form.Select'>";
 
 						$issel = $value == "default.php" ? "selected='selected'" : "";
 						print "<option $issel value='default.php'>".__("default")."</option>";
@@ -618,11 +618,11 @@ class Pref_Prefs extends Handler_Protected {
 						global $update_intervals_nodefault;
 
 						print_select_hash($pref_name, $value, $update_intervals_nodefault,
-							'dojoType="dijit.form.Select"');
+							'dojoType="fox.form.Select"');
 					} else if ($pref_name == "DEFAULT_SEARCH_LANGUAGE") {
 
 						print_select($pref_name, $value, Pref_Feeds::get_ts_languages(),
-							'dojoType="dijit.form.Select"');
+							'dojoType="fox.form.Select"');
 
 					} else if ($type_name == "bool") {
 
@@ -715,7 +715,7 @@ class Pref_Prefs extends Handler_Protected {
 		print_hidden("op", "pref-prefs");
 		print_hidden("method", "saveconfig");
 
-		print "<div dojoType=\"dijit.form.ComboButton\" type=\"submit\" class=\"alt-primary\">
+		print "<div dojoType=\"fox.form.ComboButton\" type=\"submit\" class=\"alt-primary\">
 			<span>".__('Save configuration')."</span>
 			<div dojoType=\"dijit.DropDownMenu\">
 				<div dojoType=\"dijit.MenuItem\"
@@ -1021,9 +1021,9 @@ class Pref_Prefs extends Handler_Protected {
 	}
 
 	function editPrefProfiles() {
-		print "<div dojoType='dijit.Toolbar'>";
+		print "<div dojoType='fox.Toolbar'>";
 
-		print "<div dojoType='dijit.form.DropDownButton'>".
+		print "<div dojoType='fox.form.DropDownButton'>".
 				"<span>" . __('Select')."</span>";
 		print "<div dojoType='dijit.Menu' style='display: none'>";
 		print "<div onclick=\"Tables.select('pref-profiles-list', true)\"

@@ -145,7 +145,7 @@
 
     <div dojoType="dijit.layout.BorderContainer" region="center" id="content-wrap">
         <div id="toolbar-frame" dojoType="dijit.layout.ContentPane" region="top">
-            <div id="toolbar" dojoType="dijit.Toolbar">
+            <div id="toolbar" dojoType="fox.Toolbar">
 
             <i class="material-icons net-alert" style="display : none"
                 title="<?php echo __("Communication problem with server.") ?>">error_outline</i>
@@ -170,7 +170,7 @@
 
             <select name="view_mode" title="<?php echo __('Show articles') ?>"
                 onchange="App.onViewModeChanged()"
-                dojoType="dijit.form.Select">
+                dojoType="fox.form.Select">
                 <option selected="selected" value="adaptive"><?php echo __('Adaptive') ?></option>
                 <option value="all_articles"><?php echo __('All Articles') ?></option>
                 <option value="marked"><?php echo __('Starred') ?></option>
@@ -182,7 +182,7 @@
 
 			<select title="<?php echo __('Sort articles') ?>"
                 onchange="App.onViewModeChanged()"
-                dojoType="dijit.form.Select" name="order_by">
+                dojoType="fox.form.Select" name="order_by">
 
 				<option selected="selected" value="default"><?php echo __('Default') ?></option>
                 <option value="feed_dates"><?php echo __('Newest first') ?></option>
@@ -190,7 +190,7 @@
                 <option value="title"><?php echo __('Title') ?></option>
             </select>
 
-            <div dojoType="dijit.form.ComboButton" onclick="Feeds.catchupCurrent()">
+            <div dojoType="fox.form.ComboButton" onclick="Feeds.catchupCurrent()">
                 <span><?php echo __('Mark as read') ?></span>
                 <div dojoType="dijit.DropDownMenu">
                     <div dojoType="dijit.MenuItem" onclick="Feeds.catchupCurrent('1day')">
@@ -215,7 +215,7 @@
                     }
                 ?>
 
-                <div dojoType="dijit.form.DropDownButton" class="action-button" title="<?php echo __('Actions...') ?>">
+                <div dojoType="fox.form.DropDownButton" class="action-button" title="<?php echo __('Actions...') ?>">
 					<span><i class="material-icons">menu</i></span>
                     <div dojoType="dijit.Menu" style="display: none">
                         <div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcPrefs')"><?php echo __('Preferences...') ?></div>

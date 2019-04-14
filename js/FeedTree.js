@@ -2,7 +2,10 @@
 define(["dojo/_base/declare", "dojo/dom-construct", "dijit/Tree", "dijit/Menu"], function (declare, domConstruct) {
 
 	return declare("fox.FeedTree", dijit.Tree, {
-		_onKeyPress: function(/* Event */ e) {
+		_onContainerKeydown: function(/* Event */ e) {
+			return; // Stop dijit.Tree from interpreting keystrokes
+		},
+		_onContainerKeypress: function(/* Event */ e) {
 			return; // Stop dijit.Tree from interpreting keystrokes
 		},
 		_createTreeNode: function(args) {
