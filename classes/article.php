@@ -151,6 +151,16 @@ class Article extends Handler_Protected {
 					content = ?, content_hash = ? WHERE id = ?");
 				$sth->execute([$content, $content_hash, $ref_id]);
 
+				if (DB_TYPE == "pgsql"){
+					$sth = $pdo->prepare("UPDATE ttrss_entries
+					SET tsvector_combined = to_tsvector( :ts_content)
+					WHERE id = :id");
+					$params = [
+						":ts_content" => mb_substr(strip_tags($content ), 0, 900000),
+						":id" => $ref_id];
+					$sth->execute($params);
+				}
+				
 				$sth = $pdo->prepare("UPDATE ttrss_user_entries SET published = true,
 						last_published = NOW() WHERE
 						int_id = ? AND owner_uid = ?");
@@ -186,7 +196,15 @@ class Article extends Handler_Protected {
 
 			if ($row = $sth->fetch()) {
 				$ref_id = $row["id"];
-
+				if (DB_TYPE == "pgsql"){
+					$sth = $pdo->prepare("UPDATE ttrss_entries
+					SET tsvector_combined = to_tsvector( :ts_content)
+					WHERE id = :id");
+					$params = [
+						":ts_content" => mb_substr(strip_tags($content ), 0, 900000),
+						":id" => $ref_id];
+					$sth->execute($params);
+				}
 				$sth = $pdo->prepare("INSERT INTO ttrss_user_entries
 					(ref_id, uuid, feed_id, orig_feed_id, owner_uid, published, tag_cache, label_cache,
 						last_read, note, unread, last_published)
