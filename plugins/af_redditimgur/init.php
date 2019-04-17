@@ -1,7 +1,4 @@
 <?php
-use andreskrey\Readability\Readability;
-use andreskrey\Readability\Configuration;
-
 class Af_RedditImgur extends Plugin {
 
 	/* @var PluginHost $host */
@@ -551,47 +548,16 @@ class Af_RedditImgur extends Plugin {
 				parse it which p much requires curl */
 
 				$useragent_compat = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)";
-
 				$content_type = $this->get_content_type($url, $useragent_compat);
 
 				if ($content_type && strpos($content_type, "text/html") !== FALSE) {
 
-					$tmp = fetch_file_contents(["url" => $url,
-						"useragent" => $useragent_compat,
-						"http_accept" => "text/html"]);
+					foreach ($this->host->get_hooks(PluginHost::HOOK_GET_FULL_TEXT) as $p) {
+						$extracted_content = $p->hook_get_full_text($url);
 
-					Debug::log("tmplen: " . mb_strlen($tmp), Debug::$LOG_VERBOSE);
-
-					if ($tmp && mb_strlen($tmp) < 1024 * 500) {
-
-						$r = new Readability(new Configuration());
-
-						try {
-							if ($r->parse($tmp)) {
-
-								$tmpxpath = new DOMXPath($r->getDOMDocument());
-
-								$entries = $tmpxpath->query('(//a[@href]|//img[@src])');
-
-								foreach ($entries as $entry) {
-									if ($entry->hasAttribute("href")) {
-										$entry->setAttribute("href",
-											rewrite_relative_url($url, $entry->getAttribute("href")));
-
-									}
-
-									if ($entry->hasAttribute("src")) {
-										$entry->setAttribute("src",
-											rewrite_relative_url($url, $entry->getAttribute("src")));
-
-									}
-
-								}
-
-								$article["content"] = $r->getContent() . "<hr/>" . $article["content"];
-							}
-						} catch (Exception $e) {
-							//
+						if ($extracted_content) {
+							$article["content"] = $extracted_content;
+							break;
 						}
 					}
 				}
