@@ -87,7 +87,7 @@ class Af_Readability extends Plugin {
 			print "<fieldset>";
 			print "<label class='checkbox'> ";
 			print_checkbox("enable_share_anything", $enable_share_anything);
-			print " " . __("Use Readability for pages shared via bookmarklet.");
+			print " " . __("Provide full-text services to core code (bookmarklets) and other plugins");
 			print "</label>";
 			print "</fieldset>";
 

@@ -57,7 +57,7 @@ class Af_RedditImgur extends Plugin {
 		print "<fieldset class='narrow'>";
 		print "<label class='checkbox'>";
 		print_checkbox("enable_readability", $enable_readability);
-		print " " . __("Extract missing content using Readability") . "</label>";
+		print " " . __("Extract missing content using Readability (requires af_readability)") . "</label>";
 		print "</fieldset>";
 
 		print "<fieldset class='narrow'>";
