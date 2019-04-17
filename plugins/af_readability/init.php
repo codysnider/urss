@@ -38,6 +38,13 @@ class Af_Readability extends Plugin {
 		$host->add_hook($host::HOOK_PREFS_EDIT_FEED, $this);
 		$host->add_hook($host::HOOK_PREFS_SAVE_FEED, $this);
 
+		$enable_share_anything = $this->host->get($this, "enable_share_anything");
+
+		// provide full text services to external code
+		// TODO: option that controls this needs a better caption
+		if ($enable_share_anything)
+			$host->add_hook($host::HOOK_GET_FULL_TEXT, $this);
+
 		$host->add_filter_action($this, "action_inline", __("Inline content"));
 	}
 
@@ -235,6 +242,12 @@ class Af_Readability extends Plugin {
 
 		return $this->process_article($article);
 
+	}
+
+	function hook_get_full_text($link) {
+		$extracted_content = $this->extract_content($link);
+
+		return trim(strip_tags(sanitize($extracted_content)));
 	}
 
 	function api_version() {

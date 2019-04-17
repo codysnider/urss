@@ -100,7 +100,7 @@ class Article extends Handler_Protected {
 			$pluginhost->load_all(PluginHost::KIND_ALL, $owner_uid);
 			$pluginhost->load_data();
 
-			$af_readability = $pluginhost->get_plugin("Af_Readability");
+			/*$af_readability = $pluginhost->get_plugin("Af_Readability");
 
 			if ($af_readability) {
 				$enable_share_anything = $pluginhost->get($af_readability, "enable_share_anything");
@@ -109,6 +109,15 @@ class Article extends Handler_Protected {
 					$extracted_content = $af_readability->extract_content($url);
 
 					if ($extracted_content) $content = $extracted_content;
+				}
+			}*/
+
+			foreach ($pluginhost->get_hooks(PluginHost::HOOK_GET_FULL_TEXT) as $p) {
+				$extracted_content = $p->hook_get_full_text($url);
+
+				if ($extracted_content) {
+					$content = $extracted_content;
+					break;
 				}
 			}
 		}
