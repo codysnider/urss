@@ -1434,6 +1434,17 @@ class Feeds extends Handler_Protected {
 			if (!$search_query_part) {
 				list($search_query_part, $search_words) = search_to_sql($search, $search_language);
 			}
+
+			if (DB_TYPE == "pgsql") {
+				$test_sth = $pdo->prepare("select $search_query_part from ttrss_entries limit 1");
+				try {
+					$test_sth->execute();
+				} catch (PDOException $e) {
+					// looks like tsquery syntax is invalid
+					$search_query_part = "false";
+				}
+			}
+
 			$search_query_part .= " AND ";
 		} else {
 			$search_query_part = "";
