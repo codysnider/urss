@@ -1486,11 +1486,19 @@
 		}
 
 		if (count($search_query_leftover) > 0) {
-			$search_query_leftover = $pdo->quote(implode(" & ", $search_query_leftover));
 
 			if (DB_TYPE == "pgsql") {
+
+				// if there's no joiners consider this a "simple" search and
+				// concatenate everything with &, otherwise don't try to mess with tsquery syntax
+				if (preg_match("/[&|]/", implode(" " , $search_query_leftover))) {
+					$tsquery = $pdo->quote(implode(" ", $search_query_leftover));
+				} else {
+					$tsquery = $pdo->quote(implode(" & ", $search_query_leftover));
+				}
+
 				array_push($query_keywords,
-					"(tsvector_combined @@ to_tsquery($search_language, $search_query_leftover))");
+					"(tsvector_combined @@ to_tsquery($search_language, $tsquery))");
 			}
 
 		}
