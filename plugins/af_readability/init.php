@@ -38,12 +38,9 @@ class Af_Readability extends Plugin {
 		$host->add_hook($host::HOOK_PREFS_EDIT_FEED, $this);
 		$host->add_hook($host::HOOK_PREFS_SAVE_FEED, $this);
 
-		$enable_share_anything = $this->host->get($this, "enable_share_anything");
-
-		// provide full text services to external code
-		// TODO: option that controls this needs a better caption
-		if ($enable_share_anything)
-			$host->add_hook($host::HOOK_GET_FULL_TEXT, $this);
+		// Note: we have to install the hook even if disabled because init() is being run before plugin data has loaded
+		// so we can't check for our storage-set options here
+		$host->add_hook($host::HOOK_GET_FULL_TEXT, $this);
 
 		$host->add_filter_action($this, "action_inline", __("Inline content"));
 	}
@@ -176,7 +173,7 @@ class Af_Readability extends Plugin {
 		if ($tmp && mb_strlen($tmp) < 1024 * 500) {
 			$tmpdoc = new DOMDocument("1.0", "UTF-8");
 
-			if (!$tmpdoc->loadHTML($tmp))
+			if (!@$tmpdoc->loadHTML($tmp))
 				return false;
 
 			// this is the worst hack yet :(
@@ -244,10 +241,22 @@ class Af_Readability extends Plugin {
 
 	}
 
-	function hook_get_full_text($link) {
-		$extracted_content = $this->extract_content($link);
+	function hook_get_full_text($link)
+	{
+		$enable_share_anything = $this->host->get($this, "enable_share_anything");
 
-		return trim(strip_tags(sanitize($extracted_content)));
+		if ($enable_share_anything) {
+			$extracted_content = $this->extract_content($link);
+
+			# let's see if there's anything of value in there
+			$content_test = trim(strip_tags(sanitize($extracted_content)));
+
+			if ($content_test) {
+				return $extracted_content;
+			}
+		}
+
+		return false;
 	}
 
 	function api_version() {
