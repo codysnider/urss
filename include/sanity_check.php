@@ -56,6 +56,10 @@
 				array_push($errors, "PHP version 5.6.0 or newer required. You're using " . PHP_VERSION . ".");
 			}
 
+			if (!class_exists("UConverter")) {
+				array_push($errors, "PHP UConverter class is missing, it's provided by the Internationalization (intl) module.");
+			}
+
 			if (CONFIG_VERSION != EXPECTED_CONFIG_VERSION) {
 				array_push($errors, "Configuration file (config.php) has incorrect version. Update it with new options from config.php-dist and set CONFIG_VERSION to the correct value.");
 			}
