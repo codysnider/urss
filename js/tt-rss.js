@@ -148,13 +148,6 @@ require(["dojo/_base/kernel",
 					dijit.getEnclosingWidget(toolbar.order_by).attr('value',
 						App.getInitParam("default_view_order_by"));
 
-					const hash_feed_id = hash_get('f');
-					const hash_feed_is_cat = hash_get('c') == "1";
-
-					if (hash_feed_id != undefined) {
-						Feeds.setActive(hash_feed_id, hash_feed_is_cat);
-					}
-
 					App.setLoadingProgress(50);
 
 					this._widescreen_mode = App.getInitParam("widescreen");

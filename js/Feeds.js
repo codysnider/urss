@@ -203,10 +203,13 @@ define(["dojo/_base/declare"], function (declare) {
 			document.onkeypress = (event) => { return App.hotkeyHandler(event) };
 			window.onresize = () => { Headlines.scrollHandler(); }
 
-			if (!this.getActive()) {
-				this.open({feed: -3});
+			const hash_feed_id = hash_get('f');
+			const hash_feed_is_cat = hash_get('c') == "1";
+
+			if (hash_feed_id != undefined) {
+				this.open({feed: hash_feed_id, is_cat: hash_feed_is_cat});
 			} else {
-				this.open({feed: this.getActive(), is_cat: this.activeIsCat()});
+				this.open({feed: -3});
 			}
 
 			this.hideOrShowFeeds(App.getInitParam("hide_read_feeds") == 1);
@@ -250,6 +253,8 @@ define(["dojo/_base/declare"], function (declare) {
 			return this._active_feed_id;
 		},
 		setActive: function(id, is_cat) {
+			console.log('setActive', id, is_cat);
+
 			hash_set('f', id);
 			hash_set('c', is_cat ? 1 : 0);
 
