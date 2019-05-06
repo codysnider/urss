@@ -66,9 +66,9 @@ class Pref_Feeds extends Handler_Protected {
 			$cat['items'] = array();
 			$cat['checkbox'] = false;
 			$cat['type'] = 'category';
-			$cat['unread'] = 0;
-			$cat['child_unread'] = 0;
-			$cat['auxcounter'] = 0;
+			$cat['unread'] = -1;
+			$cat['child_unread'] = -1;
+			$cat['auxcounter'] = -1;
 			$cat['parent_id'] = $cat_id;
 
 			$cat['items'] = $this->get_category_items($line['id']);
@@ -95,10 +95,10 @@ class Pref_Feeds extends Handler_Protected {
 			$feed = array();
 			$feed['id'] = 'FEED:' . $feed_line['id'];
 			$feed['bare_id'] = (int)$feed_line['id'];
-			$feed['auxcounter'] = 0;
+			$feed['auxcounter'] = -1;
 			$feed['name'] = $feed_line['title'];
 			$feed['checkbox'] = false;
-			$feed['unread'] = 0;
+			$feed['unread'] = -1;
 			$feed['error'] = $feed_line['last_error'];
 			$feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
 			$feed['param'] = make_local_datetime(
@@ -153,14 +153,14 @@ class Pref_Feeds extends Handler_Protected {
 					$item = array();
 					$item['id'] = 'FEED:' . $feed_id;
 					$item['bare_id'] = (int)$feed_id;
-					$item['auxcounter'] = 0;
+					$item['auxcounter'] = -1;
 					$item['name'] = $feed['title'];
 					$item['checkbox'] = false;
 					$item['error'] = '';
 					$item['icon'] = $feed['icon'];
 
 					$item['param'] = '';
-					$item['unread'] = 0; //$feed['sender']->get_unread($feed['id']);
+					$item['unread'] = -1;
 					$item['type'] = 'feed';
 
 					array_push($cat['items'], $item);
@@ -218,13 +218,13 @@ class Pref_Feeds extends Handler_Protected {
 				$cat = array();
 				$cat['id'] = 'CAT:' . $line['id'];
 				$cat['bare_id'] = (int)$line['id'];
-				$cat['auxcounter'] = 0;
+				$cat['auxcounter'] = -1;
 				$cat['name'] = $line['title'];
 				$cat['items'] = array();
 				$cat['checkbox'] = false;
 				$cat['type'] = 'category';
-				$cat['unread'] = 0;
-				$cat['child_unread'] = 0;
+				$cat['unread'] = -1;
+				$cat['child_unread'] = -1;
 
 				$cat['items'] = $this->get_category_items($line['id']);
 
@@ -242,13 +242,13 @@ class Pref_Feeds extends Handler_Protected {
 			$cat = array();
 			$cat['id'] = 'CAT:0';
 			$cat['bare_id'] = 0;
-			$cat['auxcounter'] = 0;
+			$cat['auxcounter'] = -1;
 			$cat['name'] = __("Uncategorized");
 			$cat['items'] = array();
 			$cat['type'] = 'category';
 			$cat['checkbox'] = false;
-			$cat['unread'] = 0;
-			$cat['child_unread'] = 0;
+			$cat['unread'] = -1;
+			$cat['child_unread'] = -1;
 
 			$fsth = $this->pdo->prepare("SELECT id, title,last_error,
 				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated, update_interval
@@ -263,14 +263,14 @@ class Pref_Feeds extends Handler_Protected {
 				$feed = array();
 				$feed['id'] = 'FEED:' . $feed_line['id'];
 				$feed['bare_id'] = (int)$feed_line['id'];
-				$feed['auxcounter'] = 0;
+				$feed['auxcounter'] = -1;
 				$feed['name'] = $feed_line['title'];
 				$feed['checkbox'] = false;
 				$feed['error'] = $feed_line['last_error'];
 				$feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
 				$feed['param'] = make_local_datetime(
 					$feed_line['last_updated'], true);
-				$feed['unread'] = 0;
+				$feed['unread'] = -1;
 				$feed['type'] = 'feed';
 				$feed['updates_disabled'] = (int)($feed_line['update_interval'] < 0);
 
@@ -298,14 +298,14 @@ class Pref_Feeds extends Handler_Protected {
 				$feed = array();
 				$feed['id'] = 'FEED:' . $feed_line['id'];
 				$feed['bare_id'] = (int)$feed_line['id'];
-				$feed['auxcounter'] = 0;
+				$feed['auxcounter'] = -1;
 				$feed['name'] = $feed_line['title'];
 				$feed['checkbox'] = false;
 				$feed['error'] = $feed_line['last_error'];
 				$feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
 				$feed['param'] = make_local_datetime(
 					$feed_line['last_updated'], true);
-				$feed['unread'] = 0;
+				$feed['unread'] = -1;
 				$feed['type'] = 'feed';
 				$feed['updates_disabled'] = (int)($feed_line['update_interval'] < 0);
 
