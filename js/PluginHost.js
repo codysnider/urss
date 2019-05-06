@@ -14,6 +14,7 @@ PluginHost = {
 	HOOK_INIT_COMPLETE: 11,
 	HOOK_HEADLINE_RENDERED: 12,
 	HOOK_COUNTERS_RECEIVED: 13,
+	HOOK_COUNTERS_PROCESSED: 14,
 	hooks: [],
 	register: function (name, callback) {
 		if (typeof(this.hooks[name]) == 'undefined')

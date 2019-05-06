@@ -95,6 +95,8 @@ define(["dojo/_base/declare"], function (declare) {
 
 			this.hideOrShowFeeds(App.getInitParam("hide_read_feeds") == 1);
 			this._counters_prev = elems;
+
+			PluginHost.run(PluginHost.HOOK_COUNTERS_PROCESSED);
 		},
 		reloadCurrent: function(method) {
 			console.log("reloadCurrent: " + method);
