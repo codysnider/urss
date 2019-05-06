@@ -44,6 +44,8 @@ define(["dojo/_base/declare"], function (declare) {
 			this._counters_prev = [];
 		},
 		parseCounters: function (elems) {
+			PluginHost.run(PluginHost.HOOK_COUNTERS_RECEIVED, elems);
+
 			for (let l = 0; l < elems.length; l++) {
 
 				if (Feeds._counters_prev[l] && this.counterEquals(elems[l], this._counters_prev[l])) {
