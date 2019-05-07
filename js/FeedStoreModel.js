@@ -31,7 +31,7 @@ define(["dojo/_base/declare", "dijit/tree/ForestStoreModel"], function (declare)
 		},
 		getFeedUnread: function (feed, is_cat) {
 			const unread = parseInt(this.getFeedValue(feed, is_cat, 'unread'));
-			return (isNaN(unread)) ? 0 : unread;
+			return (isNaN(unread)) ? -1 : unread;
 		},
 		setFeedUnread: function (feed, is_cat, unread) {
 			return this.setFeedValue(feed, is_cat, 'unread', parseInt(unread));
