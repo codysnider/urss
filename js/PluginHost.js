@@ -29,6 +29,11 @@ PluginHost = {
 			for (let i = 0; i < this.hooks[name].length; i++) {
 				this.hooks[name][i](args);
 			}
+	},
+	unregister: function (name, callback) {
+		for (var i = 0; i < this.hooks[name].length; i++)
+			if (this.hooks[name][i] == callback)
+				this.hooks[name].splice(i, 1);
 	}
 };
 
