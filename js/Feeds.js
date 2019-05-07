@@ -3,7 +3,7 @@
 define(["dojo/_base/declare"], function (declare) {
 	Feeds = {
 		counters_last_request: 0,
-		_active_feed_id: 0,
+		_active_feed_id: undefined,
 		_active_feed_is_cat: false,
 		infscroll_in_progress: 0,
 		infscroll_disabled: 0,
@@ -99,9 +99,9 @@ define(["dojo/_base/declare"], function (declare) {
 			PluginHost.run(PluginHost.HOOK_COUNTERS_PROCESSED);
 		},
 		reloadCurrent: function(method) {
-			console.log("reloadCurrent: " + method);
-
 			if (this.getActive() != undefined) {
+				console.log("reloadCurrent: " + method);
+
 				this.open({feed: this.getActive(), is_cat: this.activeIsCat(), method: method});
 			}
 			return false; // block unneeded form submits
