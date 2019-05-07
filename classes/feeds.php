@@ -850,9 +850,23 @@ class Feeds extends Handler_Protected {
 
 		$pdo = Db::pdo();
 
-		// Todo: all this interval stuff needs some generic generator function
+		if (is_array($search) && $search[0]) {
+			$search_qpart = "";
 
-		$search_qpart = is_array($search) && $search[0] ? search_to_sql($search[0], $search[1])[0] : 'true';
+			foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_SEARCH) as $plugin) {
+				list($search_qpart, $search_words) = $plugin->hook_search($search[0]);
+				break;
+			}
+
+			// fall back in case of no plugins
+			if (!$search_qpart) {
+				list($search_qpart, $search_words) = search_to_sql($search[0], $search[1]);
+			}
+		} else {
+			$search_qpart = "true";
+		}
+
+		// TODO: all this interval stuff needs some generic generator function
 
 		switch ($mode) {
 			case "1day":
