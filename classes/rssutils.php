@@ -1170,10 +1170,12 @@ class RSSUtils {
 			$sth->execute([$error_msg, $feed]);
 
 			unset($rss);
+
+			Debug::log("update failed.", Debug::$LOG_VERBOSE);
 			return false;
 		}
 
-		Debug::log("done", Debug::$LOG_VERBOSE);
+		Debug::log("update done.", Debug::$LOG_VERBOSE);
 
 		return true;
 	}

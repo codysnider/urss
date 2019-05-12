@@ -183,10 +183,12 @@ class FeedParser {
 		}
 	}
 
+	// libxml may have invalid unicode data in error messages
 	function error() {
-		return $this->error;
+		return UConverter::transcode($this->error, 'UTF-8', 'UTF-8');
 	}
 
+	// WARNING: may return invalid unicode data
 	function errors() {
 		return $this->libxml_errors;
 	}
