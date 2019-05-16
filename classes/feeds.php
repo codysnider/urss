@@ -1131,6 +1131,7 @@ class Feeds extends Handler_Protected {
 
 		global $fetch_last_error;
 		global $fetch_last_error_content;
+		global $fetch_last_content_type;
 
 		$pdo = Db::pdo();
 
@@ -1152,7 +1153,7 @@ class Feeds extends Handler_Protected {
 			return array("code" => 5, "message" => $fetch_last_error);
 		}
 
-		if (is_html($contents)) {
+		if (mb_strpos($fetch_last_content_type, "html") !== FALSE && is_html($contents)) {
 			$feedUrls = get_feeds_from_html($url, $contents);
 
 			if (count($feedUrls) == 0) {
