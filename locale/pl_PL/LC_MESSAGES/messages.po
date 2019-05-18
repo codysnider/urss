@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-22 06:58+0300\n"
-"PO-Revision-Date: 2019-05-18 08:34+0000\n"
+"PO-Revision-Date: 2019-05-19 09:34+0000\n"
 "Last-Translator: Marcin Sadowski <sadowski.marcin@icloud.com>\n"
 "Language-Team: Polish <https://weblate.tt-rss.org/projects/tt-rss/messages/"
 "pl/>\n"
@@ -2468,6 +2468,8 @@ msgstr "Ustawienia Readability (af_readability)"
 #: plugins/af_readability/init.php:79
 msgid "Use Readability for pages shared via bookmarklet."
 msgstr ""
+"Użyj Readability dla stron udostępnianych poprzez skryptozakładkę "
+"(bookmarklet)."
 
 #: plugins/af_readability/init.php:91
 #: plugins/af_psql_trgm/init.php:200
@@ -2489,7 +2491,7 @@ msgstr ""
 
 #: plugins/af_redditimgur/init.php:61
 msgid "Extract missing content using Readability"
-msgstr ""
+msgstr "Wydziel brakującą treść z użyciem Readability"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
@@ -2556,6 +2558,7 @@ msgstr ""
 #: plugins/af_comics/init.php:72
 msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
 msgstr ""
+"Wrzuć zaktualizowane filtry do <code>filters.local</code> w katalogu wtyczki."
 
 #: plugins/import_export/init.php:54
 msgid "Import and export"
