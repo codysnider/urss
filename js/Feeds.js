@@ -552,11 +552,33 @@ define(["dojo/_base/declare"], function (declare) {
 				execute: function () {
 					if (this.validate()) {
 						Feeds._search_query = this.attr('value');
+
+						// disallow empty queries
+						if (!Feeds._search_query.query)
+							Feeds._search_query = false;
+
 						this.hide();
 						Feeds.reloadCurrent();
 					}
 				},
 				href: query
+			});
+
+			const tmph = dojo.connect(dialog, 'onLoad', function () {
+				dojo.disconnect(tmph);
+
+				console.log('S_onload');
+
+				if (Feeds._search_query) {
+					if (Feeds._search_query.query)
+						dijit.byId('search_query')
+							.attr('value', Feeds._search_query.query);
+
+					if (Feeds._search_query.search_language)
+						dijit.byId('search_language')
+							.attr('value', Feeds._search_query.search_language);
+				}
+
 			});
 
 			dialog.show();

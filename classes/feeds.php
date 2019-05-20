@@ -730,10 +730,10 @@ class Feeds extends Handler_Protected {
 		print "<section>";
 
 		print "<fieldset>";
-		print "<input dojoType='dijit.form.ValidationTextBox'
+		print "<input dojoType='dijit.form.ValidationTextBox' id='search_query'
 			style='font-size : 16px; width : 540px;'
 			placeHolder=\"".T_sprintf("Search %s...", $this->getFeedTitle($active_feed_id, $is_cat))."\"
-			required='1' name='query' type='search' value=''>";
+			name='query' type='search' value=''>";
 		print "</fieldset>";
 
 		if (DB_TYPE == "pgsql") {
