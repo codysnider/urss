@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tt-rss unstable\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:58+0300\n"
+"POT-Creation-Date: 2019-05-20 15:42+0300\n"
 "PO-Revision-Date: 2019-03-17 14:52+0000\n"
 "Last-Translator: himori kim <romi8318@gmail.com>\n"
-"Language-Team: Korean <https://weblate.tt-rss.org/projects/tt-rss/messages/"
-"ko/>\n"
+"Language-Team: Korean <https://weblate.tt-rss.org/projects/tt-rss/messages/ko/>\n"
 "Language: ko_KR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -96,8 +95,8 @@ msgid "Weekly"
 msgstr "1주일에 한 번"
 
 #: backend.php:103
-#: classes/pref/users.php:47
 #: classes/pref/system.php:52
+#: classes/pref/users.php:47
 msgid "User"
 msgstr "사용자"
 
@@ -170,20 +169,20 @@ msgstr "플러그인을 찾을 수 없습니다"
 msgid "Encoding data as JSON failed"
 msgstr "JSON으로 변환에 실패하였습니다."
 
-#: index.php:128
-#: index.php:143
+#: index.php:127
+#: index.php:142
 #: index.php:254
-#: prefs.php:113
+#: prefs.php:112
 #: classes/backend.php:5
-#: classes/pref/labels.php:287
-#: classes/pref/feeds.php:1318
-#: classes/pref/filters.php:808
-#: js/AppBase.js:143
-#: js/CommonDialogs.js:277
-#: js/CommonDialogs.js:357
-#: js/Feeds.js:334
-#: js/Feeds.js:412
-#: js/Headlines.js:258
+#: classes/pref/feeds.php:1268
+#: classes/pref/filters.php:806
+#: classes/pref/labels.php:281
+#: js/AppBase.js:147
+#: js/CommonDialogs.js:291
+#: js/CommonDialogs.js:371
+#: js/Feeds.js:344
+#: js/Feeds.js:422
+#: js/Headlines.js:282
 #: js/PrefFeedTree.js:126
 #: js/PrefFeedTree.js:133
 #: js/PrefFeedTree.js:250
@@ -196,59 +195,59 @@ msgstr "JSON으로 변환에 실패하였습니다."
 msgid "Loading, please wait..."
 msgstr "로딩중입니다. 잠깐의 여유를 갖고 하늘을 바라보아요."
 
-#: index.php:152
-#: js/AppBase.js:240
-#: js/AppBase.js:246
+#: index.php:151
+#: js/AppBase.js:244
+#: js/AppBase.js:250
 msgid "Communication problem with server."
 msgstr "서버와의 통신이 원활하지 않습니다."
 
-#: index.php:155
+#: index.php:154
 msgid "Recent entries found in event log."
 msgstr ""
 
-#: index.php:158
+#: index.php:157
 msgid "Updates are available from Git."
 msgstr ""
 
-#: index.php:172
+#: index.php:171
 msgid "Show articles"
 msgstr "내용 표시"
 
-#: index.php:175
+#: index.php:174
 msgid "Adaptive"
 msgstr "추린 글"
 
-#: index.php:176
+#: index.php:175
 msgid "All Articles"
 msgstr "전체 내용"
 
-#: index.php:177
-#: include/functions.php:1198
+#: index.php:176
+#: include/functions.php:1204
 #: classes/feeds.php:70
 msgid "Starred"
 msgstr "중요 표시"
 
-#: index.php:178
-#: include/functions.php:1199
+#: index.php:177
+#: include/functions.php:1205
 #: classes/feeds.php:71
 msgid "Published"
 msgstr "공개됨"
 
-#: index.php:179
+#: index.php:178
 #: classes/feeds.php:63
 #: classes/feeds.php:69
 msgid "Unread"
 msgstr "안 읽은 글"
 
-#: index.php:180
+#: index.php:179
 msgid "With Note"
 msgstr "노트가 있는 글"
 
-#: index.php:181
+#: index.php:180
 msgid "Ignore Scoring"
 msgstr "점수 무시"
 
-#: index.php:184
+#: index.php:183
 msgid "Sort articles"
 msgstr "내용 정렬"
 
@@ -270,10 +269,10 @@ msgstr "제목순으로"
 
 #: index.php:194
 #: index.php:228
-#: include/functions.php:1186
+#: include/functions.php:1192
 #: classes/feeds.php:75
-#: js/FeedTree.js:55
-#: js/FeedTree.js:83
+#: js/FeedTree.js:58
+#: js/FeedTree.js:93
 msgid "Mark as read"
 msgstr "읽음 표시"
 
@@ -289,7 +288,7 @@ msgstr "1주일 넘게 묵은 내용"
 msgid "Older than two weeks"
 msgstr "2주일 넘게 묵은 내용"
 
-#: index.php:219
+#: index.php:218
 msgid "Actions..."
 msgstr "동작..."
 
@@ -306,7 +305,7 @@ msgid "Feed actions:"
 msgstr "피드 동작"
 
 #: index.php:224
-#: classes/handler/public.php:768
+#: classes/handler/public.php:778
 msgid "Subscribe to feed..."
 msgstr "피드 구독..."
 
@@ -315,8 +314,8 @@ msgid "Edit this feed..."
 msgstr "이 피드 수정..."
 
 #: index.php:226
-#: classes/pref/feeds.php:828
-#: classes/pref/feeds.php:1291
+#: classes/pref/feeds.php:796
+#: classes/pref/feeds.php:1241
 #: js/PrefFeedTree.js:62
 msgid "Unsubscribe"
 msgstr "구독 해제"
@@ -334,12 +333,12 @@ msgid "Other actions:"
 msgstr "기타 동작"
 
 #: index.php:231
-#: include/functions.php:1172
+#: include/functions.php:1178
 msgid "Toggle widescreen mode"
 msgstr "와이드스크린 모드 켜기/끄기"
 
 #: index.php:232
-#: include/functions.php:1206
+#: include/functions.php:1213
 #, fuzzy
 msgid "Toggle night mode"
 msgstr "통합 모드 켜기/끄기"
@@ -352,50 +351,50 @@ msgstr "키보드 단축키 도움말"
 msgid "Logout"
 msgstr "로그아웃"
 
-#: prefs.php:33
-#: prefs.php:130
-#: include/functions.php:1201
-#: classes/pref/prefs.php:471
+#: prefs.php:32
+#: prefs.php:129
+#: include/functions.php:1208
+#: classes/pref/prefs.php:473
 msgid "Preferences"
 msgstr "설정"
 
-#: prefs.php:122
+#: prefs.php:121
 msgid "Keyboard shortcuts"
 msgstr "키보드 단축키"
 
-#: prefs.php:123
+#: prefs.php:122
 msgid "Exit preferences"
 msgstr "설정 완료"
 
-#: prefs.php:133
+#: prefs.php:132
 #: classes/pref/feeds.php:127
-#: classes/pref/feeds.php:1226
-#: classes/pref/feeds.php:1280
+#: classes/pref/feeds.php:1176
+#: classes/pref/feeds.php:1230
 #: classes/pref/prefs.php:28
 msgid "Feeds"
 msgstr "피드"
 
-#: prefs.php:137
+#: prefs.php:136
 #: classes/pref/filters.php:243
 msgid "Filters"
 msgstr "필터"
 
-#: prefs.php:141
-#: classes/pref/labels.php:91
-#: classes/feeds.php:1423
+#: prefs.php:140
+#: classes/feeds.php:1383
+#: classes/pref/labels.php:85
 msgid "Labels"
 msgstr "라벨"
 
-#: prefs.php:146
+#: prefs.php:145
 msgid "Users"
 msgstr "사용자"
 
-#: prefs.php:149
+#: prefs.php:148
 msgid "System"
 msgstr "시스템"
 
 #: register.php:183
-#: include/login_form.php:140
+#: include/login_form.php:141
 msgid "Create new account"
 msgstr "새 계정 생성"
 
@@ -411,14 +410,16 @@ msgstr "관리자가 신규 사용자 등록 기능을 비활성화 한 상태�
 #: register.php:332
 #: register.php:342
 #: register.php:354
-#: classes/handler/public.php:847
-#: classes/handler/public.php:936
-#: classes/handler/public.php:966
-#: classes/handler/public.php:1042
-#: classes/handler/public.php:1135
-#: classes/handler/public.php:1147
-#: classes/handler/public.php:1152
-#: classes/handler/public.php:1175
+#: classes/handler/public.php:795
+#: classes/handler/public.php:844
+#: classes/handler/public.php:868
+#: classes/handler/public.php:960
+#: classes/handler/public.php:990
+#: classes/handler/public.php:1064
+#: classes/handler/public.php:1161
+#: classes/handler/public.php:1173
+#: classes/handler/public.php:1178
+#: classes/handler/public.php:1202
 msgid "Return to Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS로 돌아가기"
 
@@ -435,7 +436,7 @@ msgid "Check availability"
 msgstr "가능한지 확인"
 
 #: register.php:225
-#: classes/handler/public.php:951
+#: classes/handler/public.php:975
 msgid "Email:"
 msgstr "이메일:"
 
@@ -467,352 +468,348 @@ msgstr "계정 생성이 완료되었습니다."
 msgid "New user registrations are currently closed."
 msgstr "현재는 신규 사용자 등록을 할 수 없습니다."
 
-#: update.php:66
+#: update.php:68
 msgid "Tiny Tiny RSS data update script."
 msgstr "Tiny Tiny RSS 데이터 업데이트 스크립트."
 
 #: include/controls.php:85
 #: classes/pref/filters.php:212
 #: classes/pref/filters.php:223
-#: classes/pref/filters.php:539
+#: classes/pref/filters.php:537
 msgid "All feeds"
 msgstr "모든 피드"
 
 #: include/controls.php:138
 #: include/controls.php:230
-#: classes/opml.php:508
 #: classes/digest.php:124
+#: classes/feeds.php:1395
+#: classes/opml.php:536
 #: classes/pref/feeds.php:246
-#: classes/feeds.php:1435
 msgid "Uncategorized"
 msgstr "카테고리 없음"
-
-#: include/feedbrowser.php:79
-#, php-format
-msgid "%d archived article"
-msgid_plural "%d archived articles"
-msgstr[0] "저장된 글(%d개)"
-
-#: include/feedbrowser.php:102
-msgid "No feeds found."
-msgstr "피드가 없습니다."
 
 #: include/functions.php:84
 msgid "Detect automatically"
 msgstr ""
 
-#: include/functions.php:952
+#: include/functions.php:958
 #, php-format
 msgid "%d min"
 msgstr ""
 
-#: include/functions.php:1148
+#: include/functions.php:1154
 msgid "Navigation"
 msgstr "이동"
 
-#: include/functions.php:1149
+#: include/functions.php:1155
 msgid "Open next feed"
 msgstr "다음 피드 열기"
 
-#: include/functions.php:1150
+#: include/functions.php:1156
 msgid "Open previous feed"
 msgstr "이전 피드 열기"
 
-#: include/functions.php:1151
+#: include/functions.php:1157
 msgid "Open next article"
 msgstr "다음 글 보기"
 
-#: include/functions.php:1152
+#: include/functions.php:1158
 msgid "Open previous article"
 msgstr "이전 글 보기"
 
-#: include/functions.php:1153
+#: include/functions.php:1159
 msgid "Open next article (don't scroll long articles)"
 msgstr "다음 글 보기 (긴 글 스크롤 하지 않음)"
 
-#: include/functions.php:1154
+#: include/functions.php:1160
 msgid "Open previous article (don't scroll long articles)"
 msgstr "이전 글 열기 (긴 글 스크롤 하지 않음)"
 
-#: include/functions.php:1155
+#: include/functions.php:1161
 msgid "Move to next article (don't expand or mark read)"
 msgstr "다음 글로 이동(펼치거나 읽음 표시하지 않음)"
 
-#: include/functions.php:1156
+#: include/functions.php:1162
 msgid "Move to previous article (don't expand or mark read)"
 msgstr "이전 글로 이동(펼치거나 읽음 표시하지 않음)"
 
-#: include/functions.php:1157
+#: include/functions.php:1163
 msgid "Show search dialog"
 msgstr "검색 기능 표시"
 
-#: include/functions.php:1158
+#: include/functions.php:1164
 msgid "Article"
 msgstr "글"
 
-#: include/functions.php:1159
-#: js/Headlines.js:1232
+#: include/functions.php:1165
+#: js/Headlines.js:1283
 msgid "Toggle starred"
 msgstr "중요 표시"
 
-#: include/functions.php:1160
-#: js/Headlines.js:1244
+#: include/functions.php:1166
+#: js/Headlines.js:1295
 msgid "Toggle published"
 msgstr "공개 설정"
 
-#: include/functions.php:1161
-#: js/Headlines.js:1219
+#: include/functions.php:1167
+#: js/Headlines.js:1270
 msgid "Toggle unread"
 msgstr "읽지 않음 표시"
 
-#: include/functions.php:1162
+#: include/functions.php:1168
 msgid "Edit tags"
 msgstr "태그 편집"
 
-#: include/functions.php:1163
+#: include/functions.php:1169
 msgid "Open in new window"
 msgstr "새창에서 열기"
 
-#: include/functions.php:1164
-#: js/Headlines.js:1265
+#: include/functions.php:1170
+#: js/Headlines.js:1316
 msgid "Mark below as read"
 msgstr "아래 글 읽음 표시"
 
-#: include/functions.php:1165
-#: js/Headlines.js:1258
+#: include/functions.php:1171
+#: js/Headlines.js:1309
 msgid "Mark above as read"
 msgstr "위 글 읽음 표시"
 
-#: include/functions.php:1166
+#: include/functions.php:1172
 msgid "Scroll down"
 msgstr "스크롤 다운"
 
-#: include/functions.php:1167
+#: include/functions.php:1173
 msgid "Scroll up"
 msgstr "위로 스크롤"
 
-#: include/functions.php:1168
+#: include/functions.php:1174
 msgid "Select article under cursor"
 msgstr "커서위치의 글 선택"
 
-#: include/functions.php:1169
+#: include/functions.php:1175
 msgid "Email article"
 msgstr "이메일로 글 전송"
 
-#: include/functions.php:1170
+#: include/functions.php:1176
 msgid "Close/collapse article"
 msgstr "글 접기/펴기"
 
-#: include/functions.php:1171
+#: include/functions.php:1177
 msgid "Toggle article expansion (combined mode)"
 msgstr "글 확장 (혼합 모드)"
 
-#: include/functions.php:1173
+#: include/functions.php:1179
 msgid "Toggle embed original"
 msgstr "원문 표시"
 
-#: include/functions.php:1174
+#: include/functions.php:1180
 msgid "Article selection"
 msgstr "글 선택"
 
-#: include/functions.php:1175
+#: include/functions.php:1181
 msgid "Select all articles"
 msgstr "전체 글 선택"
 
-#: include/functions.php:1176
+#: include/functions.php:1182
 msgid "Select unread"
 msgstr "읽지 않은 글 선택"
 
-#: include/functions.php:1177
+#: include/functions.php:1183
 msgid "Select starred"
 msgstr "중요 표시 글 선택"
 
-#: include/functions.php:1178
+#: include/functions.php:1184
 msgid "Select published"
 msgstr "공개한 글 선택"
 
-#: include/functions.php:1179
+#: include/functions.php:1185
 msgid "Invert selection"
 msgstr "선택 반전"
 
-#: include/functions.php:1180
+#: include/functions.php:1186
 msgid "Deselect everything"
 msgstr "전체 선택 해제"
 
-#: include/functions.php:1181
-#: classes/pref/feeds.php:534
-#: classes/pref/feeds.php:852
+#: include/functions.php:1187
+#: classes/pref/feeds.php:529
+#: classes/pref/feeds.php:817
 msgid "Feed"
 msgstr "피드"
 
-#: include/functions.php:1182
+#: include/functions.php:1188
 msgid "Refresh current feed"
 msgstr "이 피드 새로고침"
 
-#: include/functions.php:1183
+#: include/functions.php:1189
 msgid "Un/hide read feeds"
 msgstr "읽은 피드 숨기기/보이기"
 
-#: include/functions.php:1184
-#: classes/pref/feeds.php:1283
+#: include/functions.php:1190
+#: classes/pref/feeds.php:1233
 msgid "Subscribe to feed"
 msgstr "피드 구독"
 
-#: include/functions.php:1185
-#: js/Headlines.js:1382
+#: include/functions.php:1191
+#: js/Headlines.js:1433
 #: js/PrefFeedTree.js:56
-#: js/FeedTree.js:62
+#: js/FeedTree.js:65
 msgid "Edit feed"
 msgstr "피드 편집"
 
-#: include/functions.php:1187
+#: include/functions.php:1193
 msgid "Reverse headlines"
 msgstr "헤드라인 거꾸로 표시"
 
-#: include/functions.php:1188
+#: include/functions.php:1194
 msgid "Toggle headline grouping"
 msgstr ""
 
-#: include/functions.php:1189
+#: include/functions.php:1195
 msgid "Debug feed update"
 msgstr "피드 업데이트 디버그"
 
-#: include/functions.php:1190
+#: include/functions.php:1196
 #, fuzzy
 msgid "Debug viewfeed()"
 msgstr "피드 업데이트 디버그"
 
-#: include/functions.php:1191
-#: js/FeedTree.js:111
+#: include/functions.php:1197
+#: js/FeedTree.js:121
 msgid "Mark all feeds as read"
 msgstr "모든 피드를 읽음 표시"
 
-#: include/functions.php:1192
+#: include/functions.php:1198
 msgid "Un/collapse current category"
 msgstr "이 카테고리 접기/펴기"
 
-#: include/functions.php:1193
+#: include/functions.php:1199
 msgid "Toggle auto expand in combined mode"
 msgstr "통합 모드에서의 자동 펼침 켜기/끄기"
 
-#: include/functions.php:1194
+#: include/functions.php:1200
 msgid "Toggle combined mode"
 msgstr "통합 모드 켜기/끄기"
 
-#: include/functions.php:1195
+#: include/functions.php:1201
 msgid "Go to"
 msgstr "이동"
 
-#: include/functions.php:1196
-#: classes/feeds.php:1296
+#: include/functions.php:1202
+#: classes/feeds.php:1256
 msgid "All articles"
 msgstr "전체 글"
 
-#: include/functions.php:1197
+#: include/functions.php:1203
 msgid "Fresh"
 msgstr "새 글"
 
-#: include/functions.php:1200
-#: js/tt-rss.js:428
-#: js/tt-rss.js:507
+#: include/functions.php:1206
+#: classes/feeds.php:1260
+msgid "Recently read"
+msgstr "최근에 읽은 글"
+
+#: include/functions.php:1207
+#: js/tt-rss.js:432
+#: js/tt-rss.js:511
 msgid "Tag cloud"
 msgstr "태그 클라우드"
 
-#: include/functions.php:1202
+#: include/functions.php:1209
 msgid "Other"
 msgstr "기타"
 
-#: include/functions.php:1203
-#: classes/pref/labels.php:272
+#: include/functions.php:1210
+#: classes/pref/labels.php:266
 msgid "Create label"
 msgstr "라벨 생성"
 
-#: include/functions.php:1204
-#: classes/pref/filters.php:787
+#: include/functions.php:1211
+#: classes/pref/filters.php:785
 msgid "Create filter"
 msgstr "필터 생성"
 
-#: include/functions.php:1205
+#: include/functions.php:1212
 msgid "Un/collapse sidebar"
 msgstr "사이드바 숨김/표시"
 
-#: include/functions.php:1207
+#: include/functions.php:1214
 msgid "Show help dialog"
 msgstr "도움말 보이기"
 
-#: include/functions.php:2460
+#: include/functions.php:2465
 msgid "There is no error, the file uploaded with success"
 msgstr ""
 
-#: include/functions.php:2461
+#: include/functions.php:2466
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 
-#: include/functions.php:2462
+#: include/functions.php:2467
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
 
-#: include/functions.php:2463
+#: include/functions.php:2468
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
-#: include/functions.php:2464
+#: include/functions.php:2469
 #, fuzzy
 msgid "No file was uploaded"
 msgstr "업로드된 파일 없음."
 
-#: include/functions.php:2465
+#: include/functions.php:2470
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: include/functions.php:2466
+#: include/functions.php:2471
 msgid "Failed to write file to disk."
 msgstr ""
 
-#: include/functions.php:2467
+#: include/functions.php:2472
 msgid "A PHP extension stopped the file upload."
 msgstr ""
 
-#: include/login_form.php:80
-#: classes/handler/public.php:636
-#: classes/handler/public.php:946
+#: include/login_form.php:81
+#: classes/handler/public.php:643
+#: classes/handler/public.php:970
+#: classes/pref/users.php:55
 msgid "Login:"
 msgstr "로그인:"
 
-#: include/login_form.php:87
-#: classes/handler/public.php:643
+#: include/login_form.php:88
+#: classes/handler/public.php:650
 msgid "Password:"
 msgstr "암호:"
 
-#: include/login_form.php:95
+#: include/login_form.php:96
 msgid "I forgot my password"
 msgstr "비밀번호를 잊어버리셨나요?"
 
-#: include/login_form.php:100
+#: include/login_form.php:101
 msgid "Profile:"
 msgstr "프로필:"
 
-#: include/login_form.php:103
+#: include/login_form.php:104
 #: classes/handler/public.php:280
-#: classes/pref/prefs.php:1096
+#: classes/pref/prefs.php:1065
 #: classes/rpc.php:69
 msgid "Default profile"
 msgstr "기본 프로필"
 
-#: include/login_form.php:112
+#: include/login_form.php:113
 msgid "Use less traffic"
 msgstr ""
 
-#: include/login_form.php:116
+#: include/login_form.php:117
 msgid "Does not display images in articles, reduces automatic refreshes."
 msgstr ""
 
-#: include/login_form.php:125
+#: include/login_form.php:126
 msgid "Remember me"
 msgstr "ID/PW 저장"
 
-#: include/login_form.php:136
-#: classes/handler/public.php:656
+#: include/login_form.php:137
+#: classes/handler/public.php:663
 msgid "Log in"
 msgstr "로그인"
 
@@ -840,182 +837,97 @@ msgstr "세션 유효성 검사 실패(잘못된 IP)"
 msgid "Article not found."
 msgstr "글이 없습니다."
 
-#: classes/article.php:214
+#: classes/article.php:239
 msgid "Tags for this article (separated by commas):"
 msgstr "이 글의 태그 (쉼표로 구분)"
 
-#: classes/article.php:239
-#: classes/pref/labels.php:79
-#: classes/pref/users.php:108
-#: classes/pref/feeds.php:832
-#: classes/pref/feeds.php:1001
-#: classes/pref/filters.php:511
-#: classes/pref/prefs.php:1047
-#: plugins/nsfw/init.php:86
-#: plugins/note/init.php:56
-#: plugins/af_readability/init.php:81
-#: plugins/af_redditimgur/init.php:67
-#: plugins/af_psql_trgm/init.php:190
-#: plugins/mail/init.php:66
+#: classes/article.php:251
+#: classes/pref/feeds.php:797
+#: classes/pref/feeds.php:951
+#: classes/pref/filters.php:509
+#: classes/pref/labels.php:73
+#: classes/pref/prefs.php:1016
+#: classes/pref/users.php:114
+#: plugins/af_psql_trgm/init.php:197
+#: plugins/af_readability/init.php:91
+#: plugins/af_redditimgur/init.php:69
 #: plugins/af_zz_imgproxy/init.php:239
+#: plugins/mail/init.php:66
+#: plugins/note/init.php:53
+#: plugins/nsfw/init.php:86
 msgid "Save"
 msgstr "저장"
 
-#: classes/article.php:241
-#: classes/handler/public.php:614
-#: classes/pref/labels.php:81
-#: classes/pref/users.php:110
-#: classes/pref/feeds.php:833
-#: classes/pref/feeds.php:1004
-#: classes/pref/feeds.php:1748
-#: classes/pref/filters.php:514
-#: classes/pref/filters.php:950
-#: classes/pref/filters.php:1029
-#: classes/pref/filters.php:1122
-#: classes/pref/prefs.php:1049
-#: classes/feeds.php:720
-#: classes/feeds.php:772
-#: classes/feeds.php:814
-#: plugins/note/init.php:58
-#: plugins/mail/init.php:179
+#: classes/article.php:253
+#: classes/feeds.php:716
+#: classes/feeds.php:757
+#: classes/handler/public.php:621
+#: classes/pref/feeds.php:798
+#: classes/pref/feeds.php:954
+#: classes/pref/feeds.php:1691
+#: classes/pref/filters.php:512
+#: classes/pref/filters.php:942
+#: classes/pref/filters.php:1021
+#: classes/pref/filters.php:1114
+#: classes/pref/labels.php:75
+#: classes/pref/prefs.php:1018
+#: classes/pref/prefs.php:1115
+#: classes/pref/users.php:116
+#: plugins/mail/init.php:178
+#: plugins/note/init.php:55
 msgid "Cancel"
 msgstr "취소"
 
-#: classes/article.php:336
-#: classes/article.php:602
+#: classes/article.php:348
+#: classes/article.php:614
 msgid "no tags"
 msgstr "태그 없음"
 
-#: classes/article.php:446
+#: classes/article.php:458
 msgid "unknown type"
 msgstr "알수 없는 종류"
 
-#: classes/article.php:523
+#: classes/article.php:535
 msgid "Attachments"
 msgstr "첨부"
 
-#: classes/opml.php:28
-#: classes/opml.php:32
-msgid "OPML Utility"
-msgstr "OPML 유틸리티"
-
-#: classes/opml.php:36
-msgid "Importing OPML..."
-msgstr "OPML 불러오는중..."
-
-#: classes/opml.php:41
-msgid "Return to preferences"
-msgstr "설정으로 돌아가기"
-
-#: classes/opml.php:297
-#, php-format
-msgid "Adding feed: %s"
-msgstr "%s 피드를 추가하는중..."
-
-#: classes/opml.php:308
-#, php-format
-msgid "Duplicate feed: %s"
-msgstr "중복 피드: %s"
-
-#: classes/opml.php:322
-#, php-format
-msgid "Adding label %s"
-msgstr "%s에 라벨 추가중..."
-
-#: classes/opml.php:325
-#, php-format
-msgid "Duplicate label: %s"
-msgstr ""
-
-#: classes/opml.php:337
-#, php-format
-msgid "Setting preference key %s to %s"
-msgstr ""
-
-#: classes/opml.php:373
-msgid "Adding filter..."
-msgstr "필터를 추가하는중..."
-
-#: classes/opml.php:508
-#, php-format
-msgid "Processing category: %s"
-msgstr "카테고리 처리중: %s"
-
-#: classes/opml.php:554
-#, php-format
-msgid "Upload failed with error code %d"
-msgstr ""
-
-#: classes/opml.php:566
-#: plugins/import_export/init.php:472
-msgid "Unable to move uploaded file."
-msgstr "업로드된 파일을 이동할 수 없습니다."
-
-#: classes/opml.php:570
-#: plugins/import_export/init.php:476
-msgid "Error: please upload OPML file."
-msgstr "오류: OPML 파일을 업로드 하세요."
-
-#: classes/opml.php:581
-msgid "Error: unable to find moved OPML file."
-msgstr "오류: 이동된 OPML 파일을 찾을 수 없습니다."
-
-#: classes/opml.php:590
-msgid "Error while parsing document."
-msgstr "문서 분석중에 오류가 발생했습니다."
-
-#: classes/backend.php:32
+#: classes/backend.php:37
 msgid "Keyboard Shortcuts"
 msgstr "키보드 단축키"
 
-#: classes/backend.php:56
-#: classes/backend.php:125
+#: classes/backend.php:61
+#: classes/backend.php:130
 msgid "Shift"
 msgstr ""
 
-#: classes/backend.php:59
-#: classes/backend.php:128
+#: classes/backend.php:64
+#: classes/backend.php:133
 msgid "Ctrl"
 msgstr ""
 
-#: classes/backend.php:154
-#: classes/dlg.php:183
-#: classes/pref/filters.php:1023
-#: classes/pref/prefs.php:673
-#: classes/pref/prefs.php:896
-#: plugins/bookmarklets/init.php:43
-#, fuzzy
-msgid "More info..."
-msgstr "기타 동작..."
-
-#: classes/backend.php:157
+#: classes/backend.php:159
 #: classes/dlg.php:30
 #: classes/dlg.php:57
-#: classes/dlg.php:90
-#: classes/dlg.php:155
-#: classes/dlg.php:189
-#: classes/dlg.php:205
-#: classes/pref/feeds.php:1554
-#: classes/pref/feeds.php:1617
+#: classes/dlg.php:89
+#: classes/dlg.php:153
+#: classes/dlg.php:187
+#: classes/dlg.php:203
+#: classes/pref/feeds.php:1499
+#: classes/pref/feeds.php:1559
 #: classes/pref/filters.php:175
-#: classes/pref/prefs.php:1149
 #: plugins/af_psql_trgm/init.php:111
-#: plugins/import_export/init.php:447
-#: plugins/import_export/init.php:491
+#: plugins/import_export/init.php:468
+#: plugins/import_export/init.php:512
 #: plugins/share/init.php:133
 msgid "Close this window"
 msgstr "이 창 닫기"
-
-#: classes/dlg.php:17
-msgid "If you have imported labels and/or filters, you might need to reload preferences to see your new data."
-msgstr ""
 
 #: classes/dlg.php:41
 msgid "Your Public OPML URL is:"
 msgstr "공개 OPML URL: "
 
 #: classes/dlg.php:54
-#: classes/dlg.php:186
+#: classes/dlg.php:184
 #: plugins/share/init.php:130
 msgid "Generate new URL"
 msgstr "새 URL 생성"
@@ -1033,175 +945,884 @@ msgstr "마지막 업데이트:"
 msgid "Update daemon is taking too long to perform a feed update. This could indicate a problem like crash or a hang. Please check the daemon process or contact instance owner."
 msgstr ""
 
-#: classes/dlg.php:172
+#: classes/dlg.php:170
 #, php-format
 msgid "%s can be accessed via the following secret URL:"
 msgstr ""
 
-#: classes/dlg.php:198
+#: classes/dlg.php:181
+#: classes/pref/filters.php:1015
+#: classes/pref/prefs.php:683
+#: classes/pref/prefs.php:806
+#: classes/pref/prefs.php:852
+#: classes/pref/prefs.php:867
+#: plugins/bookmarklets/init.php:45
+#, fuzzy
+msgid "More info..."
+msgstr "기타 동작..."
+
+#: classes/dlg.php:196
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
 msgstr ""
 
-#: classes/dlg.php:202
+#: classes/dlg.php:200
 #, fuzzy
 msgid "Open Preferences"
 msgstr "설정"
 
-#: classes/handler/public.php:530
-#: plugins/bookmarklets/init.php:39
+#: classes/feeds.php:34
+#: classes/feeds.php:35
+#: classes/feeds.php:99
+#: classes/feeds.php:100
+#: classes/pref/feeds.php:1371
+#, fuzzy
+msgid "Show as feed"
+msgstr "이 피드"
+
+#: classes/feeds.php:41
+#, php-format
+msgid "Last updated: %s"
+msgstr "마지막 업데이트: %s"
+
+#: classes/feeds.php:60
+#, fuzzy
+msgid "Select..."
+msgstr "선택"
+
+#: classes/feeds.php:62
+#: classes/pref/feeds.php:1224
+#: classes/pref/feeds.php:1457
+#: classes/pref/feeds.php:1514
+#: classes/pref/filters.php:363
+#: classes/pref/filters.php:423
+#: classes/pref/filters.php:779
+#: classes/pref/filters.php:865
+#: classes/pref/filters.php:894
+#: classes/pref/labels.php:260
+#: classes/pref/prefs.php:1030
+#: classes/pref/users.php:343
+msgid "All"
+msgstr "전체"
+
+#: classes/feeds.php:64
+msgid "Invert"
+msgstr "선택 반전"
+
+#: classes/feeds.php:65
+#: classes/pref/feeds.php:1226
+#: classes/pref/feeds.php:1459
+#: classes/pref/feeds.php:1516
+#: classes/pref/filters.php:365
+#: classes/pref/filters.php:425
+#: classes/pref/filters.php:781
+#: classes/pref/filters.php:867
+#: classes/pref/filters.php:896
+#: classes/pref/labels.php:262
+#: classes/pref/prefs.php:1032
+#: classes/pref/users.php:345
+msgid "None"
+msgstr "선택 안 함"
+
+#: classes/feeds.php:67
+msgid "Selection toggle:"
+msgstr "선택/선택해제:"
+
+#: classes/feeds.php:73
+msgid "Selection:"
+msgstr "선택:"
+
+#: classes/feeds.php:76
+msgid "Set score"
+msgstr "점수 매기기"
+
+#: classes/feeds.php:79
+msgid "Move back"
+msgstr "돌아가기"
+
+#: classes/feeds.php:80
+#: classes/pref/filters.php:372
+#: classes/pref/filters.php:432
+#: classes/pref/filters.php:874
+#: classes/pref/filters.php:903
+msgid "Delete"
+msgstr "삭제"
+
+#: classes/feeds.php:82
+msgid "Archive"
+msgstr "보관 처리"
+
+#: classes/feeds.php:86
+#: classes/feeds.php:91
+#: plugins/mail/init.php:76
+#: plugins/mailto/init.php:24
+msgid "Forward by email"
+msgstr "이메일로 전달"
+
+#: classes/feeds.php:95
+msgid "Feed:"
+msgstr "피드"
+
+#: classes/feeds.php:149
+#: classes/feeds.php:506
+msgid "Feed not found."
+msgstr "피드가 없습니다."
+
+#: classes/feeds.php:209
+msgid "Never"
+msgstr "영원히"
+
+#: classes/feeds.php:260
+#: classes/feeds.php:1258
+msgid "Archived articles"
+msgstr "보관 처리된 글"
+
+#: classes/feeds.php:320
+msgid "Collapse article"
+msgstr "글 접기"
+
+#: classes/feeds.php:345
+#, php-format
+msgid "Imported at %s"
+msgstr "%s에서 불러옴"
+
+#: classes/feeds.php:397
+msgid "No unread articles found to display."
+msgstr "읽지 않은 글이 없습니다."
+
+#: classes/feeds.php:400
+msgid "No updated articles found to display."
+msgstr "업데이트된 글이 없습니다."
+
+#: classes/feeds.php:403
+msgid "No starred articles found to display."
+msgstr "중요 표시된 글이 없습니다."
+
+#: classes/feeds.php:407
+msgid "No articles found to display. You can assign articles to labels manually from article header context menu (applies to all selected articles) or use a filter."
+msgstr "표시할 글이 없습니다. 필터를 사용하거나 글 제목을 우클릭해서 라벨을 추가할 수 있습니다."
+
+#: classes/feeds.php:409
+msgid "No articles found to display."
+msgstr "표시할 글이 없습니다."
+
+#: classes/feeds.php:426
+#: classes/feeds.php:603
+#, php-format
+msgid "Feeds last updated at %s"
+msgstr "%s에 마지막으로 업데이트 되었습니다."
+
+#: classes/feeds.php:438
+#: classes/feeds.php:615
+msgid "Some feeds have update errors (click for details)"
+msgstr "일부 피드에 업데이트 오류가 있습니다 (상세 정보는 클릭)"
+
+#: classes/feeds.php:592
+msgid "No feed selected."
+msgstr "선택된 피드가 없습니다."
+
+#: classes/feeds.php:659
+msgid "Feed or site URL"
+msgstr "피드나 사이트 URL"
+
+#: classes/feeds.php:667
+#: classes/pref/feeds.php:571
+#: classes/pref/feeds.php:826
+#: classes/pref/feeds.php:1664
+msgid "Place in category:"
+msgstr "카테고리 위치:"
+
+#: classes/feeds.php:676
+msgid "Available feeds"
+msgstr "사용 가능한 피드"
+
+#: classes/feeds.php:693
+#: classes/pref/feeds.php:657
+#: classes/pref/feeds.php:891
+#: classes/pref/feeds.php:1676
+#: classes/pref/users.php:387
+msgid "Login"
+msgstr "로그인"
+
+#: classes/feeds.php:697
+#: classes/pref/feeds.php:665
+#: classes/pref/feeds.php:899
+#: classes/pref/feeds.php:1677
+#: classes/pref/prefs.php:289
+msgid "Password"
+msgstr "암호"
+
+#: classes/feeds.php:709
+#: classes/pref/feeds.php:680
+msgid "This feed requires authentication."
+msgstr "이 피드는 로그인이 필요합니다."
+
+#: classes/feeds.php:714
+#: classes/handler/public.php:792
+#: classes/pref/feeds.php:1690
+msgid "Subscribe"
+msgstr "구독"
+
+#: classes/feeds.php:735
+#, fuzzy, php-format
+msgid "Search %s..."
+msgstr "검색..."
+
+#: classes/feeds.php:741
+#: classes/pref/feeds.php:603
+#: classes/pref/feeds.php:841
+#, fuzzy
+msgid "Language:"
+msgstr "언어"
+
+#: classes/feeds.php:743
+msgid "Used for word stemming"
+msgstr ""
+
+#: classes/feeds.php:753
+msgid "Search syntax"
+msgstr "문법 "
+
+#: classes/feeds.php:756
+#: classes/pref/feeds.php:1217
+#: classes/pref/filters.php:772
+#: classes/pref/users.php:330
+#: js/Feeds.js:550
+msgid "Search"
+msgstr "검색"
+
+#: classes/feeds.php:1250
+msgid "Starred articles"
+msgstr "중요 표시된 글"
+
+#: classes/feeds.php:1252
+msgid "Published articles"
+msgstr "공개 글"
+
+#: classes/feeds.php:1254
+msgid "Fresh articles"
+msgstr "새 글"
+
+#: classes/feeds.php:1381
+msgid "Special"
+msgstr "자동 분류"
+
+#: classes/feeds.php:1472
+#, php-format
+msgid "Incorrect search syntax: %s."
+msgstr ""
+
+#: classes/feeds.php:1657
+#, php-format
+msgid "Search results: %s"
+msgstr "검색 결과: %s"
+
+#: classes/handler/public.php:537
+#: plugins/bookmarklets/init.php:41
 msgid "Share with Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS에 공유하기"
 
-#: classes/handler/public.php:588
+#: classes/handler/public.php:595
 msgid "Title:"
 msgstr "제목:"
 
-#: classes/handler/public.php:593
-#: classes/pref/feeds.php:553
+#: classes/handler/public.php:600
+#: classes/pref/feeds.php:548
 msgid "URL:"
 msgstr "URL:"
 
-#: classes/handler/public.php:598
+#: classes/handler/public.php:605
 msgid "Content:"
 msgstr "내용:"
 
-#: classes/handler/public.php:603
+#: classes/handler/public.php:610
 msgid "Labels:"
 msgstr "라벨:"
 
-#: classes/handler/public.php:613
+#: classes/handler/public.php:620
 msgid "Share"
 msgstr "공유"
 
-#: classes/handler/public.php:615
+#: classes/handler/public.php:622
 msgid "Shared article will appear in the Published feed."
 msgstr "공유된 글은 공개된 피드에 표시됩니다."
 
-#: classes/handler/public.php:709
+#: classes/handler/public.php:716
 msgid "Incorrect username or password"
 msgstr "잘못된 사용자명 / 암호입니다."
 
-#: classes/handler/public.php:781
+#: classes/handler/public.php:805
 #, php-format
 msgid "Already subscribed to <b>%s</b>."
 msgstr "<b>%s</b>는 이미 구독중입니다."
 
-#: classes/handler/public.php:784
+#: classes/handler/public.php:808
 #, php-format
 msgid "Subscribed to <b>%s</b>."
 msgstr "<b>%s</b>를 구독했습니다."
 
-#: classes/handler/public.php:787
+#: classes/handler/public.php:811
 #, php-format
 msgid "Could not subscribe to <b>%s</b>."
 msgstr "<b>%s</b>를 구독하는데 실패했습니다."
 
-#: classes/handler/public.php:790
+#: classes/handler/public.php:814
 #, php-format
 msgid "No feeds found in <b>%s</b>."
 msgstr "<b>%s</b>에서 피드를 찾지 못했습니다."
 
-#: classes/handler/public.php:796
+#: classes/handler/public.php:820
 #, php-format
 msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "<b>%s</b>를 구독하는데 실패했습니다. <br>피드 URL을 다운로드 할 수 없습니다."
 
-#: classes/handler/public.php:806
+#: classes/handler/public.php:830
 #, fuzzy
 msgid "Multiple feed URLs found:"
 msgstr "여러개의 피드를 찾았습니다."
 
-#: classes/handler/public.php:817
+#: classes/handler/public.php:843
 msgid "Subscribe to selected feed"
 msgstr "선택된 피드 구독"
 
-#: classes/handler/public.php:842
+#: classes/handler/public.php:867
 msgid "Edit subscription options"
 msgstr "구독 옵션 편집"
 
-#: classes/handler/public.php:896
+#: classes/handler/public.php:920
 msgid "Password recovery"
 msgstr "암호 복구"
 
-#: classes/handler/public.php:939
+#: classes/handler/public.php:963
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
 msgstr ""
 
-#: classes/handler/public.php:959
+#: classes/handler/public.php:983
 #, fuzzy, php-format
 msgid "How much is %d + %d:"
 msgstr "2 + 2 = ？"
 
-#: classes/handler/public.php:965
-#: classes/pref/users.php:376
+#: classes/handler/public.php:989
+#: classes/pref/users.php:356
 msgid "Reset password"
 msgstr "암호 초기화"
 
-#: classes/handler/public.php:977
+#: classes/handler/public.php:1001
 msgid "Some of the required form parameters are missing or incorrect."
 msgstr "일부 필수 파라미터가 누락되었거나 잘못되었습니다."
 
-#: classes/handler/public.php:981
-#: classes/handler/public.php:1049
+#: classes/handler/public.php:1005
+#: classes/handler/public.php:1071
 msgid "Go back"
 msgstr "돌아가기"
 
-#: classes/handler/public.php:1023
+#: classes/handler/public.php:1047
 #, fuzzy
 msgid "[tt-rss] Password reset request"
 msgstr "[tt-rss] 암호 변경 안내"
 
-#: classes/handler/public.php:1045
+#: classes/handler/public.php:1067
 msgid "Sorry, login and email combination not found."
 msgstr "로그인/이메일 정보가 없습니다."
 
-#: classes/handler/public.php:1068
+#: classes/handler/public.php:1090
 msgid "Your access level is insufficient to run this script."
 msgstr "현재 계정 권한으로는 이 스크립트를 실행할 수 없습니다."
 
-#: classes/handler/public.php:1108
+#: classes/handler/public.php:1131
 msgid "Database Updater"
 msgstr "데이터베이스 업데이터"
 
-#: classes/handler/public.php:1119
-#, fuzzy
-msgid "Performing updates"
+#: classes/handler/public.php:1142
+#, fuzzy, php-format
+msgid "Performing updates to version %d"
 msgstr "更新を実行しています..."
 
-#: classes/handler/public.php:1121
+#: classes/handler/public.php:1147
 #, fuzzy, php-format
-msgid "Updating to schema version %d"
+msgid "Updating to version %d"
 msgstr "バージョン %d を確認しています..."
 
-#: classes/handler/public.php:1126
-#, fuzzy, php-format
-msgid "Performing update up to version %d..."
-msgstr "更新を実行しています..."
-
-#: classes/handler/public.php:1131
-msgid "FAILED!"
+#: classes/handler/public.php:1160
+msgid "Try again"
 msgstr ""
 
-#: classes/handler/public.php:1139
-msgid "OK!"
-msgstr "OK!"
+#: classes/handler/public.php:1166
+msgid "Completed."
+msgstr "完了しました"
 
-#: classes/handler/public.php:1157
-#, fuzzy
-msgid "Database update required"
-msgstr "데이터베이스 업데이터"
+#: classes/handler/public.php:1183
+#, fuzzy, php-format
+msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
+msgstr "Tiny Tiny RSS は最新のバージョンに更新する必要があります (<b>%d</b> から <b>%d</b>)。"
 
-#: classes/handler/public.php:1168
+#: classes/handler/public.php:1195
 msgid "Perform updates"
 msgstr "업데이트 실행"
 
-#: classes/pref/labels.php:25
+#: classes/opml.php:28
+#: classes/opml.php:32
+msgid "OPML Utility"
+msgstr "OPML 유틸리티"
+
+#: classes/opml.php:36
+msgid "Importing OPML..."
+msgstr "OPML 불러오는중..."
+
+#: classes/opml.php:41
+msgid "Return to preferences"
+msgstr "설정으로 돌아가기"
+
+#: classes/opml.php:316
+#, php-format
+msgid "Adding feed: %s"
+msgstr "%s 피드를 추가하는중..."
+
+#: classes/opml.php:333
+#, php-format
+msgid "Duplicate feed: %s"
+msgstr "중복 피드: %s"
+
+#: classes/opml.php:347
+#, php-format
+msgid "Adding label %s"
+msgstr "%s에 라벨 추가중..."
+
+#: classes/opml.php:350
+#, php-format
+msgid "Duplicate label: %s"
+msgstr ""
+
+#: classes/opml.php:362
+#, php-format
+msgid "Setting preference key %s to %s"
+msgstr ""
+
+#: classes/opml.php:398
+#, fuzzy, php-format
+msgid "Adding filter %s..."
+msgstr "필터를 추가하는중..."
+
+#: classes/opml.php:536
+#, php-format
+msgid "Processing category: %s"
+msgstr "카테고리 처리중: %s"
+
+#: classes/opml.php:582
+#, php-format
+msgid "Upload failed with error code %d"
+msgstr ""
+
+#: classes/opml.php:594
+#: plugins/import_export/init.php:493
+msgid "Unable to move uploaded file."
+msgstr "업로드된 파일을 이동할 수 없습니다."
+
+#: classes/opml.php:598
+#: plugins/import_export/init.php:497
+msgid "Error: please upload OPML file."
+msgstr "오류: OPML 파일을 업로드 하세요."
+
+#: classes/opml.php:609
+msgid "Error: unable to find moved OPML file."
+msgstr "오류: 이동된 OPML 파일을 찾을 수 없습니다."
+
+#: classes/opml.php:618
+msgid "Error while parsing document."
+msgstr "문서 분석중에 오류가 발생했습니다."
+
+#: classes/pref/feeds.php:28
+msgid "Check to enable field"
+msgstr "필드 활성화 확인"
+
+#: classes/pref/feeds.php:77
+#: classes/pref/feeds.php:232
+#: classes/pref/feeds.php:280
+#: classes/pref/feeds.php:286
+#: classes/pref/feeds.php:315
+#, php-format
+msgid "(%d feed)"
+msgid_plural "(%d feeds)"
+msgstr[0] "(%d개의 피드)"
+
+#: classes/pref/feeds.php:521
+#: classes/pref/prefs.php:20
+msgid "General"
+msgstr "일반"
+
+#: classes/pref/feeds.php:537
+msgid "Feed Title"
+msgstr "피드 제목"
+
+#: classes/pref/feeds.php:550
+msgid "Feed URL"
+msgstr "피드 주소"
+
+#: classes/pref/feeds.php:585
+#, fuzzy
+msgid "Site URL:"
+msgstr "サイト:"
+
+#: classes/pref/feeds.php:587
+#, fuzzy
+msgid "Site URL"
+msgstr "피드 주소"
+
+#: classes/pref/feeds.php:612
+#: classes/pref/feeds.php:852
+msgid "Update"
+msgstr "업데이트"
+
+#: classes/pref/feeds.php:621
+#: classes/pref/feeds.php:859
+#, fuzzy
+msgid "Interval:"
+msgstr "인터페이스"
+
+#: classes/pref/feeds.php:634
+#: classes/pref/feeds.php:874
+msgid "Article purging:"
+msgstr "글을 유지:"
+
+#: classes/pref/feeds.php:651
+#: classes/pref/feeds.php:885
+#: classes/pref/feeds.php:1673
+#: classes/pref/users.php:63
+#: plugins/auth_internal/init.php:60
+msgid "Authentication"
+msgstr "인증"
+
+#: classes/pref/feeds.php:669
+msgid "<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds."
+msgstr ""
+
+#: classes/pref/feeds.php:682
+#: classes/pref/feeds.php:907
+#: classes/pref/filters.php:459
+#: classes/pref/filters.php:913
+#: classes/pref/users.php:90
+msgid "Options"
+msgstr "옵션"
+
+#: classes/pref/feeds.php:698
+#: classes/pref/feeds.php:912
+msgid "Include in e-mail digest"
+msgstr "이메일 요약에 포함"
+
+#: classes/pref/feeds.php:714
+#: classes/pref/feeds.php:919
+msgid "Always display image attachments"
+msgstr ""
+
+#: classes/pref/feeds.php:729
+#: classes/pref/feeds.php:926
+#: classes/pref/prefs.php:97
+#, fuzzy
+msgid "Do not embed media"
+msgstr "글에 이미지 삽입하지 않음"
+
+#: classes/pref/feeds.php:744
+#: classes/pref/feeds.php:933
+msgid "Cache media"
+msgstr ""
+
+#: classes/pref/feeds.php:759
+#: classes/pref/feeds.php:940
+msgid "Mark updated articles as unread"
+msgstr "업데이트된 글을 읽지 않음 표시"
+
+#: classes/pref/feeds.php:763
+msgid "Icon"
+msgstr "아이콘"
+
+#: classes/pref/feeds.php:771
+#: classes/pref/feeds.php:1324
+#: plugins/import_export/init.php:72
+#, fuzzy
+msgid "Choose file..."
+msgstr "필터 만들기..."
+
+#: classes/pref/feeds.php:778
+msgid "Replace"
+msgstr ""
+
+#: classes/pref/feeds.php:780
+#: classes/pref/filters.php:502
+#: classes/pref/filters.php:798
+#: classes/pref/labels.php:269
+#: classes/pref/users.php:354
+msgid "Remove"
+msgstr "삭제"
+
+#: classes/pref/feeds.php:785
+#: classes/pref/prefs.php:745
+msgid "Plugins"
+msgstr "플러그인"
+
+#: classes/pref/feeds.php:1192
+msgid "Feeds with errors"
+msgstr "오류가 있는 피드"
+
+#: classes/pref/feeds.php:1199
+msgid "Inactive feeds"
+msgstr "피드 비활성화"
+
+#: classes/pref/feeds.php:1221
+#: classes/pref/feeds.php:1454
+#: classes/pref/feeds.php:1511
+#: classes/pref/filters.php:360
+#: classes/pref/filters.php:420
+#: classes/pref/filters.php:776
+#: classes/pref/filters.php:862
+#: classes/pref/filters.php:891
+#: classes/pref/labels.php:257
+#: classes/pref/prefs.php:1027
+#: classes/pref/users.php:340
+msgid "Select"
+msgstr "선택"
+
+#: classes/pref/feeds.php:1235
+msgid "Edit selected feeds"
+msgstr "선택된 피드 편집"
+
+#: classes/pref/feeds.php:1237
+#: classes/pref/feeds.php:1251
+#: classes/pref/filters.php:794
+msgid "Reset sort order"
+msgstr "정렬 순서 초기화"
+
+#: classes/pref/feeds.php:1239
+#: js/PrefFeedTree.js:347
+msgid "Batch subscribe"
+msgstr "일괄 구독"
+
+#: classes/pref/feeds.php:1246
+msgid "Categories"
+msgstr "카테고리"
+
+#: classes/pref/feeds.php:1249
+msgid "Add category"
+msgstr "카테고리 추가"
+
+#: classes/pref/feeds.php:1253
+msgid "Remove selected"
+msgstr "선택된 항목 제거"
+
+#: classes/pref/feeds.php:1311
+msgid "OPML"
+msgstr "OPML"
+
+#: classes/pref/feeds.php:1313
+msgid "Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings."
+msgstr "OPML을 사용하면 피드/필터/라벨/설정을 내보내고 불러올 수 있습니다."
+
+#: classes/pref/feeds.php:1330
+#, fuzzy
+msgid "Import OPML"
+msgstr "내 OPML 불러오기"
+
+#: classes/pref/feeds.php:1338
+msgid "Export OPML"
+msgstr "OPML 내보내기"
+
+#: classes/pref/feeds.php:1342
+msgid "Include settings"
+msgstr "설정 포함"
+
+#: classes/pref/feeds.php:1349
+#, fuzzy
+msgid "Published OPML"
+msgstr "공개됨"
+
+#: classes/pref/feeds.php:1351
+msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
+msgstr "사용중인 OPML을 공개하면, 누구든 아래 URL만으로 구독할 수 있습니다."
+
+#: classes/pref/feeds.php:1353
+msgid "Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds."
+msgstr ""
+
+#: classes/pref/feeds.php:1355
+msgid "Public OPML URL"
+msgstr ""
+
+#: classes/pref/feeds.php:1356
+msgid "Display published OPML URL"
+msgstr "공개 OPML URL 표시"
+
+#: classes/pref/feeds.php:1364
+msgid "Published & shared articles / Generated feeds"
+msgstr "공개, 공유된 글 / 생성된 피드"
+
+#: classes/pref/feeds.php:1366
+#, fuzzy
+msgid "Published articles can be subscribed by anyone who knows the following URL:"
+msgstr "사용중인 OPML을 공개하면, 누구든 아래 URL만으로 구독할 수 있습니다."
+
+#: classes/pref/feeds.php:1372
+msgid "Display URL"
+msgstr "URL 표시"
+
+#: classes/pref/feeds.php:1375
+msgid "Clear all generated URLs"
+msgstr "이미 만들어진 URL 제거"
+
+#: classes/pref/feeds.php:1480
+#: classes/pref/feeds.php:1537
+msgid "Click to edit feed"
+msgstr "클릭하여 피드 편집"
+
+#: classes/pref/feeds.php:1497
+#: classes/pref/feeds.php:1556
+msgid "Unsubscribe from selected feeds"
+msgstr "선택된 피드 구독 해제 중..."
+
+#: classes/pref/feeds.php:1655
+msgid "One valid feed per line (no detection is done)"
+msgstr ""
+
+#: classes/pref/feeds.php:1686
+msgid "Feeds require authentication."
+msgstr "인증이 필요한 피드"
+
+#: classes/pref/filters.php:234
+#: classes/pref/filters.php:557
+msgid "(inverse)"
+msgstr "반전"
+
+#: classes/pref/filters.php:230
+#: classes/pref/filters.php:556
+#, php-format
+msgid "%s on %s in %s %s"
+msgstr ""
+
 #: classes/pref/filters.php:349
-#: classes/pref/filters.php:852
+#: classes/pref/filters.php:850
+#: classes/pref/labels.php:25
 msgid "Caption"
 msgstr "자막"
 
-#: classes/pref/labels.php:37
+#: classes/pref/filters.php:354
+#: classes/pref/filters.php:856
+#: classes/pref/filters.php:974
+msgid "Match"
+msgstr "일치"
+
+#: classes/pref/filters.php:369
+#: classes/pref/filters.php:429
+#: classes/pref/filters.php:871
+#: classes/pref/filters.php:900
+msgid "Add"
+msgstr "추가"
+
+#: classes/pref/filters.php:413
+#: classes/pref/filters.php:884
+msgid "Apply actions"
+msgstr "동작 적용"
+
+#: classes/pref/filters.php:470
+#: classes/pref/filters.php:919
+msgid "Enabled"
+msgstr "활성화"
+
+#: classes/pref/filters.php:481
+#: classes/pref/filters.php:924
+msgid "Match any rule"
+msgstr "아무 규칙이나 적용"
+
+#: classes/pref/filters.php:492
+#: classes/pref/filters.php:929
+msgid "Inverse matching"
+msgstr "반대 적용"
+
+#: classes/pref/filters.php:506
+#: classes/pref/filters.php:938
+msgid "Test"
+msgstr "테스트"
+
+#: classes/pref/filters.php:788
+msgid "Combine"
+msgstr "병합"
+
+#: classes/pref/filters.php:791
+#: classes/pref/users.php:352
+msgid "Edit"
+msgstr "편집"
+
+#: classes/pref/filters.php:940
+msgid "Create"
+msgstr "생성"
+
+#: classes/pref/filters.php:984
+msgid "Regular expression, without outer delimiters (i.e. slashes)"
+msgstr ""
+
+#: classes/pref/filters.php:990
+msgid "Inverse regular expression matching"
+msgstr ""
+
+#: classes/pref/filters.php:994
+msgid "on field"
+msgstr "필드"
+
+#: classes/pref/filters.php:997
+#: js/PrefFilterTree.js:45
+msgid "in"
+msgstr ""
+
+#: classes/pref/filters.php:1018
+msgid "Save rule"
+msgstr "규칙 저장"
+
+#: classes/pref/filters.php:1018
+#: js/CommonFilters.js:133
+msgid "Add rule"
+msgstr "규칙 추가"
+
+#: classes/pref/filters.php:1041
+msgid "Perform Action"
+msgstr "동작 실행"
+
+#: classes/pref/filters.php:1092
+#, fuzzy
+msgid "No actions available"
+msgstr "새 버전 나왔어요!"
+
+#: classes/pref/filters.php:1111
+msgid "Save action"
+msgstr "저장 동작"
+
+#: classes/pref/filters.php:1111
+#: js/CommonFilters.js:155
+msgid "Add action"
+msgstr "동작 추가"
+
+#: classes/pref/filters.php:1139
+msgid "[No caption]"
+msgstr "[자막 없음]"
+
+#: classes/pref/filters.php:1141
+#, fuzzy, php-format
+msgid "%s (%d rule)"
+msgid_plural "%s (%d rules)"
+msgstr[0] "규칙 추가"
+
+#: classes/pref/filters.php:1155
+#, fuzzy
+msgid "matches any rule"
+msgstr "아무 규칙이나 적용"
+
+#: classes/pref/filters.php:1156
+#, fuzzy
+msgid "inverse"
+msgstr "반전"
+
+#: classes/pref/filters.php:1159
+#, fuzzy, php-format
+msgid "%s (+%d action)"
+msgid_plural "%s (+%d actions)"
+msgstr[0] "동작 추가"
+
+#: classes/pref/labels.php:38
 msgid "Colors"
 msgstr "색깔"
 
@@ -1213,204 +1834,435 @@ msgstr "전면색"
 msgid "Background:"
 msgstr "배경색"
 
-#: classes/pref/labels.php:237
+#: classes/pref/labels.php:231
 #, php-format
 msgid "Created label <b>%s</b>"
 msgstr "<b>%s</b> 라벨이 생성되었습니다."
 
-#: classes/pref/labels.php:263
-#: classes/pref/users.php:360
-#: classes/pref/feeds.php:1271
-#: classes/pref/feeds.php:1506
-#: classes/pref/feeds.php:1567
-#: classes/pref/filters.php:362
-#: classes/pref/filters.php:422
-#: classes/pref/filters.php:778
-#: classes/pref/filters.php:865
-#: classes/pref/filters.php:895
-#: classes/pref/prefs.php:1058
-msgid "Select"
-msgstr "선택"
-
-#: classes/pref/labels.php:266
-#: classes/pref/users.php:363
-#: classes/pref/feeds.php:1274
-#: classes/pref/feeds.php:1509
-#: classes/pref/feeds.php:1570
-#: classes/pref/filters.php:365
-#: classes/pref/filters.php:425
-#: classes/pref/filters.php:781
-#: classes/pref/filters.php:868
-#: classes/pref/filters.php:898
-#: classes/pref/prefs.php:1061
-#: classes/feeds.php:62
-msgid "All"
-msgstr "전체"
-
-#: classes/pref/labels.php:268
-#: classes/pref/users.php:365
-#: classes/pref/feeds.php:1276
-#: classes/pref/feeds.php:1511
-#: classes/pref/feeds.php:1572
-#: classes/pref/filters.php:367
-#: classes/pref/filters.php:427
-#: classes/pref/filters.php:783
-#: classes/pref/filters.php:870
-#: classes/pref/filters.php:900
-#: classes/pref/prefs.php:1063
-#: classes/feeds.php:65
-msgid "None"
-msgstr "선택 안 함"
-
-#: classes/pref/labels.php:275
-#: classes/pref/users.php:374
-#: classes/pref/feeds.php:811
-#: classes/pref/filters.php:504
-#: classes/pref/filters.php:800
-#: classes/feeds.php:771
-msgid "Remove"
-msgstr "삭제"
-
-#: classes/pref/labels.php:278
+#: classes/pref/labels.php:272
 msgid "Clear colors"
 msgstr "색 정리"
 
-#: classes/pref/users.php:6
-#: classes/pref/system.php:8
-msgid "Your access level is insufficient to open this tab."
-msgstr "현재 계정 권한으로는 이 탭을 사용할 수 없습니다."
-
-#: classes/pref/users.php:26
+#: classes/pref/prefs.php:41
 #, fuzzy
-msgid "Edit user"
-msgstr "규칙 편집"
+msgid "Articles"
+msgstr "글"
 
-#: classes/pref/users.php:61
-#: classes/pref/feeds.php:653
-#: classes/pref/feeds.php:920
-#: classes/pref/feeds.php:1730
-#: classes/feeds.php:690
-#: plugins/auth_internal/init.php:58
-msgid "Authentication"
-msgstr "인증"
+#: classes/pref/prefs.php:54
+msgid "Digest"
+msgstr ""
 
-#: classes/pref/users.php:66
-msgid "Access level: "
+#: classes/pref/prefs.php:59
+msgid "Advanced"
+msgstr "고급"
+
+#: classes/pref/prefs.php:70
+msgid "Allow duplicate articles"
+msgstr "글 중복 허용"
+
+#: classes/pref/prefs.php:71
+msgid "Blacklisted tags"
+msgstr "블랙리스트된 태그"
+
+#: classes/pref/prefs.php:71
+msgid "Never apply these tags automatically (comma-separated list)."
+msgstr ""
+
+#: classes/pref/prefs.php:72
+#, fuzzy
+msgid "Default language"
+msgstr "기본 프로필"
+
+#: classes/pref/prefs.php:72
+msgid "Used for full-text search"
+msgstr ""
+
+#: classes/pref/prefs.php:73
+#, fuzzy
+msgid "Mark read on scroll"
+msgstr "모든 글을 읽음 표시 할까요?"
+
+#: classes/pref/prefs.php:73
+#, fuzzy
+msgid "Mark articles as read as you scroll past them"
+msgstr "모든 글을 읽음 표시 할까요?"
+
+#: classes/pref/prefs.php:74
+#, fuzzy
+msgid "Always expand articles"
+msgstr "글을 펼쳐보려면 클릭하세요"
+
+#: classes/pref/prefs.php:75
+#, fuzzy
+msgid "Combined mode"
+msgstr "통합 모드 켜기/끄기"
+
+#: classes/pref/prefs.php:75
+#, fuzzy
+msgid "Show flat list of articles instead of separate panels"
+msgstr "제목하고 내용을 분리해서 표시하지 않고, 피드 내용의 펼쳐진 목록을 보여줍니다."
+
+#: classes/pref/prefs.php:76
+#, fuzzy
+msgid "Confirm marking feeds as read"
+msgstr "피드를 읽음표시 할 때 물어봄"
+
+#: classes/pref/prefs.php:77
+msgid "Amount of articles to display at once"
+msgstr "한 번에 표시할 글의 수"
+
+#: classes/pref/prefs.php:78
+#, fuzzy
+msgid "Default update interval"
+msgstr "피드 업데이트 주기"
+
+#: classes/pref/prefs.php:79
+#, fuzzy
+msgid "Mark sent articles as read"
+msgstr "모든 글을 읽음 표시 할까요?"
+
+#: classes/pref/prefs.php:80
+#, fuzzy
+msgid "Enable digest"
+msgstr "이메일 요약본 활성화"
+
+#: classes/pref/prefs.php:80
+msgid "Send daily digest of new (and unread) headlines to your e-mail address"
+msgstr ""
+
+#: classes/pref/prefs.php:81
+#, fuzzy
+msgid "Try to send around this time"
+msgstr "특정 시간에 이메일 요약본 전송"
+
+#: classes/pref/prefs.php:81
+#, fuzzy
+msgid "Time in UTC"
+msgstr "시간대"
+
+#: classes/pref/prefs.php:82
+#, fuzzy
+msgid "Enable API"
+msgstr "OTP 활성화"
+
+#: classes/pref/prefs.php:82
+msgid "Allows accessing this account through the API"
+msgstr ""
+
+#: classes/pref/prefs.php:83
+#, fuzzy
+msgid "Enable categories"
+msgstr "フィードカテゴリーを有効にする"
+
+#: classes/pref/prefs.php:84
+msgid "Sort feeds by unread articles count"
+msgstr "읽지 않은 글 수에 따라 피드 정렬"
+
+#: classes/pref/prefs.php:85
+#, fuzzy
+msgid "Maximum age of fresh articles"
+msgstr "새 글로 표시할 기준(시간)"
+
+#: classes/pref/prefs.php:85
+#, fuzzy
+msgid "hours"
+msgstr "4시간마다"
+
+#: classes/pref/prefs.php:86
+#, fuzzy
+msgid "Hide read feeds"
+msgstr "읽은 피드 숨기기/보이기"
+
+#: classes/pref/prefs.php:87
+msgid "Always show special feeds"
+msgstr ""
+
+#: classes/pref/prefs.php:87
+#, fuzzy
+msgid "While hiding read feeds"
+msgstr "자동분류에서는 다 읽은 피드를 숨기지 않음"
+
+#: classes/pref/prefs.php:88
+msgid "Long date format"
+msgstr "긴 날짜 형식"
+
+#: classes/pref/prefs.php:88
+msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
+msgstr ""
+
+#: classes/pref/prefs.php:89
+#, fuzzy
+msgid "Automatically show next feed"
+msgstr "다시 볼 때 다음 피드를 표시"
+
+#: classes/pref/prefs.php:89
+#, fuzzy
+msgid "After marking one as read"
+msgstr "피드를 읽음표시 할 때 물어봄"
+
+#: classes/pref/prefs.php:90
+#, fuzzy
+msgid "Purge articles older than"
+msgstr "읽지 않은 글 남겨둠"
+
+#: classes/pref/prefs.php:90
+msgid "<strong>days</strong> (0 disables)"
+msgstr ""
+
+#: classes/pref/prefs.php:91
+msgid "Purge unread articles"
+msgstr "읽지 않은 글 남겨둠"
+
+#: classes/pref/prefs.php:92
+msgid "Reverse headline order (oldest first)"
+msgstr "헤드라인 순서 반전 (오래된것부터)"
+
+#: classes/pref/prefs.php:93
+msgid "Short date format"
+msgstr "짧은 날짜 형식"
+
+#: classes/pref/prefs.php:94
+#, fuzzy
+msgid "Show content preview in headlines"
+msgstr "헤드라인 목록에 내용 미리보기 표시"
+
+#: classes/pref/prefs.php:95
+msgid "Sort headlines by feed date"
+msgstr "피드 날짜별 헤드라인 정렬"
+
+#: classes/pref/prefs.php:95
+msgid "Use feed-specified date to sort headlines instead of local import date."
+msgstr ""
+
+#: classes/pref/prefs.php:96
+#, fuzzy
+msgid "SSL client certificate"
+msgstr "SSL 인증을 사용하여 로그인"
+
+#: classes/pref/prefs.php:98
+msgid "Strip unsafe tags from articles"
+msgstr "안전하지 않은 태그 제거"
+
+#: classes/pref/prefs.php:98
+msgid "Strip all but most common HTML tags when reading articles."
+msgstr ""
+
+#: classes/pref/prefs.php:99
+#: js/PrefHelpers.js:113
+msgid "Customize stylesheet"
+msgstr "스타일시트 변경"
+
+#: classes/pref/prefs.php:100
+msgid "Time zone"
+msgstr "시간대"
+
+#: classes/pref/prefs.php:101
+#, fuzzy
+msgid "Group by feed"
+msgstr "トップ 25 フィード"
+
+#: classes/pref/prefs.php:101
+msgid "Group multiple-feed output by originating feed"
+msgstr ""
+
+#: classes/pref/prefs.php:102
+msgid "Language"
+msgstr "언어"
+
+#: classes/pref/prefs.php:103
+msgid "Theme"
+msgstr "테마"
+
+#: classes/pref/prefs.php:187
+msgid "The configuration was saved."
+msgstr "설정이 저장되었습니다."
+
+#: classes/pref/prefs.php:201
+msgid "Your personal data has been saved."
+msgstr "개인 정보가 저장되었습니다."
+
+#: classes/pref/prefs.php:217
+msgid "Your preferences are now set to default values."
+msgstr ""
+
+#: classes/pref/prefs.php:228
+msgid "Personal data / Authentication"
+msgstr "개인 정보 / 인증"
+
+#: classes/pref/prefs.php:231
+msgid "Personal data"
+msgstr "개인 정보"
+
+#: classes/pref/prefs.php:260
+msgid "Full name:"
+msgstr ""
+
+#: classes/pref/prefs.php:265
+#: classes/pref/users.php:94
+#, fuzzy
+msgid "E-mail:"
+msgstr "이메일:"
+
+#: classes/pref/prefs.php:273
+#, fuzzy
+msgid "Access level:"
 msgstr "계정 권한:"
 
-#: classes/pref/users.php:87
-#: classes/pref/feeds.php:686
-#: classes/pref/feeds.php:945
-#: classes/pref/filters.php:461
-#: classes/pref/filters.php:917
-msgid "Options"
-msgstr "옵션"
+#: classes/pref/prefs.php:284
+msgid "Save data"
+msgstr "데이터 저장"
 
-#: classes/pref/users.php:101
-msgid "User details"
-msgstr "사용자 상세 정보"
+#: classes/pref/prefs.php:333
+msgid "Changing your current password will disable OTP."
+msgstr ""
 
-#: classes/pref/users.php:141
-#: classes/pref/users.php:411
-msgid "Registered"
-msgstr "등록 일자"
-
-#: classes/pref/users.php:142
-msgid "Last logged in"
-msgstr "마지막 로그인"
-
-#: classes/pref/users.php:150
-msgid "Subscribed feeds count"
-msgstr "구독중인 피드 수"
-
-#: classes/pref/users.php:151
+#: classes/pref/prefs.php:337
 #, fuzzy
-msgid "Stored articles"
-msgstr "중요 표시된 글"
+msgid "Old password:"
+msgstr "원래 암호"
 
-#: classes/pref/users.php:155
-#: classes/pref/users.php:410
-msgid "Subscribed feeds"
-msgstr "구독중인 피드"
+#: classes/pref/prefs.php:342
+#: classes/pref/users.php:82
+#, fuzzy
+msgid "New password:"
+msgstr "새 암호"
 
-#: classes/pref/users.php:181
-msgid "User not found"
-msgstr "사용자를 찾지 못했습니다."
+#: classes/pref/prefs.php:347
+#, fuzzy
+msgid "Confirm password:"
+msgstr "암호 확인"
 
-#: classes/pref/users.php:252
-#, fuzzy, php-format
-msgid "Added user %s with password %s"
-msgstr "사용자 <b>%s</b> (암호: <b>%s</b>)가 추가되었습니다."
+#: classes/pref/prefs.php:357
+msgid "Change password"
+msgstr "암호 변경"
 
-#: classes/pref/users.php:259
-#, fuzzy, php-format
-msgid "Could not create user %s"
-msgstr "사용자 <b>%s</b>를 만들 수 없습니다."
+#: classes/pref/prefs.php:362
+msgid "One time passwords / Authenticator"
+msgstr ""
 
-#: classes/pref/users.php:263
-#, fuzzy, php-format
-msgid "User %s already exists."
-msgstr "<b>%s</b>는 이미 사용중입니다."
+#: classes/pref/prefs.php:392
+#: classes/pref/prefs.php:440
+#, fuzzy
+msgid "Your password:"
+msgstr "암호 확인"
 
-#: classes/pref/users.php:291
-#, fuzzy, php-format
-msgid "Changed password of user %s to %s"
-msgstr "사용자 <b>%s</b>의 암호가 <b>%s</b>로 변경되었습니다."
+#: classes/pref/prefs.php:402
+msgid "Disable OTP"
+msgstr "OTP 비활성화"
 
-#: classes/pref/users.php:293
-#, fuzzy, php-format
-msgid "Sending new password of user %s to %s"
-msgstr "사용자 <b>%s</b>의 새 암호를 <b>%s</b>로 보내중..."
+#: classes/pref/prefs.php:446
+#, fuzzy
+msgid "One time password:"
+msgstr "잘못된 OTP 입니다"
 
-#: classes/pref/users.php:315
-msgid "[tt-rss] Password change notification"
-msgstr "[tt-rss] 암호 변경 안내"
+#: classes/pref/prefs.php:453
+msgid "Enable OTP"
+msgstr "OTP 활성화"
 
-#: classes/pref/users.php:350
-#: classes/pref/feeds.php:1267
-#: classes/pref/filters.php:774
-#: classes/feeds.php:742
-#: classes/feeds.php:813
-#: js/Feeds.js:540
-msgid "Search"
-msgstr "검색"
+#: classes/pref/prefs.php:506
+msgid "Some preferences are only available in default profile."
+msgstr ""
 
-#: classes/pref/users.php:368
-msgid "Create user"
-msgstr "사용자 생성"
+#: classes/pref/prefs.php:601
+#, fuzzy
+msgid "default"
+msgstr "기본 정렬"
 
-#: classes/pref/users.php:372
-#: classes/pref/filters.php:793
-msgid "Edit"
-msgstr "편집"
+#: classes/pref/prefs.php:611
+msgid "Customize"
+msgstr "사용자 설정"
 
-#: classes/pref/users.php:408
-#: classes/pref/feeds.php:659
-#: classes/pref/feeds.php:926
-#: classes/pref/feeds.php:1733
-#: classes/feeds.php:694
-msgid "Login"
-msgstr "로그인"
+#: classes/pref/prefs.php:614
+#, fuzzy
+msgid "More themes..."
+msgstr "更なるフィード..."
 
-#: classes/pref/users.php:409
-msgid "Access Level"
-msgstr "계정 권한"
+#: classes/pref/prefs.php:675
+msgid "Register"
+msgstr "등록"
 
-#: classes/pref/users.php:412
-msgid "Last login"
-msgstr "마지막 로그인"
+#: classes/pref/prefs.php:679
+#: classes/pref/system.php:44
+msgid "Clear"
+msgstr ""
 
-#: classes/pref/users.php:429
-msgid "Click to edit"
-msgstr "클릭하여 편집"
+#: classes/pref/prefs.php:690
+#, php-format
+msgid "Current server time: %s"
+msgstr ""
 
-#: classes/pref/users.php:445
-msgid "No users defined."
-msgstr "정의된 사용자가 없습니다."
+#: classes/pref/prefs.php:719
+msgid "Save configuration"
+msgstr "설정 저장"
 
-#: classes/pref/users.php:447
-msgid "No matching users found."
-msgstr "일치하는 사용자가 없습니다."
+#: classes/pref/prefs.php:723
+msgid "Save and exit preferences"
+msgstr "저장하고 설정 종료"
+
+#: classes/pref/prefs.php:728
+msgid "Manage profiles"
+msgstr "프로필 관리"
+
+#: classes/pref/prefs.php:731
+msgid "Reset to defaults"
+msgstr "초기화"
+
+#: classes/pref/prefs.php:776
+msgid "System plugins"
+msgstr "시스템 플러그인"
+
+#: classes/pref/prefs.php:810
+#: classes/pref/prefs.php:856
+#, php-format
+msgid "v%.2f, by %s"
+msgstr ""
+
+#: classes/pref/prefs.php:818
+msgid "User plugins"
+msgstr "사용자 플러그인"
+
+#: classes/pref/prefs.php:845
+msgid "Clear data"
+msgstr "데이터 제거"
+
+#: classes/pref/prefs.php:870
+msgid "Enable selected plugins"
+msgstr "선택한 플러그인 켜기"
+
+#: classes/pref/prefs.php:945
+msgid "Incorrect one time password"
+msgstr "잘못된 OTP 입니다"
+
+#: classes/pref/prefs.php:950
+#: classes/pref/prefs.php:981
+msgid "Incorrect password"
+msgstr "잘못된 암호입니다"
+
+#: classes/pref/prefs.php:1005
+msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
+msgstr ""
+
+#: classes/pref/prefs.php:1041
+msgid "Create profile"
+msgstr "프로필 생성"
+
+#: classes/pref/prefs.php:1060
+#: classes/pref/prefs.php:1080
+msgid "(active)"
+msgstr "(활성화)"
+
+#: classes/pref/prefs.php:1111
+msgid "Remove selected profiles"
+msgstr "선택된 프로필 삭제"
+
+#: classes/pref/prefs.php:1113
+msgid "Activate profile"
+msgstr "프로필 활성화"
+
+#: classes/pref/system.php:8
+#: classes/pref/users.php:6
+msgid "Your access level is insufficient to open this tab."
+msgstr "현재 계정 권한으로는 이 탭을 사용할 수 없습니다."
 
 #: classes/pref/system.php:30
 msgid "Event Log"
@@ -1419,11 +2271,6 @@ msgstr ""
 #: classes/pref/system.php:41
 msgid "Refresh"
 msgstr "새로고침"
-
-#: classes/pref/system.php:44
-#: classes/pref/prefs.php:669
-msgid "Clear"
-msgstr ""
 
 #: classes/pref/system.php:49
 msgid "Error"
@@ -1446,1081 +2293,105 @@ msgstr "날짜"
 msgid "PHP Information"
 msgstr "操作の実行"
 
-#: classes/pref/feeds.php:28
-msgid "Check to enable field"
-msgstr "필드 활성화 확인"
-
-#: classes/pref/feeds.php:77
-#: classes/pref/feeds.php:232
-#: classes/pref/feeds.php:280
-#: classes/pref/feeds.php:286
-#: classes/pref/feeds.php:315
-#, php-format
-msgid "(%d feed)"
-msgid_plural "(%d feeds)"
-msgstr[0] "(%d개의 피드)"
-
-#: classes/pref/feeds.php:526
-#: classes/pref/prefs.php:20
-msgid "General"
-msgstr "일반"
-
-#: classes/pref/feeds.php:542
-msgid "Feed Title"
-msgstr "피드 제목"
-
-#: classes/pref/feeds.php:555
-msgid "Feed URL"
-msgstr "피드 주소"
-
-#: classes/pref/feeds.php:576
-#: classes/pref/feeds.php:861
-#: classes/pref/feeds.php:1723
-#: classes/feeds.php:666
-msgid "Place in category:"
-msgstr "카테고리 위치:"
-
-#: classes/pref/feeds.php:590
+#: classes/pref/users.php:26
 #, fuzzy
-msgid "Site URL:"
-msgstr "サイト:"
-
-#: classes/pref/feeds.php:592
-#, fuzzy
-msgid "Site URL"
-msgstr "피드 주소"
-
-#: classes/pref/feeds.php:605
-#: classes/pref/feeds.php:876
-#: classes/feeds.php:798
-#, fuzzy
-msgid "Language:"
-msgstr "언어"
-
-#: classes/pref/feeds.php:614
-#: classes/pref/feeds.php:887
-msgid "Update"
-msgstr "업데이트"
-
-#: classes/pref/feeds.php:623
-#: classes/pref/feeds.php:894
-#, fuzzy
-msgid "Interval:"
-msgstr "인터페이스"
-
-#: classes/pref/feeds.php:636
-#: classes/pref/feeds.php:909
-msgid "Article purging:"
-msgstr "글을 유지:"
-
-#: classes/pref/feeds.php:668
-#: classes/pref/feeds.php:937
-#: classes/pref/feeds.php:1734
-#: classes/pref/prefs.php:287
-#: classes/feeds.php:699
-msgid "Password"
-msgstr "암호"
-
-#: classes/pref/feeds.php:672
-msgid "<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds."
-msgstr ""
-
-#: classes/pref/feeds.php:684
-#: classes/feeds.php:711
-msgid "This feed requires authentication."
-msgstr "이 피드는 로그인이 필요합니다."
-
-#: classes/pref/feeds.php:702
-#: classes/pref/feeds.php:950
-msgid "Hide from Popular feeds"
-msgstr "인기 피드에서 숨김"
-
-#: classes/pref/feeds.php:718
-#: classes/pref/feeds.php:958
-msgid "Include in e-mail digest"
-msgstr "이메일 요약에 포함"
-
-#: classes/pref/feeds.php:734
-#: classes/pref/feeds.php:966
-msgid "Always display image attachments"
-msgstr ""
-
-#: classes/pref/feeds.php:750
-#: classes/pref/feeds.php:974
-#: classes/pref/prefs.php:95
-#, fuzzy
-msgid "Do not embed media"
-msgstr "글에 이미지 삽입하지 않음"
-
-#: classes/pref/feeds.php:766
-#: classes/pref/feeds.php:982
-msgid "Cache media"
-msgstr ""
-
-#: classes/pref/feeds.php:782
-#: classes/pref/feeds.php:990
-msgid "Mark updated articles as unread"
-msgstr "업데이트된 글을 읽지 않음 표시"
-
-#: classes/pref/feeds.php:788
-msgid "Icon"
-msgstr "아이콘"
-
-#: classes/pref/feeds.php:802
-#: classes/pref/feeds.php:1374
-#: plugins/import_export/init.php:72
-#, fuzzy
-msgid "Choose file..."
-msgstr "필터 만들기..."
-
-#: classes/pref/feeds.php:809
-msgid "Replace"
-msgstr ""
-
-#: classes/pref/feeds.php:816
-#: classes/pref/prefs.php:735
-msgid "Plugins"
-msgstr "플러그인"
-
-#: classes/pref/feeds.php:1242
-msgid "Feeds with errors"
-msgstr "오류가 있는 피드"
-
-#: classes/pref/feeds.php:1249
-msgid "Inactive feeds"
-msgstr "피드 비활성화"
-
-#: classes/pref/feeds.php:1285
-msgid "Edit selected feeds"
-msgstr "선택된 피드 편집"
-
-#: classes/pref/feeds.php:1287
-#: classes/pref/feeds.php:1301
-#: classes/pref/filters.php:796
-msgid "Reset sort order"
-msgstr "정렬 순서 초기화"
-
-#: classes/pref/feeds.php:1289
-#: js/PrefFeedTree.js:347
-msgid "Batch subscribe"
-msgstr "일괄 구독"
-
-#: classes/pref/feeds.php:1296
-msgid "Categories"
-msgstr "카테고리"
-
-#: classes/pref/feeds.php:1299
-msgid "Add category"
-msgstr "카테고리 추가"
-
-#: classes/pref/feeds.php:1303
-msgid "Remove selected"
-msgstr "선택된 항목 제거"
-
-#: classes/pref/feeds.php:1361
-msgid "OPML"
-msgstr "OPML"
-
-#: classes/pref/feeds.php:1363
-msgid "Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings."
-msgstr "OPML을 사용하면 피드/필터/라벨/설정을 내보내고 불러올 수 있습니다."
-
-#: classes/pref/feeds.php:1380
-#, fuzzy
-msgid "Import OPML"
-msgstr "내 OPML 불러오기"
-
-#: classes/pref/feeds.php:1388
-msgid "Export OPML"
-msgstr "OPML 내보내기"
-
-#: classes/pref/feeds.php:1392
-msgid "Include settings"
-msgstr "설정 포함"
-
-#: classes/pref/feeds.php:1399
-#, fuzzy
-msgid "Published OPML"
-msgstr "공개됨"
-
-#: classes/pref/feeds.php:1401
-msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
-msgstr "사용중인 OPML을 공개하면, 누구든 아래 URL만으로 구독할 수 있습니다."
-
-#: classes/pref/feeds.php:1403
-msgid "Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds."
-msgstr ""
-
-#: classes/pref/feeds.php:1405
-msgid "Public OPML URL"
-msgstr ""
-
-#: classes/pref/feeds.php:1406
-msgid "Display published OPML URL"
-msgstr "공개 OPML URL 표시"
-
-#: classes/pref/feeds.php:1414
-msgid "Published & shared articles / Generated feeds"
-msgstr "공개, 공유된 글 / 생성된 피드"
-
-#: classes/pref/feeds.php:1416
-#, fuzzy
-msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "사용중인 OPML을 공개하면, 누구든 아래 URL만으로 구독할 수 있습니다."
-
-#: classes/pref/feeds.php:1421
-#: classes/feeds.php:34
-#: classes/feeds.php:35
-#: classes/feeds.php:99
-#: classes/feeds.php:100
-#, fuzzy
-msgid "Show as feed"
-msgstr "이 피드"
-
-#: classes/pref/feeds.php:1422
-msgid "Display URL"
-msgstr "URL 표시"
-
-#: classes/pref/feeds.php:1425
-msgid "Clear all generated URLs"
-msgstr "이미 만들어진 URL 제거"
-
-#: classes/pref/feeds.php:1502
-msgid "These feeds have not been updated with new content for 3 months (oldest first):"
-msgstr "3개월 이상 업데이트 되지 않은 피드(오래된 순서):"
-
-#: classes/pref/feeds.php:1532
-#: classes/pref/feeds.php:1593
-msgid "Click to edit feed"
-msgstr "클릭하여 피드 편집"
-
-#: classes/pref/feeds.php:1550
-#: classes/pref/feeds.php:1613
-msgid "Unsubscribe from selected feeds"
-msgstr "선택된 피드 구독 해제 중..."
-
-#: classes/pref/feeds.php:1713
-msgid "One valid feed per line (no detection is done)"
-msgstr ""
-
-#: classes/pref/feeds.php:1743
-msgid "Feeds require authentication."
-msgstr "인증이 필요한 피드"
-
-#: classes/pref/feeds.php:1747
-#: classes/feeds.php:714
-#: classes/feeds.php:770
-msgid "Subscribe"
-msgstr "구독"
-
-#: classes/pref/filters.php:234
-#: classes/pref/filters.php:559
-msgid "(inverse)"
-msgstr "반전"
-
-#: classes/pref/filters.php:230
-#: classes/pref/filters.php:558
-#, php-format
-msgid "%s on %s in %s %s"
-msgstr ""
-
-#: classes/pref/filters.php:356
-#: classes/pref/filters.php:858
-#: classes/pref/filters.php:982
-msgid "Match"
-msgstr "일치"
-
-#: classes/pref/filters.php:371
-#: classes/pref/filters.php:431
-#: classes/pref/filters.php:874
-#: classes/pref/filters.php:904
-msgid "Add"
-msgstr "추가"
-
-#: classes/pref/filters.php:374
-#: classes/pref/filters.php:434
-#: classes/pref/filters.php:877
-#: classes/pref/filters.php:907
-#: classes/feeds.php:80
-msgid "Delete"
-msgstr "삭제"
-
-#: classes/pref/filters.php:415
-#: classes/pref/filters.php:888
-msgid "Apply actions"
-msgstr "동작 적용"
-
-#: classes/pref/filters.php:472
-#: classes/pref/filters.php:923
-msgid "Enabled"
-msgstr "활성화"
-
-#: classes/pref/filters.php:483
-#: classes/pref/filters.php:928
-msgid "Match any rule"
-msgstr "아무 규칙이나 적용"
-
-#: classes/pref/filters.php:494
-#: classes/pref/filters.php:933
-msgid "Inverse matching"
-msgstr "반대 적용"
-
-#: classes/pref/filters.php:508
-#: classes/pref/filters.php:944
-msgid "Test"
-msgstr "테스트"
-
-#: classes/pref/filters.php:790
-msgid "Combine"
-msgstr "병합"
-
-#: classes/pref/filters.php:947
-msgid "Create"
-msgstr "생성"
-
-#: classes/pref/filters.php:992
-msgid "Regular expression, without outer delimiters (i.e. slashes)"
-msgstr ""
-
-#: classes/pref/filters.php:998
-msgid "Inverse regular expression matching"
-msgstr ""
-
-#: classes/pref/filters.php:1002
-msgid "on field"
-msgstr "필드"
-
-#: classes/pref/filters.php:1005
-#: js/PrefFilterTree.js:45
-msgid "in"
-msgstr ""
-
-#: classes/pref/filters.php:1026
-msgid "Save rule"
-msgstr "규칙 저장"
-
-#: classes/pref/filters.php:1026
-#: js/CommonFilters.js:133
-msgid "Add rule"
-msgstr "규칙 추가"
-
-#: classes/pref/filters.php:1049
-msgid "Perform Action"
-msgstr "동작 실행"
-
-#: classes/pref/filters.php:1100
-#, fuzzy
-msgid "No actions available"
-msgstr "새 버전 나왔어요!"
-
-#: classes/pref/filters.php:1119
-msgid "Save action"
-msgstr "저장 동작"
-
-#: classes/pref/filters.php:1119
-#: js/CommonFilters.js:155
-msgid "Add action"
-msgstr "동작 추가"
-
-#: classes/pref/filters.php:1146
-msgid "[No caption]"
-msgstr "[자막 없음]"
-
-#: classes/pref/filters.php:1148
-#, fuzzy, php-format
-msgid "%s (%d rule)"
-msgid_plural "%s (%d rules)"
-msgstr[0] "규칙 추가"
-
-#: classes/pref/filters.php:1162
-#, fuzzy
-msgid "matches any rule"
-msgstr "아무 규칙이나 적용"
-
-#: classes/pref/filters.php:1165
-#, fuzzy, php-format
-msgid "%s (+%d action)"
-msgid_plural "%s (+%d actions)"
-msgstr[0] "동작 추가"
-
-#: classes/pref/prefs.php:40
-#, fuzzy
-msgid "Articles"
-msgstr "글"
-
-#: classes/pref/prefs.php:53
-msgid "Digest"
-msgstr ""
-
-#: classes/pref/prefs.php:58
-msgid "Advanced"
-msgstr "고급"
-
-#: classes/pref/prefs.php:69
-msgid "Allow duplicate articles"
-msgstr "글 중복 허용"
-
-#: classes/pref/prefs.php:70
-msgid "Blacklisted tags"
-msgstr "블랙리스트된 태그"
-
-#: classes/pref/prefs.php:70
-msgid "Never apply these tags automatically (comma-separated list)."
-msgstr ""
-
-#: classes/pref/prefs.php:71
-#, fuzzy
-msgid "Mark read on scroll"
-msgstr "모든 글을 읽음 표시 할까요?"
-
-#: classes/pref/prefs.php:71
-#, fuzzy
-msgid "Mark articles as read as you scroll past them"
-msgstr "모든 글을 읽음 표시 할까요?"
-
-#: classes/pref/prefs.php:72
-#, fuzzy
-msgid "Always expand articles"
-msgstr "글을 펼쳐보려면 클릭하세요"
-
-#: classes/pref/prefs.php:73
-#, fuzzy
-msgid "Combined mode"
-msgstr "통합 모드 켜기/끄기"
-
-#: classes/pref/prefs.php:73
-#, fuzzy
-msgid "Show flat list of articles instead of separate panels"
-msgstr "제목하고 내용을 분리해서 표시하지 않고, 피드 내용의 펼쳐진 목록을 보여줍니다."
-
-#: classes/pref/prefs.php:74
-#, fuzzy
-msgid "Confirm marking feeds as read"
-msgstr "피드를 읽음표시 할 때 물어봄"
-
-#: classes/pref/prefs.php:75
-msgid "Amount of articles to display at once"
-msgstr "한 번에 표시할 글의 수"
-
-#: classes/pref/prefs.php:76
-#, fuzzy
-msgid "Default update interval"
-msgstr "피드 업데이트 주기"
-
-#: classes/pref/prefs.php:77
-#, fuzzy
-msgid "Mark sent articles as read"
-msgstr "모든 글을 읽음 표시 할까요?"
-
-#: classes/pref/prefs.php:78
-#, fuzzy
-msgid "Enable digest"
-msgstr "이메일 요약본 활성화"
-
-#: classes/pref/prefs.php:78
-msgid "Send daily digest of new (and unread) headlines to your e-mail address"
-msgstr ""
-
-#: classes/pref/prefs.php:79
-#, fuzzy
-msgid "Try to send around this time"
-msgstr "특정 시간에 이메일 요약본 전송"
-
-#: classes/pref/prefs.php:79
-#, fuzzy
-msgid "Time in UTC"
-msgstr "시간대"
-
-#: classes/pref/prefs.php:80
-#, fuzzy
-msgid "Enable API"
-msgstr "OTP 활성화"
-
-#: classes/pref/prefs.php:80
-msgid "Allows accessing this account through the API"
-msgstr ""
-
-#: classes/pref/prefs.php:81
-#, fuzzy
-msgid "Enable categories"
-msgstr "フィードカテゴリーを有効にする"
-
-#: classes/pref/prefs.php:82
-msgid "Sort feeds by unread articles count"
-msgstr "읽지 않은 글 수에 따라 피드 정렬"
-
-#: classes/pref/prefs.php:83
-#, fuzzy
-msgid "Maximum age of fresh articles"
-msgstr "새 글로 표시할 기준(시간)"
-
-#: classes/pref/prefs.php:83
-#, fuzzy
-msgid "hours"
-msgstr "4시간마다"
-
-#: classes/pref/prefs.php:84
-#, fuzzy
-msgid "Hide read feeds"
-msgstr "읽은 피드 숨기기/보이기"
-
-#: classes/pref/prefs.php:85
-msgid "Always show special feeds"
-msgstr ""
-
-#: classes/pref/prefs.php:85
-#, fuzzy
-msgid "While hiding read feeds"
-msgstr "자동분류에서는 다 읽은 피드를 숨기지 않음"
-
-#: classes/pref/prefs.php:86
-msgid "Long date format"
-msgstr "긴 날짜 형식"
-
-#: classes/pref/prefs.php:86
-msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
-msgstr ""
-
-#: classes/pref/prefs.php:87
-#, fuzzy
-msgid "Automatically show next feed"
-msgstr "다시 볼 때 다음 피드를 표시"
-
-#: classes/pref/prefs.php:87
-#, fuzzy
-msgid "After marking one as read"
-msgstr "피드를 읽음표시 할 때 물어봄"
-
-#: classes/pref/prefs.php:88
-#, fuzzy
-msgid "Purge articles older than"
-msgstr "읽지 않은 글 남겨둠"
-
-#: classes/pref/prefs.php:88
-msgid "<strong>days</strong> (0 disables)"
-msgstr ""
-
-#: classes/pref/prefs.php:89
-msgid "Purge unread articles"
-msgstr "읽지 않은 글 남겨둠"
-
-#: classes/pref/prefs.php:90
-msgid "Reverse headline order (oldest first)"
-msgstr "헤드라인 순서 반전 (오래된것부터)"
-
-#: classes/pref/prefs.php:91
-msgid "Short date format"
-msgstr "짧은 날짜 형식"
-
-#: classes/pref/prefs.php:92
-#, fuzzy
-msgid "Show content preview in headlines"
-msgstr "헤드라인 목록에 내용 미리보기 표시"
-
-#: classes/pref/prefs.php:93
-msgid "Sort headlines by feed date"
-msgstr "피드 날짜별 헤드라인 정렬"
-
-#: classes/pref/prefs.php:93
-msgid "Use feed-specified date to sort headlines instead of local import date."
-msgstr ""
-
-#: classes/pref/prefs.php:94
-#, fuzzy
-msgid "SSL client certificate"
-msgstr "SSL 인증을 사용하여 로그인"
-
-#: classes/pref/prefs.php:96
-msgid "Strip unsafe tags from articles"
-msgstr "안전하지 않은 태그 제거"
-
-#: classes/pref/prefs.php:96
-msgid "Strip all but most common HTML tags when reading articles."
-msgstr ""
-
-#: classes/pref/prefs.php:97
-#: js/PrefHelpers.js:113
-msgid "Customize stylesheet"
-msgstr "스타일시트 변경"
-
-#: classes/pref/prefs.php:98
-msgid "Time zone"
-msgstr "시간대"
-
-#: classes/pref/prefs.php:99
-#, fuzzy
-msgid "Group by feed"
-msgstr "トップ 25 フィード"
-
-#: classes/pref/prefs.php:99
-msgid "Group multiple-feed output by originating feed"
-msgstr ""
-
-#: classes/pref/prefs.php:100
-msgid "Language"
-msgstr "언어"
-
-#: classes/pref/prefs.php:101
-msgid "Theme"
-msgstr "테마"
-
-#: classes/pref/prefs.php:185
-msgid "The configuration was saved."
-msgstr "설정이 저장되었습니다."
-
-#: classes/pref/prefs.php:199
-msgid "Your personal data has been saved."
-msgstr "개인 정보가 저장되었습니다."
-
-#: classes/pref/prefs.php:215
-msgid "Your preferences are now set to default values."
-msgstr ""
-
-#: classes/pref/prefs.php:226
-msgid "Personal data / Authentication"
-msgstr "개인 정보 / 인증"
-
-#: classes/pref/prefs.php:229
-msgid "Personal data"
-msgstr "개인 정보"
-
-#: classes/pref/prefs.php:258
-msgid "Full name:"
-msgstr ""
-
-#: classes/pref/prefs.php:263
-#, fuzzy
-msgid "E-mail:"
-msgstr "이메일:"
-
-#: classes/pref/prefs.php:271
-#, fuzzy
-msgid "Access level:"
+msgid "Edit user"
+msgstr "규칙 편집"
+
+#: classes/pref/users.php:68
+msgid "Access level: "
 msgstr "계정 권한:"
 
-#: classes/pref/prefs.php:282
-msgid "Save data"
-msgstr "데이터 저장"
+#: classes/pref/users.php:107
+msgid "User details"
+msgstr "사용자 상세 정보"
 
-#: classes/pref/prefs.php:331
-msgid "Changing your current password will disable OTP."
-msgstr ""
+#: classes/pref/users.php:148
+#: classes/pref/users.php:390
+msgid "Registered"
+msgstr "등록 일자"
 
-#: classes/pref/prefs.php:335
+#: classes/pref/users.php:149
+msgid "Last logged in"
+msgstr "마지막 로그인"
+
+#: classes/pref/users.php:157
+msgid "Subscribed feeds count"
+msgstr "구독중인 피드 수"
+
+#: classes/pref/users.php:158
 #, fuzzy
-msgid "Old password:"
-msgstr "원래 암호"
-
-#: classes/pref/prefs.php:340
-#, fuzzy
-msgid "New password:"
-msgstr "새 암호"
-
-#: classes/pref/prefs.php:345
-#, fuzzy
-msgid "Confirm password:"
-msgstr "암호 확인"
-
-#: classes/pref/prefs.php:355
-msgid "Change password"
-msgstr "암호 변경"
-
-#: classes/pref/prefs.php:360
-msgid "One time passwords / Authenticator"
-msgstr ""
-
-#: classes/pref/prefs.php:390
-#: classes/pref/prefs.php:438
-#, fuzzy
-msgid "Your password:"
-msgstr "암호 확인"
-
-#: classes/pref/prefs.php:400
-msgid "Disable OTP"
-msgstr "OTP 비활성화"
-
-#: classes/pref/prefs.php:444
-#, fuzzy
-msgid "One time password:"
-msgstr "잘못된 OTP 입니다"
-
-#: classes/pref/prefs.php:451
-msgid "Enable OTP"
-msgstr "OTP 활성화"
-
-#: classes/pref/prefs.php:504
-msgid "Some preferences are only available in default profile."
-msgstr ""
-
-#: classes/pref/prefs.php:595
-#, fuzzy
-msgid "default"
-msgstr "기본 정렬"
-
-#: classes/pref/prefs.php:605
-msgid "Customize"
-msgstr "사용자 설정"
-
-#: classes/pref/prefs.php:608
-#, fuzzy
-msgid "More themes..."
-msgstr "更なるフィード..."
-
-#: classes/pref/prefs.php:665
-msgid "Register"
-msgstr "등록"
-
-#: classes/pref/prefs.php:680
-#, php-format
-msgid "Current server time: %s"
-msgstr ""
-
-#: classes/pref/prefs.php:709
-msgid "Save configuration"
-msgstr "설정 저장"
-
-#: classes/pref/prefs.php:713
-msgid "Save and exit preferences"
-msgstr "저장하고 설정 종료"
-
-#: classes/pref/prefs.php:718
-msgid "Manage profiles"
-msgstr "프로필 관리"
-
-#: classes/pref/prefs.php:721
-msgid "Reset to defaults"
-msgstr "초기화"
-
-#: classes/pref/prefs.php:768
-msgid "System plugins"
-msgstr "시스템 플러그인"
-
-#: classes/pref/prefs.php:769
-msgid "System plugins are enabled in <strong>config.php</strong> for all users."
-msgstr ""
-
-#: classes/pref/prefs.php:774
-#: classes/pref/prefs.php:830
-msgid "Plugin"
-msgstr ""
-
-#: classes/pref/prefs.php:775
-#: classes/pref/prefs.php:831
-msgid "Description"
-msgstr "설명"
-
-#: classes/pref/prefs.php:776
-#: classes/pref/prefs.php:832
-msgid "Version"
-msgstr ""
-
-#: classes/pref/prefs.php:777
-#: classes/pref/prefs.php:833
-msgid "Author"
-msgstr ""
-
-#: classes/pref/prefs.php:808
-#: classes/pref/prefs.php:867
-msgid "more info"
-msgstr ""
-
-#: classes/pref/prefs.php:817
-#: classes/pref/prefs.php:876
-msgid "Clear data"
-msgstr "데이터 제거"
-
-#: classes/pref/prefs.php:826
-msgid "User plugins"
-msgstr "사용자 플러그인"
-
-#: classes/pref/prefs.php:899
-msgid "Enable selected plugins"
-msgstr "선택한 플러그인 켜기"
-
-#: classes/pref/prefs.php:975
-msgid "Incorrect one time password"
-msgstr "잘못된 OTP 입니다"
-
-#: classes/pref/prefs.php:980
-#: classes/pref/prefs.php:1011
-msgid "Incorrect password"
-msgstr "잘못된 암호입니다"
-
-#: classes/pref/prefs.php:1035
-msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr ""
-
-#: classes/pref/prefs.php:1072
-msgid "Create profile"
-msgstr "프로필 생성"
-
-#: classes/pref/prefs.php:1091
-#: classes/pref/prefs.php:1111
-msgid "(active)"
-msgstr "(활성화)"
-
-#: classes/pref/prefs.php:1143
-msgid "Remove selected profiles"
-msgstr "선택된 프로필 삭제"
-
-#: classes/pref/prefs.php:1145
-msgid "Activate profile"
-msgstr "프로필 활성화"
-
-#: classes/feeds.php:41
-#, php-format
-msgid "Last updated: %s"
-msgstr "마지막 업데이트: %s"
-
-#: classes/feeds.php:60
-#, fuzzy
-msgid "Select..."
-msgstr "선택"
-
-#: classes/feeds.php:64
-msgid "Invert"
-msgstr "선택 반전"
-
-#: classes/feeds.php:67
-msgid "Selection toggle:"
-msgstr "선택/선택해제:"
-
-#: classes/feeds.php:73
-msgid "Selection:"
-msgstr "선택:"
-
-#: classes/feeds.php:76
-msgid "Set score"
-msgstr "점수 매기기"
-
-#: classes/feeds.php:79
-msgid "Move back"
-msgstr "돌아가기"
-
-#: classes/feeds.php:82
-msgid "Archive"
-msgstr "보관 처리"
-
-#: classes/feeds.php:86
-#: classes/feeds.php:91
-#: plugins/mail/init.php:76
-#: plugins/mailto/init.php:24
-msgid "Forward by email"
-msgstr "이메일로 전달"
-
-#: classes/feeds.php:95
-msgid "Feed:"
-msgstr "피드"
-
-#: classes/feeds.php:149
-#: classes/feeds.php:500
-msgid "Feed not found."
-msgstr "피드가 없습니다."
-
-#: classes/feeds.php:209
-msgid "Never"
-msgstr "영원히"
-
-#: classes/feeds.php:258
-#: classes/feeds.php:1298
-msgid "Archived articles"
-msgstr "보관 처리된 글"
-
-#: classes/feeds.php:318
-msgid "Collapse article"
-msgstr "글 접기"
-
-#: classes/feeds.php:343
-#, php-format
-msgid "Imported at %s"
-msgstr "%s에서 불러옴"
-
-#: classes/feeds.php:392
-msgid "No unread articles found to display."
-msgstr "읽지 않은 글이 없습니다."
-
-#: classes/feeds.php:395
-msgid "No updated articles found to display."
-msgstr "업데이트된 글이 없습니다."
-
-#: classes/feeds.php:398
-msgid "No starred articles found to display."
-msgstr "중요 표시된 글이 없습니다."
-
-#: classes/feeds.php:402
-msgid "No articles found to display. You can assign articles to labels manually from article header context menu (applies to all selected articles) or use a filter."
-msgstr "표시할 글이 없습니다. 필터를 사용하거나 글 제목을 우클릭해서 라벨을 추가할 수 있습니다."
-
-#: classes/feeds.php:404
-msgid "No articles found to display."
-msgstr "표시할 글이 없습니다."
-
-#: classes/feeds.php:420
-#: classes/feeds.php:597
-#, php-format
-msgid "Feeds last updated at %s"
-msgstr "%s에 마지막으로 업데이트 되었습니다."
-
-#: classes/feeds.php:432
-#: classes/feeds.php:609
-msgid "Some feeds have update errors (click for details)"
-msgstr "일부 피드에 업데이트 오류가 있습니다 (상세 정보는 클릭)"
-
-#: classes/feeds.php:586
-msgid "No feed selected."
-msgstr "선택된 피드가 없습니다."
-
-#: classes/feeds.php:658
-msgid "Feed or site URL"
-msgstr "피드나 사이트 URL"
-
-#: classes/feeds.php:676
-msgid "Available feeds"
-msgstr "사용 가능한 피드"
-
-#: classes/feeds.php:717
-msgid "More feeds"
-msgstr "기타 피드"
-
-#: classes/feeds.php:746
-msgid "Popular feeds"
-msgstr "인기 피드"
-
-#: classes/feeds.php:747
-msgid "Feed archive"
-msgstr "피드 보관"
-
-#: classes/feeds.php:750
-msgid "limit:"
-msgstr "제한:"
-
-#: classes/feeds.php:791
+msgid "Stored articles"
+msgstr "중요 표시된 글"
+
+#: classes/pref/users.php:162
+#: classes/pref/users.php:389
+msgid "Subscribed feeds"
+msgstr "구독중인 피드"
+
+#: classes/pref/users.php:188
+msgid "User not found"
+msgstr "사용자를 찾지 못했습니다."
+
+#: classes/pref/users.php:259
 #, fuzzy, php-format
-msgid "Search %s..."
-msgstr "검색..."
+msgid "Added user %s with password %s"
+msgstr "사용자 <b>%s</b> (암호: <b>%s</b>)가 추가되었습니다."
 
-#: classes/feeds.php:800
-msgid "Used for word stemming"
+#: classes/pref/users.php:266
+#, fuzzy, php-format
+msgid "Could not create user %s"
+msgstr "사용자 <b>%s</b>를 만들 수 없습니다."
+
+#: classes/pref/users.php:270
+#, fuzzy, php-format
+msgid "User %s already exists."
+msgstr "<b>%s</b>는 이미 사용중입니다."
+
+#: classes/pref/users.php:295
+#, fuzzy, php-format
+msgid "Changed password of user %s to %s"
+msgstr "사용자 <b>%s</b>의 암호가 <b>%s</b>로 변경되었습니다."
+
+#: classes/pref/users.php:348
+msgid "Create user"
+msgstr "사용자 생성"
+
+#: classes/pref/users.php:388
+msgid "Access Level"
+msgstr "계정 권한"
+
+#: classes/pref/users.php:391
+msgid "Last login"
+msgstr "마지막 로그인"
+
+#: classes/pref/users.php:408
+msgid "Click to edit"
+msgstr "클릭하여 편집"
+
+#: classes/pref/users.php:424
+msgid "No users defined."
+msgstr "정의된 사용자가 없습니다."
+
+#: classes/pref/users.php:426
+msgid "No matching users found."
+msgstr "일치하는 사용자가 없습니다."
+
+#: plugins/af_comics/init.php:51
+msgid "Feeds supported by af_comics"
 msgstr ""
 
-#: classes/feeds.php:810
-msgid "Search syntax"
-msgstr "문법 "
-
-#: classes/feeds.php:1290
-msgid "Starred articles"
-msgstr "중요 표시된 글"
-
-#: classes/feeds.php:1292
-msgid "Published articles"
-msgstr "공개 글"
-
-#: classes/feeds.php:1294
-msgid "Fresh articles"
-msgstr "새 글"
-
-#: classes/feeds.php:1300
-msgid "Recently read"
-msgstr "최근에 읽은 글"
-
-#: classes/feeds.php:1421
-msgid "Special"
-msgstr "자동 분류"
-
-#: classes/feeds.php:1679
-#, php-format
-msgid "Search results: %s"
-msgstr "검색 결과: %s"
-
-#: plugins/nsfw/init.php:30
-#: plugins/nsfw/init.php:42
-msgid "Not work safe (click to toggle)"
+#: plugins/af_comics/init.php:53
+msgid "The following comics are currently supported:"
 msgstr ""
 
-#: plugins/nsfw/init.php:53
-msgid "NSFW Plugin"
+#: plugins/af_comics/init.php:71
+msgid "To subscribe to GoComics use the comic's regular web page as the feed URL (e.g. for the <em>Garfield</em> comic use <code>http://www.gocomics.com/garfield</code>)."
 msgstr ""
 
-#: plugins/nsfw/init.php:80
-msgid "Tags to consider NSFW (comma-separated)"
+#: plugins/af_comics/init.php:73
+msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
 msgstr ""
-
-#: plugins/nsfw/init.php:101
-msgid "Configuration saved."
-msgstr "설정이 저장되었습니다."
-
-#: plugins/note/init.php:26
-#: plugins/note/note.js:10
-msgid "Edit article note"
-msgstr "글 노트 편집"
-
-#: plugins/vf_shared/init.php:17
-#: plugins/vf_shared/init.php:73
-#, fuzzy
-msgid "Shared articles"
-msgstr "중요 표시된 글"
-
-#: plugins/auth_internal/init.php:70
-msgid "Please enter your one time password:"
-msgstr "OTP를 입력하세요:"
-
-#: plugins/auth_internal/init.php:212
-msgid "Password has been changed."
-msgstr "암호가 변경되었습니다."
-
-#: plugins/auth_internal/init.php:214
-msgid "Old password is incorrect."
-msgstr "현재 암호가 틀립니다."
-
-#: plugins/af_readability/init.php:25
-msgid "Data saved."
-msgstr ""
-
-#: plugins/af_readability/init.php:41
-#, fuzzy
-msgid "Inline content"
-msgstr "記事の内容をスクロールする"
-
-#: plugins/af_readability/init.php:48
-msgid "Readability settings (af_readability)"
-msgstr ""
-
-#: plugins/af_readability/init.php:79
-msgid "Use Readability for pages shared via bookmarklet."
-msgstr ""
-
-#: plugins/af_readability/init.php:91
-#: plugins/af_psql_trgm/init.php:200
-msgid "Currently enabled for (click to edit):"
-msgstr ""
-
-#: plugins/af_readability/init.php:107
-#, fuzzy
-msgid "Readability"
-msgstr "가능한지 확인"
-
-#: plugins/af_readability/init.php:120
-#, fuzzy
-msgid "Inline article content"
-msgstr "記事の内容をスクロールする"
-
-#: plugins/af_redditimgur/init.php:31
-msgid "Reddit content settings (af_redditimgur)"
-msgstr ""
-
-#: plugins/af_redditimgur/init.php:61
-msgid "Extract missing content using Readability"
-msgstr ""
-
-#: plugins/af_redditimgur/init.php:66
-msgid "Enable additional duplicate checking"
-msgstr ""
-
-#: plugins/af_redditimgur/init.php:80
-#: plugins/af_zz_imgproxy/init.php:253
-#, fuzzy
-msgid "Configuration saved"
-msgstr "설정이 저장되었습니다."
 
 #: plugins/af_psql_trgm/init.php:29
 #, php-format
@@ -2533,52 +2404,138 @@ msgid "Show related articles"
 msgstr "중요 표시된 글"
 
 #: plugins/af_psql_trgm/init.php:127
-#: plugins/af_psql_trgm/init.php:230
+#: plugins/af_psql_trgm/init.php:236
 #, fuzzy
 msgid "Mark similar articles as read"
 msgstr "모든 글을 읽음 표시 할까요?"
 
 #: plugins/af_psql_trgm/init.php:166
-msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
-msgstr ""
-
-#: plugins/af_psql_trgm/init.php:169
+#: plugins/af_readability/init.php:58
 #, fuzzy
 msgid "Global settings"
 msgstr "설정 포함"
 
-#: plugins/af_psql_trgm/init.php:173
+#: plugins/af_psql_trgm/init.php:172
 msgid "Minimum similarity:"
 msgstr ""
 
 #: plugins/af_psql_trgm/init.php:178
-msgid "Minimum title length:"
+msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
 msgstr ""
 
 #: plugins/af_psql_trgm/init.php:183
+msgid "Minimum title length:"
+msgstr ""
+
+#: plugins/af_psql_trgm/init.php:192
 #, fuzzy
 msgid "Enable for all feeds:"
 msgstr "フィード一覧のアイコンを有効にする"
 
-#: plugins/af_psql_trgm/init.php:217
+#: plugins/af_psql_trgm/init.php:207
+#: plugins/af_readability/init.php:101
+msgid "Currently enabled for (click to edit):"
+msgstr ""
+
+#: plugins/af_psql_trgm/init.php:224
 msgid "Similarity (pg_trgm)"
 msgstr ""
 
-#: plugins/af_comics/init.php:50
-msgid "Feeds supported by af_comics"
+#: plugins/af_readability/init.php:25
+msgid "Data saved."
 msgstr ""
 
-#: plugins/af_comics/init.php:52
-msgid "The following comics are currently supported:"
+#: plugins/af_readability/init.php:45
+#, fuzzy
+msgid "Inline content"
+msgstr "記事の内容をスクロールする"
+
+#: plugins/af_readability/init.php:52
+msgid "Readability settings (af_readability)"
 msgstr ""
 
-#: plugins/af_comics/init.php:70
-msgid "To subscribe to GoComics use the comic's regular web page as the feed URL (e.g. for the <em>Garfield</em> comic use <code>http://www.gocomics.com/garfield</code>)."
+#: plugins/af_readability/init.php:87
+msgid "Provide full-text services to core code (bookmarklets) and other plugins"
 msgstr ""
 
-#: plugins/af_comics/init.php:72
-msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
+#: plugins/af_readability/init.php:118
+#, fuzzy
+msgid "Readability"
+msgstr "가능한지 확인"
+
+#: plugins/af_readability/init.php:130
+#, fuzzy
+msgid "Inline article content"
+msgstr "記事の内容をスクロールする"
+
+#: plugins/af_redditimgur/init.php:28
+msgid "Reddit content settings (af_redditimgur)"
 msgstr ""
+
+#: plugins/af_redditimgur/init.php:60
+msgid "Extract missing content using Readability (requires af_readability)"
+msgstr ""
+
+#: plugins/af_redditimgur/init.php:66
+msgid "Enable additional duplicate checking"
+msgstr ""
+
+#: plugins/af_redditimgur/init.php:82
+#: plugins/af_zz_imgproxy/init.php:253
+#, fuzzy
+msgid "Configuration saved"
+msgstr "설정이 저장되었습니다."
+
+#: plugins/af_zz_imgproxy/init.php:209
+msgid "Image proxy settings (af_zz_imgproxy)"
+msgstr ""
+
+#: plugins/af_zz_imgproxy/init.php:233
+#, fuzzy
+msgid "Enable proxy for all remote images."
+msgstr "フィード一覧のアイコンを有効にする"
+
+#: plugins/af_zz_imgproxy/init.php:237
+#, fuzzy
+msgid "Don't cache files locally."
+msgstr "이미지를 로컬에 캐쉬"
+
+#: plugins/auth_internal/init.php:72
+msgid "Please enter your one time password:"
+msgstr "OTP를 입력하세요:"
+
+#: plugins/auth_internal/init.php:214
+msgid "Password has been changed."
+msgstr "암호가 변경되었습니다."
+
+#: plugins/auth_internal/init.php:216
+msgid "Old password is incorrect."
+msgstr "현재 암호가 틀립니다."
+
+#: plugins/bookmarklets/init.php:23
+msgid "Bookmarklets"
+msgstr ""
+
+#: plugins/bookmarklets/init.php:25
+msgid "Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it."
+msgstr ""
+
+#: plugins/bookmarklets/init.php:29
+#, php-format
+msgid "Subscribe to %s in Tiny Tiny RSS?"
+msgstr "Tiny Tiny RSS에서 %s를 구독할까요?"
+
+#: plugins/bookmarklets/init.php:34
+msgid "Subscribe in Tiny Tiny RSS"
+msgstr "Tiny Tiny RSS 구독 목록"
+
+#: plugins/bookmarklets/init.php:37
+msgid "Use this bookmarklet to publish arbitrary pages using Tiny Tiny RSS"
+msgstr ""
+
+#: plugins/close_button/init.php:28
+msgid "Close article"
+msgstr "글 닫기"
 
 #: plugins/import_export/init.php:54
 msgid "Import and export"
@@ -2604,42 +2561,42 @@ msgstr "불러오기 실패: 잘못된 스키마 버전"
 msgid "Could not import: unrecognized document format."
 msgstr ""
 
-#: plugins/import_export/init.php:423
+#: plugins/import_export/init.php:441
 msgid "Finished: "
 msgstr ""
 
-#: plugins/import_export/init.php:424
+#: plugins/import_export/init.php:442
 #, php-format
 msgid "%d article processed, "
 msgid_plural "%d articles processed, "
 msgstr[0] "%d개의 글이 처리되었습니다, "
 
-#: plugins/import_export/init.php:425
+#: plugins/import_export/init.php:443
 #, php-format
 msgid "%d imported, "
 msgid_plural "%d imported, "
 msgstr[0] "%d를 불러왔습니다,"
 
-#: plugins/import_export/init.php:426
+#: plugins/import_export/init.php:444
 #, php-format
 msgid "%d feed created."
 msgid_plural "%d feeds created."
 msgstr[0] "%d개의 피드가 생성되었습니다."
 
-#: plugins/import_export/init.php:431
+#: plugins/import_export/init.php:449
 msgid "Could not load XML document."
 msgstr ""
 
-#: plugins/import_export/init.php:443
+#: plugins/import_export/init.php:464
 msgid "Prepare data"
 msgstr "데이터 준비"
 
-#: plugins/import_export/init.php:460
+#: plugins/import_export/init.php:481
 #, php-format
 msgid "Upload failed with error code %d (%s)"
 msgstr ""
 
-#: plugins/import_export/init.php:484
+#: plugins/import_export/init.php:505
 msgid "No file uploaded."
 msgstr "업로드된 파일 없음."
 
@@ -2676,53 +2633,9 @@ msgstr "받는 사람:"
 msgid "Subject:"
 msgstr "제목:"
 
-#: plugins/mail/init.php:178
+#: plugins/mail/init.php:177
 msgid "Send e-mail"
 msgstr "이메일 전송"
-
-#: plugins/close_button/init.php:28
-msgid "Close article"
-msgstr "글 닫기"
-
-#: plugins/bookmarklets/init.php:21
-msgid "Bookmarklets"
-msgstr ""
-
-#: plugins/bookmarklets/init.php:23
-msgid "Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it."
-msgstr ""
-
-#: plugins/bookmarklets/init.php:27
-#, php-format
-msgid "Subscribe to %s in Tiny Tiny RSS?"
-msgstr "Tiny Tiny RSS에서 %s를 구독할까요?"
-
-#: plugins/bookmarklets/init.php:32
-msgid "Subscribe in Tiny Tiny RSS"
-msgstr "Tiny Tiny RSS 구독 목록"
-
-#: plugins/bookmarklets/init.php:35
-msgid "Use this bookmarklet to publish arbitrary pages using Tiny Tiny RSS"
-msgstr ""
-
-#: plugins/toggle_sidebar/init.php:23
-#, fuzzy
-msgid "Toggle feedlist"
-msgstr "フィード一覧を切り替える"
-
-#: plugins/af_zz_imgproxy/init.php:209
-msgid "Image proxy settings (af_zz_imgproxy)"
-msgstr ""
-
-#: plugins/af_zz_imgproxy/init.php:233
-#, fuzzy
-msgid "Enable proxy for all remote images."
-msgstr "フィード一覧のアイコンを有効にする"
-
-#: plugins/af_zz_imgproxy/init.php:237
-#, fuzzy
-msgid "Don't cache files locally."
-msgstr "이미지를 로컬에 캐쉬"
 
 #: plugins/mailto/init.php:73
 msgid "Clicking the following link to invoke your mail client:"
@@ -2739,6 +2652,28 @@ msgstr ""
 #: plugins/mailto/init.php:85
 msgid "Close this dialog"
 msgstr "이 창 닫기"
+
+#: plugins/note/init.php:26
+#: plugins/note/note.js:10
+msgid "Edit article note"
+msgstr "글 노트 편집"
+
+#: plugins/nsfw/init.php:30
+#: plugins/nsfw/init.php:42
+msgid "Not work safe (click to toggle)"
+msgstr ""
+
+#: plugins/nsfw/init.php:53
+msgid "NSFW Plugin"
+msgstr ""
+
+#: plugins/nsfw/init.php:80
+msgid "Tags to consider NSFW (comma-separated)"
+msgstr ""
+
+#: plugins/nsfw/init.php:101
+msgid "Configuration saved."
+msgstr "설정이 저장되었습니다."
 
 #: plugins/share/init.php:45
 msgid "You can disable all articles shared by unique URLs here."
@@ -2761,15 +2696,22 @@ msgstr ""
 msgid "Unshare article"
 msgstr "중요 표시 해제"
 
-#: js/AppBase.js:135
-msgid "Help"
-msgstr "도움말"
+#: plugins/toggle_sidebar/init.php:27
+#, fuzzy
+msgid "Toggle sidebar"
+msgstr "중요 표시"
 
-#: js/AppBase.js:382
+#: plugins/vf_shared/init.php:17
+#: plugins/vf_shared/init.php:73
+#, fuzzy
+msgid "Shared articles"
+msgstr "중요 표시된 글"
+
+#: js/AppBase.js:386
 msgid "Error explained"
 msgstr ""
 
-#: js/AppBase.js:399
+#: js/AppBase.js:403
 #, fuzzy
 msgid "Fatal error"
 msgstr "致命的なエラー"
@@ -2779,16 +2721,16 @@ msgid "Please enter new score for selected articles:"
 msgstr "선택된 글의 점수를 새로 매기세요:"
 
 #: js/Article.js:59
-#: js/Headlines.js:895
-#: js/Headlines.js:913
-#: js/Headlines.js:931
-#: js/Headlines.js:1045
-#: js/Headlines.js:1081
+#: js/Headlines.js:919
+#: js/Headlines.js:937
+#: js/Headlines.js:955
+#: js/Headlines.js:1096
+#: js/Headlines.js:1132
 #: plugins/mail/mail.js:7
 #: plugins/mailto/init.js:7
-#: js/Headlines.js:718
-#: js/Headlines.js:744
-#: js/Headlines.js:756
+#: js/Headlines.js:742
+#: js/Headlines.js:768
+#: js/Headlines.js:780
 #, fuzzy
 msgid "No articles selected."
 msgstr "선택된 글이 없습니다."
@@ -2810,68 +2752,68 @@ msgid "comment"
 msgid_plural "comments"
 msgstr[0] "코멘트"
 
-#: js/CommonDialogs.js:30
+#: js/CommonDialogs.js:11
 msgid "Remove stored feed icon?"
 msgstr "저장된 피드 아이콘을 제거할까요?"
 
-#: js/CommonDialogs.js:52
+#: js/CommonDialogs.js:38
 msgid "Please select an image file to upload."
 msgstr "업로드할 이미지 파일을 선택하세요."
 
-#: js/CommonDialogs.js:53
+#: js/CommonDialogs.js:39
 msgid "Upload new icon for this feed?"
 msgstr ""
 
-#: js/CommonDialogs.js:69
+#: js/CommonDialogs.js:83
 msgid "Subscribe to Feed"
 msgstr "피드 구독"
 
-#: js/CommonDialogs.js:96
+#: js/CommonDialogs.js:110
 msgid "Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."
 msgstr ""
 
-#: js/CommonDialogs.js:111
+#: js/CommonDialogs.js:125
 #, perl-format
 msgid "Subscribed to %s"
 msgstr "%s를 구독함"
 
-#: js/CommonDialogs.js:120
+#: js/CommonDialogs.js:134
 msgid "Specified URL seems to be invalid."
 msgstr ""
 
-#: js/CommonDialogs.js:123
+#: js/CommonDialogs.js:137
 msgid "Specified URL doesn't seem to contain any feeds."
 msgstr ""
 
-#: js/CommonDialogs.js:135
+#: js/CommonDialogs.js:149
 msgid "Expand to select feed"
 msgstr "선택된 피드로 확장"
 
-#: js/CommonDialogs.js:149
+#: js/CommonDialogs.js:163
 #, perl-format
 msgid "Couldn't download the specified URL: %s"
 msgstr "URL %s를 다운로드 할 수 없습니다."
 
-#: js/CommonDialogs.js:152
+#: js/CommonDialogs.js:166
 #, perl-format
 msgid "XML validation failed: %s"
 msgstr ""
 
-#: js/CommonDialogs.js:155
+#: js/CommonDialogs.js:169
 msgid "You are already subscribed to this feed."
 msgstr "이미 구독중인 피드입니다."
 
-#: js/CommonDialogs.js:179
+#: js/CommonDialogs.js:193
 msgid "Feeds with update errors"
 msgstr "업데이트 오류가 있는 피드"
 
-#: js/CommonDialogs.js:188
+#: js/CommonDialogs.js:202
 #: js/PrefFeedTree.js:382
 msgid "Remove selected feeds?"
 msgstr "선택된 피드를 제거할까요?"
 
-#: js/CommonDialogs.js:209
-#: js/CommonDialogs.js:294
+#: js/CommonDialogs.js:223
+#: js/CommonDialogs.js:308
 #: js/PrefFeedTree.js:168
 #: js/PrefFeedTree.js:230
 #: js/PrefFeedTree.js:246
@@ -2880,138 +2822,138 @@ msgstr "선택된 피드를 제거할까요?"
 msgid "No feeds selected."
 msgstr "선택된 피드가 없습니다."
 
-#: js/CommonDialogs.js:234
+#: js/CommonDialogs.js:248
 msgid "More Feeds"
 msgstr "기타 피드"
 
-#: js/CommonDialogs.js:326
+#: js/CommonDialogs.js:340
 msgid "Remove selected feeds from the archive? Feeds with stored articles will not be removed."
 msgstr ""
 
-#: js/CommonDialogs.js:348
+#: js/CommonDialogs.js:362
 msgid "Please enter label caption:"
 msgstr "라벨 이름을 입력하세요:"
 
-#: js/CommonDialogs.js:372
-#: js/tt-rss.js:539
+#: js/CommonDialogs.js:386
+#: js/tt-rss.js:543
 #, perl-format
 msgid "Unsubscribe from %s?"
 msgstr "%s를 구독 해제 할까요?"
 
-#: js/CommonDialogs.js:400
-#: js/tt-rss.js:390
-#: js/tt-rss.js:520
+#: js/CommonDialogs.js:414
+#: js/tt-rss.js:391
+#: js/tt-rss.js:524
 msgid "You can't edit this kind of feed."
 msgstr "이 형식의 피드는 편집할 수 없습니다."
 
-#: js/CommonDialogs.js:414
+#: js/CommonDialogs.js:428
 msgid "Edit Feed"
 msgstr "피드 편집"
 
-#: js/CommonDialogs.js:438
+#: js/CommonDialogs.js:452
 msgid "Generate new syndication address for this feed?"
 msgstr ""
 
-#: js/Feeds.js:213
+#: js/Feeds.js:221
 #, fuzzy
 msgid "Your password is at default value"
 msgstr "사용중인 암호가 기본 값입니다. 암호를 변경하세요."
 
-#: js/Headlines.js:609
-#: js/Headlines.js:657
-#: js/Headlines.js:674
+#: js/Headlines.js:633
+#: js/Headlines.js:681
+#: js/Headlines.js:698
 #, fuzzy
 msgid "Click to open next unread feed."
 msgstr "클릭하여 피드 편집"
 
-#: js/Headlines.js:613
+#: js/Headlines.js:637
 msgid "Cancel search"
 msgstr "검색 취소"
 
-#: js/Headlines.js:671
+#: js/Headlines.js:695
 #, fuzzy
 msgid "New articles found, reload feed to continue."
 msgstr "표시할 글이 없습니다."
 
-#: js/Headlines.js:682
+#: js/Headlines.js:706
 msgid "Could not update headlines (invalid object received - see error console for details)"
 msgstr ""
 
-#: js/Headlines.js:939
+#: js/Headlines.js:963
 #, fuzzy, perl-format
 msgid "Delete %d selected article in %s?"
 msgid_plural "Delete %d selected articles in %s?"
 msgstr[0] "%s에서 선택된 %d개 글을 삭제 할까요?"
 
-#: js/Headlines.js:941
+#: js/Headlines.js:965
 #, perl-format
 msgid "Delete %d selected article?"
 msgid_plural "Delete %d selected articles?"
 msgstr[0] "선택된 %d개 글을 삭제할까요?"
 
-#: js/Headlines.js:1054
+#: js/Headlines.js:1105
 #, fuzzy, perl-format
 msgid "Archive %d selected article in %s?"
 msgid_plural "Archive %d selected articles in %s?"
 msgstr[0] "%s에서 선택된 %d개 글을 보관 처리 할까요?"
 
-#: js/Headlines.js:1057
+#: js/Headlines.js:1108
 #, perl-format
 msgid "Move %d archived article back?"
 msgid_plural "Move %d archived articles back?"
 msgstr[0] "보관 처리된 %d개의 글을 다시 옮길까요?"
 
-#: js/Headlines.js:1058
+#: js/Headlines.js:1109
 msgid "Please note that unstarred articles might get purged on next feed update."
 msgstr ""
 
-#: js/Headlines.js:1087
+#: js/Headlines.js:1138
 #, fuzzy, perl-format
 msgid "Mark %d selected article in %s as read?"
 msgid_plural "Mark %d selected articles in %s as read?"
 msgstr[0] "%s에서 선택된 %d개 글을 읽음 표시 할까요?"
 
-#: js/Headlines.js:1103
+#: js/Headlines.js:1154
 msgid "No article is selected."
 msgstr "선택된 글이 없습니다."
 
-#: js/Headlines.js:1138
+#: js/Headlines.js:1189
 msgid "No articles found to mark"
 msgstr "표시할 글이 없습니다."
 
-#: js/Headlines.js:1140
+#: js/Headlines.js:1191
 #, perl-format
 msgid "Mark %d article as read?"
 msgid_plural "Mark %d articles as read?"
 msgstr[0] "%d 글을 읽음 표시 할까요?"
 
-#: js/Headlines.js:1203
+#: js/Headlines.js:1254
 msgid "Open original article"
 msgstr "원본 글 열기"
 
-#: js/Headlines.js:1210
+#: js/Headlines.js:1261
 msgid "Display article URL"
 msgstr "글 URL 표시"
 
-#: js/Headlines.js:1317
+#: js/Headlines.js:1368
 msgid "Assign label"
 msgstr "라벨 적용"
 
-#: js/Headlines.js:1322
+#: js/Headlines.js:1373
 msgid "Remove label"
 msgstr "라벨 제거"
 
-#: js/Headlines.js:1353
+#: js/Headlines.js:1404
 #, fuzzy
 msgid "Select articles in group"
 msgstr "커서위치의 글 선택"
 
-#: js/Headlines.js:1363
+#: js/Headlines.js:1414
 #, fuzzy
 msgid "Mark group as read"
 msgstr "읽음 표시"
 
-#: js/Headlines.js:1375
+#: js/Headlines.js:1426
 msgid "Mark feed as read"
 msgstr "피드 읽음 표시"
 
@@ -3204,15 +3146,19 @@ msgstr "이 글의 태그 편집"
 msgid "This will invalidate all previously shared article URLs. Continue?"
 msgstr ""
 
-#: js/AppBase.js:261
+#: js/AppBase.js:139
+msgid "Help"
+msgstr "도움말"
+
+#: js/AppBase.js:265
 msgid "<span onclick=\"App.explainError(1)\">Update daemon is not running.</span>"
 msgstr ""
 
-#: js/AppBase.js:274
+#: js/AppBase.js:278
 msgid "<span onclick=\"App.explainError(3)\">Update daemon is not updating feeds.</span>"
 msgstr ""
 
-#: js/AppBase.js:449
+#: js/AppBase.js:453
 #, fuzzy
 msgid "Unhandled exception"
 msgstr "致命的なエラー"
@@ -3225,53 +3171,53 @@ msgstr "글 태그 편집"
 msgid "Saving article tags..."
 msgstr "글의 태그 저장 중..."
 
-#: js/CommonDialogs.js:13
+#: js/CommonDialogs.js:12
+msgid "Removing feed icon..."
+msgstr "피드 아이콘 제거중..."
+
+#: js/CommonDialogs.js:17
+msgid "Feed icon removed."
+msgstr "피드 아이콘이 제거되었습니다."
+
+#: js/CommonDialogs.js:40
+msgid "Uploading, please wait..."
+msgstr "업로드중입니다. 잠깐 웹서핑하고 계세요."
+
+#: js/CommonDialogs.js:48
 msgid "Upload complete."
 msgstr "업로드 완료."
 
-#: js/CommonDialogs.js:22
+#: js/CommonDialogs.js:62
 msgid "Upload failed: icon is too big."
 msgstr ""
 
-#: js/CommonDialogs.js:25
+#: js/CommonDialogs.js:65
 #, fuzzy
 msgid "Upload failed."
 msgstr "업로드 완료."
 
-#: js/CommonDialogs.js:31
-msgid "Removing feed icon..."
-msgstr "피드 아이콘 제거중..."
-
-#: js/CommonDialogs.js:36
-msgid "Feed icon removed."
-msgstr "피드 아이콘이 제거되었습니다."
-
-#: js/CommonDialogs.js:54
-msgid "Uploading, please wait..."
-msgstr "업로드중입니다. 잠깐 웹서핑하고 계세요."
-
-#: js/CommonDialogs.js:189
+#: js/CommonDialogs.js:203
 #: js/PrefFeedTree.js:383
 msgid "Removing selected feeds..."
 msgstr "선택된 피드 제거중..."
 
-#: js/CommonDialogs.js:375
+#: js/CommonDialogs.js:389
 msgid "Removing feed..."
 msgstr "피드 제거중..."
 
-#: js/CommonDialogs.js:418
+#: js/CommonDialogs.js:432
 #: js/PrefFeedTree.js:296
 #: js/PrefFilterTree.js:206
 #: js/PrefUsers.js:40
 msgid "Saving data..."
 msgstr "데이터 저장중..."
 
-#: js/CommonDialogs.js:440
+#: js/CommonDialogs.js:454
 #: js/PrefHelpers.js:203
 msgid "Trying to change address..."
 msgstr "주소 변경중..."
 
-#: js/CommonDialogs.js:460
+#: js/CommonDialogs.js:474
 #: js/PrefHelpers.js:219
 msgid "Could not change feed URL."
 msgstr "フィードの URL を変更できません。"
@@ -3302,54 +3248,59 @@ msgstr "さらにヘッドラインを読み込み中にエラーです。"
 msgid "Create Filter"
 msgstr "필터 생성"
 
-#: js/FeedTree.js:89
+#: js/FeedTree.js:71
+#, fuzzy
+msgid "Debug feed"
+msgstr "피드 업데이트 디버그"
+
+#: js/FeedTree.js:99
 #, fuzzy
 msgid "(Un)collapse"
 msgstr "사이드바 숨김/표시"
 
-#: js/Feeds.js:362
+#: js/Feeds.js:372
 msgid "Mark all articles as read?"
 msgstr "모든 글을 읽음 표시 할까요?"
 
-#: js/Feeds.js:366
+#: js/Feeds.js:376
 msgid "Marking all feeds as read..."
 msgstr "모든 피드를 읽음 표시중..."
 
-#: js/Feeds.js:384
+#: js/Feeds.js:394
 #, fuzzy
 msgid "Mark %w in %s older than 1 day as read?"
 msgstr "하루 이상 지난 %s의 모든 글을 읽음 표시 할까요?"
 
-#: js/Feeds.js:387
+#: js/Feeds.js:397
 #, fuzzy
 msgid "Mark %w in %s older than 1 week as read?"
 msgstr "1주일 이상 지난 %s의 모든 글을 읽음 표시 할까요?"
 
-#: js/Feeds.js:390
+#: js/Feeds.js:400
 #, fuzzy
 msgid "Mark %w in %s older than 2 weeks as read?"
 msgstr "2주일 이상 지난 %s의 모든 글을 읽음 표시 할까요?"
 
-#: js/Feeds.js:393
+#: js/Feeds.js:403
 #, fuzzy
 msgid "Mark %w in %s as read?"
 msgstr "%s의 모든 글을 읽음 표시 할까요?"
 
-#: js/Feeds.js:396
+#: js/Feeds.js:406
 #, fuzzy
 msgid "search results"
 msgstr "검색 결과: %s"
 
-#: js/Feeds.js:396
+#: js/Feeds.js:406
 #, fuzzy
 msgid "all articles"
 msgstr "전체 글"
 
-#: js/Feeds.js:438
+#: js/Feeds.js:448
 msgid "Mark all articles in %s as read?"
 msgstr "%s의 모든 글을 읽음 표시 할까요?"
 
-#: js/Headlines.js:864
+#: js/Headlines.js:888
 msgid "%d article selected"
 msgid_plural "%d articles selected"
 msgstr[0] "%d개의 글이 선택되었습니다."
@@ -3468,35 +3419,31 @@ msgstr ""
 msgid "Removing selected users..."
 msgstr "사용자 삭제중..."
 
-#: js/tt-rss.js:343
+#: js/tt-rss.js:344
 #, fuzzy
 msgid "Please enable mail or mailto plugin first."
 msgstr "먼저 메일 플러그인을 켜세요."
 
-#: js/tt-rss.js:456
+#: js/tt-rss.js:460
 msgid "Please enable embed_original plugin first."
 msgstr "먼저 embed_original 플러그인을 켜세요."
 
-#: js/tt-rss.js:469
-#: js/tt-rss.js:559
+#: js/tt-rss.js:473
+#: js/tt-rss.js:563
 msgid "Widescreen is not available in combined mode."
 msgstr ""
 
-#: js/tt-rss.js:528
+#: js/tt-rss.js:532
 msgid "Please select some feed first."
 msgstr "피드를 먼저 선택하세요."
 
-#: js/tt-rss.js:533
+#: js/tt-rss.js:537
 msgid "You can't unsubscribe from the category."
 msgstr "카테고리에서는 구독 해제 할 수 없습니다."
 
 #: plugins/note/note.js:14
 msgid "Saving article note..."
 msgstr "글 노트 저장중..."
-
-#: plugins/shorten_expanded/init.js:42
-msgid "Click to expand article"
-msgstr "글을 펼쳐보려면 클릭하세요"
 
 #: plugins/share/share.js:15
 msgid "Trying to change URL..."
@@ -3510,6 +3457,60 @@ msgstr "フィードの URL を変更できません。"
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr ""
+
+#: plugins/shorten_expanded/init.js:42
+msgid "Click to expand article"
+msgstr "글을 펼쳐보려면 클릭하세요"
+
+#~ msgid "%d archived article"
+#~ msgid_plural "%d archived articles"
+#~ msgstr[0] "저장된 글(%d개)"
+
+#~ msgid "No feeds found."
+#~ msgstr "피드가 없습니다."
+
+#, fuzzy
+#~ msgid "Performing updates"
+#~ msgstr "更新を実行しています..."
+
+#~ msgid "OK!"
+#~ msgstr "OK!"
+
+#, fuzzy
+#~ msgid "Database update required"
+#~ msgstr "데이터베이스 업데이터"
+
+#, fuzzy
+#~ msgid "Sending new password of user %s to %s"
+#~ msgstr "사용자 <b>%s</b>의 새 암호를 <b>%s</b>로 보내중..."
+
+#~ msgid "[tt-rss] Password change notification"
+#~ msgstr "[tt-rss] 암호 변경 안내"
+
+#~ msgid "Hide from Popular feeds"
+#~ msgstr "인기 피드에서 숨김"
+
+#~ msgid "These feeds have not been updated with new content for 3 months (oldest first):"
+#~ msgstr "3개월 이상 업데이트 되지 않은 피드(오래된 순서):"
+
+#~ msgid "Description"
+#~ msgstr "설명"
+
+#~ msgid "More feeds"
+#~ msgstr "기타 피드"
+
+#~ msgid "Popular feeds"
+#~ msgstr "인기 피드"
+
+#~ msgid "Feed archive"
+#~ msgstr "피드 보관"
+
+#~ msgid "limit:"
+#~ msgstr "제한:"
+
+#, fuzzy
+#~ msgid "Toggle feedlist"
+#~ msgstr "フィード一覧を切り替える"
 
 #~ msgid "Help topic not found."
 #~ msgstr "도움말 주제가 없습니다."
@@ -3995,9 +3996,6 @@ msgstr ""
 #~ msgid "Please backup your database before proceeding."
 #~ msgstr "実行前にデータベースのバックアップをしてください。"
 
-#~ msgid "Your Tiny Tiny RSS database needs update to the latest version (<b>%d</b> to <b>%d</b>)."
-#~ msgstr "Tiny Tiny RSS は最新のバージョンに更新する必要があります (<b>%d</b> から <b>%d</b>)。"
-
 #~ msgid "Checking version... "
 #~ msgstr "バージョンを確認しています..."
 
@@ -4063,9 +4061,6 @@ msgstr ""
 
 #~ msgid "Score"
 #~ msgstr "スコア"
-
-#~ msgid "Completed."
-#~ msgstr "完了しました"
 
 #, fuzzy
 #~ msgid "Share on identi.ca"

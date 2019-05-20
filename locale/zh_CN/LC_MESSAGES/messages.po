@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 06:58+0300\n"
+"POT-Creation-Date: 2019-05-20 15:42+0300\n"
 "PO-Revision-Date: 2019-03-07 01:51+0000\n"
 "Last-Translator: Ptsa Daniel <ptsa1987@gmail.com>\n"
-"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/"
-"tt-rss/messages/zh_Hans/>\n"
+"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/tt-rss/messages/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -93,8 +92,8 @@ msgid "Weekly"
 msgstr "每周"
 
 #: backend.php:103
-#: classes/pref/users.php:47
 #: classes/pref/system.php:52
+#: classes/pref/users.php:47
 msgid "User"
 msgstr "普通用户"
 
@@ -166,20 +165,20 @@ msgstr "未找到插件"
 msgid "Encoding data as JSON failed"
 msgstr "将数据编码为JSON失败"
 
-#: index.php:128
-#: index.php:143
+#: index.php:127
+#: index.php:142
 #: index.php:254
-#: prefs.php:113
+#: prefs.php:112
 #: classes/backend.php:5
-#: classes/pref/labels.php:287
-#: classes/pref/feeds.php:1318
-#: classes/pref/filters.php:808
-#: js/AppBase.js:143
-#: js/CommonDialogs.js:277
-#: js/CommonDialogs.js:357
-#: js/Feeds.js:334
-#: js/Feeds.js:412
-#: js/Headlines.js:258
+#: classes/pref/feeds.php:1268
+#: classes/pref/filters.php:806
+#: classes/pref/labels.php:281
+#: js/AppBase.js:147
+#: js/CommonDialogs.js:291
+#: js/CommonDialogs.js:371
+#: js/Feeds.js:344
+#: js/Feeds.js:422
+#: js/Headlines.js:282
 #: js/PrefFeedTree.js:126
 #: js/PrefFeedTree.js:133
 #: js/PrefFeedTree.js:250
@@ -192,59 +191,59 @@ msgstr "将数据编码为JSON失败"
 msgid "Loading, please wait..."
 msgstr "读取中，请稍候……"
 
-#: index.php:152
-#: js/AppBase.js:240
-#: js/AppBase.js:246
+#: index.php:151
+#: js/AppBase.js:244
+#: js/AppBase.js:250
 msgid "Communication problem with server."
 msgstr "连接服务器出错."
 
-#: index.php:155
+#: index.php:154
 msgid "Recent entries found in event log."
 msgstr "在事件日志中找到的最近条目."
 
-#: index.php:158
+#: index.php:157
 msgid "Updates are available from Git."
 msgstr "可从Git获得更新."
 
-#: index.php:172
+#: index.php:171
 msgid "Show articles"
 msgstr "显示文章"
 
-#: index.php:175
+#: index.php:174
 msgid "Adaptive"
 msgstr "自动适应"
 
-#: index.php:176
+#: index.php:175
 msgid "All Articles"
 msgstr "全部文章"
 
-#: index.php:177
-#: include/functions.php:1198
+#: index.php:176
+#: include/functions.php:1204
 #: classes/feeds.php:70
 msgid "Starred"
 msgstr "加星标的"
 
-#: index.php:178
-#: include/functions.php:1199
+#: index.php:177
+#: include/functions.php:1205
 #: classes/feeds.php:71
 msgid "Published"
 msgstr "已发布"
 
-#: index.php:179
+#: index.php:178
 #: classes/feeds.php:63
 #: classes/feeds.php:69
 msgid "Unread"
 msgstr "未读"
 
-#: index.php:180
+#: index.php:179
 msgid "With Note"
 msgstr "笔记"
 
-#: index.php:181
+#: index.php:180
 msgid "Ignore Scoring"
 msgstr "忽略评分"
 
-#: index.php:184
+#: index.php:183
 msgid "Sort articles"
 msgstr "排序文章"
 
@@ -266,10 +265,10 @@ msgstr "标题"
 
 #: index.php:194
 #: index.php:228
-#: include/functions.php:1186
+#: include/functions.php:1192
 #: classes/feeds.php:75
-#: js/FeedTree.js:55
-#: js/FeedTree.js:83
+#: js/FeedTree.js:58
+#: js/FeedTree.js:93
 msgid "Mark as read"
 msgstr "标记为已读"
 
@@ -285,7 +284,7 @@ msgstr "一周前"
 msgid "Older than two weeks"
 msgstr "两周前"
 
-#: index.php:219
+#: index.php:218
 msgid "Actions..."
 msgstr "操作..."
 
@@ -302,7 +301,7 @@ msgid "Feed actions:"
 msgstr "信息源操作："
 
 #: index.php:224
-#: classes/handler/public.php:768
+#: classes/handler/public.php:778
 msgid "Subscribe to feed..."
 msgstr "订阅信息源..."
 
@@ -311,8 +310,8 @@ msgid "Edit this feed..."
 msgstr "编辑信息源..."
 
 #: index.php:226
-#: classes/pref/feeds.php:828
-#: classes/pref/feeds.php:1291
+#: classes/pref/feeds.php:796
+#: classes/pref/feeds.php:1241
 #: js/PrefFeedTree.js:62
 msgid "Unsubscribe"
 msgstr "取消订阅"
@@ -330,12 +329,12 @@ msgid "Other actions:"
 msgstr "其他操作："
 
 #: index.php:231
-#: include/functions.php:1172
+#: include/functions.php:1178
 msgid "Toggle widescreen mode"
 msgstr "切换宽屏模式"
 
 #: index.php:232
-#: include/functions.php:1206
+#: include/functions.php:1213
 msgid "Toggle night mode"
 msgstr "切换夜间模式"
 
@@ -347,50 +346,50 @@ msgstr "快捷键帮助"
 msgid "Logout"
 msgstr "注销"
 
-#: prefs.php:33
-#: prefs.php:130
-#: include/functions.php:1201
-#: classes/pref/prefs.php:471
+#: prefs.php:32
+#: prefs.php:129
+#: include/functions.php:1208
+#: classes/pref/prefs.php:473
 msgid "Preferences"
 msgstr "偏好设置"
 
-#: prefs.php:122
+#: prefs.php:121
 msgid "Keyboard shortcuts"
 msgstr "快捷键"
 
-#: prefs.php:123
+#: prefs.php:122
 msgid "Exit preferences"
 msgstr "退出偏好设置"
 
-#: prefs.php:133
+#: prefs.php:132
 #: classes/pref/feeds.php:127
-#: classes/pref/feeds.php:1226
-#: classes/pref/feeds.php:1280
+#: classes/pref/feeds.php:1176
+#: classes/pref/feeds.php:1230
 #: classes/pref/prefs.php:28
 msgid "Feeds"
 msgstr "信息源"
 
-#: prefs.php:137
+#: prefs.php:136
 #: classes/pref/filters.php:243
 msgid "Filters"
 msgstr "过滤器"
 
-#: prefs.php:141
-#: classes/pref/labels.php:91
-#: classes/feeds.php:1423
+#: prefs.php:140
+#: classes/feeds.php:1383
+#: classes/pref/labels.php:85
 msgid "Labels"
 msgstr "预定义标签"
 
-#: prefs.php:146
+#: prefs.php:145
 msgid "Users"
 msgstr "用户"
 
-#: prefs.php:149
+#: prefs.php:148
 msgid "System"
 msgstr "系统"
 
 #: register.php:183
-#: include/login_form.php:140
+#: include/login_form.php:141
 msgid "Create new account"
 msgstr "创建新的帐号"
 
@@ -406,14 +405,16 @@ msgstr "新用户注册功能已被管理员禁用。"
 #: register.php:332
 #: register.php:342
 #: register.php:354
-#: classes/handler/public.php:847
-#: classes/handler/public.php:936
-#: classes/handler/public.php:966
-#: classes/handler/public.php:1042
-#: classes/handler/public.php:1135
-#: classes/handler/public.php:1147
-#: classes/handler/public.php:1152
-#: classes/handler/public.php:1175
+#: classes/handler/public.php:795
+#: classes/handler/public.php:844
+#: classes/handler/public.php:868
+#: classes/handler/public.php:960
+#: classes/handler/public.php:990
+#: classes/handler/public.php:1064
+#: classes/handler/public.php:1161
+#: classes/handler/public.php:1173
+#: classes/handler/public.php:1178
+#: classes/handler/public.php:1202
 msgid "Return to Tiny Tiny RSS"
 msgstr "返回至 Tiny Tiny RSS"
 
@@ -430,7 +431,7 @@ msgid "Check availability"
 msgstr "检查可用性"
 
 #: register.php:225
-#: classes/handler/public.php:951
+#: classes/handler/public.php:975
 msgid "Email:"
 msgstr "电子邮箱："
 
@@ -462,350 +463,346 @@ msgstr "帐号创建成功。"
 msgid "New user registrations are currently closed."
 msgstr "用户注册功能目前没有启用。"
 
-#: update.php:66
+#: update.php:68
 msgid "Tiny Tiny RSS data update script."
 msgstr "Tiny Tiny RSS 数据更新脚本。"
 
 #: include/controls.php:85
 #: classes/pref/filters.php:212
 #: classes/pref/filters.php:223
-#: classes/pref/filters.php:539
+#: classes/pref/filters.php:537
 msgid "All feeds"
 msgstr "全部信息源"
 
 #: include/controls.php:138
 #: include/controls.php:230
-#: classes/opml.php:508
 #: classes/digest.php:124
+#: classes/feeds.php:1395
+#: classes/opml.php:536
 #: classes/pref/feeds.php:246
-#: classes/feeds.php:1435
 msgid "Uncategorized"
 msgstr "未分类"
-
-#: include/feedbrowser.php:79
-#, fuzzy, php-format
-msgid "%d archived article"
-msgid_plural "%d archived articles"
-msgstr[0] "%d 个存档的文章"
-
-#: include/feedbrowser.php:102
-msgid "No feeds found."
-msgstr "未找到信息源。"
 
 #: include/functions.php:84
 msgid "Detect automatically"
 msgstr "自动检测"
 
-#: include/functions.php:952
+#: include/functions.php:958
 #, php-format
 msgid "%d min"
 msgstr "%d 分钟"
 
-#: include/functions.php:1148
+#: include/functions.php:1154
 msgid "Navigation"
 msgstr "导航"
 
-#: include/functions.php:1149
+#: include/functions.php:1155
 msgid "Open next feed"
 msgstr "显示下一个信息源"
 
-#: include/functions.php:1150
+#: include/functions.php:1156
 msgid "Open previous feed"
 msgstr "显示前一个信息源"
 
-#: include/functions.php:1151
+#: include/functions.php:1157
 msgid "Open next article"
 msgstr "显示下一篇文章"
 
-#: include/functions.php:1152
+#: include/functions.php:1158
 msgid "Open previous article"
 msgstr "显示前一篇文章"
 
-#: include/functions.php:1153
+#: include/functions.php:1159
 msgid "Open next article (don't scroll long articles)"
 msgstr "显示下一篇文章 (不要在长文章中滚动)"
 
-#: include/functions.php:1154
+#: include/functions.php:1160
 msgid "Open previous article (don't scroll long articles)"
 msgstr "显示前一篇文章 (不要在长文章中滚动)"
 
-#: include/functions.php:1155
+#: include/functions.php:1161
 msgid "Move to next article (don't expand or mark read)"
 msgstr "跳转至下一篇文章 (不要展开或标记为已读)"
 
-#: include/functions.php:1156
+#: include/functions.php:1162
 msgid "Move to previous article (don't expand or mark read)"
 msgstr "跳转至前一篇文章 (不要展开或标记为已读)"
 
-#: include/functions.php:1157
+#: include/functions.php:1163
 msgid "Show search dialog"
 msgstr "显示搜索对话框"
 
-#: include/functions.php:1158
+#: include/functions.php:1164
 msgid "Article"
 msgstr "全部文章"
 
-#: include/functions.php:1159
-#: js/Headlines.js:1232
+#: include/functions.php:1165
+#: js/Headlines.js:1283
 msgid "Toggle starred"
 msgstr "加星此文章"
 
-#: include/functions.php:1160
-#: js/Headlines.js:1244
+#: include/functions.php:1166
+#: js/Headlines.js:1295
 msgid "Toggle published"
 msgstr "发布此文章"
 
-#: include/functions.php:1161
-#: js/Headlines.js:1219
+#: include/functions.php:1167
+#: js/Headlines.js:1270
 msgid "Toggle unread"
 msgstr "标记为未读"
 
-#: include/functions.php:1162
+#: include/functions.php:1168
 msgid "Edit tags"
 msgstr "编辑自定义标签"
 
-#: include/functions.php:1163
+#: include/functions.php:1169
 msgid "Open in new window"
 msgstr "在新窗口打开文章"
 
-#: include/functions.php:1164
-#: js/Headlines.js:1265
+#: include/functions.php:1170
+#: js/Headlines.js:1316
 msgid "Mark below as read"
 msgstr "将下面文章标为已读"
 
-#: include/functions.php:1165
-#: js/Headlines.js:1258
+#: include/functions.php:1171
+#: js/Headlines.js:1309
 msgid "Mark above as read"
 msgstr "将上面文章标为已读"
 
-#: include/functions.php:1166
+#: include/functions.php:1172
 msgid "Scroll down"
 msgstr "向下滚动"
 
-#: include/functions.php:1167
+#: include/functions.php:1173
 msgid "Scroll up"
 msgstr "向上滚动"
 
-#: include/functions.php:1168
+#: include/functions.php:1174
 msgid "Select article under cursor"
 msgstr "选择鼠标指向的文章"
 
-#: include/functions.php:1169
+#: include/functions.php:1175
 msgid "Email article"
 msgstr "通过邮件发送文章"
 
-#: include/functions.php:1170
+#: include/functions.php:1176
 msgid "Close/collapse article"
 msgstr "关闭/折叠文章"
 
-#: include/functions.php:1171
+#: include/functions.php:1177
 msgid "Toggle article expansion (combined mode)"
 msgstr "切换文章展开 (合并模式)"
 
-#: include/functions.php:1173
+#: include/functions.php:1179
 msgid "Toggle embed original"
 msgstr "切换嵌入模式"
 
-#: include/functions.php:1174
+#: include/functions.php:1180
 msgid "Article selection"
 msgstr "文章选择"
 
-#: include/functions.php:1175
+#: include/functions.php:1181
 msgid "Select all articles"
 msgstr "选择所有文章"
 
-#: include/functions.php:1176
+#: include/functions.php:1182
 msgid "Select unread"
 msgstr "选择未读文章"
 
-#: include/functions.php:1177
+#: include/functions.php:1183
 msgid "Select starred"
 msgstr "选择加星标文章"
 
-#: include/functions.php:1178
+#: include/functions.php:1184
 msgid "Select published"
 msgstr "选择已发布文章"
 
-#: include/functions.php:1179
+#: include/functions.php:1185
 msgid "Invert selection"
 msgstr "反选文章"
 
-#: include/functions.php:1180
+#: include/functions.php:1186
 msgid "Deselect everything"
 msgstr "取消全选"
 
-#: include/functions.php:1181
-#: classes/pref/feeds.php:534
-#: classes/pref/feeds.php:852
+#: include/functions.php:1187
+#: classes/pref/feeds.php:529
+#: classes/pref/feeds.php:817
 msgid "Feed"
 msgstr "信息源"
 
-#: include/functions.php:1182
+#: include/functions.php:1188
 msgid "Refresh current feed"
 msgstr "刷新当前信息源"
 
-#: include/functions.php:1183
+#: include/functions.php:1189
 msgid "Un/hide read feeds"
 msgstr "显示/隐藏 已读信息"
 
-#: include/functions.php:1184
-#: classes/pref/feeds.php:1283
+#: include/functions.php:1190
+#: classes/pref/feeds.php:1233
 msgid "Subscribe to feed"
 msgstr "订阅信息源"
 
-#: include/functions.php:1185
-#: js/Headlines.js:1382
+#: include/functions.php:1191
+#: js/Headlines.js:1433
 #: js/PrefFeedTree.js:56
-#: js/FeedTree.js:62
+#: js/FeedTree.js:65
 msgid "Edit feed"
 msgstr "编辑信息源"
 
-#: include/functions.php:1187
+#: include/functions.php:1193
 msgid "Reverse headlines"
 msgstr "反向排序"
 
-#: include/functions.php:1188
+#: include/functions.php:1194
 msgid "Toggle headline grouping"
 msgstr "切换标题分组"
 
-#: include/functions.php:1189
+#: include/functions.php:1195
 msgid "Debug feed update"
 msgstr "调试信息源更新"
 
-#: include/functions.php:1190
+#: include/functions.php:1196
 msgid "Debug viewfeed()"
 msgstr "调试 viewfeed()"
 
-#: include/functions.php:1191
-#: js/FeedTree.js:111
+#: include/functions.php:1197
+#: js/FeedTree.js:121
 msgid "Mark all feeds as read"
 msgstr "标记所有信息源为已读"
 
-#: include/functions.php:1192
+#: include/functions.php:1198
 msgid "Un/collapse current category"
 msgstr "展开/折叠 当前分类"
 
-#: include/functions.php:1193
+#: include/functions.php:1199
 msgid "Toggle auto expand in combined mode"
 msgstr "切换合并模式中的自动展开功能"
 
-#: include/functions.php:1194
+#: include/functions.php:1200
 msgid "Toggle combined mode"
 msgstr "切换合并模式"
 
-#: include/functions.php:1195
+#: include/functions.php:1201
 msgid "Go to"
 msgstr "跳转至"
 
-#: include/functions.php:1196
-#: classes/feeds.php:1296
+#: include/functions.php:1202
+#: classes/feeds.php:1256
 msgid "All articles"
 msgstr "全部文章"
 
-#: include/functions.php:1197
+#: include/functions.php:1203
 msgid "Fresh"
 msgstr "最新的"
 
-#: include/functions.php:1200
-#: js/tt-rss.js:428
-#: js/tt-rss.js:507
+#: include/functions.php:1206
+#: classes/feeds.php:1260
+msgid "Recently read"
+msgstr "最近的阅读"
+
+#: include/functions.php:1207
+#: js/tt-rss.js:432
+#: js/tt-rss.js:511
 msgid "Tag cloud"
 msgstr "标签云"
 
-#: include/functions.php:1202
+#: include/functions.php:1209
 msgid "Other"
 msgstr "其他"
 
-#: include/functions.php:1203
-#: classes/pref/labels.php:272
+#: include/functions.php:1210
+#: classes/pref/labels.php:266
 msgid "Create label"
 msgstr "创建预定义标签"
 
-#: include/functions.php:1204
-#: classes/pref/filters.php:787
+#: include/functions.php:1211
+#: classes/pref/filters.php:785
 msgid "Create filter"
 msgstr "创建过滤器"
 
-#: include/functions.php:1205
+#: include/functions.php:1212
 msgid "Un/collapse sidebar"
 msgstr "收起侧边栏"
 
-#: include/functions.php:1207
+#: include/functions.php:1214
 msgid "Show help dialog"
 msgstr "显示帮助对话框"
 
-#: include/functions.php:2460
+#: include/functions.php:2465
 msgid "There is no error, the file uploaded with success"
 msgstr "没有错误，文件上传成功"
 
-#: include/functions.php:2461
+#: include/functions.php:2466
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr "上传的文件大小超过了 php.ini 中定义的限制 upload_max_filesize"
 
-#: include/functions.php:2462
+#: include/functions.php:2467
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr "上传的文件大小超过了 HTML form 中定义的限制 MAX_FILE_SIZE"
 
-#: include/functions.php:2463
+#: include/functions.php:2468
 msgid "The uploaded file was only partially uploaded"
 msgstr "上传文件中断"
 
-#: include/functions.php:2464
+#: include/functions.php:2469
 msgid "No file was uploaded"
 msgstr "没有文件上传"
 
-#: include/functions.php:2465
+#: include/functions.php:2470
 msgid "Missing a temporary folder"
 msgstr "无法找到临时文件夹"
 
-#: include/functions.php:2466
+#: include/functions.php:2471
 msgid "Failed to write file to disk."
 msgstr "文件写入硬盘失败."
 
-#: include/functions.php:2467
+#: include/functions.php:2472
 msgid "A PHP extension stopped the file upload."
 msgstr "上传文件被某个 PHP 扩展终止."
 
-#: include/login_form.php:80
-#: classes/handler/public.php:636
-#: classes/handler/public.php:946
+#: include/login_form.php:81
+#: classes/handler/public.php:643
+#: classes/handler/public.php:970
+#: classes/pref/users.php:55
 msgid "Login:"
 msgstr "登陆："
 
-#: include/login_form.php:87
-#: classes/handler/public.php:643
+#: include/login_form.php:88
+#: classes/handler/public.php:650
 msgid "Password:"
 msgstr "密码："
 
-#: include/login_form.php:95
+#: include/login_form.php:96
 msgid "I forgot my password"
 msgstr "忘记密码"
 
-#: include/login_form.php:100
+#: include/login_form.php:101
 msgid "Profile:"
 msgstr "偏好："
 
-#: include/login_form.php:103
+#: include/login_form.php:104
 #: classes/handler/public.php:280
-#: classes/pref/prefs.php:1096
+#: classes/pref/prefs.php:1065
 #: classes/rpc.php:69
 msgid "Default profile"
 msgstr "默认偏好设置"
 
-#: include/login_form.php:112
+#: include/login_form.php:113
 msgid "Use less traffic"
 msgstr "省流量"
 
-#: include/login_form.php:116
+#: include/login_form.php:117
 msgid "Does not display images in articles, reduces automatic refreshes."
 msgstr "不显示文章中的图片，减少自动刷新。"
 
-#: include/login_form.php:125
+#: include/login_form.php:126
 msgid "Remember me"
 msgstr "记住我"
 
-#: include/login_form.php:136
-#: classes/handler/public.php:656
+#: include/login_form.php:137
+#: classes/handler/public.php:663
 msgid "Log in"
 msgstr "登录"
 
@@ -829,181 +826,97 @@ msgstr "无法验证会话（没有找到该用户）"
 msgid "Article not found."
 msgstr "找不到文章。"
 
-#: classes/article.php:214
+#: classes/article.php:239
 msgid "Tags for this article (separated by commas):"
 msgstr "本文的标签，请用逗号分开："
 
-#: classes/article.php:239
-#: classes/pref/labels.php:79
-#: classes/pref/users.php:108
-#: classes/pref/feeds.php:832
-#: classes/pref/feeds.php:1001
-#: classes/pref/filters.php:511
-#: classes/pref/prefs.php:1047
-#: plugins/nsfw/init.php:86
-#: plugins/note/init.php:56
-#: plugins/af_readability/init.php:81
-#: plugins/af_redditimgur/init.php:67
-#: plugins/af_psql_trgm/init.php:190
-#: plugins/mail/init.php:66
+#: classes/article.php:251
+#: classes/pref/feeds.php:797
+#: classes/pref/feeds.php:951
+#: classes/pref/filters.php:509
+#: classes/pref/labels.php:73
+#: classes/pref/prefs.php:1016
+#: classes/pref/users.php:114
+#: plugins/af_psql_trgm/init.php:197
+#: plugins/af_readability/init.php:91
+#: plugins/af_redditimgur/init.php:69
 #: plugins/af_zz_imgproxy/init.php:239
+#: plugins/mail/init.php:66
+#: plugins/note/init.php:53
+#: plugins/nsfw/init.php:86
 msgid "Save"
 msgstr "保存"
 
-#: classes/article.php:241
-#: classes/handler/public.php:614
-#: classes/pref/labels.php:81
-#: classes/pref/users.php:110
-#: classes/pref/feeds.php:833
-#: classes/pref/feeds.php:1004
-#: classes/pref/feeds.php:1748
-#: classes/pref/filters.php:514
-#: classes/pref/filters.php:950
-#: classes/pref/filters.php:1029
-#: classes/pref/filters.php:1122
-#: classes/pref/prefs.php:1049
-#: classes/feeds.php:720
-#: classes/feeds.php:772
-#: classes/feeds.php:814
-#: plugins/note/init.php:58
-#: plugins/mail/init.php:179
+#: classes/article.php:253
+#: classes/feeds.php:716
+#: classes/feeds.php:757
+#: classes/handler/public.php:621
+#: classes/pref/feeds.php:798
+#: classes/pref/feeds.php:954
+#: classes/pref/feeds.php:1691
+#: classes/pref/filters.php:512
+#: classes/pref/filters.php:942
+#: classes/pref/filters.php:1021
+#: classes/pref/filters.php:1114
+#: classes/pref/labels.php:75
+#: classes/pref/prefs.php:1018
+#: classes/pref/prefs.php:1115
+#: classes/pref/users.php:116
+#: plugins/mail/init.php:178
+#: plugins/note/init.php:55
 msgid "Cancel"
 msgstr "取消"
 
-#: classes/article.php:336
-#: classes/article.php:602
+#: classes/article.php:348
+#: classes/article.php:614
 msgid "no tags"
 msgstr "无标签"
 
-#: classes/article.php:446
+#: classes/article.php:458
 msgid "unknown type"
 msgstr "未知类型"
 
-#: classes/article.php:523
+#: classes/article.php:535
 msgid "Attachments"
 msgstr "附件"
 
-#: classes/opml.php:28
-#: classes/opml.php:32
-msgid "OPML Utility"
-msgstr "OPML 工具"
-
-#: classes/opml.php:36
-msgid "Importing OPML..."
-msgstr "正在导入 OPML ……"
-
-#: classes/opml.php:41
-msgid "Return to preferences"
-msgstr "返回偏好设置"
-
-#: classes/opml.php:297
-#, php-format
-msgid "Adding feed: %s"
-msgstr "添加信息源: %s"
-
-#: classes/opml.php:308
-#, php-format
-msgid "Duplicate feed: %s"
-msgstr "重复的信息源:%s"
-
-#: classes/opml.php:322
-#, php-format
-msgid "Adding label %s"
-msgstr "添加预定义标签%s"
-
-#: classes/opml.php:325
-#, php-format
-msgid "Duplicate label: %s"
-msgstr "重复预定义标签: %s"
-
-#: classes/opml.php:337
-#, php-format
-msgid "Setting preference key %s to %s"
-msgstr "将偏好按键从 %s 设置为 %s"
-
-#: classes/opml.php:373
-msgid "Adding filter..."
-msgstr "创建过滤器..."
-
-#: classes/opml.php:508
-#, php-format
-msgid "Processing category: %s"
-msgstr "加入到类别:%s"
-
-#: classes/opml.php:554
-#, php-format
-msgid "Upload failed with error code %d"
-msgstr "上传错误，错误代码：%d"
-
-#: classes/opml.php:566
-#: plugins/import_export/init.php:472
-msgid "Unable to move uploaded file."
-msgstr "无法移动已上传文件."
-
-#: classes/opml.php:570
-#: plugins/import_export/init.php:476
-msgid "Error: please upload OPML file."
-msgstr "错误：请上传 OPML 文件。"
-
-#: classes/opml.php:581
-msgid "Error: unable to find moved OPML file."
-msgstr "错误：无法找到移动的OPML文件。"
-
-#: classes/opml.php:590
-msgid "Error while parsing document."
-msgstr "解析文档时发生错误。"
-
-#: classes/backend.php:32
+#: classes/backend.php:37
 msgid "Keyboard Shortcuts"
 msgstr "快捷键"
 
-#: classes/backend.php:56
-#: classes/backend.php:125
+#: classes/backend.php:61
+#: classes/backend.php:130
 msgid "Shift"
 msgstr "Shift"
 
-#: classes/backend.php:59
-#: classes/backend.php:128
+#: classes/backend.php:64
+#: classes/backend.php:133
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: classes/backend.php:154
-#: classes/dlg.php:183
-#: classes/pref/filters.php:1023
-#: classes/pref/prefs.php:673
-#: classes/pref/prefs.php:896
-#: plugins/bookmarklets/init.php:43
-msgid "More info..."
-msgstr "更多信息..."
-
-#: classes/backend.php:157
+#: classes/backend.php:159
 #: classes/dlg.php:30
 #: classes/dlg.php:57
-#: classes/dlg.php:90
-#: classes/dlg.php:155
-#: classes/dlg.php:189
-#: classes/dlg.php:205
-#: classes/pref/feeds.php:1554
-#: classes/pref/feeds.php:1617
+#: classes/dlg.php:89
+#: classes/dlg.php:153
+#: classes/dlg.php:187
+#: classes/dlg.php:203
+#: classes/pref/feeds.php:1499
+#: classes/pref/feeds.php:1559
 #: classes/pref/filters.php:175
-#: classes/pref/prefs.php:1149
 #: plugins/af_psql_trgm/init.php:111
-#: plugins/import_export/init.php:447
-#: plugins/import_export/init.php:491
+#: plugins/import_export/init.php:468
+#: plugins/import_export/init.php:512
 #: plugins/share/init.php:133
 msgid "Close this window"
 msgstr "关闭本窗口"
-
-#: classes/dlg.php:17
-msgid "If you have imported labels and/or filters, you might need to reload preferences to see your new data."
-msgstr "如果你已经导入了预定义标签或过滤器，你可能需要重新加载来看到新的设置。"
 
 #: classes/dlg.php:41
 msgid "Your Public OPML URL is:"
 msgstr "你的公共 OPML URL 是："
 
 #: classes/dlg.php:54
-#: classes/dlg.php:186
+#: classes/dlg.php:184
 #: plugins/share/init.php:130
 msgid "Generate new URL"
 msgstr "生成一个新的 URL"
@@ -1021,170 +934,868 @@ msgstr "上次更新："
 msgid "Update daemon is taking too long to perform a feed update. This could indicate a problem like crash or a hang. Please check the daemon process or contact instance owner."
 msgstr "更新进程在抓取信息更新时花费了太长时间，这可能引起崩溃或假死问题。请检查守护进程或联系管理员。"
 
-#: classes/dlg.php:172
+#: classes/dlg.php:170
 #, php-format
 msgid "%s can be accessed via the following secret URL:"
 msgstr "您可以通过以下唯一 URL 分享%s："
 
-#: classes/dlg.php:198
+#: classes/dlg.php:181
+#: classes/pref/filters.php:1015
+#: classes/pref/prefs.php:683
+#: classes/pref/prefs.php:806
+#: classes/pref/prefs.php:852
+#: classes/pref/prefs.php:867
+#: plugins/bookmarklets/init.php:45
+msgid "More info..."
+msgstr "更多信息..."
+
+#: classes/dlg.php:196
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
 msgstr "您正在使用默认的tt-rss密码.请在偏好设置（个人数据/身份验证）中进行更改."
 
-#: classes/dlg.php:202
+#: classes/dlg.php:200
 msgid "Open Preferences"
 msgstr "偏好设置"
 
-#: classes/handler/public.php:530
-#: plugins/bookmarklets/init.php:39
+#: classes/feeds.php:34
+#: classes/feeds.php:35
+#: classes/feeds.php:99
+#: classes/feeds.php:100
+#: classes/pref/feeds.php:1371
+msgid "Show as feed"
+msgstr "以信息源显示"
+
+#: classes/feeds.php:41
+#, php-format
+msgid "Last updated: %s"
+msgstr "上次更新:%s"
+
+#: classes/feeds.php:60
+msgid "Select..."
+msgstr "选择..."
+
+#: classes/feeds.php:62
+#: classes/pref/feeds.php:1224
+#: classes/pref/feeds.php:1457
+#: classes/pref/feeds.php:1514
+#: classes/pref/filters.php:363
+#: classes/pref/filters.php:423
+#: classes/pref/filters.php:779
+#: classes/pref/filters.php:865
+#: classes/pref/filters.php:894
+#: classes/pref/labels.php:260
+#: classes/pref/prefs.php:1030
+#: classes/pref/users.php:343
+msgid "All"
+msgstr "全部"
+
+#: classes/feeds.php:64
+msgid "Invert"
+msgstr "反选"
+
+#: classes/feeds.php:65
+#: classes/pref/feeds.php:1226
+#: classes/pref/feeds.php:1459
+#: classes/pref/feeds.php:1516
+#: classes/pref/filters.php:365
+#: classes/pref/filters.php:425
+#: classes/pref/filters.php:781
+#: classes/pref/filters.php:867
+#: classes/pref/filters.php:896
+#: classes/pref/labels.php:262
+#: classes/pref/prefs.php:1032
+#: classes/pref/users.php:345
+msgid "None"
+msgstr "无"
+
+#: classes/feeds.php:67
+msgid "Selection toggle:"
+msgstr "锁定选择："
+
+#: classes/feeds.php:73
+msgid "Selection:"
+msgstr "选择："
+
+#: classes/feeds.php:76
+msgid "Set score"
+msgstr "评分"
+
+#: classes/feeds.php:79
+msgid "Move back"
+msgstr "移回原位"
+
+#: classes/feeds.php:80
+#: classes/pref/filters.php:372
+#: classes/pref/filters.php:432
+#: classes/pref/filters.php:874
+#: classes/pref/filters.php:903
+msgid "Delete"
+msgstr "删除"
+
+#: classes/feeds.php:82
+msgid "Archive"
+msgstr "存档"
+
+#: classes/feeds.php:86
+#: classes/feeds.php:91
+#: plugins/mail/init.php:76
+#: plugins/mailto/init.php:24
+msgid "Forward by email"
+msgstr "通过邮件转发"
+
+#: classes/feeds.php:95
+msgid "Feed:"
+msgstr "信息源："
+
+#: classes/feeds.php:149
+#: classes/feeds.php:506
+msgid "Feed not found."
+msgstr "找不到信息源。"
+
+#: classes/feeds.php:209
+msgid "Never"
+msgstr "从不"
+
+#: classes/feeds.php:260
+#: classes/feeds.php:1258
+msgid "Archived articles"
+msgstr "存档的文章"
+
+#: classes/feeds.php:320
+msgid "Collapse article"
+msgstr "折叠文章"
+
+#: classes/feeds.php:345
+#, php-format
+msgid "Imported at %s"
+msgstr "从%s导入"
+
+#: classes/feeds.php:397
+msgid "No unread articles found to display."
+msgstr "没有未读文章。"
+
+#: classes/feeds.php:400
+msgid "No updated articles found to display."
+msgstr "没有最新更新的文章。"
+
+#: classes/feeds.php:403
+msgid "No starred articles found to display."
+msgstr "没有加星标的文章。"
+
+#: classes/feeds.php:407
+msgid "No articles found to display. You can assign articles to labels manually from article header context menu (applies to all selected articles) or use a filter."
+msgstr "本标签下没有文章。你可以通过手动或过滤器的方式为文章添加预定义标签。"
+
+#: classes/feeds.php:409
+msgid "No articles found to display."
+msgstr "暂时没有文章。"
+
+#: classes/feeds.php:426
+#: classes/feeds.php:603
+#, php-format
+msgid "Feeds last updated at %s"
+msgstr "上次信息源更新时间：%s"
+
+#: classes/feeds.php:438
+#: classes/feeds.php:615
+msgid "Some feeds have update errors (click for details)"
+msgstr "部分信息源更新错误（点击了解详情）"
+
+#: classes/feeds.php:592
+msgid "No feed selected."
+msgstr "没有选中的信息源。"
+
+#: classes/feeds.php:659
+msgid "Feed or site URL"
+msgstr "信息源或网站 URL"
+
+#: classes/feeds.php:667
+#: classes/pref/feeds.php:571
+#: classes/pref/feeds.php:826
+#: classes/pref/feeds.php:1664
+msgid "Place in category:"
+msgstr "加入到类别："
+
+#: classes/feeds.php:676
+msgid "Available feeds"
+msgstr "可用的信息源"
+
+#: classes/feeds.php:693
+#: classes/pref/feeds.php:657
+#: classes/pref/feeds.php:891
+#: classes/pref/feeds.php:1676
+#: classes/pref/users.php:387
+msgid "Login"
+msgstr "登陆"
+
+#: classes/feeds.php:697
+#: classes/pref/feeds.php:665
+#: classes/pref/feeds.php:899
+#: classes/pref/feeds.php:1677
+#: classes/pref/prefs.php:289
+msgid "Password"
+msgstr "密码"
+
+#: classes/feeds.php:709
+#: classes/pref/feeds.php:680
+msgid "This feed requires authentication."
+msgstr "这个信息源需要认证."
+
+#: classes/feeds.php:714
+#: classes/handler/public.php:792
+#: classes/pref/feeds.php:1690
+msgid "Subscribe"
+msgstr "订阅"
+
+#: classes/feeds.php:735
+#, fuzzy, php-format
+msgid "Search %s..."
+msgstr "搜索..."
+
+#: classes/feeds.php:741
+#: classes/pref/feeds.php:603
+#: classes/pref/feeds.php:841
+msgid "Language:"
+msgstr "语言："
+
+#: classes/feeds.php:743
+msgid "Used for word stemming"
+msgstr "词干提取"
+
+#: classes/feeds.php:753
+msgid "Search syntax"
+msgstr "搜索语法"
+
+#: classes/feeds.php:756
+#: classes/pref/feeds.php:1217
+#: classes/pref/filters.php:772
+#: classes/pref/users.php:330
+#: js/Feeds.js:550
+msgid "Search"
+msgstr "搜索"
+
+#: classes/feeds.php:1250
+msgid "Starred articles"
+msgstr "加星标文章"
+
+#: classes/feeds.php:1252
+msgid "Published articles"
+msgstr "已发布文章"
+
+#: classes/feeds.php:1254
+msgid "Fresh articles"
+msgstr "最新更新的文章"
+
+#: classes/feeds.php:1381
+msgid "Special"
+msgstr "特殊区域"
+
+#: classes/feeds.php:1472
+#, php-format
+msgid "Incorrect search syntax: %s."
+msgstr ""
+
+#: classes/feeds.php:1657
+#, php-format
+msgid "Search results: %s"
+msgstr "搜索结果：%s"
+
+#: classes/handler/public.php:537
+#: plugins/bookmarklets/init.php:41
 msgid "Share with Tiny Tiny RSS"
 msgstr "在 Tiny Tiny RSS 中分享订阅"
 
-#: classes/handler/public.php:588
+#: classes/handler/public.php:595
 msgid "Title:"
 msgstr "标题:"
 
-#: classes/handler/public.php:593
-#: classes/pref/feeds.php:553
+#: classes/handler/public.php:600
+#: classes/pref/feeds.php:548
 msgid "URL:"
 msgstr "URL："
 
-#: classes/handler/public.php:598
+#: classes/handler/public.php:605
 msgid "Content:"
 msgstr "内容:"
 
-#: classes/handler/public.php:603
+#: classes/handler/public.php:610
 msgid "Labels:"
 msgstr "标签:"
 
-#: classes/handler/public.php:613
+#: classes/handler/public.php:620
 msgid "Share"
 msgstr "分享"
 
-#: classes/handler/public.php:615
+#: classes/handler/public.php:622
 msgid "Shared article will appear in the Published feed."
 msgstr "被分享的文章将会出现在已发布信息源中。"
 
-#: classes/handler/public.php:709
+#: classes/handler/public.php:716
 msgid "Incorrect username or password"
 msgstr "用户名或密码错误"
 
-#: classes/handler/public.php:781
+#: classes/handler/public.php:805
 #, php-format
 msgid "Already subscribed to <b>%s</b>."
 msgstr "已经订阅到 <b>%s</b>."
 
-#: classes/handler/public.php:784
+#: classes/handler/public.php:808
 #, php-format
 msgid "Subscribed to <b>%s</b>."
 msgstr "订阅到 <b>%s</b>."
 
-#: classes/handler/public.php:787
+#: classes/handler/public.php:811
 #, php-format
 msgid "Could not subscribe to <b>%s</b>."
 msgstr "无法订阅到 <b>%s</b>。"
 
-#: classes/handler/public.php:790
+#: classes/handler/public.php:814
 #, php-format
 msgid "No feeds found in <b>%s</b>."
 msgstr "在 <b>%s</b> 中没有找到信息源。"
 
-#: classes/handler/public.php:796
+#: classes/handler/public.php:820
 #, php-format
 msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "无法订阅 <b>%s</b>。<br>无法下载信息源的 URL。"
 
-#: classes/handler/public.php:806
+#: classes/handler/public.php:830
 msgid "Multiple feed URLs found:"
 msgstr "发现了多个信息源:"
 
-#: classes/handler/public.php:817
+#: classes/handler/public.php:843
 msgid "Subscribe to selected feed"
 msgstr "订阅选中的信息源"
 
-#: classes/handler/public.php:842
+#: classes/handler/public.php:867
 msgid "Edit subscription options"
 msgstr "编辑订阅选项"
 
-#: classes/handler/public.php:896
+#: classes/handler/public.php:920
 msgid "Password recovery"
 msgstr "找回密码"
 
-#: classes/handler/public.php:939
+#: classes/handler/public.php:963
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
 msgstr "你需要提供合法的用户名和Email地址。密码重置链接将会发送到你的Email中。"
 
-#: classes/handler/public.php:959
+#: classes/handler/public.php:983
 #, php-format
 msgid "How much is %d + %d:"
 msgstr "%d+%d 等于几:"
 
-#: classes/handler/public.php:965
-#: classes/pref/users.php:376
+#: classes/handler/public.php:989
+#: classes/pref/users.php:356
 msgid "Reset password"
 msgstr "重置密码"
 
-#: classes/handler/public.php:977
+#: classes/handler/public.php:1001
 msgid "Some of the required form parameters are missing or incorrect."
 msgstr "表单中的信息不完整或不正确。"
 
-#: classes/handler/public.php:981
-#: classes/handler/public.php:1049
+#: classes/handler/public.php:1005
+#: classes/handler/public.php:1071
 msgid "Go back"
 msgstr "返回"
 
-#: classes/handler/public.php:1023
+#: classes/handler/public.php:1047
 msgid "[tt-rss] Password reset request"
 msgstr "[tt-rss] 密码重置请求"
 
-#: classes/handler/public.php:1045
+#: classes/handler/public.php:1067
 msgid "Sorry, login and email combination not found."
 msgstr "对不起，没有找到用户名和Email组合。"
 
-#: classes/handler/public.php:1068
+#: classes/handler/public.php:1090
 msgid "Your access level is insufficient to run this script."
 msgstr "访问级别不足，无法运行脚本。"
 
-#: classes/handler/public.php:1108
+#: classes/handler/public.php:1131
 msgid "Database Updater"
 msgstr "数据库更新管理器"
 
-#: classes/handler/public.php:1119
-msgid "Performing updates"
-msgstr "执行更新"
-
-#: classes/handler/public.php:1121
-#, php-format
-msgid "Updating to schema version %d"
-msgstr "正在更新到 %d 版本"
-
-#: classes/handler/public.php:1126
-#, php-format
-msgid "Performing update up to version %d..."
+#: classes/handler/public.php:1142
+#, fuzzy, php-format
+msgid "Performing updates to version %d"
 msgstr "正在更新版本%d ……"
 
-#: classes/handler/public.php:1131
-msgid "FAILED!"
-msgstr "失败!"
+#: classes/handler/public.php:1147
+#, fuzzy, php-format
+msgid "Updating to version %d"
+msgstr "正在更新到 %d 版本"
 
-#: classes/handler/public.php:1139
-msgid "OK!"
-msgstr "OK！"
+#: classes/handler/public.php:1160
+msgid "Try again"
+msgstr ""
 
-#: classes/handler/public.php:1157
-msgid "Database update required"
-msgstr "需要更新数据库"
+#: classes/handler/public.php:1166
+#, fuzzy
+msgid "Completed."
+msgstr "上传完成。"
 
-#: classes/handler/public.php:1168
+#: classes/handler/public.php:1183
+#, fuzzy, php-format
+msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
+msgstr "您的 Tiny Tiny RSS 数据库需要升级到最新版（<b>%d</b> 到 <b>%d</b>）。"
+
+#: classes/handler/public.php:1195
 msgid "Perform updates"
 msgstr "执行更新"
 
-#: classes/pref/labels.php:25
+#: classes/opml.php:28
+#: classes/opml.php:32
+msgid "OPML Utility"
+msgstr "OPML 工具"
+
+#: classes/opml.php:36
+msgid "Importing OPML..."
+msgstr "正在导入 OPML ……"
+
+#: classes/opml.php:41
+msgid "Return to preferences"
+msgstr "返回偏好设置"
+
+#: classes/opml.php:316
+#, php-format
+msgid "Adding feed: %s"
+msgstr "添加信息源: %s"
+
+#: classes/opml.php:333
+#, php-format
+msgid "Duplicate feed: %s"
+msgstr "重复的信息源:%s"
+
+#: classes/opml.php:347
+#, php-format
+msgid "Adding label %s"
+msgstr "添加预定义标签%s"
+
+#: classes/opml.php:350
+#, php-format
+msgid "Duplicate label: %s"
+msgstr "重复预定义标签: %s"
+
+#: classes/opml.php:362
+#, php-format
+msgid "Setting preference key %s to %s"
+msgstr "将偏好按键从 %s 设置为 %s"
+
+#: classes/opml.php:398
+#, fuzzy, php-format
+msgid "Adding filter %s..."
+msgstr "创建过滤器..."
+
+#: classes/opml.php:536
+#, php-format
+msgid "Processing category: %s"
+msgstr "加入到类别:%s"
+
+#: classes/opml.php:582
+#, php-format
+msgid "Upload failed with error code %d"
+msgstr "上传错误，错误代码：%d"
+
+#: classes/opml.php:594
+#: plugins/import_export/init.php:493
+msgid "Unable to move uploaded file."
+msgstr "无法移动已上传文件."
+
+#: classes/opml.php:598
+#: plugins/import_export/init.php:497
+msgid "Error: please upload OPML file."
+msgstr "错误：请上传 OPML 文件。"
+
+#: classes/opml.php:609
+msgid "Error: unable to find moved OPML file."
+msgstr "错误：无法找到移动的OPML文件。"
+
+#: classes/opml.php:618
+msgid "Error while parsing document."
+msgstr "解析文档时发生错误。"
+
+#: classes/pref/feeds.php:28
+msgid "Check to enable field"
+msgstr "勾选以启用"
+
+#: classes/pref/feeds.php:77
+#: classes/pref/feeds.php:232
+#: classes/pref/feeds.php:280
+#: classes/pref/feeds.php:286
+#: classes/pref/feeds.php:315
+#, fuzzy, php-format
+msgid "(%d feed)"
+msgid_plural "(%d feeds)"
+msgstr[0] "(%d 个信息源)"
+
+#: classes/pref/feeds.php:521
+#: classes/pref/prefs.php:20
+msgid "General"
+msgstr "通用"
+
+#: classes/pref/feeds.php:537
+msgid "Feed Title"
+msgstr "信息源标题"
+
+#: classes/pref/feeds.php:550
+msgid "Feed URL"
+msgstr "信息源 URL"
+
+#: classes/pref/feeds.php:585
+msgid "Site URL:"
+msgstr "网址:"
+
+#: classes/pref/feeds.php:587
+msgid "Site URL"
+msgstr "网址"
+
+#: classes/pref/feeds.php:612
+#: classes/pref/feeds.php:852
+msgid "Update"
+msgstr "更新列表"
+
+#: classes/pref/feeds.php:621
+#: classes/pref/feeds.php:859
+msgid "Interval:"
+msgstr "间隔:"
+
+#: classes/pref/feeds.php:634
+#: classes/pref/feeds.php:874
+msgid "Article purging:"
+msgstr "文章清理："
+
+#: classes/pref/feeds.php:651
+#: classes/pref/feeds.php:885
+#: classes/pref/feeds.php:1673
+#: classes/pref/users.php:63
+#: plugins/auth_internal/init.php:60
+msgid "Authentication"
+msgstr "登录认证"
+
+#: classes/pref/feeds.php:669
+msgid "<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds."
+msgstr "<b>提示：</b>如果您的信息源需要验证，那么您需要填写登录信息。Twitter 信息源除外。"
+
+#: classes/pref/feeds.php:682
+#: classes/pref/feeds.php:907
+#: classes/pref/filters.php:459
+#: classes/pref/filters.php:913
+#: classes/pref/users.php:90
+msgid "Options"
+msgstr "选项"
+
+#: classes/pref/feeds.php:698
+#: classes/pref/feeds.php:912
+msgid "Include in e-mail digest"
+msgstr "包含电子邮件摘要"
+
+#: classes/pref/feeds.php:714
+#: classes/pref/feeds.php:919
+msgid "Always display image attachments"
+msgstr "始终显示图片附件"
+
+#: classes/pref/feeds.php:729
+#: classes/pref/feeds.php:926
+#: classes/pref/prefs.php:97
+msgid "Do not embed media"
+msgstr "不要嵌入图片"
+
+#: classes/pref/feeds.php:744
+#: classes/pref/feeds.php:933
+msgid "Cache media"
+msgstr "媒体缓存"
+
+#: classes/pref/feeds.php:759
+#: classes/pref/feeds.php:940
+msgid "Mark updated articles as unread"
+msgstr "将已更新的文章标记为未读"
+
+#: classes/pref/feeds.php:763
+msgid "Icon"
+msgstr "图标"
+
+#: classes/pref/feeds.php:771
+#: classes/pref/feeds.php:1324
+#: plugins/import_export/init.php:72
+msgid "Choose file..."
+msgstr "选择文件..."
+
+#: classes/pref/feeds.php:778
+msgid "Replace"
+msgstr "替换"
+
+#: classes/pref/feeds.php:780
+#: classes/pref/filters.php:502
+#: classes/pref/filters.php:798
+#: classes/pref/labels.php:269
+#: classes/pref/users.php:354
+msgid "Remove"
+msgstr "移除"
+
+#: classes/pref/feeds.php:785
+#: classes/pref/prefs.php:745
+msgid "Plugins"
+msgstr "插件"
+
+#: classes/pref/feeds.php:1192
+msgid "Feeds with errors"
+msgstr "有错误的信息源"
+
+#: classes/pref/feeds.php:1199
+msgid "Inactive feeds"
+msgstr "未活动的信息源"
+
+#: classes/pref/feeds.php:1221
+#: classes/pref/feeds.php:1454
+#: classes/pref/feeds.php:1511
+#: classes/pref/filters.php:360
+#: classes/pref/filters.php:420
+#: classes/pref/filters.php:776
+#: classes/pref/filters.php:862
+#: classes/pref/filters.php:891
+#: classes/pref/labels.php:257
+#: classes/pref/prefs.php:1027
+#: classes/pref/users.php:340
+msgid "Select"
+msgstr "选择"
+
+#: classes/pref/feeds.php:1235
+msgid "Edit selected feeds"
+msgstr "编辑选定的信息源"
+
+#: classes/pref/feeds.php:1237
+#: classes/pref/feeds.php:1251
+#: classes/pref/filters.php:794
+msgid "Reset sort order"
+msgstr "重置排序"
+
+#: classes/pref/feeds.php:1239
+#: js/PrefFeedTree.js:347
+msgid "Batch subscribe"
+msgstr "批量订阅"
+
+#: classes/pref/feeds.php:1246
+msgid "Categories"
+msgstr "分类"
+
+#: classes/pref/feeds.php:1249
+msgid "Add category"
+msgstr "增加分类"
+
+#: classes/pref/feeds.php:1253
+msgid "Remove selected"
+msgstr "移除选中"
+
+#: classes/pref/feeds.php:1311
+msgid "OPML"
+msgstr "OPML"
+
+#: classes/pref/feeds.php:1313
+msgid "Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings."
+msgstr "使用OPML你可以导出或导入信息源feeds列表、过滤器、标签以及设置。"
+
+#: classes/pref/feeds.php:1330
+msgid "Import OPML"
+msgstr "导入 OPML"
+
+#: classes/pref/feeds.php:1338
+msgid "Export OPML"
+msgstr "导出 OPML"
+
+#: classes/pref/feeds.php:1342
+msgid "Include settings"
+msgstr "包含设置"
+
+#: classes/pref/feeds.php:1349
+msgid "Published OPML"
+msgstr "发布OPML"
+
+#: classes/pref/feeds.php:1351
+msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
+msgstr "您可以公开发布您的 OPML 。网上的任何人都可以通过如下 URL 订阅该文件。"
+
+#: classes/pref/feeds.php:1353
+msgid "Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds."
+msgstr "已发布的OPML中不包括您的Tiny Tiny RSS设置，需要身份验证的信息源或者最受欢迎的信息源中隐藏的信息源."
+
+#: classes/pref/feeds.php:1355
+msgid "Public OPML URL"
+msgstr "公开的 OPML URL"
+
+#: classes/pref/feeds.php:1356
+msgid "Display published OPML URL"
+msgstr "公开的 OPML 地址"
+
+#: classes/pref/feeds.php:1364
+msgid "Published & shared articles / Generated feeds"
+msgstr "已发布的文章和生成的信息源"
+
+#: classes/pref/feeds.php:1366
+msgid "Published articles can be subscribed by anyone who knows the following URL:"
+msgstr "知道以下网址的任何人都可以订阅已发布的文章："
+
+#: classes/pref/feeds.php:1372
+msgid "Display URL"
+msgstr "显示 URL"
+
+#: classes/pref/feeds.php:1375
+msgid "Clear all generated URLs"
+msgstr "清空所有生成的 URL"
+
+#: classes/pref/feeds.php:1480
+#: classes/pref/feeds.php:1537
+msgid "Click to edit feed"
+msgstr "点击以编辑信息源"
+
+#: classes/pref/feeds.php:1497
+#: classes/pref/feeds.php:1556
+msgid "Unsubscribe from selected feeds"
+msgstr "取消订阅选中的信息源"
+
+#: classes/pref/feeds.php:1655
+msgid "One valid feed per line (no detection is done)"
+msgstr "每行添加一条RSS源（未进行检测）"
+
+#: classes/pref/feeds.php:1686
+msgid "Feeds require authentication."
+msgstr "Feed需要登录认证。"
+
+#: classes/pref/filters.php:234
+#: classes/pref/filters.php:557
+msgid "(inverse)"
+msgstr "(反选)"
+
+#: classes/pref/filters.php:230
+#: classes/pref/filters.php:556
+#, php-format
+msgid "%s on %s in %s %s"
+msgstr ""
+
 #: classes/pref/filters.php:349
-#: classes/pref/filters.php:852
+#: classes/pref/filters.php:850
+#: classes/pref/labels.php:25
 msgid "Caption"
 msgstr "标题"
 
-#: classes/pref/labels.php:37
+#: classes/pref/filters.php:354
+#: classes/pref/filters.php:856
+#: classes/pref/filters.php:974
+msgid "Match"
+msgstr "匹配"
+
+#: classes/pref/filters.php:369
+#: classes/pref/filters.php:429
+#: classes/pref/filters.php:871
+#: classes/pref/filters.php:900
+msgid "Add"
+msgstr "添加"
+
+#: classes/pref/filters.php:413
+#: classes/pref/filters.php:884
+msgid "Apply actions"
+msgstr "应用操作"
+
+#: classes/pref/filters.php:470
+#: classes/pref/filters.php:919
+msgid "Enabled"
+msgstr "已启用"
+
+#: classes/pref/filters.php:481
+#: classes/pref/filters.php:924
+msgid "Match any rule"
+msgstr "匹配任意规则"
+
+#: classes/pref/filters.php:492
+#: classes/pref/filters.php:929
+msgid "Inverse matching"
+msgstr "反向匹配"
+
+#: classes/pref/filters.php:506
+#: classes/pref/filters.php:938
+msgid "Test"
+msgstr "测试"
+
+#: classes/pref/filters.php:788
+msgid "Combine"
+msgstr "合并"
+
+#: classes/pref/filters.php:791
+#: classes/pref/users.php:352
+msgid "Edit"
+msgstr "编辑"
+
+#: classes/pref/filters.php:940
+msgid "Create"
+msgstr "创建"
+
+#: classes/pref/filters.php:984
+msgid "Regular expression, without outer delimiters (i.e. slashes)"
+msgstr "正则表达式，没有外部分隔符（即斜杠）"
+
+#: classes/pref/filters.php:990
+msgid "Inverse regular expression matching"
+msgstr "反选正则表达式匹配结果"
+
+#: classes/pref/filters.php:994
+msgid "on field"
+msgstr "作用范围"
+
+#: classes/pref/filters.php:997
+#: js/PrefFilterTree.js:45
+msgid "in"
+msgstr "在"
+
+#: classes/pref/filters.php:1018
+msgid "Save rule"
+msgstr "保存规则"
+
+#: classes/pref/filters.php:1018
+#: js/CommonFilters.js:133
+msgid "Add rule"
+msgstr "添加规则"
+
+#: classes/pref/filters.php:1041
+msgid "Perform Action"
+msgstr "执行操作"
+
+#: classes/pref/filters.php:1092
+msgid "No actions available"
+msgstr "无操作可用"
+
+#: classes/pref/filters.php:1111
+msgid "Save action"
+msgstr "保存操作"
+
+#: classes/pref/filters.php:1111
+#: js/CommonFilters.js:155
+msgid "Add action"
+msgstr "添加操作"
+
+#: classes/pref/filters.php:1139
+msgid "[No caption]"
+msgstr "[无标题]"
+
+#: classes/pref/filters.php:1141
+#, php-format
+msgid "%s (%d rule)"
+msgid_plural "%s (%d rules)"
+msgstr[0] "%s (%d 规则)"
+
+#: classes/pref/filters.php:1155
+msgid "matches any rule"
+msgstr "匹配任意规则"
+
+#: classes/pref/filters.php:1156
+#, fuzzy
+msgid "inverse"
+msgstr "(反选)"
+
+#: classes/pref/filters.php:1159
+#, fuzzy, php-format
+msgid "%s (+%d action)"
+msgid_plural "%s (+%d actions)"
+msgstr[0] "信息源动作"
+
+#: classes/pref/labels.php:38
 msgid "Colors"
 msgstr "颜色"
 
@@ -1196,202 +1807,421 @@ msgstr "前端："
 msgid "Background:"
 msgstr "背景："
 
-#: classes/pref/labels.php:237
+#: classes/pref/labels.php:231
 #, php-format
 msgid "Created label <b>%s</b>"
 msgstr "创建预定义标签 <b>%s</b>"
 
-#: classes/pref/labels.php:263
-#: classes/pref/users.php:360
-#: classes/pref/feeds.php:1271
-#: classes/pref/feeds.php:1506
-#: classes/pref/feeds.php:1567
-#: classes/pref/filters.php:362
-#: classes/pref/filters.php:422
-#: classes/pref/filters.php:778
-#: classes/pref/filters.php:865
-#: classes/pref/filters.php:895
-#: classes/pref/prefs.php:1058
-msgid "Select"
-msgstr "选择"
-
-#: classes/pref/labels.php:266
-#: classes/pref/users.php:363
-#: classes/pref/feeds.php:1274
-#: classes/pref/feeds.php:1509
-#: classes/pref/feeds.php:1570
-#: classes/pref/filters.php:365
-#: classes/pref/filters.php:425
-#: classes/pref/filters.php:781
-#: classes/pref/filters.php:868
-#: classes/pref/filters.php:898
-#: classes/pref/prefs.php:1061
-#: classes/feeds.php:62
-msgid "All"
-msgstr "全部"
-
-#: classes/pref/labels.php:268
-#: classes/pref/users.php:365
-#: classes/pref/feeds.php:1276
-#: classes/pref/feeds.php:1511
-#: classes/pref/feeds.php:1572
-#: classes/pref/filters.php:367
-#: classes/pref/filters.php:427
-#: classes/pref/filters.php:783
-#: classes/pref/filters.php:870
-#: classes/pref/filters.php:900
-#: classes/pref/prefs.php:1063
-#: classes/feeds.php:65
-msgid "None"
-msgstr "无"
-
-#: classes/pref/labels.php:275
-#: classes/pref/users.php:374
-#: classes/pref/feeds.php:811
-#: classes/pref/filters.php:504
-#: classes/pref/filters.php:800
-#: classes/feeds.php:771
-msgid "Remove"
-msgstr "移除"
-
-#: classes/pref/labels.php:278
+#: classes/pref/labels.php:272
 msgid "Clear colors"
 msgstr "清空颜色"
 
-#: classes/pref/users.php:6
-#: classes/pref/system.php:8
-msgid "Your access level is insufficient to open this tab."
-msgstr "您的访问级别不够，无法打开这个舌签。"
+#: classes/pref/prefs.php:41
+#, fuzzy
+msgid "Articles"
+msgstr "全部文章"
 
-#: classes/pref/users.php:26
-msgid "Edit user"
-msgstr "编辑用户"
+#: classes/pref/prefs.php:54
+msgid "Digest"
+msgstr "摘要"
 
-#: classes/pref/users.php:61
-#: classes/pref/feeds.php:653
-#: classes/pref/feeds.php:920
-#: classes/pref/feeds.php:1730
-#: classes/feeds.php:690
-#: plugins/auth_internal/init.php:58
-msgid "Authentication"
-msgstr "登录认证"
+#: classes/pref/prefs.php:59
+msgid "Advanced"
+msgstr "高级"
 
-#: classes/pref/users.php:66
-msgid "Access level: "
+#: classes/pref/prefs.php:70
+msgid "Allow duplicate articles"
+msgstr "允许重复的文章"
+
+#: classes/pref/prefs.php:71
+msgid "Blacklisted tags"
+msgstr "被列入黑名单的标签"
+
+#: classes/pref/prefs.php:71
+msgid "Never apply these tags automatically (comma-separated list)."
+msgstr "不要自动应用这些标签（以逗号分隔的列表）。"
+
+#: classes/pref/prefs.php:72
+#, fuzzy
+msgid "Default language"
+msgstr "默认偏好设置"
+
+#: classes/pref/prefs.php:72
+msgid "Used for full-text search"
+msgstr ""
+
+#: classes/pref/prefs.php:73
+msgid "Mark read on scroll"
+msgstr "滚动时标记为已读"
+
+#: classes/pref/prefs.php:73
+msgid "Mark articles as read as you scroll past them"
+msgstr "滚动时标记文章为已读"
+
+#: classes/pref/prefs.php:74
+msgid "Always expand articles"
+msgstr "始终展开文章"
+
+#: classes/pref/prefs.php:75
+msgid "Combined mode"
+msgstr "合并模式"
+
+#: classes/pref/prefs.php:75
+msgid "Show flat list of articles instead of separate panels"
+msgstr "将文章列表展开显示，而不是将标题和内容分别显示"
+
+#: classes/pref/prefs.php:76
+msgid "Confirm marking feeds as read"
+msgstr "标记信息源为已读之前弹出确认"
+
+#: classes/pref/prefs.php:77
+msgid "Amount of articles to display at once"
+msgstr "同时显示的文章数量"
+
+#: classes/pref/prefs.php:78
+msgid "Default update interval"
+msgstr "默认更新间隔"
+
+#: classes/pref/prefs.php:79
+#, fuzzy
+msgid "Mark sent articles as read"
+msgstr "将所有文章标记为已读？"
+
+#: classes/pref/prefs.php:80
+msgid "Enable digest"
+msgstr "启用电子邮件摘要"
+
+#: classes/pref/prefs.php:80
+msgid "Send daily digest of new (and unread) headlines to your e-mail address"
+msgstr "每天将更新的和未读的文章标题通过邮件发送摘要到您设置的邮箱中"
+
+#: classes/pref/prefs.php:81
+msgid "Try to send around this time"
+msgstr "在特定时间发送摘要"
+
+#: classes/pref/prefs.php:81
+msgid "Time in UTC"
+msgstr "UTC时区"
+
+#: classes/pref/prefs.php:82
+msgid "Enable API"
+msgstr "启用API"
+
+#: classes/pref/prefs.php:82
+msgid "Allows accessing this account through the API"
+msgstr "允许外部客户端通过 API 来访问该账户"
+
+#: classes/pref/prefs.php:83
+msgid "Enable categories"
+msgstr "启用类别"
+
+#: classes/pref/prefs.php:84
+msgid "Sort feeds by unread articles count"
+msgstr "以未读文章数量排序信息源"
+
+#: classes/pref/prefs.php:85
+msgid "Maximum age of fresh articles"
+msgstr "最新更新文章的保鲜期（以小时为单位）"
+
+#: classes/pref/prefs.php:85
+msgid "hours"
+msgstr "小时"
+
+#: classes/pref/prefs.php:86
+msgid "Hide read feeds"
+msgstr "显示/隐藏 已读信息"
+
+#: classes/pref/prefs.php:87
+msgid "Always show special feeds"
+msgstr "始终显示特殊信息源"
+
+#: classes/pref/prefs.php:87
+#, fuzzy
+msgid "While hiding read feeds"
+msgstr "隐藏已读信息之后显示特殊区域的内容"
+
+#: classes/pref/prefs.php:88
+msgid "Long date format"
+msgstr "长时间格式"
+
+#: classes/pref/prefs.php:88
+#, fuzzy
+msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
+msgstr "所使用的语法与 PHP <a href='http://php.net/manual/function.date.php'>date()</a> 函数相同."
+
+#: classes/pref/prefs.php:89
+#, fuzzy
+msgid "Automatically show next feed"
+msgstr "自动显示下一个信息源"
+
+#: classes/pref/prefs.php:89
+#, fuzzy
+msgid "After marking one as read"
+msgstr "标记信息源为已读之前弹出确认"
+
+#: classes/pref/prefs.php:90
+#, fuzzy
+msgid "Purge articles older than"
+msgstr "清除未读文章"
+
+#: classes/pref/prefs.php:90
+msgid "<strong>days</strong> (0 disables)"
+msgstr ""
+
+#: classes/pref/prefs.php:91
+msgid "Purge unread articles"
+msgstr "清除未读文章"
+
+#: classes/pref/prefs.php:92
+msgid "Reverse headline order (oldest first)"
+msgstr "反转标题列表顺序（最旧的在上面）"
+
+#: classes/pref/prefs.php:93
+msgid "Short date format"
+msgstr "短时间格式"
+
+#: classes/pref/prefs.php:94
+#, fuzzy
+msgid "Show content preview in headlines"
+msgstr "在标题列表中显示内容预览"
+
+#: classes/pref/prefs.php:95
+msgid "Sort headlines by feed date"
+msgstr "以信息源的日期排序"
+
+#: classes/pref/prefs.php:95
+msgid "Use feed-specified date to sort headlines instead of local import date."
+msgstr "使用信息源中定义的时间，而非本地导入的时间来排序。"
+
+#: classes/pref/prefs.php:96
+#, fuzzy
+msgid "SSL client certificate"
+msgstr "使用 SSL 证书登录"
+
+#: classes/pref/prefs.php:98
+msgid "Strip unsafe tags from articles"
+msgstr "从文章中剔除不安全的标签"
+
+#: classes/pref/prefs.php:98
+msgid "Strip all but most common HTML tags when reading articles."
+msgstr "仅加载几个最常用的 HTML 标签."
+
+#: classes/pref/prefs.php:99
+#: js/PrefHelpers.js:113
+msgid "Customize stylesheet"
+msgstr "自定义样式"
+
+#: classes/pref/prefs.php:100
+msgid "Time zone"
+msgstr "时区"
+
+#: classes/pref/prefs.php:101
+#, fuzzy
+msgid "Group by feed"
+msgstr "前25位的信息源"
+
+#: classes/pref/prefs.php:101
+msgid "Group multiple-feed output by originating feed"
+msgstr ""
+
+#: classes/pref/prefs.php:102
+msgid "Language"
+msgstr "语言"
+
+#: classes/pref/prefs.php:103
+msgid "Theme"
+msgstr "主题"
+
+#: classes/pref/prefs.php:187
+msgid "The configuration was saved."
+msgstr "设置已保存。"
+
+#: classes/pref/prefs.php:201
+msgid "Your personal data has been saved."
+msgstr "您的个人数据已保存。"
+
+#: classes/pref/prefs.php:217
+msgid "Your preferences are now set to default values."
+msgstr "你的偏好设置已经重置为默认值。"
+
+#: classes/pref/prefs.php:228
+msgid "Personal data / Authentication"
+msgstr "个人数据 / 用户认证"
+
+#: classes/pref/prefs.php:231
+msgid "Personal data"
+msgstr "个人数据"
+
+#: classes/pref/prefs.php:260
+#, fuzzy
+msgid "Full name:"
+msgstr "姓名"
+
+#: classes/pref/prefs.php:265
+#: classes/pref/users.php:94
+#, fuzzy
+msgid "E-mail:"
+msgstr "电子邮件："
+
+#: classes/pref/prefs.php:273
+#, fuzzy
+msgid "Access level:"
 msgstr "访问级别: "
 
-#: classes/pref/users.php:87
-#: classes/pref/feeds.php:686
-#: classes/pref/feeds.php:945
-#: classes/pref/filters.php:461
-#: classes/pref/filters.php:917
-msgid "Options"
-msgstr "选项"
+#: classes/pref/prefs.php:284
+msgid "Save data"
+msgstr "保存信息"
 
-#: classes/pref/users.php:101
-msgid "User details"
-msgstr "用户详细资料"
+#: classes/pref/prefs.php:333
+msgid "Changing your current password will disable OTP."
+msgstr "更改当前密码会使 OTP 动态口令失效。"
 
-#: classes/pref/users.php:141
-#: classes/pref/users.php:411
-msgid "Registered"
-msgstr "注册时间"
+#: classes/pref/prefs.php:337
+#, fuzzy
+msgid "Old password:"
+msgstr "原密码"
 
-#: classes/pref/users.php:142
-msgid "Last logged in"
-msgstr "上次登录"
+#: classes/pref/prefs.php:342
+#: classes/pref/users.php:82
+#, fuzzy
+msgid "New password:"
+msgstr "新密码"
 
-#: classes/pref/users.php:150
-msgid "Subscribed feeds count"
-msgstr "订阅的信息源数量"
+#: classes/pref/prefs.php:347
+#, fuzzy
+msgid "Confirm password:"
+msgstr "确认密码"
 
-#: classes/pref/users.php:151
-msgid "Stored articles"
-msgstr "存储的文章"
+#: classes/pref/prefs.php:357
+msgid "Change password"
+msgstr "更改密码"
 
-#: classes/pref/users.php:155
-#: classes/pref/users.php:410
-msgid "Subscribed feeds"
-msgstr "订阅的信息源"
+#: classes/pref/prefs.php:362
+msgid "One time passwords / Authenticator"
+msgstr "动态口令"
 
-#: classes/pref/users.php:181
-msgid "User not found"
-msgstr "未找到用户"
+#: classes/pref/prefs.php:392
+#: classes/pref/prefs.php:440
+#, fuzzy
+msgid "Your password:"
+msgstr "确认密码"
 
-#: classes/pref/users.php:252
+#: classes/pref/prefs.php:402
+msgid "Disable OTP"
+msgstr "禁用 OTP 动态口令"
+
+#: classes/pref/prefs.php:446
+#, fuzzy
+msgid "One time password:"
+msgstr "一次性密码不正确"
+
+#: classes/pref/prefs.php:453
+msgid "Enable OTP"
+msgstr "启用 OTP 动态口令"
+
+#: classes/pref/prefs.php:506
+msgid "Some preferences are only available in default profile."
+msgstr "部分设置仅支持默认偏好."
+
+#: classes/pref/prefs.php:601
+msgid "default"
+msgstr "默认"
+
+#: classes/pref/prefs.php:611
+msgid "Customize"
+msgstr "自定义"
+
+#: classes/pref/prefs.php:614
+#, fuzzy
+msgid "More themes..."
+msgstr "更多操作"
+
+#: classes/pref/prefs.php:675
+msgid "Register"
+msgstr "注册"
+
+#: classes/pref/prefs.php:679
+#: classes/pref/system.php:44
+msgid "Clear"
+msgstr "清空"
+
+#: classes/pref/prefs.php:690
+#, fuzzy, php-format
+msgid "Current server time: %s"
+msgstr "当前服务器系统时间: %s (UTC)"
+
+#: classes/pref/prefs.php:719
+msgid "Save configuration"
+msgstr "保存设置"
+
+#: classes/pref/prefs.php:723
+msgid "Save and exit preferences"
+msgstr "保存并退出设置"
+
+#: classes/pref/prefs.php:728
+msgid "Manage profiles"
+msgstr "管理偏好文件"
+
+#: classes/pref/prefs.php:731
+msgid "Reset to defaults"
+msgstr "恢复到默认"
+
+#: classes/pref/prefs.php:776
+msgid "System plugins"
+msgstr "系统插件"
+
+#: classes/pref/prefs.php:810
+#: classes/pref/prefs.php:856
 #, php-format
-msgid "Added user %s with password %s"
-msgstr "已添加用户%s ，密码为%s"
+msgid "v%.2f, by %s"
+msgstr ""
 
-#: classes/pref/users.php:259
-#, php-format
-msgid "Could not create user %s"
-msgstr "无法创建用户 %s"
+#: classes/pref/prefs.php:818
+msgid "User plugins"
+msgstr "用户插件"
 
-#: classes/pref/users.php:263
-#, php-format
-msgid "User %s already exists."
-msgstr "用户%s已存在。"
+#: classes/pref/prefs.php:845
+msgid "Clear data"
+msgstr "清空数据"
 
-#: classes/pref/users.php:291
-#, php-format
-msgid "Changed password of user %s to %s"
-msgstr "用户%s ，密码修改为%s"
+#: classes/pref/prefs.php:870
+msgid "Enable selected plugins"
+msgstr "启用选择的插件"
 
-#: classes/pref/users.php:293
-#, php-format
-msgid "Sending new password of user %s to %s"
-msgstr "用户%s，新密码发送至%s"
+#: classes/pref/prefs.php:945
+msgid "Incorrect one time password"
+msgstr "一次性密码不正确"
 
-#: classes/pref/users.php:315
-msgid "[tt-rss] Password change notification"
-msgstr "[tt-rss] 密码更换提醒"
+#: classes/pref/prefs.php:950
+#: classes/pref/prefs.php:981
+msgid "Incorrect password"
+msgstr "密码错误"
 
-#: classes/pref/users.php:350
-#: classes/pref/feeds.php:1267
-#: classes/pref/filters.php:774
-#: classes/feeds.php:742
-#: classes/feeds.php:813
-#: js/Feeds.js:540
-msgid "Search"
-msgstr "搜索"
+#: classes/pref/prefs.php:1005
+msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
+msgstr "您可以通过自定义 CSS 来更改颜色，字体和版式。"
 
-#: classes/pref/users.php:368
-msgid "Create user"
-msgstr "创建用户"
+#: classes/pref/prefs.php:1041
+msgid "Create profile"
+msgstr "创建偏好文件"
 
-#: classes/pref/users.php:372
-#: classes/pref/filters.php:793
-msgid "Edit"
-msgstr "编辑"
+#: classes/pref/prefs.php:1060
+#: classes/pref/prefs.php:1080
+msgid "(active)"
+msgstr "（当前使用的）"
 
-#: classes/pref/users.php:408
-#: classes/pref/feeds.php:659
-#: classes/pref/feeds.php:926
-#: classes/pref/feeds.php:1733
-#: classes/feeds.php:694
-msgid "Login"
-msgstr "登陆"
+#: classes/pref/prefs.php:1111
+msgid "Remove selected profiles"
+msgstr "移除选中的偏好文件"
 
-#: classes/pref/users.php:409
-msgid "Access Level"
-msgstr "访问级别"
+#: classes/pref/prefs.php:1113
+msgid "Activate profile"
+msgstr "启用偏好文件"
 
-#: classes/pref/users.php:412
-msgid "Last login"
-msgstr "最后登陆"
-
-#: classes/pref/users.php:429
-msgid "Click to edit"
-msgstr "点击进行编辑"
-
-#: classes/pref/users.php:445
-msgid "No users defined."
-msgstr "没有定义用户。"
-
-#: classes/pref/users.php:447
-msgid "No matching users found."
-msgstr "没有匹配的用户。"
+#: classes/pref/system.php:8
+#: classes/pref/users.php:6
+msgid "Your access level is insufficient to open this tab."
+msgstr "您的访问级别不够，无法打开这个舌签。"
 
 #: classes/pref/system.php:30
 msgid "Event Log"
@@ -1400,11 +2230,6 @@ msgstr "事件日志"
 #: classes/pref/system.php:41
 msgid "Refresh"
 msgstr "刷新"
-
-#: classes/pref/system.php:44
-#: classes/pref/prefs.php:669
-msgid "Clear"
-msgstr "清空"
 
 #: classes/pref/system.php:49
 msgid "Error"
@@ -1426,1049 +2251,103 @@ msgstr "日期"
 msgid "PHP Information"
 msgstr "PHP信息"
 
-#: classes/pref/feeds.php:28
-msgid "Check to enable field"
-msgstr "勾选以启用"
-
-#: classes/pref/feeds.php:77
-#: classes/pref/feeds.php:232
-#: classes/pref/feeds.php:280
-#: classes/pref/feeds.php:286
-#: classes/pref/feeds.php:315
-#, fuzzy, php-format
-msgid "(%d feed)"
-msgid_plural "(%d feeds)"
-msgstr[0] "(%d 个信息源)"
-
-#: classes/pref/feeds.php:526
-#: classes/pref/prefs.php:20
-msgid "General"
-msgstr "通用"
-
-#: classes/pref/feeds.php:542
-msgid "Feed Title"
-msgstr "信息源标题"
-
-#: classes/pref/feeds.php:555
-msgid "Feed URL"
-msgstr "信息源 URL"
-
-#: classes/pref/feeds.php:576
-#: classes/pref/feeds.php:861
-#: classes/pref/feeds.php:1723
-#: classes/feeds.php:666
-msgid "Place in category:"
-msgstr "加入到类别："
-
-#: classes/pref/feeds.php:590
-msgid "Site URL:"
-msgstr "网址:"
-
-#: classes/pref/feeds.php:592
-msgid "Site URL"
-msgstr "网址"
-
-#: classes/pref/feeds.php:605
-#: classes/pref/feeds.php:876
-#: classes/feeds.php:798
-msgid "Language:"
-msgstr "语言："
-
-#: classes/pref/feeds.php:614
-#: classes/pref/feeds.php:887
-msgid "Update"
-msgstr "更新列表"
-
-#: classes/pref/feeds.php:623
-#: classes/pref/feeds.php:894
-msgid "Interval:"
-msgstr "间隔:"
-
-#: classes/pref/feeds.php:636
-#: classes/pref/feeds.php:909
-msgid "Article purging:"
-msgstr "文章清理："
-
-#: classes/pref/feeds.php:668
-#: classes/pref/feeds.php:937
-#: classes/pref/feeds.php:1734
-#: classes/pref/prefs.php:287
-#: classes/feeds.php:699
-msgid "Password"
-msgstr "密码"
-
-#: classes/pref/feeds.php:672
-msgid "<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds."
-msgstr "<b>提示：</b>如果您的信息源需要验证，那么您需要填写登录信息。Twitter 信息源除外。"
-
-#: classes/pref/feeds.php:684
-#: classes/feeds.php:711
-msgid "This feed requires authentication."
-msgstr "这个信息源需要认证."
-
-#: classes/pref/feeds.php:702
-#: classes/pref/feeds.php:950
-msgid "Hide from Popular feeds"
-msgstr "从最受欢迎的信息源中隐藏"
-
-#: classes/pref/feeds.php:718
-#: classes/pref/feeds.php:958
-msgid "Include in e-mail digest"
-msgstr "包含电子邮件摘要"
-
-#: classes/pref/feeds.php:734
-#: classes/pref/feeds.php:966
-msgid "Always display image attachments"
-msgstr "始终显示图片附件"
-
-#: classes/pref/feeds.php:750
-#: classes/pref/feeds.php:974
-#: classes/pref/prefs.php:95
-msgid "Do not embed media"
-msgstr "不要嵌入图片"
-
-#: classes/pref/feeds.php:766
-#: classes/pref/feeds.php:982
-msgid "Cache media"
-msgstr "媒体缓存"
-
-#: classes/pref/feeds.php:782
-#: classes/pref/feeds.php:990
-msgid "Mark updated articles as unread"
-msgstr "将已更新的文章标记为未读"
-
-#: classes/pref/feeds.php:788
-msgid "Icon"
-msgstr "图标"
-
-#: classes/pref/feeds.php:802
-#: classes/pref/feeds.php:1374
-#: plugins/import_export/init.php:72
-msgid "Choose file..."
-msgstr "选择文件..."
-
-#: classes/pref/feeds.php:809
-msgid "Replace"
-msgstr "替换"
-
-#: classes/pref/feeds.php:816
-#: classes/pref/prefs.php:735
-msgid "Plugins"
-msgstr "插件"
-
-#: classes/pref/feeds.php:1242
-msgid "Feeds with errors"
-msgstr "有错误的信息源"
-
-#: classes/pref/feeds.php:1249
-msgid "Inactive feeds"
-msgstr "未活动的信息源"
-
-#: classes/pref/feeds.php:1285
-msgid "Edit selected feeds"
-msgstr "编辑选定的信息源"
-
-#: classes/pref/feeds.php:1287
-#: classes/pref/feeds.php:1301
-#: classes/pref/filters.php:796
-msgid "Reset sort order"
-msgstr "重置排序"
-
-#: classes/pref/feeds.php:1289
-#: js/PrefFeedTree.js:347
-msgid "Batch subscribe"
-msgstr "批量订阅"
-
-#: classes/pref/feeds.php:1296
-msgid "Categories"
-msgstr "分类"
-
-#: classes/pref/feeds.php:1299
-msgid "Add category"
-msgstr "增加分类"
-
-#: classes/pref/feeds.php:1303
-msgid "Remove selected"
-msgstr "移除选中"
-
-#: classes/pref/feeds.php:1361
-msgid "OPML"
-msgstr "OPML"
-
-#: classes/pref/feeds.php:1363
-msgid "Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings."
-msgstr "使用OPML你可以导出或导入信息源feeds列表、过滤器、标签以及设置。"
-
-#: classes/pref/feeds.php:1380
-msgid "Import OPML"
-msgstr "导入 OPML"
-
-#: classes/pref/feeds.php:1388
-msgid "Export OPML"
-msgstr "导出 OPML"
-
-#: classes/pref/feeds.php:1392
-msgid "Include settings"
-msgstr "包含设置"
-
-#: classes/pref/feeds.php:1399
-msgid "Published OPML"
-msgstr "发布OPML"
-
-#: classes/pref/feeds.php:1401
-msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
-msgstr "您可以公开发布您的 OPML 。网上的任何人都可以通过如下 URL 订阅该文件。"
-
-#: classes/pref/feeds.php:1403
-msgid "Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds."
-msgstr "已发布的OPML中不包括您的Tiny Tiny RSS设置，需要身份验证的信息源或者最受欢迎的信息源中隐藏的信息源."
-
-#: classes/pref/feeds.php:1405
-msgid "Public OPML URL"
-msgstr "公开的 OPML URL"
-
-#: classes/pref/feeds.php:1406
-msgid "Display published OPML URL"
-msgstr "公开的 OPML 地址"
-
-#: classes/pref/feeds.php:1414
-msgid "Published & shared articles / Generated feeds"
-msgstr "已发布的文章和生成的信息源"
-
-#: classes/pref/feeds.php:1416
-msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "知道以下网址的任何人都可以订阅已发布的文章："
-
-#: classes/pref/feeds.php:1421
-#: classes/feeds.php:34
-#: classes/feeds.php:35
-#: classes/feeds.php:99
-#: classes/feeds.php:100
-msgid "Show as feed"
-msgstr "以信息源显示"
-
-#: classes/pref/feeds.php:1422
-msgid "Display URL"
-msgstr "显示 URL"
-
-#: classes/pref/feeds.php:1425
-msgid "Clear all generated URLs"
-msgstr "清空所有生成的 URL"
-
-#: classes/pref/feeds.php:1502
-msgid "These feeds have not been updated with new content for 3 months (oldest first):"
-msgstr "以下信息源已经有三个月没有内容更新了（最旧的在最上）："
-
-#: classes/pref/feeds.php:1532
-#: classes/pref/feeds.php:1593
-msgid "Click to edit feed"
-msgstr "点击以编辑信息源"
-
-#: classes/pref/feeds.php:1550
-#: classes/pref/feeds.php:1613
-msgid "Unsubscribe from selected feeds"
-msgstr "取消订阅选中的信息源"
-
-#: classes/pref/feeds.php:1713
-msgid "One valid feed per line (no detection is done)"
-msgstr "每行添加一条RSS源（未进行检测）"
-
-#: classes/pref/feeds.php:1743
-msgid "Feeds require authentication."
-msgstr "Feed需要登录认证。"
-
-#: classes/pref/feeds.php:1747
-#: classes/feeds.php:714
-#: classes/feeds.php:770
-msgid "Subscribe"
-msgstr "订阅"
-
-#: classes/pref/filters.php:234
-#: classes/pref/filters.php:559
-msgid "(inverse)"
-msgstr "(反选)"
-
-#: classes/pref/filters.php:230
-#: classes/pref/filters.php:558
-#, php-format
-msgid "%s on %s in %s %s"
-msgstr ""
-
-#: classes/pref/filters.php:356
-#: classes/pref/filters.php:858
-#: classes/pref/filters.php:982
-msgid "Match"
-msgstr "匹配"
-
-#: classes/pref/filters.php:371
-#: classes/pref/filters.php:431
-#: classes/pref/filters.php:874
-#: classes/pref/filters.php:904
-msgid "Add"
-msgstr "添加"
-
-#: classes/pref/filters.php:374
-#: classes/pref/filters.php:434
-#: classes/pref/filters.php:877
-#: classes/pref/filters.php:907
-#: classes/feeds.php:80
-msgid "Delete"
-msgstr "删除"
-
-#: classes/pref/filters.php:415
-#: classes/pref/filters.php:888
-msgid "Apply actions"
-msgstr "应用操作"
-
-#: classes/pref/filters.php:472
-#: classes/pref/filters.php:923
-msgid "Enabled"
-msgstr "已启用"
-
-#: classes/pref/filters.php:483
-#: classes/pref/filters.php:928
-msgid "Match any rule"
-msgstr "匹配任意规则"
-
-#: classes/pref/filters.php:494
-#: classes/pref/filters.php:933
-msgid "Inverse matching"
-msgstr "反向匹配"
-
-#: classes/pref/filters.php:508
-#: classes/pref/filters.php:944
-msgid "Test"
-msgstr "测试"
-
-#: classes/pref/filters.php:790
-msgid "Combine"
-msgstr "合并"
-
-#: classes/pref/filters.php:947
-msgid "Create"
-msgstr "创建"
-
-#: classes/pref/filters.php:992
-msgid "Regular expression, without outer delimiters (i.e. slashes)"
-msgstr "正则表达式，没有外部分隔符（即斜杠）"
-
-#: classes/pref/filters.php:998
-msgid "Inverse regular expression matching"
-msgstr "反选正则表达式匹配结果"
-
-#: classes/pref/filters.php:1002
-msgid "on field"
-msgstr "作用范围"
-
-#: classes/pref/filters.php:1005
-#: js/PrefFilterTree.js:45
-msgid "in"
-msgstr "在"
-
-#: classes/pref/filters.php:1026
-msgid "Save rule"
-msgstr "保存规则"
-
-#: classes/pref/filters.php:1026
-#: js/CommonFilters.js:133
-msgid "Add rule"
-msgstr "添加规则"
-
-#: classes/pref/filters.php:1049
-msgid "Perform Action"
-msgstr "执行操作"
-
-#: classes/pref/filters.php:1100
-msgid "No actions available"
-msgstr "无操作可用"
-
-#: classes/pref/filters.php:1119
-msgid "Save action"
-msgstr "保存操作"
-
-#: classes/pref/filters.php:1119
-#: js/CommonFilters.js:155
-msgid "Add action"
-msgstr "添加操作"
-
-#: classes/pref/filters.php:1146
-msgid "[No caption]"
-msgstr "[无标题]"
-
-#: classes/pref/filters.php:1148
-#, php-format
-msgid "%s (%d rule)"
-msgid_plural "%s (%d rules)"
-msgstr[0] "%s (%d 规则)"
-
-#: classes/pref/filters.php:1162
-msgid "matches any rule"
-msgstr "匹配任意规则"
-
-#: classes/pref/filters.php:1165
-#, fuzzy, php-format
-msgid "%s (+%d action)"
-msgid_plural "%s (+%d actions)"
-msgstr[0] "信息源动作"
-
-#: classes/pref/prefs.php:40
-#, fuzzy
-msgid "Articles"
-msgstr "全部文章"
-
-#: classes/pref/prefs.php:53
-msgid "Digest"
-msgstr "摘要"
-
-#: classes/pref/prefs.php:58
-msgid "Advanced"
-msgstr "高级"
-
-#: classes/pref/prefs.php:69
-msgid "Allow duplicate articles"
-msgstr "允许重复的文章"
-
-#: classes/pref/prefs.php:70
-msgid "Blacklisted tags"
-msgstr "被列入黑名单的标签"
-
-#: classes/pref/prefs.php:70
-msgid "Never apply these tags automatically (comma-separated list)."
-msgstr "不要自动应用这些标签（以逗号分隔的列表）。"
-
-#: classes/pref/prefs.php:71
-msgid "Mark read on scroll"
-msgstr "滚动时标记为已读"
-
-#: classes/pref/prefs.php:71
-msgid "Mark articles as read as you scroll past them"
-msgstr "滚动时标记文章为已读"
-
-#: classes/pref/prefs.php:72
-msgid "Always expand articles"
-msgstr "始终展开文章"
-
-#: classes/pref/prefs.php:73
-msgid "Combined mode"
-msgstr "合并模式"
-
-#: classes/pref/prefs.php:73
-msgid "Show flat list of articles instead of separate panels"
-msgstr "将文章列表展开显示，而不是将标题和内容分别显示"
-
-#: classes/pref/prefs.php:74
-msgid "Confirm marking feeds as read"
-msgstr "标记信息源为已读之前弹出确认"
-
-#: classes/pref/prefs.php:75
-msgid "Amount of articles to display at once"
-msgstr "同时显示的文章数量"
-
-#: classes/pref/prefs.php:76
-msgid "Default update interval"
-msgstr "默认更新间隔"
-
-#: classes/pref/prefs.php:77
-#, fuzzy
-msgid "Mark sent articles as read"
-msgstr "将所有文章标记为已读？"
-
-#: classes/pref/prefs.php:78
-msgid "Enable digest"
-msgstr "启用电子邮件摘要"
-
-#: classes/pref/prefs.php:78
-msgid "Send daily digest of new (and unread) headlines to your e-mail address"
-msgstr "每天将更新的和未读的文章标题通过邮件发送摘要到您设置的邮箱中"
-
-#: classes/pref/prefs.php:79
-msgid "Try to send around this time"
-msgstr "在特定时间发送摘要"
-
-#: classes/pref/prefs.php:79
-msgid "Time in UTC"
-msgstr "UTC时区"
-
-#: classes/pref/prefs.php:80
-msgid "Enable API"
-msgstr "启用API"
-
-#: classes/pref/prefs.php:80
-msgid "Allows accessing this account through the API"
-msgstr "允许外部客户端通过 API 来访问该账户"
-
-#: classes/pref/prefs.php:81
-msgid "Enable categories"
-msgstr "启用类别"
-
-#: classes/pref/prefs.php:82
-msgid "Sort feeds by unread articles count"
-msgstr "以未读文章数量排序信息源"
-
-#: classes/pref/prefs.php:83
-msgid "Maximum age of fresh articles"
-msgstr "最新更新文章的保鲜期（以小时为单位）"
-
-#: classes/pref/prefs.php:83
-msgid "hours"
-msgstr "小时"
-
-#: classes/pref/prefs.php:84
-msgid "Hide read feeds"
-msgstr "显示/隐藏 已读信息"
-
-#: classes/pref/prefs.php:85
-msgid "Always show special feeds"
-msgstr "始终显示特殊信息源"
-
-#: classes/pref/prefs.php:85
-#, fuzzy
-msgid "While hiding read feeds"
-msgstr "隐藏已读信息之后显示特殊区域的内容"
-
-#: classes/pref/prefs.php:86
-msgid "Long date format"
-msgstr "长时间格式"
-
-#: classes/pref/prefs.php:86
-#, fuzzy
-msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
-msgstr "所使用的语法与 PHP <a href='http://php.net/manual/function.date.php'>date()</a> 函数相同."
-
-#: classes/pref/prefs.php:87
-#, fuzzy
-msgid "Automatically show next feed"
-msgstr "自动显示下一个信息源"
-
-#: classes/pref/prefs.php:87
-#, fuzzy
-msgid "After marking one as read"
-msgstr "标记信息源为已读之前弹出确认"
-
-#: classes/pref/prefs.php:88
-#, fuzzy
-msgid "Purge articles older than"
-msgstr "清除未读文章"
-
-#: classes/pref/prefs.php:88
-msgid "<strong>days</strong> (0 disables)"
-msgstr ""
-
-#: classes/pref/prefs.php:89
-msgid "Purge unread articles"
-msgstr "清除未读文章"
-
-#: classes/pref/prefs.php:90
-msgid "Reverse headline order (oldest first)"
-msgstr "反转标题列表顺序（最旧的在上面）"
-
-#: classes/pref/prefs.php:91
-msgid "Short date format"
-msgstr "短时间格式"
-
-#: classes/pref/prefs.php:92
-#, fuzzy
-msgid "Show content preview in headlines"
-msgstr "在标题列表中显示内容预览"
-
-#: classes/pref/prefs.php:93
-msgid "Sort headlines by feed date"
-msgstr "以信息源的日期排序"
-
-#: classes/pref/prefs.php:93
-msgid "Use feed-specified date to sort headlines instead of local import date."
-msgstr "使用信息源中定义的时间，而非本地导入的时间来排序。"
-
-#: classes/pref/prefs.php:94
-#, fuzzy
-msgid "SSL client certificate"
-msgstr "使用 SSL 证书登录"
-
-#: classes/pref/prefs.php:96
-msgid "Strip unsafe tags from articles"
-msgstr "从文章中剔除不安全的标签"
-
-#: classes/pref/prefs.php:96
-msgid "Strip all but most common HTML tags when reading articles."
-msgstr "仅加载几个最常用的 HTML 标签."
-
-#: classes/pref/prefs.php:97
-#: js/PrefHelpers.js:113
-msgid "Customize stylesheet"
-msgstr "自定义样式"
-
-#: classes/pref/prefs.php:98
-msgid "Time zone"
-msgstr "时区"
-
-#: classes/pref/prefs.php:99
-#, fuzzy
-msgid "Group by feed"
-msgstr "前25位的信息源"
-
-#: classes/pref/prefs.php:99
-msgid "Group multiple-feed output by originating feed"
-msgstr ""
-
-#: classes/pref/prefs.php:100
-msgid "Language"
-msgstr "语言"
-
-#: classes/pref/prefs.php:101
-msgid "Theme"
-msgstr "主题"
-
-#: classes/pref/prefs.php:185
-msgid "The configuration was saved."
-msgstr "设置已保存。"
-
-#: classes/pref/prefs.php:199
-msgid "Your personal data has been saved."
-msgstr "您的个人数据已保存。"
-
-#: classes/pref/prefs.php:215
-msgid "Your preferences are now set to default values."
-msgstr "你的偏好设置已经重置为默认值。"
-
-#: classes/pref/prefs.php:226
-msgid "Personal data / Authentication"
-msgstr "个人数据 / 用户认证"
-
-#: classes/pref/prefs.php:229
-msgid "Personal data"
-msgstr "个人数据"
-
-#: classes/pref/prefs.php:258
-#, fuzzy
-msgid "Full name:"
-msgstr "姓名"
-
-#: classes/pref/prefs.php:263
-#, fuzzy
-msgid "E-mail:"
-msgstr "电子邮件："
-
-#: classes/pref/prefs.php:271
-#, fuzzy
-msgid "Access level:"
+#: classes/pref/users.php:26
+msgid "Edit user"
+msgstr "编辑用户"
+
+#: classes/pref/users.php:68
+msgid "Access level: "
 msgstr "访问级别: "
 
-#: classes/pref/prefs.php:282
-msgid "Save data"
-msgstr "保存信息"
+#: classes/pref/users.php:107
+msgid "User details"
+msgstr "用户详细资料"
 
-#: classes/pref/prefs.php:331
-msgid "Changing your current password will disable OTP."
-msgstr "更改当前密码会使 OTP 动态口令失效。"
+#: classes/pref/users.php:148
+#: classes/pref/users.php:390
+msgid "Registered"
+msgstr "注册时间"
 
-#: classes/pref/prefs.php:335
-#, fuzzy
-msgid "Old password:"
-msgstr "原密码"
+#: classes/pref/users.php:149
+msgid "Last logged in"
+msgstr "上次登录"
 
-#: classes/pref/prefs.php:340
-#, fuzzy
-msgid "New password:"
-msgstr "新密码"
+#: classes/pref/users.php:157
+msgid "Subscribed feeds count"
+msgstr "订阅的信息源数量"
 
-#: classes/pref/prefs.php:345
-#, fuzzy
-msgid "Confirm password:"
-msgstr "确认密码"
+#: classes/pref/users.php:158
+msgid "Stored articles"
+msgstr "存储的文章"
 
-#: classes/pref/prefs.php:355
-msgid "Change password"
-msgstr "更改密码"
+#: classes/pref/users.php:162
+#: classes/pref/users.php:389
+msgid "Subscribed feeds"
+msgstr "订阅的信息源"
 
-#: classes/pref/prefs.php:360
-msgid "One time passwords / Authenticator"
-msgstr "动态口令"
+#: classes/pref/users.php:188
+msgid "User not found"
+msgstr "未找到用户"
 
-#: classes/pref/prefs.php:390
-#: classes/pref/prefs.php:438
-#, fuzzy
-msgid "Your password:"
-msgstr "确认密码"
-
-#: classes/pref/prefs.php:400
-msgid "Disable OTP"
-msgstr "禁用 OTP 动态口令"
-
-#: classes/pref/prefs.php:444
-#, fuzzy
-msgid "One time password:"
-msgstr "一次性密码不正确"
-
-#: classes/pref/prefs.php:451
-msgid "Enable OTP"
-msgstr "启用 OTP 动态口令"
-
-#: classes/pref/prefs.php:504
-msgid "Some preferences are only available in default profile."
-msgstr "部分设置仅支持默认偏好."
-
-#: classes/pref/prefs.php:595
-msgid "default"
-msgstr "默认"
-
-#: classes/pref/prefs.php:605
-msgid "Customize"
-msgstr "自定义"
-
-#: classes/pref/prefs.php:608
-#, fuzzy
-msgid "More themes..."
-msgstr "更多操作"
-
-#: classes/pref/prefs.php:665
-msgid "Register"
-msgstr "注册"
-
-#: classes/pref/prefs.php:680
-#, fuzzy, php-format
-msgid "Current server time: %s"
-msgstr "当前服务器系统时间: %s (UTC)"
-
-#: classes/pref/prefs.php:709
-msgid "Save configuration"
-msgstr "保存设置"
-
-#: classes/pref/prefs.php:713
-msgid "Save and exit preferences"
-msgstr "保存并退出设置"
-
-#: classes/pref/prefs.php:718
-msgid "Manage profiles"
-msgstr "管理偏好文件"
-
-#: classes/pref/prefs.php:721
-msgid "Reset to defaults"
-msgstr "恢复到默认"
-
-#: classes/pref/prefs.php:768
-msgid "System plugins"
-msgstr "系统插件"
-
-#: classes/pref/prefs.php:769
-msgid "System plugins are enabled in <strong>config.php</strong> for all users."
-msgstr "在 <strong>config.php</strong> 中启用的系统插件适用于所有用户."
-
-#: classes/pref/prefs.php:774
-#: classes/pref/prefs.php:830
-msgid "Plugin"
-msgstr "插件"
-
-#: classes/pref/prefs.php:775
-#: classes/pref/prefs.php:831
-msgid "Description"
-msgstr "描述"
-
-#: classes/pref/prefs.php:776
-#: classes/pref/prefs.php:832
-msgid "Version"
-msgstr "版本"
-
-#: classes/pref/prefs.php:777
-#: classes/pref/prefs.php:833
-msgid "Author"
-msgstr "作者"
-
-#: classes/pref/prefs.php:808
-#: classes/pref/prefs.php:867
-msgid "more info"
-msgstr "更多信息"
-
-#: classes/pref/prefs.php:817
-#: classes/pref/prefs.php:876
-msgid "Clear data"
-msgstr "清空数据"
-
-#: classes/pref/prefs.php:826
-msgid "User plugins"
-msgstr "用户插件"
-
-#: classes/pref/prefs.php:899
-msgid "Enable selected plugins"
-msgstr "启用选择的插件"
-
-#: classes/pref/prefs.php:975
-msgid "Incorrect one time password"
-msgstr "一次性密码不正确"
-
-#: classes/pref/prefs.php:980
-#: classes/pref/prefs.php:1011
-msgid "Incorrect password"
-msgstr "密码错误"
-
-#: classes/pref/prefs.php:1035
-msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr "您可以通过自定义 CSS 来更改颜色，字体和版式。"
-
-#: classes/pref/prefs.php:1072
-msgid "Create profile"
-msgstr "创建偏好文件"
-
-#: classes/pref/prefs.php:1091
-#: classes/pref/prefs.php:1111
-msgid "(active)"
-msgstr "（当前使用的）"
-
-#: classes/pref/prefs.php:1143
-msgid "Remove selected profiles"
-msgstr "移除选中的偏好文件"
-
-#: classes/pref/prefs.php:1145
-msgid "Activate profile"
-msgstr "启用偏好文件"
-
-#: classes/feeds.php:41
+#: classes/pref/users.php:259
 #, php-format
-msgid "Last updated: %s"
-msgstr "上次更新:%s"
+msgid "Added user %s with password %s"
+msgstr "已添加用户%s ，密码为%s"
 
-#: classes/feeds.php:60
-msgid "Select..."
-msgstr "选择..."
-
-#: classes/feeds.php:64
-msgid "Invert"
-msgstr "反选"
-
-#: classes/feeds.php:67
-msgid "Selection toggle:"
-msgstr "锁定选择："
-
-#: classes/feeds.php:73
-msgid "Selection:"
-msgstr "选择："
-
-#: classes/feeds.php:76
-msgid "Set score"
-msgstr "评分"
-
-#: classes/feeds.php:79
-msgid "Move back"
-msgstr "移回原位"
-
-#: classes/feeds.php:82
-msgid "Archive"
-msgstr "存档"
-
-#: classes/feeds.php:86
-#: classes/feeds.php:91
-#: plugins/mail/init.php:76
-#: plugins/mailto/init.php:24
-msgid "Forward by email"
-msgstr "通过邮件转发"
-
-#: classes/feeds.php:95
-msgid "Feed:"
-msgstr "信息源："
-
-#: classes/feeds.php:149
-#: classes/feeds.php:500
-msgid "Feed not found."
-msgstr "找不到信息源。"
-
-#: classes/feeds.php:209
-msgid "Never"
-msgstr "从不"
-
-#: classes/feeds.php:258
-#: classes/feeds.php:1298
-msgid "Archived articles"
-msgstr "存档的文章"
-
-#: classes/feeds.php:318
-msgid "Collapse article"
-msgstr "折叠文章"
-
-#: classes/feeds.php:343
+#: classes/pref/users.php:266
 #, php-format
-msgid "Imported at %s"
-msgstr "从%s导入"
+msgid "Could not create user %s"
+msgstr "无法创建用户 %s"
 
-#: classes/feeds.php:392
-msgid "No unread articles found to display."
-msgstr "没有未读文章。"
-
-#: classes/feeds.php:395
-msgid "No updated articles found to display."
-msgstr "没有最新更新的文章。"
-
-#: classes/feeds.php:398
-msgid "No starred articles found to display."
-msgstr "没有加星标的文章。"
-
-#: classes/feeds.php:402
-msgid "No articles found to display. You can assign articles to labels manually from article header context menu (applies to all selected articles) or use a filter."
-msgstr "本标签下没有文章。你可以通过手动或过滤器的方式为文章添加预定义标签。"
-
-#: classes/feeds.php:404
-msgid "No articles found to display."
-msgstr "暂时没有文章。"
-
-#: classes/feeds.php:420
-#: classes/feeds.php:597
+#: classes/pref/users.php:270
 #, php-format
-msgid "Feeds last updated at %s"
-msgstr "上次信息源更新时间：%s"
+msgid "User %s already exists."
+msgstr "用户%s已存在。"
 
-#: classes/feeds.php:432
-#: classes/feeds.php:609
-msgid "Some feeds have update errors (click for details)"
-msgstr "部分信息源更新错误（点击了解详情）"
-
-#: classes/feeds.php:586
-msgid "No feed selected."
-msgstr "没有选中的信息源。"
-
-#: classes/feeds.php:658
-msgid "Feed or site URL"
-msgstr "信息源或网站 URL"
-
-#: classes/feeds.php:676
-msgid "Available feeds"
-msgstr "可用的信息源"
-
-#: classes/feeds.php:717
-msgid "More feeds"
-msgstr "更多信息源"
-
-#: classes/feeds.php:746
-msgid "Popular feeds"
-msgstr "热门信息源"
-
-#: classes/feeds.php:747
-msgid "Feed archive"
-msgstr "信息源存档"
-
-#: classes/feeds.php:750
-msgid "limit:"
-msgstr "限制："
-
-#: classes/feeds.php:791
-#, fuzzy, php-format
-msgid "Search %s..."
-msgstr "搜索..."
-
-#: classes/feeds.php:800
-msgid "Used for word stemming"
-msgstr "词干提取"
-
-#: classes/feeds.php:810
-msgid "Search syntax"
-msgstr "搜索语法"
-
-#: classes/feeds.php:1290
-msgid "Starred articles"
-msgstr "加星标文章"
-
-#: classes/feeds.php:1292
-msgid "Published articles"
-msgstr "已发布文章"
-
-#: classes/feeds.php:1294
-msgid "Fresh articles"
-msgstr "最新更新的文章"
-
-#: classes/feeds.php:1300
-msgid "Recently read"
-msgstr "最近的阅读"
-
-#: classes/feeds.php:1421
-msgid "Special"
-msgstr "特殊区域"
-
-#: classes/feeds.php:1679
+#: classes/pref/users.php:295
 #, php-format
-msgid "Search results: %s"
-msgstr "搜索结果：%s"
+msgid "Changed password of user %s to %s"
+msgstr "用户%s ，密码修改为%s"
 
-#: plugins/nsfw/init.php:30
-#: plugins/nsfw/init.php:42
-msgid "Not work safe (click to toggle)"
-msgstr "不宜在工作场所观看（点击开启）"
+#: classes/pref/users.php:348
+msgid "Create user"
+msgstr "创建用户"
 
-#: plugins/nsfw/init.php:53
-msgid "NSFW Plugin"
-msgstr "NSFW 插件"
+#: classes/pref/users.php:388
+msgid "Access Level"
+msgstr "访问级别"
 
-#: plugins/nsfw/init.php:80
-msgid "Tags to consider NSFW (comma-separated)"
-msgstr "不宜在工作场所观看的标签（多个标签以逗号分隔）"
+#: classes/pref/users.php:391
+msgid "Last login"
+msgstr "最后登陆"
 
-#: plugins/nsfw/init.php:101
-msgid "Configuration saved."
-msgstr "设置已保存."
+#: classes/pref/users.php:408
+msgid "Click to edit"
+msgstr "点击进行编辑"
 
-#: plugins/note/init.php:26
-#: plugins/note/note.js:10
-msgid "Edit article note"
-msgstr "编辑文章注记"
+#: classes/pref/users.php:424
+msgid "No users defined."
+msgstr "没有定义用户。"
 
-#: plugins/vf_shared/init.php:17
-#: plugins/vf_shared/init.php:73
-msgid "Shared articles"
-msgstr "共享文章"
+#: classes/pref/users.php:426
+msgid "No matching users found."
+msgstr "没有匹配的用户。"
 
-#: plugins/auth_internal/init.php:70
-msgid "Please enter your one time password:"
-msgstr "请输入您的一次性密码:"
+#: plugins/af_comics/init.php:51
+msgid "Feeds supported by af_comics"
+msgstr "af_comics 的 feed 源"
 
-#: plugins/auth_internal/init.php:212
-msgid "Password has been changed."
-msgstr "密码更改成功。"
+#: plugins/af_comics/init.php:53
+msgid "The following comics are currently supported:"
+msgstr "漫画支持支持："
 
-#: plugins/auth_internal/init.php:214
-msgid "Old password is incorrect."
-msgstr "原密码输入错误。"
+#: plugins/af_comics/init.php:71
+msgid "To subscribe to GoComics use the comic's regular web page as the feed URL (e.g. for the <em>Garfield</em> comic use <code>http://www.gocomics.com/garfield</code>)."
+msgstr "订阅 GoComics 时，使用漫画网址作为源地址。例如 <em>Garfield</em>，则地址为<code>http://www.gocomics.com/garfield</code>。"
 
-#: plugins/af_readability/init.php:25
-msgid "Data saved."
-msgstr "数据已保存."
-
-#: plugins/af_readability/init.php:41
-msgid "Inline content"
-msgstr "Inline 内容"
-
-#: plugins/af_readability/init.php:48
-msgid "Readability settings (af_readability)"
-msgstr "Readability 设置 (af_readability)"
-
-#: plugins/af_readability/init.php:79
-msgid "Use Readability for pages shared via bookmarklet."
-msgstr "用Readability通过书签分享页面."
-
-#: plugins/af_readability/init.php:91
-#: plugins/af_psql_trgm/init.php:200
-msgid "Currently enabled for (click to edit):"
-msgstr "当前启用（点击编辑）:"
-
-#: plugins/af_readability/init.php:107
-msgid "Readability"
-msgstr "Readability 获取全文"
-
-#: plugins/af_readability/init.php:120
-msgid "Inline article content"
-msgstr "Inline 文章内容"
-
-#: plugins/af_redditimgur/init.php:31
-msgid "Reddit content settings (af_redditimgur)"
-msgstr "Reddit 内容设置"
-
-#: plugins/af_redditimgur/init.php:61
-msgid "Extract missing content using Readability"
-msgstr "使用 Readability 提取缺失的内容"
-
-#: plugins/af_redditimgur/init.php:66
-msgid "Enable additional duplicate checking"
-msgstr "开启额外的重复检查"
-
-#: plugins/af_redditimgur/init.php:80
-#: plugins/af_zz_imgproxy/init.php:253
-msgid "Configuration saved"
-msgstr "设置已保存"
+#: plugins/af_comics/init.php:73
+msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
+msgstr "将新版的过滤器放置于插件目录下的 <code>filters.local</code> 文件夹中."
 
 #: plugins/af_psql_trgm/init.php:29
 #, php-format
@@ -2480,49 +2359,130 @@ msgid "Show related articles"
 msgstr "显示相关文章"
 
 #: plugins/af_psql_trgm/init.php:127
-#: plugins/af_psql_trgm/init.php:230
+#: plugins/af_psql_trgm/init.php:236
 msgid "Mark similar articles as read"
 msgstr "将类似的文章标记为已读"
 
 #: plugins/af_psql_trgm/init.php:166
-msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
-msgstr "PostgreSQL trigram 扩展将返回一个文本相似度的浮点数（0-1）。设置过低的阈值可能导致错误的结果，0 为关闭相似度检查。"
-
-#: plugins/af_psql_trgm/init.php:169
+#: plugins/af_readability/init.php:58
 msgid "Global settings"
 msgstr "全局设置"
 
-#: plugins/af_psql_trgm/init.php:173
+#: plugins/af_psql_trgm/init.php:172
 msgid "Minimum similarity:"
 msgstr "最低相似度："
 
 #: plugins/af_psql_trgm/init.php:178
+msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
+msgstr "PostgreSQL trigram 扩展将返回一个文本相似度的浮点数（0-1）。设置过低的阈值可能导致错误的结果，0 为关闭相似度检查。"
+
+#: plugins/af_psql_trgm/init.php:183
 msgid "Minimum title length:"
 msgstr "最短标题长度："
 
-#: plugins/af_psql_trgm/init.php:183
+#: plugins/af_psql_trgm/init.php:192
 msgid "Enable for all feeds:"
 msgstr "启用所有信息源:"
 
-#: plugins/af_psql_trgm/init.php:217
+#: plugins/af_psql_trgm/init.php:207
+#: plugins/af_readability/init.php:101
+msgid "Currently enabled for (click to edit):"
+msgstr "当前启用（点击编辑）:"
+
+#: plugins/af_psql_trgm/init.php:224
 msgid "Similarity (pg_trgm)"
 msgstr "相似度 (pg_trgm)"
 
-#: plugins/af_comics/init.php:50
-msgid "Feeds supported by af_comics"
-msgstr "af_comics 的 feed 源"
+#: plugins/af_readability/init.php:25
+msgid "Data saved."
+msgstr "数据已保存."
 
-#: plugins/af_comics/init.php:52
-msgid "The following comics are currently supported:"
-msgstr "漫画支持支持："
+#: plugins/af_readability/init.php:45
+msgid "Inline content"
+msgstr "Inline 内容"
 
-#: plugins/af_comics/init.php:70
-msgid "To subscribe to GoComics use the comic's regular web page as the feed URL (e.g. for the <em>Garfield</em> comic use <code>http://www.gocomics.com/garfield</code>)."
-msgstr "订阅 GoComics 时，使用漫画网址作为源地址。例如 <em>Garfield</em>，则地址为<code>http://www.gocomics.com/garfield</code>。"
+#: plugins/af_readability/init.php:52
+msgid "Readability settings (af_readability)"
+msgstr "Readability 设置 (af_readability)"
 
-#: plugins/af_comics/init.php:72
-msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
-msgstr "将新版的过滤器放置于插件目录下的 <code>filters.local</code> 文件夹中."
+#: plugins/af_readability/init.php:87
+msgid "Provide full-text services to core code (bookmarklets) and other plugins"
+msgstr ""
+
+#: plugins/af_readability/init.php:118
+msgid "Readability"
+msgstr "Readability 获取全文"
+
+#: plugins/af_readability/init.php:130
+msgid "Inline article content"
+msgstr "Inline 文章内容"
+
+#: plugins/af_redditimgur/init.php:28
+msgid "Reddit content settings (af_redditimgur)"
+msgstr "Reddit 内容设置"
+
+#: plugins/af_redditimgur/init.php:60
+#, fuzzy
+msgid "Extract missing content using Readability (requires af_readability)"
+msgstr "使用 Readability 提取缺失的内容"
+
+#: plugins/af_redditimgur/init.php:66
+msgid "Enable additional duplicate checking"
+msgstr "开启额外的重复检查"
+
+#: plugins/af_redditimgur/init.php:82
+#: plugins/af_zz_imgproxy/init.php:253
+msgid "Configuration saved"
+msgstr "设置已保存"
+
+#: plugins/af_zz_imgproxy/init.php:209
+msgid "Image proxy settings (af_zz_imgproxy)"
+msgstr "图片代理设置 (af_zz_imgproxy)"
+
+#: plugins/af_zz_imgproxy/init.php:233
+msgid "Enable proxy for all remote images."
+msgstr "为远程图像启用代理."
+
+#: plugins/af_zz_imgproxy/init.php:237
+msgid "Don't cache files locally."
+msgstr "不要在本地缓存文件."
+
+#: plugins/auth_internal/init.php:72
+msgid "Please enter your one time password:"
+msgstr "请输入您的一次性密码:"
+
+#: plugins/auth_internal/init.php:214
+msgid "Password has been changed."
+msgstr "密码更改成功。"
+
+#: plugins/auth_internal/init.php:216
+msgid "Old password is incorrect."
+msgstr "原密码输入错误。"
+
+#: plugins/bookmarklets/init.php:23
+msgid "Bookmarklets"
+msgstr "小书签"
+
+#: plugins/bookmarklets/init.php:25
+msgid "Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it."
+msgstr "将以下链接拖拽至您的浏览器工具条，在浏览器中打开您想看的信息源，然后点击链接以订阅。"
+
+#: plugins/bookmarklets/init.php:29
+#, php-format
+msgid "Subscribe to %s in Tiny Tiny RSS?"
+msgstr "在 Tiny Tiny RSS 中订阅 %s ？"
+
+#: plugins/bookmarklets/init.php:34
+msgid "Subscribe in Tiny Tiny RSS"
+msgstr "在 Tiny Tiny RSS 中订阅"
+
+#: plugins/bookmarklets/init.php:37
+msgid "Use this bookmarklet to publish arbitrary pages using Tiny Tiny RSS"
+msgstr "使用书签发布任意页面"
+
+#: plugins/close_button/init.php:28
+msgid "Close article"
+msgstr "关闭文章"
 
 #: plugins/import_export/init.php:54
 msgid "Import and export"
@@ -2548,42 +2508,42 @@ msgstr "无法导入：不正确的 schema 版本。"
 msgid "Could not import: unrecognized document format."
 msgstr "无法导入：不可识别的文档格式。"
 
-#: plugins/import_export/init.php:423
+#: plugins/import_export/init.php:441
 msgid "Finished: "
 msgstr "已完成: "
 
-#: plugins/import_export/init.php:424
+#: plugins/import_export/init.php:442
 #, fuzzy, php-format
 msgid "%d article processed, "
 msgid_plural "%d articles processed, "
 msgstr[0] "编辑文章注记"
 
-#: plugins/import_export/init.php:425
+#: plugins/import_export/init.php:443
 #, fuzzy, php-format
 msgid "%d imported, "
 msgid_plural "%d imported, "
 msgstr[0] "已导入。"
 
-#: plugins/import_export/init.php:426
+#: plugins/import_export/init.php:444
 #, fuzzy, php-format
 msgid "%d feed created."
 msgid_plural "%d feeds created."
 msgstr[0] "没有选中的信息源。"
 
-#: plugins/import_export/init.php:431
+#: plugins/import_export/init.php:449
 msgid "Could not load XML document."
 msgstr "无法加载 XML 文档。"
 
-#: plugins/import_export/init.php:443
+#: plugins/import_export/init.php:464
 msgid "Prepare data"
 msgstr "准备数据"
 
-#: plugins/import_export/init.php:460
+#: plugins/import_export/init.php:481
 #, php-format
 msgid "Upload failed with error code %d (%s)"
 msgstr "上传错误，错误代码%d(%s)"
 
-#: plugins/import_export/init.php:484
+#: plugins/import_export/init.php:505
 msgid "No file uploaded."
 msgstr "没有文件上传。"
 
@@ -2619,50 +2579,9 @@ msgstr "收信人："
 msgid "Subject:"
 msgstr "主题："
 
-#: plugins/mail/init.php:178
+#: plugins/mail/init.php:177
 msgid "Send e-mail"
 msgstr "发送邮件"
-
-#: plugins/close_button/init.php:28
-msgid "Close article"
-msgstr "关闭文章"
-
-#: plugins/bookmarklets/init.php:21
-msgid "Bookmarklets"
-msgstr "小书签"
-
-#: plugins/bookmarklets/init.php:23
-msgid "Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it."
-msgstr "将以下链接拖拽至您的浏览器工具条，在浏览器中打开您想看的信息源，然后点击链接以订阅。"
-
-#: plugins/bookmarklets/init.php:27
-#, php-format
-msgid "Subscribe to %s in Tiny Tiny RSS?"
-msgstr "在 Tiny Tiny RSS 中订阅 %s ？"
-
-#: plugins/bookmarklets/init.php:32
-msgid "Subscribe in Tiny Tiny RSS"
-msgstr "在 Tiny Tiny RSS 中订阅"
-
-#: plugins/bookmarklets/init.php:35
-msgid "Use this bookmarklet to publish arbitrary pages using Tiny Tiny RSS"
-msgstr "使用书签发布任意页面"
-
-#: plugins/toggle_sidebar/init.php:23
-msgid "Toggle feedlist"
-msgstr "切换侧边栏"
-
-#: plugins/af_zz_imgproxy/init.php:209
-msgid "Image proxy settings (af_zz_imgproxy)"
-msgstr "图片代理设置 (af_zz_imgproxy)"
-
-#: plugins/af_zz_imgproxy/init.php:233
-msgid "Enable proxy for all remote images."
-msgstr "为远程图像启用代理."
-
-#: plugins/af_zz_imgproxy/init.php:237
-msgid "Don't cache files locally."
-msgstr "不要在本地缓存文件."
 
 #: plugins/mailto/init.php:73
 msgid "Clicking the following link to invoke your mail client:"
@@ -2679,6 +2598,28 @@ msgstr "在邮件发送前，你能够编辑消息。"
 #: plugins/mailto/init.php:85
 msgid "Close this dialog"
 msgstr "关闭此对话框"
+
+#: plugins/note/init.php:26
+#: plugins/note/note.js:10
+msgid "Edit article note"
+msgstr "编辑文章注记"
+
+#: plugins/nsfw/init.php:30
+#: plugins/nsfw/init.php:42
+msgid "Not work safe (click to toggle)"
+msgstr "不宜在工作场所观看（点击开启）"
+
+#: plugins/nsfw/init.php:53
+msgid "NSFW Plugin"
+msgstr "NSFW 插件"
+
+#: plugins/nsfw/init.php:80
+msgid "Tags to consider NSFW (comma-separated)"
+msgstr "不宜在工作场所观看的标签（多个标签以逗号分隔）"
+
+#: plugins/nsfw/init.php:101
+msgid "Configuration saved."
+msgstr "设置已保存."
 
 #: plugins/share/init.php:45
 msgid "You can disable all articles shared by unique URLs here."
@@ -2700,15 +2641,21 @@ msgstr "您可以通过以下唯一 URL 分享本文："
 msgid "Unshare article"
 msgstr "取消文章共享"
 
-#: js/AppBase.js:135
-msgid "Help"
-msgstr "帮助"
+#: plugins/toggle_sidebar/init.php:27
+#, fuzzy
+msgid "Toggle sidebar"
+msgstr "加星此文章"
 
-#: js/AppBase.js:382
+#: plugins/vf_shared/init.php:17
+#: plugins/vf_shared/init.php:73
+msgid "Shared articles"
+msgstr "共享文章"
+
+#: js/AppBase.js:386
 msgid "Error explained"
 msgstr "Error释义"
 
-#: js/AppBase.js:399
+#: js/AppBase.js:403
 msgid "Fatal error"
 msgstr "致命错误"
 
@@ -2717,16 +2664,16 @@ msgid "Please enter new score for selected articles:"
 msgstr "请输入所选文章的新分数："
 
 #: js/Article.js:59
-#: js/Headlines.js:895
-#: js/Headlines.js:913
-#: js/Headlines.js:931
-#: js/Headlines.js:1045
-#: js/Headlines.js:1081
+#: js/Headlines.js:919
+#: js/Headlines.js:937
+#: js/Headlines.js:955
+#: js/Headlines.js:1096
+#: js/Headlines.js:1132
 #: plugins/mail/mail.js:7
 #: plugins/mailto/init.js:7
-#: js/Headlines.js:718
-#: js/Headlines.js:744
-#: js/Headlines.js:756
+#: js/Headlines.js:742
+#: js/Headlines.js:768
+#: js/Headlines.js:780
 msgid "No articles selected."
 msgstr "未选中任何文章。"
 
@@ -2748,68 +2695,68 @@ msgid "comment"
 msgid_plural "comments"
 msgstr[0] "评论些什么？"
 
-#: js/CommonDialogs.js:30
+#: js/CommonDialogs.js:11
 msgid "Remove stored feed icon?"
 msgstr "移除已保存的信息源图标？"
 
-#: js/CommonDialogs.js:52
+#: js/CommonDialogs.js:38
 msgid "Please select an image file to upload."
 msgstr "请选择图片文件上传。"
 
-#: js/CommonDialogs.js:53
+#: js/CommonDialogs.js:39
 msgid "Upload new icon for this feed?"
 msgstr "为本信息源上传一个新的图标？"
 
-#: js/CommonDialogs.js:69
+#: js/CommonDialogs.js:83
 msgid "Subscribe to Feed"
 msgstr "订阅信息源"
 
-#: js/CommonDialogs.js:96
+#: js/CommonDialogs.js:110
 msgid "Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."
 msgstr "解析输出失败。 这可能由于服务器超时或网络问题。 服务器的输出已经被记录在浏览器console控制台中。"
 
-#: js/CommonDialogs.js:111
+#: js/CommonDialogs.js:125
 #, perl-format
 msgid "Subscribed to %s"
 msgstr "已订阅至 %s"
 
-#: js/CommonDialogs.js:120
+#: js/CommonDialogs.js:134
 msgid "Specified URL seems to be invalid."
 msgstr "指定的 URL 无效。"
 
-#: js/CommonDialogs.js:123
+#: js/CommonDialogs.js:137
 msgid "Specified URL doesn't seem to contain any feeds."
 msgstr "指定的 URL 没有包含任何信息源。"
 
-#: js/CommonDialogs.js:135
+#: js/CommonDialogs.js:149
 msgid "Expand to select feed"
 msgstr "展开选择的信息源"
 
-#: js/CommonDialogs.js:149
+#: js/CommonDialogs.js:163
 #, perl-format
 msgid "Couldn't download the specified URL: %s"
 msgstr "无法从指定的网址下载:%s"
 
-#: js/CommonDialogs.js:152
+#: js/CommonDialogs.js:166
 #, perl-format
 msgid "XML validation failed: %s"
 msgstr "XML 验证失败：%s"
 
-#: js/CommonDialogs.js:155
+#: js/CommonDialogs.js:169
 msgid "You are already subscribed to this feed."
 msgstr "您已经订阅过这个信息源啦。"
 
-#: js/CommonDialogs.js:179
+#: js/CommonDialogs.js:193
 msgid "Feeds with update errors"
 msgstr "更新错误的信息源"
 
-#: js/CommonDialogs.js:188
+#: js/CommonDialogs.js:202
 #: js/PrefFeedTree.js:382
 msgid "Remove selected feeds?"
 msgstr "移除选中的信息源？"
 
-#: js/CommonDialogs.js:209
-#: js/CommonDialogs.js:294
+#: js/CommonDialogs.js:223
+#: js/CommonDialogs.js:308
 #: js/PrefFeedTree.js:168
 #: js/PrefFeedTree.js:230
 #: js/PrefFeedTree.js:246
@@ -2817,133 +2764,133 @@ msgstr "移除选中的信息源？"
 msgid "No feeds selected."
 msgstr "没有选中信息源。"
 
-#: js/CommonDialogs.js:234
+#: js/CommonDialogs.js:248
 msgid "More Feeds"
 msgstr "更多信息源"
 
-#: js/CommonDialogs.js:326
+#: js/CommonDialogs.js:340
 msgid "Remove selected feeds from the archive? Feeds with stored articles will not be removed."
 msgstr "将选中的信息源从存档中移除？包含已保存文章的信息源不会被移除。"
 
-#: js/CommonDialogs.js:348
+#: js/CommonDialogs.js:362
 msgid "Please enter label caption:"
 msgstr "请填写预定义标签的说明："
 
-#: js/CommonDialogs.js:372
-#: js/tt-rss.js:539
+#: js/CommonDialogs.js:386
+#: js/tt-rss.js:543
 #, perl-format
 msgid "Unsubscribe from %s?"
 msgstr "从 %s 取消订阅？"
 
-#: js/CommonDialogs.js:400
-#: js/tt-rss.js:390
-#: js/tt-rss.js:520
+#: js/CommonDialogs.js:414
+#: js/tt-rss.js:391
+#: js/tt-rss.js:524
 msgid "You can't edit this kind of feed."
 msgstr "您无法编辑这种类型的信息源。"
 
-#: js/CommonDialogs.js:414
+#: js/CommonDialogs.js:428
 msgid "Edit Feed"
 msgstr "编辑信息源"
 
-#: js/CommonDialogs.js:438
+#: js/CommonDialogs.js:452
 msgid "Generate new syndication address for this feed?"
 msgstr "为本信息源生成新的群地址？"
 
-#: js/Feeds.js:213
+#: js/Feeds.js:221
 msgid "Your password is at default value"
 msgstr "您还在使用系统默认的密码，请修改"
 
-#: js/Headlines.js:609
-#: js/Headlines.js:657
-#: js/Headlines.js:674
+#: js/Headlines.js:633
+#: js/Headlines.js:681
+#: js/Headlines.js:698
 msgid "Click to open next unread feed."
 msgstr "点击打开下一个未读信息源。"
 
-#: js/Headlines.js:613
+#: js/Headlines.js:637
 msgid "Cancel search"
 msgstr "取消搜索"
 
-#: js/Headlines.js:671
+#: js/Headlines.js:695
 msgid "New articles found, reload feed to continue."
 msgstr "找到新文章，点击重新加载。"
 
-#: js/Headlines.js:682
+#: js/Headlines.js:706
 msgid "Could not update headlines (invalid object received - see error console for details)"
 msgstr "无法显示文章（收到无效对象 - 有关详细信息，请参阅错误控制台）"
 
-#: js/Headlines.js:939
+#: js/Headlines.js:963
 #, fuzzy, perl-format
 msgid "Delete %d selected article in %s?"
 msgid_plural "Delete %d selected articles in %s?"
 msgstr[0] "删除 %s 中选择的 %d 篇文章？"
 
-#: js/Headlines.js:941
+#: js/Headlines.js:965
 #, fuzzy, perl-format
 msgid "Delete %d selected article?"
 msgid_plural "Delete %d selected articles?"
 msgstr[0] "删除选中的 %d 篇文章？"
 
-#: js/Headlines.js:1054
+#: js/Headlines.js:1105
 #, fuzzy, perl-format
 msgid "Archive %d selected article in %s?"
 msgid_plural "Archive %d selected articles in %s?"
 msgstr[0] "将 %s 中的 %d 篇选中的文章存档？"
 
-#: js/Headlines.js:1057
+#: js/Headlines.js:1108
 #, fuzzy, perl-format
 msgid "Move %d archived article back?"
 msgid_plural "Move %d archived articles back?"
 msgstr[0] "将存档的 %d 篇文章移回原处？"
 
-#: js/Headlines.js:1058
+#: js/Headlines.js:1109
 msgid "Please note that unstarred articles might get purged on next feed update."
 msgstr "请注意,未加星的文章可能在下一次文章更新中被清除."
 
-#: js/Headlines.js:1087
+#: js/Headlines.js:1138
 #, fuzzy, perl-format
 msgid "Mark %d selected article in %s as read?"
 msgid_plural "Mark %d selected articles in %s as read?"
 msgstr[0] "将 %s 中选中的 %d 篇文章标记为已读？"
 
-#: js/Headlines.js:1103
+#: js/Headlines.js:1154
 msgid "No article is selected."
 msgstr "未选中任何文章。"
 
-#: js/Headlines.js:1138
+#: js/Headlines.js:1189
 msgid "No articles found to mark"
 msgstr "未找到需要标记的文章"
 
-#: js/Headlines.js:1140
+#: js/Headlines.js:1191
 #, fuzzy, perl-format
 msgid "Mark %d article as read?"
 msgid_plural "Mark %d articles as read?"
 msgstr[0] "将 %d 篇文章标记为已读？"
 
-#: js/Headlines.js:1203
+#: js/Headlines.js:1254
 msgid "Open original article"
 msgstr "打开原文"
 
-#: js/Headlines.js:1210
+#: js/Headlines.js:1261
 msgid "Display article URL"
 msgstr "显示网址"
 
-#: js/Headlines.js:1317
+#: js/Headlines.js:1368
 msgid "Assign label"
 msgstr "添加预定义标签"
 
-#: js/Headlines.js:1322
+#: js/Headlines.js:1373
 msgid "Remove label"
 msgstr "移除预定义标签"
 
-#: js/Headlines.js:1353
+#: js/Headlines.js:1404
 msgid "Select articles in group"
 msgstr "选择分类中的文章"
 
-#: js/Headlines.js:1363
+#: js/Headlines.js:1414
 msgid "Mark group as read"
 msgstr "将分类标记为已读"
 
-#: js/Headlines.js:1375
+#: js/Headlines.js:1426
 msgid "Mark feed as read"
 msgstr "标记信息源为已读"
 
@@ -3125,15 +3072,19 @@ msgstr "不再分享此文章？"
 msgid "This will invalidate all previously shared article URLs. Continue?"
 msgstr "之前共享文章的 URL 将会回到未认证状态。是否继续？"
 
-#: js/AppBase.js:261
+#: js/AppBase.js:139
+msgid "Help"
+msgstr "帮助"
+
+#: js/AppBase.js:265
 msgid "<span onclick=\"App.explainError(1)\">Update daemon is not running.</span>"
 msgstr "<span onclick=\"App.explainError(1)\">更新程序未运行</span>"
 
-#: js/AppBase.js:274
+#: js/AppBase.js:278
 msgid "<span onclick=\"App.explainError(3)\">Update daemon is not updating feeds.</span>"
 msgstr "<span onclick=\"App.explainError(3)\">更新程序未更新订阅源.</span>"
 
-#: js/AppBase.js:449
+#: js/AppBase.js:453
 msgid "Unhandled exception"
 msgstr "未处理的异常"
 
@@ -3145,52 +3096,52 @@ msgstr "编辑文章的自定义标签"
 msgid "Saving article tags..."
 msgstr "保存文章标签..."
 
-#: js/CommonDialogs.js:13
-msgid "Upload complete."
-msgstr "上传完成。"
-
-#: js/CommonDialogs.js:22
-msgid "Upload failed: icon is too big."
-msgstr "上传失败：图标太大了。"
-
-#: js/CommonDialogs.js:25
-msgid "Upload failed."
-msgstr "上传失败。"
-
-#: js/CommonDialogs.js:31
+#: js/CommonDialogs.js:12
 msgid "Removing feed icon..."
 msgstr "移除信息源图标..."
 
-#: js/CommonDialogs.js:36
+#: js/CommonDialogs.js:17
 msgid "Feed icon removed."
 msgstr "信息源图标已删除."
 
-#: js/CommonDialogs.js:54
+#: js/CommonDialogs.js:40
 msgid "Uploading, please wait..."
 msgstr "上传中，请稍候…"
 
-#: js/CommonDialogs.js:189
+#: js/CommonDialogs.js:48
+msgid "Upload complete."
+msgstr "上传完成。"
+
+#: js/CommonDialogs.js:62
+msgid "Upload failed: icon is too big."
+msgstr "上传失败：图标太大了。"
+
+#: js/CommonDialogs.js:65
+msgid "Upload failed."
+msgstr "上传失败。"
+
+#: js/CommonDialogs.js:203
 #: js/PrefFeedTree.js:383
 msgid "Removing selected feeds..."
 msgstr "正在移除选中的信息源..."
 
-#: js/CommonDialogs.js:375
+#: js/CommonDialogs.js:389
 msgid "Removing feed..."
 msgstr "删除 feed..."
 
-#: js/CommonDialogs.js:418
+#: js/CommonDialogs.js:432
 #: js/PrefFeedTree.js:296
 #: js/PrefFilterTree.js:206
 #: js/PrefUsers.js:40
 msgid "Saving data..."
 msgstr "正在保存数据.."
 
-#: js/CommonDialogs.js:440
+#: js/CommonDialogs.js:454
 #: js/PrefHelpers.js:203
 msgid "Trying to change address..."
 msgstr "尝试更改地址..."
 
-#: js/CommonDialogs.js:460
+#: js/CommonDialogs.js:474
 #: js/PrefHelpers.js:219
 msgid "Could not change feed URL."
 msgstr "无法更改信息源网址。"
@@ -3219,47 +3170,52 @@ msgstr "尝试获取过滤器测试结果时出错."
 msgid "Create Filter"
 msgstr "创建过滤器"
 
-#: js/FeedTree.js:89
+#: js/FeedTree.js:71
+#, fuzzy
+msgid "Debug feed"
+msgstr "调试 viewfeed()"
+
+#: js/FeedTree.js:99
 msgid "(Un)collapse"
 msgstr "收起和展开"
 
-#: js/Feeds.js:362
+#: js/Feeds.js:372
 msgid "Mark all articles as read?"
 msgstr "将所有文章标记为已读？"
 
-#: js/Feeds.js:366
+#: js/Feeds.js:376
 msgid "Marking all feeds as read..."
 msgstr "标记所有信息源为已读..."
 
-#: js/Feeds.js:384
+#: js/Feeds.js:394
 msgid "Mark %w in %s older than 1 day as read?"
 msgstr "将 %s 中 %w 1天前的文章标记为已读?"
 
-#: js/Feeds.js:387
+#: js/Feeds.js:397
 msgid "Mark %w in %s older than 1 week as read?"
 msgstr "将 %s 中 %w 1周前的文章标记为已读?"
 
-#: js/Feeds.js:390
+#: js/Feeds.js:400
 msgid "Mark %w in %s older than 2 weeks as read?"
 msgstr "将 %s 中 %w 2周前的文章标记为已读?"
 
-#: js/Feeds.js:393
+#: js/Feeds.js:403
 msgid "Mark %w in %s as read?"
 msgstr "将 %s 中 %w 的文章标记为已读?"
 
-#: js/Feeds.js:396
+#: js/Feeds.js:406
 msgid "search results"
 msgstr "搜索结果"
 
-#: js/Feeds.js:396
+#: js/Feeds.js:406
 msgid "all articles"
 msgstr "全部文章"
 
-#: js/Feeds.js:438
+#: js/Feeds.js:448
 msgid "Mark all articles in %s as read?"
 msgstr "将 %s 中的全部文章标记为已读？"
 
-#: js/Headlines.js:864
+#: js/Headlines.js:888
 #, fuzzy
 msgid "%d article selected"
 msgid_plural "%d articles selected"
@@ -3375,34 +3331,30 @@ msgstr "移除选中的用户？默认管理员和您的帐户不会被移除。
 msgid "Removing selected users..."
 msgstr "删除所选用户..."
 
-#: js/tt-rss.js:343
+#: js/tt-rss.js:344
 msgid "Please enable mail or mailto plugin first."
 msgstr "请先启用邮件或邮件插件。"
 
-#: js/tt-rss.js:456
+#: js/tt-rss.js:460
 msgid "Please enable embed_original plugin first."
 msgstr "请先启用embed_original插件。"
 
-#: js/tt-rss.js:469
-#: js/tt-rss.js:559
+#: js/tt-rss.js:473
+#: js/tt-rss.js:563
 msgid "Widescreen is not available in combined mode."
 msgstr "在合并模式下无法启用宽屏."
 
-#: js/tt-rss.js:528
+#: js/tt-rss.js:532
 msgid "Please select some feed first."
 msgstr "请选择信息源。"
 
-#: js/tt-rss.js:533
+#: js/tt-rss.js:537
 msgid "You can't unsubscribe from the category."
 msgstr "您不能取消订阅一个类别。"
 
 #: plugins/note/note.js:14
 msgid "Saving article note..."
 msgstr "保存文章笔记......"
-
-#: plugins/shorten_expanded/init.js:42
-msgid "Click to expand article"
-msgstr "点击展开文章"
 
 #: plugins/share/share.js:15
 msgid "Trying to change URL..."
@@ -3415,6 +3367,81 @@ msgstr "无法更改网址。"
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."
 msgstr "分享的 URL 已被清除。"
+
+#: plugins/shorten_expanded/init.js:42
+msgid "Click to expand article"
+msgstr "点击展开文章"
+
+#, fuzzy
+#~ msgid "%d archived article"
+#~ msgid_plural "%d archived articles"
+#~ msgstr[0] "%d 个存档的文章"
+
+#~ msgid "No feeds found."
+#~ msgstr "未找到信息源。"
+
+#~ msgid "If you have imported labels and/or filters, you might need to reload preferences to see your new data."
+#~ msgstr "如果你已经导入了预定义标签或过滤器，你可能需要重新加载来看到新的设置。"
+
+#~ msgid "Performing updates"
+#~ msgstr "执行更新"
+
+#~ msgid "FAILED!"
+#~ msgstr "失败!"
+
+#~ msgid "OK!"
+#~ msgstr "OK！"
+
+#~ msgid "Database update required"
+#~ msgstr "需要更新数据库"
+
+#~ msgid "Sending new password of user %s to %s"
+#~ msgstr "用户%s，新密码发送至%s"
+
+#~ msgid "[tt-rss] Password change notification"
+#~ msgstr "[tt-rss] 密码更换提醒"
+
+#~ msgid "Hide from Popular feeds"
+#~ msgstr "从最受欢迎的信息源中隐藏"
+
+#~ msgid "These feeds have not been updated with new content for 3 months (oldest first):"
+#~ msgstr "以下信息源已经有三个月没有内容更新了（最旧的在最上）："
+
+#~ msgid "System plugins are enabled in <strong>config.php</strong> for all users."
+#~ msgstr "在 <strong>config.php</strong> 中启用的系统插件适用于所有用户."
+
+#~ msgid "Plugin"
+#~ msgstr "插件"
+
+#~ msgid "Description"
+#~ msgstr "描述"
+
+#~ msgid "Version"
+#~ msgstr "版本"
+
+#~ msgid "Author"
+#~ msgstr "作者"
+
+#~ msgid "more info"
+#~ msgstr "更多信息"
+
+#~ msgid "More feeds"
+#~ msgstr "更多信息源"
+
+#~ msgid "Popular feeds"
+#~ msgstr "热门信息源"
+
+#~ msgid "Feed archive"
+#~ msgstr "信息源存档"
+
+#~ msgid "limit:"
+#~ msgstr "限制："
+
+#~ msgid "Use Readability for pages shared via bookmarklet."
+#~ msgstr "用Readability通过书签分享页面."
+
+#~ msgid "Toggle feedlist"
+#~ msgstr "切换侧边栏"
 
 #, fuzzy
 #~ msgid "Automatically opens next unread feed after marking one as read"
@@ -4068,9 +4095,6 @@ msgstr "分享的 URL 已被清除。"
 
 #~ msgid "Please backup your database before proceeding."
 #~ msgstr "执行下一步前请先备份数据库。"
-
-#~ msgid "Your Tiny Tiny RSS database needs update to the latest version (<b>%d</b> to <b>%d</b>)."
-#~ msgstr "您的 Tiny Tiny RSS 数据库需要升级到最新版（<b>%d</b> 到 <b>%d</b>）。"
 
 #~ msgid "Checking version... "
 #~ msgstr "正在检查版本……"
