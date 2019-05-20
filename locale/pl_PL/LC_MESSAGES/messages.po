@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-22 06:58+0300\n"
-"PO-Revision-Date: 2019-05-19 09:34+0000\n"
+"PO-Revision-Date: 2019-05-20 10:35+0000\n"
 "Last-Translator: Marcin Sadowski <sadowski.marcin@icloud.com>\n"
 "Language-Team: Polish <https://weblate.tt-rss.org/projects/tt-rss/messages/"
 "pl/>\n"
@@ -2487,7 +2487,7 @@ msgstr "Przewijanie treści artykułu"
 
 #: plugins/af_redditimgur/init.php:31
 msgid "Reddit content settings (af_redditimgur)"
-msgstr ""
+msgstr "Ustawienia treści Reddit (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:61
 msgid "Extract missing content using Readability"
