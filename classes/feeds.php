@@ -1460,7 +1460,9 @@ class Feeds extends Handler_Protected {
 			}
 
 			if (DB_TYPE == "pgsql") {
-				$test_sth = $pdo->prepare("select $search_query_part from ttrss_entries limit 1");
+				$test_sth = $pdo->prepare("select $search_query_part 
+					FROM ttrss_entries, ttrss_user_entries WHERE id = ref_id limit 1");
+
 				try {
 					$test_sth->execute();
 				} catch (PDOException $e) {
