@@ -567,8 +567,6 @@ define(["dojo/_base/declare"], function (declare) {
 			const tmph = dojo.connect(dialog, 'onLoad', function () {
 				dojo.disconnect(tmph);
 
-				console.log('S_onload');
-
 				if (Feeds._search_query) {
 					if (Feeds._search_query.query)
 						dijit.byId('search_query')
