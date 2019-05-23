@@ -1762,6 +1762,7 @@ body.ttrss_utility.share_popup .content {
 }
 .flat .dijitTree .dijitTreeRow {
   overflow: hidden;
+  -moz-user-select: none; /* TODO: temporary workaround for bug: https://discourse.tt-rss.org/t/is-it-possible-to-create-a-hierarchy-of-categories/876/13 */
   text-overflow: ellipsis;
 }
 .flat label.dijitButton {
