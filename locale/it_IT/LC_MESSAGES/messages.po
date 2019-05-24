@@ -10,15 +10,16 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2019-02-23 05:03+0000\n"
+"PO-Revision-Date: 2019-05-25 05:29+0000\n"
 "Last-Translator: Dario Di Ludovico <dario@diludovico.it>\n"
-"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/it/>\n"
+"Language-Team: Italian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"it/>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3\n"
+"X-Generator: Weblate 3.5.1\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -1194,7 +1195,7 @@ msgstr "Speciale"
 #: classes/feeds.php:1472
 #, php-format
 msgid "Incorrect search syntax: %s."
-msgstr ""
+msgstr "Sintassi di ricerca incorretta: %s."
 
 #: classes/feeds.php:1657
 #, php-format
@@ -1316,28 +1317,29 @@ msgid "Database Updater"
 msgstr "Aggiornatore database"
 
 #: classes/handler/public.php:1142
-#, fuzzy, php-format
+#, php-format
 msgid "Performing updates to version %d"
-msgstr "Esecuzione dell'aggiornamento alla versione %d..."
+msgstr "Esecuzione dell'aggiornamento alla versione %d"
 
 #: classes/handler/public.php:1147
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to version %d"
 msgstr "Aggiornamento alla versione %d"
 
 #: classes/handler/public.php:1160
 msgid "Try again"
-msgstr ""
+msgstr "Riprova"
 
 #: classes/handler/public.php:1166
-#, fuzzy
 msgid "Completed."
-msgstr "Caricamento completato."
+msgstr "Completato."
 
 #: classes/handler/public.php:1183
-#, fuzzy, php-format
+#, php-format
 msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
-msgstr "Il database di Tiny Tiny RSS deve essere aggiornato all&apos;ultima versione (<b>%d</b> a <b>%d</b>)."
+msgstr ""
+"Il database di Tiny Tiny RSS deve essere aggiornato all'ultima versione (da %"
+"d a %d)."
 
 #: classes/handler/public.php:1195
 msgid "Perform updates"
@@ -1382,9 +1384,9 @@ msgid "Setting preference key %s to %s"
 msgstr "Impostazione della voce delle preferenze %s a %s"
 
 #: classes/opml.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Adding filter %s..."
-msgstr "Aggiungendo filtro..."
+msgstr "Aggiungendo filtro %s..."
 
 #: classes/opml.php:536
 #, php-format
@@ -1788,9 +1790,8 @@ msgid "matches any rule"
 msgstr "Corrisponde a una qualsiasi regola"
 
 #: classes/pref/filters.php:1156
-#, fuzzy
 msgid "inverse"
-msgstr "(inverso)"
+msgstr "inverso"
 
 #: classes/pref/filters.php:1159
 #, php-format
@@ -1845,13 +1846,12 @@ msgid "Never apply these tags automatically (comma-separated list)."
 msgstr "Non applicare queste etichette automaticamente (lista separata da virgole)."
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Default language"
-msgstr "Profilo predefinito"
+msgstr "Linguaggio predefinito"
 
 #: classes/pref/prefs.php:72
 msgid "Used for full-text search"
-msgstr ""
+msgstr "Utilizzato per ricerca full-text"
 
 #: classes/pref/prefs.php:73
 msgid "Mark read on scroll"
@@ -2159,7 +2159,7 @@ msgstr "Plugin di sistema"
 #: classes/pref/prefs.php:856
 #, php-format
 msgid "v%.2f, by %s"
-msgstr ""
+msgstr "v%.2f, da%s"
 
 #: classes/pref/prefs.php:818
 msgid "User plugins"
@@ -2393,6 +2393,8 @@ msgstr "Impostazioni di Readability (af_readability)"
 #: plugins/af_readability/init.php:87
 msgid "Provide full-text services to core code (bookmarklets) and other plugins"
 msgstr ""
+"Fornisce servizi full-text al codice principale (bookmarklets) e ad altri "
+"plugin"
 
 #: plugins/af_readability/init.php:118
 msgid "Readability"
@@ -2407,9 +2409,9 @@ msgid "Reddit content settings (af_redditimgur)"
 msgstr "Impostazioni per i contenuti di Reddit (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:60
-#, fuzzy
 msgid "Extract missing content using Readability (requires af_readability)"
-msgstr "Estrai il contenuto mancante usando Readability"
+msgstr ""
+"Estrai il contenuto mancante usando Readability (richiede af_readability)"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
@@ -2501,15 +2503,15 @@ msgstr "Finito: "
 #, php-format
 msgid "%d article processed, "
 msgid_plural "%d articles processed, "
-msgstr[0] "%d articolo elaborato,"
-msgstr[1] "%d articoli elaborati,"
+msgstr[0] "%d articolo elaborato, "
+msgstr[1] "%d articoli elaborati, "
 
 #: plugins/import_export/init.php:443
 #, php-format
 msgid "%d imported, "
 msgid_plural "%d imported, "
-msgstr[0] "%d importato,"
-msgstr[1] "%d importati,"
+msgstr[0] "%d importato, "
+msgstr[1] "%d importati, "
 
 #: plugins/import_export/init.php:444
 #, php-format
@@ -2630,9 +2632,8 @@ msgid "Unshare article"
 msgstr "Togli la condivisione all'articolo"
 
 #: plugins/toggle_sidebar/init.php:27
-#, fuzzy
 msgid "Toggle sidebar"
-msgstr "Inverti articoli con stella"
+msgstr "Attiva la sidebar"
 
 #: plugins/vf_shared/init.php:17
 #: plugins/vf_shared/init.php:73
@@ -3166,9 +3167,8 @@ msgid "Create Filter"
 msgstr "Crea filtro"
 
 #: js/FeedTree.js:71
-#, fuzzy
 msgid "Debug feed"
-msgstr "Debug vista del feed (viewfeed())"
+msgstr "Debug del feed"
 
 #: js/FeedTree.js:99
 msgid "(Un)collapse"
