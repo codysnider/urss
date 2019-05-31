@@ -10,14 +10,16 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2019-05-20 10:35+0000\n"
+"PO-Revision-Date: 2019-05-30 08:13+0000\n"
 "Last-Translator: Marcin Sadowski <sadowski.marcin@icloud.com>\n"
-"Language-Team: Polish <https://weblate.tt-rss.org/projects/tt-rss/messages/pl/>\n"
+"Language-Team: Polish <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"pl/>\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.5.1\n"
 
 #: backend.php:73
@@ -938,7 +940,7 @@ msgstr "Proces aktualizacji kanału trwa zbyt długo. Może to wskazywać na jeg
 #: classes/dlg.php:170
 #, php-format
 msgid "%s can be accessed via the following secret URL:"
-msgstr "%s może zostać udostępniony korzystając z tego prywatnego adresu:"
+msgstr "„%s” może zostać udostępniony korzystając z tego prywatnego adresu:"
 
 #: classes/dlg.php:181
 #: classes/pref/filters.php:1015
@@ -1194,7 +1196,7 @@ msgstr "Specjalne"
 #: classes/feeds.php:1472
 #, php-format
 msgid "Incorrect search syntax: %s."
-msgstr ""
+msgstr "Nieprawidłowa składnia wyszukiwania: %s."
 
 #: classes/feeds.php:1657
 #, php-format
@@ -1316,27 +1318,29 @@ msgid "Database Updater"
 msgstr "Aktualizator bazy danych"
 
 #: classes/handler/public.php:1142
-#, fuzzy, php-format
+#, php-format
 msgid "Performing updates to version %d"
-msgstr "Wykonywanie aktualizacji do wersji %d…"
+msgstr "Wykonywanie aktualizacji do wersji %d"
 
 #: classes/handler/public.php:1147
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to version %d"
-msgstr "Aktualizacja do wersji %d"
+msgstr "Aktualizowanie do wersji %d"
 
 #: classes/handler/public.php:1160
 msgid "Try again"
-msgstr ""
+msgstr "Spróbuj ponownie"
 
 #: classes/handler/public.php:1166
 msgid "Completed."
 msgstr "Zakończono."
 
 #: classes/handler/public.php:1183
-#, fuzzy, php-format
+#, php-format
 msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
-msgstr "Baza Tiny Tiny RSS musi być zaktualizowana do aktualnej wersji (<b>%d</b> do <b>%d</b>)."
+msgstr ""
+"Baza danych Tiny Tiny RSS wymaga zaktualizowania do najnowszej wersji (z "
+"<b>%d</b> do <b>%d</b>)."
 
 #: classes/handler/public.php:1195
 msgid "Perform updates"
@@ -1381,9 +1385,9 @@ msgid "Setting preference key %s to %s"
 msgstr "Ustawiam wartość parametru %s na %s"
 
 #: classes/opml.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Adding filter %s..."
-msgstr "Dodawanie filtra %s"
+msgstr "Dodawanie filtra %s…"
 
 #: classes/opml.php:536
 #, php-format
@@ -1670,7 +1674,7 @@ msgstr "(odwróć)"
 #: classes/pref/filters.php:556
 #, php-format
 msgid "%s on %s in %s %s"
-msgstr "%s na %s w %s %s"
+msgstr "„%s” w %s w: %s %s"
 
 #: classes/pref/filters.php:349
 #: classes/pref/filters.php:850
@@ -1789,9 +1793,8 @@ msgid "matches any rule"
 msgstr "pasuje do dowolnej reguły"
 
 #: classes/pref/filters.php:1156
-#, fuzzy
 msgid "inverse"
-msgstr "(odwróć)"
+msgstr "odwróć"
 
 #: classes/pref/filters.php:1159
 #, php-format
@@ -1828,7 +1831,7 @@ msgstr "Artykuły"
 
 #: classes/pref/prefs.php:54
 msgid "Digest"
-msgstr "Wyciąg"
+msgstr "Przegląd e-mail"
 
 #: classes/pref/prefs.php:59
 msgid "Advanced"
@@ -1847,13 +1850,12 @@ msgid "Never apply these tags automatically (comma-separated list)."
 msgstr "Nigdy nie dodawaj automatycznie tych etykiet (lista rozdzielona przecinkami)."
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Default language"
-msgstr "Domyślny profil"
+msgstr "Domyślny język"
 
 #: classes/pref/prefs.php:72
 msgid "Used for full-text search"
-msgstr ""
+msgstr "Używane do wyszukiwania pełnotekstowego"
 
 #: classes/pref/prefs.php:73
 msgid "Mark read on scroll"
@@ -1893,15 +1895,17 @@ msgstr "Oznacz wysłane artykuły jako przeczytane"
 
 #: classes/pref/prefs.php:80
 msgid "Enable digest"
-msgstr "Włącz „wyciąg”"
+msgstr "Włącz przegląd e-mail"
 
 #: classes/pref/prefs.php:80
 msgid "Send daily digest of new (and unread) headlines to your e-mail address"
-msgstr "Wysyłaj codzienny wyciąg nowych (i nieprzeczytanych) nagłówków na twój adres e-mail"
+msgstr ""
+"Wysyłaj codzienny przegląd nowych i nieprzeczytanych nagłówków na twój adres "
+"e-mail"
 
 #: classes/pref/prefs.php:81
 msgid "Try to send around this time"
-msgstr "Spróbuj wysłać wyciąg około tej godziny"
+msgstr "Spróbuj wysłać około tej godziny"
 
 #: classes/pref/prefs.php:81
 msgid "Time in UTC"
@@ -2161,7 +2165,7 @@ msgstr "Wtyczki systemowe"
 #: classes/pref/prefs.php:856
 #, php-format
 msgid "v%.2f, by %s"
-msgstr ""
+msgstr "wer. %.2f, przez %s"
 
 #: classes/pref/prefs.php:818
 msgid "User plugins"
@@ -2362,6 +2366,9 @@ msgstr "Minimalne podobieństwo:"
 #: plugins/af_psql_trgm/init.php:178
 msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
 msgstr ""
+"Rozszerzenie trigram PostgreSQL zwraca wartość podobieństwa ciągów "
+"tekstowych jako liczbę zmiennoprzecinkową (0-1). Ustawienie zbyt niskiego "
+"poziomu może dawać fałszywe wyniki pozytywne; zero wyłącza sprawdzanie."
 
 #: plugins/af_psql_trgm/init.php:183
 msgid "Minimum title length:"
@@ -2396,6 +2403,8 @@ msgstr "Ustawienia Readability (af_readability)"
 #: plugins/af_readability/init.php:87
 msgid "Provide full-text services to core code (bookmarklets) and other plugins"
 msgstr ""
+"Świadczenie usług pełnotekstowych dla kodu podstawowego (zakładek) i innych "
+"wtyczek"
 
 #: plugins/af_readability/init.php:118
 msgid "Readability"
@@ -2411,9 +2420,8 @@ msgid "Reddit content settings (af_redditimgur)"
 msgstr "Ustawienia treści Reddit (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:60
-#, fuzzy
 msgid "Extract missing content using Readability (requires af_readability)"
-msgstr "Wydziel brakującą treść z użyciem Readability"
+msgstr "Wydziel brakującą treść z użyciem Readability (requires af_readability)"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
@@ -2637,9 +2645,8 @@ msgid "Unshare article"
 msgstr "Zakończ udostępnianie artykułu"
 
 #: plugins/toggle_sidebar/init.php:27
-#, fuzzy
 msgid "Toggle sidebar"
-msgstr "Przełącz oznaczenie gwiazdką"
+msgstr "Przełącz panel boczny"
 
 #: plugins/vf_shared/init.php:17
 #: plugins/vf_shared/init.php:73
@@ -3181,9 +3188,8 @@ msgid "Create Filter"
 msgstr "Utwórz filtr"
 
 #: js/FeedTree.js:71
-#, fuzzy
 msgid "Debug feed"
-msgstr "Testuj viewfeed()"
+msgstr "Testuj kanał"
 
 #: js/FeedTree.js:99
 msgid "(Un)collapse"

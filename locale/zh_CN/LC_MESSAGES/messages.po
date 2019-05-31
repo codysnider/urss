@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2019-03-07 01:51+0000\n"
+"PO-Revision-Date: 2019-05-22 12:29+0000\n"
 "Last-Translator: Ptsa Daniel <ptsa1987@gmail.com>\n"
-"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/tt-rss/messages/zh_Hans/>\n"
+"Language-Team: Chinese (Simplified) <https://weblate.tt-rss.org/projects/"
+"tt-rss/messages/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.3\n"
+"X-Generator: Weblate 3.5.1\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -1148,9 +1149,9 @@ msgid "Subscribe"
 msgstr "订阅"
 
 #: classes/feeds.php:735
-#, fuzzy, php-format
+#, php-format
 msgid "Search %s..."
-msgstr "搜索..."
+msgstr "搜索 %s ..."
 
 #: classes/feeds.php:741
 #: classes/pref/feeds.php:603
@@ -1193,7 +1194,7 @@ msgstr "特殊区域"
 #: classes/feeds.php:1472
 #, php-format
 msgid "Incorrect search syntax: %s."
-msgstr ""
+msgstr "搜索语法不正确：%s ."
 
 #: classes/feeds.php:1657
 #, php-format
@@ -1315,28 +1316,27 @@ msgid "Database Updater"
 msgstr "数据库更新管理器"
 
 #: classes/handler/public.php:1142
-#, fuzzy, php-format
+#, php-format
 msgid "Performing updates to version %d"
-msgstr "正在更新版本%d ……"
+msgstr "正在更新版本 %d"
 
 #: classes/handler/public.php:1147
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to version %d"
-msgstr "正在更新到 %d 版本"
+msgstr "正在更新到 %d"
 
 #: classes/handler/public.php:1160
 msgid "Try again"
-msgstr ""
+msgstr "重试"
 
 #: classes/handler/public.php:1166
-#, fuzzy
 msgid "Completed."
-msgstr "上传完成。"
+msgstr "完成。"
 
 #: classes/handler/public.php:1183
-#, fuzzy, php-format
+#, php-format
 msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
-msgstr "您的 Tiny Tiny RSS 数据库需要升级到最新版（<b>%d</b> 到 <b>%d</b>）。"
+msgstr "您的 Tiny Tiny RSS 数据库需要升级到最新版（ %d 到  %d ）。"
 
 #: classes/handler/public.php:1195
 msgid "Perform updates"
@@ -1381,9 +1381,9 @@ msgid "Setting preference key %s to %s"
 msgstr "将偏好按键从 %s 设置为 %s"
 
 #: classes/opml.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Adding filter %s..."
-msgstr "创建过滤器..."
+msgstr "增加过滤器%s..."
 
 #: classes/opml.php:536
 #, php-format
@@ -1422,7 +1422,7 @@ msgstr "勾选以启用"
 #: classes/pref/feeds.php:280
 #: classes/pref/feeds.php:286
 #: classes/pref/feeds.php:315
-#, fuzzy, php-format
+#, php-format
 msgid "(%d feed)"
 msgid_plural "(%d feeds)"
 msgstr[0] "(%d 个信息源)"
@@ -1785,9 +1785,8 @@ msgid "matches any rule"
 msgstr "匹配任意规则"
 
 #: classes/pref/filters.php:1156
-#, fuzzy
 msgid "inverse"
-msgstr "(反选)"
+msgstr "反选"
 
 #: classes/pref/filters.php:1159
 #, fuzzy, php-format
@@ -1817,9 +1816,8 @@ msgid "Clear colors"
 msgstr "清空颜色"
 
 #: classes/pref/prefs.php:41
-#, fuzzy
 msgid "Articles"
-msgstr "全部文章"
+msgstr "文章"
 
 #: classes/pref/prefs.php:54
 msgid "Digest"
@@ -1842,13 +1840,12 @@ msgid "Never apply these tags automatically (comma-separated list)."
 msgstr "不要自动应用这些标签（以逗号分隔的列表）。"
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Default language"
-msgstr "默认偏好设置"
+msgstr "默认语言"
 
 #: classes/pref/prefs.php:72
 msgid "Used for full-text search"
-msgstr ""
+msgstr "用于全文搜索"
 
 #: classes/pref/prefs.php:73
 msgid "Mark read on scroll"
@@ -1883,9 +1880,8 @@ msgid "Default update interval"
 msgstr "默认更新间隔"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Mark sent articles as read"
-msgstr "将所有文章标记为已读？"
+msgstr "将发送的文章标记为已读"
 
 #: classes/pref/prefs.php:80
 msgid "Enable digest"
@@ -1936,37 +1932,33 @@ msgid "Always show special feeds"
 msgstr "始终显示特殊信息源"
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "While hiding read feeds"
-msgstr "隐藏已读信息之后显示特殊区域的内容"
+msgstr "隐藏已读信息源"
 
 #: classes/pref/prefs.php:88
 msgid "Long date format"
 msgstr "长时间格式"
 
 #: classes/pref/prefs.php:88
-#, fuzzy
 msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
-msgstr "所使用的语法与 PHP <a href='http://php.net/manual/function.date.php'>date()</a> 函数相同."
+msgstr ""
+"所使用的语法与 PHP <a href='http://php.net/manual/function.date.php'>date()</a>函数相同."
 
 #: classes/pref/prefs.php:89
-#, fuzzy
 msgid "Automatically show next feed"
 msgstr "自动显示下一个信息源"
 
 #: classes/pref/prefs.php:89
-#, fuzzy
 msgid "After marking one as read"
-msgstr "标记信息源为已读之前弹出确认"
+msgstr "将这个信息源标记为已读以后"
 
 #: classes/pref/prefs.php:90
-#, fuzzy
 msgid "Purge articles older than"
-msgstr "清除未读文章"
+msgstr "清除旧文章"
 
 #: classes/pref/prefs.php:90
 msgid "<strong>days</strong> (0 disables)"
-msgstr ""
+msgstr "<strong>天</strong>(0 表示关闭)"
 
 #: classes/pref/prefs.php:91
 msgid "Purge unread articles"
@@ -1981,9 +1973,8 @@ msgid "Short date format"
 msgstr "短时间格式"
 
 #: classes/pref/prefs.php:94
-#, fuzzy
 msgid "Show content preview in headlines"
-msgstr "在标题列表中显示内容预览"
+msgstr "在标题中显示内容预览"
 
 #: classes/pref/prefs.php:95
 msgid "Sort headlines by feed date"
@@ -1994,9 +1985,8 @@ msgid "Use feed-specified date to sort headlines instead of local import date."
 msgstr "使用信息源中定义的时间，而非本地导入的时间来排序。"
 
 #: classes/pref/prefs.php:96
-#, fuzzy
 msgid "SSL client certificate"
-msgstr "使用 SSL 证书登录"
+msgstr "SSL客户端证书"
 
 #: classes/pref/prefs.php:98
 msgid "Strip unsafe tags from articles"
@@ -2016,13 +2006,12 @@ msgid "Time zone"
 msgstr "时区"
 
 #: classes/pref/prefs.php:101
-#, fuzzy
 msgid "Group by feed"
-msgstr "前25位的信息源"
+msgstr "分组显示信息源"
 
 #: classes/pref/prefs.php:101
 msgid "Group multiple-feed output by originating feed"
-msgstr ""
+msgstr "按订阅源分组显示,不是聚合在一起"
 
 #: classes/pref/prefs.php:102
 msgid "Language"
@@ -2053,20 +2042,17 @@ msgid "Personal data"
 msgstr "个人数据"
 
 #: classes/pref/prefs.php:260
-#, fuzzy
 msgid "Full name:"
-msgstr "姓名"
+msgstr "全名:"
 
 #: classes/pref/prefs.php:265
 #: classes/pref/users.php:94
-#, fuzzy
 msgid "E-mail:"
 msgstr "电子邮件："
 
 #: classes/pref/prefs.php:273
-#, fuzzy
 msgid "Access level:"
-msgstr "访问级别: "
+msgstr "访问级别:"
 
 #: classes/pref/prefs.php:284
 msgid "Save data"
@@ -2077,20 +2063,17 @@ msgid "Changing your current password will disable OTP."
 msgstr "更改当前密码会使 OTP 动态口令失效。"
 
 #: classes/pref/prefs.php:337
-#, fuzzy
 msgid "Old password:"
-msgstr "原密码"
+msgstr "原密码:"
 
 #: classes/pref/prefs.php:342
 #: classes/pref/users.php:82
-#, fuzzy
 msgid "New password:"
-msgstr "新密码"
+msgstr "新密码:"
 
 #: classes/pref/prefs.php:347
-#, fuzzy
 msgid "Confirm password:"
-msgstr "确认密码"
+msgstr "确认密码:"
 
 #: classes/pref/prefs.php:357
 msgid "Change password"
@@ -2102,18 +2085,16 @@ msgstr "动态口令"
 
 #: classes/pref/prefs.php:392
 #: classes/pref/prefs.php:440
-#, fuzzy
 msgid "Your password:"
-msgstr "确认密码"
+msgstr "你的密码:"
 
 #: classes/pref/prefs.php:402
 msgid "Disable OTP"
 msgstr "禁用 OTP 动态口令"
 
 #: classes/pref/prefs.php:446
-#, fuzzy
 msgid "One time password:"
-msgstr "一次性密码不正确"
+msgstr "一次性密码:"
 
 #: classes/pref/prefs.php:453
 msgid "Enable OTP"
@@ -2132,9 +2113,8 @@ msgid "Customize"
 msgstr "自定义"
 
 #: classes/pref/prefs.php:614
-#, fuzzy
 msgid "More themes..."
-msgstr "更多操作"
+msgstr "更多主题..."
 
 #: classes/pref/prefs.php:675
 msgid "Register"
@@ -2146,7 +2126,7 @@ msgid "Clear"
 msgstr "清空"
 
 #: classes/pref/prefs.php:690
-#, fuzzy, php-format
+#, php-format
 msgid "Current server time: %s"
 msgstr "当前服务器系统时间: %s (UTC)"
 
@@ -2407,7 +2387,7 @@ msgstr "Readability 设置 (af_readability)"
 
 #: plugins/af_readability/init.php:87
 msgid "Provide full-text services to core code (bookmarklets) and other plugins"
-msgstr ""
+msgstr "为核心代码（bookmarklets）和其他插件提供全文服务"
 
 #: plugins/af_readability/init.php:118
 msgid "Readability"
@@ -2422,9 +2402,8 @@ msgid "Reddit content settings (af_redditimgur)"
 msgstr "Reddit 内容设置"
 
 #: plugins/af_redditimgur/init.php:60
-#, fuzzy
 msgid "Extract missing content using Readability (requires af_readability)"
-msgstr "使用 Readability 提取缺失的内容"
+msgstr "使用Readability 提取缺少的内容（需要af_readability）"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
@@ -2513,22 +2492,22 @@ msgid "Finished: "
 msgstr "已完成: "
 
 #: plugins/import_export/init.php:442
-#, fuzzy, php-format
+#, php-format
 msgid "%d article processed, "
 msgid_plural "%d articles processed, "
-msgstr[0] "编辑文章注记"
+msgstr[0] "%d 文章处理了. "
 
 #: plugins/import_export/init.php:443
-#, fuzzy, php-format
+#, php-format
 msgid "%d imported, "
 msgid_plural "%d imported, "
-msgstr[0] "已导入。"
+msgstr[0] "%d已导入 , "
 
 #: plugins/import_export/init.php:444
-#, fuzzy, php-format
+#, php-format
 msgid "%d feed created."
 msgid_plural "%d feeds created."
-msgstr[0] "没有选中的信息源。"
+msgstr[0] "%d个信息源被创建."
 
 #: plugins/import_export/init.php:449
 msgid "Could not load XML document."
@@ -2642,9 +2621,8 @@ msgid "Unshare article"
 msgstr "取消文章共享"
 
 #: plugins/toggle_sidebar/init.php:27
-#, fuzzy
 msgid "Toggle sidebar"
-msgstr "加星此文章"
+msgstr "切换侧边栏"
 
 #: plugins/vf_shared/init.php:17
 #: plugins/vf_shared/init.php:73
@@ -2690,10 +2668,9 @@ msgid "comments"
 msgstr "评论"
 
 #: js/Article.js:155
-#, fuzzy
 msgid "comment"
 msgid_plural "comments"
-msgstr[0] "评论些什么？"
+msgstr[0] "评论"
 
 #: js/CommonDialogs.js:11
 msgid "Remove stored feed icon?"
@@ -2819,25 +2796,25 @@ msgid "Could not update headlines (invalid object received - see error console f
 msgstr "无法显示文章（收到无效对象 - 有关详细信息，请参阅错误控制台）"
 
 #: js/Headlines.js:963
-#, fuzzy, perl-format
+#, perl-format
 msgid "Delete %d selected article in %s?"
 msgid_plural "Delete %d selected articles in %s?"
 msgstr[0] "删除 %s 中选择的 %d 篇文章？"
 
 #: js/Headlines.js:965
-#, fuzzy, perl-format
+#, perl-format
 msgid "Delete %d selected article?"
 msgid_plural "Delete %d selected articles?"
 msgstr[0] "删除选中的 %d 篇文章？"
 
 #: js/Headlines.js:1105
-#, fuzzy, perl-format
+#, perl-format
 msgid "Archive %d selected article in %s?"
 msgid_plural "Archive %d selected articles in %s?"
 msgstr[0] "将 %s 中的 %d 篇选中的文章存档？"
 
 #: js/Headlines.js:1108
-#, fuzzy, perl-format
+#, perl-format
 msgid "Move %d archived article back?"
 msgid_plural "Move %d archived articles back?"
 msgstr[0] "将存档的 %d 篇文章移回原处？"
@@ -2847,7 +2824,7 @@ msgid "Please note that unstarred articles might get purged on next feed update.
 msgstr "请注意,未加星的文章可能在下一次文章更新中被清除."
 
 #: js/Headlines.js:1138
-#, fuzzy, perl-format
+#, perl-format
 msgid "Mark %d selected article in %s as read?"
 msgid_plural "Mark %d selected articles in %s as read?"
 msgstr[0] "将 %s 中选中的 %d 篇文章标记为已读？"
@@ -2861,7 +2838,7 @@ msgid "No articles found to mark"
 msgstr "未找到需要标记的文章"
 
 #: js/Headlines.js:1191
-#, fuzzy, perl-format
+#, perl-format
 msgid "Mark %d article as read?"
 msgid_plural "Mark %d articles as read?"
 msgstr[0] "将 %d 篇文章标记为已读？"
@@ -3037,7 +3014,7 @@ msgstr "导出数据"
 #, perl-format
 msgid "Finished, exported %d article. You can download the data <a class='visibleLink' href='%u'>here</a>."
 msgid_plural "Finished, exported %d articles. You can download the data <a class='visibleLink' href='%u'>here</a>."
-msgstr[0] ""
+msgstr[0] "完成，导出%d篇文章。您可以<a class='visibleLink' href='%u'> 点这里</a>下载数据。"
 
 #: plugins/import_export/import_export.js:93
 msgid "Data Import"
@@ -3171,9 +3148,8 @@ msgid "Create Filter"
 msgstr "创建过滤器"
 
 #: js/FeedTree.js:71
-#, fuzzy
 msgid "Debug feed"
-msgstr "调试 viewfeed()"
+msgstr "调试信息源"
 
 #: js/FeedTree.js:99
 msgid "(Un)collapse"
@@ -3216,10 +3192,9 @@ msgid "Mark all articles in %s as read?"
 msgstr "将 %s 中的全部文章标记为已读？"
 
 #: js/Headlines.js:888
-#, fuzzy
 msgid "%d article selected"
 msgid_plural "%d articles selected"
-msgstr[0] "未选中任何文章。"
+msgstr[0] "%d 文章被选中"
 
 #: js/PrefFeedTree.js:141
 msgid "Removing category..."
