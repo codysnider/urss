@@ -105,18 +105,26 @@ body.ttrss_prefs {
 		}
 	}
 
-	table.prefErrorLog tr.errrow td {
-		font-size : 10px;
-	}
+	.prefErrorLog {
+		tr {
+			td {
+				font-size: 10px;
+			}
 
-	table.prefErrorLog tr.errrow td.errno {
-		font-style : italic;
-		font-weight : bold;
-		white-space : nowrap;
-	}
+			.errno {
+				font-style : italic;
+				font-weight : bold;
+				white-space : nowrap;
+			}
 
-	table.prefErrorLog td.filename, table.prefErrorLog td.login, table.prefErrorLog td.timestamp {
-		color : @default-text;
+			.errstr {
+				word-break: break-all;
+			}
+
+			.filename, .login, .timestamp {
+				color : @default-text;
+			}
+		}
 	}
 
 	hr {

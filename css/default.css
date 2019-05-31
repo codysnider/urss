@@ -1513,17 +1513,20 @@ body.ttrss_prefs fieldset.plugin label.description {
 body.ttrss_prefs fieldset.plugin label.description .dijitCheckBox {
   margin-right: 10px;
 }
-body.ttrss_prefs table.prefErrorLog tr.errrow td {
+body.ttrss_prefs .prefErrorLog tr td {
   font-size: 10px;
 }
-body.ttrss_prefs table.prefErrorLog tr.errrow td.errno {
+body.ttrss_prefs .prefErrorLog tr .errno {
   font-style: italic;
   font-weight: bold;
   white-space: nowrap;
 }
-body.ttrss_prefs table.prefErrorLog td.filename,
-body.ttrss_prefs table.prefErrorLog td.login,
-body.ttrss_prefs table.prefErrorLog td.timestamp {
+body.ttrss_prefs .prefErrorLog tr .errstr {
+  word-break: break-all;
+}
+body.ttrss_prefs .prefErrorLog tr .filename,
+body.ttrss_prefs .prefErrorLog tr .login,
+body.ttrss_prefs .prefErrorLog tr .timestamp {
   color: #555;
 }
 body.ttrss_prefs hr {
@@ -1762,7 +1765,7 @@ body.ttrss_utility.share_popup .content {
 }
 .flat .dijitTree .dijitTreeRow {
   overflow: hidden;
-  -moz-user-select: none; /* TODO: temporary workaround for bug: https://discourse.tt-rss.org/t/is-it-possible-to-create-a-hierarchy-of-categories/876/13 */
+  -moz-user-select: none;
   text-overflow: ellipsis;
 }
 .flat label.dijitButton {

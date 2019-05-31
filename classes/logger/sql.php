@@ -12,8 +12,8 @@ class Logger_SQL {
 
 			$owner_uid = $_SESSION["uid"] ? $_SESSION["uid"] : null;
 
-			if (DB_TYPE == "mysql")
-				$context = substr($context, 0, 65534);
+			// limit context length, DOMDocument dumps entire XML in here sometimes, which may be huge
+			$context = mb_substr($context, 0, 8192);
 
 			// passed error message may contain invalid unicode characters, failing to insert an error here
 			// would break the execution entirely by generating an actual fatal error instead of a E_WARNING etc

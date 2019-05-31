@@ -54,7 +54,7 @@ class Pref_System extends Handler_Protected {
 				</tr>";
 
 			while ($line = $res->fetch()) {
-				print "<tr class=\"errrow\">";
+				print "<tr>";
 
 				foreach ($line as $k => $v) {
 					$line[$k] = htmlspecialchars($v);
