@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: TT-RSS CZech\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2018-12-23 18:12+0000\n"
+"PO-Revision-Date: 2019-06-06 08:14+0000\n"
 "Last-Translator: Marek Pavelka <mara.pavelka@gmail.com>\n"
-"Language-Team: Czech <https://weblate.tt-rss.org/projects/tt-rss/messages/cs/>\n"
+"Language-Team: Czech <https://weblate.tt-rss.org/projects/tt-rss/messages/cs/"
+">\n"
 "Language: cs_CZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 3.3\n"
+"X-Generator: Weblate 3.5.1\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -146,7 +147,9 @@ msgstr "Kontrola konfigurace selhala"
 
 #: errors.php:31
 msgid "Your version of MySQL is not currently supported. Please see official site for more information."
-msgstr "Vaše verze MySQL není nyní podporována. Více informací najdete na oficiálních stránkách."
+msgstr ""
+"Vaše verze MySQL není aktuálně podporována. Více informací naleznete na "
+"oficiálních stránkách."
 
 #: errors.php:35
 msgid "SQL escaping test failed, check your database and PHP configuration"
@@ -162,7 +165,7 @@ msgstr "Modul nebyl nalezen"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
-msgstr ""
+msgstr "Kódování dat jako JSON selhalo"
 
 #: index.php:127
 #: index.php:142
@@ -484,7 +487,7 @@ msgstr "Bez kategorie"
 
 #: include/functions.php:84
 msgid "Detect automatically"
-msgstr ""
+msgstr "Automaticky detekovat"
 
 #: include/functions.php:958
 #, php-format
@@ -945,9 +948,8 @@ msgstr "K %s lze přistupovat pomocí následující tajné URL:"
 #: classes/pref/prefs.php:852
 #: classes/pref/prefs.php:867
 #: plugins/bookmarklets/init.php:45
-#, fuzzy
 msgid "More info..."
-msgstr "více informací"
+msgstr "Více informací..."
 
 #: classes/dlg.php:196
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
@@ -1148,9 +1150,9 @@ msgid "Subscribe"
 msgstr "Přihlásit se k odběru"
 
 #: classes/feeds.php:735
-#, fuzzy, php-format
+#, php-format
 msgid "Search %s..."
-msgstr "Hledat..."
+msgstr "Hledat %s..."
 
 #: classes/feeds.php:741
 #: classes/pref/feeds.php:603
@@ -1193,7 +1195,7 @@ msgstr "Speciální"
 #: classes/feeds.php:1472
 #, php-format
 msgid "Incorrect search syntax: %s."
-msgstr ""
+msgstr "Nesprávná syntaxe hledání: %s."
 
 #: classes/feeds.php:1657
 #, php-format
@@ -1260,9 +1262,8 @@ msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "Nelze se přihlásit k odběru <b>%s</b>.<br>Nelze stáhnout URL kanálu."
 
 #: classes/handler/public.php:830
-#, fuzzy
 msgid "Multiple feed URLs found:"
-msgstr "Nalezeno více URL kanálů."
+msgstr "Nalezeno více URL kanálů:"
 
 #: classes/handler/public.php:843
 msgid "Subscribe to selected feed"
@@ -1277,14 +1278,15 @@ msgid "Password recovery"
 msgstr "Obnovení hesla"
 
 #: classes/handler/public.php:963
-#, fuzzy
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
-msgstr "Budete muset zadat platný název a e-mailovou adresu účtu. Odkaz na obnovení hesla bude zaslán na vaši e-mailovou adresu."
+msgstr ""
+"Budete muset zadat platný název a e-mail účtu. Odkaz na obnovení hesla bude "
+"zaslán na vaši e-mailovou adresu."
 
 #: classes/handler/public.php:983
-#, fuzzy, php-format
+#, php-format
 msgid "How much is %d + %d:"
-msgstr "Kolik je dva plus dva:"
+msgstr "Kolik je %d plus %d:"
 
 #: classes/handler/public.php:989
 #: classes/pref/users.php:356
@@ -1317,28 +1319,28 @@ msgid "Database Updater"
 msgstr "Aktualizační nástroj databáze"
 
 #: classes/handler/public.php:1142
-#, fuzzy, php-format
+#, php-format
 msgid "Performing updates to version %d"
-msgstr "Provádím aktualizace..."
+msgstr "Provádění aktualizace na verzi %d"
 
 #: classes/handler/public.php:1147
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to version %d"
-msgstr "Aktualizuji na verzi %d..."
+msgstr "Aktualizace na verzi %d"
 
 #: classes/handler/public.php:1160
 msgid "Try again"
-msgstr ""
+msgstr "Zkusit znovu"
 
 #: classes/handler/public.php:1166
-#, fuzzy
 msgid "Completed."
-msgstr "Nahrávání dokončeno."
+msgstr "Dokončeno."
 
 #: classes/handler/public.php:1183
-#, fuzzy, php-format
+#, php-format
 msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
-msgstr "Vaše databáze Tiny Tiny RSS potřebuje aktualizaci na poslední verzi (<b>%d</b> na <b>%d</b>)."
+msgstr ""
+"Databáze Tiny Tiny RSS potřebuje aktualizaci na nejnovější verzi (%d na %d)."
 
 #: classes/handler/public.php:1195
 msgid "Perform updates"
@@ -1383,9 +1385,9 @@ msgid "Setting preference key %s to %s"
 msgstr "Nastavení klíče předvoleb %s na %s"
 
 #: classes/opml.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Adding filter %s..."
-msgstr "Přidávání filtru..."
+msgstr "Přidávání filtru %s..."
 
 #: classes/opml.php:536
 #, php-format
@@ -1459,9 +1461,8 @@ msgstr "Aktualizovat"
 
 #: classes/pref/feeds.php:621
 #: classes/pref/feeds.php:859
-#, fuzzy
 msgid "Interval:"
-msgstr "Rozhraní"
+msgstr "Interval:"
 
 #: classes/pref/feeds.php:634
 #: classes/pref/feeds.php:874
@@ -1657,9 +1658,8 @@ msgid "Unsubscribe from selected feeds"
 msgstr "Odhlásit odběr vybraných kanálů"
 
 #: classes/pref/feeds.php:1655
-#, fuzzy
 msgid "One valid feed per line (no detection is done)"
-msgstr "Přidávejte jeden platný kanál RSS na řádek (neprobíhá detekce kanálu)"
+msgstr "Jeden platný kanál na řádek (neprobíhá žádná detekce)"
 
 #: classes/pref/feeds.php:1686
 msgid "Feeds require authentication."
@@ -1793,17 +1793,16 @@ msgid "matches any rule"
 msgstr "odpovídá jakémukoliv pravidlu"
 
 #: classes/pref/filters.php:1156
-#, fuzzy
 msgid "inverse"
-msgstr "(inverzní)"
+msgstr "inverzní"
 
 #: classes/pref/filters.php:1159
 #, php-format
 msgid "%s (+%d action)"
 msgid_plural "%s (+%d actions)"
-msgstr[0] "%s (+ %d akce)"
-msgstr[1] "%s (+ %d akce)"
-msgstr[2] "%s (+ %d akcí)"
+msgstr[0] "%s (+%d akce)"
+msgstr[1] "%s (+%d akce)"
+msgstr[2] "%s (+%d akcí)"
 
 #: classes/pref/labels.php:38
 msgid "Colors"
@@ -1827,9 +1826,8 @@ msgid "Clear colors"
 msgstr "Vymazat barvy"
 
 #: classes/pref/prefs.php:41
-#, fuzzy
 msgid "Articles"
-msgstr "Článek"
+msgstr "Články"
 
 #: classes/pref/prefs.php:54
 msgid "Digest"
@@ -1849,90 +1847,76 @@ msgstr "Zakázané značky"
 
 #: classes/pref/prefs.php:71
 msgid "Never apply these tags automatically (comma-separated list)."
-msgstr ""
+msgstr "Nikdy nepoužívat tyto značky automaticky (čárkami oddělený seznam)."
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Default language"
-msgstr "Výchozí profil"
+msgstr "Výchozí jazyk"
 
 #: classes/pref/prefs.php:72
 msgid "Used for full-text search"
-msgstr ""
+msgstr "Použito pro fulltextové vyhledávání"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Mark read on scroll"
-msgstr "Označit všechny články jako přečtené?"
+msgstr "Označit jako přečtené při posouvání"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Mark articles as read as you scroll past them"
-msgstr "Označit všechny články jako přečtené?"
+msgstr "Označit články jako přečtené při posouvání přes ně"
 
 #: classes/pref/prefs.php:74
-#, fuzzy
 msgid "Always expand articles"
-msgstr "Klikněte pro rozbalení článku"
+msgstr "Vždy rozbalovat články"
 
 #: classes/pref/prefs.php:75
-#, fuzzy
 msgid "Combined mode"
-msgstr "Přepnout kombinovaný režim"
+msgstr "Kombinovaný režim"
 
 #: classes/pref/prefs.php:75
-#, fuzzy
 msgid "Show flat list of articles instead of separate panels"
-msgstr "Zobrazit rozbalený seznam článků kanálu namísto odděleného zobrazení pro nadpisy a obsah článku"
+msgstr "Zobrazit plochý seznam článků namísto oddělených panelů"
 
 #: classes/pref/prefs.php:76
-#, fuzzy
 msgid "Confirm marking feeds as read"
-msgstr "Potvrdit označení kanálu jako přečteného"
+msgstr "Potvrdit označení kanálů jako přečtených"
 
 #: classes/pref/prefs.php:77
 msgid "Amount of articles to display at once"
 msgstr "Počet najednou zobrazovaných článků"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Default update interval"
-msgstr "Výchozí interval aktualizace kanálů"
+msgstr "Výchozí interval aktualizace"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Mark sent articles as read"
-msgstr "Označit všechny články jako přečtené?"
+msgstr "Označit odeslané články jako přečtené"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Enable digest"
-msgstr "Povolit e-mailový výtah"
+msgstr "Povolit výtah"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Send daily digest of new (and unread) headlines to your e-mail address"
-msgstr "Tato volba umožňuje odesílání denních výtahů nových (a nepřečtených) nadpisů na vaši nastavenou e-mailovou adresu"
+msgstr ""
+"Odeslat denní výtah nových (a nepřečtených) nadpisů na vaši e-mailovou adresu"
 
 #: classes/pref/prefs.php:81
-#, fuzzy
 msgid "Try to send around this time"
-msgstr "Pokusit se odeslat výtahy kolem zadaného času"
+msgstr "Pokusit se odeslat kolem tohoto času"
 
 #: classes/pref/prefs.php:81
-#, fuzzy
 msgid "Time in UTC"
-msgstr "Časové pásmo"
+msgstr "Čas v UTC"
 
 #: classes/pref/prefs.php:82
-#, fuzzy
 msgid "Enable API"
-msgstr "Povolit jednorázové heslo"
+msgstr "Povolit API"
 
 #: classes/pref/prefs.php:82
-#, fuzzy
 msgid "Allows accessing this account through the API"
-msgstr "Povolit externím klientům přistupovat k tomuto účtu pomocí API"
+msgstr "Umožňuje přístup k tomuto účtu přes rozhraní API"
 
 #: classes/pref/prefs.php:83
 msgid "Enable categories"
@@ -1943,56 +1927,50 @@ msgid "Sort feeds by unread articles count"
 msgstr "Seřadit kanály podle počtu nepřečtených článků"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "Maximum age of fresh articles"
-msgstr "Maximální stáří nových článků (v hodinách)"
+msgstr "Maximální stáří nových článků"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "hours"
-msgstr "4 hodiny"
+msgstr "hodiny"
 
 #: classes/pref/prefs.php:86
-#, fuzzy
 msgid "Hide read feeds"
-msgstr "Zobrazit nebo skrýt přečtené kanály"
+msgstr "Skrýt přečtené kanály"
 
 #: classes/pref/prefs.php:87
 msgid "Always show special feeds"
-msgstr ""
+msgstr "Vždy zobrazovat speciální kanály"
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "While hiding read feeds"
-msgstr "Zobrazit speciální kanály při skrývání přečtených kanálů"
+msgstr "Při skrývání číst kanály"
 
 #: classes/pref/prefs.php:88
 msgid "Long date format"
 msgstr "Dlouhý formát data"
 
 #: classes/pref/prefs.php:88
-#, fuzzy
 msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
-msgstr "Použitá syntaxe je shodná s funkcí PHP <a href='http://php.net/manual/function.date.php'>date()</a>."
+msgstr ""
+"Syntaxe je shodná s funkcí PHP <a href='https://www.php.net/manual/en/"
+"function.date.php'>date()</a>."
 
 #: classes/pref/prefs.php:89
-#, fuzzy
 msgid "Automatically show next feed"
-msgstr "Při zjištění nového stavu zobrazit další kanál"
+msgstr "Automaticky zobrazit další kanál"
 
 #: classes/pref/prefs.php:89
-#, fuzzy
 msgid "After marking one as read"
-msgstr "Potvrdit označení kanálu jako přečteného"
+msgstr "Po označení jednoho jako přečteného"
 
 #: classes/pref/prefs.php:90
-#, fuzzy
 msgid "Purge articles older than"
-msgstr "Vyčistit nepřečtené články"
+msgstr "Vyčistit články starší než"
 
 #: classes/pref/prefs.php:90
 msgid "<strong>days</strong> (0 disables)"
-msgstr ""
+msgstr "<strong>dní</strong> (0 zakáže)"
 
 #: classes/pref/prefs.php:91
 msgid "Purge unread articles"
@@ -2007,9 +1985,8 @@ msgid "Short date format"
 msgstr "Krátký formát data"
 
 #: classes/pref/prefs.php:94
-#, fuzzy
 msgid "Show content preview in headlines"
-msgstr "Zobrazit náhled obsahu v seznamu nadpisů"
+msgstr "Zobrazit náhled obsahu v nadpisech"
 
 #: classes/pref/prefs.php:95
 msgid "Sort headlines by feed date"
@@ -2020,9 +1997,8 @@ msgid "Use feed-specified date to sort headlines instead of local import date."
 msgstr "Použít pro seřazení nadpisů datum zadané kanálem namísto data místního importu."
 
 #: classes/pref/prefs.php:96
-#, fuzzy
 msgid "SSL client certificate"
-msgstr "Přihlásit se s certifikátem SSL"
+msgstr "Certifikát klienta SSL"
 
 #: classes/pref/prefs.php:98
 msgid "Strip unsafe tags from articles"
@@ -2043,11 +2019,11 @@ msgstr "Časové pásmo"
 
 #: classes/pref/prefs.php:101
 msgid "Group by feed"
-msgstr ""
+msgstr "Seskupit podle kanálu"
 
 #: classes/pref/prefs.php:101
 msgid "Group multiple-feed output by originating feed"
-msgstr ""
+msgstr "Seskupit vícekanálový výstup podle prvotního kanálu"
 
 #: classes/pref/prefs.php:102
 msgid "Language"
@@ -2078,20 +2054,17 @@ msgid "Personal data"
 msgstr "Osobní údaje"
 
 #: classes/pref/prefs.php:260
-#, fuzzy
 msgid "Full name:"
-msgstr "Celé jméno"
+msgstr "Celé jméno:"
 
 #: classes/pref/prefs.php:265
 #: classes/pref/users.php:94
-#, fuzzy
 msgid "E-mail:"
-msgstr "E-mail: "
+msgstr "E-mail:"
 
 #: classes/pref/prefs.php:273
-#, fuzzy
 msgid "Access level:"
-msgstr "Úroveň přístupu: "
+msgstr "Úroveň přístupu:"
 
 #: classes/pref/prefs.php:284
 msgid "Save data"
@@ -2102,20 +2075,17 @@ msgid "Changing your current password will disable OTP."
 msgstr "Změna aktuálního hesla zakáže jednorázové heslo."
 
 #: classes/pref/prefs.php:337
-#, fuzzy
 msgid "Old password:"
-msgstr "Staré heslo"
+msgstr "Staré heslo:"
 
 #: classes/pref/prefs.php:342
 #: classes/pref/users.php:82
-#, fuzzy
 msgid "New password:"
-msgstr "Nové heslo"
+msgstr "Nové heslo:"
 
 #: classes/pref/prefs.php:347
-#, fuzzy
 msgid "Confirm password:"
-msgstr "Potvrdit heslo"
+msgstr "Potvrdit heslo:"
 
 #: classes/pref/prefs.php:357
 msgid "Change password"
@@ -2127,18 +2097,16 @@ msgstr "Jednorázové heslo / Ověření"
 
 #: classes/pref/prefs.php:392
 #: classes/pref/prefs.php:440
-#, fuzzy
 msgid "Your password:"
-msgstr "Potvrdit heslo"
+msgstr "Vaše heslo:"
 
 #: classes/pref/prefs.php:402
 msgid "Disable OTP"
 msgstr "Zakázat jednorázové heslo"
 
 #: classes/pref/prefs.php:446
-#, fuzzy
 msgid "One time password:"
-msgstr "Nesprávné jednorázové heslo"
+msgstr "Jednorázové heslo:"
 
 #: classes/pref/prefs.php:453
 msgid "Enable OTP"
@@ -2157,9 +2125,8 @@ msgid "Customize"
 msgstr "Přizpůsobit"
 
 #: classes/pref/prefs.php:614
-#, fuzzy
 msgid "More themes..."
-msgstr "Více akcí..."
+msgstr "Více motivů..."
 
 #: classes/pref/prefs.php:675
 msgid "Register"
@@ -2171,9 +2138,9 @@ msgid "Clear"
 msgstr "Vymazat"
 
 #: classes/pref/prefs.php:690
-#, fuzzy, php-format
+#, php-format
 msgid "Current server time: %s"
-msgstr "Aktuální čas na serveru: %s (UTC)"
+msgstr "Aktuální čas na serveru: %s"
 
 #: classes/pref/prefs.php:719
 msgid "Save configuration"
@@ -2199,7 +2166,7 @@ msgstr "Systémové moduly"
 #: classes/pref/prefs.php:856
 #, php-format
 msgid "v%.2f, by %s"
-msgstr ""
+msgstr "v%.2f, od %s"
 
 #: classes/pref/prefs.php:818
 msgid "User plugins"
@@ -2273,9 +2240,8 @@ msgid "Date"
 msgstr "Datum"
 
 #: classes/pref/system.php:85
-#, fuzzy
 msgid "PHP Information"
-msgstr "Provést akci"
+msgstr "Informace o PHP"
 
 #: classes/pref/users.php:26
 msgid "Edit user"
@@ -2434,6 +2400,7 @@ msgstr "Nastavení Readability (af_readability)"
 #: plugins/af_readability/init.php:87
 msgid "Provide full-text services to core code (bookmarklets) and other plugins"
 msgstr ""
+"Zadejte fulltextové služby pro základní kód (záložkové aplety) a další moduly"
 
 #: plugins/af_readability/init.php:118
 msgid "Readability"
@@ -2448,9 +2415,8 @@ msgid "Reddit content settings (af_redditimgur)"
 msgstr "Nastavení obsahu Redditu (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:60
-#, fuzzy
 msgid "Extract missing content using Readability (requires af_readability)"
-msgstr "Extrahovat chybějící obsah pomocí Readability"
+msgstr "Extrahovat chybějící obsah pomocí Readability (vyžaduje af_readability)"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
@@ -2674,9 +2640,8 @@ msgid "Unshare article"
 msgstr "Zrušit sdílení článku"
 
 #: plugins/toggle_sidebar/init.php:27
-#, fuzzy
 msgid "Toggle sidebar"
-msgstr "Přepnout označeno hvězdičkou"
+msgstr "Přepnout postranní panel"
 
 #: plugins/vf_shared/init.php:17
 #: plugins/vf_shared/init.php:73
@@ -2726,7 +2691,7 @@ msgid "comment"
 msgid_plural "comments"
 msgstr[0] "komentář"
 msgstr[1] "komentáře"
-msgstr[2] "komentáře"
+msgstr[2] "komentářů"
 
 #: js/CommonDialogs.js:11
 msgid "Remove stored feed icon?"
@@ -2850,6 +2815,8 @@ msgstr "Nalezeny nové články, načtěte znovu kanál pro pokračování."
 #: js/Headlines.js:706
 msgid "Could not update headlines (invalid object received - see error console for details)"
 msgstr ""
+"Nelze aktualizovat nadpisy (obdržen neplatný objekt – podrobnosti v chybové "
+"konzoli)"
 
 #: js/Headlines.js:963
 #, perl-format
@@ -3082,9 +3049,15 @@ msgstr "Exportovat data"
 #, perl-format
 msgid "Finished, exported %d article. You can download the data <a class='visibleLink' href='%u'>here</a>."
 msgid_plural "Finished, exported %d articles. You can download the data <a class='visibleLink' href='%u'>here</a>."
-msgstr[0] "Dokončeno, exportován %d článek. a class='visibleLink' href='%u'>Zde</a> můžete stáhnout data."
-msgstr[1] "Dokončeno, exportovány %d články. a class='visibleLink' href='%u'>Zde</a> můžete stáhnout data."
-msgstr[2] "Dokončeno, exportováno %d článků. a class='visibleLink' href='%u'>Zde</a> můžete stáhnout data."
+msgstr[0] ""
+"Dokončeno, exportován %d článek. <a class='visibleLink' href='%u'>Zde</a> "
+"můžete stáhnout data."
+msgstr[1] ""
+"Dokončeno, exportovány %d články. <a class='visibleLink' href='%u'>Zde</a> "
+"můžete stáhnout data."
+msgstr[2] ""
+"Dokončeno, exportováno %d článků. <a class='visibleLink' href='%u'>Zde</a> "
+"můžete stáhnout data."
 
 #: plugins/import_export/import_export.js:93
 msgid "Data Import"
@@ -3218,9 +3191,8 @@ msgid "Create Filter"
 msgstr "Vytvořit filtr"
 
 #: js/FeedTree.js:71
-#, fuzzy
 msgid "Debug feed"
-msgstr "Ladit viewfeed()"
+msgstr "Ladit kanál"
 
 #: js/FeedTree.js:99
 msgid "(Un)collapse"
