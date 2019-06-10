@@ -48,7 +48,7 @@ class Af_Readability extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType='dijit.layout.AccordionPane' 
+		print "<div dojoType='dijit.layout.AccordionPane'
 			title=\"<i class='material-icons'>extension</i> ".__('Readability settings (af_readability)')."\">";
 
 		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
@@ -178,7 +178,7 @@ class Af_Readability extends Plugin {
 
 			// this is the worst hack yet :(
 			if (strtolower($tmpdoc->encoding) != 'utf-8') {
-				$tmp = preg_replace("/<meta.*?charset.*?\/>/i", "", $tmp);
+				$tmp = preg_replace("/<meta.*?charset.*?\/?>/i", "", $tmp);
 				$tmp = mb_convert_encoding($tmp, 'utf-8', $tmpdoc->encoding);
 			}
 
