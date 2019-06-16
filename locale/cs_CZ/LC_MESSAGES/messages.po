@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: TT-RSS CZech\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2019-06-06 08:14+0000\n"
+"PO-Revision-Date: 2019-06-17 06:33+0000\n"
 "Last-Translator: Marek Pavelka <mara.pavelka@gmail.com>\n"
 "Language-Team: Czech <https://weblate.tt-rss.org/projects/tt-rss/messages/cs/"
 ">\n"
@@ -778,7 +778,7 @@ msgstr "Heslo:"
 
 #: include/login_form.php:96
 msgid "I forgot my password"
-msgstr "Zapomněl jsem své heslo"
+msgstr "Zapomněl jsem heslo"
 
 #: include/login_form.php:101
 msgid "Profile:"
@@ -814,7 +814,7 @@ msgstr "Nepodařilo se ověřit relaci (změnila se verze schématu)"
 
 #: include/sessions.php:53
 msgid "Session failed to validate (UA changed)."
-msgstr "Nepodařilo se ověřit relaci (změnilo se UA)."
+msgstr "Nepodařilo se ověřit relaci (změnil se uživatelský agent)."
 
 #: include/sessions.php:67
 msgid "Session failed to validate (password changed)"
