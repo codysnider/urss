@@ -1683,6 +1683,13 @@ class Feeds extends Handler_Protected {
 			$offset_query_part = "";
 		}
 
+		if ($start_ts) {
+			$start_ts_formatted = date("Y/m/d H:i:s", strtotime($start_ts));
+			$start_ts_query_part = "date_entered >= '$start_ts_formatted' AND";
+		} else {
+			$start_ts_query_part = "";
+		}
+
 		if (is_numeric($feed)) {
 			// proper override_order applied above
 			if ($vfeed_query_part && !$ignore_vfeed_group && get_pref('VFEED_GROUP_BY_FEED', $owner_uid)) {
@@ -1705,13 +1712,6 @@ class Feeds extends Handler_Protected {
 			}
 
 			if ($vfeed_query_part) $vfeed_query_part .= "favicon_avg_color,";
-
-			if ($start_ts) {
-				$start_ts_formatted = date("Y/m/d H:i:s", strtotime($start_ts));
-				$start_ts_query_part = "date_entered >= '$start_ts_formatted' AND";
-			} else {
-				$start_ts_query_part = "";
-			}
 
 			$first_id = 0;
 			$first_id_query_strategy_part = $query_strategy_part;
@@ -1845,6 +1845,7 @@ class Feeds extends Handler_Protected {
 							tag_name = ".$pdo->quote($feed)." AND
 							$view_query_part
 							$search_query_part
+							$start_ts_query_part
 							$query_strategy_part ORDER BY $order_by
 							$limit_query_part $offset_query_part";
 
