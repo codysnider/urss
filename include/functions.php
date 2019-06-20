@@ -15,6 +15,7 @@
 	$fetch_curl_used = false;
 
 	libxml_disable_entity_loader(true);
+	libxml_use_internal_errors(true);
 
 	// separate test because this is included before sanity checks
 	if (function_exists("mb_internal_encoding")) mb_internal_encoding("UTF-8");
@@ -158,108 +159,6 @@
 	// TODO: compat wrapper, remove at some point
 	function _debug($msg) {
 	    Debug::log($msg);
-	}
-
-	/**
-	 * Purge a feed old posts.
-	 *
-	 * @param mixed $link A database connection.
-	 * @param mixed $feed_id The id of the purged feed.
-	 * @param mixed $purge_interval Olderness of purged posts.
-	 * @param boolean $debug Set to True to enable the debug. False by default.
-	 * @access public
-	 * @return void
-	 */
-	function purge_feed($feed_id, $purge_interval) {
-
-		if (!$purge_interval) $purge_interval = feed_purge_interval($feed_id);
-
-		$pdo = Db::pdo();
-
-		$sth = $pdo->prepare("SELECT owner_uid FROM ttrss_feeds WHERE id = ?");
-		$sth->execute([$feed_id]);
-
-		$owner_uid = false;
-
-		if ($row = $sth->fetch()) {
-			$owner_uid = $row["owner_uid"];
-		}
-
-		if ($purge_interval == -1 || !$purge_interval) {
-			if ($owner_uid) {
-				CCache::update($feed_id, $owner_uid);
-			}
-			return;
-		}
-
-		if (!$owner_uid) return;
-
-		if (FORCE_ARTICLE_PURGE == 0) {
-			$purge_unread = get_pref("PURGE_UNREAD_ARTICLES",
-				$owner_uid, false);
-		} else {
-			$purge_unread = true;
-			$purge_interval = FORCE_ARTICLE_PURGE;
-		}
-
-		if (!$purge_unread)
-			$query_limit = " unread = false AND ";
-		else
-			$query_limit = "";
-
-		$purge_interval = (int) $purge_interval;
-
-		if (DB_TYPE == "pgsql") {
-			$sth = $pdo->prepare("DELETE FROM ttrss_user_entries
-				USING ttrss_entries
-				WHERE ttrss_entries.id = ref_id AND
-				marked = false AND
-				feed_id = ? AND
-				$query_limit
-				ttrss_entries.date_updated < NOW() - INTERVAL '$purge_interval days'");
-			$sth->execute([$feed_id]);
-
-		} else {
-			$sth  = $pdo->prepare("DELETE FROM ttrss_user_entries
-				USING ttrss_user_entries, ttrss_entries
-				WHERE ttrss_entries.id = ref_id AND
-				marked = false AND
-				feed_id = ? AND
-				$query_limit
-				ttrss_entries.date_updated < DATE_SUB(NOW(), INTERVAL $purge_interval DAY)");
-			$sth->execute([$feed_id]);
-
-		}
-
-		$rows = $sth->rowCount();
-
-		CCache::update($feed_id, $owner_uid);
-
-        Debug::log("Purged feed $feed_id ($purge_interval): deleted $rows articles");
-
-		return $rows;
-	} // function purge_feed
-
-	function feed_purge_interval($feed_id) {
-
-		$pdo = DB::pdo();
-
-		$sth = $pdo->prepare("SELECT purge_interval, owner_uid FROM ttrss_feeds
-			WHERE id = ?");
-		$sth->execute([$feed_id]);
-
-		if ($row = $sth->fetch()) {
-			$purge_interval = $row["purge_interval"];
-			$owner_uid = $row["owner_uid"];
-
-			if ($purge_interval == 0) $purge_interval = get_pref(
-				'PURGE_OLD_DAYS', $owner_uid);
-
-			return $purge_interval;
-
-		} else {
-			return -1;
-		}
 	}
 
 	// TODO: max_size currently only works for CURL transfers
@@ -543,48 +442,6 @@
 		}
 
 	}
-
-	/**
-	 * Try to determine the favicon URL for a feed.
-	 * adapted from wordpress favicon plugin by Jeff Minard (http://thecodepro.com/)
-	 * http://dev.wp-plugins.org/file/favatars/trunk/favatars.php
-	 *
-	 * @param string $url A feed or page URL
-	 * @access public
-	 * @return mixed The favicon URL, or false if none was found.
-	 */
-	function get_favicon_url($url) {
-
-		$favicon_url = false;
-
-		if ($html = @fetch_file_contents($url)) {
-
-			libxml_use_internal_errors(true);
-
-			$doc = new DOMDocument();
-			$doc->loadHTML('<?xml encoding="UTF-8">' . $html);
-			$xpath = new DOMXPath($doc);
-
-			$base = $xpath->query('/html/head/base[@href]');
-			foreach ($base as $b) {
-				$url = rewrite_relative_url($url, $b->getAttribute("href"));
-				break;
-			}
-
-			$entries = $xpath->query('/html/head/link[@rel="shortcut icon" or @rel="icon"]');
-			if (count($entries) > 0) {
-				foreach ($entries as $entry) {
-					$favicon_url = rewrite_relative_url($url, $entry->getAttribute("href"));
-					break;
-				}
-			}
-		}
-
-		if (!$favicon_url)
-			$favicon_url = rewrite_relative_url($url, "/favicon.ico");
-
-		return $favicon_url;
-	} // function get_favicon_url
 
 	function initialize_user_prefs($uid, $profile = false) {
 
@@ -1361,153 +1218,6 @@
 		return $data;
 	}
 
-	function search_to_sql($search, $search_language) {
-
-		$keywords = str_getcsv(trim($search), " ");
-		$query_keywords = array();
-		$search_words = array();
-		$search_query_leftover = array();
-
-		$pdo = Db::pdo();
-
-		if ($search_language)
-			$search_language = $pdo->quote(mb_strtolower($search_language));
-		else
-			$search_language = $pdo->quote("english");
-
-		foreach ($keywords as $k) {
-			if (strpos($k, "-") === 0) {
-				$k = substr($k, 1);
-				$not = "NOT";
-			} else {
-				$not = "";
-			}
-
-			$commandpair = explode(":", mb_strtolower($k), 2);
-
-			switch ($commandpair[0]) {
-				case "title":
-					if ($commandpair[1]) {
-						array_push($query_keywords, "($not (LOWER(ttrss_entries.title) LIKE ".
-							$pdo->quote('%' . mb_strtolower($commandpair[1]) . '%') ."))");
-					} else {
-						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-						array_push($search_words, $k);
-					}
-					break;
-				case "author":
-					if ($commandpair[1]) {
-						array_push($query_keywords, "($not (LOWER(author) LIKE ".
-							$pdo->quote('%' . mb_strtolower($commandpair[1]) . '%')."))");
-					} else {
-						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-						array_push($search_words, $k);
-					}
-					break;
-				case "note":
-					if ($commandpair[1]) {
-						if ($commandpair[1] == "true")
-							array_push($query_keywords, "($not (note IS NOT NULL AND note != ''))");
-						else if ($commandpair[1] == "false")
-							array_push($query_keywords, "($not (note IS NULL OR note = ''))");
-						else
-							array_push($query_keywords, "($not (LOWER(note) LIKE ".
-								$pdo->quote('%' . mb_strtolower($commandpair[1]) . '%')."))");
-					} else {
-						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-						if (!$not) array_push($search_words, $k);
-					}
-					break;
-				case "star":
-
-					if ($commandpair[1]) {
-						if ($commandpair[1] == "true")
-							array_push($query_keywords, "($not (marked = true))");
-						else
-							array_push($query_keywords, "($not (marked = false))");
-					} else {
-						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-						if (!$not) array_push($search_words, $k);
-					}
-					break;
-				case "pub":
-					if ($commandpair[1]) {
-						if ($commandpair[1] == "true")
-							array_push($query_keywords, "($not (published = true))");
-						else
-							array_push($query_keywords, "($not (published = false))");
-
-					} else {
-						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-						if (!$not) array_push($search_words, $k);
-					}
-					break;
-				case "unread":
-					if ($commandpair[1]) {
-						if ($commandpair[1] == "true")
-							array_push($query_keywords, "($not (unread = true))");
-						else
-							array_push($query_keywords, "($not (unread = false))");
-
-					} else {
-						array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-						if (!$not) array_push($search_words, $k);
-					}
-					break;
-				default:
-					if (strpos($k, "@") === 0) {
-
-						$user_tz_string = get_pref('USER_TIMEZONE', $_SESSION['uid']);
-						$orig_ts = strtotime(substr($k, 1));
-						$k = date("Y-m-d", convert_timestamp($orig_ts, $user_tz_string, 'UTC'));
-
-						//$k = date("Y-m-d", strtotime(substr($k, 1)));
-
-						array_push($query_keywords, "(".SUBSTRING_FOR_DATE."(updated,1,LENGTH('$k')) $not = '$k')");
-					} else {
-
-						if (DB_TYPE == "pgsql") {
-							$k = mb_strtolower($k);
-							array_push($search_query_leftover, $not ? "!$k" : $k);
-						} else {
-							array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-						}
-
-						if (!$not) array_push($search_words, $k);
-					}
-			}
-		}
-
-		if (count($search_query_leftover) > 0) {
-
-			if (DB_TYPE == "pgsql") {
-
-				// if there's no joiners consider this a "simple" search and
-				// concatenate everything with &, otherwise don't try to mess with tsquery syntax
-				if (preg_match("/[&|]/", implode(" " , $search_query_leftover))) {
-					$tsquery = $pdo->quote(implode(" ", $search_query_leftover));
-				} else {
-					$tsquery = $pdo->quote(implode(" & ", $search_query_leftover));
-				}
-
-				array_push($query_keywords,
-					"(tsvector_combined @@ to_tsquery($search_language, $tsquery))");
-			}
-
-		}
-
-		$search_query_part = implode("AND", $query_keywords);
-
-		return array($search_query_part, $search_words);
-	}
-
 	function iframe_whitelisted($entry) {
 		$whitelist = array("youtube.com", "youtu.be", "vimeo.com", "player.vimeo.com");
 
@@ -1585,8 +1295,6 @@
 		if (!$owner) $owner = $_SESSION["uid"];
 
 		$res = trim($str); if (!$res) return '';
-
-		libxml_use_internal_errors(true);
 
 		$doc = new DOMDocument();
 		$doc->loadHTML('<?xml encoding="UTF-8">' . $res);
@@ -1901,51 +1609,6 @@
 		}
 	}
 
-	function cleanup_tags($days = 14, $limit = 1000) {
-
-		$days = (int) $days;
-
-		if (DB_TYPE == "pgsql") {
-			$interval_query = "date_updated < NOW() - INTERVAL '$days days'";
-		} else if (DB_TYPE == "mysql") {
-			$interval_query = "date_updated < DATE_SUB(NOW(), INTERVAL $days DAY)";
-		}
-
-		$tags_deleted = 0;
-
-		$pdo = Db::pdo();
-
-		while ($limit > 0) {
-			$limit_part = 500;
-
-			$sth = $pdo->prepare("SELECT ttrss_tags.id AS id
-					FROM ttrss_tags, ttrss_user_entries, ttrss_entries
-					WHERE post_int_id = int_id AND $interval_query AND
-					ref_id = ttrss_entries.id AND tag_cache != '' LIMIT ?");
-            $sth->bindValue(1, $limit_part, PDO::PARAM_INT);
-            $sth->execute();
-
-			$ids = array();
-
-			while ($line = $sth->fetch()) {
-				array_push($ids, $line['id']);
-			}
-
-			if (count($ids) > 0) {
-				$ids = join(",", $ids);
-
-				$usth = $pdo->query("DELETE FROM ttrss_tags WHERE id IN ($ids)");
-				$tags_deleted = $usth->rowCount();
-			} else {
-				break;
-			}
-
-			$limit -= $limit_part;
-		}
-
-		return $tags_deleted;
-	}
-
 	function print_user_stylesheet() {
 		$value = get_pref('USER_STYLESHEET');
 
@@ -1957,7 +1620,7 @@
 
 	}
 
-	function filter_to_sql($filter, $owner_uid) {
+	/* function filter_to_sql($filter, $owner_uid) {
 		$query = array();
 
 		$pdo = Db::pdo();
@@ -2043,7 +1706,7 @@
 		if ($filter['inverse']) $fullquery = "(NOT $fullquery)";
 
 		return $fullquery;
-	}
+	} */
 
 	if (!function_exists('gzdecode')) {
 		function gzdecode($string) { // no support for 2nd argument
@@ -2229,29 +1892,6 @@
 		} else {
 			return false;
 		}
-	}
-
-	function check_mysql_tables() {
-		$pdo = Db::pdo();
-
-		$sth = $pdo->prepare("SELECT engine, table_name FROM information_schema.tables WHERE
-			table_schema = ? AND table_name LIKE 'ttrss_%' AND engine != 'InnoDB'");
-		$sth->execute([DB_NAME]);
-
-		$bad_tables = [];
-
-		while ($line = $sth->fetch()) {
-			array_push($bad_tables, $line);
-		}
-
-		return $bad_tables;
-	}
-
-	function validate_field($string, $allowed, $default = "") {
-		if (in_array($string, $allowed))
-			return $string;
-		else
-			return $default;
 	}
 
 	function arr_qmarks($arr) {

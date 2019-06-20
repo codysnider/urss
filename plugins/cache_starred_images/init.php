@@ -166,8 +166,6 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	function cache_article_images($content, $site_url, $owner_uid, $article_id) {
-		libxml_use_internal_errors(true);
-
 		$status_filename = $this->cache_dir . $article_id . "-" . sha1($site_url) . ".status";
 
 		Debug::log("status: $status_filename", Debug::$LOG_EXTENDED);

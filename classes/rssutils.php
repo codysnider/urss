@@ -1147,7 +1147,7 @@ class RSSUtils {
 
 			Debug::log("purging feed...", Debug::$LOG_VERBOSE);
 
-			purge_feed($feed, 0);
+			Feeds::purge_feed($feed, 0);
 
 			$sth = $pdo->prepare("UPDATE ttrss_feeds
 				SET last_updated = NOW(), last_unconditional = NOW(), last_error = '' WHERE id = ?");
@@ -1205,32 +1205,31 @@ class RSSUtils {
 	}
 
 	static function cache_media($html, $site_url) {
-		libxml_use_internal_errors(true);
-
 		$doc = new DOMDocument();
-		$doc->loadHTML('<?xml encoding="UTF-8">' . $html);
-		$xpath = new DOMXPath($doc);
+		if ($doc->loadHTML($html)) {
+			$xpath = new DOMXPath($doc);
 
-		$entries = $xpath->query('(//img[@src])|(//video/source[@src])|(//audio/source[@src])');
+			$entries = $xpath->query('(//img[@src])|(//video/source[@src])|(//audio/source[@src])');
 
-		foreach ($entries as $entry) {
-			if ($entry->hasAttribute('src') && strpos($entry->getAttribute('src'), "data:") !== 0) {
-				$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
+			foreach ($entries as $entry) {
+				if ($entry->hasAttribute('src') && strpos($entry->getAttribute('src'), "data:") !== 0) {
+					$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
 
-				$local_filename = CACHE_DIR . "/images/" . sha1($src);
+					$local_filename = CACHE_DIR . "/images/" . sha1($src);
 
-				Debug::log("cache_media: checking $src", Debug::$LOG_VERBOSE);
+					Debug::log("cache_media: checking $src", Debug::$LOG_VERBOSE);
 
-				if (!file_exists($local_filename)) {
-					Debug::log("cache_media: downloading: $src to $local_filename", Debug::$LOG_VERBOSE);
+					if (!file_exists($local_filename)) {
+						Debug::log("cache_media: downloading: $src to $local_filename", Debug::$LOG_VERBOSE);
 
-					$file_content = fetch_file_contents($src);
+						$file_content = fetch_file_contents($src);
 
-					if ($file_content && strlen($file_content) > MIN_CACHE_FILE_SIZE) {
-						file_put_contents($local_filename, $file_content);
+						if ($file_content && strlen($file_content) > MIN_CACHE_FILE_SIZE) {
+							file_put_contents($local_filename, $file_content);
+						}
+					} else if (is_writable($local_filename)) {
+						touch($local_filename);
 					}
-				} else if (is_writable($local_filename)) {
-					touch($local_filename);
 				}
 			}
 		}
@@ -1517,7 +1516,7 @@ class RSSUtils {
 		$icon_file = ICONS_DIR . "/$feed.ico";
 
 		if (!file_exists($icon_file)) {
-			$favicon_url = get_favicon_url($site_url);
+			$favicon_url = RSSUtils::get_favicon_url($site_url);
 
 			if ($favicon_url) {
 				// Limiting to "image" type misses those served with text/plain
@@ -1679,4 +1678,46 @@ class RSSUtils {
 
 		return $filters;
 	}
+
+	/**
+	 * Try to determine the favicon URL for a feed.
+	 * adapted from wordpress favicon plugin by Jeff Minard (http://thecodepro.com/)
+	 * http://dev.wp-plugins.org/file/favatars/trunk/favatars.php
+	 *
+	 * @param string $url A feed or page URL
+	 * @access public
+	 * @return mixed The favicon URL, or false if none was found.
+	 */
+	static function get_favicon_url($url) {
+
+		$favicon_url = false;
+
+		if ($html = @fetch_file_contents($url)) {
+
+			$doc = new DOMDocument();
+			if ($doc->loadHTML($html)) {
+				$xpath = new DOMXPath($doc);
+
+				$base = $xpath->query('/html/head/base[@href]');
+				foreach ($base as $b) {
+					$url = rewrite_relative_url($url, $b->getAttribute("href"));
+					break;
+				}
+
+				$entries = $xpath->query('/html/head/link[@rel="shortcut icon" or @rel="icon"]');
+				if (count($entries) > 0) {
+					foreach ($entries as $entry) {
+						$favicon_url = rewrite_relative_url($url, $entry->getAttribute("href"));
+						break;
+					}
+				}
+			}
+		}
+
+		if (!$favicon_url)
+			$favicon_url = rewrite_relative_url($url, "/favicon.ico");
+
+		return $favicon_url;
+	}
+
 }

@@ -27,7 +27,23 @@
 		return $url_path;
 	}
 
-	/**
+	function check_mysql_tables() {
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("SELECT engine, table_name FROM information_schema.tables WHERE
+				table_schema = ? AND table_name LIKE 'ttrss_%' AND engine != 'InnoDB'");
+		$sth->execute([DB_NAME]);
+
+		$bad_tables = [];
+
+		while ($line = $sth->fetch()) {
+			array_push($bad_tables, $line);
+		}
+
+		return $bad_tables;
+	}
+
+/**
 	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
 	 */
 	function initial_sanity_check() {

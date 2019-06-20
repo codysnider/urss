@@ -362,7 +362,7 @@ class Pref_Users extends Handler_Protected {
 			print "</div>"; #pane
 			print "<div style='padding : 0px' dojoType='dijit.layout.ContentPane' region='center'>";
 
-			$sort = validate_field($sort,
+			$sort = $this->validate_field($sort,
 				["login", "access_level", "created", "num_feeds", "created", "last_login"], "login");
 
 			if ($sort != "login") $sort = "$sort DESC";
@@ -435,4 +435,12 @@ class Pref_Users extends Handler_Protected {
 			print "</div>"; #container
 
 		}
-	}
+
+		function validate_field($string, $allowed, $default = "") {
+			if (in_array($string, $allowed))
+				return $string;
+			else
+				return $default;
+		}
+
+}

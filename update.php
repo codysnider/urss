@@ -14,6 +14,51 @@
 	require_once "db.php";
 	require_once "db-prefs.php";
 
+	function cleanup_tags($days = 14, $limit = 1000) {
+
+		$days = (int) $days;
+
+		if (DB_TYPE == "pgsql") {
+			$interval_query = "date_updated < NOW() - INTERVAL '$days days'";
+		} else if (DB_TYPE == "mysql") {
+			$interval_query = "date_updated < DATE_SUB(NOW(), INTERVAL $days DAY)";
+		}
+
+		$tags_deleted = 0;
+
+		$pdo = Db::pdo();
+
+		while ($limit > 0) {
+			$limit_part = 500;
+
+			$sth = $pdo->prepare("SELECT ttrss_tags.id AS id
+						FROM ttrss_tags, ttrss_user_entries, ttrss_entries
+						WHERE post_int_id = int_id AND $interval_query AND
+						ref_id = ttrss_entries.id AND tag_cache != '' LIMIT ?");
+			$sth->bindValue(1, $limit_part, PDO::PARAM_INT);
+			$sth->execute();
+
+			$ids = array();
+
+			while ($line = $sth->fetch()) {
+				array_push($ids, $line['id']);
+			}
+
+			if (count($ids) > 0) {
+				$ids = join(",", $ids);
+
+				$usth = $pdo->query("DELETE FROM ttrss_tags WHERE id IN ($ids)");
+				$tags_deleted = $usth->rowCount();
+			} else {
+				break;
+			}
+
+			$limit -= $limit_part;
+		}
+
+		return $tags_deleted;
+	}
+
 	if (!defined('PHP_EXECUTABLE'))
 		define('PHP_EXECUTABLE', '/usr/bin/php');
 
