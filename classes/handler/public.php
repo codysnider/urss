@@ -75,7 +75,7 @@ class Handler_Public extends Handler {
 
 		$feed_self_url = get_self_url_prefix() .
 			"/public.php?op=rss&id=$feed&key=" .
-			get_feed_access_key($feed, false, $owner_uid);
+			Feeds::get_feed_access_key($feed, false, $owner_uid);
 
 		if (!$feed_site_url) $feed_site_url = get_self_url_prefix();
 

@@ -1166,7 +1166,7 @@ class Pref_Feeds extends Handler_Protected {
 	function addCat() {
 		$feed_cat = trim(clean($_REQUEST["cat"]));
 
-		add_feed_category($feed_cat);
+		Feeds::add_feed_category($feed_cat);
 	}
 
 	function index() {
@@ -1750,7 +1750,7 @@ class Pref_Feeds extends Handler_Protected {
 			WHERE feed_id = ? AND is_cat = ? AND owner_uid = ?");
 		$sth->execute([$feed_id, bool_to_sql_bool($is_cat), $owner_uid]);
 
-		return get_feed_access_key($feed_id, $is_cat, $owner_uid);
+		return Feeds::get_feed_access_key($feed_id, $is_cat, $owner_uid);
 	}
 
 	// Silent

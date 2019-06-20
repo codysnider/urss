@@ -161,7 +161,7 @@ class Dlg extends Handler_Protected {
 		$feed_id = $this->params[0];
 		$is_cat = (bool) $this->params[1];
 
-		$key = get_feed_access_key($feed_id, $is_cat);
+		$key = Feeds::get_feed_access_key($feed_id, $is_cat);
 
 		$url_path = htmlspecialchars($this->params[2]) . "&key=" . $key;
 

@@ -507,7 +507,7 @@ class RSSUtils {
 
 			Debug::log("loading filters & labels...", Debug::$LOG_VERBOSE);
 
-			$filters = load_filters($feed, $owner_uid);
+			$filters = RSSUtils::load_filters($feed, $owner_uid);
 
 			if (Debug::get_loglevel() >= Debug::$LOG_EXTENDED) {
 				print_r($filters);
@@ -1071,7 +1071,7 @@ class RSSUtils {
 						$manual_tags = trim_array(explode(",", $f["param"]));
 
 						foreach ($manual_tags as $tag) {
-							if (tag_is_valid($tag)) {
+							if (Article::tag_is_valid($tag)) {
 								array_push($entry_tags, $tag);
 							}
 						}
@@ -1115,9 +1115,9 @@ class RSSUtils {
 
 					foreach ($filtered_tags as $tag) {
 
-						$tag = sanitize_tag($tag);
+						$tag = Article::sanitize_tag($tag);
 
-						if (!tag_is_valid($tag)) continue;
+						if (!Article::tag_is_valid($tag)) continue;
 
 						$tsth->execute([$tag, $entry_int_id, $owner_uid]);
 
@@ -1570,4 +1570,113 @@ class RSSUtils {
 		return mb_strpos($feed_data, "\x1f" . "\x8b" . "\x08", 0, "US-ASCII") === 0;
 	}
 
+	static function load_filters($feed_id, $owner_uid) {
+		$filters = array();
+
+		$feed_id = (int) $feed_id;
+		$cat_id = (int)Feeds::getFeedCategory($feed_id);
+
+		if ($cat_id == 0)
+			$null_cat_qpart = "cat_id IS NULL OR";
+		else
+			$null_cat_qpart = "";
+
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("SELECT * FROM ttrss_filters2 WHERE
+				owner_uid = ? AND enabled = true ORDER BY order_id, title");
+		$sth->execute([$owner_uid]);
+
+		$check_cats = array_merge(
+			Feeds::getParentCategories($cat_id, $owner_uid),
+			[$cat_id]);
+
+		$check_cats_str = join(",", $check_cats);
+		$check_cats_fullids = array_map(function($a) { return "CAT:$a"; }, $check_cats);
+
+		while ($line = $sth->fetch()) {
+			$filter_id = $line["id"];
+
+			$match_any_rule = sql_bool_to_bool($line["match_any_rule"]);
+
+			$sth2 = $pdo->prepare("SELECT
+					r.reg_exp, r.inverse, r.feed_id, r.cat_id, r.cat_filter, r.match_on, t.name AS type_name
+					FROM ttrss_filters2_rules AS r,
+					ttrss_filter_types AS t
+					WHERE
+						(match_on IS NOT NULL OR
+						  (($null_cat_qpart (cat_id IS NULL AND cat_filter = false) OR cat_id IN ($check_cats_str)) AND
+						  (feed_id IS NULL OR feed_id = ?))) AND
+						filter_type = t.id AND filter_id = ?");
+			$sth2->execute([$feed_id, $filter_id]);
+
+			$rules = array();
+			$actions = array();
+
+			while ($rule_line = $sth2->fetch()) {
+				#				print_r($rule_line);
+
+				if ($rule_line["match_on"]) {
+					$match_on = json_decode($rule_line["match_on"], true);
+
+					if (in_array("0", $match_on) || in_array($feed_id, $match_on) || count(array_intersect($check_cats_fullids, $match_on)) > 0) {
+
+						$rule = array();
+						$rule["reg_exp"] = $rule_line["reg_exp"];
+						$rule["type"] = $rule_line["type_name"];
+						$rule["inverse"] = sql_bool_to_bool($rule_line["inverse"]);
+
+						array_push($rules, $rule);
+					} else if (!$match_any_rule) {
+						// this filter contains a rule that doesn't match to this feed/category combination
+						// thus filter has to be rejected
+
+						$rules = [];
+						break;
+					}
+
+				} else {
+
+					$rule = array();
+					$rule["reg_exp"] = $rule_line["reg_exp"];
+					$rule["type"] = $rule_line["type_name"];
+					$rule["inverse"] = sql_bool_to_bool($rule_line["inverse"]);
+
+					array_push($rules, $rule);
+				}
+			}
+
+			if (count($rules) > 0) {
+				$sth2 = $pdo->prepare("SELECT a.action_param,t.name AS type_name
+						FROM ttrss_filters2_actions AS a,
+						ttrss_filter_actions AS t
+						WHERE
+							action_id = t.id AND filter_id = ?");
+				$sth2->execute([$filter_id]);
+
+				while ($action_line = $sth2->fetch()) {
+					#				print_r($action_line);
+
+					$action = array();
+					$action["type"] = $action_line["type_name"];
+					$action["param"] = $action_line["action_param"];
+
+					array_push($actions, $action);
+				}
+			}
+
+			$filter = [];
+			$filter["id"] = $filter_id;
+			$filter["match_any_rule"] = sql_bool_to_bool($line["match_any_rule"]);
+			$filter["inverse"] = sql_bool_to_bool($line["inverse"]);
+			$filter["rules"] = $rules;
+			$filter["actions"] = $actions;
+
+			if (count($rules) > 0 && count($actions) > 0) {
+				array_push($filters, $filter);
+			}
+		}
+
+		return $filters;
+	}
 }

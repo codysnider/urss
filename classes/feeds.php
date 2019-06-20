@@ -2006,5 +2006,69 @@ class Feeds extends Handler_Protected {
 			return '';
 	}
 
+	static function add_feed_category($feed_cat, $parent_cat_id = false, $order_id = 0) {
+
+		if (!$feed_cat) return false;
+
+		$feed_cat = mb_substr($feed_cat, 0, 250);
+		if (!$parent_cat_id) $parent_cat_id = null;
+
+		$pdo = Db::pdo();
+		$tr_in_progress = false;
+
+		try {
+			$pdo->beginTransaction();
+		} catch (Exception $e) {
+			$tr_in_progress = true;
+		}
+
+		$sth = $pdo->prepare("SELECT id FROM ttrss_feed_categories
+				WHERE (parent_cat = :parent OR (:parent IS NULL AND parent_cat IS NULL))
+				AND title = :title AND owner_uid = :uid");
+		$sth->execute([':parent' => $parent_cat_id, ':title' => $feed_cat, ':uid' => $_SESSION['uid']]);
+
+		if (!$sth->fetch()) {
+
+			$sth = $pdo->prepare("INSERT INTO ttrss_feed_categories (owner_uid,title,parent_cat,order_id)
+					VALUES (?, ?, ?, ?)");
+			$sth->execute([$_SESSION['uid'], $feed_cat, $parent_cat_id, (int)$order_id]);
+
+			if (!$tr_in_progress) $pdo->commit();
+
+			return true;
+		}
+
+		$pdo->commit();
+
+		return false;
+	}
+
+	static function get_feed_access_key($feed_id, $is_cat, $owner_uid = false) {
+
+		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
+
+		$is_cat = bool_to_sql_bool($is_cat);
+
+		$pdo = Db::pdo();
+
+		$sth = $pdo->prepare("SELECT access_key FROM ttrss_access_keys
+				WHERE feed_id = ? AND is_cat = ?
+				AND owner_uid = ?");
+		$sth->execute([$feed_id, $is_cat, $owner_uid]);
+
+		if ($row = $sth->fetch()) {
+			return $row["access_key"];
+		} else {
+			$key = uniqid_short();
+
+			$sth = $pdo->prepare("INSERT INTO ttrss_access_keys
+					(access_key, feed_id, is_cat, owner_uid)
+					VALUES (?, ?, ?, ?)");
+
+			$sth->execute([$key, $feed_id, $is_cat, $owner_uid]);
+
+			return $key;
+		}
+	}
 }
 

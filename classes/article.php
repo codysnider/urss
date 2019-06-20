@@ -306,9 +306,9 @@ class Article extends Handler_Protected {
 			$sth->execute([$int_id, $_SESSION['uid']]);
 
 			foreach ($tags as $tag) {
-				$tag = sanitize_tag($tag);
+				$tag = Article::sanitize_tag($tag);
 
-				if (!tag_is_valid($tag)) {
+				if (!Article::tag_is_valid($tag)) {
 					continue;
 				}
 
@@ -798,6 +798,27 @@ class Article extends Handler_Protected {
 			Labels::update_cache($owner_uid, $id, array("no-labels" => 1));
 
 		return $rv;
+	}
+
+	static function sanitize_tag($tag) {
+		$tag = trim($tag);
+
+		$tag = mb_strtolower($tag, 'utf-8');
+
+		$tag = preg_replace('/[,\'\"\+\>\<]/', "", $tag);
+
+		if (DB_TYPE == "mysql") {
+			$tag = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $tag);
+		}
+
+		return $tag;
+	}
+
+	static function tag_is_valid($tag) {
+		if (!$tag || is_numeric($tag) || mb_strlen($tag) > 250)
+			return false;
+
+		return true;
 	}
 
 }

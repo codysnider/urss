@@ -1798,13 +1798,6 @@
 		return $tmp;
 	}
 
-	function tag_is_valid($tag) {
-		if (!$tag || is_numeric($tag) || mb_strlen($tag) > 250)
-			return false;
-
-		return true;
-	}
-
 	function render_login_form() {
 		header('Cache-Control: public');
 
@@ -1821,20 +1814,6 @@
 		$ts = microtime(true);
 		echo sprintf("<!-- CP[$n] %.4f seconds -->\n", $ts - $s);
 		return $ts;
-	}
-
-	function sanitize_tag($tag) {
-		$tag = trim($tag);
-
-		$tag = mb_strtolower($tag, 'utf-8');
-
-		$tag = preg_replace('/[,\'\"\+\>\<]/', "", $tag);
-
-		if (DB_TYPE == "mysql") {
-			$tag = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $tag);
-		}
-
-		return $tag;
 	}
 
 	function is_server_https() {
@@ -1864,185 +1843,10 @@
 		}
 	} // function encrypt_password
 
-	function load_filters($feed_id, $owner_uid) {
-		$filters = array();
-
-		$feed_id = (int) $feed_id;
-		$cat_id = (int)Feeds::getFeedCategory($feed_id);
-
-		if ($cat_id == 0)
-			$null_cat_qpart = "cat_id IS NULL OR";
-		else
-			$null_cat_qpart = "";
-
-		$pdo = Db::pdo();
-
-		$sth = $pdo->prepare("SELECT * FROM ttrss_filters2 WHERE
-				owner_uid = ? AND enabled = true ORDER BY order_id, title");
-		$sth->execute([$owner_uid]);
-
-		$check_cats = array_merge(
-			Feeds::getParentCategories($cat_id, $owner_uid),
-			[$cat_id]);
-
-		$check_cats_str = join(",", $check_cats);
-		$check_cats_fullids = array_map(function($a) { return "CAT:$a"; }, $check_cats);
-
-		while ($line = $sth->fetch()) {
-			$filter_id = $line["id"];
-
-			$match_any_rule = sql_bool_to_bool($line["match_any_rule"]);
-
-			$sth2 = $pdo->prepare("SELECT
-					r.reg_exp, r.inverse, r.feed_id, r.cat_id, r.cat_filter, r.match_on, t.name AS type_name
-					FROM ttrss_filters2_rules AS r,
-					ttrss_filter_types AS t
-					WHERE
-						(match_on IS NOT NULL OR
-						  (($null_cat_qpart (cat_id IS NULL AND cat_filter = false) OR cat_id IN ($check_cats_str)) AND
-						  (feed_id IS NULL OR feed_id = ?))) AND
-						filter_type = t.id AND filter_id = ?");
-			$sth2->execute([$feed_id, $filter_id]);
-
-			$rules = array();
-			$actions = array();
-
-			while ($rule_line = $sth2->fetch()) {
-	#				print_r($rule_line);
-
-				if ($rule_line["match_on"]) {
-					$match_on = json_decode($rule_line["match_on"], true);
-
-					if (in_array("0", $match_on) || in_array($feed_id, $match_on) || count(array_intersect($check_cats_fullids, $match_on)) > 0) {
-
-						$rule = array();
-						$rule["reg_exp"] = $rule_line["reg_exp"];
-						$rule["type"] = $rule_line["type_name"];
-						$rule["inverse"] = sql_bool_to_bool($rule_line["inverse"]);
-
-						array_push($rules, $rule);
-					} else if (!$match_any_rule) {
-						// this filter contains a rule that doesn't match to this feed/category combination
-						// thus filter has to be rejected
-
-						$rules = [];
-						break;
-					}
-
-				} else {
-
-					$rule = array();
-					$rule["reg_exp"] = $rule_line["reg_exp"];
-					$rule["type"] = $rule_line["type_name"];
-					$rule["inverse"] = sql_bool_to_bool($rule_line["inverse"]);
-
-					array_push($rules, $rule);
-				}
-			}
-
-			if (count($rules) > 0) {
-				$sth2 = $pdo->prepare("SELECT a.action_param,t.name AS type_name
-						FROM ttrss_filters2_actions AS a,
-						ttrss_filter_actions AS t
-						WHERE
-							action_id = t.id AND filter_id = ?");
-				$sth2->execute([$filter_id]);
-
-				while ($action_line = $sth2->fetch()) {
-					#				print_r($action_line);
-
-					$action = array();
-					$action["type"] = $action_line["type_name"];
-					$action["param"] = $action_line["action_param"];
-
-					array_push($actions, $action);
-				}
-			}
-
-			$filter = [];
-			$filter["id"] = $filter_id;
-			$filter["match_any_rule"] = sql_bool_to_bool($line["match_any_rule"]);
-			$filter["inverse"] = sql_bool_to_bool($line["inverse"]);
-			$filter["rules"] = $rules;
-			$filter["actions"] = $actions;
-
-			if (count($rules) > 0 && count($actions) > 0) {
-				array_push($filters, $filter);
-			}
-		}
-
-		return $filters;
-	}
-
 	function init_plugins() {
 		PluginHost::getInstance()->load(PLUGINS, PluginHost::KIND_ALL);
 
 		return true;
-	}
-
-	function add_feed_category($feed_cat, $parent_cat_id = false, $order_id = 0) {
-
-		if (!$feed_cat) return false;
-
-		$feed_cat = mb_substr($feed_cat, 0, 250);
-		if (!$parent_cat_id) $parent_cat_id = null;
-
-		$pdo = Db::pdo();
-		$tr_in_progress = false;
-
-		try {
-			$pdo->beginTransaction();
-		} catch (Exception $e) {
-			$tr_in_progress = true;
-		}
-
-		$sth = $pdo->prepare("SELECT id FROM ttrss_feed_categories
-				WHERE (parent_cat = :parent OR (:parent IS NULL AND parent_cat IS NULL))
-				AND title = :title AND owner_uid = :uid");
-		$sth->execute([':parent' => $parent_cat_id, ':title' => $feed_cat, ':uid' => $_SESSION['uid']]);
-
-		if (!$sth->fetch()) {
-
-			$sth = $pdo->prepare("INSERT INTO ttrss_feed_categories (owner_uid,title,parent_cat,order_id)
-					VALUES (?, ?, ?, ?)");
-			$sth->execute([$_SESSION['uid'], $feed_cat, $parent_cat_id, (int)$order_id]);
-
-			if (!$tr_in_progress) $pdo->commit();
-
-			return true;
-		}
-
-		$pdo->commit();
-
-		return false;
-	}
-
-	function get_feed_access_key($feed_id, $is_cat, $owner_uid = false) {
-
-		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
-
-		$is_cat = bool_to_sql_bool($is_cat);
-
-		$pdo = Db::pdo();
-
-		$sth = $pdo->prepare("SELECT access_key FROM ttrss_access_keys
-				WHERE feed_id = ? AND is_cat = ?
-				AND owner_uid = ?");
-		$sth->execute([$feed_id, $is_cat, $owner_uid]);
-
-		if ($row = $sth->fetch()) {
-			return $row["access_key"];
-		} else {
-			$key = uniqid_short();
-
-			$sth = $pdo->prepare("INSERT INTO ttrss_access_keys
-					(access_key, feed_id, is_cat, owner_uid)
-					VALUES (?, ?, ?, ?)");
-
-			$sth->execute([$key, $feed_id, $is_cat, $owner_uid]);
-
-			return $key;
-		}
 	}
 
 	function build_url($parts) {
