@@ -2017,68 +2017,6 @@
 		return false;
 	}
 
-	/**
-	 * Fixes incomplete URLs by prepending "http://".
-	 * Also replaces feed:// with http://, and
-	 * prepends a trailing slash if the url is a domain name only.
-	 *
-	 * @param string $url Possibly incomplete URL
-	 *
-	 * @return string Fixed URL.
-	 */
-	function fix_url($url) {
-
-		// support schema-less urls
-		if (strpos($url, '//') === 0) {
-			$url = 'https:' . $url;
-		}
-
-		if (strpos($url, '://') === false) {
-			$url = 'http://' . $url;
-		} else if (substr($url, 0, 5) == 'feed:') {
-			$url = 'http:' . substr($url, 5);
-		}
-
-		//prepend slash if the URL has no slash in it
-		// "http://www.example" -> "http://www.example/"
-		if (strpos($url, '/', strpos($url, ':') + 3) === false) {
-			$url .= '/';
-		}
-
-		//convert IDNA hostname to punycode if possible
-		if (function_exists("idn_to_ascii")) {
-			$parts = parse_url($url);
-			if (mb_detect_encoding($parts['host']) != 'ASCII')
-			{
-				$parts['host'] = idn_to_ascii($parts['host']);
-				$url = build_url($parts);
-			}
-		}
-
-		if ($url != "http:///")
-			return $url;
-		else
-			return '';
-	}
-
-	function validate_feed_url($url) {
-		$parts = parse_url($url);
-
-		return ($parts['scheme'] == 'http' || $parts['scheme'] == 'feed' || $parts['scheme'] == 'https');
-
-	}
-
-	/* function save_email_address($email) {
-		// FIXME: implement persistent storage of emails
-
-		if (!$_SESSION['stored_emails'])
-			$_SESSION['stored_emails'] = array();
-
-		if (!in_array($email, $_SESSION['stored_emails']))
-			array_push($_SESSION['stored_emails'], $email);
-	} */
-
-
 	function get_feed_access_key($feed_id, $is_cat, $owner_uid = false) {
 
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
@@ -2105,42 +2043,6 @@
 
 			return $key;
 		}
-	}
-
-	function get_feeds_from_html($url, $content)
-	{
-		$url     = fix_url($url);
-		$baseUrl = substr($url, 0, strrpos($url, '/') + 1);
-
-		libxml_use_internal_errors(true);
-
-		$doc = new DOMDocument();
-		$doc->loadHTML('<?xml encoding="UTF-8">' . $content);
-		$xpath = new DOMXPath($doc);
-		$entries = $xpath->query('/html/head/link[@rel="alternate" and '.
-			'(contains(@type,"rss") or contains(@type,"atom"))]|/html/head/link[@rel="feed"]');
-		$feedUrls = array();
-		foreach ($entries as $entry) {
-			if ($entry->hasAttribute('href')) {
-				$title = $entry->getAttribute('title');
-				if ($title == '') {
-					$title = $entry->getAttribute('type');
-				}
-				$feedUrl = rewrite_relative_url(
-					$baseUrl, $entry->getAttribute('href')
-				);
-				$feedUrls[$feedUrl] = $title;
-			}
-		}
-		return $feedUrls;
-	}
-
-	function is_html($content) {
-		return preg_match("/<html|DOCTYPE html/i", substr($content, 0, 8192)) !== 0;
-	}
-
-	function url_is_html($url, $login = false, $pass = false) {
-		return is_html(fetch_file_contents($url, false, $login, $pass));
 	}
 
 	function build_url($parts) {
