@@ -298,23 +298,25 @@ class Handler_Public extends Handler {
 	function share() {
 		$uuid = clean($_REQUEST["key"]);
 
-		$sth = $this->pdo->prepare("SELECT ref_id, owner_uid FROM ttrss_user_entries WHERE
-			uuid = ?");
-		$sth->execute([$uuid]);
+		if ($uuid) {
+			$sth = $this->pdo->prepare("SELECT ref_id, owner_uid 
+						FROM ttrss_user_entries WHERE uuid = ?");
+			$sth->execute([$uuid]);
 
-		if ($row = $sth->fetch()) {
-			header("Content-Type: text/html");
+			if ($row = $sth->fetch()) {
+				header("Content-Type: text/html");
 
-			$id = $row["ref_id"];
-			$owner_uid = $row["owner_uid"];
+				$id = $row["ref_id"];
+				$owner_uid = $row["owner_uid"];
 
-			print $this->format_article($id, $owner_uid);
+				print $this->format_article($id, $owner_uid);
 
-		} else {
-			header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
-			print "Article not found.";
+				return;
+			}
 		}
 
+		header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+		print "Article not found.";
 	}
 
 	private function get_article_image($enclosures, $content, $site_url) {
