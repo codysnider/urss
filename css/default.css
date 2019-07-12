@@ -1547,6 +1547,14 @@ body.ttrss_prefs .phpinfo td.v {
   font-family: monospace;
   word-break: break-all;
 }
+body.ttrss_prefs #filterNewRuleDlg .invalid,
+body.ttrss_main #filterNewRuleDlg .invalid {
+  background: #ffc0c0;
+}
+body.ttrss_prefs #filterNewRuleDlg .valid,
+body.ttrss_main #filterNewRuleDlg .valid {
+  background: #c0ffc0;
+}
 body.ttrss_prefs fieldset,
 body.ttrss_utility fieldset {
   border-width: 0px;

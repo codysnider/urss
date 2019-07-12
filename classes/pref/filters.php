@@ -978,12 +978,12 @@ class Pref_Filters extends Handler_Protected {
 		print "<input dojoType=\"dijit.form.ValidationTextBox\"
 			 required=\"true\" id=\"filterDlg_regExp\" 
 			 onchange='Filters.filterDlgCheckRegExp(this)'
-			 style=\"font-size : 16px; width : 20em;\"
+			 onblur='Filters.filterDlgCheckRegExp(this)'
+			 onfocus='Filters.filterDlgCheckRegExp(this)'
+			 style=\"font-size : 16px; width : 500px\"
 			 name=\"reg_exp\" value=\"$reg_exp\"/>";
 
-		print "<div dojoType=\"dijit.Tooltip\" connectId=\"filterDlg_regExp\" position=\"below\">
-			".__("Regular expression, without outer delimiters (i.e. slashes)")."
-		</div>";
+		print "<div dojoType='dijit.Tooltip' id='filterDlg_regExp_tip' connectId='filterDlg_regExp' position='below'></div>";
 
 		print "<fieldset>";
 		print "<label class='checkbox'><input id=\"filterDlg_inverse\" dojoType=\"dijit.form.CheckBox\"

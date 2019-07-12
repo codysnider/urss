@@ -1548,6 +1548,14 @@ body.ttrss_prefs .phpinfo td.v {
   font-family: monospace;
   word-break: break-all;
 }
+body.ttrss_prefs #filterNewRuleDlg .invalid,
+body.ttrss_main #filterNewRuleDlg .invalid {
+  background: #ffc0c0;
+}
+body.ttrss_prefs #filterNewRuleDlg .valid,
+body.ttrss_main #filterNewRuleDlg .valid {
+  background: #c0ffc0;
+}
 body.ttrss_prefs fieldset,
 body.ttrss_utility fieldset {
   border-width: 0px;
@@ -1826,6 +1834,12 @@ body.flat.ttrss_main.ttrss_prefs #footer a {
 body.flat.ttrss_main.ttrss_prefs td.filename,
 body.flat.ttrss_main.ttrss_prefs div.prefHelp {
   color: #999999;
+}
+body.flat.ttrss_main.ttrss_prefs #filterNewRuleDlg .invalid {
+  background: #503030;
+}
+body.flat.ttrss_main.ttrss_prefs #filterNewRuleDlg .valid {
+  background: #305030;
 }
 body.flat.ttrss_main {
   /*
