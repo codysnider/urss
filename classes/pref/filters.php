@@ -976,7 +976,8 @@ class Pref_Filters extends Handler_Protected {
 		print "<section>";
 
 		print "<input dojoType=\"dijit.form.ValidationTextBox\"
-			 required=\"true\" id=\"filterDlg_regExp\"
+			 required=\"true\" id=\"filterDlg_regExp\" 
+			 onchange='Filters.filterDlgCheckRegExp(this)'
 			 style=\"font-size : 16px; width : 20em;\"
 			 name=\"reg_exp\" value=\"$reg_exp\"/>";
 

@@ -2,6 +2,13 @@
 /* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
 	Filters = {
+		filterDlgCheckRegExp: function(sender) {
+			try {
+				new RegExp("/" + sender.value + "/");
+			} catch (e) {
+				console.error(e);
+			}
+		},
 		filterDlgCheckAction: function(sender) {
 			const action = sender.value;
 
