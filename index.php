@@ -162,11 +162,11 @@
             }
             ?>
 
-            <form id="toolbar-headlines" action="" onsubmit='return false'>
+            <form id="toolbar-headlines" action="" style="order : 10" onsubmit='return false'>
 
             </form>
 
-            <form id="toolbar-main" action="" onsubmit='return false'>
+            <form id="toolbar-main" action="" style="order : 20" onsubmit='return false'>
 
             <select name="view_mode" title="<?php echo __('Show articles') ?>"
                 onchange="App.onViewModeChanged()"
@@ -207,7 +207,7 @@
 
             </form>
 
-            <div class="action-chooser">
+            <div class="action-chooser" style="order : 30">
 
                 <?php
                     foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_TOOLBAR_BUTTON) as $p) {
