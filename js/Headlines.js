@@ -272,17 +272,21 @@ define(["dojo/_base/declare"], function (declare) {
 					}
 				}
 
-				if (!Feeds.infscroll_disabled) {
+				if (!Feeds.infscroll_disabled && !Feeds.infscroll_in_progress) {
 					const hsp = $("headlines-spacer");
 					const container = $("headlines-frame");
 
-					if (hsp && hsp.offsetTop - 250 <= container.scrollTop + container.offsetHeight) {
+					if (hsp && hsp.previousSibling) {
+						const last_row = hsp.previousSibling;
 
-						hsp.innerHTML = "<span class='loading'><img src='images/indicator_tiny.gif'> " +
-							__("Loading, please wait...") + "</span>";
+						// invoke lazy load if last article in buffer is nearly visible
+						if (last_row.offsetTop - 250 <= container.scrollTop + container.offsetHeight) {
+							hsp.innerHTML = "<span class='loading'><img src='images/indicator_tiny.gif'> " +
+								__("Loading, please wait...") + "</span>";
 
-						Headlines.loadMore();
-						return;
+							Headlines.loadMore();
+							return;
+						}
 					}
 				}
 
@@ -558,13 +562,14 @@ define(["dojo/_base/declare"], function (declare) {
 
 				const headlines_count = reply['headlines-info']['count'];
 
-				Feeds.infscroll_disabled = parseInt(headlines_count) < 30;
-				console.log('received', headlines_count, 'headlines, infscroll disabled=', Feeds.infscroll_disabled);
-
 				//this.vgroup_last_feed = reply['headlines-info']['vgroup_last_feed'];
 				this.current_first_id = reply['headlines']['first_id'];
 
+				console.log('received', headlines_count, 'headlines');
+
 				if (!append) {
+					Feeds.infscroll_disabled = parseInt(headlines_count) != 30;
+					console.log('infscroll_disabled=', Feeds.infscroll_disabled);
 
 					// TODO: the below needs to be applied again when switching expanded/expandable on the fly
 					// via hotkeys, not just on feed load
@@ -663,7 +668,7 @@ define(["dojo/_base/declare"], function (declare) {
 						}
 					}
 
-					Feeds.infscroll_disabled = headlines_appended != 30;
+					Feeds.infscroll_disabled = headlines_appended == 0;
 
 					console.log('appended', headlines_appended, 'headlines, infscroll_disabled=', Feeds.infscroll_disabled);
 
@@ -682,10 +687,10 @@ define(["dojo/_base/declare"], function (declare) {
 					}
 
 				} else {
-					console.log("no new headlines received");
-
+					Feeds.infscroll_disabled = true;
 					const first_id_changed = reply['headlines']['first_id_changed'];
-					console.log("first id changed:" + first_id_changed);
+
+					console.log("no headlines received, infscroll_disabled=", Feeds.infscroll_disabled, 'first_id_changed=', first_id_changed);
 
 					let hsp = $("headlines-spacer");
 
