@@ -279,8 +279,8 @@ define(["dojo/_base/declare"], function (declare) {
 					if (hsp && hsp.previousSibling) {
 						const last_row = hsp.previousSibling;
 
-						// invoke lazy load if last article in buffer is nearly visible
-						if (last_row.offsetTop - 250 <= container.scrollTop + container.offsetHeight) {
+						// invoke lazy load if last article in buffer is nearly visible OR is active
+						if (Article.getActive() == last_row.getAttribute("data-article-id") || last_row.offsetTop - 250 <= container.scrollTop + container.offsetHeight) {
 							hsp.innerHTML = "<span class='loading'><img src='images/indicator_tiny.gif'> " +
 								__("Loading, please wait...") + "</span>";
 
