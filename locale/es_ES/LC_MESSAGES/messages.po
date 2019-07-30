@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2019-01-10 10:12+0000\n"
-"Last-Translator: Jesus Leal <lealp22@gmail.com>\n"
-"Language-Team: Spanish <https://weblate.tt-rss.org/projects/tt-rss/messages/es/>\n"
+"PO-Revision-Date: 2019-07-20 18:11+0000\n"
+"Last-Translator: Roberto Michán Sánchez <robertoms258@gmail.com>\n"
+"Language-Team: Spanish <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"es/>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3\n"
+"X-Generator: Weblate 3.7.1\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -57,15 +58,13 @@ msgstr "Desactivar actualizaciones"
 
 #: backend.php:84
 #: backend.php:94
-#, fuzzy
 msgid "15 minutes"
-msgstr "Cada 15 minutos"
+msgstr "15 minutos"
 
 #: backend.php:85
 #: backend.php:95
-#, fuzzy
 msgid "30 minutes"
-msgstr "Cada 30 minutos"
+msgstr "30 minutos"
 
 #: backend.php:86
 #: backend.php:96
@@ -74,15 +73,13 @@ msgstr "Cada hora"
 
 #: backend.php:87
 #: backend.php:97
-#, fuzzy
 msgid "4 hours"
-msgstr "Cada 4 horas"
+msgstr "4 horas"
 
 #: backend.php:88
 #: backend.php:98
-#, fuzzy
 msgid "12 hours"
-msgstr "Cada 12 horas"
+msgstr "12 horas"
 
 #: backend.php:89
 #: backend.php:99
@@ -118,11 +115,11 @@ msgstr "Este programa requiere cookies para funcionar apropiadamente. Parece que
 
 #: errors.php:15
 msgid "Backend sanity check failed."
-msgstr "La comprobación de validez del Backend ha fallado"
+msgstr "La comprobación de validez del backend ha fallado."
 
 #: errors.php:17
 msgid "Frontend sanity check failed."
-msgstr "La comprobación de validez del Frontend ha fallado"
+msgstr "La comprobación de validez del frontend ha fallado."
 
 #: errors.php:19
 msgid "Incorrect database schema version. &lt;a href='db-updater.php'&gt;Please update&lt;/a&gt;."
@@ -146,7 +143,7 @@ msgstr "Denegado. Su nivel de acceso es insuficiente para acceder a esta página
 
 #: errors.php:29
 msgid "Configuration check failed"
-msgstr "La comprobación de la configuración ha fallado."
+msgstr "La comprobación de la configuración ha fallado"
 
 #: errors.php:31
 msgid "Your version of MySQL is not currently supported. Please see official site for more information."
@@ -154,21 +151,21 @@ msgstr "Su versión de MySQL no está soportada. Por favor, visite el sitio ofic
 
 #: errors.php:35
 msgid "SQL escaping test failed, check your database and PHP configuration"
-msgstr "La prueba de escape SQL ha fallado. Por favor, revise la configuración de su base de datos y PHP."
+msgstr ""
+"La prueba de escape SQL ha fallado. Por favor, revise la configuración de su "
+"base de datos y PHP"
 
 #: errors.php:37
-#, fuzzy
 msgid "Method not found"
-msgstr "Fuente no encontrada."
+msgstr "Método no encontrado"
 
 #: errors.php:39
-#, fuzzy
 msgid "Plugin not found"
-msgstr "Usuario no encontrado"
+msgstr "Extensión no encontrada"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
-msgstr ""
+msgstr "Fallo en la codificación de datos como JSON"
 
 #: index.php:127
 #: index.php:142
@@ -340,9 +337,8 @@ msgstr "Alternar modo de pantalla ancha"
 
 #: index.php:232
 #: include/functions.php:1213
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "Alternar modo combinado"
+msgstr "Alternar modo noche"
 
 #: index.php:233
 msgid "Keyboard shortcuts help"
@@ -443,7 +439,7 @@ msgstr "Correo electrónico:"
 
 #: register.php:228
 msgid "How much is two plus two:"
-msgstr "¿Cuánto es dos más dos?"
+msgstr "Cuánto es dos más dos:"
 
 #: register.php:231
 msgid "Submit registration"
@@ -451,7 +447,7 @@ msgstr "Enviar solicitud de registro"
 
 #: register.php:249
 msgid "Your registration information is incomplete."
-msgstr "Su información de registro está incompleta"
+msgstr "Su información de registro está incompleta."
 
 #: register.php:264
 msgid "Sorry, this username is already taken."
@@ -491,7 +487,7 @@ msgstr "Sin clasificar"
 
 #: include/functions.php:84
 msgid "Detect automatically"
-msgstr ""
+msgstr "Detectar automáticamente"
 
 #: include/functions.php:958
 #, php-format
@@ -625,7 +621,7 @@ msgstr "Seleccionar artículos publicados"
 
 #: include/functions.php:1185
 msgid "Invert selection"
-msgstr "Invertir selección "
+msgstr "Invertir selección"
 
 #: include/functions.php:1186
 msgid "Deselect everything"
@@ -670,9 +666,8 @@ msgid "Debug feed update"
 msgstr "Depurar la actualización de fuentes"
 
 #: include/functions.php:1196
-#, fuzzy
 msgid "Debug viewfeed()"
-msgstr "Depurar la actualización de fuentes"
+msgstr "Depurar viewfeed()"
 
 #: include/functions.php:1197
 #: js/FeedTree.js:121
@@ -754,9 +749,8 @@ msgid "The uploaded file was only partially uploaded"
 msgstr "El fichero cargado solo fue subido parcialmente"
 
 #: include/functions.php:2469
-#, fuzzy
 msgid "No file was uploaded"
-msgstr "No se ha cargado ningún archivo."
+msgstr "No se ha subido ningún archivo"
 
 #: include/functions.php:2470
 msgid "Missing a temporary folder"
@@ -819,9 +813,8 @@ msgid "Session failed to validate (schema version changed)"
 msgstr "No se pudo validar la sesión (ha cambiado la versión del esquema)"
 
 #: include/sessions.php:53
-#, fuzzy
 msgid "Session failed to validate (UA changed)."
-msgstr "No se pudo validar la sesión (ha cambiado la contraseña)"
+msgstr "No se pudo validar la sesión (Agente de Usuario cambiado)."
 
 #: include/sessions.php:67
 msgid "Session failed to validate (password changed)"
@@ -944,9 +937,9 @@ msgid "Update daemon is taking too long to perform a feed update. This could ind
 msgstr "El demonio de actualización está tardando demasiado en realizar una actualización de fuente. Esto podría deberse a un problema en el servidor (rotura, cuelgue,...). Por favor, compruebe el proceso del demonio o avise al propietario de la instancia."
 
 #: classes/dlg.php:170
-#, fuzzy, php-format
+#, php-format
 msgid "%s can be accessed via the following secret URL:"
-msgstr "Puede compartir este artículo con la siguiente URL única:"
+msgstr "%s puede ser accedido desde la siguiente URL secreta:"
 
 #: classes/dlg.php:181
 #: classes/pref/filters.php:1015
@@ -955,27 +948,24 @@ msgstr "Puede compartir este artículo con la siguiente URL única:"
 #: classes/pref/prefs.php:852
 #: classes/pref/prefs.php:867
 #: plugins/bookmarklets/init.php:45
-#, fuzzy
 msgid "More info..."
-msgstr "más información"
+msgstr "Más información..."
 
 #: classes/dlg.php:196
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
 msgstr "Está utilizando el password por defecto de tt-rss. Por favor, debe cambiarlo en Preferencias (Datos personales / Auntentificación)."
 
 #: classes/dlg.php:200
-#, fuzzy
 msgid "Open Preferences"
-msgstr "Preferencias"
+msgstr "Abrir Preferencias"
 
 #: classes/feeds.php:34
 #: classes/feeds.php:35
 #: classes/feeds.php:99
 #: classes/feeds.php:100
 #: classes/pref/feeds.php:1371
-#, fuzzy
 msgid "Show as feed"
-msgstr "Esta fuente"
+msgstr "Mostrar como fuente"
 
 #: classes/feeds.php:41
 #, php-format
@@ -983,9 +973,8 @@ msgid "Last updated: %s"
 msgstr "Última actualización: %s"
 
 #: classes/feeds.php:60
-#, fuzzy
 msgid "Select..."
-msgstr "Seleccionar"
+msgstr "Seleccionar..."
 
 #: classes/feeds.php:62
 #: classes/pref/feeds.php:1224
@@ -1067,7 +1056,7 @@ msgstr "Fuente no encontrada."
 
 #: classes/feeds.php:209
 msgid "Never"
-msgstr "Nunca "
+msgstr "Nunca"
 
 #: classes/feeds.php:260
 #: classes/feeds.php:1258
@@ -1147,7 +1136,7 @@ msgstr "Iniciar sesión"
 #: classes/pref/feeds.php:1677
 #: classes/pref/prefs.php:289
 msgid "Password"
-msgstr "Contraseña:"
+msgstr "Contraseña"
 
 #: classes/feeds.php:709
 #: classes/pref/feeds.php:680
@@ -1161,20 +1150,21 @@ msgid "Subscribe"
 msgstr "Suscribir"
 
 #: classes/feeds.php:735
-#, fuzzy, php-format
+#, php-format
 msgid "Search %s..."
-msgstr "Buscar..."
+msgstr "Buscar %s..."
 
 #: classes/feeds.php:741
 #: classes/pref/feeds.php:603
 #: classes/pref/feeds.php:841
-#, fuzzy
 msgid "Language:"
-msgstr "Idioma"
+msgstr "Idioma:"
 
 #: classes/feeds.php:743
 msgid "Used for word stemming"
 msgstr ""
+"Utilizado para <a href=\"https://es.wikipedia.org/wiki/Stemming\""
+">stemming</a> de palabras"
 
 #: classes/feeds.php:753
 msgid "Search syntax"
@@ -1207,7 +1197,7 @@ msgstr "Especial"
 #: classes/feeds.php:1472
 #, php-format
 msgid "Incorrect search syntax: %s."
-msgstr ""
+msgstr "Sintaxis de búsqueda incorrecta: %s."
 
 #: classes/feeds.php:1657
 #, php-format
@@ -1251,12 +1241,12 @@ msgstr "Nombre de usuario o contraseña incorrecta"
 #: classes/handler/public.php:805
 #, php-format
 msgid "Already subscribed to <b>%s</b>."
-msgstr "Ya está suscrito a <strong>%s</strong>."
+msgstr "Ya está suscrito a <b>%s</b>."
 
 #: classes/handler/public.php:808
 #, php-format
 msgid "Subscribed to <b>%s</b>."
-msgstr "Suscrito a <strong>%s</strong>."
+msgstr "Suscrito a <b>%s</b>."
 
 #: classes/handler/public.php:811
 #, php-format
@@ -1274,9 +1264,8 @@ msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "No se pudo suscribir a <strong>%s</strong>. No se pudo descargar la fuente de su URL."
 
 #: classes/handler/public.php:830
-#, fuzzy
 msgid "Multiple feed URLs found:"
-msgstr "Múltiples fuentes encontradas."
+msgstr "Múltiples URL de fuentes encontradas:"
 
 #: classes/handler/public.php:843
 msgid "Subscribe to selected feed"
@@ -1291,14 +1280,16 @@ msgid "Password recovery"
 msgstr "Recuperación de contraseña"
 
 #: classes/handler/public.php:963
-#, fuzzy
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
-msgstr "Se necesita que proporcione un nombre de usuario y correo electrónico válidos. Un enlace para crear una nueva contraseña será enviado a su correo electrónico."
+msgstr ""
+"Se necesita que proporcione un nombre de usuario y correo electrónico "
+"válidos. Se enviará un enlace para crear una nueva contraseña a su correo "
+"electrónico."
 
 #: classes/handler/public.php:983
-#, fuzzy, php-format
+#, php-format
 msgid "How much is %d + %d:"
-msgstr "¿Cuánto es dos más dos?"
+msgstr "Cuánto es %d + %d:"
 
 #: classes/handler/public.php:989
 #: classes/pref/users.php:356
@@ -1331,28 +1322,29 @@ msgid "Database Updater"
 msgstr "Actualizador de la base de datos"
 
 #: classes/handler/public.php:1142
-#, fuzzy, php-format
+#, php-format
 msgid "Performing updates to version %d"
-msgstr "Actualizando..."
+msgstr "Realizando actualizaciones a la versión %d"
 
 #: classes/handler/public.php:1147
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to version %d"
-msgstr "Actualizando a la versión %d..."
+msgstr "Actualizando a la versión %d"
 
 #: classes/handler/public.php:1160
 msgid "Try again"
-msgstr ""
+msgstr "Inténtelo de nuevo"
 
 #: classes/handler/public.php:1166
-#, fuzzy
 msgid "Completed."
-msgstr "Subida completa."
+msgstr "Completado."
 
 #: classes/handler/public.php:1183
-#, fuzzy, php-format
+#, php-format
 msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
-msgstr "Su base de datos Tiny Tiny RSS necesita ser actualizada a la última versión (<b>%d</b> to <b>%d</b>)."
+msgstr ""
+"Su base de datos Tiny Tiny RSS necesita actualizarse a la última versión (%d "
+"to %d)."
 
 #: classes/handler/public.php:1195
 msgid "Perform updates"
@@ -1397,9 +1389,9 @@ msgid "Setting preference key %s to %s"
 msgstr "Configurando la opción %s como %s"
 
 #: classes/opml.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Adding filter %s..."
-msgstr "Añadiendo filtro..."
+msgstr "Añadiendo filtro %s..."
 
 #: classes/opml.php:536
 #, php-format
@@ -1458,14 +1450,12 @@ msgid "Feed URL"
 msgstr "URL de la fuente"
 
 #: classes/pref/feeds.php:585
-#, fuzzy
 msgid "Site URL:"
-msgstr "URL del artículo:"
+msgstr "URL del sitio:"
 
 #: classes/pref/feeds.php:587
-#, fuzzy
 msgid "Site URL"
-msgstr "URL de la fuente"
+msgstr "URL del sitio"
 
 #: classes/pref/feeds.php:612
 #: classes/pref/feeds.php:852
@@ -1474,14 +1464,13 @@ msgstr "Actualizar"
 
 #: classes/pref/feeds.php:621
 #: classes/pref/feeds.php:859
-#, fuzzy
 msgid "Interval:"
-msgstr "Interfaz"
+msgstr "Intervalo:"
 
 #: classes/pref/feeds.php:634
 #: classes/pref/feeds.php:874
 msgid "Article purging:"
-msgstr "Purga de artículos"
+msgstr "Purga de artículos:"
 
 #: classes/pref/feeds.php:651
 #: classes/pref/feeds.php:885
@@ -1516,14 +1505,13 @@ msgstr "Mostrar siempre imágenes adjuntas"
 #: classes/pref/feeds.php:729
 #: classes/pref/feeds.php:926
 #: classes/pref/prefs.php:97
-#, fuzzy
 msgid "Do not embed media"
-msgstr "No mostrar imágenes"
+msgstr "No incluir contenido multimedia"
 
 #: classes/pref/feeds.php:744
 #: classes/pref/feeds.php:933
 msgid "Cache media"
-msgstr ""
+msgstr "Caché de contenido multimedia"
 
 #: classes/pref/feeds.php:759
 #: classes/pref/feeds.php:940
@@ -1537,9 +1525,8 @@ msgstr "Icono"
 #: classes/pref/feeds.php:771
 #: classes/pref/feeds.php:1324
 #: plugins/import_export/init.php:72
-#, fuzzy
 msgid "Choose file..."
-msgstr "Crear filtro..."
+msgstr "Elegir archivo..."
 
 #: classes/pref/feeds.php:778
 msgid "Replace"
@@ -1556,7 +1543,7 @@ msgstr "Eliminar"
 #: classes/pref/feeds.php:785
 #: classes/pref/prefs.php:745
 msgid "Plugins"
-msgstr "Plugins"
+msgstr "Extensiones"
 
 #: classes/pref/feeds.php:1192
 msgid "Feeds with errors"
@@ -1616,7 +1603,6 @@ msgid "Using OPML you can export and import your feeds, filters, labels and Tiny
 msgstr "Puede usar OPML para importar y exportar sus fuentes, filtros, marcadores y preferencias de Tiny Tiny RSS."
 
 #: classes/pref/feeds.php:1330
-#, fuzzy
 msgid "Import OPML"
 msgstr "Importar OPML"
 
@@ -1629,9 +1615,8 @@ msgid "Include settings"
 msgstr "Incluir preferencias"
 
 #: classes/pref/feeds.php:1349
-#, fuzzy
 msgid "Published OPML"
-msgstr "Publicados"
+msgstr "OPML publicado"
 
 #: classes/pref/feeds.php:1351
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
@@ -1654,9 +1639,10 @@ msgid "Published & shared articles / Generated feeds"
 msgstr "Artículos publicados y compartidos / Fuentes generadas"
 
 #: classes/pref/feeds.php:1366
-#, fuzzy
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "Puede hacer público su OPML. Cualquiera que conozca la siguiente URL podrá suscribirse al OPML."
+msgstr ""
+"Los artículos publicados pueden ser suscritos por cualquiera que conozca la "
+"siguiente URL:"
 
 #: classes/pref/feeds.php:1372
 msgid "Display URL"
@@ -1677,9 +1663,8 @@ msgid "Unsubscribe from selected feeds"
 msgstr "Cancelar la suscripción a las fuentes seleccionadas"
 
 #: classes/pref/feeds.php:1655
-#, fuzzy
 msgid "One valid feed per line (no detection is done)"
-msgstr "Añadir una fuente RSS válida en cada línea (no se realizará detección de fuentes)"
+msgstr "Una fuente válida por línea (no se realizará detección)"
 
 #: classes/pref/feeds.php:1686
 msgid "Feeds require authentication."
@@ -1755,7 +1740,7 @@ msgstr "Crear"
 
 #: classes/pref/filters.php:984
 msgid "Regular expression, without outer delimiters (i.e. slashes)"
-msgstr ""
+msgstr "Expresión regular, sin delimitadores (p.e. barras)"
 
 #: classes/pref/filters.php:990
 msgid "Inverse regular expression matching"
@@ -1784,9 +1769,8 @@ msgid "Perform Action"
 msgstr "Realizar la acción"
 
 #: classes/pref/filters.php:1092
-#, fuzzy
 msgid "No actions available"
-msgstr "¡Nueva versión disponible!"
+msgstr "Ninguna acción disponible"
 
 #: classes/pref/filters.php:1111
 msgid "Save action"
@@ -1809,14 +1793,12 @@ msgstr[0] "%s (%d regla)"
 msgstr[1] "%s (%d reglas)"
 
 #: classes/pref/filters.php:1155
-#, fuzzy
 msgid "matches any rule"
-msgstr "Coincidencia con cualquier regla"
+msgstr "coincide con cualquier regla"
 
 #: classes/pref/filters.php:1156
-#, fuzzy
 msgid "inverse"
-msgstr "(inverso)"
+msgstr "inverso"
 
 #: classes/pref/filters.php:1159
 #, php-format
@@ -1840,16 +1822,15 @@ msgstr "Fondo:"
 #: classes/pref/labels.php:231
 #, php-format
 msgid "Created label <b>%s</b>"
-msgstr "Se ha creado la etiqueta <strong>%s</strong>"
+msgstr "Se ha creado la etiqueta <b>%s</b>"
 
 #: classes/pref/labels.php:272
 msgid "Clear colors"
 msgstr "Limpiar los colores"
 
 #: classes/pref/prefs.php:41
-#, fuzzy
 msgid "Articles"
-msgstr "Artículo"
+msgstr "Artículos"
 
 #: classes/pref/prefs.php:54
 msgid "Digest"
@@ -1870,89 +1851,77 @@ msgstr "Etiquetas añadidas a la lista negra"
 #: classes/pref/prefs.php:71
 msgid "Never apply these tags automatically (comma-separated list)."
 msgstr ""
+"Nunca aplique estas etiquetas automáticamente (lista separada por comas)."
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Default language"
-msgstr "Perfil por defecto"
+msgstr "Idioma por defecto"
 
 #: classes/pref/prefs.php:72
 msgid "Used for full-text search"
-msgstr ""
+msgstr "Utilizado para búsqueda de texto completo"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Mark read on scroll"
-msgstr "¿Marcar todos los artículos como leídos?"
+msgstr "Marcar artículos como leídos al bajar la barra de desplazamiento"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Mark articles as read as you scroll past them"
-msgstr "¿Marcar todos los artículos como leídos?"
+msgstr "Marcar artículos como leídos al desplazarse por ellos"
 
 #: classes/pref/prefs.php:74
-#, fuzzy
 msgid "Always expand articles"
-msgstr "Desplegar el artículo"
+msgstr "Siempre expandir artículos"
 
 #: classes/pref/prefs.php:75
-#, fuzzy
 msgid "Combined mode"
-msgstr "Alternar modo combinado"
+msgstr "Modo combinado"
 
 #: classes/pref/prefs.php:75
-#, fuzzy
 msgid "Show flat list of articles instead of separate panels"
-msgstr "Los titulares de los artículos y su contenido se muestran combinados en una lista expandible, en lugar de mostrarse por separado."
+msgstr "Mostrar lista plana de artículos en lugar de paneles separados"
 
 #: classes/pref/prefs.php:76
-#, fuzzy
 msgid "Confirm marking feeds as read"
-msgstr "Pedir confirmación para marcar una fuente como leída"
+msgstr "Pedir confirmación para marcar fuentes como leídas"
 
 #: classes/pref/prefs.php:77
 msgid "Amount of articles to display at once"
 msgstr "Número de artículos que se muestran simultáneamente"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Default update interval"
-msgstr "Intervalo de actualización de fuentes por defecto"
+msgstr "Intervalo de actualización por defecto"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Mark sent articles as read"
-msgstr "¿Marcar todos los artículos como leídos?"
+msgstr "Marcar artículos enviados como leídos"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Enable digest"
 msgstr "Habilitar correo recopilatorio"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Send daily digest of new (and unread) headlines to your e-mail address"
-msgstr "Esta opción permite el envío diario de un recopilatorio de los titulares nuevos o sin leer a la dirección de correo que haya indicado en la configuración"
+msgstr ""
+"Enviar diariamente un resumen de los titulares nuevos (y no leídos) a su "
+"dirección de correo electrónico"
 
 #: classes/pref/prefs.php:81
-#, fuzzy
 msgid "Try to send around this time"
-msgstr "Intentar enviar recopilatorios aproximadamente a la hora seleccionada"
+msgstr "Intentar enviar aproximadamente a esta hora"
 
 #: classes/pref/prefs.php:81
-#, fuzzy
 msgid "Time in UTC"
-msgstr "Zona horaria "
+msgstr "Hora en UTC"
 
 #: classes/pref/prefs.php:82
-#, fuzzy
 msgid "Enable API"
-msgstr "Activar contraseñas de un solo uso"
+msgstr "Habilitar API"
 
 #: classes/pref/prefs.php:82
-#, fuzzy
 msgid "Allows accessing this account through the API"
-msgstr "Permite a clientes externos acceder a esta cuenta mediante la API"
+msgstr "Permite acceder a esta cuenta mediante la API"
 
 #: classes/pref/prefs.php:83
 msgid "Enable categories"
@@ -1963,56 +1932,50 @@ msgid "Sort feeds by unread articles count"
 msgstr "Ordenar las fuentes por número de artículos sin leer"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "Maximum age of fresh articles"
-msgstr "Antigüedad máxima de los artículos recientes (en horas)"
+msgstr "Antigüedad máxima de los artículos recientes"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "hours"
-msgstr "Cada 4 horas"
+msgstr "horas"
 
 #: classes/pref/prefs.php:86
-#, fuzzy
 msgid "Hide read feeds"
-msgstr "Ocultar/Mostrar fuentes leídas"
+msgstr "Ocultar fuentes leídas"
 
 #: classes/pref/prefs.php:87
 msgid "Always show special feeds"
-msgstr ""
+msgstr "Mostrar siempre fuentes especiales"
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "While hiding read feeds"
-msgstr "Mostrar las fuentes especiales cuando se oculten las fuentes leídas"
+msgstr "Mientras se oculten las fuentes leídas"
 
 #: classes/pref/prefs.php:88
 msgid "Long date format"
 msgstr "Formato de fecha largo"
 
 #: classes/pref/prefs.php:88
-#, fuzzy
 msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
-msgstr "La sintaxis usada es idéntica a la función PHP <a href='http://php.net/manual/function.date.php'>date()</a>."
+msgstr ""
+"La sintaxis es idéntica a la función PHP <a href='http://php.net/manual/"
+"function.date.php'>date()</a>."
 
 #: classes/pref/prefs.php:89
-#, fuzzy
 msgid "Automatically show next feed"
-msgstr "Al ponerse al corriente, mostrar la siguiente fuente"
+msgstr "Mostrar automáticamente la siguiente fuente"
 
 #: classes/pref/prefs.php:89
-#, fuzzy
 msgid "After marking one as read"
-msgstr "Pedir confirmación para marcar una fuente como leída"
+msgstr "Tras marcar una como leída"
 
 #: classes/pref/prefs.php:90
-#, fuzzy
 msgid "Purge articles older than"
-msgstr "Purgar artículos sin leer"
+msgstr "Purgar artículos más antiguos de"
 
 #: classes/pref/prefs.php:90
 msgid "<strong>days</strong> (0 disables)"
-msgstr ""
+msgstr "<strong>días</strong> (0 desactivaciones)"
 
 #: classes/pref/prefs.php:91
 msgid "Purge unread articles"
@@ -2027,9 +1990,8 @@ msgid "Short date format"
 msgstr "Formato de fecha corto"
 
 #: classes/pref/prefs.php:94
-#, fuzzy
 msgid "Show content preview in headlines"
-msgstr "Mostrar una vista previa del contenido en la lista de titulares"
+msgstr "Mostrar una vista previa del contenido en los titulares"
 
 #: classes/pref/prefs.php:95
 msgid "Sort headlines by feed date"
@@ -2040,9 +2002,8 @@ msgid "Use feed-specified date to sort headlines instead of local import date."
 msgstr "Usar fecha especificada en la fuente para ordenar los titulares en lugar de la fecha local de importación."
 
 #: classes/pref/prefs.php:96
-#, fuzzy
 msgid "SSL client certificate"
-msgstr "Iniciar sesión con certificado SSL"
+msgstr "Certificado cliente SSL"
 
 #: classes/pref/prefs.php:98
 msgid "Strip unsafe tags from articles"
@@ -2059,16 +2020,15 @@ msgstr "Personalizar hoja de estilo"
 
 #: classes/pref/prefs.php:100
 msgid "Time zone"
-msgstr "Zona horaria "
+msgstr "Zona horaria"
 
 #: classes/pref/prefs.php:101
-#, fuzzy
 msgid "Group by feed"
-msgstr "25 primeras fuentes"
+msgstr "Agrupar por fuente"
 
 #: classes/pref/prefs.php:101
 msgid "Group multiple-feed output by originating feed"
-msgstr ""
+msgstr "Agrupar la salida de múltiples fuentes por fuente de origen"
 
 #: classes/pref/prefs.php:102
 msgid "Language"
@@ -2099,18 +2059,15 @@ msgid "Personal data"
 msgstr "Datos personales"
 
 #: classes/pref/prefs.php:260
-#, fuzzy
 msgid "Full name:"
-msgstr "Nombre completo"
+msgstr "Nombre completo:"
 
 #: classes/pref/prefs.php:265
 #: classes/pref/users.php:94
-#, fuzzy
 msgid "E-mail:"
 msgstr "Correo electrónico:"
 
 #: classes/pref/prefs.php:273
-#, fuzzy
 msgid "Access level:"
 msgstr "Nivel de acceso:"
 
@@ -2123,20 +2080,17 @@ msgid "Changing your current password will disable OTP."
 msgstr "Cambiar su contraseña actual desactivará las contraseñas de un solo uso."
 
 #: classes/pref/prefs.php:337
-#, fuzzy
 msgid "Old password:"
-msgstr "Antigua contraseña"
+msgstr "Contraseña antigua:"
 
 #: classes/pref/prefs.php:342
 #: classes/pref/users.php:82
-#, fuzzy
 msgid "New password:"
-msgstr "Nueva contraseña"
+msgstr "Nueva contraseña:"
 
 #: classes/pref/prefs.php:347
-#, fuzzy
 msgid "Confirm password:"
-msgstr "Confirme la nueva contraseña"
+msgstr "Confirme la contraseña:"
 
 #: classes/pref/prefs.php:357
 msgid "Change password"
@@ -2148,18 +2102,16 @@ msgstr "Contraseñas de un solo uso / Autenticador"
 
 #: classes/pref/prefs.php:392
 #: classes/pref/prefs.php:440
-#, fuzzy
 msgid "Your password:"
-msgstr "Confirme la nueva contraseña"
+msgstr "Su contraseña:"
 
 #: classes/pref/prefs.php:402
 msgid "Disable OTP"
 msgstr "Desactivar contraseñas de un solo uso"
 
 #: classes/pref/prefs.php:446
-#, fuzzy
 msgid "One time password:"
-msgstr "Contraseña de un solo uso incorrecta"
+msgstr "Contraseña de un solo uso:"
 
 #: classes/pref/prefs.php:453
 msgid "Enable OTP"
@@ -2170,18 +2122,16 @@ msgid "Some preferences are only available in default profile."
 msgstr "Algunas preferencias solo están disponibles en el perfil por defecto."
 
 #: classes/pref/prefs.php:601
-#, fuzzy
 msgid "default"
-msgstr "Por defecto"
+msgstr "por defecto"
 
 #: classes/pref/prefs.php:611
 msgid "Customize"
 msgstr "Personalizar"
 
 #: classes/pref/prefs.php:614
-#, fuzzy
 msgid "More themes..."
-msgstr "Más fuentes..."
+msgstr "Más temas..."
 
 #: classes/pref/prefs.php:675
 msgid "Register"
@@ -2193,9 +2143,9 @@ msgid "Clear"
 msgstr "Limpiar"
 
 #: classes/pref/prefs.php:690
-#, fuzzy, php-format
+#, php-format
 msgid "Current server time: %s"
-msgstr "Hora actual del servidor: %s (UTC)"
+msgstr "Hora actual del servidor: %s"
 
 #: classes/pref/prefs.php:719
 msgid "Save configuration"
@@ -2215,17 +2165,17 @@ msgstr "Opciones por defecto"
 
 #: classes/pref/prefs.php:776
 msgid "System plugins"
-msgstr "Plugins de sistema"
+msgstr "Extensiones de sistema"
 
 #: classes/pref/prefs.php:810
 #: classes/pref/prefs.php:856
 #, php-format
 msgid "v%.2f, by %s"
-msgstr ""
+msgstr "v%.2f, por %s"
 
 #: classes/pref/prefs.php:818
 msgid "User plugins"
-msgstr "Plugins de usuario"
+msgstr "Extensiones de usuario"
 
 #: classes/pref/prefs.php:845
 msgid "Clear data"
@@ -2233,7 +2183,7 @@ msgstr "Borrar datos"
 
 #: classes/pref/prefs.php:870
 msgid "Enable selected plugins"
-msgstr "Activar los plugins seleccionados"
+msgstr "Activar las extensiones seleccionados"
 
 #: classes/pref/prefs.php:945
 msgid "Incorrect one time password"
@@ -2245,9 +2195,10 @@ msgid "Incorrect password"
 msgstr "Contraseña incorrecta"
 
 #: classes/pref/prefs.php:1005
-#, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr "Aquí puede cambiar los colores, fuentes y diseño de su tema actual mediante código CSS. Puede utilizar  <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">este archivo</a> como referencia."
+msgstr ""
+"Puede sobrescribir los colores, las fuentes y el diseño del tema actualmente "
+"seleccionado con declaraciones CSS personalizadas aquí."
 
 #: classes/pref/prefs.php:1041
 msgid "Create profile"
@@ -2273,7 +2224,7 @@ msgstr "Su nivel de acceso es insuficiente para abrir esta pestaña."
 
 #: classes/pref/system.php:30
 msgid "Event Log"
-msgstr ""
+msgstr "Registro de Eventos"
 
 #: classes/pref/system.php:41
 msgid "Refresh"
@@ -2296,18 +2247,16 @@ msgid "Date"
 msgstr "Fecha"
 
 #: classes/pref/system.php:85
-#, fuzzy
 msgid "PHP Information"
-msgstr "Realizar la acción"
+msgstr "Información de PHP"
 
 #: classes/pref/users.php:26
-#, fuzzy
 msgid "Edit user"
-msgstr "Editar regla"
+msgstr "Editar usuario"
 
 #: classes/pref/users.php:68
 msgid "Access level: "
-msgstr "Nivel de acceso:"
+msgstr "Nivel de acceso:· "
 
 #: classes/pref/users.php:107
 msgid "User details"
@@ -2327,9 +2276,8 @@ msgid "Subscribed feeds count"
 msgstr "Contador de fuentes suscritas"
 
 #: classes/pref/users.php:158
-#, fuzzy
 msgid "Stored articles"
-msgstr "Favoritos"
+msgstr "Artículos almacenados"
 
 #: classes/pref/users.php:162
 #: classes/pref/users.php:389
@@ -2341,24 +2289,24 @@ msgid "User not found"
 msgstr "Usuario no encontrado"
 
 #: classes/pref/users.php:259
-#, fuzzy, php-format
+#, php-format
 msgid "Added user %s with password %s"
-msgstr "Se ha añadido al usuario <strong>%s</strong> con la contraseña <strong>%s</strong>"
+msgstr "Se ha añadido al usuario %s con la contraseña %s"
 
 #: classes/pref/users.php:266
-#, fuzzy, php-format
+#, php-format
 msgid "Could not create user %s"
-msgstr "No se puede crear el usuario <strong>%s</strong>"
+msgstr "No se pudo crear el usuario %s"
 
 #: classes/pref/users.php:270
-#, fuzzy, php-format
+#, php-format
 msgid "User %s already exists."
-msgstr "El usuario <strong>%s</strong> ya existe."
+msgstr "El usuario %s ya existe."
 
 #: classes/pref/users.php:295
-#, fuzzy, php-format
+#, php-format
 msgid "Changed password of user %s to %s"
-msgstr "Se ha cambiado la contraseña del usuario <b>%s</b> a <b>%s</b>"
+msgstr "Se ha cambiado la contraseña del usuario %s a %s"
 
 #: classes/pref/users.php:348
 msgid "Create user"
@@ -2395,117 +2343,117 @@ msgstr "Actualmente están soportados los siguientes cómics:"
 #: plugins/af_comics/init.php:71
 msgid "To subscribe to GoComics use the comic's regular web page as the feed URL (e.g. for the <em>Garfield</em> comic use <code>http://www.gocomics.com/garfield</code>)."
 msgstr ""
+"Para suscribirse a GoComics, utilice la página web habitual del cómic como "
+"URL de la fuente (p.e., para el cómic de <em>Garfield</em> use "
+"<code>http://www.gocomics.com/garfield</code>)."
 
 #: plugins/af_comics/init.php:73
 msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
 msgstr ""
+"Descarta cualquier filtro actualizado en <code>filters.local</code> en la "
+"carpeta de extensiones."
 
 #: plugins/af_psql_trgm/init.php:29
 #, php-format
 msgid "Data saved (%s, %d)"
-msgstr ""
+msgstr "Datos guardados (%s, %d)"
 
 #: plugins/af_psql_trgm/init.php:120
-#, fuzzy
 msgid "Show related articles"
-msgstr "Artículos compartidos"
+msgstr "Mostrar artículos relacionados"
 
 #: plugins/af_psql_trgm/init.php:127
 #: plugins/af_psql_trgm/init.php:236
-#, fuzzy
 msgid "Mark similar articles as read"
-msgstr "¿Marcar todos los artículos como leídos?"
+msgstr "Marcar artículos similares como leídos"
 
 #: plugins/af_psql_trgm/init.php:166
 #: plugins/af_readability/init.php:58
-#, fuzzy
 msgid "Global settings"
-msgstr "Incluir preferencias"
+msgstr "Preferencias globales"
 
 #: plugins/af_psql_trgm/init.php:172
 msgid "Minimum similarity:"
-msgstr ""
+msgstr "Similitud mínima:"
 
 #: plugins/af_psql_trgm/init.php:178
 msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
 msgstr ""
+"La extensión  trigram de PostgreSQL devuelve similitud de cadena como un "
+"número de punto flotante (0-1). Si se ajusta a un valor demasiado bajo se "
+"pueden producir falsos positivos, cero deshabilita la comprobación."
 
 #: plugins/af_psql_trgm/init.php:183
 msgid "Minimum title length:"
-msgstr ""
+msgstr "Longitud mínima del título:"
 
 #: plugins/af_psql_trgm/init.php:192
-#, fuzzy
 msgid "Enable for all feeds:"
-msgstr "Actualizar todas las fuentes"
+msgstr "Habilitar para todas las fuentes:"
 
 #: plugins/af_psql_trgm/init.php:207
 #: plugins/af_readability/init.php:101
 msgid "Currently enabled for (click to edit):"
-msgstr ""
+msgstr "Actualmente habilitado para (click para editar):"
 
 #: plugins/af_psql_trgm/init.php:224
 msgid "Similarity (pg_trgm)"
-msgstr ""
+msgstr "Similitud (pg_trgm)"
 
 #: plugins/af_readability/init.php:25
 msgid "Data saved."
-msgstr ""
+msgstr "Datos guardados."
 
 #: plugins/af_readability/init.php:45
-#, fuzzy
 msgid "Inline content"
-msgstr "Desplazar el contenido del artículo"
+msgstr "Contenido entre líneas"
 
 #: plugins/af_readability/init.php:52
 msgid "Readability settings (af_readability)"
-msgstr ""
+msgstr "Configuración de Readability (af_readability)"
 
 #: plugins/af_readability/init.php:87
 msgid "Provide full-text services to core code (bookmarklets) and other plugins"
 msgstr ""
+"Proporcionar servicios de texto completo al código central (bookmarklets) y "
+"otras extensiones"
 
 #: plugins/af_readability/init.php:118
-#, fuzzy
 msgid "Readability"
-msgstr "Comprobar la disponibilidad"
+msgstr "Readability"
 
 #: plugins/af_readability/init.php:130
-#, fuzzy
 msgid "Inline article content"
-msgstr "Desplazar el contenido del artículo"
+msgstr "Contenido entre líneas de artículos"
 
 #: plugins/af_redditimgur/init.php:28
 msgid "Reddit content settings (af_redditimgur)"
-msgstr ""
+msgstr "Configuración de contenido de Reddit (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:60
 msgid "Extract missing content using Readability (requires af_readability)"
-msgstr ""
+msgstr "Extraer contenido restante usando Readability (requiere af_readability)"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
-msgstr ""
+msgstr "Habilitar la comprobación adicional de duplicados"
 
 #: plugins/af_redditimgur/init.php:82
 #: plugins/af_zz_imgproxy/init.php:253
-#, fuzzy
 msgid "Configuration saved"
-msgstr "Configuración guardada."
+msgstr "Configuración guardada"
 
 #: plugins/af_zz_imgproxy/init.php:209
 msgid "Image proxy settings (af_zz_imgproxy)"
-msgstr ""
+msgstr "Configuración del proxy de imágenes (af_zz_imgproxy)"
 
 #: plugins/af_zz_imgproxy/init.php:233
-#, fuzzy
 msgid "Enable proxy for all remote images."
-msgstr "Actualizar todas las fuentes"
+msgstr "Habilitar proxy para todas las imágenes remotas."
 
 #: plugins/af_zz_imgproxy/init.php:237
-#, fuzzy
 msgid "Don't cache files locally."
-msgstr "Guardar las imágenes en la memoria caché local"
+msgstr "No almacenar archivos en caché localmente."
 
 #: plugins/auth_internal/init.php:72
 msgid "Please enter your one time password:"
@@ -2570,7 +2518,7 @@ msgstr "Fallo de la importación: no se reconoce el formato del documento."
 
 #: plugins/import_export/init.php:441
 msgid "Finished: "
-msgstr "Terminado:"
+msgstr "Terminado:· "
 
 #: plugins/import_export/init.php:442
 #, php-format
@@ -2602,9 +2550,9 @@ msgid "Prepare data"
 msgstr "Preparar datos"
 
 #: plugins/import_export/init.php:481
-#, fuzzy, php-format
+#, php-format
 msgid "Upload failed with error code %d (%s)"
-msgstr "La subida falló con el código de error %d"
+msgstr "La subida falló con el código de error %d (%s)"
 
 #: plugins/import_export/init.php:505
 msgid "No file uploaded."
@@ -2612,16 +2560,17 @@ msgstr "No se ha cargado ningún archivo."
 
 #: plugins/mail/init.php:29
 msgid "Mail addresses saved."
-msgstr ""
+msgstr "Direcciones de correo guardadas."
 
 #: plugins/mail/init.php:36
-#, fuzzy
 msgid "Mail plugin"
-msgstr "Plugins de usuario"
+msgstr "Extensión de correo"
 
 #: plugins/mail/init.php:38
 msgid "You can set predefined email addressed here (comma-separated list):"
 msgstr ""
+"Aquí puede establecer una dirección de correo electrónico predefinida (lista "
+"separada por comas):"
 
 #: plugins/mail/init.php:118
 #: plugins/mail/init.php:124
@@ -2653,7 +2602,7 @@ msgstr "Hacer click en el enlace siguiente invocará su aplicación de correo:"
 
 #: plugins/mailto/init.php:77
 msgid "Forward selected article(s) by email."
-msgstr "Enviar artículo por correo"
+msgstr "Enviar artículo(s) seleccionado(s) por correo electrónico."
 
 #: plugins/mailto/init.php:80
 msgid "You should be able to edit the message before sending in your mail client."
@@ -2675,7 +2624,7 @@ msgstr "NSFW (click para alternar)"
 
 #: plugins/nsfw/init.php:53
 msgid "NSFW Plugin"
-msgstr "Plugin NSFW"
+msgstr "Extensión NSFW"
 
 #: plugins/nsfw/init.php:80
 msgid "Tags to consider NSFW (comma-separated)"
@@ -2706,9 +2655,8 @@ msgid "Unshare article"
 msgstr "Dejar de compartir el artículo"
 
 #: plugins/toggle_sidebar/init.php:27
-#, fuzzy
 msgid "Toggle sidebar"
-msgstr "Alternar favoritos"
+msgstr "Alternar la barra lateral"
 
 #: plugins/vf_shared/init.php:17
 #: plugins/vf_shared/init.php:73
@@ -2721,7 +2669,7 @@ msgstr "Error explicado"
 
 #: js/AppBase.js:403
 msgid "Fatal error"
-msgstr ""
+msgstr "Error crítico"
 
 #: js/Article.js:33
 msgid "Please enter new score for selected articles:"
@@ -2738,9 +2686,8 @@ msgstr "Por favor, introduzca puntuación para los artículos seleccionados:"
 #: js/Headlines.js:742
 #: js/Headlines.js:768
 #: js/Headlines.js:780
-#, fuzzy
 msgid "No articles selected."
-msgstr "No se ha seleccionado ningún artículo."
+msgstr "Ningún artículo seleccionado."
 
 #: js/Article.js:67
 msgid "Please enter new score for this article:"
@@ -2779,6 +2726,9 @@ msgstr "Suscribirse a fuente"
 #: js/CommonDialogs.js:110
 msgid "Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."
 msgstr ""
+"Fallo en el procesamiento de la salida. Esto puede indicar timeout del "
+"servidor y/o problemas de red. La salida del backend se registró en la "
+"consola del navegador."
 
 #: js/CommonDialogs.js:125
 #, perl-format
@@ -2826,9 +2776,8 @@ msgstr "¿Borrar fuentes seleccionadas?"
 #: js/PrefFeedTree.js:230
 #: js/PrefFeedTree.js:246
 #: js/PrefFeedTree.js:398
-#, fuzzy
 msgid "No feeds selected."
-msgstr "No se ha seleccionado ninguna fuente."
+msgstr "Ninguna fuente seleccionada."
 
 #: js/CommonDialogs.js:248
 msgid "More Feeds"
@@ -2863,29 +2812,30 @@ msgid "Generate new syndication address for this feed?"
 msgstr "¿Generar nueva dirección de sindicación para esta fuente?"
 
 #: js/Feeds.js:221
-#, fuzzy
 msgid "Your password is at default value"
-msgstr "Su contraseña tiene el valor por defecto. Por favor, modifíquela."
+msgstr "Su contraseña tiene el valor por defecto"
 
 #: js/Headlines.js:633
 #: js/Headlines.js:681
 #: js/Headlines.js:698
-#, fuzzy
 msgid "Click to open next unread feed."
-msgstr "Pulse para editar fuente"
+msgstr "Pulse abrir la siguiente fuente sin leer."
 
 #: js/Headlines.js:637
 msgid "Cancel search"
 msgstr "Cancelar búsqueda"
 
 #: js/Headlines.js:695
-#, fuzzy
 msgid "New articles found, reload feed to continue."
-msgstr "No se han encontrado artículos que mostrar."
+msgstr ""
+"No se han encontrado artículos nuevos, vuelve a cargar la fuente para "
+"continuar."
 
 #: js/Headlines.js:706
 msgid "Could not update headlines (invalid object received - see error console for details)"
 msgstr ""
+"No se pudieron actualizar los titulares (objeto inválido recibido - vea la "
+"consola de errores para más detalles)"
 
 #: js/Headlines.js:963
 #, perl-format
@@ -2991,9 +2941,8 @@ msgid "Remove selected categories?"
 msgstr "¿Eliminar las categorías seleccionadas?"
 
 #: js/PrefFeedTree.js:209
-#, fuzzy
 msgid "No categories selected."
-msgstr "No se han seleccionado categorías."
+msgstr "Ninguna categoría seleccionada."
 
 #: js/PrefFeedTree.js:260
 msgid "Edit Multiple Feeds"
@@ -3004,9 +2953,8 @@ msgid "Save changes to selected feeds?"
 msgstr "¿Guardar los cambios de las fuentes seleccionadas?"
 
 #: js/PrefFeedTree.js:315
-#, fuzzy
 msgid "Rename category to:"
-msgstr "Borrar categoría"
+msgstr "Cambiar el nombre de la categoría a:"
 
 #: js/PrefFeedTree.js:327
 msgid "Category title:"
@@ -3027,9 +2975,8 @@ msgstr "Inverso"
 #: js/PrefFilterTree.js:107
 #: js/PrefFilterTree.js:123
 #: js/PrefFilterTree.js:236
-#, fuzzy
 msgid "No filters selected."
-msgstr "No se han seleccionado filtros."
+msgstr "Ningún filtro seleccionado."
 
 #: js/PrefFilterTree.js:111
 msgid "Combine selected filters?"
@@ -3056,9 +3003,8 @@ msgid "This will invalidate all previously generated feed URLs. Continue?"
 msgstr "Se invalidarán todas las URLs generadas previamente. ¿Continuar?"
 
 #: js/PrefHelpers.js:21
-#, fuzzy
 msgid "Clear event log?"
-msgstr "Borrar registro"
+msgstr "¿Borrar registro de eventos?"
 
 #: js/PrefHelpers.js:40
 msgid "Settings Profiles"
@@ -3069,9 +3015,8 @@ msgid "Remove selected profiles? Active and default profiles will not be removed
 msgstr "¿Borrar los perfiles seleccionados? El perfil activo y el perfil por defecto no serán borrados."
 
 #: js/PrefHelpers.js:64
-#, fuzzy
 msgid "No profiles selected."
-msgstr "No se ha seleccionado ningún artículo."
+msgstr "Ningún perfil seleccionado."
 
 #: js/PrefHelpers.js:71
 msgid "Activate selected profile?"
@@ -3087,7 +3032,7 @@ msgstr "¿Restaurar las opciones por defecto?"
 
 #: js/PrefHelpers.js:137
 msgid "Clear stored data for this plugin?"
-msgstr "¿Borrar los datos guardados por este plugin?"
+msgstr "¿Borrar los datos guardados por esta extensión?"
 
 #: js/PrefHelpers.js:156
 msgid "Please choose an OPML file first."
@@ -3106,9 +3051,8 @@ msgid "Click to close"
 msgstr "Clic para cerrar"
 
 #: plugins/af_psql_trgm/init.js:10
-#, fuzzy
 msgid "Related articles"
-msgstr "Borrar artículo"
+msgstr "Artículos relacionados"
 
 #: plugins/import_export/import_export.js:13
 msgid "Export Data"
@@ -3136,7 +3080,7 @@ msgstr "Enviar artículo por correo"
 
 #: plugins/mail/mail.js:30
 msgid "Error sending email:"
-msgstr ""
+msgstr "Error al enviar el correo electrónico:"
 
 #: plugins/share/share.js:10
 msgid "Share article by URL"
@@ -3161,14 +3105,18 @@ msgstr "Ayuda"
 #: js/AppBase.js:265
 msgid "<span onclick=\"App.explainError(1)\">Update daemon is not running.</span>"
 msgstr ""
+"<span onclick=\"App.explainError(1)\">El demonio de actualización no se está "
+"ejecutando</span>"
 
 #: js/AppBase.js:278
 msgid "<span onclick=\"App.explainError(3)\">Update daemon is not updating feeds.</span>"
 msgstr ""
+"<span onclick=\"App.explainError(3)\">El demonio de actualización no está "
+"actualizando las fuentes.</span>"
 
 #: js/AppBase.js:453
 msgid "Unhandled exception"
-msgstr ""
+msgstr "Excepción no controlada"
 
 #: js/Article.js:236
 msgid "Edit article Tags"
@@ -3195,14 +3143,12 @@ msgid "Upload complete."
 msgstr "Subida completa."
 
 #: js/CommonDialogs.js:62
-#, fuzzy
 msgid "Upload failed: icon is too big."
-msgstr "La subida falló con el código de error %d"
+msgstr "La subida falló: el icono es demasiado grande."
 
 #: js/CommonDialogs.js:65
-#, fuzzy
 msgid "Upload failed."
-msgstr "Subida completa."
+msgstr "Subida fallida."
 
 #: js/CommonDialogs.js:203
 #: js/PrefFeedTree.js:383
@@ -3240,31 +3186,28 @@ msgstr "Editar acción"
 
 #: js/CommonFilters.js:194
 msgid "Looking for articles (%d processed, %f found)..."
-msgstr ""
+msgstr "Buscando artículos (%d procesados, %f encontrados)..."
 
 #: js/CommonFilters.js:225
-#, fuzzy
 msgid "Found %d articles matching this filter:"
-msgstr "Artículos coincidentes con este filtro:"
+msgstr "Encontrados %d artículos coincidentes con este filtro:"
 
 #: js/CommonFilters.js:236
-#, fuzzy
 msgid "Error while trying to get filter test results."
-msgstr "Error mientras se intentaba cargar más titulares"
+msgstr ""
+"Error mientras se intentaba obtener los resultados de la prueba del filtro."
 
 #: js/CommonFilters.js:278
 msgid "Create Filter"
 msgstr "Crear filtro"
 
 #: js/FeedTree.js:71
-#, fuzzy
 msgid "Debug feed"
-msgstr "Depurar la actualización de fuentes"
+msgstr "Depurar feed"
 
 #: js/FeedTree.js:99
-#, fuzzy
 msgid "(Un)collapse"
-msgstr "Mostrar/ocultar la barra lateral"
+msgstr "(Des)plegar"
 
 #: js/Feeds.js:372
 msgid "Mark all articles as read?"
@@ -3275,34 +3218,28 @@ msgid "Marking all feeds as read..."
 msgstr "Marcando todas las fuentes como leídas..."
 
 #: js/Feeds.js:394
-#, fuzzy
 msgid "Mark %w in %s older than 1 day as read?"
-msgstr "¿Marcar como leídos todos los artículos de más de 1 día de antigüedad de %s? "
+msgstr "¿Marcar %w en %s de más de 1 día de antigüedad como leídos?"
 
 #: js/Feeds.js:397
-#, fuzzy
 msgid "Mark %w in %s older than 1 week as read?"
-msgstr "¿Marcar como leídos todos los artículos de más de 1 semana de antigüedad de %s?"
+msgstr "¿Marcar %w en %s de más de 1 semana de antigüedad como leídos?"
 
 #: js/Feeds.js:400
-#, fuzzy
 msgid "Mark %w in %s older than 2 weeks as read?"
-msgstr "¿Marcar como leídos todos los artículos de más de 2 semanas de antigüedad de %s?"
+msgstr "¿Marcar %w en %s de más de 2 semanas de antigüedad como leídos?"
 
 #: js/Feeds.js:403
-#, fuzzy
 msgid "Mark %w in %s as read?"
-msgstr "¿Marcar todos los artículos de %s como leídos?"
+msgstr "¿Marcar %w en %s  como leídos?"
 
 #: js/Feeds.js:406
-#, fuzzy
 msgid "search results"
-msgstr "Resultados de búsqueda: %s"
+msgstr "resultados de búsqueda"
 
 #: js/Feeds.js:406
-#, fuzzy
 msgid "all articles"
-msgstr "Todos"
+msgstr "todos los artículos"
 
 #: js/Feeds.js:448
 msgid "Mark all articles in %s as read?"
@@ -3349,7 +3286,7 @@ msgstr "Limpiando URLs..."
 
 #: js/PrefHelpers.js:8
 msgid "Generated URLs cleared."
-msgstr "Borrar todas las URLs generadas"
+msgstr "Borradas todas las URLs generadas."
 
 #: js/PrefHelpers.js:50
 msgid "Removing selected profiles..."
@@ -3374,9 +3311,8 @@ msgstr "¿Restaurar color por defecto en los marcadores seleccionados?"
 
 #: js/PrefLabelTree.js:139
 #: js/PrefLabelTree.js:159
-#, fuzzy
 msgid "No labels selected."
-msgstr "No se han seleccionado marcadores."
+msgstr "Ninguna etiqueta seleccionada."
 
 #: js/PrefLabelTree.js:146
 msgid "Remove selected labels?"
@@ -3387,7 +3323,6 @@ msgid "Removing selected labels..."
 msgstr "Eliminando las etiquetas seleccionadas..."
 
 #: js/PrefUsers.js:15
-#, fuzzy
 msgid "Please enter username:"
 msgstr "Por favor, introduzca el nombre de usuario:"
 
@@ -3402,13 +3337,11 @@ msgstr "Editor de usuario"
 #: js/PrefUsers.js:57
 #: js/PrefUsers.js:96
 #: js/PrefUsers.js:103
-#, fuzzy
 msgid "No users selected."
-msgstr "No se han seleccionado usuarios."
+msgstr "Ningún usuario seleccionado."
 
 #: js/PrefUsers.js:62
 #: js/PrefUsers.js:108
-#, fuzzy
 msgid "Please select one user."
 msgstr "Por favor, seleccione un solo usuario."
 
@@ -3429,18 +3362,17 @@ msgid "Removing selected users..."
 msgstr "Eliminando los usuarios seleccionados..."
 
 #: js/tt-rss.js:344
-#, fuzzy
 msgid "Please enable mail or mailto plugin first."
-msgstr "Por favor, habilite primero el plugin mail."
+msgstr "Por favor, habilite primero la extensión de correo."
 
 #: js/tt-rss.js:460
 msgid "Please enable embed_original plugin first."
-msgstr "Por favor, habilite primero el plugin embed_original."
+msgstr "Por favor, habilite primero la extensión embed_original."
 
 #: js/tt-rss.js:473
 #: js/tt-rss.js:563
 msgid "Widescreen is not available in combined mode."
-msgstr ""
+msgstr "El modo de pantalla ancha no está disponible en el modo combinado."
 
 #: js/tt-rss.js:532
 msgid "Please select some feed first."
@@ -3459,9 +3391,8 @@ msgid "Trying to change URL..."
 msgstr "Intentando cambiar la URL..."
 
 #: plugins/share/share.js:40
-#, fuzzy
 msgid "Could not change URL."
-msgstr "No se puede cambiar la URL de la fuente."
+msgstr "No se pudo cambiar la URL."
 
 #: plugins/share/share_prefs.js:9
 msgid "Shared URLs cleared."

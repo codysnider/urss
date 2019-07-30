@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2014-02-17 23:12+0800\n"
-"Last-Translator: Yuan Chiu <me@yuaner.tw>\n"
-"Language-Team: Yuan Chiu <me@yuaner.tw>\n"
+"PO-Revision-Date: 2019-07-27 10:10+0000\n"
+"Last-Translator: 洪偉翔 <weihsiang.hung@gmail.com>\n"
+"Language-Team: Chinese (Traditional) <https://weblate.tt-rss.org/projects/"
+"tt-rss/messages/zh_Hant/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Weblate 3.7.1\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -57,13 +58,11 @@ msgstr "禁用更新"
 
 #: backend.php:84
 #: backend.php:94
-#, fuzzy
 msgid "15 minutes"
 msgstr "每15分鐘"
 
 #: backend.php:85
 #: backend.php:95
-#, fuzzy
 msgid "30 minutes"
 msgstr "每30分鐘"
 
@@ -74,13 +73,11 @@ msgstr "每小時"
 
 #: backend.php:87
 #: backend.php:97
-#, fuzzy
 msgid "4 hours"
 msgstr "每4小時"
 
 #: backend.php:88
 #: backend.php:98
-#, fuzzy
 msgid "12 hours"
 msgstr "每12小時"
 
@@ -159,18 +156,16 @@ msgid "SQL escaping test failed, check your database and PHP configuration"
 msgstr "SQL 脫出測試失敗，請檢查您的資料庫和 PHP 設定。"
 
 #: errors.php:37
-#, fuzzy
 msgid "Method not found"
-msgstr "找不到摘要。"
+msgstr "找不到方法(Method)"
 
 #: errors.php:39
-#, fuzzy
 msgid "Plugin not found"
-msgstr "未找到使用者"
+msgstr "找不到插件"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
-msgstr ""
+msgstr "將資料轉為JSON編碼失敗"
 
 #: index.php:127
 #: index.php:142
@@ -206,11 +201,11 @@ msgstr "無法連接到伺服器"
 
 #: index.php:154
 msgid "Recent entries found in event log."
-msgstr ""
+msgstr "在事件日誌中找到的最近條目。"
 
 #: index.php:157
 msgid "Updates are available from Git."
-msgstr ""
+msgstr "Git上有新的更新。"
 
 #: index.php:171
 msgid "Show articles"
@@ -244,7 +239,7 @@ msgstr "未讀"
 
 #: index.php:179
 msgid "With Note"
-msgstr ""
+msgstr "筆記"
 
 #: index.php:180
 msgid "Ignore Scoring"
@@ -342,9 +337,8 @@ msgstr "切換版面顯示"
 
 #: index.php:232
 #: include/functions.php:1213
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "鎖定發布的項"
+msgstr "切換夜間模式"
 
 #: index.php:233
 msgid "Keyboard shortcuts help"
@@ -493,12 +487,12 @@ msgstr "未分類"
 
 #: include/functions.php:84
 msgid "Detect automatically"
-msgstr ""
+msgstr "自動偵測"
 
 #: include/functions.php:958
 #, php-format
 msgid "%d min"
-msgstr ""
+msgstr "%d 分鐘"
 
 #: include/functions.php:1154
 msgid "Navigation"
@@ -510,7 +504,7 @@ msgstr "顯示下一個摘要"
 
 #: include/functions.php:1156
 msgid "Open previous feed"
-msgstr ""
+msgstr "顯示上一個摘要"
 
 #: include/functions.php:1157
 msgid "Open next article"
@@ -522,19 +516,19 @@ msgstr "開啟上一個文章"
 
 #: include/functions.php:1159
 msgid "Open next article (don't scroll long articles)"
-msgstr ""
+msgstr "顯示下一篇文章（不要在長文章中捲動）"
 
 #: include/functions.php:1160
 msgid "Open previous article (don't scroll long articles)"
-msgstr ""
+msgstr "顯示上一篇文章（不要在長文章中捲動）"
 
 #: include/functions.php:1161
 msgid "Move to next article (don't expand or mark read)"
-msgstr ""
+msgstr "移動到下一篇文章（不要展開會標示為已讀）"
 
 #: include/functions.php:1162
 msgid "Move to previous article (don't expand or mark read)"
-msgstr ""
+msgstr "移動到上一篇文章（不要展開或標示為已讀）"
 
 #: include/functions.php:1163
 msgid "Show search dialog"
@@ -586,24 +580,20 @@ msgid "Scroll up"
 msgstr "向上捲動"
 
 #: include/functions.php:1174
-#, fuzzy
 msgid "Select article under cursor"
-msgstr "選擇滑鼠指向的文章"
+msgstr "選擇滑鼠指到的文章"
 
 #: include/functions.php:1175
-#, fuzzy
 msgid "Email article"
 msgstr "透過郵件發送文章"
 
 #: include/functions.php:1176
-#, fuzzy
 msgid "Close/collapse article"
-msgstr "選擇所有文章"
+msgstr "關閉/折疊文章"
 
 #: include/functions.php:1177
-#, fuzzy
 msgid "Toggle article expansion (combined mode)"
-msgstr "鎖定發布的項"
+msgstr "切換文章展開（合併模式）"
 
 #: include/functions.php:1179
 msgid "Toggle embed original"
@@ -664,23 +654,20 @@ msgid "Edit feed"
 msgstr "編輯摘要"
 
 #: include/functions.php:1193
-#, fuzzy
 msgid "Reverse headlines"
 msgstr "反向排序"
 
 #: include/functions.php:1194
 msgid "Toggle headline grouping"
-msgstr ""
+msgstr "切換標題分組"
 
 #: include/functions.php:1195
-#, fuzzy
 msgid "Debug feed update"
-msgstr "禁用更新"
+msgstr "調試摘要更新"
 
 #: include/functions.php:1196
-#, fuzzy
 msgid "Debug viewfeed()"
-msgstr "禁用更新"
+msgstr "調試 viewfeed()"
 
 #: include/functions.php:1197
 #: js/FeedTree.js:121
@@ -688,19 +675,16 @@ msgid "Mark all feeds as read"
 msgstr "標記所有摘要為已讀"
 
 #: include/functions.php:1198
-#, fuzzy
 msgid "Un/collapse current category"
-msgstr "加入到類別："
+msgstr "展開/折疊當前分類"
 
 #: include/functions.php:1199
-#, fuzzy
 msgid "Toggle auto expand in combined mode"
-msgstr "鎖定發布的項"
+msgstr "切換合併模式中的自動展開功能"
 
 #: include/functions.php:1200
-#, fuzzy
 msgid "Toggle combined mode"
-msgstr "鎖定發布的項"
+msgstr "切換合併模式"
 
 #: include/functions.php:1201
 msgid "Go to"
@@ -741,47 +725,44 @@ msgid "Create filter"
 msgstr "建立過濾器"
 
 #: include/functions.php:1212
-#, fuzzy
 msgid "Un/collapse sidebar"
-msgstr "折疊側邊欄"
+msgstr "展開/折疊側邊欄"
 
 #: include/functions.php:1214
-#, fuzzy
 msgid "Show help dialog"
-msgstr "顯示搜尋對話框"
+msgstr "顯示說明對話框"
 
 #: include/functions.php:2465
 msgid "There is no error, the file uploaded with success"
-msgstr ""
+msgstr "沒有發生錯誤，檔案上傳成功"
 
 #: include/functions.php:2466
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
-msgstr ""
+msgstr "上傳的文件超過了 php.ini 中 upload_max_filesize 定義的大小"
 
 #: include/functions.php:2467
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
-msgstr ""
+msgstr "上傳的文件大小超過了 HTML form 中 MAX_FILE_SIZE 定義的限制"
 
 #: include/functions.php:2468
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "僅上傳成功部分檔案"
 
 #: include/functions.php:2469
-#, fuzzy
 msgid "No file was uploaded"
 msgstr "沒有上傳檔案"
 
 #: include/functions.php:2470
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "找不到暫存資料夾"
 
 #: include/functions.php:2471
 msgid "Failed to write file to disk."
-msgstr ""
+msgstr "檔案寫入硬碟失敗。"
 
 #: include/functions.php:2472
 msgid "A PHP extension stopped the file upload."
-msgstr ""
+msgstr "某個PHP擴展終止了檔案上傳。"
 
 #: include/login_form.php:81
 #: classes/handler/public.php:643
@@ -828,23 +809,20 @@ msgid "Log in"
 msgstr "登入"
 
 #: include/sessions.php:45
-#, fuzzy
 msgid "Session failed to validate (schema version changed)"
-msgstr "無法驗證會話（IP 錯誤）"
+msgstr "無法驗證會話（schema 版本發生變化）"
 
 #: include/sessions.php:53
-#, fuzzy
 msgid "Session failed to validate (UA changed)."
-msgstr "無法驗證會話（IP 錯誤）"
+msgstr "無法驗證會話（UA 發生變化）"
 
 #: include/sessions.php:67
 msgid "Session failed to validate (password changed)"
 msgstr "無法驗證會話（IP 錯誤）"
 
 #: include/sessions.php:74
-#, fuzzy
 msgid "Session failed to validate (user not found)"
-msgstr "無法驗證會話（IP 錯誤）"
+msgstr "無法驗證會話（找不到使用者）"
 
 #: classes/article.php:26
 msgid "Article not found."
@@ -911,12 +889,12 @@ msgstr "快捷鍵"
 #: classes/backend.php:61
 #: classes/backend.php:130
 msgid "Shift"
-msgstr ""
+msgstr "Shift"
 
 #: classes/backend.php:64
 #: classes/backend.php:133
 msgid "Ctrl"
-msgstr ""
+msgstr "Ctrl"
 
 #: classes/backend.php:159
 #: classes/dlg.php:30
@@ -959,9 +937,9 @@ msgid "Update daemon is taking too long to perform a feed update. This could ind
 msgstr "更新進程在抓取信息更新時花費了太長時間，可能已經崩潰。請檢查守護進程或聯系管理員。"
 
 #: classes/dlg.php:170
-#, fuzzy, php-format
+#, php-format
 msgid "%s can be accessed via the following secret URL:"
-msgstr "您可以透過此 URL 分享本文章："
+msgstr "您可以透過此 URL 分享%s："
 
 #: classes/dlg.php:181
 #: classes/pref/filters.php:1015
@@ -970,27 +948,24 @@ msgstr "您可以透過此 URL 分享本文章："
 #: classes/pref/prefs.php:852
 #: classes/pref/prefs.php:867
 #: plugins/bookmarklets/init.php:45
-#, fuzzy
 msgid "More info..."
-msgstr "更多資訊"
+msgstr "更多資訊..."
 
 #: classes/dlg.php:196
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
-msgstr ""
+msgstr "您正在使用預設的tt-rss密碼。 請在偏好設定（個人資料與驗證）中進行更改。"
 
 #: classes/dlg.php:200
-#, fuzzy
 msgid "Open Preferences"
-msgstr "偏好設定"
+msgstr "打開偏好設定"
 
 #: classes/feeds.php:34
 #: classes/feeds.php:35
 #: classes/feeds.php:99
 #: classes/feeds.php:100
 #: classes/pref/feeds.php:1371
-#, fuzzy
 msgid "Show as feed"
-msgstr "本摘要"
+msgstr "以摘要顯示"
 
 #: classes/feeds.php:41
 #, php-format
@@ -998,9 +973,8 @@ msgid "Last updated: %s"
 msgstr "上次更新： %s"
 
 #: classes/feeds.php:60
-#, fuzzy
 msgid "Select..."
-msgstr "選擇"
+msgstr "選擇..."
 
 #: classes/feeds.php:62
 #: classes/pref/feeds.php:1224
@@ -1068,7 +1042,6 @@ msgstr "存檔"
 #: classes/feeds.php:91
 #: plugins/mail/init.php:76
 #: plugins/mailto/init.php:24
-#, fuzzy
 msgid "Forward by email"
 msgstr "透過郵件轉發"
 
@@ -1091,14 +1064,13 @@ msgid "Archived articles"
 msgstr "已儲存的文章"
 
 #: classes/feeds.php:320
-#, fuzzy
 msgid "Collapse article"
-msgstr "全部文章"
+msgstr "折疊文章"
 
 #: classes/feeds.php:345
-#, fuzzy, php-format
+#, php-format
 msgid "Imported at %s"
-msgstr "匯入"
+msgstr "從%s匯入"
 
 #: classes/feeds.php:397
 msgid "No unread articles found to display."
@@ -1113,9 +1085,8 @@ msgid "No starred articles found to display."
 msgstr "沒有加星標的文章。"
 
 #: classes/feeds.php:407
-#, fuzzy
 msgid "No articles found to display. You can assign articles to labels manually from article header context menu (applies to all selected articles) or use a filter."
-msgstr "本標籤下沒有文章。你可以透過手動或過濾器的方式為文章添加預定義標籤（參考上方動作菜單）。"
+msgstr "本標籤下沒有文章。你可以透過文章標題上的右鍵選單（會套用到全部所選的文章）或使用過濾器的方式為文章新增標籤。"
 
 #: classes/feeds.php:409
 msgid "No articles found to display."
@@ -1137,9 +1108,8 @@ msgid "No feed selected."
 msgstr "沒有選取的摘要。"
 
 #: classes/feeds.php:659
-#, fuzzy
 msgid "Feed or site URL"
-msgstr "摘要 URL"
+msgstr "摘要或網站 URL"
 
 #: classes/feeds.php:667
 #: classes/pref/feeds.php:571
@@ -1180,14 +1150,13 @@ msgid "Subscribe"
 msgstr "訂閱"
 
 #: classes/feeds.php:735
-#, fuzzy, php-format
+#, php-format
 msgid "Search %s..."
-msgstr "搜尋"
+msgstr "搜尋 %s..."
 
 #: classes/feeds.php:741
 #: classes/pref/feeds.php:603
 #: classes/pref/feeds.php:841
-#, fuzzy
 msgid "Language:"
 msgstr "語言："
 
@@ -1196,9 +1165,8 @@ msgid "Used for word stemming"
 msgstr ""
 
 #: classes/feeds.php:753
-#, fuzzy
 msgid "Search syntax"
-msgstr "搜尋"
+msgstr "搜尋語法"
 
 #: classes/feeds.php:756
 #: classes/pref/feeds.php:1217
@@ -1227,7 +1195,7 @@ msgstr "特殊區域"
 #: classes/feeds.php:1472
 #, php-format
 msgid "Incorrect search syntax: %s."
-msgstr ""
+msgstr "不正確的搜尋語法： %s。"
 
 #: classes/feeds.php:1657
 #, php-format
@@ -1262,7 +1230,7 @@ msgstr "分享"
 
 #: classes/handler/public.php:622
 msgid "Shared article will appear in the Published feed."
-msgstr ""
+msgstr "共享文章將顯示在已發布的摘要中。"
 
 #: classes/handler/public.php:716
 msgid "Incorrect username or password"
@@ -1294,9 +1262,8 @@ msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "無法訂閱 <b>%s</b>。<br>無法下載摘要的 URL。"
 
 #: classes/handler/public.php:830
-#, fuzzy
 msgid "Multiple feed URLs found:"
-msgstr "未找到摘要。"
+msgstr "找到多個摘要："
 
 #: classes/handler/public.php:843
 msgid "Subscribe to selected feed"
@@ -1311,14 +1278,13 @@ msgid "Password recovery"
 msgstr "密碼救援"
 
 #: classes/handler/public.php:963
-#, fuzzy
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
-msgstr "你需要提供有效的電子郵件以及帳號名稱，新密碼將以電子郵件寄給你。"
+msgstr "你需要提供有效的電子郵件以及帳號名稱，密碼重設連結將以電子郵件寄給你。"
 
 #: classes/handler/public.php:983
-#, fuzzy, php-format
+#, php-format
 msgid "How much is %d + %d:"
-msgstr "二加二等於几："
+msgstr "%d+%d等於幾："
 
 #: classes/handler/public.php:989
 #: classes/pref/users.php:356
@@ -1327,7 +1293,7 @@ msgstr "重設密碼"
 
 #: classes/handler/public.php:1001
 msgid "Some of the required form parameters are missing or incorrect."
-msgstr ""
+msgstr "表單信息不完整或不正確。"
 
 #: classes/handler/public.php:1005
 #: classes/handler/public.php:1071
@@ -1335,9 +1301,8 @@ msgid "Go back"
 msgstr "回去"
 
 #: classes/handler/public.php:1047
-#, fuzzy
 msgid "[tt-rss] Password reset request"
-msgstr "[tt-rss] 密碼更換提醒"
+msgstr "[tt-rss] 密碼重設請求"
 
 #: classes/handler/public.php:1067
 msgid "Sorry, login and email combination not found."
@@ -1352,28 +1317,27 @@ msgid "Database Updater"
 msgstr "資料庫更新管理器"
 
 #: classes/handler/public.php:1142
-#, fuzzy, php-format
+#, php-format
 msgid "Performing updates to version %d"
-msgstr "正在更新……"
+msgstr "正在更新到版本 %d"
 
 #: classes/handler/public.php:1147
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to version %d"
-msgstr "正在更新到 %d 版本……"
+msgstr "正在更新到版本 %d"
 
 #: classes/handler/public.php:1160
 msgid "Try again"
-msgstr ""
+msgstr "重試"
 
 #: classes/handler/public.php:1166
-#, fuzzy
 msgid "Completed."
-msgstr "上傳完成！"
+msgstr "完成。"
 
 #: classes/handler/public.php:1183
-#, fuzzy, php-format
+#, php-format
 msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
-msgstr "您的 Tiny Tiny RSS 資料庫需要升級到最新版（<b>%d</b> 到 <b>%d</b>）。"
+msgstr "您的 Tiny Tiny RSS 資料庫需要升級到最新版（%d 到 %d）。"
 
 #: classes/handler/public.php:1195
 msgid "Perform updates"
@@ -1398,9 +1362,9 @@ msgid "Adding feed: %s"
 msgstr "新增摘要: %s"
 
 #: classes/opml.php:333
-#, fuzzy, php-format
+#, php-format
 msgid "Duplicate feed: %s"
-msgstr "更新摘要"
+msgstr "重複的摘要：%s"
 
 #: classes/opml.php:347
 #, php-format
@@ -1418,14 +1382,14 @@ msgid "Setting preference key %s to %s"
 msgstr "將偏好按鍵從 %s 設定為 %s"
 
 #: classes/opml.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Adding filter %s..."
-msgstr "建立過濾器"
+msgstr "新增過濾器 %s..."
 
 #: classes/opml.php:536
-#, fuzzy, php-format
+#, php-format
 msgid "Processing category: %s"
-msgstr "加入到類別："
+msgstr "加入到類別：%s"
 
 #: classes/opml.php:582
 #, php-format
@@ -1434,9 +1398,8 @@ msgstr "上傳失敗，失敗碼 %d"
 
 #: classes/opml.php:594
 #: plugins/import_export/init.php:493
-#, fuzzy
 msgid "Unable to move uploaded file."
-msgstr "錯誤：無法載入文章。"
+msgstr "無法移動已上傳的檔案。"
 
 #: classes/opml.php:598
 #: plugins/import_export/init.php:497
@@ -1444,9 +1407,8 @@ msgid "Error: please upload OPML file."
 msgstr "錯誤：請上傳 OPML 文件。"
 
 #: classes/opml.php:609
-#, fuzzy
 msgid "Error: unable to find moved OPML file."
-msgstr "錯誤：無法載入文章。"
+msgstr "錯誤：無法找到已移動的OPML文件。"
 
 #: classes/opml.php:618
 msgid "Error while parsing document."
@@ -1480,14 +1442,12 @@ msgid "Feed URL"
 msgstr "摘要 URL"
 
 #: classes/pref/feeds.php:585
-#, fuzzy
 msgid "Site URL:"
-msgstr "文章網址： "
+msgstr "網址："
 
 #: classes/pref/feeds.php:587
-#, fuzzy
 msgid "Site URL"
-msgstr "摘要 URL"
+msgstr "網站 URL"
 
 #: classes/pref/feeds.php:612
 #: classes/pref/feeds.php:852
@@ -1496,9 +1456,8 @@ msgstr "更新列表"
 
 #: classes/pref/feeds.php:621
 #: classes/pref/feeds.php:859
-#, fuzzy
 msgid "Interval:"
-msgstr "界面"
+msgstr "間隔："
 
 #: classes/pref/feeds.php:634
 #: classes/pref/feeds.php:874
@@ -1538,14 +1497,13 @@ msgstr "始終顯示圖片附件"
 #: classes/pref/feeds.php:729
 #: classes/pref/feeds.php:926
 #: classes/pref/prefs.php:97
-#, fuzzy
 msgid "Do not embed media"
-msgstr "不要包含圖片"
+msgstr "不要嵌入媒體"
 
 #: classes/pref/feeds.php:744
 #: classes/pref/feeds.php:933
 msgid "Cache media"
-msgstr ""
+msgstr "媒體快取"
 
 #: classes/pref/feeds.php:759
 #: classes/pref/feeds.php:940
@@ -1559,9 +1517,8 @@ msgstr "圖示"
 #: classes/pref/feeds.php:771
 #: classes/pref/feeds.php:1324
 #: plugins/import_export/init.php:72
-#, fuzzy
 msgid "Choose file..."
-msgstr "建立過濾器"
+msgstr "選擇檔案..."
 
 #: classes/pref/feeds.php:778
 msgid "Replace"
@@ -1615,7 +1572,7 @@ msgstr "重新排序"
 #: classes/pref/feeds.php:1239
 #: js/PrefFeedTree.js:347
 msgid "Batch subscribe"
-msgstr ""
+msgstr "批次訂閱"
 
 #: classes/pref/feeds.php:1246
 msgid "Categories"
@@ -1635,26 +1592,23 @@ msgstr "OPML"
 
 #: classes/pref/feeds.php:1313
 msgid "Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings."
-msgstr ""
+msgstr "使用OPML你可以匯出或匯入摘要、過濾器、標籤和 Tiny Tiny RSS 的設定。"
 
 #: classes/pref/feeds.php:1330
-#, fuzzy
 msgid "Import OPML"
-msgstr "正在匯入 OPML ……"
+msgstr "匯入 OPML"
 
 #: classes/pref/feeds.php:1338
-#, fuzzy
 msgid "Export OPML"
-msgstr "正在匯入 OPML ……"
+msgstr "匯出 OPML"
 
 #: classes/pref/feeds.php:1342
 msgid "Include settings"
 msgstr "包含設定"
 
 #: classes/pref/feeds.php:1349
-#, fuzzy
 msgid "Published OPML"
-msgstr "已發布"
+msgstr "已發布的 OPML"
 
 #: classes/pref/feeds.php:1351
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
@@ -1662,26 +1616,23 @@ msgstr "您可以公開發布您的 OPML 。網上的任何人都可以透過如
 
 #: classes/pref/feeds.php:1353
 msgid "Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds."
-msgstr ""
+msgstr "已發佈的OPML中不包含您的 Tiny Tiny RSS 設定、需要認證的摘要和最受歡迎的摘要中隱藏的摘要。"
 
 #: classes/pref/feeds.php:1355
 msgid "Public OPML URL"
 msgstr "公開的 OPML URL"
 
 #: classes/pref/feeds.php:1356
-#, fuzzy
 msgid "Display published OPML URL"
-msgstr "公開的 OPML URL"
+msgstr "顯示公開的 OPML URL"
 
 #: classes/pref/feeds.php:1364
-#, fuzzy
 msgid "Published & shared articles / Generated feeds"
-msgstr "已發布的文章和產生的摘要"
+msgstr "已發布或分享的文章和產生的摘要"
 
 #: classes/pref/feeds.php:1366
-#, fuzzy
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "您可以公開發布您的 OPML 。網上的任何人都可以透過如下 URL 訂閱該文件。"
+msgstr "知道以下網址的人都可以訂閱已發佈的文章："
 
 #: classes/pref/feeds.php:1372
 msgid "Display URL"
@@ -1703,11 +1654,11 @@ msgstr "取消訂閱選取的摘要"
 
 #: classes/pref/feeds.php:1655
 msgid "One valid feed per line (no detection is done)"
-msgstr ""
+msgstr "每行一個合法的RSS網址（不會進行檢測）"
 
 #: classes/pref/feeds.php:1686
 msgid "Feeds require authentication."
-msgstr ""
+msgstr "摘要來源需要認證。"
 
 #: classes/pref/filters.php:234
 #: classes/pref/filters.php:557
@@ -1741,9 +1692,8 @@ msgstr "新增"
 
 #: classes/pref/filters.php:413
 #: classes/pref/filters.php:884
-#, fuzzy
 msgid "Apply actions"
-msgstr "摘要動作"
+msgstr "套用操作"
 
 #: classes/pref/filters.php:470
 #: classes/pref/filters.php:919
@@ -1753,11 +1703,10 @@ msgstr "已啟用"
 #: classes/pref/filters.php:481
 #: classes/pref/filters.php:924
 msgid "Match any rule"
-msgstr ""
+msgstr "匹配任何規則"
 
 #: classes/pref/filters.php:492
 #: classes/pref/filters.php:929
-#, fuzzy
 msgid "Inverse matching"
 msgstr "反向匹配"
 
@@ -1768,7 +1717,7 @@ msgstr "測試"
 
 #: classes/pref/filters.php:788
 msgid "Combine"
-msgstr ""
+msgstr "合併"
 
 #: classes/pref/filters.php:791
 #: classes/pref/users.php:352
@@ -1781,11 +1730,11 @@ msgstr "建立"
 
 #: classes/pref/filters.php:984
 msgid "Regular expression, without outer delimiters (i.e. slashes)"
-msgstr ""
+msgstr "正規表示式，沒有外部分隔符號（即斜線）"
 
 #: classes/pref/filters.php:990
 msgid "Inverse regular expression matching"
-msgstr ""
+msgstr "反向選擇正規表示式的匹配結果"
 
 #: classes/pref/filters.php:994
 msgid "on field"
@@ -1797,9 +1746,8 @@ msgid "in"
 msgstr "在"
 
 #: classes/pref/filters.php:1018
-#, fuzzy
 msgid "Save rule"
-msgstr "保存"
+msgstr "儲存規則"
 
 #: classes/pref/filters.php:1018
 #: js/CommonFilters.js:133
@@ -1811,46 +1759,41 @@ msgid "Perform Action"
 msgstr "執行動作"
 
 #: classes/pref/filters.php:1092
-#, fuzzy
 msgid "No actions available"
-msgstr "有可用的新版本啦！"
+msgstr "沒有可執行的操作"
 
 #: classes/pref/filters.php:1111
-#, fuzzy
 msgid "Save action"
-msgstr "版面動作"
+msgstr "儲存操作"
 
 #: classes/pref/filters.php:1111
 #: js/CommonFilters.js:155
-#, fuzzy
 msgid "Add action"
-msgstr "摘要動作"
+msgstr "新增操作"
 
 #: classes/pref/filters.php:1139
-#, fuzzy
 msgid "[No caption]"
-msgstr "標題"
+msgstr "[無標題]"
 
 #: classes/pref/filters.php:1141
 #, php-format
 msgid "%s (%d rule)"
 msgid_plural "%s (%d rules)"
-msgstr[0] ""
+msgstr[0] "%s (%d 條規則)"
 
 #: classes/pref/filters.php:1155
 msgid "matches any rule"
-msgstr ""
+msgstr "匹配任意規則"
 
 #: classes/pref/filters.php:1156
-#, fuzzy
 msgid "inverse"
 msgstr "反向選取"
 
 #: classes/pref/filters.php:1159
-#, fuzzy, php-format
+#, php-format
 msgid "%s (+%d action)"
 msgid_plural "%s (+%d actions)"
-msgstr[0] "摘要動作"
+msgstr[0] "%s (+%d 個操作)"
 
 #: classes/pref/labels.php:38
 msgid "Colors"
@@ -1874,7 +1817,6 @@ msgid "Clear colors"
 msgstr "清空顏色"
 
 #: classes/pref/prefs.php:41
-#, fuzzy
 msgid "Articles"
 msgstr "文章"
 
@@ -1896,44 +1838,37 @@ msgstr "被列入黑名單的標籤"
 
 #: classes/pref/prefs.php:71
 msgid "Never apply these tags automatically (comma-separated list)."
-msgstr ""
+msgstr "不要自動套用這些標籤（以逗號分隔）。"
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Default language"
-msgstr "預設偏好設定"
+msgstr "預設語言"
 
 #: classes/pref/prefs.php:72
 msgid "Used for full-text search"
-msgstr ""
+msgstr "用於全文搜尋"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Mark read on scroll"
-msgstr "將所有文章標記為已讀？"
+msgstr "捲動時標記為已讀"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Mark articles as read as you scroll past them"
-msgstr "將所有文章標記為已讀？"
+msgstr "將捲動到上面的文章標記為已讀"
 
 #: classes/pref/prefs.php:74
-#, fuzzy
 msgid "Always expand articles"
-msgstr "點擊以展開文章。"
+msgstr "永遠展開文章"
 
 #: classes/pref/prefs.php:75
-#, fuzzy
 msgid "Combined mode"
-msgstr "鎖定發布的項"
+msgstr "合併模式"
 
 #: classes/pref/prefs.php:75
-#, fuzzy
 msgid "Show flat list of articles instead of separate panels"
 msgstr "將文章列表展開顯示，而不是將標題和內容分別顯示"
 
 #: classes/pref/prefs.php:76
-#, fuzzy
 msgid "Confirm marking feeds as read"
 msgstr "標記摘要為已讀之前彈出確認"
 
@@ -1942,44 +1877,36 @@ msgid "Amount of articles to display at once"
 msgstr "同時顯示的文章數量"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Default update interval"
-msgstr "預設摘要更新間隔"
+msgstr "預設更新間隔"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Mark sent articles as read"
-msgstr "將所有文章標記為已讀？"
+msgstr "將發送的文章標記為已讀"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Enable digest"
 msgstr "啟用電子郵件摘要"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Send daily digest of new (and unread) headlines to your e-mail address"
-msgstr "每天將更新的和未讀的文章標題透過郵件發送摘要到您設定的郵箱中"
+msgstr "每天將更新的和未讀的文章標題透過郵件發送摘要到您設定的信箱中"
 
 #: classes/pref/prefs.php:81
-#, fuzzy
 msgid "Try to send around this time"
 msgstr "在指定的時間發送摘要"
 
 #: classes/pref/prefs.php:81
-#, fuzzy
 msgid "Time in UTC"
-msgstr "所在時區"
+msgstr "UTC時區"
 
 #: classes/pref/prefs.php:82
-#, fuzzy
 msgid "Enable API"
-msgstr "已啟用"
+msgstr "啟用 API"
 
 #: classes/pref/prefs.php:82
-#, fuzzy
 msgid "Allows accessing this account through the API"
-msgstr "允許第三方客戶端程式透過API來存取"
+msgstr "允許第三方程式透過API來存取這個帳號"
 
 #: classes/pref/prefs.php:83
 msgid "Enable categories"
@@ -1990,28 +1917,24 @@ msgid "Sort feeds by unread articles count"
 msgstr "以未讀文章數量排序摘要"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "Maximum age of fresh articles"
-msgstr "最新更新文章的保鮮期（以小時為單位）"
+msgstr "最近更新文章的保鮮期"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "hours"
-msgstr "每4小時"
+msgstr "小時"
 
 #: classes/pref/prefs.php:86
-#, fuzzy
 msgid "Hide read feeds"
-msgstr "隱藏（顯示）已讀信息"
+msgstr "隱藏已讀的摘要"
 
 #: classes/pref/prefs.php:87
 msgid "Always show special feeds"
-msgstr ""
+msgstr "永遠顯示特殊區域"
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "While hiding read feeds"
-msgstr "隱藏已讀信息之後顯示特殊區域的內容"
+msgstr "當隱藏已讀的摘要"
 
 #: classes/pref/prefs.php:88
 msgid "Long date format"
@@ -2020,25 +1943,23 @@ msgstr "較長的日期時間格式"
 #: classes/pref/prefs.php:88
 msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
 msgstr ""
+"語法和 PHP <a href='http://php.net/manual/function.date.php'>date()</a> 函數相同。"
 
 #: classes/pref/prefs.php:89
-#, fuzzy
 msgid "Automatically show next feed"
 msgstr "自動顯示下一個摘要"
 
 #: classes/pref/prefs.php:89
-#, fuzzy
 msgid "After marking one as read"
-msgstr "標記摘要為已讀之前彈出確認"
+msgstr "將這個摘要標記為已讀之後"
 
 #: classes/pref/prefs.php:90
-#, fuzzy
 msgid "Purge articles older than"
-msgstr "清除未讀文章"
+msgstr "清除"
 
 #: classes/pref/prefs.php:90
 msgid "<strong>days</strong> (0 disables)"
-msgstr ""
+msgstr "<strong>天</strong> 前的舊文章(0 代表不清除)"
 
 #: classes/pref/prefs.php:91
 msgid "Purge unread articles"
@@ -2053,9 +1974,8 @@ msgid "Short date format"
 msgstr "較短的日期時間格式"
 
 #: classes/pref/prefs.php:94
-#, fuzzy
 msgid "Show content preview in headlines"
-msgstr "在標題列表中顯示內容預覽"
+msgstr "在標題中顯示內容預覽"
 
 #: classes/pref/prefs.php:95
 msgid "Sort headlines by feed date"
@@ -2066,9 +1986,8 @@ msgid "Use feed-specified date to sort headlines instead of local import date."
 msgstr "使用摘要中定義的時間，而非本地匯入的時間來排序。"
 
 #: classes/pref/prefs.php:96
-#, fuzzy
 msgid "SSL client certificate"
-msgstr "使用 SSL 證書登錄"
+msgstr "SSL客戶端證書"
 
 #: classes/pref/prefs.php:98
 msgid "Strip unsafe tags from articles"
@@ -2088,9 +2007,8 @@ msgid "Time zone"
 msgstr "所在時區"
 
 #: classes/pref/prefs.php:101
-#, fuzzy
 msgid "Group by feed"
-msgstr "前25位的摘要"
+msgstr "根據摘要分組"
 
 #: classes/pref/prefs.php:101
 msgid "Group multiple-feed output by originating feed"
@@ -2114,7 +2032,7 @@ msgstr "您的個人數據已儲存。"
 
 #: classes/pref/prefs.php:217
 msgid "Your preferences are now set to default values."
-msgstr ""
+msgstr "你的偏好設定已經重設為預設值。"
 
 #: classes/pref/prefs.php:228
 msgid "Personal data / Authentication"
@@ -2125,20 +2043,17 @@ msgid "Personal data"
 msgstr "個人資訊"
 
 #: classes/pref/prefs.php:260
-#, fuzzy
 msgid "Full name:"
-msgstr "姓名"
+msgstr "全名："
 
 #: classes/pref/prefs.php:265
 #: classes/pref/users.php:94
-#, fuzzy
 msgid "E-mail:"
 msgstr "電子郵件："
 
 #: classes/pref/prefs.php:273
-#, fuzzy
 msgid "Access level:"
-msgstr "帳號等級："
+msgstr "權限等級："
 
 #: classes/pref/prefs.php:284
 msgid "Save data"
@@ -2149,20 +2064,17 @@ msgid "Changing your current password will disable OTP."
 msgstr ""
 
 #: classes/pref/prefs.php:337
-#, fuzzy
 msgid "Old password:"
-msgstr "原始密碼"
+msgstr "原始密碼："
 
 #: classes/pref/prefs.php:342
 #: classes/pref/users.php:82
-#, fuzzy
 msgid "New password:"
-msgstr "新密碼"
+msgstr "新密碼："
 
 #: classes/pref/prefs.php:347
-#, fuzzy
 msgid "Confirm password:"
-msgstr "確認密碼"
+msgstr "確認密碼："
 
 #: classes/pref/prefs.php:357
 msgid "Change password"
@@ -2170,32 +2082,28 @@ msgstr "更改密碼"
 
 #: classes/pref/prefs.php:362
 msgid "One time passwords / Authenticator"
-msgstr ""
+msgstr "動態密碼/認證"
 
 #: classes/pref/prefs.php:392
 #: classes/pref/prefs.php:440
-#, fuzzy
 msgid "Your password:"
-msgstr "確認密碼"
+msgstr "你的密碼："
 
 #: classes/pref/prefs.php:402
-#, fuzzy
 msgid "Disable OTP"
-msgstr "禁用更新"
+msgstr "禁用OTP動態密碼"
 
 #: classes/pref/prefs.php:446
-#, fuzzy
 msgid "One time password:"
-msgstr "使用者名或密碼錯誤"
+msgstr "動態密碼："
 
 #: classes/pref/prefs.php:453
-#, fuzzy
 msgid "Enable OTP"
-msgstr "已啟用"
+msgstr "啟用OTP動態密碼"
 
 #: classes/pref/prefs.php:506
 msgid "Some preferences are only available in default profile."
-msgstr ""
+msgstr "部分設定只能在預設設定檔中設定。"
 
 #: classes/pref/prefs.php:601
 #, fuzzy
@@ -2207,9 +2115,8 @@ msgid "Customize"
 msgstr "自訂"
 
 #: classes/pref/prefs.php:614
-#, fuzzy
 msgid "More themes..."
-msgstr "更多動作"
+msgstr "更多主題..."
 
 #: classes/pref/prefs.php:675
 msgid "Register"
@@ -2221,9 +2128,9 @@ msgid "Clear"
 msgstr "清空"
 
 #: classes/pref/prefs.php:690
-#, fuzzy, php-format
+#, php-format
 msgid "Current server time: %s"
-msgstr "目前伺服器上的時間: %s (UTC)"
+msgstr "目前伺服器上的時間：%s"
 
 #: classes/pref/prefs.php:719
 msgid "Save configuration"
@@ -2264,9 +2171,8 @@ msgid "Enable selected plugins"
 msgstr "啟用所選取的擴充套件"
 
 #: classes/pref/prefs.php:945
-#, fuzzy
 msgid "Incorrect one time password"
-msgstr "使用者名或密碼錯誤"
+msgstr "動態密碼不正確"
 
 #: classes/pref/prefs.php:950
 #: classes/pref/prefs.php:981
@@ -2274,9 +2180,8 @@ msgid "Incorrect password"
 msgstr "密碼錯誤"
 
 #: classes/pref/prefs.php:1005
-#, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr "您可以透過自訂 CSS 來更改顏色，字體和版式。具體可參考 <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">本文件</a>。"
+msgstr "您可以透過自訂 CSS 來更改顏色，字體和版面。"
 
 #: classes/pref/prefs.php:1041
 msgid "Create profile"
@@ -2302,7 +2207,7 @@ msgstr "您的帳號等級不夠，無法打開這個頁籤。"
 
 #: classes/pref/system.php:30
 msgid "Event Log"
-msgstr ""
+msgstr "事件日誌"
 
 #: classes/pref/system.php:41
 msgid "Refresh"
@@ -2325,14 +2230,12 @@ msgid "Date"
 msgstr "日期"
 
 #: classes/pref/system.php:85
-#, fuzzy
 msgid "PHP Information"
-msgstr "執行動作"
+msgstr "PHP訊息"
 
 #: classes/pref/users.php:26
-#, fuzzy
 msgid "Edit user"
-msgstr "編輯過濾器"
+msgstr "編輯使用者"
 
 #: classes/pref/users.php:68
 msgid "Access level: "
@@ -2356,9 +2259,8 @@ msgid "Subscribed feeds count"
 msgstr "訂閱的摘要數量"
 
 #: classes/pref/users.php:158
-#, fuzzy
 msgid "Stored articles"
-msgstr "加星標文章"
+msgstr "已存的文章"
 
 #: classes/pref/users.php:162
 #: classes/pref/users.php:389
@@ -2370,24 +2272,24 @@ msgid "User not found"
 msgstr "未找到使用者"
 
 #: classes/pref/users.php:259
-#, fuzzy, php-format
+#, php-format
 msgid "Added user %s with password %s"
-msgstr "已添加使用者 <b>%s</b> ，密碼為<b>%s</b>"
+msgstr "已新增使用者%s ，密碼為%s"
 
 #: classes/pref/users.php:266
-#, fuzzy, php-format
+#, php-format
 msgid "Could not create user %s"
-msgstr "無法建立使用者 <b>%s</b> "
+msgstr "無法建立使用者 %s"
 
 #: classes/pref/users.php:270
-#, fuzzy, php-format
+#, php-format
 msgid "User %s already exists."
-msgstr "使用者 <b>%s</b> 已存在。"
+msgstr "使用者 %s 已存在。"
 
 #: classes/pref/users.php:295
-#, fuzzy, php-format
+#, php-format
 msgid "Changed password of user %s to %s"
-msgstr "已添加使用者 <b>%s</b> ，密碼為<b>%s</b>"
+msgstr "使用者%s的密碼修改為%s"
 
 #: classes/pref/users.php:348
 msgid "Create user"
@@ -2415,11 +2317,11 @@ msgstr "沒有匹配的使用者。"
 
 #: plugins/af_comics/init.php:51
 msgid "Feeds supported by af_comics"
-msgstr ""
+msgstr "af_comics 支援的摘要"
 
 #: plugins/af_comics/init.php:53
 msgid "The following comics are currently supported:"
-msgstr ""
+msgstr "目前支援下列漫畫："
 
 #: plugins/af_comics/init.php:71
 msgid "To subscribe to GoComics use the comic's regular web page as the feed URL (e.g. for the <em>Garfield</em> comic use <code>http://www.gocomics.com/garfield</code>)."
@@ -2432,28 +2334,25 @@ msgstr ""
 #: plugins/af_psql_trgm/init.php:29
 #, php-format
 msgid "Data saved (%s, %d)"
-msgstr ""
+msgstr "資料已儲存 (%s, %d)"
 
 #: plugins/af_psql_trgm/init.php:120
-#, fuzzy
 msgid "Show related articles"
-msgstr "已分享的文章"
+msgstr "顯示相關文章"
 
 #: plugins/af_psql_trgm/init.php:127
 #: plugins/af_psql_trgm/init.php:236
-#, fuzzy
 msgid "Mark similar articles as read"
-msgstr "將所有文章標記為已讀？"
+msgstr "將類似的文章標記為已讀"
 
 #: plugins/af_psql_trgm/init.php:166
 #: plugins/af_readability/init.php:58
-#, fuzzy
 msgid "Global settings"
-msgstr "包含設定"
+msgstr "全局設定"
 
 #: plugins/af_psql_trgm/init.php:172
 msgid "Minimum similarity:"
-msgstr ""
+msgstr "最低相似度："
 
 #: plugins/af_psql_trgm/init.php:178
 msgid "PostgreSQL trigram extension returns string similarity as a floating point number (0-1). Setting it too low might produce false positives, zero disables checking."
@@ -2461,21 +2360,20 @@ msgstr ""
 
 #: plugins/af_psql_trgm/init.php:183
 msgid "Minimum title length:"
-msgstr ""
+msgstr "最短標題長度："
 
 #: plugins/af_psql_trgm/init.php:192
-#, fuzzy
 msgid "Enable for all feeds:"
-msgstr "啟用摘要分類"
+msgstr "所有摘要啟用："
 
 #: plugins/af_psql_trgm/init.php:207
 #: plugins/af_readability/init.php:101
 msgid "Currently enabled for (click to edit):"
-msgstr ""
+msgstr "目前已啟用(點擊以編輯)："
 
 #: plugins/af_psql_trgm/init.php:224
 msgid "Similarity (pg_trgm)"
-msgstr ""
+msgstr "相似度 (pg_trgm)"
 
 #: plugins/af_readability/init.php:25
 msgid "Data saved."
