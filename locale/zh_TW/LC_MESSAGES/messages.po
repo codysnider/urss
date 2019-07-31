@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2019-07-27 10:10+0000\n"
+"PO-Revision-Date: 2019-07-31 13:04+0000\n"
 "Last-Translator: 洪偉翔 <weihsiang.hung@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://weblate.tt-rss.org/projects/"
 "tt-rss/messages/zh_Hant/>\n"
@@ -161,7 +161,7 @@ msgstr "找不到方法(Method)"
 
 #: errors.php:39
 msgid "Plugin not found"
-msgstr "找不到插件"
+msgstr "找不到擴充套件"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
@@ -697,7 +697,7 @@ msgstr "全部文章"
 
 #: include/functions.php:1203
 msgid "Fresh"
-msgstr ""
+msgstr "最新的"
 
 #: include/functions.php:1206
 #: classes/feeds.php:1260
@@ -2061,7 +2061,7 @@ msgstr "儲存資料"
 
 #: classes/pref/prefs.php:333
 msgid "Changing your current password will disable OTP."
-msgstr ""
+msgstr "修改你目前的密碼會停用動態密碼功能。"
 
 #: classes/pref/prefs.php:337
 msgid "Old password:"
@@ -2106,7 +2106,6 @@ msgid "Some preferences are only available in default profile."
 msgstr "部分設定只能在預設設定檔中設定。"
 
 #: classes/pref/prefs.php:601
-#, fuzzy
 msgid "default"
 msgstr "預設"
 
@@ -2377,67 +2376,60 @@ msgstr "相似度 (pg_trgm)"
 
 #: plugins/af_readability/init.php:25
 msgid "Data saved."
-msgstr ""
+msgstr "資料已儲存。"
 
 #: plugins/af_readability/init.php:45
-#, fuzzy
 msgid "Inline content"
-msgstr "滾動文章內容"
+msgstr "內嵌內容"
 
 #: plugins/af_readability/init.php:52
 msgid "Readability settings (af_readability)"
-msgstr ""
+msgstr "Readability 設定(af_readability)"
 
 #: plugins/af_readability/init.php:87
 msgid "Provide full-text services to core code (bookmarklets) and other plugins"
-msgstr ""
+msgstr "為核心程式(bookmarklets)和其他擴充套件提供全文服務"
 
 #: plugins/af_readability/init.php:118
-#, fuzzy
 msgid "Readability"
-msgstr "檢查可用性"
+msgstr "Readability"
 
 #: plugins/af_readability/init.php:130
-#, fuzzy
 msgid "Inline article content"
-msgstr "滾動文章內容"
+msgstr "內嵌文章內容"
 
 #: plugins/af_redditimgur/init.php:28
 msgid "Reddit content settings (af_redditimgur)"
-msgstr ""
+msgstr "Reddit 內容設定 (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:60
 msgid "Extract missing content using Readability (requires af_readability)"
-msgstr ""
+msgstr "使用 Readability 擷取缺少的內容(需要 af_readability)"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
-msgstr ""
+msgstr "開啟額外的重複檢查"
 
 #: plugins/af_redditimgur/init.php:82
 #: plugins/af_zz_imgproxy/init.php:253
-#, fuzzy
 msgid "Configuration saved"
-msgstr "設定已儲存。"
+msgstr "設定已儲存"
 
 #: plugins/af_zz_imgproxy/init.php:209
 msgid "Image proxy settings (af_zz_imgproxy)"
-msgstr ""
+msgstr "圖片代理設定 (af_zz_imgproxy)"
 
 #: plugins/af_zz_imgproxy/init.php:233
-#, fuzzy
 msgid "Enable proxy for all remote images."
-msgstr "啟用摘要分類"
+msgstr "為所有遠端圖片啟用代理。"
 
 #: plugins/af_zz_imgproxy/init.php:237
-#, fuzzy
 msgid "Don't cache files locally."
-msgstr "本地快取圖片"
+msgstr "不要在本地快取檔案。"
 
 #: plugins/auth_internal/init.php:72
-#, fuzzy
 msgid "Please enter your one time password:"
-msgstr "請填寫類別名稱："
+msgstr "請輸入你的動態密碼："
 
 #: plugins/auth_internal/init.php:214
 msgid "Password has been changed."
@@ -2478,7 +2470,7 @@ msgstr "匯入和匯出"
 
 #: plugins/import_export/init.php:56
 msgid "You can export and import your Starred and Archived articles for safekeeping or when migrating between tt-rss instances of same version."
-msgstr ""
+msgstr "您可以匯出和匯入您收藏和封存的文章來進行安全備份或者遷移到其他地方相同版本的 tt-rss。"
 
 #: plugins/import_export/init.php:61
 msgid "Export my data"
@@ -2490,41 +2482,41 @@ msgstr "匯入"
 
 #: plugins/import_export/init.php:243
 msgid "Could not import: incorrect schema version."
-msgstr ""
+msgstr "無法匯入：不正確的 schema 版本。"
 
 #: plugins/import_export/init.php:248
 msgid "Could not import: unrecognized document format."
-msgstr ""
+msgstr "無法匯入：無法辨識的文件格式。"
 
 #: plugins/import_export/init.php:441
 msgid "Finished: "
 msgstr "完成： "
 
 #: plugins/import_export/init.php:442
-#, fuzzy, php-format
+#, php-format
 msgid "%d article processed, "
 msgid_plural "%d articles processed, "
-msgstr[0] "編輯文章註記"
+msgstr[0] "%d 篇文章已處理， "
 
 #: plugins/import_export/init.php:443
 #, php-format
 msgid "%d imported, "
 msgid_plural "%d imported, "
-msgstr[0] "%d 個已匯入"
+msgstr[0] "%d 個已匯入 "
 
 #: plugins/import_export/init.php:444
 #, php-format
 msgid "%d feed created."
 msgid_plural "%d feeds created."
-msgstr[0] "%d 個摘要已建立"
+msgstr[0] "%d 個摘要已建立。"
 
 #: plugins/import_export/init.php:449
 msgid "Could not load XML document."
-msgstr ""
+msgstr "無法載入XML文件。"
 
 #: plugins/import_export/init.php:464
 msgid "Prepare data"
-msgstr ""
+msgstr "準備資料"
 
 #: plugins/import_export/init.php:481
 #, fuzzy, php-format
@@ -2540,13 +2532,12 @@ msgid "Mail addresses saved."
 msgstr ""
 
 #: plugins/mail/init.php:36
-#, fuzzy
 msgid "Mail plugin"
-msgstr "使用者擴充套件"
+msgstr "mail擴充套件"
 
 #: plugins/mail/init.php:38
 msgid "You can set predefined email addressed here (comma-separated list):"
-msgstr ""
+msgstr "您可以在此設定預定義的電子郵件位址（以逗號分隔）："
 
 #: plugins/mail/init.php:118
 #: plugins/mail/init.php:124
@@ -2574,16 +2565,15 @@ msgstr "發送郵件"
 
 #: plugins/mailto/init.php:73
 msgid "Clicking the following link to invoke your mail client:"
-msgstr ""
+msgstr "點擊下面連結來啟動您的電子郵件客戶端："
 
 #: plugins/mailto/init.php:77
-#, fuzzy
 msgid "Forward selected article(s) by email."
-msgstr "用郵件轉發文章"
+msgstr "用郵件轉發所選的文章。"
 
 #: plugins/mailto/init.php:80
 msgid "You should be able to edit the message before sending in your mail client."
-msgstr ""
+msgstr "在您的電子郵件客戶端發送前，您可以先編輯訊息。"
 
 #: plugins/mailto/init.php:85
 msgid "Close this dialog"
@@ -2597,11 +2587,11 @@ msgstr "編輯文章註記"
 #: plugins/nsfw/init.php:30
 #: plugins/nsfw/init.php:42
 msgid "Not work safe (click to toggle)"
-msgstr ""
+msgstr "不宜在工作時瀏覽（點擊開啟）"
 
 #: plugins/nsfw/init.php:53
 msgid "NSFW Plugin"
-msgstr ""
+msgstr "NSFW擴充套件"
 
 #: plugins/nsfw/init.php:80
 msgid "Tags to consider NSFW (comma-separated)"
@@ -3014,7 +3004,7 @@ msgstr "重置為預設狀態？"
 
 #: js/PrefHelpers.js:137
 msgid "Clear stored data for this plugin?"
-msgstr ""
+msgstr "要清除此擴充套件所儲存的資料嗎？"
 
 #: js/PrefHelpers.js:156
 msgid "Please choose an OPML file first."
@@ -3372,14 +3362,12 @@ msgid "Removing selected users..."
 msgstr "移除選定的過濾器？"
 
 #: js/tt-rss.js:344
-#, fuzzy
 msgid "Please enable mail or mailto plugin first."
-msgstr "請先選几個摘要吧。"
+msgstr "請先啟用mail或mailto擴充套件。"
 
 #: js/tt-rss.js:460
-#, fuzzy
 msgid "Please enable embed_original plugin first."
-msgstr "請先選几個摘要吧。"
+msgstr "請掀起用 embed_original擴充套件。"
 
 #: js/tt-rss.js:473
 #: js/tt-rss.js:563
