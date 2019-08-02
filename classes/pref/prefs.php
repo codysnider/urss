@@ -224,7 +224,7 @@ class Pref_Prefs extends Handler_Protected {
 		$_SESSION["prefs_op_result"] = "";
 
 		print "<div dojoType='dijit.layout.AccordionContainer' region='center'>";
-		print "<div dojoType='dijit.layout.AccordionPane' 
+		print "<div dojoType='dijit.layout.AccordionPane'
 			title=\"<i class='material-icons'>person</i> ".__('Personal data / Authentication')."\">";
 
 		print "<div dojoType='dijit.layout.TabContainer'>";
@@ -373,7 +373,7 @@ class Pref_Prefs extends Handler_Protected {
 					evt.preventDefault();
 					if (this.validate()) {
 						Notify.progress('Disabling OTP', true);
-	
+
 						new Ajax.Request('backend.php', {
 							parameters: dojo.objectToQuery(this.getValues()),
 							onComplete: function(transport) {
@@ -469,7 +469,7 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "</div>"; #pane
 
-		print "<div dojoType='dijit.layout.AccordionPane' selected='true' 
+		print "<div dojoType='dijit.layout.AccordionPane' selected='true'
 			title=\"<i class='material-icons'>settings</i> ".__('Preferences')."\">";
 
 		print "<form dojoType='dijit.form.Form' id='changeSettingsForm'>";
@@ -678,8 +678,8 @@ class Pref_Prefs extends Handler_Protected {
 							onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '')\">" .
 							__('Clear') . "</button>";
 
-						print "<button dojoType='dijit.form.Button' class='alt-info' 
-							onclick='window.open(\"https://tt-rss.org/wiki/SSL+Certificate+Authentication\")'>
+						print "<button dojoType='dijit.form.Button' class='alt-info'
+							onclick='window.open(\"https://tt-rss.org/wiki/SSL%20Certificate%20Authentication\")'>
 							<i class='material-icons'>help</i> ".__("More info...")."</button>";
 
 					} else if ($pref_name == 'DIGEST_PREFERRED_TIME') {
@@ -741,7 +741,7 @@ class Pref_Prefs extends Handler_Protected {
 
 		print "</div>"; #pane
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>extension</i> ".__('Plugins')."\">";
 
 		print "<form dojoType=\"dijit.form.Form\" id=\"changePluginsForm\">";
@@ -801,7 +801,7 @@ class Pref_Prefs extends Handler_Protected {
 						".htmlspecialchars($about[1]). "</label>";
 
 					if (@$about[4]) {
-						print "<button dojoType='dijit.form.Button' class='alt-info' 
+						print "<button dojoType='dijit.form.Button' class='alt-info'
 							onclick='window.open(\"".htmlspecialchars($about[4])."\")'>
 								<i class='material-icons'>open_in_new</i> ".__("More info...")."</button>";
 					}
@@ -840,7 +840,7 @@ class Pref_Prefs extends Handler_Protected {
 
 				if (count($tmppluginhost->get_all($plugin)) > 0) {
 					if (in_array($name, $system_enabled) || in_array($name, $user_enabled)) {
-						print " <button dojoType='dijit.form.Button' 
+						print " <button dojoType='dijit.form.Button'
 							onclick=\"Helpers.clearPluginData('$name')\">
 								<i class='material-icons'>clear</i> ".__("Clear data")."</button>";
 					}
