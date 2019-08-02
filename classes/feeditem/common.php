@@ -41,11 +41,14 @@ abstract class FeedItem_Common extends FeedItem {
 				return clean($author->nodeValue);
 		}
 
-		$author = $this->xpath->query("dc:creator", $this->elem)->item(0);
+		$author_elems = $this->xpath->query("dc:creator", $this->elem);
+		$authors = [];
 
-		if ($author) {
-			return clean($author->nodeValue);
+		foreach ($author_elems as $author) {
+			array_push($authors, clean($author->nodeValue));
 		}
+
+		return implode(", ", $authors);
 	}
 
 	function get_comments_url() {
