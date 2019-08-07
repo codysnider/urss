@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Tiny Tiny RSS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2019-08-07 07:15+0000\n"
+"PO-Revision-Date: 2019-08-08 12:15+0000\n"
 "Last-Translator: 洪偉翔 <weihsiang.hung@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://weblate.tt-rss.org/projects/"
 "tt-rss/messages/zh_Hant/>\n"
@@ -2141,7 +2141,7 @@ msgstr "儲存並離開偏好設定"
 
 #: classes/pref/prefs.php:728
 msgid "Manage profiles"
-msgstr "管理偏好文件"
+msgstr "管理偏好設定文件"
 
 #: classes/pref/prefs.php:731
 msgid "Reset to defaults"
@@ -2193,7 +2193,7 @@ msgstr "（當前使用的）"
 
 #: classes/pref/prefs.php:1111
 msgid "Remove selected profiles"
-msgstr "移除選取的偏好文件"
+msgstr "移除選取的偏好設定文件"
 
 #: classes/pref/prefs.php:1113
 msgid "Activate profile"
@@ -2961,15 +2961,15 @@ msgstr "要清空事件日誌嗎？"
 
 #: js/PrefHelpers.js:40
 msgid "Settings Profiles"
-msgstr "偏好設定的設定"
+msgstr "偏好設定文件的設定"
 
 #: js/PrefHelpers.js:49
 msgid "Remove selected profiles? Active and default profiles will not be removed."
-msgstr "移除選取的偏好設定？當前偏好與預設偏好不會被移除。"
+msgstr "要移除選取的偏好設定文件嗎？使用中和預設的偏好設定文件不會被移除。"
 
 #: js/PrefHelpers.js:64
 msgid "No profiles selected."
-msgstr "未選擇偏好設定。"
+msgstr "未選擇偏好設定文件。"
 
 #: js/PrefHelpers.js:71
 msgid "Activate selected profile?"
@@ -3240,7 +3240,7 @@ msgstr "產生的 URLs 已清除。"
 
 #: js/PrefHelpers.js:50
 msgid "Removing selected profiles..."
-msgstr "正在移除所選的偏好設定檔..."
+msgstr "正在移除所選的偏好設定文件..."
 
 #: js/PrefHelpers.js:85
 msgid "Creating profile..."
