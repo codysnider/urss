@@ -1,76 +1,63 @@
 <?php
-class DiskCache
-{
+class DiskCache {
 	private $dir;
 
-	public function __construct($dir)
-	{
+	public function __construct($dir) {
 		$this->dir = basename($dir);
 	}
 
-	public function getDir()
-	{
+	public function getDir() {
 		return $this->dir;
 	}
 
-	public function isWritable()
-	{
+	public function isWritable() {
 		return is_dir($this->dir) && is_writable($this->dir);
 	}
 
-	public function exists($filename)
-	{
+	public function exists($filename) {
 		return file_exists($this->getFullPath($filename));
 	}
 
-	public function getSize($filename)
-	{
+	public function getSize($filename) {
 		if ($this->exists($filename))
 			return filesize($this->getFullPath($filename));
 		else
 			return -1;
 	}
 
-	public function getFullPath($filename)
-	{
+	public function getFullPath($filename) {
 		$filename = basename($filename);
 
 		return CACHE_DIR . "/" . $this->dir . "/" . $filename;
 	}
 
-	public function put($filename, $data)
-	{
+	public function put($filename, $data) {
 		return file_put_contents($this->getFullPath($filename), $data);
 	}
 
-	public function touch($filename)
-	{
+	public function touch($filename) {
 		return touch($this->getFullPath($filename));
 	}
 
-	public function get($filename)
-	{
+	public function get($filename) {
 		if ($this->exists($filename))
 			return file_get_contents($this->getFullPath($filename));
 		else
 			return null;
 	}
 
-	public function getMimeType($filename)
-	{
+	public function getMimeType($filename) {
 		if ($this->exists($filename))
 			return mime_content_type($this->getFullPath($filename));
 		else
 			return null;
 	}
 
-	public function send($filename)
-	{
+	public function send($filename) {
 		return send_local_file($this->getFullPath($filename));
 	}
 
-	static public function getUrl($filename)
-	{
+	static public function getUrl($filename) {
 		return get_self_url_prefix() . "/public.php?op=cached_url&file=" . $filename;
 	}
 
@@ -119,5 +106,29 @@ class DiskCache
 			}
 		}
 		return $res;
+	}
+
+	static function expire() {
+		$dirs = array_filter(glob(CACHE_DIR . "/*"), "is_dir");
+
+		foreach ($dirs as $cache_dir) {
+			$num_deleted = 0;
+
+			if (is_writable($cache_dir)) {
+				$files = glob("$cache_dir/*");
+
+				if ($files) {
+					foreach ($files as $file) {
+						if (time() - filemtime($file) > 86400*CACHE_MAX_DAYS) {
+							unlink($file);
+
+							++$num_deleted;
+						}
+					}
+				}
+			}
+
+			Debug::log("Expired $cache_dir: removed $num_deleted files.");
+		}
 	}
 }
