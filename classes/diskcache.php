@@ -1,63 +1,123 @@
 <?php
-class DiskCache {
+class DiskCache
+{
 	private $dir;
 
-	public function __construct($dir) {
+	public function __construct($dir)
+	{
 		$this->dir = basename($dir);
 	}
 
-	public function getDir() {
+	public function getDir()
+	{
 		return $this->dir;
 	}
 
-	public function isWritable() {
+	public function isWritable()
+	{
 		return is_dir($this->dir) && is_writable($this->dir);
 	}
 
-	public function exists($filename) {
+	public function exists($filename)
+	{
 		return file_exists($this->getFullPath($filename));
 	}
 
-	public function getSize($filename) {
+	public function getSize($filename)
+	{
 		if ($this->exists($filename))
 			return filesize($this->getFullPath($filename));
 		else
 			return -1;
 	}
 
-	public function getFullPath($filename) {
+	public function getFullPath($filename)
+	{
 		$filename = basename($filename);
 
 		return CACHE_DIR . "/" . $this->dir . "/" . $filename;
 	}
 
-	public function put($filename, $data) {
+	public function put($filename, $data)
+	{
 		return file_put_contents($this->getFullPath($filename), $data);
 	}
 
-	public function touch($filename) {
+	public function touch($filename)
+	{
 		return touch($this->getFullPath($filename));
 	}
 
-	public function get($filename) {
+	public function get($filename)
+	{
 		if ($this->exists($filename))
 			return file_get_contents($this->getFullPath($filename));
 		else
 			return null;
 	}
 
-	public function getMimeType($filename) {
+	public function getMimeType($filename)
+	{
 		if ($this->exists($filename))
 			return mime_content_type($this->getFullPath($filename));
 		else
 			return null;
 	}
 
-	public function send($filename) {
+	public function send($filename)
+	{
 		return send_local_file($this->getFullPath($filename));
 	}
 
-	static public function getUrl($filename) {
+	static public function getUrl($filename)
+	{
 		return get_self_url_prefix() . "/public.php?op=cached_url&file=" . $filename;
+	}
+
+	// check for locally cached (media) URLs and rewrite to local versions
+	// this is called separately after sanitize() and plugin render article hooks to allow
+	// plugins work on original source URLs used before caching
+	static public function rewriteUrls($str)
+	{
+		$res = trim($str);
+		if (!$res) return '';
+
+		$doc = new DOMDocument();
+		if ($doc->loadHTML('<?xml encoding="UTF-8">' . $res)) {
+			$xpath = new DOMXPath($doc);
+			$cache = new DiskCache("images");
+
+			$entries = $xpath->query('(//img[@src]|//picture/source[@src]|//video[@poster]|//video/source[@src]|//audio/source[@src])');
+
+			$need_saving = false;
+
+			foreach ($entries as $entry) {
+
+				if ($entry->hasAttribute('src') || $entry->hasAttribute('poster')) {
+
+					// should be already absolutized because this is called after sanitize()
+					$src = $entry->hasAttribute('poster') ? $entry->getAttribute('poster') : $entry->getAttribute('src');
+					$cached_filename = sha1($src);
+
+					if ($cache->getSize($cached_filename) > 0) {
+
+						$src = DiskCache::getUrl(sha1($src));
+
+						if ($entry->hasAttribute('poster'))
+							$entry->setAttribute('poster', $src);
+						else
+							$entry->setAttribute('src', $src);
+
+						$need_saving = true;
+					}
+				}
+			}
+
+			if ($need_saving) {
+				$doc->removeChild($doc->firstChild); //remove doctype
+				$res = $doc->saveHTML();
+			}
+		}
+		return $res;
 	}
 }

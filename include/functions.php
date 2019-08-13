@@ -1233,51 +1233,6 @@
 		return false;
 	}
 
-	// check for locally cached (media) URLs and rewrite to local versions
-	// this is called separately after sanitize() and plugin render article hooks to allow
-	// plugins work on original source URLs used before caching
-
-	function rewrite_cached_urls($str) {
-		$res = trim($str); if (!$res) return '';
-
-		$doc = new DOMDocument();
-		$doc->loadHTML('<?xml encoding="UTF-8">' . $res);
-		$xpath = new DOMXPath($doc);
-
-		$entries = $xpath->query('(//img[@src]|//picture/source[@src]|//video[@poster]|//video/source[@src]|//audio/source[@src])');
-
-		$need_saving = false;
-
-		foreach ($entries as $entry) {
-
-			if ($entry->hasAttribute('src') || $entry->hasAttribute('poster')) {
-
-				// should be already absolutized because this is called after sanitize()
-				$src = $entry->hasAttribute('poster') ? $entry->getAttribute('poster') : $entry->getAttribute('src');
-				$cached_filename = CACHE_DIR . '/images/' . sha1($src);
-
-				if (file_exists($cached_filename)) {
-
-					$src = DiskCache::getUrl(sha1($src));
-
-					if ($entry->hasAttribute('poster'))
-						$entry->setAttribute('poster', $src);
-					else
-						$entry->setAttribute('src', $src);
-
-					$need_saving = true;
-				}
-			}
-		}
-
-		if ($need_saving) {
-			$doc->removeChild($doc->firstChild); //remove doctype
-			$res = $doc->saveHTML();
-		}
-
-		return $res;
-	}
-
 	function sanitize($str, $force_remove_images = false, $owner = false, $site_url = false, $highlight_words = false, $article_id = false) {
 		if (!$owner) $owner = $_SESSION["uid"];
 
@@ -1302,9 +1257,6 @@
 
 			if ($entry->hasAttribute('src')) {
 				$src = rewrite_relative_url($rewrite_base_url, $entry->getAttribute('src'));
-
-				// cache stuff has gone to rewrite_cached_urls()
-
 				$entry->setAttribute('src', $src);
 			}
 

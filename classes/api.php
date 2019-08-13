@@ -379,7 +379,7 @@ class API extends Handler {
 					$article = $p->hook_render_article_api(array("article" => $article));
 				}
 
-				$article['content'] = rewrite_cached_urls($article['content']);
+				$article['content'] = DiskCache::rewriteUrls($article['content']);
 
 				array_push($articles, $article);
 
@@ -801,7 +801,7 @@ class API extends Handler {
 						$headline_row = $p->hook_render_article_api(array("headline" => $headline_row));
 					}
 
-					$headline_row['content'] = rewrite_cached_urls($headline_row['content']);
+					$headline_row['content'] = DiskCache::rewriteUrls($headline_row['content']);
 
 					array_push($headlines, $headline_row);
 				}

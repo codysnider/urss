@@ -382,7 +382,7 @@ class Handler_Public extends Handler {
 				$line = $p->hook_render_article($line);
 			}
 
-			$line['content'] = rewrite_cached_urls($line['content']);
+			$line['content'] = DiskCache::rewriteUrls($line['content']);
 
 			$enclosures = Article::get_article_enclosures($line["id"]);
 
