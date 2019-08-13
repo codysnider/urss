@@ -1202,7 +1202,7 @@ class Handler_Public extends Handler {
 	}
 
 	function cached_url() {
-		@$req_filename = basename($_GET['hash']);
+		@$req_filename = basename($_GET['file']);
 
 		// we don't need an extension to find the file, hash is a complete URL
 		$hash = preg_replace("/\.[^\.]*$/", "", $req_filename);

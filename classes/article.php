@@ -676,7 +676,7 @@ class Article extends Handler_Protected {
 		while ($line = $sth->fetch()) {
 
 			if (file_exists(CACHE_DIR . '/images/' . sha1($line["content_url"]))) {
-				$line["content_url"] = get_self_url_prefix() . '/public.php?op=cached_url&hash=' . sha1($line["content_url"]);
+				$line["content_url"] = DiskCache::getUrl(sha1($line["content_url"]));
 			}
 
 			array_push($rv, $line);

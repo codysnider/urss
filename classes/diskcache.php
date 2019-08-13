@@ -56,4 +56,8 @@ class DiskCache {
 	public function send($filename) {
 		return send_local_file($this->getFullPath($filename));
 	}
+
+	static public function getUrl($filename) {
+		return get_self_url_prefix() . "/public.php?op=cached_url&file=" . $filename;
+	}
 }

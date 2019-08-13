@@ -1258,20 +1258,7 @@
 
 				if (file_exists($cached_filename)) {
 
-					// this is strictly cosmetic
-					if ($entry->tagName == 'img') {
-						$suffix = ".png";
-					} else if ($entry->parentNode && $entry->parentNode->tagName == "picture") {
-						$suffix = ".png";
-					} else if ($entry->parentNode && $entry->parentNode->tagName == "video") {
-						$suffix = ".mp4";
-					} else if ($entry->parentNode && $entry->parentNode->tagName == "audio") {
-						$suffix = ".ogg";
-					} else {
-						$suffix = "";
-					}
-
-					$src = get_self_url_prefix() . '/public.php?op=cached_url&hash=' . sha1($src) . $suffix;
+					$src = DiskCache::getUrl(sha1($src));
 
 					if ($entry->hasAttribute('poster'))
 						$entry->setAttribute('poster', $src);
