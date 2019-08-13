@@ -114,7 +114,7 @@ class DiskCache {
 		foreach ($dirs as $cache_dir) {
 			$num_deleted = 0;
 
-			if (is_writable($cache_dir)) {
+			if (is_writable($cache_dir) && !file_exists("$cache_dir/.no-auto-expiry")) {
 				$files = glob("$cache_dir/*");
 
 				if ($files) {
@@ -126,9 +126,9 @@ class DiskCache {
 						}
 					}
 				}
-			}
 
-			Debug::log("Expired $cache_dir: removed $num_deleted files.");
+				Debug::log("Expired $cache_dir: removed $num_deleted files.");
+			}
 		}
 	}
 }
