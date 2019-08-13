@@ -8,15 +8,17 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2019-05-18 08:35+0000\n"
+"PO-Revision-Date: 2019-08-13 10:03+0000\n"
 "Last-Translator: Vladimir Budylnikov <me@nett00n.org>\n"
-"Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/ru/>\n"
+"Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"ru/>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.5.1\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.7.1\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -737,7 +739,7 @@ msgstr "Ошибок нет, файл загружен успешно"
 
 #: include/functions.php:2466
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
-msgstr "Загружаемый файл превышает upload_max_filesize параметр в php.ini"
+msgstr "Загружаемый файл превышает upload_max_filesize, директиву в php.ini"
 
 #: include/functions.php:2467
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
