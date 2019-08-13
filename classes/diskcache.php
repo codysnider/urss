@@ -52,4 +52,8 @@ class DiskCache {
 		else
 			return null;
 	}
+
+	public function send($filename) {
+		return send_local_file($this->getFullPath($filename));
+	}
 }
