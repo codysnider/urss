@@ -56,8 +56,6 @@ class Af_Zz_ImgProxy extends Plugin {
 
 		$local_filename = sha1($url);
 
-		header("Content-Disposition: inline; filename=\"".basename($local_filename)."\"");
-
 		if ($this->cache->exists($local_filename)) {
 			$this->cache->send($local_filename);
 		} else {

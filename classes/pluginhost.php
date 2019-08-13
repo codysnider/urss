@@ -470,4 +470,8 @@ class PluginHost {
 	function get_filter_actions() {
 		return $this->plugin_actions;
 	}
+
+	function get_owner_uid() {
+		return $this->owner_uid;
+	}
 }

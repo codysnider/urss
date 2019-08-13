@@ -446,7 +446,7 @@ class Article extends Handler_Protected {
 			foreach ($result as $line) {
 
 				foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ENCLOSURE_ENTRY) as $plugin) {
-					$line = $plugin->hook_enclosure_entry($line);
+					$line = $plugin->hook_enclosure_entry($line, $id);
 				}
 
 				$url = $line["content_url"];

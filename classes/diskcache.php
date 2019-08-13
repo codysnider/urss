@@ -3,15 +3,28 @@ class DiskCache {
 	private $dir;
 
 	public function __construct($dir) {
-		$this->dir = basename($dir);
+		$this->dir = CACHE_DIR . "/" . basename($dir);
 	}
 
 	public function getDir() {
 		return $this->dir;
 	}
 
-	public function isWritable() {
-		return is_dir($this->dir) && is_writable($this->dir);
+	public function makeDir() {
+		if (!is_dir($this->dir)) {
+			return mkdir($this->dir);
+		}
+	}
+
+	public function isWritable($filename = "") {
+		if ($filename) {
+			if (file_exists($this->getFullPath($filename)))
+				return is_writable($this->getFullPath($filename));
+			else
+				return is_writable($this->dir);
+		} else {
+			return is_writable($this->dir);
+		}
 	}
 
 	public function exists($filename) {
@@ -28,7 +41,7 @@ class DiskCache {
 	public function getFullPath($filename) {
 		$filename = basename($filename);
 
-		return CACHE_DIR . "/" . $this->dir . "/" . $filename;
+		return $this->dir . "/" . $filename;
 	}
 
 	public function put($filename, $data) {
@@ -54,6 +67,8 @@ class DiskCache {
 	}
 
 	public function send($filename) {
+		header("Content-Disposition: inline; filename=\"$filename\"");
+
 		return send_local_file($this->getFullPath($filename));
 	}
 

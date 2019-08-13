@@ -1,82 +1,34 @@
 <?php
-class Cache_Starred_Images extends Plugin implements IHandler {
+class Cache_Starred_Images extends Plugin {
 
 	/* @var PluginHost $host */
 	private $host;
-	private $cache_dir;
+	/* @var DiskCache $cache */
+	private $cache;
     private $max_cache_attempts = 5; // per-article
 
 	function about() {
 		return array(1.0,
-			"Automatically cache Starred articles' images and HTML5 video files",
-			"fox",
-			true);
-	}
-
-	/**
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 */
-	function csrf_ignore($method) {
-		return false;
-	}
-
-	/**
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 */
-	function before($method) {
-		return true;
-	}
-
-	function after() {
-		return true;
+			"Automatically cache media files in Starred articles",
+			"fox");
 	}
 
 	function init($host) {
 		$this->host = $host;
+		$this->cache = new DiskCache("starred-images");
 
-		$this->cache_dir = CACHE_DIR . "/starred-images/";
+		if ($this->cache->makeDir())
+			chmod($this->cache->getDir(), 0777);
 
-		if (!is_dir($this->cache_dir)) {
-			mkdir($this->cache_dir);
-		}
+		if (!$this->cache->exists(".no-auto-expiry"))
+			$this->cache->touch(".no-auto-expiry");
 
-		if (is_dir($this->cache_dir)) {
-
-			if (!is_writable($this->cache_dir))
-				chmod($this->cache_dir, 0777);
-
-			if (is_writable($this->cache_dir)) {
-				$host->add_hook($host::HOOK_UPDATE_TASK, $this);
-				$host->add_hook($host::HOOK_HOUSE_KEEPING, $this);
-				$host->add_hook($host::HOOK_SANITIZE, $this);
-				$host->add_handler("public", "cache_starred_images_getimage", $this);
-
-			} else {
-				user_error("Starred cache directory is not writable.", E_USER_WARNING);
-			}
-
+		if ($this->cache->isWritable()) {
+			$host->add_hook($host::HOOK_HOUSE_KEEPING, $this);
+			$host->add_hook($host::HOOK_ENCLOSURE_ENTRY, $this);
+			$host->add_hook($host::HOOK_SANITIZE, $this);
 		} else {
-			user_error("Unable to create starred cache directory.", E_USER_WARNING);
-		}
-	}
-
-	function cache_starred_images_getimage() {
-		ob_end_clean();
-
-		$hash = basename($_REQUEST["hash"]);
-
-		if ($hash) {
-
-			$filename = $this->cache_dir . "/" . basename($hash);
-
-			if (file_exists($filename)) {
-				header("Content-Disposition: attachment; filename=\"$hash\"");
-
-				send_local_file($filename);
-			} else {
-				header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
-				echo "File not found.";
-			}
+			user_error("Starred cache directory ".$this->cache->getDir()." is not writable.", E_USER_WARNING);
 		}
 	}
 
@@ -84,7 +36,45 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
 	 */
 	function hook_house_keeping() {
-		$files = glob($this->cache_dir . "/*.{png,mp4,status}", GLOB_BRACE);
+		/* since HOOK_UPDATE_TASK is not available to user plugins, this hook is a next best thing */
+
+		Debug::log("caching media of starred articles for user " . $this->host->get_owner_uid() . "...");
+
+		$sth = $this->pdo->prepare("SELECT content, ttrss_entries.title, 
+       		ttrss_user_entries.owner_uid, link, site_url, ttrss_entries.id, plugin_data
+			FROM ttrss_entries, ttrss_user_entries LEFT JOIN ttrss_feeds ON
+				(ttrss_user_entries.feed_id = ttrss_feeds.id)
+			WHERE ref_id = ttrss_entries.id AND
+				marked = true AND
+				site_url != '' AND 
+			    ttrss_user_entries.owner_uid = ? AND
+				plugin_data NOT LIKE '%starred_cache_images%'
+			ORDER BY ".sql_random_function()." LIMIT 100");
+
+		if ($sth->execute([$this->host->get_owner_uid()])) {
+
+			$usth = $this->pdo->prepare("UPDATE ttrss_entries SET plugin_data = ? WHERE id = ?");
+
+			while ($line = $sth->fetch()) {
+				Debug::log("processing article " . $line["title"], Debug::$LOG_VERBOSE);
+
+				if ($line["site_url"]) {
+					$success = $this->cache_article_images($line["content"], $line["site_url"], $line["owner_uid"], $line["id"]);
+
+					if ($success) {
+						$plugin_data = "starred_cache_images,${line['owner_uid']}:" . $line["plugin_data"];
+
+						$usth->execute([$plugin_data, $line['id']]);
+					}
+				}
+			}
+		}
+
+		/* actual housekeeping */
+
+		Debug::log("expiring " . $this->cache->getDir() . "...");
+
+		$files = glob($this->cache->getDir() . "/*.{png,mp4,status}", GLOB_BRACE);
 
 		$last_article_id = 0;
 		$article_exists = 1;
@@ -107,6 +97,16 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 		}
 	}
 
+	function hook_enclosure_entry($enc, $article_id) {
+		$local_filename = $article_id . "-" . sha1($enc["content_url"]);
+
+		if ($this->cache->exists($local_filename)) {
+			$enc["content_url"] = DiskCache::getUrl("starred-images/" . $local_filename);
+		}
+
+		return $enc;
+	}
+
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
@@ -120,15 +120,12 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 				if ($entry->hasAttribute('src')) {
 					$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
 
-					$extension = $entry->tagName == 'source' ? '.mp4' : '.png';
-					$local_filename = $this->cache_dir . $article_id . "-" . sha1($src) . $extension;
+					$local_filename = $article_id . "-" . sha1($src);
 
-					if (file_exists($local_filename)) {
-						$entry->setAttribute("src", get_self_url_prefix() .
-							"/public.php?op=cache_starred_images_getimage&method=image&hash=" .
-							$article_id . "-" . sha1($src) . $extension);
+					if ($this->cache->exists($local_filename)) {
+						$entry->setAttribute("src", DiskCache::getUrl("starred-images/" . $local_filename));
+						$entry->removeAttribute("srcset");
 					}
-
 				}
 			}
 		}
@@ -136,42 +133,46 @@ class Cache_Starred_Images extends Plugin implements IHandler {
 		return $doc;
 	}
 
-	function hook_update_task() {
-		$res = $this->pdo->query("SELECT content, ttrss_user_entries.owner_uid, link, site_url, ttrss_entries.id, plugin_data
-			FROM ttrss_entries, ttrss_user_entries LEFT JOIN ttrss_feeds ON
-				(ttrss_user_entries.feed_id = ttrss_feeds.id)
-			WHERE ref_id = ttrss_entries.id AND
-				marked = true AND
-				(UPPER(content) LIKE '%<IMG%' OR UPPER(content) LIKE '%<VIDEO%') AND
-				site_url != '' AND
-				plugin_data NOT LIKE '%starred_cache_images%'
-			ORDER BY ".sql_random_function()." LIMIT 100");
+	private function cache_url($article_id, $url) {
+		$local_filename = $article_id . "-" . sha1($url);
 
-		$usth = $this->pdo->prepare("UPDATE ttrss_entries SET plugin_data = ? WHERE id = ?");
+		if (!$this->cache->getSize($local_filename) >= 0) {
+			Debug::log("cache_images: downloading: $url to $local_filename", Debug::$LOG_VERBOSE);
 
-		while ($line = $res->fetch()) {
-			if ($line["site_url"]) {
-				$success = $this->cache_article_images($line["content"], $line["site_url"], $line["owner_uid"], $line["id"]);
+			$data = fetch_file_contents(["url" => $url, "max_size" => MAX_CACHE_FILE_SIZE]);
 
-				if ($success) {
-					$plugin_data = "starred_cache_images,${line['owner_uid']}:" . $line["plugin_data"];
-
-					$usth->execute([$plugin_data, $line['id']]);
+			if ($data) {
+				if (strlen($data) > MIN_CACHE_FILE_SIZE) {
+					$this->cache->put($local_filename, $data);
 				}
+
+				return true;
 			}
+		} else {
+			//Debug::log("cache_images: local file exists for $url", Debug::$LOG_VERBOSE);
+
+			return true;
 		}
+
+		return false;
 	}
 
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	function cache_article_images($content, $site_url, $owner_uid, $article_id) {
-		$status_filename = $this->cache_dir . $article_id . "-" . sha1($site_url) . ".status";
+	private function cache_article_images($content, $site_url, $owner_uid, $article_id) {
+		$status_filename = $article_id . "-" . sha1($site_url) . ".status";
 
-		Debug::log("status: $status_filename", Debug::$LOG_EXTENDED);
+		/* housekeeping might run as a separate user, in this case status/media might not be writable */
+		if (!$this->cache->isWritable($status_filename)) {
+			Debug::log("status not writable: $status_filename", Debug::$LOG_VERBOSE);
+			return false;
+		}
 
-        if (file_exists($status_filename))
-            $status = json_decode(file_get_contents($status_filename), true);
+		Debug::log("status: $status_filename", Debug::$LOG_VERBOSE);
+
+        if ($this->cache->exists($status_filename))
+            $status = json_decode($this->cache->get($status_filename), true);
         else
             $status = [];
 
@@ -180,47 +181,48 @@ class Cache_Starred_Images extends Plugin implements IHandler {
         // only allow several download attempts for article
         if ($status["attempt"] > $this->max_cache_attempts) {
             Debug::log("too many attempts for $site_url", Debug::$LOG_VERBOSE);
-            return;
+            return false;
         }
 
-        if (!file_put_contents($status_filename, json_encode($status))) {
+        if (!$this->cache->put($status_filename, json_encode($status))) {
             user_error("unable to write status file: $status_filename", E_USER_WARNING);
-            return;
+            return false;
         }
 
 		$doc = new DOMDocument();
-		$doc->loadHTML('<?xml encoding="UTF-8">' . $content);
-		$xpath = new DOMXPath($doc);
 
-		$entries = $xpath->query('(//img[@src])|(//video/source[@src])');
-
-		$success = false;
 		$has_images = false;
+		$success = false;
 
-		foreach ($entries as $entry) {
+        if ($doc->loadHTML('<?xml encoding="UTF-8">' . $content)) {
+			$xpath = new DOMXPath($doc);
+			$entries = $xpath->query('(//img[@src])|(//video/source[@src])');
 
-			if ($entry->hasAttribute('src') && strpos($entry->getAttribute('src'), "data:") !== 0) {
+			foreach ($entries as $entry) {
 
-				$has_images = true;
-				$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
+				if ($entry->hasAttribute('src') && strpos($entry->getAttribute('src'), "data:") !== 0) {
 
-				$extension = $entry->tagName == 'source' ? '.mp4' : '.png';
+					$has_images = true;
 
-				$local_filename = $this->cache_dir . $article_id . "-" . sha1($src) . $extension;
+					$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
 
-				Debug::log("cache_images: downloading: $src to $local_filename", Debug::$LOG_VERBOSE);
-
-				if (!file_exists($local_filename)) {
-					$file_content = fetch_file_contents(["url" => $src, "max_size" => MAX_CACHE_FILE_SIZE]);
-
-					if ($file_content) {
-                        if (strlen($file_content) > MIN_CACHE_FILE_SIZE) {
-                            file_put_contents($local_filename, $file_content);
-                        }
-
+					if ($this->cache_url($article_id, $src)) {
 						$success = true;
 					}
-				} else {
+				}
+			}
+		}
+
+		$esth = $this->pdo->prepare("SELECT content_url FROM ttrss_enclosures WHERE post_id = ? AND
+			(content_type LIKE '%image%' OR content_type LIKE '%video%')");
+
+        if ($esth->execute([$article_id])) {
+        	while ($enc = $esth->fetch()) {
+
+        		$has_images = true;
+        		$url = rewrite_relative_url($site_url, $enc["content_url"]);
+
+				if ($this->cache_url($article_id, $url)) {
 					$success = true;
 				}
 			}
