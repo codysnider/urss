@@ -10,6 +10,10 @@ class DiskCache {
 		return $this->dir;
 	}
 
+	public function isWritable() {
+		return is_dir($this->dir) && is_writable($this->dir);
+	}
+
 	public function exists($filename) {
 		return file_exists($this->getFullPath($filename));
 	}
