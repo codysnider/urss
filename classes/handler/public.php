@@ -1204,6 +1204,9 @@ class Handler_Public extends Handler {
 	function cached_url() {
 		list ($cache_dir, $filename) = explode("/", $_GET["file"], 2);
 
+		// we do not allow files with extensions at the moment
+		$filename = str_replace(".", "", $filename);
+
 		$cache = new DiskCache($cache_dir);
 
 		if ($cache->exists($filename)) {
