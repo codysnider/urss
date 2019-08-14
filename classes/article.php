@@ -826,6 +826,8 @@ class Article extends Handler_Protected {
 	static function get_article_image($enclosures, $content, $site_url) {
 
 		$article_image = false;
+		$article_stream = false;
+
 		$tmpdoc = new DOMDocument();
 
 		if (@$tmpdoc->loadHTML('<?xml encoding="UTF-8">' . mb_substr($content, 0, 131070))) {
@@ -837,10 +839,18 @@ class Article extends Handler_Protected {
 					$matches = [];
 					if ($rrr = preg_match("/\/embed\/([\w-]+)/", $e->getAttribute("src"), $matches)) {
 						$article_image = "https://img.youtube.com/vi/" . $matches[1] . "/hqdefault.jpg";
+						$article_stream = "https://youtu.be/" . $matches[1];
 						break;
 					}
 				} else if ($e->nodeName == "video") {
 					$article_image = $e->getAttribute("poster");
+
+					$src = $tmpxpath->query("//source[@src]", $e)->item(0);
+
+					if ($src) {
+						$article_stream = $src->getAttribute("src");
+					}
+
 					break;
 				} else if ($e->nodeName == 'img') {
 					if (mb_strpos($e->getAttribute("src"), "data:") !== 0) {
@@ -852,15 +862,20 @@ class Article extends Handler_Protected {
 		}
 
 		if ($article_image)
-			return rewrite_relative_url($site_url, $article_image);
+			$article_image = rewrite_relative_url($site_url, $article_image);
 
-		foreach ($enclosures as $enc) {
-			if (strpos($enc["content_type"], "image/") !== FALSE) {
-				return rewrite_relative_url($site_url, $enc["content_url"]);
+		if ($article_stream)
+			$article_stream = rewrite_relative_url($site_url, $article_stream);
+
+		if (!$article_image)
+			foreach ($enclosures as $enc) {
+				if (strpos($enc["content_type"], "image/") !== FALSE) {
+					$article_image = rewrite_relative_url($site_url, $enc["content_url"]);
+					break;
+				}
 			}
-		}
 
-		return false;
+		return [$article_image, $article_stream];
 	}
 
 }

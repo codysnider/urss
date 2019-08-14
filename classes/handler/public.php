@@ -156,8 +156,9 @@ class Handler_Public extends Handler {
 					$tpl->setVariable('ARTICLE_ENCLOSURE_LENGTH', null, true);
 				}
 
-				$tpl->setVariable('ARTICLE_OG_IMAGE',
-                        Article::get_article_image($enclosures, $line['content'], $feed_site_url), true);
+				list ($og_image, $og_stream) = Article::get_article_image($enclosures, $line['content'], $feed_site_url);
+
+				$tpl->setVariable('ARTICLE_OG_IMAGE', $og_image, true);
 
 				$tpl->addBlock('entry');
 			}
@@ -381,7 +382,7 @@ class Handler_Public extends Handler {
 
             $rv .= "</head>";
 
-            $og_image = Article::get_article_image($enclosures, $line['content'], $line["site_url"]);
+            list ($og_image, $og_stream) = Article::get_article_image($enclosures, $line['content'], $line["site_url"]);
 
             if ($og_image) {
                 $rv .= "<meta property='og:image' content=\"" . htmlspecialchars($og_image) . "\"/>";

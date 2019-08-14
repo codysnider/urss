@@ -803,7 +803,11 @@ class API extends Handler {
 					}
 
 					$headline_row["content"] = DiskCache::rewriteUrls($headline_row['content']);
-					$headline_row["flavor_image"] = Article::get_article_image($enclosures, $line["content"], $line["site_url"]);
+
+					list ($flavor_image, $flavor_stream) = Article::get_article_image($enclosures, $line["content"], $line["site_url"]);
+
+					$headline_row["flavor_image"] = $flavor_image;
+					$headline_row["flavor_stream"] = $flavor_stream;
 
 					array_push($headlines, $headline_row);
 				}
