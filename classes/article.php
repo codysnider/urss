@@ -875,6 +875,14 @@ class Article extends Handler_Protected {
 				}
 			}
 
+		$cache = new DiskCache("images");
+
+		if ($cache->exists(sha1($article_image)))
+			$article_image = $cache->getUrl(sha1($article_image));
+
+		if ($cache->exists(sha1($article_stream)))
+			$article_stream = $cache->getUrl(sha1($article_stream));
+
 		return [$article_image, $article_stream];
 	}
 
