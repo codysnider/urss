@@ -871,7 +871,7 @@ class RSSUtils {
 					$entry_ref_id = $ref_id;
 
 					if (RSSUtils::find_article_filter($article_filters, "filter")) {
-						Debug::log("article is filtered out, nothing to do.");
+						Debug::log("article is filtered out, nothing to do.", Debug::$LOG_VERBOSE);
 						$pdo->commit();
 						continue;
 					}
@@ -1284,32 +1284,6 @@ class RSSUtils {
 		Debug::log("Removed $num_deleted old lock files.");
 	}
 
-	static function expire_cached_files() {
-		foreach (array("feeds", "images", "export", "upload") as $dir) {
-			$cache_dir = CACHE_DIR . "/$dir";
-
-			Debug::log("Expiring $cache_dir", Debug::$LOG_VERBOSE);
-
-			$num_deleted = 0;
-
-			if (is_writable($cache_dir)) {
-				$files = glob("$cache_dir/*");
-
-				if ($files) {
-					foreach ($files as $file) {
-						if (time() - filemtime($file) > 86400*CACHE_MAX_DAYS) {
-							unlink($file);
-
-							++$num_deleted;
-						}
-					}
-				}
-			}
-
-			Debug::log("$cache_dir: removed $num_deleted files.");
-		}
-	}
-
 	/**
 	 * Source: http://www.php.net/manual/en/function.parse-url.php#104527
 	 * Returns the url query as associative array
@@ -1498,7 +1472,8 @@ class RSSUtils {
 	}
 
 	static function housekeeping_common() {
-		RSSUtils::expire_cached_files();
+		DiskCache::expire();
+
 		RSSUtils::expire_lock_files();
 		RSSUtils::expire_error_log();
 		RSSUtils::expire_feed_archive();

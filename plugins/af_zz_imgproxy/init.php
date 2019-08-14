@@ -4,6 +4,9 @@ class Af_Zz_ImgProxy extends Plugin {
 	/* @var PluginHost $host */
 	private $host;
 
+	/* @var DiskCache $cache */
+	private $cache;
+
 	function about() {
 		return array(1.0,
 			"Load insecure images via built-in proxy",
@@ -18,6 +21,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 	function init($host) {
 		$this->host = $host;
+		$this->cache = new DiskCache("images");
 
 		$host->add_hook($host::HOOK_RENDER_ARTICLE, $this);
 		$host->add_hook($host::HOOK_RENDER_ARTICLE_CDM, $this);
@@ -50,16 +54,10 @@ class Af_Zz_ImgProxy extends Plugin {
 			return;
 		}
 
-		$local_filename = CACHE_DIR . "/images/" . sha1($url);
+		$local_filename = sha1($url);
 
-		if ($_REQUEST["debug"] == "1") { print $url . "\n" . $local_filename; die; }
-
-		header("Content-Disposition: inline; filename=\"".basename($local_filename)."\"");
-
-		if (file_exists($local_filename)) {
-
-			send_local_file($local_filename);
-
+		if ($this->cache->exists($local_filename)) {
+			$this->cache->send($local_filename);
 		} else {
 			$data = fetch_file_contents(["url" => $url, "max_size" => MAX_CACHE_FILE_SIZE]);
 
@@ -68,8 +66,8 @@ class Af_Zz_ImgProxy extends Plugin {
 				$disable_cache = $this->host->get($this, "disable_cache");
 
 				if (!$disable_cache && strlen($data) > MIN_CACHE_FILE_SIZE) {
-					if (file_put_contents($local_filename, $data)) {
-						$mimetype = mime_content_type($local_filename);
+					if ($this->cache->put($local_filename, $data)) {
+						$mimetype = $this->cache->getMimeType($local_filename);
 						header("Content-type: $mimetype");
 					}
 				}
@@ -110,7 +108,7 @@ class Af_Zz_ImgProxy extends Plugin {
 		}
 	}
 
-	function rewrite_url_if_needed($url, $all_remote = false) {
+	private function rewrite_url_if_needed($url, $all_remote = false) {
 		$scheme = parse_url($url, PHP_URL_SCHEME);
 
 		if ($all_remote) {

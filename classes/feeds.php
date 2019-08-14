@@ -307,7 +307,7 @@ class Feeds extends Handler_Protected {
                     $line = $p->hook_render_article_cdm($line);
                 }
 
-                $line['content'] = rewrite_cached_urls($line['content']);
+                $line['content'] = DiskCache::rewriteUrls($line['content']);
 
                 if ($line['note'])
                     $line['note'] = Article::format_article_note($id, $line['note']);

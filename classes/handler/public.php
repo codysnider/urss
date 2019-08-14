@@ -382,7 +382,7 @@ class Handler_Public extends Handler {
 				$line = $p->hook_render_article($line);
 			}
 
-			$line['content'] = rewrite_cached_urls($line['content']);
+			$line['content'] = DiskCache::rewriteUrls($line['content']);
 
 			$enclosures = Article::get_article_enclosures($line["id"]);
 
@@ -1202,24 +1202,21 @@ class Handler_Public extends Handler {
 	}
 
 	function cached_url() {
-		@$req_filename = basename($_GET['hash']);
+		$filename = $_GET['file'];
 
-		// we don't need an extension to find the file, hash is a complete URL
-		$hash = preg_replace("/\.[^\.]*$/", "", $req_filename);
+		if (strpos($filename, "/") !== FALSE) {
+			list ($cache_dir, $filename) = explode("/", $filename, 2);
+		} else {
+			$cache_dir = "images";
+		}
 
-		if ($hash) {
+		$cache = new DiskCache($cache_dir);
 
-			$filename = CACHE_DIR . '/images/' . $hash;
-
-			if (file_exists($filename)) {
-				header("Content-Disposition: inline; filename=\"$req_filename\"");
-
-				send_local_file($filename);
-
-			} else {
-				header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
-				echo "File not found.";
-			}
+		if ($cache->exists($filename)) {
+			$cache->send($filename);
+		} else {
+			header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+			echo "File not found.";
 		}
 	}
 
