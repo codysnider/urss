@@ -111,21 +111,22 @@ class Af_Zz_ImgProxy extends Plugin {
 	}
 
 	private function rewrite_url_if_needed($url, $all_remote = false) {
-		$scheme = parse_url($url, PHP_URL_SCHEME);
+		/* we don't need to handle URLs where local cache already exists, tt-rss rewrites those automatically */
+		if (!$this->cache->exists(sha1($url))) {
 
-		if ($all_remote) {
-			$host = parse_url($url, PHP_URL_HOST);
-			$self_host = parse_url(get_self_url_prefix(), PHP_URL_HOST);
+			$scheme = parse_url($url, PHP_URL_SCHEME);
 
-			$is_remote = $host != $self_host;
-		} else {
-			$is_remote = false;
-		}
+			if ($all_remote) {
+				$host = parse_url($url, PHP_URL_HOST);
+				$self_host = parse_url(get_self_url_prefix(), PHP_URL_HOST);
 
-		if (($scheme != 'https' && $scheme != "") || $is_remote) {
-			if (strpos($url, "data:") !== 0) {
-				/* we don't need to handle URLs where local cache already exists, tt-rss rewrites those automatically */
-				if (!$this->cache->exists(sha1($url))) {
+				$is_remote = $host != $self_host;
+			} else {
+				$is_remote = false;
+			}
+
+			if (($scheme != 'https' && $scheme != "") || $is_remote) {
+				if (strpos($url, "data:") !== 0) {
 					$parts = parse_url($url);
 
 					foreach (explode(" " , $this->ssl_known_whitelist) as $host) {
