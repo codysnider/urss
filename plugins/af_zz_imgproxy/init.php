@@ -57,7 +57,9 @@ class Af_Zz_ImgProxy extends Plugin {
 		$local_filename = sha1($url);
 
 		if ($this->cache->exists($local_filename)) {
-			$this->cache->send($local_filename);
+			header("Location: " . $this->cache->getUrl($local_filename));
+			return;
+			//$this->cache->send($local_filename);
 		} else {
 			$data = fetch_file_contents(["url" => $url, "max_size" => MAX_CACHE_FILE_SIZE]);
 
@@ -67,8 +69,8 @@ class Af_Zz_ImgProxy extends Plugin {
 
 				if (!$disable_cache && strlen($data) > MIN_CACHE_FILE_SIZE) {
 					if ($this->cache->put($local_filename, $data)) {
-						$mimetype = $this->cache->getMimeType($local_filename);
-						header("Content-type: $mimetype");
+						header("Location: " . $this->cache->getUrl($local_filename));
+						return;
 					}
 				}
 
@@ -136,8 +138,11 @@ class Af_Zz_ImgProxy extends Plugin {
 					}
 				}
 
-				return get_self_url_prefix() . "/public.php?op=pluginhandler&plugin=af_zz_imgproxy&pmethod=imgproxy&url=" .
-					urlencode($url);
+				/* we don't need to handle URLs where local cache already exists, tt-rss rewrites those automatically */
+				if (!$this->cache->exists(sha1($url))) {
+					return get_self_url_prefix() . "/public.php?op=pluginhandler&plugin=af_zz_imgproxy&pmethod=imgproxy&url=" .
+						urlencode($url);
+				}
 			}
 		}
 
