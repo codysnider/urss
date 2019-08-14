@@ -673,10 +673,12 @@ class Article extends Handler_Protected {
 
 		$rv = array();
 
+		$cache = new DiskCache("images");
+
 		while ($line = $sth->fetch()) {
 
-			if (file_exists(CACHE_DIR . '/images/' . sha1($line["content_url"]))) {
-				$line["content_url"] = DiskCache::getUrl(sha1($line["content_url"]));
+			if ($cache->exists(sha1($line["content_url"]))) {
+				$line["content_url"] = $cache->getUrl(sha1($line["content_url"]));
 			}
 
 			array_push($rv, $line);

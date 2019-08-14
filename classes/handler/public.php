@@ -1202,13 +1202,7 @@ class Handler_Public extends Handler {
 	}
 
 	function cached_url() {
-		$filename = $_GET['file'];
-
-		if (strpos($filename, "/") !== FALSE) {
-			list ($cache_dir, $filename) = explode("/", $filename, 2);
-		} else {
-			$cache_dir = "images";
-		}
+		list ($cache_dir, $filename) = explode("/", $_GET["file"], 2);
 
 		$cache = new DiskCache($cache_dir);
 

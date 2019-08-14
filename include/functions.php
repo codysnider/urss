@@ -594,6 +594,10 @@
 		}
 	}
 
+	function clean_filename($filename) {
+		return basename(preg_replace("/\.\.|[\/\\\]/", "", $filename));
+	}
+
 	function make_password($length = 12) {
 		$password = "";
 		$possible = "0123456789abcdfghjkmnpqrstvwxyzABCDFGHJKMNPQRSTVWXYZ*%+^";

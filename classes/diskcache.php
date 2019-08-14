@@ -3,7 +3,7 @@ class DiskCache {
 	private $dir;
 
 	public function __construct($dir) {
-		$this->dir = CACHE_DIR . "/" . basename($dir);
+		$this->dir = CACHE_DIR . "/" . clean_filename($dir);
 	}
 
 	public function getDir() {
@@ -39,7 +39,7 @@ class DiskCache {
 	}
 
 	public function getFullPath($filename) {
-		$filename = basename($filename);
+		$filename = clean_filename($filename);
 
 		return $this->dir . "/" . $filename;
 	}
@@ -72,8 +72,8 @@ class DiskCache {
 		return send_local_file($this->getFullPath($filename));
 	}
 
-	static public function getUrl($filename) {
-		return get_self_url_prefix() . "/public.php?op=cached_url&file=" . $filename;
+	public function getUrl($filename) {
+		return get_self_url_prefix() . "/public.php?op=cached_url&file=" . basename($this->dir) . "/" . $filename;
 	}
 
 	// check for locally cached (media) URLs and rewrite to local versions
@@ -103,7 +103,7 @@ class DiskCache {
 
 					if ($cache->getSize($cached_filename) > 0) {
 
-						$src = DiskCache::getUrl(sha1($src));
+						$src = $cache->getUrl(sha1($src));
 
 						if ($entry->hasAttribute('poster'))
 							$entry->setAttribute('poster', $src);

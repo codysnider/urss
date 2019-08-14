@@ -101,7 +101,7 @@ class Cache_Starred_Images extends Plugin {
 		$local_filename = $article_id . "-" . sha1($enc["content_url"]);
 
 		if ($this->cache->exists($local_filename)) {
-			$enc["content_url"] = DiskCache::getUrl("starred-images/" . $local_filename);
+			$enc["content_url"] = $this->cache->getUrl($local_filename);
 		}
 
 		return $enc;
@@ -123,7 +123,7 @@ class Cache_Starred_Images extends Plugin {
 					$local_filename = $article_id . "-" . sha1($src);
 
 					if ($this->cache->exists($local_filename)) {
-						$entry->setAttribute("src", DiskCache::getUrl("starred-images/" . $local_filename));
+						$entry->setAttribute("src", $this->cache->getUrl($local_filename));
 						$entry->removeAttribute("srcset");
 					}
 				}
