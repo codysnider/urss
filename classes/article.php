@@ -825,8 +825,8 @@ class Article extends Handler_Protected {
 
 	static function get_article_image($enclosures, $content, $site_url) {
 
-		$article_image = false;
-		$article_stream = false;
+		$article_image = "";
+		$article_stream = "";
 
 		$tmpdoc = new DOMDocument();
 
