@@ -157,7 +157,7 @@ class Handler_Public extends Handler {
 				}
 
 				$tpl->setVariable('ARTICLE_OG_IMAGE',
-                        $this->get_article_image($enclosures, $line['content'], $feed_site_url), true);
+                        Article::get_article_image($enclosures, $line['content'], $feed_site_url), true);
 
 				$tpl->addBlock('entry');
 			}
@@ -319,34 +319,6 @@ class Handler_Public extends Handler {
 		print "Article not found.";
 	}
 
-	private function get_article_image($enclosures, $content, $site_url) {
-	    $og_image = false;
-
-		foreach ($enclosures as $enc) {
-			if (strpos($enc["content_type"], "image/") !== FALSE) {
-				return rewrite_relative_url($site_url, $enc["content_url"]);
-			}
-		}
-
-		if (!$og_image) {
-			$tmpdoc = new DOMDocument();
-
-			if (@$tmpdoc->loadHTML('<?xml encoding="UTF-8">' . mb_substr($content, 0, 131070))) {
-				$tmpxpath = new DOMXPath($tmpdoc);
-				$imgs = $tmpxpath->query("//img");
-
-				foreach ($imgs as $img) {
-					$src = $img->getAttribute("src");
-
-					if (mb_strpos($src, "data:") !== 0)
-						return rewrite_relative_url($site_url, $src);
-				}
-			}
-		}
-
-		return false;
-    }
-
 	private function format_article($id, $owner_uid) {
 
 		$pdo = Db::pdo();
@@ -409,7 +381,7 @@ class Handler_Public extends Handler {
 
             $rv .= "</head>";
 
-            $og_image = $this->get_article_image($enclosures, $line['content'], $line["site_url"]);
+            $og_image = Article::get_article_image($enclosures, $line['content'], $line["site_url"]);
 
             if ($og_image) {
                 $rv .= "<meta property='og:image' content=\"" . htmlspecialchars($og_image) . "\"/>";

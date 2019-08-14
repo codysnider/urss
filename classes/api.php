@@ -759,9 +759,10 @@ class API extends Handler {
 						"tags" => $tags,
 					);
 
+					$enclosures = Article::get_article_enclosures($line['id']);
+
 					if ($include_attachments)
-						$headline_row['attachments'] = Article::get_article_enclosures(
-							$line['id']);
+						$headline_row['attachments'] = $enclosures;
 
 					if ($show_excerpt)
 						$headline_row["excerpt"] = $line["content_preview"];
@@ -801,7 +802,8 @@ class API extends Handler {
 						$headline_row = $p->hook_render_article_api(array("headline" => $headline_row));
 					}
 
-					$headline_row['content'] = DiskCache::rewriteUrls($headline_row['content']);
+					$headline_row["content"] = DiskCache::rewriteUrls($headline_row['content']);
+					$headline_row["flavor_image"] = Article::get_article_image($enclosures, $line["content"], $line["site_url"]);
 
 					array_push($headlines, $headline_row);
 				}

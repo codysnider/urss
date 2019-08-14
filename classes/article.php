@@ -823,4 +823,44 @@ class Article extends Handler_Protected {
 		return true;
 	}
 
+	static function get_article_image($enclosures, $content, $site_url) {
+
+		$article_image = false;
+		$tmpdoc = new DOMDocument();
+
+		if (@$tmpdoc->loadHTML('<?xml encoding="UTF-8">' . mb_substr($content, 0, 131070))) {
+			$tmpxpath = new DOMXPath($tmpdoc);
+			$elems = $tmpxpath->query('(//img[@src]|//video[@poster]|//iframe[contains(@src , "youtube.com/embed/")])');
+
+			foreach ($elems as $e) {
+				if ($e->nodeName == "iframe") {
+					$matches = [];
+					if ($rrr = preg_match("/\/embed\/([\w-]+)/", $e->getAttribute("src"), $matches)) {
+						$article_image = "https://img.youtube.com/vi/" . $matches[1] . "/hqdefault.jpg";
+						break;
+					}
+				} else if ($e->nodeName == "video") {
+					$article_image = $e->getAttribute("poster");
+					break;
+				} else if ($e->nodeName == 'img') {
+					if (mb_strpos($e->getAttribute("src"), "data:") !== 0) {
+						$article_image = $e->getAttribute("src");
+					}
+					break;
+				}
+			}
+		}
+
+		if ($article_image)
+			return rewrite_relative_url($site_url, $article_image);
+
+		foreach ($enclosures as $enc) {
+			if (strpos($enc["content_type"], "image/") !== FALSE) {
+				return rewrite_relative_url($site_url, $enc["content_url"]);
+			}
+		}
+
+		return false;
+	}
+
 }
