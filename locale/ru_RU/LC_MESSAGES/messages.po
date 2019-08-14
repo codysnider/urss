@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2019-08-13 10:03+0000\n"
-"Last-Translator: Vladimir Budylnikov <me@nett00n.org>\n"
+"PO-Revision-Date: 2019-08-14 10:49+0000\n"
+"Last-Translator: Andrew Dolgov <fox@fakecake.org>\n"
 "Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
 "ru/>\n"
 "Language: ru_RU\n"
@@ -739,11 +739,12 @@ msgstr "Ошибок нет, файл загружен успешно"
 
 #: include/functions.php:2466
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
-msgstr "Загружаемый файл превышает upload_max_filesize, директиву в php.ini"
+msgstr "Загружаемый файл превышает директиву upload_max_filesize в php.ini"
 
 #: include/functions.php:2467
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
-msgstr "Загружаемый файл превышает MAX_FILE_SIZE, директиву заданную в HTML-форме"
+msgstr ""
+"Загружаемый файл превышает MAX_FILE_SIZE параметр, указанный в форме HTML"
 
 #: include/functions.php:2468
 msgid "The uploaded file was only partially uploaded"

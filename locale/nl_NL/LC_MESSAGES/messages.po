@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-20 15:42+0300\n"
-"PO-Revision-Date: 2019-02-23 05:02+0000\n"
-"Last-Translator: Patrick Ahles <p.ahles+weblate@gmail.com>\n"
-"Language-Team: Dutch <https://weblate.tt-rss.org/projects/tt-rss/messages/nl/>\n"
+"PO-Revision-Date: 2019-08-14 10:49+0000\n"
+"Last-Translator: Edgar Pireyn <edgar@pireyn.be>\n"
+"Language-Team: Dutch <https://weblate.tt-rss.org/projects/tt-rss/messages/nl/"
+">\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3\n"
+"X-Generator: Weblate 3.7.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _\n"
 "X-Poedit-Basepath: .\n"
@@ -466,8 +467,9 @@ msgid "New user registrations are currently closed."
 msgstr "Nieuwe gebruikersregistratie is op dit moment niet mogelijk."
 
 #: update.php:68
+#, fuzzy
 msgid "Tiny Tiny RSS data update script."
-msgstr "Tiny Tiny RSS data update script."
+msgstr "Tiny Tiny RSS gegevens update script."
 
 #: include/controls.php:85
 #: classes/pref/filters.php:212
@@ -1195,7 +1197,7 @@ msgstr "Speciaal"
 #: classes/feeds.php:1472
 #, php-format
 msgid "Incorrect search syntax: %s."
-msgstr ""
+msgstr "Incorrecte zoek syntax: %s."
 
 #: classes/feeds.php:1657
 #, php-format
@@ -1319,26 +1321,28 @@ msgstr "Database-updater"
 #: classes/handler/public.php:1142
 #, fuzzy, php-format
 msgid "Performing updates to version %d"
-msgstr "Uitvoeren van updates naar versie %d..."
+msgstr "Updaten naar versie %d..."
 
 #: classes/handler/public.php:1147
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to version %d"
-msgstr "Updaten naar schema-versie %d"
+msgstr "Updaten naar versie %d"
 
 #: classes/handler/public.php:1160
+#, fuzzy
 msgid "Try again"
-msgstr ""
+msgstr "Probeer opnieuw"
 
 #: classes/handler/public.php:1166
-#, fuzzy
 msgid "Completed."
-msgstr "Upload voltooid."
+msgstr "Voltooid."
 
 #: classes/handler/public.php:1183
-#, fuzzy, php-format
+#, php-format
 msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
-msgstr "Uw Tiny Tiny RSS database moet worden geüpdate naar de laatste versie (<b>%d</b> naar <b>%d</b>)."
+msgstr ""
+"Uw Tiny Tiny RSS database moet worden geüpdatet naar de laatste versie (%d "
+"naar%d)."
 
 #: classes/handler/public.php:1195
 msgid "Perform updates"
@@ -1383,9 +1387,9 @@ msgid "Setting preference key %s to %s"
 msgstr "Instellen voorkeursleutel %s op %s"
 
 #: classes/opml.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Adding filter %s..."
-msgstr "Filter toevoegen..."
+msgstr "Filter %s toevoegen..."
 
 #: classes/opml.php:536
 #, php-format
@@ -1424,10 +1428,10 @@ msgstr "Aanvinken om veld in te schakelen"
 #: classes/pref/feeds.php:280
 #: classes/pref/feeds.php:286
 #: classes/pref/feeds.php:315
-#, fuzzy, php-format
+#, php-format
 msgid "(%d feed)"
 msgid_plural "(%d feeds)"
-msgstr[0] "(%d feeds)"
+msgstr[0] "(%d feed)"
 msgstr[1] "(%d feeds)"
 
 #: classes/pref/feeds.php:521
@@ -1683,7 +1687,7 @@ msgstr "Onderschrift"
 #: classes/pref/filters.php:856
 #: classes/pref/filters.php:974
 msgid "Match"
-msgstr "Match"
+msgstr "Treffer"
 
 #: classes/pref/filters.php:369
 #: classes/pref/filters.php:429
@@ -1778,27 +1782,26 @@ msgid "[No caption]"
 msgstr "[Geen onderschrift]"
 
 #: classes/pref/filters.php:1141
-#, fuzzy, php-format
+#, php-format
 msgid "%s (%d rule)"
 msgid_plural "%s (%d rules)"
-msgstr[0] "Regel toevoegen"
-msgstr[1] "Regel toevoegen"
+msgstr[0] "%s (%d regel)"
+msgstr[1] "%s (%d regels)"
 
 #: classes/pref/filters.php:1155
 msgid "matches any rule"
 msgstr "match elke regel"
 
 #: classes/pref/filters.php:1156
-#, fuzzy
 msgid "inverse"
-msgstr "(omgekeerd)"
+msgstr "omkeren"
 
 #: classes/pref/filters.php:1159
-#, fuzzy, php-format
+#, php-format
 msgid "%s (+%d action)"
 msgid_plural "%s (+%d actions)"
-msgstr[0] "Actie toevoegen"
-msgstr[1] "Actie toevoegen"
+msgstr[0] "%s (+%d actie)"
+msgstr[1] "%s (+%d acties)"
 
 #: classes/pref/labels.php:38
 msgid "Colors"
@@ -1846,13 +1849,12 @@ msgid "Never apply these tags automatically (comma-separated list)."
 msgstr "Deze tags nooit automatisch toekennen (kommagescheiden lijst)."
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Default language"
-msgstr "Standaard profiel"
+msgstr "Standaardtaal"
 
 #: classes/pref/prefs.php:72
 msgid "Used for full-text search"
-msgstr ""
+msgstr "Word gebruikt voor een zoekopdracht over de volledige tekst"
 
 #: classes/pref/prefs.php:73
 msgid "Mark read on scroll"
@@ -2160,7 +2162,7 @@ msgstr "Systeem plug-ins"
 #: classes/pref/prefs.php:856
 #, php-format
 msgid "v%.2f, by %s"
-msgstr ""
+msgstr "v%.2f, door %s"
 
 #: classes/pref/prefs.php:818
 msgid "User plugins"
@@ -2392,12 +2394,13 @@ msgid "Readability settings (af_readability)"
 msgstr "Readability-instellingen (af_readability)"
 
 #: plugins/af_readability/init.php:87
+#, fuzzy
 msgid "Provide full-text services to core code (bookmarklets) and other plugins"
-msgstr ""
+msgstr "Bied full-text services aan kerncode (bookmarklets) en andere plug-ins"
 
 #: plugins/af_readability/init.php:118
 msgid "Readability"
-msgstr "Readability"
+msgstr "Leesbaarheid"
 
 #: plugins/af_readability/init.php:130
 msgid "Inline article content"
@@ -2681,8 +2684,8 @@ msgstr "commentaren"
 #: js/Article.js:155
 msgid "comment"
 msgid_plural "comments"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "commentaar"
+msgstr[1] "commentaren"
 
 #: js/CommonDialogs.js:11
 msgid "Remove stored feed icon?"
