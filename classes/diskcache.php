@@ -101,7 +101,7 @@ class DiskCache {
 					$src = $entry->hasAttribute('poster') ? $entry->getAttribute('poster') : $entry->getAttribute('src');
 					$cached_filename = sha1($src);
 
-					if ($cache->getSize($cached_filename) > 0) {
+					if ($cache->exists($cached_filename)) {
 
 						$src = $cache->getUrl(sha1($src));
 

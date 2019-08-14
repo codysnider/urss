@@ -136,7 +136,7 @@ class Cache_Starred_Images extends Plugin {
 	private function cache_url($article_id, $url) {
 		$local_filename = $article_id . "-" . sha1($url);
 
-		if (!$this->cache->getSize($local_filename) >= 0) {
+		if (!$this->cache->exists($local_filename)) {
 			Debug::log("cache_images: downloading: $url to $local_filename", Debug::$LOG_VERBOSE);
 
 			$data = fetch_file_contents(["url" => $url, "max_size" => MAX_CACHE_FILE_SIZE]);
