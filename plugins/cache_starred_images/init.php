@@ -141,13 +141,9 @@ class Cache_Starred_Images extends Plugin {
 
 			$data = fetch_file_contents(["url" => $url, "max_size" => MAX_CACHE_FILE_SIZE]);
 
-			if ($data) {
-				if (strlen($data) > MIN_CACHE_FILE_SIZE) {
-					$this->cache->put($local_filename, $data);
-				}
+			if ($data)
+				return $this->cache->put($local_filename, $data);;
 
-				return true;
-			}
 		} else {
 			//Debug::log("cache_images: local file exists for $url", Debug::$LOG_VERBOSE);
 

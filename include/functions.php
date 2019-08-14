@@ -54,8 +54,6 @@
 	// feed limit for one update batch
 	define_default('DAEMON_SLEEP_INTERVAL', 120);
 	// default sleep interval between feed updates (sec)
-	define_default('MIN_CACHE_FILE_SIZE', 1024);
-	// do not cache files smaller than that (bytes)
 	define_default('MAX_CACHE_FILE_SIZE', 64*1024*1024);
 	// do not cache files larger than that (bytes)
 	define_default('MAX_DOWNLOAD_FILE_SIZE', 16*1024*1024);

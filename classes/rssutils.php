@@ -1196,7 +1196,7 @@ class RSSUtils {
 					if (!$cache->exists($local_filename)) {
 						$file_content = fetch_file_contents(array("url" => $src, "max_size" => MAX_CACHE_FILE_SIZE));
 
-						if ($file_content && strlen($file_content) > MIN_CACHE_FILE_SIZE) {
+						if ($file_content) {
 							$cache->put($local_filename, $file_content);
 						}
 					} else if (is_writable($local_filename)) {
@@ -1230,7 +1230,7 @@ class RSSUtils {
 
 							$file_content = fetch_file_contents(array("url" => $src, "max_size" => MAX_CACHE_FILE_SIZE));
 
-							if ($file_content && strlen($file_content) > MIN_CACHE_FILE_SIZE) {
+							if ($file_content) {
 								$cache->put($local_filename, $file_content);
 							}
 						} else if ($cache->isWritable($local_filename)) {

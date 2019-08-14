@@ -67,7 +67,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 				$disable_cache = $this->host->get($this, "disable_cache");
 
-				if (!$disable_cache && strlen($data) > MIN_CACHE_FILE_SIZE) {
+				if (!$disable_cache) {
 					if ($this->cache->put($local_filename, $data)) {
 						header("Location: " . $this->cache->getUrl($local_filename));
 						return;
