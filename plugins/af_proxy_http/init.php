@@ -1,5 +1,5 @@
 <?php
-class Af_Zz_ImgProxy extends Plugin {
+class Af_Proxy_Http extends Plugin {
 
 	/* @var PluginHost $host */
 	private $host;
@@ -9,7 +9,7 @@ class Af_Zz_ImgProxy extends Plugin {
 
 	function about() {
 		return array(1.0,
-			"Load insecure images via built-in proxy",
+			"Loads media served over plain HTTP via built-in secure proxy",
 			"fox");
 	}
 
@@ -23,8 +23,8 @@ class Af_Zz_ImgProxy extends Plugin {
 		$this->host = $host;
 		$this->cache = new DiskCache("images");
 
-		$host->add_hook($host::HOOK_RENDER_ARTICLE, $this);
-		$host->add_hook($host::HOOK_RENDER_ARTICLE_CDM, $this);
+		$host->add_hook($host::HOOK_RENDER_ARTICLE, $this, 150);
+		$host->add_hook($host::HOOK_RENDER_ARTICLE_CDM, $this, 150);
 		$host->add_hook($host::HOOK_ENCLOSURE_ENTRY, $this);
 
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
