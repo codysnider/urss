@@ -107,8 +107,10 @@ class DiskCache {
 
 						if ($entry->hasAttribute('poster'))
 							$entry->setAttribute('poster', $src);
-						else
+						else {
 							$entry->setAttribute('src', $src);
+							$entry->removeAttribute("srcset");
+						}
 
 						$need_saving = true;
 					}
