@@ -128,28 +128,44 @@ class PluginHost {
 		}
 	}
 
-	function add_hook($type, $sender) {
+	function add_hook($type, $sender, $priority = 50) {
+		$priority = (int) $priority;
+
 		if (!is_array($this->hooks[$type])) {
-			$this->hooks[$type] = array();
+			$this->hooks[$type] = [];
 		}
 
-		array_push($this->hooks[$type], $sender);
+		if (!is_array($this->hooks[$type][$priority])) {
+			$this->hooks[$type][$priority] = [];
+		}
+
+		array_push($this->hooks[$type][$priority], $sender);
+		ksort($this->hooks[$type]);
 	}
 
 	function del_hook($type, $sender) {
 		if (is_array($this->hooks[$type])) {
-			$key = array_Search($sender, $this->hooks[$type]);
-			if ($key !== FALSE) {
-				unset($this->hooks[$type][$key]);
+			foreach (array_keys($this->hooks[$type]) as $prio) {
+				$key = array_search($sender, $this->hooks[$type][$prio]);
+
+				if ($key !== FALSE) {
+					unset($this->hooks[$type][$prio][$key]);
+				}
 			}
 		}
 	}
 
 	function get_hooks($type) {
 		if (isset($this->hooks[$type])) {
-			return $this->hooks[$type];
+			$tmp = [];
+
+			foreach (array_keys($this->hooks[$type]) as $prio) {
+				$tmp = array_merge($tmp, $this->hooks[$type][$prio]);
+			}
+
+			return $tmp;
 		} else {
-			return array();
+			return [];
 		}
 	}
 	function load_all($kind, $owner_uid = false, $skip_init = false) {
