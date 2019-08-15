@@ -141,8 +141,7 @@ class Af_Proxy_Http extends Plugin {
 						}
 					}
 
-					return get_self_url_prefix() . "/public.php?op=pluginhandler&plugin=af_proxy_http&pmethod=imgproxy&url=" .
-						urlencode($url);
+					return $this->host->get_public_method_url($this, "imgproxy", ["url" => $url]);
 				}
 			}
 		}
