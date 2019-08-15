@@ -141,7 +141,7 @@ class Af_Proxy_Http extends Plugin {
 						}
 					}
 
-					return get_self_url_prefix() . "/public.php?op=pluginhandler&plugin=af_zz_imgproxy&pmethod=imgproxy&url=" .
+					return get_self_url_prefix() . "/public.php?op=pluginhandler&plugin=af_proxy_http&pmethod=imgproxy&url=" .
 						urlencode($url);
 				}
 			}
@@ -210,7 +210,7 @@ class Af_Proxy_Http extends Plugin {
 		if ($args != "prefFeeds") return;
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\" 
-			title=\"<i class='material-icons'>extension</i> ".__('Image proxy settings (af_zz_imgproxy)')."\">";
+			title=\"<i class='material-icons'>extension</i> ".__('Image proxy settings (af_proxy_http)')."\">";
 
 		print "<form dojoType=\"dijit.form.Form\">";
 
@@ -230,7 +230,7 @@ class Af_Proxy_Http extends Plugin {
 
 		print_hidden("op", "pluginhandler");
 		print_hidden("method", "save");
-		print_hidden("plugin", "af_zz_imgproxy");
+		print_hidden("plugin", "af_proxy_http");
 
 		$proxy_all = $this->host->get($this, "proxy_all");
 		print_checkbox("proxy_all", $proxy_all);
