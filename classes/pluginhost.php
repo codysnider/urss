@@ -500,7 +500,7 @@ class PluginHost {
 					[
 						"op" => "pluginhandler",
 						"plugin" => strtolower(get_class($sender)),
-						"pmethod" => $method
+						"method" => $method
 					],
 					$params));
 	}
