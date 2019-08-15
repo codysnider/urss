@@ -829,7 +829,7 @@ class Article extends Handler_Protected {
 		$article_stream = "";
 
 		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ARTICLE_IMAGE) as $p) {
-			list ($article_image, $article_stream) = $p->hook_article_image($enclosures, $content, $site_url);
+			list ($article_image, $article_stream, $content) = $p->hook_article_image($enclosures, $content, $site_url);
 		}
 
 		if (!$article_image && !$article_stream) {
