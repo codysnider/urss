@@ -593,7 +593,7 @@
 	}
 
 	function clean_filename($filename) {
-		return basename(preg_replace("/\.\.|[\/\\\]/", "", $filename));
+		return basename(preg_replace("/\.\.|[\/\\\]/", "", clean($filename)));
 	}
 
 	function make_password($length = 12) {
