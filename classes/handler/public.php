@@ -1216,17 +1216,17 @@ class Handler_Public extends Handler {
 				if ($plugin->is_public_method($method)) {
 					$plugin->$method();
 				} else {
-					user_error("PluginHandler[PUBLIC]: Requested private method '$method' of plugin '$plugin_name'.");
+					user_error("PluginHandler[PUBLIC]: Requested private method '$method' of plugin '$plugin_name'.", E_USER_WARNING);
 					header("Content-Type: text/json");
 					print error_json(6);
 				}
 			} else {
-				user_error("PluginHandler[PUBLIC]: Requested unknown method '$method' of plugin '$plugin_name'.");
+				user_error("PluginHandler[PUBLIC]: Requested unknown method '$method' of plugin '$plugin_name'.", E_USER_WARNING);
 				header("Content-Type: text/json");
 				print error_json(13);
 			}
 		} else {
-			user_error("PluginHandler[PUBLIC]: Requested method '$method' of unknown plugin '$plugin_name'.");
+			user_error("PluginHandler[PUBLIC]: Requested method '$method' of unknown plugin '$plugin_name'.", E_USER_WARNING);
 			header("Content-Type: text/json");
 			print error_json(14);
 		}
