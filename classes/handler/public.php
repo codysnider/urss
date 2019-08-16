@@ -1203,30 +1203,30 @@ class Handler_Public extends Handler {
 	public function pluginhandler() {
 		$host = new PluginHost();
 
-		$plugin = basename(clean($_REQUEST["plugin"]));
+		$plugin_name = clean_filename($_REQUEST["plugin"]);
 		$method = clean($_REQUEST["pmethod"]);
 
-		$host->load($plugin, PluginHost::KIND_USER, 0);
+		$host->load($plugin_name, PluginHost::KIND_USER, 0);
 		$host->load_data();
 
-		$pclass = $host->get_plugin($plugin);
+		$plugin = $host->get_plugin($plugin_name);
 
-		if ($pclass) {
-			if (method_exists($pclass, $method)) {
-				if ($pclass->is_public_method($method)) {
-					$pclass->$method();
+		if ($plugin) {
+			if (method_exists($plugin, $method)) {
+				if ($plugin->is_public_method($method)) {
+					$plugin->$method();
 				} else {
-					user_error("pluginhandler: Requested private method '$method' of plugin '$plugin'.");
+					user_error("PluginHandler[PUBLIC]: Requested private method '$method' of plugin '$plugin_name'.");
 					header("Content-Type: text/json");
 					print error_json(6);
 				}
 			} else {
-				user_error("pluginhandler: Requested unknown method '$method' of plugin '$plugin'.");
+				user_error("PluginHandler[PUBLIC]: Requested unknown method '$method' of plugin '$plugin_name'.");
 				header("Content-Type: text/json");
 				print error_json(13);
 			}
 		} else {
-			user_error("pluginhandler: Requested method '$method' of unknown plugin '$plugin'.");
+			user_error("PluginHandler[PUBLIC]: Requested method '$method' of unknown plugin '$plugin_name'.");
 			header("Content-Type: text/json");
 			print error_json(14);
 		}
