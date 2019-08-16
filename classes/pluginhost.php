@@ -186,7 +186,7 @@ class PluginHost {
 
 		foreach ($plugins as $class) {
 			$class = trim($class);
-			$class_file = strtolower(basename($class));
+			$class_file = strtolower(clean_filename($class));
 
 			if (!is_dir(__DIR__."/../plugins/$class_file") &&
 					!is_dir(__DIR__."/../plugins.local/$class_file")) continue;

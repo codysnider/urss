@@ -88,7 +88,7 @@ class Backend extends Handler {
 	}
 
 	function help() {
-		$topic = basename(clean($_REQUEST["topic"])); // only one for now
+		$topic = clean_filename($_REQUEST["topic"]); // only one for now
 
 		if ($topic == "main") {
 			$info = get_hotkeys_info();
