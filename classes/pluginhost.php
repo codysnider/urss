@@ -186,7 +186,7 @@ class PluginHost {
 
 		foreach ($plugins as $class) {
 			$class = trim($class);
-			$class_file = strtolower(basename($class));
+			$class_file = strtolower(clean_filename($class));
 
 			if (!is_dir(__DIR__."/../plugins/$class_file") &&
 					!is_dir(__DIR__."/../plugins.local/$class_file")) continue;
@@ -490,5 +490,35 @@ class PluginHost {
 
 	function get_owner_uid() {
 		return $this->owner_uid;
+	}
+
+	// handled by classes/pluginhandler.php, requires valid session
+	function get_method_url($sender, $method, $params)  {
+		return get_self_url_prefix() . "/backend.php?" .
+			http_build_query(
+				array_merge(
+					[
+						"op" => "pluginhandler",
+						"plugin" => strtolower(get_class($sender)),
+						"method" => $method
+					],
+					$params));
+	}
+
+	// WARNING: endpoint in public.php, exposed to unauthenticated users
+	function get_public_method_url($sender, $method, $params)  {
+		if ($sender->is_public_method($method)) {
+			return get_self_url_prefix() . "/public.php?" .
+				http_build_query(
+					array_merge(
+						[
+							"op" => "pluginhandler",
+							"plugin" => strtolower(get_class($sender)),
+							"pmethod" => $method
+						],
+						$params));
+		} else {
+			user_error("get_public_method_url: requested method '$method' of '" . get_class($sender) . "' is private.");
+		}
 	}
 }

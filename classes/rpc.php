@@ -572,7 +572,7 @@ class RPC extends Handler_Protected {
 
 	function log() {
 		$msg = clean($_REQUEST['msg']);
-		$file = basename(clean($_REQUEST['file']));
+		$file = clean_filename($_REQUEST['file']);
 		$line = (int) clean($_REQUEST['line']);
 		$context = clean($_REQUEST['context']);
 
