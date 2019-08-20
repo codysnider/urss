@@ -15,6 +15,17 @@ class Logger_SQL {
 			// limit context length, DOMDocument dumps entire XML in here sometimes, which may be huge
 			$context = mb_substr($context, 0, 8192);
 
+			$server_params = [
+				"IP" => "REMOTE_ADDR",
+				"Request URI" => "REQUEST_URI",
+				"User agent" => "HTTP_USER_AGENT",
+			];
+
+			foreach ($server_params as $n => $p) {
+				if (isset($_SERVER[$p]))
+					$context .= "\n$n: " . $_SERVER[$p];
+			}
+
 			// passed error message may contain invalid unicode characters, failing to insert an error here
 			// would break the execution entirely by generating an actual fatal error instead of a E_WARNING etc
 			$errstr = UConverter::transcode($errstr, 'UTF-8', 'UTF-8');
