@@ -312,7 +312,7 @@ class Pref_Feeds extends Handler_Protected {
 				array_push($root['items'], $feed);
 			}
 
-			$root['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', count($cat['items'])), count($cat['items']));
+			$root['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', count($root['items'])), count($root['items']));
 		}
 
 		$fl = array();
