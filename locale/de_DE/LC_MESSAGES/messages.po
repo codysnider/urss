@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-15 13:47+0300\n"
 "PO-Revision-Date: 2019-08-26 11:40+0000\n"
-"Last-Translator: Patrick Ahles <p.ahles+weblate@gmail.com>\n"
+"Last-Translator: Oliver Meyer <olm@cativa.net>\n"
 "Language-Team: German <https://weblate.tt-rss.org/projects/tt-rss/messages/"
 "de/>\n"
 "Language: de_DE\n"
@@ -1195,7 +1195,7 @@ msgstr "Sonderfeeds"
 #: classes/feeds.php:1472
 #, php-format
 msgid "Incorrect search syntax: %s."
-msgstr ""
+msgstr "Ungültige Such-Syntax: %s"
 
 #: classes/feeds.php:1657
 #, php-format
@@ -1328,7 +1328,7 @@ msgstr "Aktualisierung auf Version %d"
 
 #: classes/handler/public.php:1123
 msgid "Try again"
-msgstr ""
+msgstr "Erneut versuchen"
 
 #: classes/handler/public.php:1129
 msgid "Completed."
@@ -2402,9 +2402,8 @@ msgid "Reddit content settings (af_redditimgur)"
 msgstr "Reddit Inhalts-Einstellungen (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:60
-#, fuzzy
 msgid "Extract missing content using Readability (requires af_readability)"
-msgstr "Extrahiere fehlenden Inhalt mit Readability"
+msgstr "Extrahiere fehlenden Inhalt mit Readability (benötigt af_readability)"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
@@ -2559,9 +2558,8 @@ msgid "Unshare article"
 msgstr "Artikel nicht mehr teilen"
 
 #: plugins/toggle_sidebar/init.php:27
-#, fuzzy
 msgid "Toggle sidebar"
-msgstr "Markierung ein-/ausschalten"
+msgstr "Seitenleiste ein-/ausschalten"
 
 #: plugins/vf_shared/init.php:17
 #: plugins/vf_shared/init.php:73
