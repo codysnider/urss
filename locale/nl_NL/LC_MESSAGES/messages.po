@@ -8,9 +8,10 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-15 13:47+0300\n"
-"PO-Revision-Date: 2019-08-14 10:49+0000\n"
-"Last-Translator: Edgar Pireyn <edgar@pireyn.be>\n"
-"Language-Team: Dutch <https://weblate.tt-rss.org/projects/tt-rss/messages/nl/>\n"
+"PO-Revision-Date: 2019-08-27 12:06+0000\n"
+"Last-Translator: Patrick Ahles <p.ahles+weblate@gmail.com>\n"
+"Language-Team: Dutch <https://weblate.tt-rss.org/projects/tt-rss/messages/nl/"
+">\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -465,9 +466,8 @@ msgid "New user registrations are currently closed."
 msgstr "Nieuwe gebruikersregistratie is op dit moment niet mogelijk."
 
 #: update.php:113
-#, fuzzy
 msgid "Tiny Tiny RSS data update script."
-msgstr "Tiny Tiny RSS gegevens update script."
+msgstr "Tiny Tiny RSS gegevens updatescript."
 
 #: include/controls.php:85
 #: classes/pref/filters.php:212
@@ -1193,7 +1193,7 @@ msgstr "Speciaal"
 #: classes/feeds.php:1472
 #, php-format
 msgid "Incorrect search syntax: %s."
-msgstr "Incorrecte zoek syntax: %s."
+msgstr "Verkeerde zoeksyntax: %s."
 
 #: classes/feeds.php:1657
 #, php-format
@@ -1315,9 +1315,9 @@ msgid "Database Updater"
 msgstr "Database-updater"
 
 #: classes/handler/public.php:1105
-#, fuzzy, php-format
+#, php-format
 msgid "Performing updates to version %d"
-msgstr "Updaten naar versie %d..."
+msgstr "Uitvoeren updates naar versie %d"
 
 #: classes/handler/public.php:1110
 #, php-format
@@ -1325,7 +1325,6 @@ msgid "Updating to version %d"
 msgstr "Updaten naar versie %d"
 
 #: classes/handler/public.php:1123
-#, fuzzy
 msgid "Try again"
 msgstr "Probeer opnieuw"
 
@@ -1336,7 +1335,9 @@ msgstr "Voltooid."
 #: classes/handler/public.php:1146
 #, php-format
 msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
-msgstr "Uw Tiny Tiny RSS database moet worden geüpdatet naar de laatste versie (%d naar%d)."
+msgstr ""
+"Uw Tiny Tiny RSS database moet worden geüpdatet naar de laatste versie (%d "
+"naar %d)."
 
 #: classes/handler/public.php:1158
 msgid "Perform updates"
@@ -1841,7 +1842,7 @@ msgstr "Standaardtaal"
 
 #: classes/pref/prefs.php:72
 msgid "Used for full-text search"
-msgstr "Word gebruikt voor een zoekopdracht over de volledige tekst"
+msgstr "Wordt gebruikt voor een zoekopdracht over de volledige tekst"
 
 #: classes/pref/prefs.php:73
 msgid "Mark read on scroll"
@@ -2381,13 +2382,12 @@ msgid "Readability settings (af_readability)"
 msgstr "Readability-instellingen (af_readability)"
 
 #: plugins/af_readability/init.php:87
-#, fuzzy
 msgid "Provide full-text services to core code (bookmarklets) and other plugins"
 msgstr "Bied full-text services aan kerncode (bookmarklets) en andere plug-ins"
 
 #: plugins/af_readability/init.php:118
 msgid "Readability"
-msgstr "Leesbaarheid"
+msgstr "Readability"
 
 #: plugins/af_readability/init.php:130
 msgid "Inline article content"
@@ -2398,9 +2398,8 @@ msgid "Reddit content settings (af_redditimgur)"
 msgstr "Reddit inhoudinstellingen (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:60
-#, fuzzy
 msgid "Extract missing content using Readability (requires af_readability)"
-msgstr "Leid missende inhoud af met Readability"
+msgstr "Leid missende inhoud af met Readability (af_readability nodig)"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
@@ -2555,9 +2554,8 @@ msgid "Unshare article"
 msgstr "Artikel niet meer delen"
 
 #: plugins/toggle_sidebar/init.php:27
-#, fuzzy
 msgid "Toggle sidebar"
-msgstr "In/uitschakelen sterren"
+msgstr "In/uitschakelen zijbalk"
 
 #: plugins/vf_shared/init.php:17
 #: plugins/vf_shared/init.php:73
@@ -3076,9 +3074,8 @@ msgid "Create Filter"
 msgstr "Filter aanmaken"
 
 #: js/FeedTree.js:71
-#, fuzzy
 msgid "Debug feed"
-msgstr "Debug viewfeed()"
+msgstr "Debug feed"
 
 #: js/FeedTree.js:99
 msgid "(Un)collapse"
