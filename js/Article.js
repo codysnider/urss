@@ -32,7 +32,7 @@ define(["dojo/_base/declare"], function (declare) {
 			if (ids.length > 0) {
 				const score = prompt(__("Please enter new score for selected articles:"));
 
-				if (parseInt(score) != undefined) {
+				if (!isNaN(parseInt(score))) {
 					ids.each((id) => {
 						const row = $("RROW-" + id);
 
@@ -66,7 +66,7 @@ define(["dojo/_base/declare"], function (declare) {
 				const score_old = row.getAttribute("data-score");
 				const score = prompt(__("Please enter new score for this article:"), score_old);
 
-				if (parseInt(score) != undefined) {
+				if (!isNaN(parseInt(score))) {
 					row.setAttribute("data-score", score);
 
 					const pic = row.select(".icon-score")[0];
