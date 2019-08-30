@@ -2,6 +2,8 @@
 require_once "colors.php";
 
 class Feeds extends Handler_Protected {
+	const NEVER_GROUP_FEEDS = [ -6, 0 ];
+	const NEVER_GROUP_BY_DATE = [ -2, -1, -3 ];
 
     private $params;
 
@@ -199,7 +201,8 @@ class Feeds extends Handler_Protected {
 			$qfh_ret = $this->queryFeedHeadlines($params);
 		}
 
-		$vfeed_group_enabled = get_pref("VFEED_GROUP_BY_FEED") && $feed != -6;
+		$vfeed_group_enabled = get_pref("VFEED_GROUP_BY_FEED") &&
+			!(in_array($feed, Feeds::NEVER_GROUP_FEEDS) && !$cat_view);
 
 		$result = $qfh_ret[0]; // this could be either a PDO query result or a -1 if first id changed
 		$feed_title = $qfh_ret[1];
@@ -1438,7 +1441,7 @@ class Feeds extends Handler_Protected {
 		$start_ts = isset($params["start_ts"]) ? $params["start_ts"] : false;
 		$check_first_id = isset($params["check_first_id"]) ? $params["check_first_id"] : false;
 		$skip_first_id_check = isset($params["skip_first_id_check"]) ? $params["skip_first_id_check"] : false;
-		$order_by = isset($params["order_by"]) ? $params["order_by"] : false;
+		//$order_by = isset($params["order_by"]) ? $params["order_by"] : false;
 
 		$ext_tables_part = "";
 		$limit_query_part = "";
@@ -1693,12 +1696,18 @@ class Feeds extends Handler_Protected {
 		if (is_numeric($feed)) {
 			// proper override_order applied above
 			if ($vfeed_query_part && !$ignore_vfeed_group && get_pref('VFEED_GROUP_BY_FEED', $owner_uid)) {
-                $yyiw_desc = $order_by == "date_reverse" ? "" : "desc";
+
+				if (!(in_array($feed, Feeds::NEVER_GROUP_BY_DATE) && !$cat_view)) {
+					$yyiw_desc = $order_by == "date_reverse" ? "" : "desc";
+					$yyiw_order_qpart = "yyiw $yyiw_desc, ";
+				} else {
+					$yyiw_order_qpart = "";
+				}
 
 				if (!$override_order) {
-					$order_by = "yyiw $yyiw_desc, ttrss_feeds.title, ".$order_by;
+					$order_by = "$yyiw_order_qpart ttrss_feeds.title, $order_by";
 				} else {
-					$order_by = "yyiw $yyiw_desc, ttrss_feeds.title, ".$override_order;
+					$order_by = "$yyiw_order_qpart ttrss_feeds.title, $override_order";
 				}
 			}
 
