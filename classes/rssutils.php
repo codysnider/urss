@@ -563,14 +563,6 @@ class RSSUtils {
 
 				Debug::log("orig date: " . $item->get_date(), Debug::$LOG_VERBOSE);
 
-				if ($entry_timestamp == -1 || !$entry_timestamp || $entry_timestamp > time()) {
-					$entry_timestamp = time();
-				}
-
-				$entry_timestamp_fmt = strftime("%Y/%m/%d %H:%M:%S", $entry_timestamp);
-
-				Debug::log("date $entry_timestamp [$entry_timestamp_fmt]", Debug::$LOG_VERBOSE);
-
 				$entry_title = strip_tags($item->get_title());
 
 				$entry_link = rewrite_relative_url($site_url, clean($item->get_link()));
@@ -656,7 +648,7 @@ class RSSUtils {
 					"force_catchup" => false, // ugly hack for the time being
 					"score_modifier" => 0, // no previous value, plugin should recalculate score modifier based on content if needed
 					"language" => $entry_language,
-					"timestamp" => $entry_timestamp_fmt,
+					"timestamp" => $entry_timestamp,
 					"num_comments" => $num_comments, // read only
 					"feed" => array("id" => $feed,
 						"fetch_url" => $fetch_url,
@@ -798,7 +790,15 @@ class RSSUtils {
 				$article_labels = $article["labels"];
 				$entry_score_modifier = (int) $article["score_modifier"];
 				$entry_language = $article["language"];
-				$entry_timestamp_fmt = $article["timestamp"];
+				$entry_timestamp = $article["timestamp"];
+
+				if ($entry_timestamp == -1 || !$entry_timestamp || $entry_timestamp > time()) {
+					$entry_timestamp = time();
+				}
+
+				$entry_timestamp_fmt = strftime("%Y/%m/%d %H:%M:%S", $entry_timestamp);
+
+				Debug::log("date $entry_timestamp [$entry_timestamp_fmt]", Debug::$LOG_VERBOSE);
 
 				if (Debug::get_loglevel() >= Debug::$LOG_EXTENDED) {
 					Debug::log("article labels:", Debug::$LOG_VERBOSE);
