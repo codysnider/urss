@@ -656,6 +656,7 @@ class RSSUtils {
 					"force_catchup" => false, // ugly hack for the time being
 					"score_modifier" => 0, // no previous value, plugin should recalculate score modifier based on content if needed
 					"language" => $entry_language,
+					"timestamp" => $entry_timestamp_fmt,
 					"num_comments" => $num_comments, // read only
 					"feed" => array("id" => $feed,
 						"fetch_url" => $fetch_url,
@@ -797,6 +798,7 @@ class RSSUtils {
 				$article_labels = $article["labels"];
 				$entry_score_modifier = (int) $article["score_modifier"];
 				$entry_language = $article["language"];
+				$entry_timestamp_fmt = $article["timestamp"];
 
 				if (Debug::get_loglevel() >= Debug::$LOG_EXTENDED) {
 					Debug::log("article labels:", Debug::$LOG_VERBOSE);
