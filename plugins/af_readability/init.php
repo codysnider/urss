@@ -180,7 +180,11 @@ class Af_Readability extends Plugin {
 			// this is the worst hack yet :(
 			if (strtolower($tmpdoc->encoding) != 'utf-8') {
 				$tmp = preg_replace("/<meta.*?charset.*?\/?>/i", "", $tmp);
-				$tmp = mb_convert_encoding($tmp, 'utf-8', $tmpdoc->encoding);
+				if (empty($tmpdoc->encoding)) {
+					$tmp = mb_convert_encoding($tmp, 'utf-8');
+				} else {
+					$tmp = mb_convert_encoding($tmp, 'utf-8', $tmpdoc->encoding);
+				}
 			}
 
 			try {
