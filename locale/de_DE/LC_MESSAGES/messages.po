@@ -12,15 +12,16 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-15 13:47+0300\n"
-"PO-Revision-Date: 2019-06-15 09:33+0000\n"
+"PO-Revision-Date: 2019-08-27 12:06+0000\n"
 "Last-Translator: Oliver Meyer <olm@cativa.net>\n"
-"Language-Team: German <https://weblate.tt-rss.org/projects/tt-rss/messages/de/>\n"
+"Language-Team: German <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.5.1\n"
+"X-Generator: Weblate 3.7.1\n"
 "X-Poedit-Bookmarks: -1,557,558,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: backend.php:73
@@ -1194,7 +1195,7 @@ msgstr "Sonderfeeds"
 #: classes/feeds.php:1472
 #, php-format
 msgid "Incorrect search syntax: %s."
-msgstr ""
+msgstr "Ungültige Such-Syntax: %s."
 
 #: classes/feeds.php:1657
 #, php-format
@@ -1316,27 +1317,29 @@ msgid "Database Updater"
 msgstr "Datenbank-Updater"
 
 #: classes/handler/public.php:1105
-#, fuzzy, php-format
+#, php-format
 msgid "Performing updates to version %d"
-msgstr "Führe Aktualisierung auf Version %d durch..."
+msgstr "Führe Aktualisierung auf Version %d durch"
 
 #: classes/handler/public.php:1110
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to version %d"
-msgstr "Aktualisiere auf Schema-Version %d"
+msgstr "Aktualisierung auf Version %d"
 
 #: classes/handler/public.php:1123
 msgid "Try again"
-msgstr ""
+msgstr "Erneut versuchen"
 
 #: classes/handler/public.php:1129
 msgid "Completed."
 msgstr "Fertig."
 
 #: classes/handler/public.php:1146
-#, fuzzy, php-format
+#, php-format
 msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
-msgstr "Ihre Tiny Tiny RSS Datenbank benötigt eine Aktualisierung auf die neuste Version (<b>%d</b> nach <b>%d</b>)."
+msgstr ""
+"Ihre Tiny Tiny RSS Datenbank benötigt eine Aktualisierung auf die neuste "
+"Version (%d nach %d)."
 
 #: classes/handler/public.php:1158
 msgid "Perform updates"
@@ -1381,9 +1384,9 @@ msgid "Setting preference key %s to %s"
 msgstr "Setze Konfigurationsoption %s auf %s"
 
 #: classes/opml.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Adding filter %s..."
-msgstr "Füge Filter hinzu..."
+msgstr "Füge Filter %s hinzu..."
 
 #: classes/opml.php:536
 #, php-format
@@ -1780,9 +1783,8 @@ msgid "matches any rule"
 msgstr "erfüllt jeder Regel"
 
 #: classes/pref/filters.php:1157
-#, fuzzy
 msgid "inverse"
-msgstr "(invertiert)"
+msgstr "umgekehrt"
 
 #: classes/pref/filters.php:1160
 #, php-format
@@ -1837,9 +1839,8 @@ msgid "Never apply these tags automatically (comma-separated list)."
 msgstr "Diese Tags niemals automatisch hinzufügen (Komma-separierte Liste)."
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Default language"
-msgstr "Standardprofil"
+msgstr "Standardsprache"
 
 #: classes/pref/prefs.php:72
 msgid "Used for full-text search"
@@ -2151,7 +2152,7 @@ msgstr "System-Plugins"
 #: classes/pref/prefs.php:856
 #, php-format
 msgid "v%.2f, by %s"
-msgstr ""
+msgstr "v%.2f, zu %s"
 
 #: classes/pref/prefs.php:818
 msgid "User plugins"
@@ -2385,6 +2386,8 @@ msgstr "Einstellungen zur Lesbarkeit (af_readability)"
 #: plugins/af_readability/init.php:87
 msgid "Provide full-text services to core code (bookmarklets) and other plugins"
 msgstr ""
+"Stellt Sie einen Volltextdienst für den Core Code (bookmarklets) und andere "
+"Plugins bereit"
 
 #: plugins/af_readability/init.php:118
 msgid "Readability"
@@ -2399,9 +2402,8 @@ msgid "Reddit content settings (af_redditimgur)"
 msgstr "Reddit Inhalts-Einstellungen (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:60
-#, fuzzy
 msgid "Extract missing content using Readability (requires af_readability)"
-msgstr "Extrahiere fehlenden Inhalt mit Readability"
+msgstr "Extrahiere fehlenden Inhalt mit Readability (benötigt af_readability)"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
@@ -2556,9 +2558,8 @@ msgid "Unshare article"
 msgstr "Artikel nicht mehr teilen"
 
 #: plugins/toggle_sidebar/init.php:27
-#, fuzzy
 msgid "Toggle sidebar"
-msgstr "Markierung ein-/ausschalten"
+msgstr "Seitenleiste ein-/ausschalten"
 
 #: plugins/vf_shared/init.php:17
 #: plugins/vf_shared/init.php:73
@@ -3077,9 +3078,8 @@ msgid "Create Filter"
 msgstr "Filter erstellen"
 
 #: js/FeedTree.js:71
-#, fuzzy
 msgid "Debug feed"
-msgstr "Debugge viewfeed()"
+msgstr "Debugge feed"
 
 #: js/FeedTree.js:99
 msgid "(Un)collapse"
