@@ -559,7 +559,7 @@ class RSSUtils {
 
 				Debug::log("guid $entry_guid / $entry_guid_hashed", Debug::$LOG_VERBOSE);
 
-				$entry_timestamp = strip_tags($item->get_date());
+				$entry_timestamp = (int)$item->get_date();
 
 				Debug::log("orig date: " . $item->get_date(), Debug::$LOG_VERBOSE);
 
