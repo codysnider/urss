@@ -114,9 +114,6 @@ class Af_Comics extends Plugin {
 			$tpl->setVariable('FEED_URL', htmlspecialchars($fetch_url), true);
 			$tpl->setVariable('SELF_URL', $site_url, true);
 
-			$tpl->setVariable('ARTICLE_UPDATED_ATOM', date('c'), true);
-			$tpl->setVariable('ARTICLE_UPDATED_RFC822', date(DATE_RFC822), true);
-
 			if ($body) {
 				$doc = new DOMDocument();
 
@@ -126,13 +123,22 @@ class Af_Comics extends Plugin {
 					$node = $xpath->query('//picture[contains(@class, "item-comic-image")]/img')->item(0);
 
 					if ($node) {
-						$node->removeAttribute("width");
-						$node->removeAttribute("data-srcset");
-						$node->removeAttribute("srcset");
+						$title = $xpath->query('//h1')->item(0);
+
+						if ($title) {
+							$title = clean(trim($title->nodeValue));
+						} else {
+							$title = date('l, F d, Y');
+						}
+
+						foreach (['srcset', 'sizes', 'data-srcset', 'width'] as $attr ) {
+							$node->removeAttribute($attr);
+						}
 
 						$tpl->setVariable('ARTICLE_ID', $article_link, true);
 						$tpl->setVariable('ARTICLE_LINK', $article_link, true);
-						$tpl->setVariable('ARTICLE_TITLE', date('l, F d, Y'), true);
+						$tpl->setVariable('ARTICLE_UPDATED_ATOM', date('c', mktime(11, 0, 0)), true);
+						$tpl->setVariable('ARTICLE_TITLE', htmlspecialchars($title), true);
 						$tpl->setVariable('ARTICLE_EXCERPT', '', true);
 						$tpl->setVariable('ARTICLE_CONTENT', $doc->saveHTML($node), true);
 
@@ -141,14 +147,11 @@ class Af_Comics extends Plugin {
 						$tpl->setVariable('ARTICLE_SOURCE_TITLE', $feed_title, true);
 
 						$tpl->addBlock('entry');
-
 					}
 				}
 			}
 
 			$tpl->addBlock('feed');
-
-			$tmp_data = '';
 
 			if ($tpl->generateOutputToString($tmp_data))
 				$feed_data = $tmp_data;
