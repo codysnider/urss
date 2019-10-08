@@ -140,6 +140,11 @@
         <div id="feedlistLoading">
             <img src='images/indicator_tiny.gif'/>
             <?php echo  __("Loading, please wait..."); ?></div>
+        <?php
+          foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FEED_TREE) as $p) {
+            echo $p->hook_feed_tree();
+          }
+        ?>
         <div id="feedTree"></div>
     </div>
 

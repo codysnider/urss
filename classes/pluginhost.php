@@ -60,6 +60,7 @@ class PluginHost {
 	const HOOK_FILTER_TRIGGERED = 40;
 	const HOOK_GET_FULL_TEXT = 41;
 	const HOOK_ARTICLE_IMAGE = 42;
+	const HOOK_FEED_TREE = 43;
 
 	const KIND_ALL = 1;
 	const KIND_SYSTEM = 2;
