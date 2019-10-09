@@ -1008,6 +1008,31 @@ class Pref_Prefs extends Handler_Protected {
 
 		if ($authenticator->check_password($_SESSION["uid"], $password)) {
 
+			$sth = $this->pdo->prepare("SELECT email, login FROM ttrss_users WHERE id = ?");
+			$sth->execute([$_SESSION['uid']]);
+
+			if ($row = $sth->fetch()) {
+				$mailer = new Mailer();
+
+				require_once "lib/MiniTemplator.class.php";
+
+				$tpl = new MiniTemplator;
+
+				$tpl->readTemplateFromFile("templates/otp_disabled_template.txt");
+
+				$tpl->setVariable('LOGIN', $row["login"]);
+				$tpl->setVariable('TTRSS_HOST', SELF_URL_PATH);
+
+				$tpl->addBlock('message');
+
+				$tpl->generateOutputToString($message);
+
+				$mailer->mail(["to_name" => $row["login"],
+					"to_address" => $row["email"],
+					"subject" => "[tt-rss] OTP change notification",
+					"message" => $message]);
+			}
+
 			$sth = $this->pdo->prepare("UPDATE ttrss_users SET otp_enabled = false WHERE
 				id = ?");
 			$sth->execute([$_SESSION['uid']]);

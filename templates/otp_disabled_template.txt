@@ -1,0 +1,10 @@
+<!-- $BeginBlock message -->
+Hello, ${LOGIN}.
+
+Checking of one time passwords (2FA) on this Tiny Tiny RSS instance has been disabled for your account.
+
+If you haven't requested this change, consider contacting your instance owner or resetting your password.
+
+-- 
+Sent by tt-rss mailer daemon at ${TTRSS_HOST}.
+<!-- $EndBlock message -->
