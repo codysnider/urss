@@ -1,7 +1,7 @@
 <!-- $BeginBlock message -->
 Hello, ${LOGIN}.
 
-Checking of one time passwords (2FA) on this Tiny Tiny RSS instance has been disabled for your account.
+One time passwords (2FA) has been disabled for your account on this Tiny Tiny RSS instance. 
 
 If you haven't requested this change, consider contacting your instance owner or resetting your password.
 
