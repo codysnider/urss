@@ -10,5 +10,6 @@ Please note that the above link will only be valid for the next 15 minutes.
 
 If you don't want to reset your password, ignore this message.
 
-Sincerely, Tiny Tiny RSS Mail Daemon.
+-- 
+Sent by tt-rss mailer daemon at ${TTRSS_HOST}.
 <!-- $EndBlock message -->

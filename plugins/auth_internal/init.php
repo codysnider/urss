@@ -211,6 +211,32 @@ class Auth_Internal extends Plugin implements IAuthModule {
 
 			$_SESSION["pwd_hash"] = $new_password_hash;
 
+			$sth = $this->pdo->prepare("SELECT email, login FROM ttrss_users WHERE id = ?");
+			$sth->execute([$owner_uid]);
+
+			if ($row = $sth->fetch()) {
+				$mailer = new Mailer();
+
+				require_once "lib/MiniTemplator.class.php";
+
+				$tpl = new MiniTemplator;
+
+				$tpl->readTemplateFromFile("templates/password_change_template.txt");
+
+				$tpl->setVariable('LOGIN', $row["login"]);
+				$tpl->setVariable('TTRSS_HOST', SELF_URL_PATH);
+
+				$tpl->addBlock('message');
+
+				$tpl->generateOutputToString($message);
+
+				$mailer->mail(["to_name" => $row["login"],
+					"to_address" => $row["email"],
+					"subject" => "[tt-rss] Password change notification",
+					"message" => $message]);
+
+			}
+
 			return __("Password has been changed.");
 		} else {
 			return "ERROR: ".__('Old password is incorrect.');

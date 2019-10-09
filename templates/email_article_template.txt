@@ -12,5 +12,5 @@ Thought I'd share the following with you:
 <!-- $EndBlock article -->
 
 -- 
-This message has been sent by Tiny Tiny RSS installation at ${TTRSS_HOST}.
+Sent by Tiny Tiny RSS mailer daemon at ${TTRSS_HOST}.
 <!-- $EndBlock email -->

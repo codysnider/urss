@@ -14,5 +14,7 @@
 <!-- $EndBlock feed -->
  
 <hr>
-<em>To unsubscribe, visit your configuration options or contact instance owner.</em>
+
+<em>To unsubscribe, visit your configuration options or contact instance owner.</em><br/>
+<em>Sent by tt-rss mailer daemon at ${TTRSS_HOST}.</em>
 <!-- $EndBlock digest -->

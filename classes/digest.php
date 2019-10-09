@@ -103,9 +103,11 @@ class Digest
 
 		$tpl->setVariable('CUR_DATE', date('Y/m/d', $local_ts));
 		$tpl->setVariable('CUR_TIME', date('G:i', $local_ts));
+		$tpl->setVariable('TTRSS_HOST', SELF_URL_PATH);
 
 		$tpl_t->setVariable('CUR_DATE', date('Y/m/d', $local_ts));
 		$tpl_t->setVariable('CUR_TIME', date('G:i', $local_ts));
+		$tpl_t->setVariable('TTRSS_HOST', SELF_URL_PATH);
 
 		$affected_ids = array();
 

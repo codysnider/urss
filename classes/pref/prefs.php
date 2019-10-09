@@ -122,6 +122,11 @@ class Pref_Prefs extends Handler_Protected {
 		$new_pw = clean($_POST["new_password"]);
 		$con_pw = clean($_POST["confirm_password"]);
 
+		if ($old_pw == $new_pw) {
+			print "ERROR: ".format_error("New password must be different from the old one.");
+			return;
+		}
+
 		if ($old_pw == "") {
 			print "ERROR: ".format_error("Old password cannot be blank.");
 			return;
@@ -193,6 +198,37 @@ class Pref_Prefs extends Handler_Protected {
 		$email = clean($_POST["email"]);
 		$full_name = clean($_POST["full_name"]);
 		$active_uid = $_SESSION["uid"];
+
+		$sth = $this->pdo->prepare("SELECT email, login, full_name FROM ttrss_users WHERE id = ?");
+		$sth->execute([$active_uid]);
+
+		if ($row = $sth->fetch()) {
+			$old_email = $row["email"];
+
+			if ($old_email != $email) {
+				$mailer = new Mailer();
+
+				require_once "lib/MiniTemplator.class.php";
+
+				$tpl = new MiniTemplator;
+
+				$tpl->readTemplateFromFile("templates/mail_change_template.txt");
+
+				$tpl->setVariable('LOGIN', $row["login"]);
+				$tpl->setVariable('NEWMAIL', $email);
+				$tpl->setVariable('TTRSS_HOST', SELF_URL_PATH);
+
+				$tpl->addBlock('message');
+
+				$tpl->generateOutputToString($message);
+
+				$mailer->mail(["to_name" => $row["login"],
+					"to_address" => $row["email"],
+					"subject" => "[tt-rss] Mail address change notification",
+					"message" => $message]);
+
+			}
+		}
 
 		$sth = $this->pdo->prepare("UPDATE ttrss_users SET email = ?,
 			full_name = ? WHERE id = ?");

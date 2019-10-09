@@ -996,6 +996,7 @@ class Handler_Public extends Handler {
 
 						$tpl->setVariable('LOGIN', $login);
 						$tpl->setVariable('RESETPASS_LINK', $resetpass_link);
+						$tpl->setVariable('TTRSS_HOST', SELF_URL_PATH);
 
 						$tpl->addBlock('message');
 
