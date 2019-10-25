@@ -591,7 +591,6 @@ class RSSUtils {
 				$entry_guid = mb_substr($entry_guid, 0, 245);
 
 				Debug::log("author $entry_author", Debug::$LOG_VERBOSE);
-				Debug::log("num_comments: $num_comments", Debug::$LOG_VERBOSE);
 				Debug::log("looking for tags...", Debug::$LOG_VERBOSE);
 
 				// parse <category> entries into tags
@@ -649,7 +648,7 @@ class RSSUtils {
 					"score_modifier" => 0, // no previous value, plugin should recalculate score modifier based on content if needed
 					"language" => $entry_language,
 					"timestamp" => $entry_timestamp,
-					"num_comments" => $num_comments, // read only
+					"num_comments" => $num_comments,
 					"feed" => array("id" => $feed,
 						"fetch_url" => $fetch_url,
 						"site_url" => $site_url,
@@ -791,6 +790,7 @@ class RSSUtils {
 				$entry_score_modifier = (int) $article["score_modifier"];
 				$entry_language = $article["language"];
 				$entry_timestamp = $article["timestamp"];
+				$num_comments = $article["num_comments"];
 
 				if ($entry_timestamp == -1 || !$entry_timestamp || $entry_timestamp > time()) {
 					$entry_timestamp = time();
@@ -799,6 +799,7 @@ class RSSUtils {
 				$entry_timestamp_fmt = strftime("%Y/%m/%d %H:%M:%S", $entry_timestamp);
 
 				Debug::log("date $entry_timestamp [$entry_timestamp_fmt]", Debug::$LOG_VERBOSE);
+				Debug::log("num_comments: $num_comments", Debug::$LOG_VERBOSE);
 
 				if (Debug::get_loglevel() >= Debug::$LOG_EXTENDED) {
 					Debug::log("article labels:", Debug::$LOG_VERBOSE);
