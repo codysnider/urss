@@ -36,7 +36,7 @@ class Auth_Internal extends Plugin implements IAuthModule {
 					$base32 = new \OTPHP\Base32();
 
 					$otp_enabled = $row['otp_enabled'];
-					$secret = $base32->encode(sha1($row['salt']));
+					$secret = $base32->encode(mb_substr(sha1($row["salt"]), 0, 12), false);
 
 					$topt = new \OTPHP\TOTP($secret);
 					$otp_check = $topt->now();
