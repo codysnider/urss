@@ -439,16 +439,27 @@ class Pref_Prefs extends Handler_Protected {
 
 					print "</form>";
 
-				} else if (function_exists("imagecreatefromstring")) {
+				} else {
 
 					print_warning("You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP.");
-					print_notice("Scan the following code by the Authenticator application:");
 
-					$csrf_token = $_SESSION["csrf_token"];
+					print_notice("Scan the following code by the Authenticator application or use OTP key (below).");
 
-					print "<img alt='otp qr-code' src='backend.php?op=pref-prefs&method=otpqrcode&csrf_token=$csrf_token'>";
+					if (function_exists("imagecreatefromstring")) {
+						$csrf_token = $_SESSION["csrf_token"];
+						print "<img alt='otp qr-code' src='backend.php?op=pref-prefs&method=otpqrcode&csrf_token=$csrf_token'>";
+					} else {
+						print_error("PHP GD functions are required to generate QR codes.");
+					}
 
 					print "<form dojoType='dijit.form.Form' id='changeOtpForm'>";
+
+					$otp_secret = $this->otpsecret();
+
+					print "<fieldset>";
+					print "<label>".__("OTP Key:")."</label>";
+					print "<input dojoType='dijit.form.ValidationTextBox' disabled='disabled' value='$otp_secret' size='32'>";
+					print "</fieldset>";
 
 					print_hidden("op", "pref-prefs");
 					print_hidden("method", "otpenable");
@@ -490,8 +501,6 @@ class Pref_Prefs extends Handler_Protected {
 
 					print "</form>";
 
-				} else {
-					print_notice("PHP GD functions are required for OTP support.");
 				}
 			}
 
@@ -922,27 +931,42 @@ class Pref_Prefs extends Handler_Protected {
 		$_SESSION["prefs_show_advanced"] = !$_SESSION["prefs_show_advanced"];
 	}
 
+	function otpsecret() {
+		$sth = $this->pdo->prepare("SELECT salt, otp_enabled
+			FROM ttrss_users
+			WHERE id = ?");
+		$sth->execute([$_SESSION['uid']]);
+
+		if ($row = $sth->fetch()) {
+			$otp_enabled = sql_bool_to_bool($row["otp_enabled"]);
+
+			if (!$otp_enabled) {
+				$base32 = new \OTPHP\Base32();
+				$secret = $base32->encode(mb_substr(sha1($row["salt"]), 0, 12), false);
+
+				return $secret;
+			}
+		}
+
+		return false;
+	}
+
 	function otpqrcode() {
 		require_once "lib/phpqrcode/phpqrcode.php";
 
-		$sth = $this->pdo->prepare("SELECT login,salt,otp_enabled
+		$sth = $this->pdo->prepare("SELECT login
 			FROM ttrss_users
 			WHERE id = ?");
 		$sth->execute([$_SESSION['uid']]);
 
 		if ($row = $sth->fetch()) {
 
-			$base32 = new \OTPHP\Base32();
+			$secret = $this->otpsecret();
+			$login = $row['login'];
 
-			$login = $row["login"];
-			$otp_enabled = sql_bool_to_bool($row["otp_enabled"]);
-
-			if (!$otp_enabled) {
-				$secret = $base32->encode(sha1($row["salt"]));
-
+			if ($secret) {
 				QRcode::png("otpauth://totp/".urlencode($login).
 					"?secret=$secret&issuer=".urlencode("Tiny Tiny RSS"));
-
 			}
 		}
 	}
@@ -956,16 +980,12 @@ class Pref_Prefs extends Handler_Protected {
 
 		if ($authenticator->check_password($_SESSION["uid"], $password)) {
 
-			$sth = $this->pdo->prepare("SELECT salt
-				FROM ttrss_users
-				WHERE id = ?");
-			$sth->execute([$_SESSION['uid']]);
+			$secret = $this->otpsecret();
 
-			if ($row = $sth->fetch()) {
+			if ($secret) {
 
 				$base32 = new \OTPHP\Base32();
 
-				$secret = $base32->encode(sha1($row["salt"]));
 				$topt = new \OTPHP\TOTP($secret);
 
 				$otp_check = $topt->now();
