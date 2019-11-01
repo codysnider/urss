@@ -258,6 +258,28 @@
 		}
 
 		private function check_app_password($login, $password, $service) {
+			$sth = $this->pdo->prepare("SELECT p.id, p.pwd_hash, u.id AS uid 
+				FROM ttrss_app_passwords p, ttrss_users u 
+				WHERE p.owner_uid = u.id AND u.login = ? AND service = ?");
+			$sth->execute([$login, $service]);
+
+			while ($row = $sth->fetch()) {
+				list ($algo, $hash, $salt) = explode(":", $row["pwd_hash"]);
+
+				if ($algo == "SSHA-512") {
+					$test_hash = hash('sha512', $salt . $password);
+
+					if ($test_hash == $hash) {
+						$usth = $this->pdo->prepare("UPDATE ttrss_app_passwords SET last_used = NOW() WHERE id = ?");
+						$usth->execute([$row['id']]);
+
+						return $row['uid'];
+					}
+				} else {
+					user_error("Got unknown algo of app password for user $login: $algo");
+				}
+			}
+
 			return false;
 		}
 

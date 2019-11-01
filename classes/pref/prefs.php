@@ -395,13 +395,29 @@ class Pref_Prefs extends Handler_Protected {
 			print "</form>";
 
 			print "</div>"; # content pane
-			print "<div dojoType='dijit.layout.ContentPane' title=\"".__('App passwords')."\">";
 
-			print_notice("You can create separate passwords for API clients. Using one is required if you enable OTP.");
+			if ($_SESSION["auth_module"] == "auth_internal") {
 
+				print "<div dojoType='dijit.layout.ContentPane' title=\"" . __('App passwords') . "\">";
 
+				print_notice("You can create separate passwords for the API clients. Using one is required if you enable OTP.");
 
-			print "</div>"; # content pane
+				print "<div id='app_passwords_holder'>";
+				$this->appPasswordList();
+				print "</div>";
+
+				print "<hr>";
+
+				print "<button style='float : left' class='alt-primary' dojoType='dijit.form.Button' 
+					onclick=\"Helpers.AppPasswords.generate()\">" .
+					__('Generate new password') . "</button> ";
+
+				print "<button style='float : left' class='alt-danger' dojoType='dijit.form.Button' 
+					onclick=\"Helpers.AppPasswords.removeSelected()\">" .
+					__('Remove selected passwords') . "</button>";
+
+				print "</div>"; # content pane
+			}
 
 			print "<div dojoType='dijit.layout.ContentPane' title=\"".__('One time passwords / Authenticator')."\">";
 
@@ -450,7 +466,7 @@ class Pref_Prefs extends Handler_Protected {
 				} else {
 
 					print_warning("You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP.");
-					print_notice("You will also need to create a separate App password for API clients if you enable OTP.");
+					print_notice("You will need to use a separate password for the API clients if you enable OTP.");
 
 					if (function_exists("imagecreatefromstring")) {
 						print "<h3>" . __("Scan the following code by the Authenticator application or copy the key manually:") . "</h3>";
@@ -1220,5 +1236,88 @@ class Pref_Prefs extends Handler_Protected {
 			return $this->pref_help[$pref_name][1];
 		}
 		return "";
+	}
+
+	private function appPasswordList() {
+		print "<div dojoType='fox.Toolbar'>";
+		print "<div dojoType='fox.form.DropDownButton'>" .
+			"<span>" . __('Select') . "</span>";
+		print "<div dojoType='dijit.Menu' style='display: none'>";
+		print "<div onclick=\"Tables.select('app-password-list', true)\"
+				dojoType=\"dijit.MenuItem\">" . __('All') . "</div>";
+		print "<div onclick=\"Tables.select('app-password-list', false)\"
+				dojoType=\"dijit.MenuItem\">" . __('None') . "</div>";
+		print "</div></div>";
+		print "</div>"; #toolbar
+
+		print "<div class='panel panel-scrollable'>";
+		print "<table width='100%' id='app-password-list'>";
+		print "<tr>";
+		print "<th width='2%'></th>";
+		print "<th align='left'>".__("Description")."</th>";
+		print "<th align='right'>".__("Created")."</th>";
+		print "<th align='right'>".__("Last used")."</th>";
+		print "</tr>";
+
+		$sth = $this->pdo->prepare("SELECT id, title, created, last_used 
+			FROM ttrss_app_passwords WHERE owner_uid = ?");
+		$sth->execute([$_SESSION['uid']]);
+
+		while ($row = $sth->fetch()) {
+
+			$row_id = $row["id"];
+
+			print "<tr data-row-id='$row_id'>";
+
+			print "<td align='center'>
+						<input onclick='Tables.onRowChecked(this)' dojoType='dijit.form.CheckBox' type='checkbox'></td>";
+			print "<td>" . htmlspecialchars($row["title"]) . "</td>";
+
+			print "<td align='right' class='text-muted'>";
+			print make_local_datetime($row['created'], false);
+			print "</td>";
+
+			print "<td align='right' class='text-muted'>";
+			print make_local_datetime($row['last_used'], false);
+			print "</td>";
+
+			print "</tr>";
+		}
+
+		print "</table>";
+		print "</div>";
+	}
+
+	private function encryptAppPassword($password) {
+		$salt = substr(bin2hex(get_random_bytes(24)), 0, 24);
+
+		return "SSHA-512:".hash('sha512', $salt . $password). ":$salt";
+	}
+
+	function deleteAppPassword() {
+		$ids = explode(",", clean($_REQUEST['ids']));
+		$ids_qmarks = arr_qmarks($ids);
+
+		$sth = $this->pdo->prepare("DELETE FROM ttrss_app_passwords WHERE id IN ($ids_qmarks) AND owner_uid = ?");
+		$sth->execute(array_merge($ids, [$_SESSION['uid']]));
+
+		$this->appPasswordList();
+	}
+
+	function generateAppPassword() {
+		$title = clean($_REQUEST['title']);
+		$new_password = make_password(16);
+		$new_password_hash = $this->encryptAppPassword($new_password);
+
+		print_warning(T_sprintf("Generated password <strong>%s</strong> for %s. Please remember it for future reference.", $new_password, $title));
+
+		$sth = $this->pdo->prepare("INSERT INTO ttrss_app_passwords 
+    			(title, pwd_hash, service, created, owner_uid)
+    		 VALUES 
+    		    (?, ?, ?, NOW(), ?)");
+
+		$sth->execute([$title, $new_password_hash, Auth_Base::AUTH_SERVICE_API, $_SESSION['uid']]);
+
+		$this->appPasswordList();
 	}
 }
