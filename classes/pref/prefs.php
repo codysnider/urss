@@ -986,7 +986,6 @@ class Pref_Prefs extends Handler_Protected {
 		$sth->execute([$_SESSION['uid']]);
 
 		if ($row = $sth->fetch()) {
-
 			$secret = $this->otpsecret();
 			$login = $row['login'];
 
