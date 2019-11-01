@@ -408,11 +408,11 @@ class Pref_Prefs extends Handler_Protected {
 
 				print "<hr>";
 
-				print "<button style='float : left' class='alt-primary' dojoType='dijit.form.Button' 
+				print "<button style='float : left' class='alt-primary' dojoType='dijit.form.Button'
 					onclick=\"Helpers.AppPasswords.generate()\">" .
 					__('Generate new password') . "</button> ";
 
-				print "<button style='float : left' class='alt-danger' dojoType='dijit.form.Button' 
+				print "<button style='float : left' class='alt-danger' dojoType='dijit.form.Button'
 					onclick=\"Helpers.AppPasswords.removeSelected()\">" .
 					__('Remove selected passwords') . "</button>";
 
@@ -469,13 +469,13 @@ class Pref_Prefs extends Handler_Protected {
 					print_notice("You will need to use a separate password for the API clients if you enable OTP.");
 
 					if (function_exists("imagecreatefromstring")) {
-						print "<h3>" . __("Scan the following code by the Authenticator application or copy the key manually:") . "</h3>";
+						print "<h3>" . __("Scan the following code by the Authenticator application or copy the key manually") . "</h3>";
 
 						$csrf_token = $_SESSION["csrf_token"];
 						print "<img alt='otp qr-code' src='backend.php?op=pref-prefs&method=otpqrcode&csrf_token=$csrf_token'>";
 					} else {
 						print_error("PHP GD functions are required to generate QR codes.");
-						print "<h3>" . __("Use the following OTP key with a compatible Authenticator application:") . "</h3>";
+						print "<h3>" . __("Use the following OTP key with a compatible Authenticator application") . "</h3>";
 					}
 
 					print "<form dojoType='dijit.form.Form' id='changeOtpForm'>";
@@ -1258,7 +1258,7 @@ class Pref_Prefs extends Handler_Protected {
 		print "<th align='right'>".__("Last used")."</th>";
 		print "</tr>";
 
-		$sth = $this->pdo->prepare("SELECT id, title, created, last_used 
+		$sth = $this->pdo->prepare("SELECT id, title, created, last_used
 			FROM ttrss_app_passwords WHERE owner_uid = ?");
 		$sth->execute([$_SESSION['uid']]);
 
@@ -1310,9 +1310,9 @@ class Pref_Prefs extends Handler_Protected {
 
 		print_warning(T_sprintf("Generated password <strong>%s</strong> for %s. Please remember it for future reference.", $new_password, $title));
 
-		$sth = $this->pdo->prepare("INSERT INTO ttrss_app_passwords 
+		$sth = $this->pdo->prepare("INSERT INTO ttrss_app_passwords
     			(title, pwd_hash, service, created, owner_uid)
-    		 VALUES 
+    		 VALUES
     		    (?, ?, ?, NOW(), ?)");
 
 		$sth->execute([$title, $new_password_hash, Auth_Base::AUTH_SERVICE_API, $_SESSION['uid']]);
