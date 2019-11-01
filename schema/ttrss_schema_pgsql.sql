@@ -30,6 +30,7 @@ drop table if exists ttrss_cat_counters_cache;
 drop table if exists ttrss_archived_feeds;
 drop table if exists ttrss_feeds;
 drop table if exists ttrss_feed_categories;
+drop table if exists ttrss_app_passwords;
 drop table if exists ttrss_users;
 drop table if exists ttrss_themes;
 drop table if exists ttrss_sessions;
@@ -54,6 +55,12 @@ create table ttrss_users (id serial not null primary key,
 
 insert into ttrss_users (login,pwd_hash,access_level) values ('admin',
 	'SHA1:5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 10);
+
+create table ttrss_app_passwords (id serial not null primary key,
+    title varchar(250) not null,
+    pwd_hash text not null,
+    service varchar(100) not null,
+    owner_uid integer not null references ttrss_users(id) on delete cascade);
 
 create table ttrss_feed_categories(id serial not null primary key,
 	owner_uid integer not null references ttrss_users(id) on delete cascade,
@@ -269,7 +276,7 @@ create index ttrss_tags_post_int_id_idx on ttrss_tags(post_int_id);
 
 create table ttrss_version (schema_version int not null);
 
-insert into ttrss_version values (138);
+insert into ttrss_version values (139);
 
 create table ttrss_enclosures (id serial not null primary key,
 	content_url text not null,

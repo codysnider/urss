@@ -33,6 +33,7 @@ drop table if exists ttrss_cat_counters_cache;
 drop table if exists ttrss_feeds;
 drop table if exists ttrss_archived_feeds;
 drop table if exists ttrss_feed_categories;
+drop table if exists ttrss_app_passwords;
 drop table if exists ttrss_users;
 drop table if exists ttrss_themes;
 drop table if exists ttrss_sessions;
@@ -287,7 +288,7 @@ create table ttrss_tags (id integer primary key auto_increment,
 
 create table ttrss_version (schema_version int not null) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-insert into ttrss_version values (138);
+insert into ttrss_version values (139);
 
 create table ttrss_enclosures (id integer primary key auto_increment,
 	content_url text not null,
