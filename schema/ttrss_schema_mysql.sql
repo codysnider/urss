@@ -58,6 +58,14 @@ create table ttrss_users (id integer primary key not null auto_increment,
 insert into ttrss_users (login,pwd_hash,access_level) values ('admin',
 	'SHA1:5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 10);
 
+create table ttrss_app_passwords (id integer not null primary key auto_increment,
+    title varchar(250) not null,
+    pwd_hash text not null,
+    service varchar(100) not null,
+    created datetime not null,
+    last_used datetime default null,
+    owner_uid integer not null references ttrss_users(id) on delete cascade);
+
 create table ttrss_feed_categories(id integer not null primary key auto_increment,
 	owner_uid integer not null,
 	title varchar(200) not null,
