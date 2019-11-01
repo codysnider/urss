@@ -395,6 +395,14 @@ class Pref_Prefs extends Handler_Protected {
 			print "</form>";
 
 			print "</div>"; # content pane
+			print "<div dojoType='dijit.layout.ContentPane' title=\"".__('App passwords')."\">";
+
+			print_notice("You can create separate passwords for API clients. Using one is required if you enable OTP.");
+
+
+
+			print "</div>"; # content pane
+
 			print "<div dojoType='dijit.layout.ContentPane' title=\"".__('One time passwords / Authenticator')."\">";
 
 			if ($_SESSION["auth_module"] == "auth_internal") {
@@ -442,14 +450,16 @@ class Pref_Prefs extends Handler_Protected {
 				} else {
 
 					print_warning("You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP.");
-
-					print_notice("Scan the following code by the Authenticator application or use OTP key (below).");
+					print_notice("You will also need to create a separate App password for API clients if you enable OTP.");
 
 					if (function_exists("imagecreatefromstring")) {
+						print "<h3>" . __("Scan the following code by the Authenticator application or copy the key manually:") . "</h3>";
+
 						$csrf_token = $_SESSION["csrf_token"];
 						print "<img alt='otp qr-code' src='backend.php?op=pref-prefs&method=otpqrcode&csrf_token=$csrf_token'>";
 					} else {
 						print_error("PHP GD functions are required to generate QR codes.");
+						print "<h3>" . __("Use the following OTP key with a compatible Authenticator application:") . "</h3>";
 					}
 
 					print "<form dojoType='dijit.form.Form' id='changeOtpForm'>";
