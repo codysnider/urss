@@ -2,6 +2,8 @@
 class Auth_Base {
 	private $pdo;
 
+	const AUTH_SERVICE_API = '_api';
+
 	function __construct() {
 		$this->pdo = Db::pdo();
 	}
@@ -9,14 +11,14 @@ class Auth_Base {
 	/**
 	 * @SuppressWarnings(unused)
 	 */
-	function check_password($owner_uid, $password) {
+	function check_password($owner_uid, $password, $service = '') {
 		return false;
 	}
 
 	/**
 	 * @SuppressWarnings(unused)
 	 */
-	function authenticate($login, $password) {
+	function authenticate($login, $password, $service = '') {
 		return false;
 	}
 

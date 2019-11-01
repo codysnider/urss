@@ -22,8 +22,6 @@
 	ini_set('session.use_cookies', 0);
 	ini_set("session.gc_maxlifetime", 86400);
 
-	define('AUTH_DISABLE_OTP', true);
-
 	if (defined('ENABLE_GZIP_OUTPUT') && ENABLE_GZIP_OUTPUT &&
 			function_exists("ob_gzhandler")) {
 
