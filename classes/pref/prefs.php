@@ -466,7 +466,7 @@ class Pref_Prefs extends Handler_Protected {
 				} else {
 
 					print_warning("You will need a compatible Authenticator to use this. Changing your password would automatically disable OTP.");
-					print_notice("You will need to use a separate password for the API clients if you enable OTP.");
+					print_notice("You will need to generate app passwords for the API clients if you enable OTP.");
 
 					if (function_exists("imagecreatefromstring")) {
 						print "<h3>" . __("Scan the following code by the Authenticator application or copy the key manually") . "</h3>";
