@@ -31,14 +31,7 @@ class Auth_Internal extends Plugin implements IAuthModule {
 			$sth->execute([$login]);
 
 			if ($row = $sth->fetch()) {
-
-				$base32 = new \OTPHP\Base32();
-
 				$otp_enabled = $row['otp_enabled'];
-				$secret = $base32->encode(mb_substr(sha1($row["salt"]), 0, 12), false);
-
-				$topt = new \OTPHP\TOTP($secret);
-				$otp_check = $topt->now();
 
 				if ($otp_enabled) {
 
@@ -48,7 +41,18 @@ class Auth_Internal extends Plugin implements IAuthModule {
 					}
 
 					if ($otp) {
-						if ($otp != $otp_check) {
+						$base32 = new \OTPHP\Base32();
+
+						$secret = $base32->encode(mb_substr(sha1($row["salt"]), 0, 12), false);
+						$secret_legacy = $base32->encode(sha1($row["salt"]));
+
+						$totp = new \OTPHP\TOTP($secret);
+						$otp_check = $totp->now();
+
+						$totp_legacy = new \OTPHP\TOTP($secret_legacy);
+						$otp_check_legacy = $totp_legacy->now();
+
+						if ($otp != $otp_check && $otp != $otp_check_legacy) {
 							return false;
 						}
 					} else {
