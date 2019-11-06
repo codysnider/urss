@@ -437,7 +437,7 @@
 
 						if (!$res) {
 							print_notice("Query: $line");
-							print_error("Error: " . implode(", ", $this->pdo->errorInfo()));
+							print_error("Error: " . implode(", ", $pdo->errorInfo()));
                         }
 					}
 				}
