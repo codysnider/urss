@@ -115,7 +115,7 @@ create index ttrss_feeds_owner_uid_index on ttrss_feeds(owner_uid);
 create index ttrss_feeds_cat_id_idx on ttrss_feeds(cat_id);
 
 insert into ttrss_feeds (owner_uid, title, feed_url) values
-	(1, 'Tiny Tiny RSS: Forum', 'http://tt-rss.org/forum/rss.php');
+	((select id from ttrss_users where login = 'admin'), 'Tiny Tiny RSS: Forum', 'https://tt-rss.org/forum/rss.php');
 
 create table ttrss_archived_feeds (id integer not null primary key,
 	owner_uid integer not null references ttrss_users(id) on delete cascade,
