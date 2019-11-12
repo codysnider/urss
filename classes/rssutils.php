@@ -1551,7 +1551,8 @@ class RSSUtils {
 	}
 
 	static function is_gzipped($feed_data) {
-		return mb_strpos($feed_data, "\x1f" . "\x8b" . "\x08", 0, "US-ASCII") === 0;
+		return strpos(substr($feed_data, 0, 3),
+				"\x1f" . "\x8b" . "\x08", 0) === 0;
 	}
 
 	static function load_filters($feed_id, $owner_uid) {
