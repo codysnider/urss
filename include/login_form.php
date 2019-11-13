@@ -91,11 +91,12 @@ function bwLimitChange(elem) {
 					   dojoType="dijit.form.TextBox"
 					   class="input input-text"
 					   value="<?php echo $_SESSION["fake_password"] ?>"/>
-
-				<?php if (strpos(PLUGINS, "auth_internal") !== FALSE) { ?>
-					<a href="public.php?op=forgotpass"><?php echo __("I forgot my password") ?></a>
-				<?php } ?>
 			</fieldset>
+			<?php if (strpos(PLUGINS, "auth_internal") !== FALSE) { ?>
+				<fieldset class="align-right">
+					<a href="public.php?op=forgotpass"><?php echo __("I forgot my password") ?></a>
+				</fieldset>
+			<?php } ?>
 
 			<fieldset>
 				<label><?php echo __("Profile:") ?></label>
