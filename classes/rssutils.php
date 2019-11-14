@@ -335,8 +335,19 @@ class RSSUtils {
 		$force_refetch = isset($_REQUEST["force_refetch"]);
 		$feed_data = "";
 
+		Debug::log("running HOOK_FETCH_FEED handlers...", Debug::$LOG_VERBOSE);
+
 		foreach ($pluginhost->get_hooks(PluginHost::HOOK_FETCH_FEED) as $plugin) {
+			Debug::log("... " . get_class($plugin), Debug::$LOG_VERBOSE);
+			$start = microtime(true);
 			$feed_data = $plugin->hook_fetch_feed($feed_data, $fetch_url, $owner_uid, $feed, 0, $auth_login, $auth_pass);
+			Debug::log(sprintf("=== %.4f (sec)", microtime(true) - $start), Debug::$LOG_VERBOSE);
+		}
+
+		if ($feed_data) {
+			Debug::log("feed data has been modified by a plugin.", Debug::$LOG_VERBOSE);
+		} else {
+			Debug::log("feed data has not been modified by a plugin.", Debug::$LOG_VERBOSE);
 		}
 
 		// try cache
@@ -428,8 +439,20 @@ class RSSUtils {
 			return;
 		}
 
+		Debug::log("running HOOK_FEED_FETCHED handlers...", Debug::$LOG_VERBOSE);
+		$feed_data_checksum = md5($feed_data);
+
 		foreach ($pluginhost->get_hooks(PluginHost::HOOK_FEED_FETCHED) as $plugin) {
+			Debug::log("... " . get_class($plugin), Debug::$LOG_VERBOSE);
+			$start = microtime(true);
 			$feed_data = $plugin->hook_feed_fetched($feed_data, $fetch_url, $owner_uid, $feed);
+			Debug::log(sprintf("=== %.4f (sec)", microtime(true) - $start), Debug::$LOG_VERBOSE);
+		}
+
+		if (md5($feed_data) != $feed_data_checksum) {
+			Debug::log("feed data has been modified by a plugin.", Debug::$LOG_VERBOSE);
+		} else {
+			Debug::log("feed data has not been modified by a plugin.", Debug::$LOG_VERBOSE);
 		}
 
 		$rss = new FeedParser($feed_data);
@@ -437,8 +460,16 @@ class RSSUtils {
 
 		if (!$rss->error()) {
 
+			Debug::log("running HOOK_FEED_PARSED handlers...", Debug::$LOG_VERBOSE);
+
 			// We use local pluginhost here because we need to load different per-user feed plugins
-			$pluginhost->run_hooks(PluginHost::HOOK_FEED_PARSED, "hook_feed_parsed", $rss);
+
+			foreach ($pluginhost->get_hooks(PluginHost::HOOK_FEED_PARSED) as $plugin) {
+				Debug::log("... " . get_class($plugin), Debug::$LOG_VERBOSE);
+				$start = microtime(true);
+				$plugin->hook_feed_parsed($rss);
+				Debug::log(sprintf("=== %.4f (sec)", microtime(true) - $start), Debug::$LOG_VERBOSE);
+			}
 
 			Debug::log("language: $feed_language", Debug::$LOG_VERBOSE);
 			Debug::log("processing feed data...", Debug::$LOG_VERBOSE);
