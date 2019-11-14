@@ -844,6 +844,24 @@ class Pref_Prefs extends Handler_Protected {
 			print_warning("Your PHP configuration has open_basedir restrictions enabled. Some plugins relying on CURL for functionality may not work correctly.");
 		}
 
+		$feed_handler_whitelist = [ "Af_Comics" ];
+
+		$feed_handlers = array_merge(
+			PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FEED_FETCHED),
+			PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FEED_PARSED),
+			PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FETCH_FEED));
+
+		$feed_handlers = array_filter($feed_handlers, function($plugin) use ($feed_handler_whitelist) {
+			return in_array(get_class($plugin), $feed_handler_whitelist) === FALSE; });
+
+		if (count($feed_handlers) > 0) {
+			print_error(
+				T_sprintf("The following plugins use per-feed content hooks. This may cause excessive data usage and origin server load resulting in a ban of your instance: <b>%s</b>" ,
+					implode(", ", array_map(function($plugin) { return get_class($plugin); }, $feed_handlers))
+				) . " (<a href='https://tt-rss.org/wiki/FeedHandlerPlugins' target='_blank'>".__("More info...")."</a>)"
+			);
+		}
+
 		print "<h2>".__("System plugins")."</h2>";
 		print_notice("System plugins are enabled in <strong>config.php</strong> for all users.");
 
