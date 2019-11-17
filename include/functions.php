@@ -164,6 +164,12 @@
 	    Debug::log($msg);
 	}
 
+	function reset_fetch_domain_quota() {
+		global $fetch_domain_hits;
+
+		$fetch_domain_hits = [];
+	}
+
 	// TODO: max_size currently only works for CURL transfers
 	// TODO: multiple-argument way is deprecated, first parameter is a hash now
 	function fetch_file_contents($options /* previously: 0: $url , 1: $type = false, 2: $login = false, 3: $pass = false,

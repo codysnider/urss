@@ -259,6 +259,8 @@ class RSSUtils {
 	 */
 	static function update_rss_feed($feed, $no_cache = false) {
 
+		reset_fetch_domain_quota();
+
 		Debug::log("start", Debug::$LOG_VERBOSE);
 
 		$pdo = Db::pdo();
