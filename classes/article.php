@@ -305,19 +305,9 @@ class Article extends Handler_Protected {
 				post_int_id = ? AND owner_uid = ?");
 			$sth->execute([$int_id, $_SESSION['uid']]);
 
+			$tags = FeedItem_Common::normalize_categories($tags);
+
 			foreach ($tags as $tag) {
-				$tag = Article::sanitize_tag($tag);
-
-				if (!Article::tag_is_valid($tag)) {
-					continue;
-				}
-
-				if (preg_match("/^[0-9]*$/", $tag)) {
-					continue;
-				}
-
-				//					print "<!-- $id : $int_id : $tag -->";
-
 				if ($tag != '') {
 					$sth = $this->pdo->prepare("INSERT INTO ttrss_tags
 								(post_int_id, owner_uid, tag_name)
@@ -331,7 +321,6 @@ class Article extends Handler_Protected {
 
 			/* update tag cache */
 
-			sort($tags_to_cache);
 			$tags_str = join(",", $tags_to_cache);
 
 			$sth = $this->pdo->prepare("UPDATE ttrss_user_entries
@@ -800,27 +789,6 @@ class Article extends Handler_Protected {
 			Labels::update_cache($owner_uid, $id, array("no-labels" => 1));
 
 		return $rv;
-	}
-
-	static function sanitize_tag($tag) {
-		$tag = trim($tag);
-
-		$tag = mb_strtolower($tag, 'utf-8');
-
-		$tag = preg_replace('/[,\'\"\+\>\<]/', "", $tag);
-
-		if (DB_TYPE == "mysql") {
-			$tag = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $tag);
-		}
-
-		return $tag;
-	}
-
-	static function tag_is_valid($tag) {
-		if (!$tag || is_numeric($tag) || mb_strlen($tag) > 250)
-			return false;
-
-		return true;
 	}
 
 	static function get_article_image($enclosures, $content, $site_url) {

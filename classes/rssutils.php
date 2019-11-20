@@ -626,28 +626,8 @@ class RSSUtils {
 				Debug::log("author $entry_author", Debug::$LOG_VERBOSE);
 				Debug::log("looking for tags...", Debug::$LOG_VERBOSE);
 
-				// parse <category> entries into tags
-
-				$additional_tags = array();
-
-				$additional_tags_src = $item->get_categories();
-
-				if (is_array($additional_tags_src)) {
-					foreach ($additional_tags_src as $tobj) {
-						array_push($additional_tags, $tobj);
-					}
-				}
-
-				$entry_tags = array_unique($additional_tags);
-
-				for ($i = 0; $i < count($entry_tags); $i++) {
-					$entry_tags[$i] = mb_strtolower($entry_tags[$i], 'utf-8');
-
-					// we don't support numeric tags, let's prefix them
-					if (is_numeric($entry_tags[$i])) $entry_tags[$i] = 't:' . $entry_tags[$i];
-				}
-
-				Debug::log("tags found: " . join(",", $entry_tags), Debug::$LOG_VERBOSE);
+				$entry_tags = $item->get_categories();
+				Debug::log("tags found: " . join(", ", $entry_tags), Debug::$LOG_VERBOSE);
 
 				Debug::log("done collecting data.", Debug::$LOG_VERBOSE);
 
@@ -1107,9 +1087,7 @@ class RSSUtils {
 						$manual_tags = trim_array(explode(",", $f["param"]));
 
 						foreach ($manual_tags as $tag) {
-							if (Article::tag_is_valid($tag)) {
-								array_push($entry_tags, $tag);
-							}
+							array_push($entry_tags, $tag);
 						}
 					}
 				}
@@ -1122,19 +1100,17 @@ class RSSUtils {
 				$filtered_tags = array();
 				$tags_to_cache = array();
 
-				if ($entry_tags && is_array($entry_tags)) {
-					foreach ($entry_tags as $tag) {
-						if (array_search($tag, $boring_tags) === false) {
-							array_push($filtered_tags, $tag);
-						}
+				foreach ($entry_tags as $tag) {
+					if (array_search($tag, $boring_tags) === false) {
+						array_push($filtered_tags, $tag);
 					}
 				}
 
 				$filtered_tags = array_unique($filtered_tags);
 
-				if (Debug::get_loglevel() >= Debug::$LOG_EXTENDED) {
-					Debug::log("filtered article tags:", Debug::$LOG_VERBOSE);
-					print_r($filtered_tags);
+				if (Debug::get_loglevel() >= Debug::$LOG_VERBOSE) {
+					Debug::log("filtered tags: " . implode(", ", $filtered_tags), Debug::$LOG_VERBOSE);
+
 				}
 
 				// Save article tags in the database
@@ -1149,12 +1125,9 @@ class RSSUtils {
 									(owner_uid,tag_name,post_int_id)
 									VALUES (?, ?, ?)");
 
+					$filtered_tags = FeedItem_Common::normalize_categories($filtered_tags);
+
 					foreach ($filtered_tags as $tag) {
-
-						$tag = Article::sanitize_tag($tag);
-
-						if (!Article::tag_is_valid($tag)) continue;
-
 						$tsth->execute([$tag, $entry_int_id, $owner_uid]);
 
 						if (!$tsth->fetch()) {
@@ -1165,9 +1138,6 @@ class RSSUtils {
 					}
 
 					/* update the cache */
-
-					$tags_to_cache = array_unique($tags_to_cache);
-
 					$tags_str = join(",", $tags_to_cache);
 
 					$tsth = $pdo->prepare("UPDATE ttrss_user_entries

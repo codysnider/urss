@@ -97,19 +97,19 @@ class FeedItem_RSS extends FeedItem_Common {
 
 	function get_categories() {
 		$categories = $this->elem->getElementsByTagName("category");
-		$cats = array();
+		$cats = [];
 
 		foreach ($categories as $cat) {
-			array_push($cats, trim($cat->nodeValue));
+			array_push($cats, $cat->nodeValue);
 		}
 
 		$categories = $this->xpath->query("dc:subject", $this->elem);
 
 		foreach ($categories as $cat) {
-			array_push($cats, clean(trim($cat->nodeValue)));
+			array_push($cats, $cat->nodeValue);
 		}
 
-		return $cats;
+		return $this->normalize_categories($cats);
 	}
 
 	function get_enclosures() {

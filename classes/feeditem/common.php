@@ -162,4 +162,35 @@ abstract class FeedItem_Common extends FeedItem {
 		}
 	}
 
+	static function normalize_categories($cats) {
+
+		$tmp = [];
+
+		foreach ($cats as $rawcat) {
+			$tmp = array_merge($tmp, explode(",", $rawcat));
+		}
+
+		$tmp = array_map(function($srccat) {
+			$cat = clean(trim(mb_strtolower($srccat)));
+
+			// we don't support numeric tags
+			if (is_numeric($cat))
+				$cat = 't:' . $cat;
+
+			$cat = preg_replace('/[,\'\"]/', "", $cat);
+
+			if (DB_TYPE == "mysql") {
+				$cat = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $cat);
+			}
+
+			if (mb_strlen($cat) > 250)
+				$cat = mb_substr($cat, 0, 250);
+
+			return $cat;
+		}, $tmp);
+
+		asort($tmp);
+
+		return array_unique($tmp);
+	}
 }
