@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-15 13:47+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2019-11-23 18:58+0000\n"
+"Last-Translator: Nikolay Korotkiy <sikmir@gmail.com>\n"
+"Language-Team: Esperanto <https://weblate.tt-rss.org/projects/tt-rss/"
+"messages/eo/>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.7.1\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -75,15 +77,15 @@ msgstr ""
 
 #: backend.php:89 backend.php:99
 msgid "Daily"
-msgstr ""
+msgstr "Ĉiutage"
 
 #: backend.php:90 backend.php:100
 msgid "Weekly"
-msgstr ""
+msgstr "Semajne"
 
 #: backend.php:103 classes/pref/system.php:52 classes/pref/users.php:47
 msgid "User"
-msgstr ""
+msgstr "Uzanto"
 
 #: backend.php:104
 msgid "Power User"
@@ -440,19 +442,19 @@ msgstr ""
 
 #: include/functions.php:1014
 msgid "Open next feed"
-msgstr ""
+msgstr "Malfermi sekvan fluon"
 
 #: include/functions.php:1015
 msgid "Open previous feed"
-msgstr ""
+msgstr "Malfermi antaŭan fluon"
 
 #: include/functions.php:1016
 msgid "Open next article"
-msgstr ""
+msgstr "Malfermi sekvan artikolon"
 
 #: include/functions.php:1017
 msgid "Open previous article"
-msgstr ""
+msgstr "Malfermi antaŭan artikolon"
 
 #: include/functions.php:1018
 msgid "Open next article (don't scroll long articles)"
@@ -476,7 +478,7 @@ msgstr ""
 
 #: include/functions.php:1023
 msgid "Article"
-msgstr ""
+msgstr "Artikolo"
 
 #: include/functions.php:1024 js/Headlines.js:1288
 msgid "Toggle starred"
@@ -565,7 +567,7 @@ msgstr ""
 #: include/functions.php:1046 classes/pref/feeds.php:529
 #: classes/pref/feeds.php:817
 msgid "Feed"
-msgstr ""
+msgstr "Fluo"
 
 #: include/functions.php:1047
 msgid "Refresh current feed"
@@ -582,7 +584,7 @@ msgstr ""
 #: include/functions.php:1050 js/Headlines.js:1438 js/PrefFeedTree.js:56
 #: js/FeedTree.js:65
 msgid "Edit feed"
-msgstr ""
+msgstr "Redakti fluon"
 
 #: include/functions.php:1052
 msgid "Reverse headlines"
@@ -697,7 +699,7 @@ msgstr ""
 
 #: include/login_form.php:88 classes/handler/public.php:625
 msgid "Password:"
-msgstr ""
+msgstr "Pasvorto:"
 
 #: include/login_form.php:96
 msgid "I forgot my password"
@@ -746,7 +748,7 @@ msgstr ""
 
 #: classes/article.php:26
 msgid "Article not found."
-msgstr ""
+msgstr "Artikolo ne trovita."
 
 #: classes/article.php:239
 msgid "Tags for this article (separated by commas):"
@@ -921,11 +923,11 @@ msgstr ""
 
 #: classes/feeds.php:95
 msgid "Feed:"
-msgstr ""
+msgstr "Fluo:"
 
 #: classes/feeds.php:149 classes/feeds.php:506
 msgid "Feed not found."
-msgstr ""
+msgstr "Fluo ne trovita."
 
 #: classes/feeds.php:209
 msgid "Never"
@@ -1001,7 +1003,7 @@ msgstr ""
 #: classes/feeds.php:697 classes/pref/feeds.php:665 classes/pref/feeds.php:899
 #: classes/pref/feeds.php:1677 classes/pref/prefs.php:289
 msgid "Password"
-msgstr ""
+msgstr "Pasvorto"
 
 #: classes/feeds.php:709 classes/pref/feeds.php:680
 msgid "This feed requires authentication."
@@ -1146,7 +1148,7 @@ msgstr ""
 
 #: classes/handler/public.php:952 classes/pref/users.php:356
 msgid "Reset password"
-msgstr ""
+msgstr "Restarigi pasvorton"
 
 #: classes/handler/public.php:964
 msgid "Some of the required form parameters are missing or incorrect."
@@ -1277,8 +1279,8 @@ msgstr ""
 #, php-format
 msgid "(%d feed)"
 msgid_plural "(%d feeds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(%d fluo)"
+msgstr[1] "(%d fluoj)"
 
 #: classes/pref/feeds.php:521 classes/pref/prefs.php:20
 msgid "General"
@@ -1861,7 +1863,7 @@ msgstr ""
 
 #: classes/pref/prefs.php:260
 msgid "Full name:"
-msgstr ""
+msgstr "Plena nomo:"
 
 #: classes/pref/prefs.php:265 classes/pref/users.php:94
 msgid "E-mail:"
@@ -1881,11 +1883,11 @@ msgstr ""
 
 #: classes/pref/prefs.php:337
 msgid "Old password:"
-msgstr ""
+msgstr "Malnova pasvorto:"
 
 #: classes/pref/prefs.php:342 classes/pref/users.php:82
 msgid "New password:"
-msgstr ""
+msgstr "Nova pasvorto:"
 
 #: classes/pref/prefs.php:347
 msgid "Confirm password:"
@@ -1893,7 +1895,7 @@ msgstr ""
 
 #: classes/pref/prefs.php:357
 msgid "Change password"
-msgstr ""
+msgstr "Ŝanĝi pasvorton"
 
 #: classes/pref/prefs.php:362
 msgid "One time passwords / Authenticator"
@@ -1901,7 +1903,7 @@ msgstr ""
 
 #: classes/pref/prefs.php:392 classes/pref/prefs.php:440
 msgid "Your password:"
-msgstr ""
+msgstr "Via pasvorto:"
 
 #: classes/pref/prefs.php:402
 msgid "Disable OTP"
@@ -2077,7 +2079,7 @@ msgstr ""
 
 #: classes/pref/users.php:188
 msgid "User not found"
-msgstr ""
+msgstr "Uzanto ne trovita"
 
 #: classes/pref/users.php:259
 #, php-format
@@ -2101,7 +2103,7 @@ msgstr ""
 
 #: classes/pref/users.php:348
 msgid "Create user"
-msgstr ""
+msgstr "Krei uzanton"
 
 #: classes/pref/users.php:388
 msgid "Access Level"
@@ -2277,7 +2279,7 @@ msgstr ""
 
 #: plugins/close_button/init.php:28
 msgid "Close article"
-msgstr ""
+msgstr "Fermi artikolon"
 
 #: plugins/mail/init.php:29
 msgid "Mail addresses saved."
@@ -2505,7 +2507,7 @@ msgstr ""
 
 #: js/CommonDialogs.js:428
 msgid "Edit Feed"
-msgstr ""
+msgstr "Redakti fluon"
 
 #: js/CommonDialogs.js:452
 msgid "Generate new syndication address for this feed?"
