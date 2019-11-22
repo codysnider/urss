@@ -10,15 +10,16 @@ msgstr ""
 "Project-Id-Version: tt-rss 1.7.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-15 13:47+0300\n"
-"PO-Revision-Date: 2019-02-07 14:35+0000\n"
+"PO-Revision-Date: 2019-11-23 18:58+0000\n"
 "Last-Translator: Nikolay Korotkiy <sikmir@gmail.com>\n"
-"Language-Team: Finnish <https://weblate.tt-rss.org/projects/tt-rss/messages/fi/>\n"
+"Language-Team: Finnish <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"fi/>\n"
 "Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3\n"
+"X-Generator: Weblate 3.7.1\n"
 
 #: backend.php:73
 msgid "Use default"
@@ -59,15 +60,13 @@ msgstr "Ei päivitystä"
 
 #: backend.php:84
 #: backend.php:94
-#, fuzzy
 msgid "15 minutes"
-msgstr "15 minuutin välein"
+msgstr "15 minuuttia"
 
 #: backend.php:85
 #: backend.php:95
-#, fuzzy
 msgid "30 minutes"
-msgstr "30 minuutin välein"
+msgstr "30 minuuttia"
 
 #: backend.php:86
 #: backend.php:96
@@ -76,15 +75,13 @@ msgstr "Kerran tunnissa"
 
 #: backend.php:87
 #: backend.php:97
-#, fuzzy
 msgid "4 hours"
-msgstr "4 tunnin välein"
+msgstr "4 tuntia"
 
 #: backend.php:88
 #: backend.php:98
-#, fuzzy
 msgid "12 hours"
-msgstr "12 tunnin välein"
+msgstr "12 tuntia"
 
 #: backend.php:89
 #: backend.php:99
@@ -132,7 +129,7 @@ msgstr ""
 
 #: errors.php:21
 msgid "Request not authorized."
-msgstr ""
+msgstr "Pyyntö ei ole sallittu."
 
 #: errors.php:23
 msgid "No operation to perform."
@@ -339,9 +336,8 @@ msgstr "Vaihda näkymä"
 
 #: index.php:232
 #: include/functions.php:1072
-#, fuzzy
 msgid "Toggle night mode"
-msgstr "Vaihda yhdistelmänäkymän tila"
+msgstr "Vaihda yötilaan"
 
 #: index.php:233
 msgid "Keyboard shortcuts help"
@@ -952,9 +948,8 @@ msgstr "Voit jakaa tämän artikkelin seuraavalla uniikilla osoitteella:"
 #: classes/pref/prefs.php:852
 #: classes/pref/prefs.php:867
 #: plugins/bookmarklets/init.php:45
-#, fuzzy
 msgid "More info..."
-msgstr "lisätietoja"
+msgstr "Lisätietoja…"
 
 #: classes/dlg.php:196
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
@@ -982,7 +977,7 @@ msgstr "Päivitetty viimeksi: %s"
 #: classes/feeds.php:60
 #, fuzzy
 msgid "Select..."
-msgstr "Valitse"
+msgstr "Valitse…"
 
 #: classes/feeds.php:62
 #: classes/pref/feeds.php:1224
@@ -1160,16 +1155,15 @@ msgid "Subscribe"
 msgstr "Tilaa"
 
 #: classes/feeds.php:735
-#, fuzzy, php-format
+#, php-format
 msgid "Search %s..."
-msgstr "Etsi..."
+msgstr "Etsi %s…"
 
 #: classes/feeds.php:741
 #: classes/pref/feeds.php:603
 #: classes/pref/feeds.php:841
-#, fuzzy
 msgid "Language:"
-msgstr "Kieli"
+msgstr "Kieli:"
 
 #: classes/feeds.php:743
 msgid "Used for word stemming"
@@ -1295,9 +1289,9 @@ msgid "You will need to provide valid account name and email. Password reset lin
 msgstr "Syötä tilisi sähköpostiosoite. Uusi salasana lähetetään sinulle sähköpostilla."
 
 #: classes/handler/public.php:946
-#, fuzzy, php-format
+#, php-format
 msgid "How much is %d + %d:"
-msgstr "Paljonko on kaksi plus kaksi:"
+msgstr "Paljonko on %d + %d:"
 
 #: classes/handler/public.php:952
 #: classes/pref/users.php:356
@@ -1438,11 +1432,11 @@ msgstr "Valitse aktivoidaksesi kenttä"
 #: classes/pref/feeds.php:280
 #: classes/pref/feeds.php:286
 #: classes/pref/feeds.php:315
-#, fuzzy, php-format
+#, php-format
 msgid "(%d feed)"
 msgid_plural "(%d feeds)"
-msgstr[0] "Muokkaa syötettä"
-msgstr[1] "Muokkaa syötettä"
+msgstr[0] "(%d syöte)"
+msgstr[1] "(%d syötettä)"
 
 #: classes/pref/feeds.php:521
 #: classes/pref/prefs.php:20
@@ -1458,14 +1452,12 @@ msgid "Feed URL"
 msgstr "Syötteen osoite"
 
 #: classes/pref/feeds.php:585
-#, fuzzy
 msgid "Site URL:"
-msgstr "Artikkelin osoite:"
+msgstr "Sivuston URL-osoite:"
 
 #: classes/pref/feeds.php:587
-#, fuzzy
 msgid "Site URL"
-msgstr "Syötteen osoite"
+msgstr "Sivuston URL-osoite"
 
 #: classes/pref/feeds.php:612
 #: classes/pref/feeds.php:852
@@ -1536,9 +1528,8 @@ msgstr "Suosikkikuvake"
 
 #: classes/pref/feeds.php:771
 #: classes/pref/feeds.php:1324
-#, fuzzy
 msgid "Choose file..."
-msgstr "Luo suodatin..."
+msgstr "Valitse tiedosto…"
 
 #: classes/pref/feeds.php:778
 msgid "Replace"
@@ -1615,7 +1606,6 @@ msgid "Using OPML you can export and import your feeds, filters, labels and Tiny
 msgstr "OPML:ää käyttäen voit viedä ja tuoda syötteitä, suodattimia, tunnisteita ja Tiny Tiny RSS:n asetuksia."
 
 #: classes/pref/feeds.php:1330
-#, fuzzy
 msgid "Import OPML"
 msgstr "Tuo OPML"
 
@@ -1798,11 +1788,11 @@ msgid "[No caption]"
 msgstr "Nimi"
 
 #: classes/pref/filters.php:1142
-#, fuzzy, php-format
+#, php-format
 msgid "%s (%d rule)"
 msgid_plural "%s (%d rules)"
-msgstr[0] "Lisää sääntö"
-msgstr[1] "Lisää sääntö"
+msgstr[0] "%s (%d sääntö)"
+msgstr[1] "%s (%d sääntöä)"
 
 #: classes/pref/filters.php:1156
 #, fuzzy
@@ -1815,11 +1805,11 @@ msgid "inverse"
 msgstr "(käänteinen)"
 
 #: classes/pref/filters.php:1160
-#, fuzzy, php-format
+#, php-format
 msgid "%s (+%d action)"
 msgid_plural "%s (+%d actions)"
-msgstr[0] "Lisää toiminto"
-msgstr[1] "Lisää toiminto"
+msgstr[0] "%s (+%d toiminto)"
+msgstr[1] "%s (+%d toimintoa)"
 
 #: classes/pref/labels.php:38
 msgid "Colors"
@@ -1843,9 +1833,8 @@ msgid "Clear colors"
 msgstr "Poista värit"
 
 #: classes/pref/prefs.php:41
-#, fuzzy
 msgid "Articles"
-msgstr "Artikkeli"
+msgstr "Artikkelit"
 
 #: classes/pref/prefs.php:54
 msgid "Digest"
@@ -1868,9 +1857,8 @@ msgid "Never apply these tags automatically (comma-separated list)."
 msgstr ""
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Default language"
-msgstr "Oletusprofiili"
+msgstr "Oletuskieli"
 
 #: classes/pref/prefs.php:72
 msgid "Used for full-text search"
@@ -1941,9 +1929,8 @@ msgid "Time in UTC"
 msgstr "Aikavyöhyke"
 
 #: classes/pref/prefs.php:82
-#, fuzzy
 msgid "Enable API"
-msgstr "Aktivoi kertakäyttösalasana"
+msgstr "Ota API käyttöön"
 
 #: classes/pref/prefs.php:82
 #, fuzzy
@@ -2094,15 +2081,13 @@ msgid "Personal data"
 msgstr "Omat tiedot"
 
 #: classes/pref/prefs.php:260
-#, fuzzy
 msgid "Full name:"
-msgstr "Koko nimi"
+msgstr "Koko nimi:"
 
 #: classes/pref/prefs.php:265
 #: classes/pref/users.php:94
-#, fuzzy
 msgid "E-mail:"
-msgstr "Sähköposti: "
+msgstr "Sähköposti:"
 
 #: classes/pref/prefs.php:273
 #, fuzzy
@@ -2118,20 +2103,17 @@ msgid "Changing your current password will disable OTP."
 msgstr "Salasanan vaihtaminen poistaa kertakäyttösalasanatunnistautumisen käytöstä."
 
 #: classes/pref/prefs.php:337
-#, fuzzy
 msgid "Old password:"
-msgstr "Vanha salasana"
+msgstr "Vanha salasana:"
 
 #: classes/pref/prefs.php:342
 #: classes/pref/users.php:82
-#, fuzzy
 msgid "New password:"
-msgstr "Uusi salasana"
+msgstr "Uusi salasana:"
 
 #: classes/pref/prefs.php:347
-#, fuzzy
 msgid "Confirm password:"
-msgstr "Vahvista salasana"
+msgstr "Vahvista salasana:"
 
 #: classes/pref/prefs.php:357
 msgid "Change password"
@@ -2143,18 +2125,16 @@ msgstr "Kertakäyttösalasanat"
 
 #: classes/pref/prefs.php:392
 #: classes/pref/prefs.php:440
-#, fuzzy
 msgid "Your password:"
-msgstr "Vahvista salasana"
+msgstr "Salasanasi:"
 
 #: classes/pref/prefs.php:402
 msgid "Disable OTP"
 msgstr "Poista OTP käytöstä"
 
 #: classes/pref/prefs.php:446
-#, fuzzy
 msgid "One time password:"
-msgstr "Väärä kertakäyttösalasana"
+msgstr "Kertakäyttöinen salasana:"
 
 #: classes/pref/prefs.php:453
 msgid "Enable OTP"
@@ -2165,18 +2145,16 @@ msgid "Some preferences are only available in default profile."
 msgstr "Jotkut asetukset ovat saatavilla vain oletusprofiilissa."
 
 #: classes/pref/prefs.php:601
-#, fuzzy
 msgid "default"
-msgstr "Oletus"
+msgstr "oletus"
 
 #: classes/pref/prefs.php:611
 msgid "Customize"
 msgstr "Muokkaa"
 
 #: classes/pref/prefs.php:614
-#, fuzzy
 msgid "More themes..."
-msgstr "Lisää toimintoja..."
+msgstr "Lisää teemoja…"
 
 #: classes/pref/prefs.php:675
 msgid "Register"
@@ -2460,9 +2438,8 @@ msgid "Provide full-text services to core code (bookmarklets) and other plugins"
 msgstr ""
 
 #: plugins/af_readability/init.php:118
-#, fuzzy
 msgid "Readability"
-msgstr "Tarkasta saatavuus"
+msgstr "Luettavuus"
 
 #: plugins/af_readability/init.php:130
 #, fuzzy
@@ -3209,14 +3186,12 @@ msgid "Mark %w in %s as read?"
 msgstr "Merkitäänkö kaikki artikkelit syötteessä %s luetuiksi?"
 
 #: js/Feeds.js:406
-#, fuzzy
 msgid "search results"
-msgstr "Hakutulokset: %s"
+msgstr "hakutulokset"
 
 #: js/Feeds.js:406
-#, fuzzy
 msgid "all articles"
-msgstr "Kaikki artikkelit"
+msgstr "kaikki artikkelit"
 
 #: js/Feeds.js:448
 msgid "Mark all articles in %s as read?"
