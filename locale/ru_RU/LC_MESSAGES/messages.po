@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-15 13:47+0300\n"
-"PO-Revision-Date: 2019-11-23 18:58+0000\n"
-"Last-Translator: Nikolay Korotkiy <sikmir@gmail.com>\n"
+"PO-Revision-Date: 2019-11-25 20:58+0000\n"
+"Last-Translator: progit <pash.vld@gmail.com>\n"
 "Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
 "ru/>\n"
 "Language: ru_RU\n"
@@ -1265,13 +1265,12 @@ msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "Не могу подписаться на <b>%s</b>. Не могу загрузить URL канала."
 
 #: classes/handler/public.php:793
-#, fuzzy
 msgid "Multiple feed URLs found:"
-msgstr "Обнаружено несколько URL канала."
+msgstr "Найдено несколько URL каналов:"
 
 #: classes/handler/public.php:806
 msgid "Subscribe to selected feed"
-msgstr "Подписаться на выбранные каналы"
+msgstr "Подписаться на выбранный канал"
 
 #: classes/handler/public.php:830
 msgid "Edit subscription options"
@@ -1323,14 +1322,14 @@ msgid "Database Updater"
 msgstr "Обновление базы данных"
 
 #: classes/handler/public.php:1105
-#, fuzzy, php-format
+#, php-format
 msgid "Performing updates to version %d"
-msgstr "Идет обновление..."
+msgstr "Выполнение обновления до версии %d"
 
 #: classes/handler/public.php:1110
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to version %d"
-msgstr "Обновляется до версии %d..."
+msgstr "Обновляется до версии %d"
 
 #: classes/handler/public.php:1123
 msgid "Try again"
@@ -2181,7 +2180,7 @@ msgstr "Системные плагины"
 #: classes/pref/prefs.php:856
 #, php-format
 msgid "v%.2f, by %s"
-msgstr ""
+msgstr "v%.2f, by %s"
 
 #: classes/pref/prefs.php:818
 msgid "User plugins"
@@ -2420,6 +2419,8 @@ msgstr "Настройки Readability (af_readability)"
 #: plugins/af_readability/init.php:87
 msgid "Provide full-text services to core code (bookmarklets) and other plugins"
 msgstr ""
+"Предоставление полнотекстовых сервисов для основного кода (букмарклетов) и "
+"других плагинов"
 
 #: plugins/af_readability/init.php:118
 msgid "Readability"
@@ -2665,6 +2666,9 @@ msgstr "Подписаться на канал"
 #: js/CommonDialogs.js:110
 msgid "Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."
 msgstr ""
+"Не удалось проанализировать вывод. Это может указывать на тайм-аут сервера и/"
+"или проблемы с сетью. Выходные данные сервера были записаны в консоль "
+"браузера."
 
 #: js/CommonDialogs.js:125
 #, perl-format
@@ -2772,6 +2776,8 @@ msgstr "Найдены новые статьи, обновите канал дл
 #: js/Headlines.js:711
 msgid "Could not update headlines (invalid object received - see error console for details)"
 msgstr ""
+"Не удалось обновить заголовки (получен недопустимый объект - подробности см. "
+"в консоли ошибок)"
 
 #: js/Headlines.js:968
 #, perl-format
