@@ -230,6 +230,7 @@
 		$followlocation = isset($options["followlocation"]) ? $options["followlocation"] : true;
 		$max_size = isset($options["max_size"]) ? $options["max_size"] : MAX_DOWNLOAD_FILE_SIZE; // in bytes
 		$http_accept = isset($options["http_accept"]) ? $options["http_accept"] : false;
+		$http_referrer = isset($options["http_referrer"]) ? $options["http_referrer"] : false;
 
 		$url = ltrim($url, ' ');
 		$url = str_replace(' ', '%20', $url);
@@ -273,7 +274,9 @@
 			curl_setopt($ch, CURLOPT_USERAGENT, $useragent ? $useragent :
 				SELF_USER_AGENT);
 			curl_setopt($ch, CURLOPT_ENCODING, "");
-			//curl_setopt($ch, CURLOPT_REFERER, $url);
+
+			if  ($http_referrer)
+				curl_setopt($ch, CURLOPT_REFERER, $http_referrer);
 
 			if ($max_size) {
 				curl_setopt($ch, CURLOPT_NOPROGRESS, false);
@@ -400,6 +403,9 @@
 
 			if ($http_accept)
 				array_push($context_options['http']['header'], "Accept: $http_accept");
+
+			if ($http_referrer)
+				array_push($context_options['http']['header'], "Referer: $http_referrer");
 
 			if (defined('_HTTP_PROXY')) {
 				$context_options['http']['request_fulluri'] = true;

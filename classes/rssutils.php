@@ -739,7 +739,7 @@ class RSSUtils {
 				if (count($matched_filter_ids) > 0) {
 					$filter_ids_qmarks = arr_qmarks($matched_filter_ids);
 
-					$fsth = $pdo->prepare("UPDATE ttrss_filters2 SET last_triggered = NOW() WHERE 
+					$fsth = $pdo->prepare("UPDATE ttrss_filters2 SET last_triggered = NOW() WHERE
 							   id IN ($filter_ids_qmarks) AND owner_uid = ?");
 
 					$fsth->execute(array_merge($matched_filter_ids, [$owner_uid]));
@@ -1200,10 +1200,18 @@ class RSSUtils {
 					Debug::log("cache_enclosures: downloading: $src to $local_filename", Debug::$LOG_VERBOSE);
 
 					if (!$cache->exists($local_filename)) {
-						$file_content = fetch_file_contents(array("url" => $src, "max_size" => MAX_CACHE_FILE_SIZE));
+
+						global $fetch_last_error_code;
+						global $fetch_last_error;
+
+						$file_content = fetch_file_contents(array("url" => $src,
+							"http_referrer" => $src,
+							"max_size" => MAX_CACHE_FILE_SIZE));
 
 						if ($file_content) {
 							$cache->put($local_filename, $file_content);
+						} else {
+							Debug::log("cache_enclosures: failed with $fetch_last_error_code: $fetch_last_error");
 						}
 					} else if (is_writable($local_filename)) {
 						$cache->touch($local_filename);
@@ -1234,10 +1242,17 @@ class RSSUtils {
 						if (!$cache->exists($local_filename)) {
 							Debug::log("cache_media: downloading: $src to $local_filename", Debug::$LOG_VERBOSE);
 
-							$file_content = fetch_file_contents(array("url" => $src, "max_size" => MAX_CACHE_FILE_SIZE));
+							global $fetch_last_error_code;
+							global $fetch_last_error;
+
+							$file_content = fetch_file_contents(array("url" => $src,
+								"http_referrer" => $src,
+								"max_size" => MAX_CACHE_FILE_SIZE));
 
 							if ($file_content) {
 								$cache->put($local_filename, $file_content);
+							} else {
+								Debug::log("cache_media: failed with $fetch_last_error_code: $fetch_last_error");
 							}
 						} else if ($cache->isWritable($local_filename)) {
 							$cache->touch($local_filename);
