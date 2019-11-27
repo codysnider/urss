@@ -61,6 +61,7 @@ class PluginHost {
 	const HOOK_GET_FULL_TEXT = 41;
 	const HOOK_ARTICLE_IMAGE = 42;
 	const HOOK_FEED_TREE = 43;
+	const HOOK_IFRAME_WHITELISTED = 44;
 
 	const KIND_ALL = 1;
 	const KIND_SYSTEM = 2;
