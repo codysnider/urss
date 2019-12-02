@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-15 13:47+0300\n"
-"PO-Revision-Date: 2019-08-28 15:06+0000\n"
+"PO-Revision-Date: 2019-12-03 15:38+0000\n"
 "Last-Translator: Андрій Жук <zhouck@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.tt-rss.org/projects/tt-rss/"
 "messages/uk/>\n"
@@ -490,7 +490,7 @@ msgstr "Визначати автоматично"
 #: include/functions.php:817
 #, php-format
 msgid "%d min"
-msgstr "%d мін"
+msgstr "%d хв"
 
 #: include/functions.php:1013
 msgid "Navigation"
