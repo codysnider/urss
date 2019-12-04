@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-15 13:47+0300\n"
-"PO-Revision-Date: 2019-08-14 10:49+0000\n"
-"Last-Translator: Andrew Dolgov <fox@fakecake.org>\n"
-"Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/ru/>\n"
+"PO-Revision-Date: 2019-11-25 20:58+0000\n"
+"Last-Translator: progit <pash.vld@gmail.com>\n"
+"Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
+"ru/>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.7.1\n"
 
 #: backend.php:73
@@ -760,7 +762,7 @@ msgstr "Ошибка записи файла на диск."
 
 #: include/functions.php:1782
 msgid "A PHP extension stopped the file upload."
-msgstr "Расширение PHP остановило загрузку файла"
+msgstr "Расширение PHP остановило загрузку файла."
 
 #: include/login_form.php:81
 #: classes/handler/public.php:618
@@ -949,9 +951,8 @@ msgstr "Вы можете опубликовать %s с помощью след
 #: classes/pref/prefs.php:852
 #: classes/pref/prefs.php:867
 #: plugins/bookmarklets/init.php:45
-#, fuzzy
 msgid "More info..."
-msgstr "подробнее"
+msgstr "Подробнее…"
 
 #: classes/dlg.php:196
 msgid "You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."
@@ -1152,9 +1153,9 @@ msgid "Subscribe"
 msgstr "Подписаться"
 
 #: classes/feeds.php:735
-#, fuzzy, php-format
+#, php-format
 msgid "Search %s..."
-msgstr "Поиск..."
+msgstr "Поиск %s…"
 
 #: classes/feeds.php:741
 #: classes/pref/feeds.php:603
@@ -1164,7 +1165,7 @@ msgstr "Язык:"
 
 #: classes/feeds.php:743
 msgid "Used for word stemming"
-msgstr ""
+msgstr "Используется стемминга слов"
 
 #: classes/feeds.php:753
 msgid "Search syntax"
@@ -1197,7 +1198,7 @@ msgstr "Особые"
 #: classes/feeds.php:1472
 #, php-format
 msgid "Incorrect search syntax: %s."
-msgstr ""
+msgstr "Неверный синтаксис поиска: %s."
 
 #: classes/feeds.php:1657
 #, php-format
@@ -1264,13 +1265,12 @@ msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "Не могу подписаться на <b>%s</b>. Не могу загрузить URL канала."
 
 #: classes/handler/public.php:793
-#, fuzzy
 msgid "Multiple feed URLs found:"
-msgstr "Обнаружено несколько URL канала."
+msgstr "Найдено несколько URL каналов:"
 
 #: classes/handler/public.php:806
 msgid "Subscribe to selected feed"
-msgstr "Подписаться на выбранные каналы"
+msgstr "Подписаться на выбранный канал"
 
 #: classes/handler/public.php:830
 msgid "Edit subscription options"
@@ -1281,14 +1281,15 @@ msgid "Password recovery"
 msgstr "Восстановление пароля"
 
 #: classes/handler/public.php:926
-#, fuzzy
 msgid "You will need to provide valid account name and email. Password reset link will be sent to your email address."
-msgstr "Введите ваш логин и электронный адрес. Новый пароль будет выслан на указанный адрес."
+msgstr ""
+"Введите ваш логин и электронный адрес. Ссылка для сброса пароля будет "
+"выслана на указанный адрес."
 
 #: classes/handler/public.php:946
-#, fuzzy, php-format
+#, php-format
 msgid "How much is %d + %d:"
-msgstr "Сколько будет, два плюс два:"
+msgstr "Сколько будет %d плюс %d:"
 
 #: classes/handler/public.php:952
 #: classes/pref/users.php:356
@@ -1321,18 +1322,18 @@ msgid "Database Updater"
 msgstr "Обновление базы данных"
 
 #: classes/handler/public.php:1105
-#, fuzzy, php-format
+#, php-format
 msgid "Performing updates to version %d"
-msgstr "Идет обновление..."
+msgstr "Выполнение обновления до версии %d"
 
 #: classes/handler/public.php:1110
-#, fuzzy, php-format
+#, php-format
 msgid "Updating to version %d"
-msgstr "Обновляется до версии %d..."
+msgstr "Обновляется до версии %d"
 
 #: classes/handler/public.php:1123
 msgid "Try again"
-msgstr ""
+msgstr "Попробуйте ещё раз"
 
 #: classes/handler/public.php:1129
 #, fuzzy
@@ -1387,9 +1388,9 @@ msgid "Setting preference key %s to %s"
 msgstr "Устанавливаю ключ настроек %s в %s"
 
 #: classes/opml.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Adding filter %s..."
-msgstr "Добавляю фильтр..."
+msgstr "Добавляю фильтр %s…"
 
 #: classes/opml.php:536
 #, php-format
@@ -1461,9 +1462,8 @@ msgstr "Обновить"
 
 #: classes/pref/feeds.php:621
 #: classes/pref/feeds.php:859
-#, fuzzy
 msgid "Interval:"
-msgstr "Интерфейс"
+msgstr "Интервал:"
 
 #: classes/pref/feeds.php:634
 #: classes/pref/feeds.php:874
@@ -1636,9 +1636,10 @@ msgid "Published & shared articles / Generated feeds"
 msgstr "Опубликованные & общие каналы / Автоматически созданные каналы"
 
 #: classes/pref/feeds.php:1366
-#, fuzzy
 msgid "Published articles can be subscribed by anyone who knows the following URL:"
-msgstr "Ваш OPML может быть опубликован и на него могут подписаться те, кто знает URL, указанный ниже."
+msgstr ""
+"На опубликованные статьи может быть подписан любой кому известен следующий "
+"URL:"
 
 #: classes/pref/feeds.php:1372
 msgid "Display URL"
@@ -1825,9 +1826,8 @@ msgid "Clear colors"
 msgstr "Очистить цвета"
 
 #: classes/pref/prefs.php:41
-#, fuzzy
 msgid "Articles"
-msgstr "Статья"
+msgstr "Статьи"
 
 #: classes/pref/prefs.php:54
 msgid "Digest"
@@ -1848,15 +1848,15 @@ msgstr "Черный список тегов"
 #: classes/pref/prefs.php:71
 msgid "Never apply these tags automatically (comma-separated list)."
 msgstr ""
+"Никогда не назначать эти тэги автоматически (список разделенный запятыми)."
 
 #: classes/pref/prefs.php:72
-#, fuzzy
 msgid "Default language"
-msgstr "Профиль по умолчанию"
+msgstr "Язык по умолчанию"
 
 #: classes/pref/prefs.php:72
 msgid "Used for full-text search"
-msgstr ""
+msgstr "Используется для полнотекстового поиска"
 
 #: classes/pref/prefs.php:73
 #, fuzzy
@@ -1864,24 +1864,20 @@ msgid "Mark read on scroll"
 msgstr "Пометить все статьи как прочитанные?"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Mark articles as read as you scroll past them"
-msgstr "Пометить все статьи как прочитанные?"
+msgstr "Помечать статьи как прочитанные при пролистывании"
 
 #: classes/pref/prefs.php:74
-#, fuzzy
 msgid "Always expand articles"
-msgstr "Щёлкните чтобы развернуть статью"
+msgstr "Всегда разворачивать статьи"
 
 #: classes/pref/prefs.php:75
-#, fuzzy
 msgid "Combined mode"
-msgstr "Переключить комбинированный режим"
+msgstr "Комбинированный режим"
 
 #: classes/pref/prefs.php:75
-#, fuzzy
 msgid "Show flat list of articles instead of separate panels"
-msgstr "Показывать развёрнутый список статей, вместо разделения экрана на заголовки и содержимое статей"
+msgstr "Показать развёрнутый список статей, вместо отдельных панелей"
 
 #: classes/pref/prefs.php:76
 #, fuzzy
@@ -1893,14 +1889,12 @@ msgid "Amount of articles to display at once"
 msgstr "Количество статей на странице"
 
 #: classes/pref/prefs.php:78
-#, fuzzy
 msgid "Default update interval"
-msgstr "Интервал обновления канала по умолчанию"
+msgstr "Интервал обновления по умолчанию"
 
 #: classes/pref/prefs.php:79
-#, fuzzy
 msgid "Mark sent articles as read"
-msgstr "Пометить все статьи как прочитанные?"
+msgstr "Пометить отправленные статьи как прочитанные"
 
 #: classes/pref/prefs.php:80
 #, fuzzy
@@ -1918,14 +1912,12 @@ msgid "Try to send around this time"
 msgstr "Попытаться посылать дайджесты в районе этого времени"
 
 #: classes/pref/prefs.php:81
-#, fuzzy
 msgid "Time in UTC"
-msgstr "Часовой пояс"
+msgstr "Время в UTC"
 
 #: classes/pref/prefs.php:82
-#, fuzzy
 msgid "Enable API"
-msgstr "Включить одноразовые пароли"
+msgstr "Включить API"
 
 #: classes/pref/prefs.php:82
 #, fuzzy
@@ -1933,18 +1925,16 @@ msgid "Allows accessing this account through the API"
 msgstr "Разрешить внешним клиентам доступ к данному аккаунту через API"
 
 #: classes/pref/prefs.php:83
-#, fuzzy
 msgid "Enable categories"
-msgstr "Включить категории каналов"
+msgstr "Включить категории"
 
 #: classes/pref/prefs.php:84
 msgid "Sort feeds by unread articles count"
 msgstr "Сортировать каналы по количеству непрочитанных статей"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "Maximum age of fresh articles"
-msgstr "Максимальный возраст свежих статей (в часах)"
+msgstr "Максимальный возраст свежих статей"
 
 #: classes/pref/prefs.php:85
 #, fuzzy
@@ -1952,13 +1942,12 @@ msgid "hours"
 msgstr "Каждые 4 часа"
 
 #: classes/pref/prefs.php:86
-#, fuzzy
 msgid "Hide read feeds"
-msgstr "Показать/скрыть прочитанные"
+msgstr "Скрыть прочитанные каналы"
 
 #: classes/pref/prefs.php:87
 msgid "Always show special feeds"
-msgstr ""
+msgstr "Всегда показывать специальные каналы"
 
 #: classes/pref/prefs.php:87
 #, fuzzy
@@ -1975,23 +1964,20 @@ msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.p
 msgstr "Используется синтаксис, аналогичный функции <a href='http://php.net/manual/function.date.php'>date()</a> в PHP."
 
 #: classes/pref/prefs.php:89
-#, fuzzy
 msgid "Automatically show next feed"
-msgstr "Показывать следующий канал при отметке как прочитанный"
+msgstr "Автоматически показывать следующий канал"
 
 #: classes/pref/prefs.php:89
-#, fuzzy
 msgid "After marking one as read"
-msgstr "Подтвердить отметку каналка как прочитанный"
+msgstr "После маркировки прочитанным"
 
 #: classes/pref/prefs.php:90
-#, fuzzy
 msgid "Purge articles older than"
-msgstr "Очистить непрочитанные статьи"
+msgstr "Очистить статьи старше чем"
 
 #: classes/pref/prefs.php:90
 msgid "<strong>days</strong> (0 disables)"
-msgstr ""
+msgstr "<strong>дней</strong> (0 - отключён)"
 
 #: classes/pref/prefs.php:91
 msgid "Purge unread articles"
@@ -2041,13 +2027,12 @@ msgid "Time zone"
 msgstr "Часовой пояс"
 
 #: classes/pref/prefs.php:101
-#, fuzzy
 msgid "Group by feed"
-msgstr "Лучшие 25 каналов"
+msgstr "Группировать по каналу"
 
 #: classes/pref/prefs.php:101
 msgid "Group multiple-feed output by originating feed"
-msgstr ""
+msgstr "Группировать многопоточный канал по исходному"
 
 #: classes/pref/prefs.php:102
 msgid "Language"
@@ -2078,15 +2063,13 @@ msgid "Personal data"
 msgstr "Личные данные"
 
 #: classes/pref/prefs.php:260
-#, fuzzy
 msgid "Full name:"
-msgstr "Полное имя"
+msgstr "Полное имя:"
 
 #: classes/pref/prefs.php:265
 #: classes/pref/users.php:94
-#, fuzzy
 msgid "E-mail:"
-msgstr "E-mail: "
+msgstr "Электронная почта:"
 
 #: classes/pref/prefs.php:273
 #, fuzzy
@@ -2127,18 +2110,16 @@ msgstr "Одноразовые пароли / Аутентификатор"
 
 #: classes/pref/prefs.php:392
 #: classes/pref/prefs.php:440
-#, fuzzy
 msgid "Your password:"
-msgstr "Подтверждение пароля"
+msgstr "Ваш пароль:"
 
 #: classes/pref/prefs.php:402
 msgid "Disable OTP"
 msgstr "Отключить одноразовый пароль"
 
 #: classes/pref/prefs.php:446
-#, fuzzy
 msgid "One time password:"
-msgstr "Неверный одноразовый пароль"
+msgstr "Одноразовый пароль:"
 
 #: classes/pref/prefs.php:453
 msgid "Enable OTP"
@@ -2158,9 +2139,8 @@ msgid "Customize"
 msgstr "Изменить пользовательские стили"
 
 #: classes/pref/prefs.php:614
-#, fuzzy
 msgid "More themes..."
-msgstr "Больше каналов..."
+msgstr "Больше тем…"
 
 #: classes/pref/prefs.php:675
 msgid "Register"
@@ -2200,7 +2180,7 @@ msgstr "Системные плагины"
 #: classes/pref/prefs.php:856
 #, php-format
 msgid "v%.2f, by %s"
-msgstr ""
+msgstr "v%.2f, by %s"
 
 #: classes/pref/prefs.php:818
 msgid "User plugins"
@@ -2224,9 +2204,10 @@ msgid "Incorrect password"
 msgstr "Неверный пароль"
 
 #: classes/pref/prefs.php:1005
-#, fuzzy
 msgid "You can override colors, fonts and layout of your currently selected theme with custom CSS declarations here."
-msgstr "Вы можете задавать свои цвета, шрифты и макет Вашей текущей схемы с помощью собственных CSS здесь. <a target=\"_blank\" class=\"visibleLink\" href=\"%s\">Этот файл</a> может использоваться в качестве основы."
+msgstr ""
+"Вы можете задавать свои цвета, шрифты и макет Вашей текущей схемы с помощью "
+"собственных указанных здесь CSS."
 
 #: classes/pref/prefs.php:1041
 msgid "Create profile"
@@ -2275,9 +2256,8 @@ msgid "Date"
 msgstr "Дата"
 
 #: classes/pref/system.php:85
-#, fuzzy
 msgid "PHP Information"
-msgstr "Применить обновления"
+msgstr "Информация о PHP"
 
 #: classes/pref/users.php:26
 msgid "Edit user"
@@ -2372,6 +2352,9 @@ msgstr "Поддерживаются следующие комиксы:"
 #: plugins/af_comics/init.php:71
 msgid "To subscribe to GoComics use the comic's regular web page as the feed URL (e.g. for the <em>Garfield</em> comic use <code>http://www.gocomics.com/garfield</code>)."
 msgstr ""
+"Чтобы подписаться на GoComics используйте URL веб страницы комикса (например "
+"для <em> Garfield </em> используйте <code> http://www.gocomics.com/"
+"garfield</code>)."
 
 #: plugins/af_comics/init.php:73
 msgid "Drop any updated filters into <code>filters.local</code> in plugin directory."
@@ -2415,7 +2398,7 @@ msgstr "Включить для всех каналов:"
 #: plugins/af_psql_trgm/init.php:207
 #: plugins/af_readability/init.php:101
 msgid "Currently enabled for (click to edit):"
-msgstr ""
+msgstr "Сейчас включён для (нажмите для изменения):"
 
 #: plugins/af_psql_trgm/init.php:224
 msgid "Similarity (pg_trgm)"
@@ -2436,11 +2419,12 @@ msgstr "Настройки Readability (af_readability)"
 #: plugins/af_readability/init.php:87
 msgid "Provide full-text services to core code (bookmarklets) and other plugins"
 msgstr ""
+"Предоставление полнотекстовых сервисов для основного кода (букмарклетов) и "
+"других плагинов"
 
 #: plugins/af_readability/init.php:118
-#, fuzzy
 msgid "Readability"
-msgstr "Readability"
+msgstr "Удобство чтения"
 
 #: plugins/af_readability/init.php:130
 msgid "Inline article content"
@@ -2682,6 +2666,9 @@ msgstr "Подписаться на канал"
 #: js/CommonDialogs.js:110
 msgid "Failed to parse output. This can indicate server timeout and/or network issues. Backend output was logged to browser console."
 msgstr ""
+"Не удалось проанализировать вывод. Это может указывать на тайм-аут сервера и/"
+"или проблемы с сетью. Выходные данные сервера были записаны в консоль "
+"браузера."
 
 #: js/CommonDialogs.js:125
 #, perl-format
@@ -2789,38 +2776,40 @@ msgstr "Найдены новые статьи, обновите канал дл
 #: js/Headlines.js:711
 msgid "Could not update headlines (invalid object received - see error console for details)"
 msgstr ""
+"Не удалось обновить заголовки (получен недопустимый объект - подробности см. "
+"в консоли ошибок)"
 
 #: js/Headlines.js:968
 #, perl-format
 msgid "Delete %d selected article in %s?"
 msgid_plural "Delete %d selected articles in %s?"
 msgstr[0] "Удалить %d выбранную статью в %s?"
-msgstr[1] "Удалить %d выбранных статьи(ей) в %s?"
-msgstr[2] "Удалить %d выбранных статьи(ей) в %s?"
+msgstr[1] "Удалить %d выбранные статьи в %s?"
+msgstr[2] "Удалить %d выбранных статей в %s?"
 
 #: js/Headlines.js:970
 #, perl-format
 msgid "Delete %d selected article?"
 msgid_plural "Delete %d selected articles?"
 msgstr[0] "Удалить %d выбранную статью?"
-msgstr[1] "Удалить %d выбранных статьи(ей)?"
-msgstr[2] "Удалить %d выбранных статьи(ей)?"
+msgstr[1] "Удалить %d выбранные статьи?"
+msgstr[2] "Удалить %d выбранных статей?"
 
 #: js/Headlines.js:1110
 #, perl-format
 msgid "Archive %d selected article in %s?"
 msgid_plural "Archive %d selected articles in %s?"
 msgstr[0] "Архивировать %d выбранную статью в %s?"
-msgstr[1] "Архивировать %d выбранных статьи(ей) в %s?"
-msgstr[2] "Архивировать %d выбранных статьи(ей) в %s?"
+msgstr[1] "Архивировать %d выбранные статьи в %s?"
+msgstr[2] "Архивировать %d выбранных статей в %s?"
 
 #: js/Headlines.js:1113
 #, perl-format
 msgid "Move %d archived article back?"
 msgid_plural "Move %d archived articles back?"
 msgstr[0] "Переместить %d архивированную статью назад?"
-msgstr[1] "Переместить %d архивированных статьи(ей) назад?"
-msgstr[2] "Переместить %d архивированных статьи(ей) назад?"
+msgstr[1] "Переместить %d архивированных статьи назад?"
+msgstr[2] "Переместить %d архивированных статей назад?"
 
 #: js/Headlines.js:1114
 msgid "Please note that unstarred articles might get purged on next feed update."
@@ -2831,8 +2820,8 @@ msgstr "Пожалуйста, учтите, что не отмеченные з�
 msgid "Mark %d selected article in %s as read?"
 msgid_plural "Mark %d selected articles in %s as read?"
 msgstr[0] "Отметить %d выбранную статью в %s как прочитанную?"
-msgstr[1] "Отметить %d выбранных(ые) статьи(ей) в %s как прочитанные?"
-msgstr[2] "Отметить %d выбранных(ые) статьи(ей) в %s как прочитанные?"
+msgstr[1] "Отметить %d выбранные статьи в %s как прочитанные?"
+msgstr[2] "Отметить %d выбранных статей в %s как прочитанные?"
 
 #: js/Headlines.js:1159
 msgid "No article is selected."
@@ -2847,8 +2836,8 @@ msgstr "Статей для отметки не найдено"
 msgid "Mark %d article as read?"
 msgid_plural "Mark %d articles as read?"
 msgstr[0] "Отметить %d статью как прочитанную?"
-msgstr[1] "Отметить %d статьи(ей) как прочитанные?"
-msgstr[2] "Отметить %d статьи(ей) как прочитанные?"
+msgstr[1] "Отметить %d статьи как прочитанные?"
+msgstr[2] "Отметить %d статей как прочитанные?"
 
 #: js/Headlines.js:1259
 msgid "Open original article"
@@ -3045,15 +3034,17 @@ msgstr "Помощь"
 #: js/AppBase.js:265
 msgid "<span onclick=\"App.explainError(1)\">Update daemon is not running.</span>"
 msgstr ""
+"<span onclick=\"App.explainError(1)\">Демон обновления не запущен.</span>"
 
 #: js/AppBase.js:278
 msgid "<span onclick=\"App.explainError(3)\">Update daemon is not updating feeds.</span>"
 msgstr ""
+"<span onclick=\"App.explainError(3)\">Демон обновления не обновляет "
+"каналы</span>"
 
 #: js/AppBase.js:453
-#, fuzzy
 msgid "Unhandled exception"
-msgstr "Фатальная Ошибка"
+msgstr "Необрабатываемое исключение"
 
 #: js/Article.js:236
 msgid "Edit article Tags"
@@ -3170,9 +3161,8 @@ msgid "Mark %w in %s older than 2 weeks as read?"
 msgstr "Отметить все статьи в %s старше 2 недель как прочитанные?"
 
 #: js/Feeds.js:403
-#, fuzzy
 msgid "Mark %w in %s as read?"
-msgstr "Отметить все статьи в %s как прочитанные?"
+msgstr "Отметить %w в %s как прочитанные?"
 
 #: js/Feeds.js:406
 msgid "search results"
@@ -3190,8 +3180,8 @@ msgstr "Отметить все статьи в %s как прочитанные
 msgid "%d article selected"
 msgid_plural "%d articles selected"
 msgstr[0] "%d статья выбрана"
-msgstr[1] "%d статьи(ей) выбрано"
-msgstr[2] "%d статьи(ей) выбрано"
+msgstr[1] "%d статьи выбрано"
+msgstr[2] "%d статей выбрано"
 
 #: js/PrefFeedTree.js:141
 msgid "Removing category..."
