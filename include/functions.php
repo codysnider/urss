@@ -1121,6 +1121,8 @@
 			"*(40)|Shift+Down" => "article_scroll_down",
 			"^(38)|Ctrl+Up" => "prev_article_noscroll",
 			"^(40)|Ctrl+Down" => "next_article_noscroll",
+			"(33)|Page Up" => "article_page_up",
+			"(34)|Page Down" => "article_page_down",
 			"/" => "search_dialog",
 			"s" => "toggle_mark",
 			"S" => "toggle_publ",
