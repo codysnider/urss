@@ -314,7 +314,7 @@ define(["dojo/_base/declare"], function (declare) {
 			else
 				return 0;
 		},
-		scrollPages: function (offset) {
+		scrollByPages: function (offset) {
 			if (!App.isCombinedMode()) {
 				const ci = $("content-insert");
 				if (ci) {
