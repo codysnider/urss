@@ -641,6 +641,7 @@ body.ttrss_main #headlines-frame {
   -webkit-overflow-scrolling: touch;
   -webkit-transform: translateZ(0);
   -webkit-backface-visibility: hidden;
+  scroll-behavior: smooth;
 }
 body.ttrss_main #headlines-frame div.feed-title {
   border: 0px solid #b87d2c;
