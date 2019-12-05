@@ -751,7 +751,6 @@ body.ttrss_main {
 		-webkit-overflow-scrolling : touch;
 		-webkit-transform: translateZ(0);
 		-webkit-backface-visibility: hidden;
-		scroll-behavior: smooth;
 
 		div.feed-title {
 			border: 0px solid @color-link;
@@ -771,6 +770,10 @@ body.ttrss_main {
 		div.feed-title a:hover {
 			color: @color-link;
 		}
+	}
+
+	#headlines-frame.smooth-scroll {
+		scroll-behavior: smooth;
 	}
 
 	#toolbar-frame_splitter {
@@ -872,6 +875,7 @@ body.ttrss_main {
 		line-height: 1.5;
 		overflow : auto;
 		-webkit-overflow-scrolling : touch;
+		scroll-behavior: smooth;
 	}
 
 	img.feed-icon, img.icon {

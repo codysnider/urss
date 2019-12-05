@@ -640,7 +640,6 @@ body.ttrss_main #headlines-frame {
   -webkit-overflow-scrolling: touch;
   -webkit-transform: translateZ(0);
   -webkit-backface-visibility: hidden;
-  scroll-behavior: smooth;
 }
 body.ttrss_main #headlines-frame div.feed-title {
   border: 0px solid #257aa7;
@@ -656,6 +655,9 @@ body.ttrss_main #headlines-frame div.feed-title a {
 }
 body.ttrss_main #headlines-frame div.feed-title a:hover {
   color: #257aa7;
+}
+body.ttrss_main #headlines-frame.smooth-scroll {
+  scroll-behavior: smooth;
 }
 body.ttrss_main #toolbar-frame_splitter {
   display: none;
@@ -743,6 +745,7 @@ body.ttrss_main #content-insert {
   line-height: 1.5;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 body.ttrss_main img.feed-icon,
 body.ttrss_main img.icon {

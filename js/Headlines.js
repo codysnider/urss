@@ -592,7 +592,9 @@ define(["dojo/_base/declare"], function (declare) {
 					Article.setActive(0);
 
 					try {
+						$("headlines-frame").removeClassName("smooth-scroll");
 						$("headlines-frame").scrollTop = 0;
+						$("headlines-frame").addClassName("smooth-scroll");
 
 						Element.hide("floatingTitle");
 						$("floatingTitle").setAttribute("data-article-id", 0);
