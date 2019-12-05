@@ -560,7 +560,6 @@
 				session_regenerate_id(true);
 
 				$_SESSION["uid"] = $user_id;
-				$_SESSION["version"] = VERSION_STATIC;
 				$_SESSION["auth_module"] = $auth_module;
 
 				$pdo = DB::pdo();
