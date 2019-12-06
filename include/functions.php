@@ -1584,7 +1584,7 @@
 		$value = get_pref('USER_STYLESHEET');
 
 		if ($value) {
-			print "<style type=\"text/css\">";
+			print "<style type='text/css' id='user_css_style'>";
 			print str_replace("<br/>", "\n", $value);
 			print "</style>";
 		}

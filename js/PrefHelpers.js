@@ -150,6 +150,12 @@ define(["dojo/_base/declare"], function (declare) {
 				id: "cssEditDlg",
 				title: __("Customize stylesheet"),
 				style: "width: 600px",
+				apply: function() {
+					xhrPost("backend.php", this.attr('value'), () => {
+						new Effect.Appear("css_edit_apply_msg");
+						$("user_css_style").innerText = this.attr('value');
+					});
+				},
 				execute: function () {
 					Notify.progress('Saving data...', true);
 
