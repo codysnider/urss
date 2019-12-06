@@ -202,10 +202,13 @@ function _color_unpack($hex, $normalize = false) {
 
   if (strpos($hex, '#') !== 0)
     $hex = _resolve_htmlcolor($hex);
+  else
+  	$hex = substr($hex, 1);
 
   if (strlen($hex) == 4) {
     $hex = $hex[1] . $hex[1] . $hex[2] . $hex[2] . $hex[3] . $hex[3];
-  } $c = hexdec($hex);
+  }
+  $c = hexdec($hex);
   for ($i = 16; $i >= 0; $i -= 8) {
     $out[] = (($c >> $i) & 0xFF) / ($normalize ? 255 : 1);
   } return $out;

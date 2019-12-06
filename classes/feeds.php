@@ -1924,7 +1924,7 @@ class Feeds extends Handler_Protected {
         $sum = 0;
 
         for ($i = 0; $i < strlen($name); $i++) {
-            $sum += ord($name{$i});
+            $sum += ord($name[$i]);
         }
 
         $sum %= count($colormap);
