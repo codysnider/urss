@@ -118,6 +118,11 @@ class Pref_Prefs extends Handler_Protected {
 
 	function changepassword() {
 
+		if (defined('_TTRSS_DEMO_INSTANCE')) {
+			print "ERROR: ".format_error("Disabled in demo version.");
+			return;
+		}
+
 		$old_pw = clean($_POST["old_password"]);
 		$new_pw = clean($_POST["new_password"]);
 		$con_pw = clean($_POST["confirm_password"]);
