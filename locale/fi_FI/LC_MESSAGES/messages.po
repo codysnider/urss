@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: tt-rss 1.7.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-15 13:47+0300\n"
-"PO-Revision-Date: 2019-11-23 18:58+0000\n"
+"PO-Revision-Date: 2019-12-10 18:38+0000\n"
 "Last-Translator: Nikolay Korotkiy <sikmir@gmail.com>\n"
 "Language-Team: Finnish <https://weblate.tt-rss.org/projects/tt-rss/messages/"
 "fi/>\n"
@@ -486,12 +486,12 @@ msgstr "Luokittelemattomat"
 
 #: include/functions.php:83
 msgid "Detect automatically"
-msgstr ""
+msgstr "Tunnista automaattisesti"
 
 #: include/functions.php:817
 #, php-format
 msgid "%d min"
-msgstr ""
+msgstr "%d min"
 
 #: include/functions.php:1013
 msgid "Navigation"
@@ -735,7 +735,7 @@ msgstr "Näytä ohjeikkuna"
 
 #: include/functions.php:1775
 msgid "There is no error, the file uploaded with success"
-msgstr ""
+msgstr "Ei ole virhettä, tiedosto on ladattu onnistuneesti"
 
 #: include/functions.php:1776
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
@@ -814,9 +814,8 @@ msgid "Session failed to validate (schema version changed)"
 msgstr "Istunnon validointi epäonnistui (tietokantakaava muuttunut)"
 
 #: include/sessions.php:53
-#, fuzzy
 msgid "Session failed to validate (UA changed)."
-msgstr "Session validointi epäonnistui (salasana vaihtunut)"
+msgstr "Session validointi epäonnistui (UA vaihtunut)."
 
 #: include/sessions.php:67
 msgid "Session failed to validate (password changed)"
@@ -956,9 +955,8 @@ msgid "You are using default tt-rss password. Please change it in the Preference
 msgstr ""
 
 #: classes/dlg.php:200
-#, fuzzy
 msgid "Open Preferences"
-msgstr "Asetukset"
+msgstr "Avaa asetukset"
 
 #: classes/feeds.php:34
 #: classes/feeds.php:35
@@ -975,7 +973,6 @@ msgid "Last updated: %s"
 msgstr "Päivitetty viimeksi: %s"
 
 #: classes/feeds.php:60
-#, fuzzy
 msgid "Select..."
 msgstr "Valitse…"
 
@@ -1058,9 +1055,8 @@ msgid "Feed not found."
 msgstr "Syötettä ei löydy."
 
 #: classes/feeds.php:209
-#, fuzzy
 msgid "Never"
-msgstr "Älä poista koskaan"
+msgstr "Ei koskaan"
 
 #: classes/feeds.php:260
 #: classes/feeds.php:1258
@@ -1267,9 +1263,8 @@ msgid "Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL."
 msgstr "Syötettä <b>%s</b> ei voitu tilata.<br>Osoitetta ei voi ladata."
 
 #: classes/handler/public.php:793
-#, fuzzy
 msgid "Multiple feed URLs found:"
-msgstr "Useita syöteosoitteita löytyi."
+msgstr "Useita syöteosoitteita löytyi:"
 
 #: classes/handler/public.php:806
 msgid "Subscribe to selected feed"
@@ -1309,7 +1304,7 @@ msgstr "Takaisin"
 
 #: classes/handler/public.php:1010
 msgid "[tt-rss] Password reset request"
-msgstr ""
+msgstr "[tt-rss] Salasanan vaihtopyyntö"
 
 #: classes/handler/public.php:1030
 msgid "Sorry, login and email combination not found."
@@ -1336,7 +1331,7 @@ msgstr ""
 
 #: classes/handler/public.php:1123
 msgid "Try again"
-msgstr ""
+msgstr "Yritä uudelleen"
 
 #: classes/handler/public.php:1129
 #, fuzzy
@@ -1391,9 +1386,9 @@ msgid "Setting preference key %s to %s"
 msgstr ""
 
 #: classes/opml.php:398
-#, fuzzy, php-format
+#, php-format
 msgid "Adding filter %s..."
-msgstr "Lisätään suodatin..."
+msgstr "Lisätään suodatin %s…"
 
 #: classes/opml.php:536
 #, php-format
@@ -1466,9 +1461,8 @@ msgstr "Päivitä"
 
 #: classes/pref/feeds.php:621
 #: classes/pref/feeds.php:859
-#, fuzzy
 msgid "Interval:"
-msgstr "Käyttöliittymä"
+msgstr "Aikaväli:"
 
 #: classes/pref/feeds.php:634
 #: classes/pref/feeds.php:874
@@ -1618,9 +1612,8 @@ msgid "Include settings"
 msgstr "Sisältäen asetukset"
 
 #: classes/pref/feeds.php:1349
-#, fuzzy
 msgid "Published OPML"
-msgstr "Julkiset"
+msgstr "Julkaistu OPML"
 
 #: classes/pref/feeds.php:1351
 msgid "Your OPML can be published publicly and can be subscribed by anyone who knows the URL below."
@@ -1951,9 +1944,8 @@ msgid "Maximum age of fresh articles"
 msgstr "Enimmäisikä tuoreille artikkeleille (tunneissa)"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "hours"
-msgstr "4 tunnin välein"
+msgstr "tuntia"
 
 #: classes/pref/prefs.php:86
 #, fuzzy
@@ -2090,9 +2082,8 @@ msgid "E-mail:"
 msgstr "Sähköposti:"
 
 #: classes/pref/prefs.php:273
-#, fuzzy
 msgid "Access level:"
-msgstr "Käyttäjäoikeudet: "
+msgstr "Käyttöoikeustaso:"
 
 #: classes/pref/prefs.php:284
 msgid "Save data"
@@ -2166,9 +2157,9 @@ msgid "Clear"
 msgstr "Tyhjennä"
 
 #: classes/pref/prefs.php:690
-#, fuzzy, php-format
+#, php-format
 msgid "Current server time: %s"
-msgstr "Palvelimen aika: %s (UTC)"
+msgstr "Palvelimen aika: %s"
 
 #: classes/pref/prefs.php:719
 msgid "Save configuration"
@@ -2246,7 +2237,7 @@ msgstr "Käyttäjäoikeutesi eivät ole riittävät tämän alasivun avaamiseen.
 
 #: classes/pref/system.php:30
 msgid "Event Log"
-msgstr ""
+msgstr "Tapahtumaloki"
 
 #: classes/pref/system.php:41
 msgid "Refresh"
@@ -2269,14 +2260,12 @@ msgid "Date"
 msgstr "Päiväys"
 
 #: classes/pref/system.php:85
-#, fuzzy
 msgid "PHP Information"
-msgstr "Suorita toiminto"
+msgstr "Tietoja PHP:stä"
 
 #: classes/pref/users.php:26
-#, fuzzy
 msgid "Edit user"
-msgstr "Muokkaa sääntöä"
+msgstr "Muokkaa käyttäjää"
 
 #: classes/pref/users.php:68
 msgid "Access level: "
@@ -2300,9 +2289,8 @@ msgid "Subscribed feeds count"
 msgstr "Tilattujen syötteiden määrä"
 
 #: classes/pref/users.php:158
-#, fuzzy
 msgid "Stored articles"
-msgstr "Tähdelliset artikkelit"
+msgstr "Tallennetut artikkelit"
 
 #: classes/pref/users.php:162
 #: classes/pref/users.php:389
@@ -2319,14 +2307,14 @@ msgid "Added user %s with password %s"
 msgstr "Käyttäjätunnus <b>%s</b> lisätty salasanalla <b>%s</b>"
 
 #: classes/pref/users.php:266
-#, fuzzy, php-format
+#, php-format
 msgid "Could not create user %s"
-msgstr "Käyttäjää <b>%s</b> ei voitu luoda"
+msgstr "Käyttäjää %s ei voitu luoda"
 
 #: classes/pref/users.php:270
-#, fuzzy, php-format
+#, php-format
 msgid "User %s already exists."
-msgstr "Käyttäjätunnus <b>%s</b> on jo olemassa."
+msgstr "Käyttäjätunnus %s on jo olemassa."
 
 #: classes/pref/users.php:295
 #, fuzzy, php-format
@@ -2391,7 +2379,7 @@ msgstr "Merkitäänkö samankaltaiset artikkelit luetuksi?"
 #: plugins/af_psql_trgm/init.php:166
 #: plugins/af_readability/init.php:58
 msgid "Global settings"
-msgstr ""
+msgstr "Yleiset asetukset"
 
 #: plugins/af_psql_trgm/init.php:172
 msgid "Minimum similarity:"
@@ -2417,12 +2405,11 @@ msgstr ""
 
 #: plugins/af_psql_trgm/init.php:224
 msgid "Similarity (pg_trgm)"
-msgstr ""
+msgstr "Samankaltaisuus (pg_trgm)"
 
 #: plugins/af_readability/init.php:25
-#, fuzzy
 msgid "Data saved."
-msgstr "Tiedot talletettu (%s, %d)"
+msgstr "Tiedot tallennettu."
 
 #: plugins/af_readability/init.php:45
 #, fuzzy
@@ -2460,9 +2447,8 @@ msgstr ""
 
 #: plugins/af_redditimgur/init.php:82
 #: plugins/af_zz_imgproxy/init.php:257
-#, fuzzy
 msgid "Configuration saved"
-msgstr "Asetukset tallennettiin."
+msgstr "Asetukset tallennettiin"
 
 #: plugins/af_zz_imgproxy/init.php:213
 msgid "Image proxy settings (af_zz_imgproxy)"
@@ -2579,7 +2565,7 @@ msgstr ""
 
 #: plugins/nsfw/init.php:53
 msgid "NSFW Plugin"
-msgstr ""
+msgstr "NSFW lisäosa"
 
 #: plugins/nsfw/init.php:80
 msgid "Tags to consider NSFW (comma-separated)"
@@ -2625,7 +2611,7 @@ msgstr "Virheet selitettynä"
 
 #: js/AppBase.js:403
 msgid "Fatal error"
-msgstr ""
+msgstr "Kohtalokas virhe"
 
 #: js/Article.js:33
 msgid "Please enter new score for selected articles:"
@@ -2655,9 +2641,8 @@ msgid "Article URL:"
 msgstr "Artikkelin osoite:"
 
 #: js/Article.js:152
-#, fuzzy
 msgid "comments"
-msgstr "Litteet"
+msgstr "kommentit"
 
 #: js/Article.js:155
 msgid "comment"
@@ -2711,7 +2696,7 @@ msgstr "Osoitteen %s lataaminen epäonnistui"
 #: js/CommonDialogs.js:166
 #, perl-format
 msgid "XML validation failed: %s"
-msgstr ""
+msgstr "XML-tarkistus epäonnistui: %s"
 
 #: js/CommonDialogs.js:169
 msgid "You are already subscribed to this feed."
@@ -2732,9 +2717,8 @@ msgstr "Poistetaanko valitut syötteet?"
 #: js/PrefFeedTree.js:230
 #: js/PrefFeedTree.js:246
 #: js/PrefFeedTree.js:398
-#, fuzzy
 msgid "No feeds selected."
-msgstr "Yhtään syötettä ei ole valittuna"
+msgstr "Yhtään syötettä ei ole valittuna."
 
 #: js/CommonDialogs.js:248
 msgid "More Feeds"
@@ -3005,16 +2989,15 @@ msgstr "Valitse ensin OPML-tiedosto."
 
 #: js/PrefHelpers.js:180
 msgid "OPML Import"
-msgstr ""
+msgstr "OPML-tuonti"
 
 #: js/PrefHelpers.js:202
 msgid "Replace current OPML publishing address with a new one?"
 msgstr "Korvataanko nykyinen OPML-julkaisuosoite uudella?"
 
 #: js/common.js:215
-#, fuzzy
 msgid "Click to close"
-msgstr "Napsauta muokataksesi"
+msgstr "Sulje napsauttamalla"
 
 #: plugins/af_psql_trgm/init.js:10
 msgid "Related articles"
@@ -3059,7 +3042,7 @@ msgstr ""
 
 #: js/AppBase.js:453
 msgid "Unhandled exception"
-msgstr ""
+msgstr "Käsittelemätön poikkeus"
 
 #: js/Article.js:236
 msgid "Edit article Tags"
@@ -3181,9 +3164,8 @@ msgid "Mark %w in %s older than 2 weeks as read?"
 msgstr "Merkitäänkö kaikki kahta viikkoa vanhemmat artikkelit syötteessä %s luetuiksi?"
 
 #: js/Feeds.js:403
-#, fuzzy
 msgid "Mark %w in %s as read?"
-msgstr "Merkitäänkö kaikki artikkelit syötteessä %s luetuiksi?"
+msgstr "Merkitäänkö %w syötteessä %s luetuiksi?"
 
 #: js/Feeds.js:406
 msgid "search results"
@@ -3262,9 +3244,8 @@ msgstr "Palautetaanko oletusväri valituille tunnisteille?"
 
 #: js/PrefLabelTree.js:139
 #: js/PrefLabelTree.js:159
-#, fuzzy
 msgid "No labels selected."
-msgstr "Yhtään tunnistetta ei ole valittuna"
+msgstr "Yhtään tunnistetta ei ole valittuna."
 
 #: js/PrefLabelTree.js:146
 msgid "Remove selected labels?"
