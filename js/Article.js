@@ -338,7 +338,7 @@ define(["dojo/_base/declare"], function (declare) {
 				elem = $("headlines-frame");
 			}
 
-			if (event.repeat) {
+			if (event && event.repeat) {
 				elem.addClassName("forbid-smooth-scroll");
 				window.clearTimeout(this._scroll_reset_timeout);
 

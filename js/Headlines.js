@@ -806,7 +806,13 @@ define(["dojo/_base/declare"], function (declare) {
 			if (row)
 				row.toggleClassName("published");
 		},
-		move: function (mode, noscroll, noexpand) {
+		move: function (mode, params) {
+			params = params || {};
+
+			const noscroll = params.noscroll || false;
+			const noexpand = params.noexpand || false;
+			const event = params.event;
+
 			const rows = Headlines.getLoaded();
 
 			let prev_id = false;
@@ -849,7 +855,7 @@ define(["dojo/_base/declare"], function (declare) {
 						if (!noscroll && article && article.offsetTop + article.offsetHeight >
 							ctr.scrollTop + ctr.offsetHeight) {
 
-							Article.scroll(ctr.offsetHeight / 4);
+							Article.scroll(ctr.offsetHeight / 4, event);
 
 						} else if (next_id) {
 							Article.setActive(next_id);
@@ -872,10 +878,10 @@ define(["dojo/_base/declare"], function (declare) {
 						const ctr = $("headlines-frame");
 
 						if (!noscroll && article && article.offsetTop < ctr.scrollTop) {
-							Article.scroll(-ctr.offsetHeight / 3);
+							Article.scroll(-ctr.offsetHeight / 3, event);
 						} else if (!noscroll && prev_article &&
 							prev_article.offsetTop < ctr.scrollTop) {
-							Article.scroll(-ctr.offsetHeight / 4);
+							Article.scroll(-ctr.offsetHeight / 4, event);
 						} else if (prev_id) {
 							Article.setActive(prev_id);
 							Article.cdmScrollToId(prev_id, noscroll);
@@ -1387,7 +1393,7 @@ define(["dojo/_base/declare"], function (declare) {
 		scrollByPages: function (offset, event) {
 			const elem = $("headlines-frame");
 
-			if (event.repeat) {
+			if (event && event.repeat) {
 				elem.addClassName("forbid-smooth-scroll");
 				window.clearTimeout(this._scroll_reset_timeout);
 
