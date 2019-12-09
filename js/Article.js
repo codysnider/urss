@@ -318,12 +318,12 @@ define(["dojo/_base/declare"], function (declare) {
 			if (!App.isCombinedMode()) {
 				const ci = $("content-insert");
 				if (ci) {
-					ci.scrollTop += ci.offsetHeight * offset * 0.9;
+					ci.scrollTop += ci.offsetHeight * offset * 0.99;
 				}
 			} else {
 				const hi = $("headlines-frame");
 				if (hi) {
-					hi.scrollTop += hi.offsetHeight * offset * 0.9;
+					hi.scrollTop += hi.offsetHeight * offset * 0.99;
 				}
 
 			}

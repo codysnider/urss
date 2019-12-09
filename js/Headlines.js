@@ -1386,7 +1386,7 @@ define(["dojo/_base/declare"], function (declare) {
 		scrollByPages: function (offset) {
 			const hi = $("headlines-frame");
 			if (hi) {
-				hi.scrollTop += hi.offsetHeight * offset * 0.9;
+				hi.scrollTop += hi.offsetHeight * offset * 0.99;
 			}
 		},
 		initHeadlinesMenu: function () {
