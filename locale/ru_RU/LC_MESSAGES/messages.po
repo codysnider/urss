@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: tt-rss git\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-15 13:47+0300\n"
-"PO-Revision-Date: 2019-11-25 20:58+0000\n"
-"Last-Translator: progit <pash.vld@gmail.com>\n"
+"PO-Revision-Date: 2019-12-10 18:38+0000\n"
+"Last-Translator: Nikolay Korotkiy <sikmir@gmail.com>\n"
 "Language-Team: Russian <https://weblate.tt-rss.org/projects/tt-rss/messages/"
 "ru/>\n"
 "Language: ru_RU\n"
@@ -1336,14 +1336,15 @@ msgid "Try again"
 msgstr "Попробуйте ещё раз"
 
 #: classes/handler/public.php:1129
-#, fuzzy
 msgid "Completed."
-msgstr "Загрузка завершена."
+msgstr "Завершено."
 
 #: classes/handler/public.php:1146
-#, fuzzy, php-format
+#, php-format
 msgid "Tiny Tiny RSS database needs update to the latest version (%d to %d)."
-msgstr "Вашей базе данных Tiny Tiny RSS необходимо обновиться до последней версии  (<b>%d</b> до <b>%d</b>)."
+msgstr ""
+"Базе данных Tiny Tiny RSS потребуется обновление до последней версии  (с "
+"<b>%d</b> до <b>%d</b>)."
 
 #: classes/handler/public.php:1158
 msgid "Perform updates"
@@ -1660,9 +1661,8 @@ msgid "Unsubscribe from selected feeds"
 msgstr "Отписаться от выбранных каналов"
 
 #: classes/pref/feeds.php:1655
-#, fuzzy
 msgid "One valid feed per line (no detection is done)"
-msgstr "Впишите по одному действительному RSS каналу на строчку (валидность канала не проверяется)"
+msgstr "Один действительный RSS канал на строчку (проверка не производится)"
 
 #: classes/pref/feeds.php:1686
 msgid "Feeds require authentication."
@@ -1792,9 +1792,8 @@ msgid "matches any rule"
 msgstr "удовлетворяет любому правилу"
 
 #: classes/pref/filters.php:1157
-#, fuzzy
 msgid "inverse"
-msgstr "(Инвертирован)"
+msgstr "обратный"
 
 #: classes/pref/filters.php:1160
 #, php-format
@@ -1859,9 +1858,8 @@ msgid "Used for full-text search"
 msgstr "Используется для полнотекстового поиска"
 
 #: classes/pref/prefs.php:73
-#, fuzzy
 msgid "Mark read on scroll"
-msgstr "Пометить все статьи как прочитанные?"
+msgstr "Обозначать статьи прочитанными при прокрутке"
 
 #: classes/pref/prefs.php:73
 msgid "Mark articles as read as you scroll past them"
@@ -1880,9 +1878,8 @@ msgid "Show flat list of articles instead of separate panels"
 msgstr "Показать развёрнутый список статей, вместо отдельных панелей"
 
 #: classes/pref/prefs.php:76
-#, fuzzy
 msgid "Confirm marking feeds as read"
-msgstr "Подтвердить отметку каналка как прочитанный"
+msgstr "Подтверждать обозначение канала прочитанным"
 
 #: classes/pref/prefs.php:77
 msgid "Amount of articles to display at once"
@@ -1897,17 +1894,16 @@ msgid "Mark sent articles as read"
 msgstr "Пометить отправленные статьи как прочитанные"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Enable digest"
 msgstr "Включить дайджест по электронной почте"
 
 #: classes/pref/prefs.php:80
-#, fuzzy
 msgid "Send daily digest of new (and unread) headlines to your e-mail address"
-msgstr "Эта опция разрешает отправку ежедневного обзора новых (и непрочитанных) заголовков на ваш адрес электронной почты"
+msgstr ""
+"Отправлять дайджест новых (и непрочитанных) заголовков на вашу электронную "
+"почту"
 
 #: classes/pref/prefs.php:81
-#, fuzzy
 msgid "Try to send around this time"
 msgstr "Попытаться посылать дайджесты в районе этого времени"
 
@@ -1920,9 +1916,8 @@ msgid "Enable API"
 msgstr "Включить API"
 
 #: classes/pref/prefs.php:82
-#, fuzzy
 msgid "Allows accessing this account through the API"
-msgstr "Разрешить внешним клиентам доступ к данному аккаунту через API"
+msgstr "Позволяет иметь доступ к этой учетной записи через API"
 
 #: classes/pref/prefs.php:83
 msgid "Enable categories"
@@ -1937,9 +1932,8 @@ msgid "Maximum age of fresh articles"
 msgstr "Максимальный возраст свежих статей"
 
 #: classes/pref/prefs.php:85
-#, fuzzy
 msgid "hours"
-msgstr "Каждые 4 часа"
+msgstr "часа(ов)"
 
 #: classes/pref/prefs.php:86
 msgid "Hide read feeds"
@@ -1950,18 +1944,18 @@ msgid "Always show special feeds"
 msgstr "Всегда показывать специальные каналы"
 
 #: classes/pref/prefs.php:87
-#, fuzzy
 msgid "While hiding read feeds"
-msgstr "Показывать специальные каналы, когда скрываются прочитанные каналы"
+msgstr "Когда скрываются прочитанные каналы"
 
 #: classes/pref/prefs.php:88
 msgid "Long date format"
 msgstr "Длинный формат даты"
 
 #: classes/pref/prefs.php:88
-#, fuzzy
 msgid "Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function."
-msgstr "Используется синтаксис, аналогичный функции <a href='http://php.net/manual/function.date.php'>date()</a> в PHP."
+msgstr ""
+"Используется синтаксис, аналогичный функции <a href='http://php.net/manual/"
+"function.date.php'>date()</a> в PHP."
 
 #: classes/pref/prefs.php:89
 msgid "Automatically show next feed"
@@ -1992,9 +1986,8 @@ msgid "Short date format"
 msgstr "Короткий формат даты"
 
 #: classes/pref/prefs.php:94
-#, fuzzy
 msgid "Show content preview in headlines"
-msgstr "Показать предпросмотр содержимого в списке заголовков"
+msgstr "Показывать предпросмотр содержимого в списке заголовков"
 
 #: classes/pref/prefs.php:95
 msgid "Sort headlines by feed date"
@@ -2005,9 +1998,8 @@ msgid "Use feed-specified date to sort headlines instead of local import date."
 msgstr "Использовать заданную для канала дату для сортировки заголовков вместо даты импорта."
 
 #: classes/pref/prefs.php:96
-#, fuzzy
 msgid "SSL client certificate"
-msgstr "Вход с помощью SSL сертификата"
+msgstr "Клиентский SSL сертификат"
 
 #: classes/pref/prefs.php:98
 msgid "Strip unsafe tags from articles"
@@ -2072,9 +2064,8 @@ msgid "E-mail:"
 msgstr "Электронная почта:"
 
 #: classes/pref/prefs.php:273
-#, fuzzy
 msgid "Access level:"
-msgstr "Уровень доступа: "
+msgstr "Уровень доступа:"
 
 #: classes/pref/prefs.php:284
 msgid "Save data"
@@ -2085,20 +2076,17 @@ msgid "Changing your current password will disable OTP."
 msgstr "Изменение текущего пароля приведет к отключению OTP."
 
 #: classes/pref/prefs.php:337
-#, fuzzy
 msgid "Old password:"
-msgstr "Старый пароль"
+msgstr "Старый пароль:"
 
 #: classes/pref/prefs.php:342
 #: classes/pref/users.php:82
-#, fuzzy
 msgid "New password:"
-msgstr "Новый пароль"
+msgstr "Новый пароль:"
 
 #: classes/pref/prefs.php:347
-#, fuzzy
 msgid "Confirm password:"
-msgstr "Подтверждение пароля"
+msgstr "Подтверждение пароля:"
 
 #: classes/pref/prefs.php:357
 msgid "Change password"
@@ -2130,9 +2118,8 @@ msgid "Some preferences are only available in default profile."
 msgstr "Некоторые настройки доступны только в профиле по умолчанию."
 
 #: classes/pref/prefs.php:601
-#, fuzzy
 msgid "default"
-msgstr "По умолчанию"
+msgstr "по умолчанию"
 
 #: classes/pref/prefs.php:611
 msgid "Customize"
@@ -2152,9 +2139,9 @@ msgid "Clear"
 msgstr "Очистить"
 
 #: classes/pref/prefs.php:690
-#, fuzzy, php-format
+#, php-format
 msgid "Current server time: %s"
-msgstr "Текущее время на сервере: %s (UTC)"
+msgstr "Текущее время на сервере: %s"
 
 #: classes/pref/prefs.php:719
 msgid "Save configuration"
@@ -2435,9 +2422,8 @@ msgid "Reddit content settings (af_redditimgur)"
 msgstr "Настройки контента с Reddit (af_redditimgur)"
 
 #: plugins/af_redditimgur/init.php:60
-#, fuzzy
 msgid "Extract missing content using Readability (requires af_readability)"
-msgstr "Извлекать контент с помощью Readability"
+msgstr "Извлекать содержимое с помощью Readability (требует af_readability)"
 
 #: plugins/af_redditimgur/init.php:66
 msgid "Enable additional duplicate checking"
@@ -2592,9 +2578,8 @@ msgid "Unshare article"
 msgstr "Убрать статью из общего доступа"
 
 #: plugins/toggle_sidebar/init.php:27
-#, fuzzy
 msgid "Toggle sidebar"
-msgstr "Отметить / снять отметку"
+msgstr "Переключить боковую панель"
 
 #: plugins/vf_shared/init.php:17
 #: plugins/vf_shared/init.php:73
@@ -2606,9 +2591,8 @@ msgid "Error explained"
 msgstr "Ошибка разъяснена"
 
 #: js/AppBase.js:403
-#, fuzzy
 msgid "Fatal error"
-msgstr "Фатальная Ошибка"
+msgstr "Фатальная ошибка"
 
 #: js/Article.js:33
 msgid "Please enter new score for selected articles:"
@@ -3129,9 +3113,8 @@ msgid "Create Filter"
 msgstr "Создать фильтр"
 
 #: js/FeedTree.js:71
-#, fuzzy
 msgid "Debug feed"
-msgstr "Отлаживать обновление канала"
+msgstr "Отладка канала"
 
 #: js/FeedTree.js:99
 msgid "(Un)collapse"
@@ -3146,19 +3129,16 @@ msgid "Marking all feeds as read..."
 msgstr "Помечаю все каналы как прочитанные..."
 
 #: js/Feeds.js:394
-#, fuzzy
 msgid "Mark %w in %s older than 1 day as read?"
-msgstr "Отметить все статьи в %s старше 1 дня как прочитанные?"
+msgstr "Отметить %w в %s старше 1 дня как прочитанные?"
 
 #: js/Feeds.js:397
-#, fuzzy
 msgid "Mark %w in %s older than 1 week as read?"
-msgstr "Отметить все статьи в %s старше 1 недели как прочитанные?"
+msgstr "Отметить %w в %s старше 1 недели как прочитанные?"
 
 #: js/Feeds.js:400
-#, fuzzy
 msgid "Mark %w in %s older than 2 weeks as read?"
-msgstr "Отметить все статьи в %s старше 2 недель как прочитанные?"
+msgstr "Отметить %w в %s старше 2 недель как прочитанные?"
 
 #: js/Feeds.js:403
 msgid "Mark %w in %s as read?"
