@@ -213,7 +213,7 @@ require(["dojo/_base/kernel",
 						const action_func = this.hotkey_actions[action_name];
 
 						if (action_func != null) {
-							action_func();
+							action_func(event);
 							event.stopPropagation();
 							return false;
 						}
@@ -324,23 +324,23 @@ require(["dojo/_base/kernel",
 					this.hotkey_actions["catchup_above"] = function () {
 						Headlines.catchupRelativeTo(0);
 					};
-					this.hotkey_actions["article_scroll_down"] = function () {
-						Article.scroll(40);
+					this.hotkey_actions["article_scroll_down"] = function (event) {
+						Article.scroll(80, event);
 					};
-					this.hotkey_actions["article_scroll_up"] = function () {
-						Article.scroll(-40);
+					this.hotkey_actions["article_scroll_up"] = function (event) {
+						Article.scroll(-80, event);
 					};
-					this.hotkey_actions["next_article_page"] = function () {
-						Headlines.scrollByPages(1);
+					this.hotkey_actions["next_article_page"] = function (event) {
+						Headlines.scrollByPages(1, event);
 					};
-					this.hotkey_actions["prev_article_page"] = function () {
-						Headlines.scrollByPages(-1);
+					this.hotkey_actions["prev_article_page"] = function (event) {
+						Headlines.scrollByPages(-1, event);
 					};
-					this.hotkey_actions["article_page_down"] = function () {
-						Article.scrollByPages(1);
+					this.hotkey_actions["article_page_down"] = function (event) {
+						Article.scrollByPages(1, event);
 					};
-					this.hotkey_actions["article_page_up"] = function () {
-						Article.scrollByPages(-1);
+					this.hotkey_actions["article_page_up"] = function (event) {
+						Article.scrollByPages(-1, event);
 					};
 					this.hotkey_actions["close_article"] = function () {
 						if (App.isCombinedMode()) {

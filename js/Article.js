@@ -2,6 +2,7 @@
 /* global __, ngettext */
 define(["dojo/_base/declare"], function (declare) {
 	Article = {
+		_scroll_reset_timeout: false,
 		getScoreClass: function (score) {
 			if (score > 500) {
 				return "score-high";
@@ -314,33 +315,42 @@ define(["dojo/_base/declare"], function (declare) {
 			else
 				return 0;
 		},
-		scrollByPages: function (offset) {
-			if (!App.isCombinedMode()) {
-				const ci = $("content-insert");
-				if (ci) {
-					ci.scrollTop += ci.offsetHeight * offset * 0.99;
-				}
-			} else {
-				const hi = $("headlines-frame");
-				if (hi) {
-					hi.scrollTop += hi.offsetHeight * offset * 0.99;
-				}
+		scrollByPages: function (page_offset, event) {
+			let elem;
 
+			if (!App.isCombinedMode()) {
+				elem = $("content-insert");
+			} else {
+				elem = $("headlines-frame");
 			}
+
+			const offset = elem.offsetHeight * page_offset * 0.99;
+
+			this.scroll(offset, event);
 		},
-		scroll: function (offset) {
-			if (!App.isCombinedMode()) {
-				const ci = $("content-insert");
-				if (ci) {
-					ci.scrollTop += offset;
-				}
-			} else {
-				const hi = $("headlines-frame");
-				if (hi) {
-					hi.scrollTop += offset;
-				}
+		scroll: function (offset, event) {
 
+			let elem;
+
+			if (!App.isCombinedMode()) {
+				elem = $("content-insert");
+			} else {
+				elem = $("headlines-frame");
 			}
+
+			if (event.repeat) {
+				elem.addClassName("forbid-smooth-scroll");
+				window.clearTimeout(this._scroll_reset_timeout);
+
+				this._scroll_reset_timeout = window.setTimeout(() => {
+					if (elem) elem.removeClassName("forbid-smooth-scroll");
+				}, 250)
+
+			} else {
+				elem.removeClassName("forbid-smooth-scroll");
+			}
+
+			elem.scrollTop += offset;
 		},
 		mouseIn: function (id) {
 			this.post_under_pointer = id;

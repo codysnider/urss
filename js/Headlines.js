@@ -7,6 +7,7 @@ define(["dojo/_base/declare"], function (declare) {
 		_observer_counters_timeout: 0,
 		headlines: [],
 		current_first_id: 0,
+		_scroll_reset_timeout: false,
 		row_observer: new MutationObserver((mutations) => {
 			const modified = [];
 
@@ -1383,11 +1384,21 @@ define(["dojo/_base/declare"], function (declare) {
 
 			}
 		},
-		scrollByPages: function (offset) {
-			const hi = $("headlines-frame");
-			if (hi) {
-				hi.scrollTop += hi.offsetHeight * offset * 0.99;
+		scrollByPages: function (offset, event) {
+			const elem = $("headlines-frame");
+
+			if (event.repeat) {
+				elem.addClassName("forbid-smooth-scroll");
+				window.clearTimeout(this._scroll_reset_timeout);
+
+				this._scroll_reset_timeout = window.setTimeout(() => {
+					if (elem) elem.removeClassName("forbid-smooth-scroll");
+				}, 250)
+			} else {
+				elem.removeClassName("forbid-smooth-scroll");
 			}
+
+			elem.scrollTop += elem.offsetHeight * offset * 0.99;
 		},
 		initHeadlinesMenu: function () {
 			if (!dijit.byId("headlinesMenu")) {

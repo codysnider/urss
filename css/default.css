@@ -659,6 +659,10 @@ body.ttrss_main #headlines-frame div.feed-title a:hover {
 body.ttrss_main #headlines-frame.smooth-scroll {
   scroll-behavior: smooth;
 }
+body.ttrss_main #headlines-frame.forbid-smooth-scroll,
+body.ttrss_main #content-insert.forbid-smooth-scroll {
+  scroll-behavior: auto;
+}
 body.ttrss_main #toolbar-frame_splitter {
   display: none;
 }
