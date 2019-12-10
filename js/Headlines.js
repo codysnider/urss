@@ -272,7 +272,7 @@ define(["dojo/_base/declare"], function (declare) {
 			try {
 				Headlines.unpackVisible();
 
-				if (App.isCombinedMode()) {
+				/*if (App.isCombinedMode()) {
 					Headlines.updateFloatingTitle();
 
 					const ctr = $("headlines-frame");
@@ -289,13 +289,13 @@ define(["dojo/_base/declare"], function (declare) {
 							/*console.log(row.getAttribute("data-article-title"), row.offsetTop, row.offsetHeight, ctr.scrollTop, ctr.offsetHeight,
 								this.isChildVisible(row, ctr));*/
 
-							if (this.isChildVisible(row, ctr)) {
+				/*			if (this.isChildVisible(row, ctr)) {
 								Article.setActive(row.getAttribute("data-article-id"));
 								break;
 							}
 						}
 					}
-				}
+				} */
 
 				if (!Feeds.infscroll_disabled && !Feeds.infscroll_in_progress) {
 					const hsp = $("headlines-spacer");
