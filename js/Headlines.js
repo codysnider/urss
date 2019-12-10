@@ -868,7 +868,7 @@ define(["dojo/_base/declare"], function (declare) {
 							Article.scroll(ctr.offsetHeight / 2, event);
 						} else if (next_id) {
 							Article.setActive(next_id);
-							Article.cdmScrollToId(next_id, true);
+							Article.cdmScrollToId(next_id, true, event);
 						}
 
 					} else if (next_id) {
@@ -890,10 +890,10 @@ define(["dojo/_base/declare"], function (declare) {
 							Article.scroll(-ctr.offsetHeight / 2, event);
 						} else {
 							if (row.offsetTop < ctr.scrollTop) {
-								Article.cdmScrollToId(Article.getActive(), noscroll);
+								Article.cdmScrollToId(Article.getActive(), noscroll, event);
 							} else if (prev_id) {
 								Article.setActive(prev_id);
-								Article.cdmScrollToId(prev_id, noscroll);
+								Article.cdmScrollToId(prev_id, noscroll, event);
 							}
 						}
 

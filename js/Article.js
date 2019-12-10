@@ -275,7 +275,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			dialog.show();
 		},
-		cdmScrollToId: function (id, force) {
+		cdmScrollToId: function (id, force, event) {
 			const ctr = $("headlines-frame");
 			const e = $("RROW-" + id);
 
@@ -283,6 +283,18 @@ define(["dojo/_base/declare"], function (declare) {
 
 			if (force || e.offsetTop + e.offsetHeight > (ctr.scrollTop + ctr.offsetHeight) ||
 				e.offsetTop < ctr.scrollTop) {
+
+				if (event && event.repeat) {
+					ctr.addClassName("forbid-smooth-scroll");
+					window.clearTimeout(this._scroll_reset_timeout);
+
+					this._scroll_reset_timeout = window.setTimeout(() => {
+						if (ctr) ctr.removeClassName("forbid-smooth-scroll");
+					}, 250)
+
+				} else {
+					ctr.removeClassName("forbid-smooth-scroll");
+				}
 
 				ctr.scrollTop = e.offsetTop;
 
