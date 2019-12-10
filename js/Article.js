@@ -278,13 +278,14 @@ define(["dojo/_base/declare"], function (declare) {
 		cdmScrollToId: function (id, force, event) {
 			const ctr = $("headlines-frame");
 			const e = $("RROW-" + id);
+			const is_expanded = App.getInitParam("cdm_expanded");
 
 			if (!e || !ctr) return;
 
-			if (force || e.offsetTop + e.offsetHeight > (ctr.scrollTop + ctr.offsetHeight) ||
+			if (force || is_expanded || e.offsetTop + e.offsetHeight > (ctr.scrollTop + ctr.offsetHeight) ||
 				e.offsetTop < ctr.scrollTop) {
 
-				if (event && event.repeat) {
+				if (event && event.repeat || !is_expanded) {
 					ctr.addClassName("forbid-smooth-scroll");
 					window.clearTimeout(this._scroll_reset_timeout);
 
