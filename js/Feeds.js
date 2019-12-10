@@ -93,7 +93,7 @@ define(["dojo/_base/declare"], function (declare) {
 				}
 			}
 
-			this.hideOrShowFeeds(App.getInitParam("hide_read_feeds") == 1);
+			this.hideOrShowFeeds(App.getInitParam("hide_read_feeds"));
 			this._counters_prev = elems;
 
 			PluginHost.run(PluginHost.HOOK_COUNTERS_PROCESSED);
@@ -147,7 +147,7 @@ define(["dojo/_base/declare"], function (declare) {
 				const treeModel = new fox.FeedStoreModel({
 					store: store,
 					query: {
-						"type": App.getInitParam('enable_feed_cats') == 1 ? "category" : "feed"
+						"type": App.getInitParam('enable_feed_cats') ? "category" : "feed"
 					},
 					rootId: "root",
 					rootLabel: "Feeds",
@@ -212,7 +212,7 @@ define(["dojo/_base/declare"], function (declare) {
 				this.open({feed: -3});
 			}
 
-			this.hideOrShowFeeds(App.getInitParam("hide_read_feeds") == 1);
+			this.hideOrShowFeeds(App.getInitParam("hide_read_feeds"));
 
 			if (App.getInitParam("is_default_pw")) {
 				console.warn("user password is at default value");
@@ -237,7 +237,7 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 
 			// bw_limit disables timeout() so we request initial counters separately
-			if (App.getInitParam("bw_limit") == "1") {
+			if (App.getInitParam("bw_limit")) {
 				this.requestCounters(true);
 			} else {
 				setTimeout(() => {
@@ -274,7 +274,7 @@ define(["dojo/_base/declare"], function (declare) {
 			if (tree) return tree.selectFeed(feed, is_cat);
 		},
 		toggleUnread: function() {
-			const hide = !(App.getInitParam("hide_read_feeds") == "1");
+			const hide = !App.getInitParam("hide_read_feeds");
 
 			xhrPost("backend.php", {op: "rpc", method: "setpref", key: "HIDE_READ_FEEDS", value: hide}, () => {
 				this.hideOrShowFeeds(hide);
@@ -385,7 +385,7 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 		},
 		catchupFeed: function(feed, is_cat, mode) {
-			if (is_cat == undefined) is_cat = false;
+			is_cat = is_cat || false;
 
 			let str = false;
 
@@ -409,7 +409,7 @@ define(["dojo/_base/declare"], function (declare) {
 			str = str.replace("%s", fn)
 				.replace("%w", mark_what);
 
-			if (App.getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+			if (App.getInitParam("confirm_feed_catchup") && !confirm(str)) {
 				return;
 			}
 
@@ -424,7 +424,7 @@ define(["dojo/_base/declare"], function (declare) {
 			xhrPost("backend.php", catchup_query, (transport) => {
 				App.handleRpcJson(transport);
 
-				const show_next_feed = App.getInitParam("on_catchup_show_next_feed") == "1";
+				const show_next_feed = App.getInitParam("on_catchup_show_next_feed");
 
 				if (show_next_feed) {
 					const nuf = this.getNextUnread(feed, is_cat);

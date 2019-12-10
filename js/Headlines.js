@@ -303,7 +303,7 @@ define(["dojo/_base/declare"], function (declare) {
 					}
 				}
 
-				if (App.getInitParam("cdm_auto_catchup") == 1) {
+				if (App.getInitParam("cdm_auto_catchup")) {
 
 					let rows = $$("#headlines-frame > div[id*=RROW][class*=Unread]");
 
@@ -919,7 +919,7 @@ define(["dojo/_base/declare"], function (declare) {
 			const row = $("RROW-" + id);
 
 			if (row) {
-				if (cmode == undefined) cmode = 2;
+				if (typeof cmode == "undefined") cmode = 2;
 
 				switch (cmode) {
 					case 0:
@@ -990,7 +990,7 @@ define(["dojo/_base/declare"], function (declare) {
 			str = str.replace("%d", rows.length);
 			str = str.replace("%s", fn);
 
-			if (App.getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+			if (App.getInitParam("confirm_feed_catchup") && !confirm(str)) {
 				return;
 			}
 
@@ -1136,7 +1136,7 @@ define(["dojo/_base/declare"], function (declare) {
 			str = str.replace("%d", rows.length);
 			str = str.replace("%s", fn);
 
-			if (App.getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+			if (App.getInitParam("confirm_feed_catchup") && !confirm(str)) {
 				return;
 			}
 
@@ -1162,7 +1162,7 @@ define(["dojo/_base/declare"], function (declare) {
 			str = str.replace("%d", rows.length);
 			str = str.replace("%s", fn);
 
-			if (App.getInitParam("confirm_feed_catchup") == 1 && !confirm(str)) {
+			if (App.getInitParam("confirm_feed_catchup") && !confirm(str)) {
 				return;
 			}
 

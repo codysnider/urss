@@ -385,7 +385,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 			const msg = __("Unsubscribe from %s?").replace("%s", title);
 
-			if (title == undefined || confirm(msg)) {
+			if (typeof title == "undefined" || confirm(msg)) {
 				Notify.progress("Removing feed...");
 
 				const query = {op: "pref-feeds", quiet: 1, method: "remove", ids: feed_id};
