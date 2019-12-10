@@ -272,30 +272,8 @@ define(["dojo/_base/declare"], function (declare) {
 			try {
 				Headlines.unpackVisible();
 
-				/*if (App.isCombinedMode()) {
+				if (App.isCombinedMode())
 					Headlines.updateFloatingTitle();
-
-					const ctr = $("headlines-frame");
-
-					// set first visible child in the buffer as active, but not if we're at the beginning (to prevent auto marking
-					// first article as read all the time)
-					if (ctr.scrollTop > 0 && App.getInitParam("cdm_expanded") && App.getInitParam("cdm_auto_catchup")) {
-
-						const rows = $$("#headlines-frame > div[id*=RROW]");
-
-						for (let i = 0; i < rows.length; i++) {
-							const row = rows[i];
-
-							/*console.log(row.getAttribute("data-article-title"), row.offsetTop, row.offsetHeight, ctr.scrollTop, ctr.offsetHeight,
-								this.isChildVisible(row, ctr));*/
-
-				/*			if (this.isChildVisible(row, ctr)) {
-								Article.setActive(row.getAttribute("data-article-id"));
-								break;
-							}
-						}
-					}
-				} */
 
 				if (!Feeds.infscroll_disabled && !Feeds.infscroll_in_progress) {
 					const hsp = $("headlines-spacer");
