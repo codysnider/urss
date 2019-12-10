@@ -267,7 +267,7 @@ define(["dojo/_base/declare"], function (declare) {
 
 					// set first visible child in the buffer as active, but not if we're at the beginning (to prevent auto marking
 					// first article as read all the time)
-					if (ctr.scrollTop > 0 && App.getInitParam("cdm_expanded") /*&& App.getInitParam("cdm_auto_catchup") == 1*/) {
+					if (ctr.scrollTop > 0 && App.getInitParam("cdm_expanded") && App.getInitParam("cdm_auto_catchup")) {
 
 						const rows = $$("#headlines-frame > div[id*=RROW]");
 
