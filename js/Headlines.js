@@ -256,6 +256,18 @@ define(["dojo/_base/declare"], function (declare) {
 				etop < ctop && ebottom > ctop || ebottom > cbottom && etop < cbottom
 
 		},
+		firstVisible: function() {
+			const rows = $$("#headlines-frame > div[id*=RROW]");
+			const ctr = $("headlines-frame");
+
+			for (let i = 0; i < rows.length; i++) {
+				const row = rows[i];
+
+				if (this.isChildVisible(row, ctr)) {
+					return row.getAttribute("data-article-id");
+				}
+			}
+		},
 		scrollHandler: function (/*event*/) {
 			try {
 				Headlines.unpackVisible();
@@ -830,13 +842,15 @@ define(["dojo/_base/declare"], function (declare) {
 			let prev_id = false;
 			let next_id = false;
 
-			if (!$('RROW-' + Article.getActive())) {
+			const active_row = $("RROW-" + Article.getActive());
+
+			if (!active_row) {
 				Article.setActive(0);
 			}
 
-			if (!Article.getActive()) {
-				next_id = rows[0];
-				prev_id = rows[rows.length - 1]
+			if (!Article.getActive() || (active_row && !Headlines.isChildVisible(active_row, $("headlines-frame")))) {
+				next_id = Headlines.firstVisible();
+				prev_id = next_id;
 			} else {
 				for (let i = 0; i < rows.length; i++) {
 					if (rows[i] == Article.getActive()) {
@@ -889,7 +903,7 @@ define(["dojo/_base/declare"], function (declare) {
 						if (!noscroll) {
 							Article.scroll(-ctr.offsetHeight / 2, event);
 						} else {
-							if (row.offsetTop < ctr.scrollTop) {
+							if (row && row.offsetTop < ctr.scrollTop) {
 								Article.cdmScrollToId(Article.getActive(), noscroll, event);
 							} else if (prev_id) {
 								Article.setActive(prev_id);
