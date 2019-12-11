@@ -329,13 +329,7 @@ define(["dojo/_base/declare"], function (declare) {
 				return 0;
 		},
 		scrollByPages: function (page_offset, event) {
-			let elem;
-
-			if (!App.isCombinedMode()) {
-				elem = $("content-insert");
-			} else {
-				elem = $("headlines-frame");
-			}
+			const elem = App.isCombinedMode() ? $("headlines-frame") : $("content-insert");
 
 			const offset = elem.offsetHeight * page_offset * 0.99;
 
@@ -343,13 +337,7 @@ define(["dojo/_base/declare"], function (declare) {
 		},
 		scroll: function (offset, event) {
 
-			let elem;
-
-			if (!App.isCombinedMode()) {
-				elem = $("content-insert");
-			} else {
-				elem = $("headlines-frame");
-			}
+			const elem = App.isCombinedMode() ? $("headlines-frame") : $("content-insert");
 
 			if (event && event.repeat) {
 				elem.addClassName("forbid-smooth-scroll");

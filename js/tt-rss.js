@@ -277,10 +277,10 @@ require(["dojo/_base/kernel",
 
 						if (rv) Feeds.open({feed: rv[0], is_cat: rv[1], delayed: true})
 					};
-					this.hotkey_actions["next_article"] = function (event) {
+					this.hotkey_actions["next_article_or_scroll"] = function (event) {
 						Headlines.move('next', {event: event});
 					};
-					this.hotkey_actions["prev_article"] = function (event) {
+					this.hotkey_actions["prev_article_or_scroll"] = function (event) {
 						Headlines.move('prev', {event: event});
 					};
 					this.hotkey_actions["next_article_noscroll"] = function (event) {
@@ -325,10 +325,16 @@ require(["dojo/_base/kernel",
 						Headlines.catchupRelativeTo(0);
 					};
 					this.hotkey_actions["article_scroll_down"] = function (event) {
-						Article.scroll(80, event);
+						const ctr = App.isCombinedMode() ? $("headlines-frame") : $("content-insert");
+
+						if (ctr)
+							Article.scroll(ctr.offsetHeight / 2, event);
 					};
 					this.hotkey_actions["article_scroll_up"] = function (event) {
-						Article.scroll(-80, event);
+						const ctr = App.isCombinedMode() ? $("headlines-frame") : $("content-insert");
+
+						if (ctr)
+							Article.scroll(-ctr.offsetHeight / 2, event);
 					};
 					this.hotkey_actions["next_article_page"] = function (event) {
 						Headlines.scrollByPages(1, event);
@@ -375,7 +381,7 @@ require(["dojo/_base/kernel",
 						Headlines.select('none');
 					};
 					this.hotkey_actions["feed_refresh"] = function () {
-						if (Feeds.getActive() != undefined) {
+						if (typeof Feeds.getActive() != "undefined") {
 							Feeds.open({feed: Feeds.getActive(), is_cat: Feeds.activeIsCat()});
 						}
 					};
@@ -405,7 +411,7 @@ require(["dojo/_base/kernel",
 							CommonDialogs.editFeed(Feeds.getActive());
 					};
 					this.hotkey_actions["feed_catchup"] = function () {
-						if (Feeds.getActive() != undefined) {
+						if (typeof Feeds.getActive() != "undefined") {
 							Feeds.catchupCurrent();
 						}
 					};
