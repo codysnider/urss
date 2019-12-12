@@ -9,12 +9,37 @@ define(["dojo/_base/declare"], function (declare) {
 		hotkey_prefix_timeout: 0,
 		constructor: function() {
 			window.onerror = this.Error.onWindowError;
+			this.setupNightModeDetection();
 		},
 		getInitParam: function(k) {
 			return this._initParams[k];
 		},
 		setInitParam: function(k, v) {
 			this._initParams[k] = v;
+		},
+		nightModeChanged: function(is_night) {
+			console.log("night mode changed to", is_night);
+
+			const link = $("theme_css");
+
+			if (link) {
+
+				if (link.getAttribute("data-orig-href").indexOf("css/default.css") !== -1) {
+					const css_override = is_night ? "themes/night.css" : "css/default.css";
+					link.setAttribute("href", css_override + "?" + Date.now());
+				}
+			}
+		},
+		setupNightModeDetection: function() {
+			if (window.matchMedia) {
+				const mql = window.matchMedia('(prefers-color-scheme: dark)');
+
+				mql.addEventListener("change", () => {
+					this.nightModeChanged(mql.matches);
+				});
+
+				this.nightModeChanged(mql.matches);
+			}
 		},
 		enableCsrfSupport: function() {
 			Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(
@@ -357,30 +382,6 @@ define(["dojo/_base/declare"], function (declare) {
 			}
 
 			this.initSecondStage();
-		},
-		toggleNightMode: function() {
-			const link = $("theme_css");
-
-			if (link) {
-
-				let user_theme = "";
-				let user_css = "";
-
-				if (link.getAttribute("href").indexOf("themes/night.css") == -1) {
-					user_css = "themes/night.css?" + Date.now();
-					user_theme = "night.css";
-				} else {
-					user_theme = "default.php";
-					user_css = "css/default.css?" + Date.now();
-				}
-
-				$("main").fade({duration: 0.5, afterFinish: () => {
-					link.setAttribute("href", user_css);
-					$("main").appear({duration: 0.5});
-					xhrPost("backend.php", {op: "rpc", method: "setpref", key: "USER_CSS_THEME", value: user_theme});
-				}});
-
-			}
 		},
 		explainError: function(code) {
 			return this.displayDlg(__("Error explained"), "explainError", code);

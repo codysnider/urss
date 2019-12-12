@@ -513,9 +513,6 @@ require(["dojo/_base/kernel",
 							Headlines.renderAgain();
 						});
 					};
-					this.hotkey_actions["toggle_night_mode"] = function () {
-						App.toggleNightMode();
-					};
 				},
 				onActionSelected: function(opid) {
 					switch (opid) {
@@ -580,9 +577,6 @@ require(["dojo/_base/kernel",
 							} else {
 								alert(__("Widescreen is not available in combined mode."));
 							}
-							break;
-						case "qmcToggleNightMode":
-							App.toggleNightMode();
 							break;
 						case "qmcHKhelp":
 							App.helpDialog("main");

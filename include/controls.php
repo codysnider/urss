@@ -238,7 +238,7 @@ function stylesheet_tag($filename, $id = false) {
 
 	$id_part = $id ? "id=\"$id\"" : "";
 
-	return "<link rel=\"stylesheet\" $id_part type=\"text/css\" href=\"$filename?$timestamp\"/>\n";
+	return "<link rel=\"stylesheet\" $id_part type=\"text/css\" data-orig-href=\"$filename\" href=\"$filename?$timestamp\"/>\n";
 }
 
 function javascript_tag($filename) {

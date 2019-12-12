@@ -142,8 +142,6 @@ require(["dojo/_base/kernel",
 							case "help_dialog":
 								App.helpDialog("main");
 								return false;
-							case "toggle_night_mode":
-								App.toggleNightMode();
 							default:
 								console.log("unhandled action: " + action_name + "; keycode: " + event.which);
 						}
