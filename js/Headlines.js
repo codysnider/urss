@@ -546,6 +546,16 @@ define(["dojo/_base/declare"], function (declare) {
 
 			return tmp.firstChild;
 		},
+		updateCurrentUnread: function() {
+			const feed_unread = Feeds.getUnread(Feeds.getActive(), Feeds.activeIsCat());
+
+			if (feed_unread > 0 && !Element.visible("feeds-holder")) {
+				$("feed_current_unread").innerText = feed_unread;
+				Element.show("feed_current_unread");
+			} else {
+				Element.hide("feed_current_unread");
+			}
+		},
 		onLoaded: function (transport, offset, append) {
 			const reply = App.handleRpcJson(transport);
 
@@ -647,6 +657,8 @@ define(["dojo/_base/declare"], function (declare) {
 							" (<a href='#' onclick='Feeds.cancelSearch()'>" + __("Cancel search") + "</a>)" +
 							"</span>";
 					}
+
+					Headlines.updateCurrentUnread();
 
 				} else if (headlines_count > 0 && feed_id == Feeds.getActive() && is_cat == Feeds.activeIsCat()) {
 					const c = dijit.byId("headlines-frame");

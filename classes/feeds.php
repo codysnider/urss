@@ -51,7 +51,9 @@ class Feeds extends Handler_Protected {
 		if ($error)
 			$reply .= " <i title=\"" . htmlspecialchars($error) . "\" class='material-icons icon-error'>error</i>";
 
-		$reply .= "</span></span>";
+		$reply .= "</span>";
+		$reply .= "<span id='feed_current_unread' style='display: none'></span>";
+		$reply .= "</span>";
 
 		$reply .= "<span class=\"right\">";
 		$reply .= "<span id='selected_prompt'></span>";

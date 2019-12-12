@@ -867,11 +867,21 @@ body.ttrss_main .dijitDialog h3:first-of-type,
 body.ttrss_main .dijitDialog h4:first-of-type {
   margin-top: 0px;
 }
-body.ttrss_main i.icon-syndicate {
+body.ttrss_main #toolbar-headlines i.icon-syndicate {
   color: #ff7c4b;
   margin-right: 8px;
   border: 1px solid #ff7c4b;
   border-radius: 4px;
+}
+body.ttrss_main #toolbar-headlines #feed_current_unread {
+  margin-left: 8px;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #2a89bc;
+  color: white;
+  background: #2a89bc;
+  border-radius: 4px;
+  min-width: 23px;
 }
 body.ttrss_main i.icon-no-feed {
   opacity: 0.2;

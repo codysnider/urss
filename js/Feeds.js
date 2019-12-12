@@ -93,6 +93,8 @@ define(["dojo/_base/declare"], function (declare) {
 				}
 			}
 
+			Headlines.updateCurrentUnread();
+
 			this.hideOrShowFeeds(App.getInitParam("hide_read_feeds"));
 			this._counters_prev = elems;
 
@@ -119,6 +121,8 @@ define(["dojo/_base/declare"], function (declare) {
 			Element.visible("feeds-holder") ? splitter.show() : splitter.hide();
 
 			dijit.byId("main").resize();
+
+			Headlines.updateCurrentUnread();
 		},
 		cancelSearch: function() {
 			this._search_query = "";
