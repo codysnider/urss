@@ -34,9 +34,11 @@ define(["dojo/_base/declare"], function (declare) {
 			if (window.matchMedia) {
 				const mql = window.matchMedia('(prefers-color-scheme: dark)');
 
-				mql.addEventListener("change", () => {
-					this.nightModeChanged(mql.matches);
-				});
+				try {
+					mql.addEventListener("change", () => {
+						this.nightModeChanged(mql.matches);
+					});
+				} catch (e) {}
 
 				this.nightModeChanged(mql.matches);
 			}
