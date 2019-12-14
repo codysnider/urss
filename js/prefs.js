@@ -155,7 +155,10 @@ require(["dojo/_base/kernel",
 			App = new _App();
 
 		} catch (e) {
-			this.Error.report(e);
+			if (App && App.Error)
+				App.Error.report(e);
+			else
+				alert(e + "\n\n" + e.stack);
 		}
 	});
 });
