@@ -67,33 +67,35 @@ require(["dojo/_base/kernel",
 				_widescreen_mode: false,
 				hotkey_actions: {},
 				constructor: function () {
-					parser.parse();
+					this.setupNightModeDetection(() => {
+						parser.parse();
 
-					if (!this.checkBrowserFeatures())
-						return;
+						if (!this.checkBrowserFeatures())
+							return;
 
-					this.setLoadingProgress(30);
-					this.initHotkeyActions();
+						this.setLoadingProgress(30);
+						this.initHotkeyActions();
 
-					const a = document.createElement('audio');
-					const hasAudio = !!a.canPlayType;
-					const hasSandbox = "sandbox" in document.createElement("iframe");
-					const hasMp3 = !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
-					const clientTzOffset = new Date().getTimezoneOffset() * 60;
+						const a = document.createElement('audio');
+						const hasAudio = !!a.canPlayType;
+						const hasSandbox = "sandbox" in document.createElement("iframe");
+						const hasMp3 = !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
+						const clientTzOffset = new Date().getTimezoneOffset() * 60;
 
-					const params = {
-						op: "rpc", method: "sanityCheck", hasAudio: hasAudio,
-						hasMp3: hasMp3,
-						clientTzOffset: clientTzOffset,
-						hasSandbox: hasSandbox
-					};
+						const params = {
+							op: "rpc", method: "sanityCheck", hasAudio: hasAudio,
+							hasMp3: hasMp3,
+							clientTzOffset: clientTzOffset,
+							hasSandbox: hasSandbox
+						};
 
-					xhrPost("backend.php", params, (transport) => {
-						try {
-							App.backendSanityCallback(transport);
-						} catch (e) {
-							App.Error.report(e);
-						}
+						xhrPost("backend.php", params, (transport) => {
+							try {
+								App.backendSanityCallback(transport);
+							} catch (e) {
+								App.Error.report(e);
+							}
+						});
 					});
 				},
 				checkBrowserFeatures: function() {

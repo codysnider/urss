@@ -9,7 +9,6 @@ define(["dojo/_base/declare"], function (declare) {
 		hotkey_prefix_timeout: 0,
 		constructor: function() {
 			window.onerror = this.Error.onWindowError;
-			this.setupNightModeDetection();
 		},
 		getInitParam: function(k) {
 			return this._initParams[k];
@@ -17,30 +16,47 @@ define(["dojo/_base/declare"], function (declare) {
 		setInitParam: function(k, v) {
 			this._initParams[k] = v;
 		},
-		nightModeChanged: function(is_night) {
+		nightModeChanged: function(is_night, link) {
 			console.log("night mode changed to", is_night);
 
-			const link = $("theme_css");
-
 			if (link) {
-
-				if (link.getAttribute("data-orig-href").indexOf("css/default.css") !== -1) {
-					const css_override = is_night ? "themes/night.css" : "css/default.css";
-					link.setAttribute("href", css_override + "?" + Date.now());
-				}
+				const css_override = is_night ? "themes/night.css" : "css/default.css";
+				link.setAttribute("href", css_override + "?" + Date.now());
 			}
 		},
-		setupNightModeDetection: function() {
-			if (window.matchMedia) {
+		setupNightModeDetection: function(callback) {
+			if (!$("theme_css")) {
 				const mql = window.matchMedia('(prefers-color-scheme: dark)');
 
 				try {
 					mql.addEventListener("change", () => {
-						this.nightModeChanged(mql.matches);
+						this.nightModeChanged(mql.matches, $("theme_auto_css"));
 					});
-				} catch (e) {}
+				} catch (e) {
+					console.warn("exception while trying to set MQL event listener");
+				}
 
-				this.nightModeChanged(mql.matches);
+				const link = new Element("link", {
+					rel: "stylesheet",
+					id: "theme_auto_css"
+				});
+
+				if (callback) {
+                    link.onload = function () {
+                        document.querySelector("body").removeClassName("css_loading");
+                        callback();
+                    };
+
+                    link.onerror = function(event) {
+                        alert("Fatal error while loading application stylesheet: " + link.getAttribute("href"));
+                    }
+                }
+
+				this.nightModeChanged(mql.matches, link);
+
+				document.querySelector("head").appendChild(link);
+			} else {
+				if (callback) callback();
 			}
 		},
 		enableCsrfSupport: function() {
