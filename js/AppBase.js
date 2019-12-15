@@ -56,6 +56,8 @@ define(["dojo/_base/declare"], function (declare) {
 
 				document.querySelector("head").appendChild(link);
 			} else {
+				document.querySelector("body").removeClassName("css_loading");
+
 				if (callback) callback();
 			}
 		},
