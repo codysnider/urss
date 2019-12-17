@@ -405,7 +405,7 @@ class Pref_Prefs extends Handler_Protected {
 
 				print "<div dojoType='dijit.layout.ContentPane' title=\"" . __('App passwords') . "\">";
 
-				print_notice("You can create separate passwords for the API clients. Using one is required if you enable OTP.");
+				print_notice("You can create separate passwords for API clients. Using one is required if you enable OTP.");
 
 				print "<div id='app_passwords_holder'>";
 				$this->appPasswordList();
