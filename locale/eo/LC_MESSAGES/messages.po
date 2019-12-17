@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-15 13:47+0300\n"
-"PO-Revision-Date: 2019-11-23 18:58+0000\n"
+"PO-Revision-Date: 2019-12-10 18:38+0000\n"
 "Last-Translator: Nikolay Korotkiy <sikmir@gmail.com>\n"
 "Language-Team: Esperanto <https://weblate.tt-rss.org/projects/tt-rss/"
 "messages/eo/>\n"
@@ -49,7 +49,7 @@ msgstr ""
 
 #: backend.php:82
 msgid "Default interval"
-msgstr ""
+msgstr "Defaŭlta intervalo"
 
 #: backend.php:83 backend.php:93
 msgid "Disable updates"
@@ -57,11 +57,11 @@ msgstr ""
 
 #: backend.php:84 backend.php:94
 msgid "15 minutes"
-msgstr ""
+msgstr "15 minutoj"
 
 #: backend.php:85 backend.php:95
 msgid "30 minutes"
-msgstr ""
+msgstr "30 minutoj"
 
 #: backend.php:86 backend.php:96
 msgid "Hourly"
@@ -69,11 +69,11 @@ msgstr ""
 
 #: backend.php:87 backend.php:97
 msgid "4 hours"
-msgstr ""
+msgstr "4 horoj"
 
 #: backend.php:88 backend.php:98
 msgid "12 hours"
-msgstr ""
+msgstr "12 horoj"
 
 #: backend.php:89 backend.php:99
 msgid "Daily"
@@ -93,7 +93,7 @@ msgstr ""
 
 #: backend.php:105
 msgid "Administrator"
-msgstr ""
+msgstr "Administranto"
 
 #: errors.php:9
 msgid ""
@@ -159,7 +159,7 @@ msgstr ""
 
 #: errors.php:39
 msgid "Plugin not found"
-msgstr ""
+msgstr "Kromprogramo ne trovita"
 
 #: errors.php:41
 msgid "Encoding data as JSON failed"
@@ -198,7 +198,7 @@ msgstr ""
 
 #: index.php:175
 msgid "All Articles"
-msgstr ""
+msgstr "Ĉiuj artikoloj"
 
 #: index.php:176 include/functions.php:1063 classes/feeds.php:70
 msgid "Starred"
@@ -206,11 +206,11 @@ msgstr ""
 
 #: index.php:177 include/functions.php:1064 classes/feeds.php:71
 msgid "Published"
-msgstr ""
+msgstr "Eldonita"
 
 #: index.php:178 classes/feeds.php:63 classes/feeds.php:69
 msgid "Unread"
-msgstr ""
+msgstr "Nelegita"
 
 #: index.php:179
 msgid "With Note"
@@ -226,24 +226,24 @@ msgstr ""
 
 #: index.php:187
 msgid "Default"
-msgstr ""
+msgstr "Defaŭlto"
 
 #: index.php:188
 msgid "Newest first"
-msgstr ""
+msgstr "Plej nova unue"
 
 #: index.php:189
 msgid "Oldest first"
-msgstr ""
+msgstr "Plej malnova unue"
 
 #: index.php:190
 msgid "Title"
-msgstr ""
+msgstr "Titolo"
 
 #: index.php:194 index.php:228 include/functions.php:1051 classes/feeds.php:75
 #: js/FeedTree.js:58 js/FeedTree.js:93
 msgid "Mark as read"
-msgstr ""
+msgstr "Marki kiel legita"
 
 #: index.php:197
 msgid "Older than one day"
@@ -259,15 +259,15 @@ msgstr ""
 
 #: index.php:218
 msgid "Actions..."
-msgstr ""
+msgstr "Agoj…"
 
 #: index.php:221
 msgid "Preferences..."
-msgstr ""
+msgstr "Agordoj…"
 
 #: index.php:222
 msgid "Search..."
-msgstr ""
+msgstr "Serĉi…"
 
 #: index.php:223
 msgid "Feed actions:"
@@ -284,11 +284,11 @@ msgstr ""
 #: index.php:226 classes/pref/feeds.php:796 classes/pref/feeds.php:1241
 #: js/PrefFeedTree.js:62
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Malaboni"
 
 #: index.php:227
 msgid "All feeds:"
-msgstr ""
+msgstr "Ĉiuj fluoj:"
 
 #: index.php:229
 msgid "(Un)hide read feeds"
@@ -296,7 +296,7 @@ msgstr ""
 
 #: index.php:230
 msgid "Other actions:"
-msgstr ""
+msgstr "Aliaj agoj:"
 
 #: index.php:231 include/functions.php:1037
 msgid "Toggle widescreen mode"
@@ -312,16 +312,16 @@ msgstr ""
 
 #: index.php:242
 msgid "Logout"
-msgstr ""
+msgstr "Elsaluto"
 
 #: prefs.php:32 prefs.php:129 include/functions.php:1067
 #: classes/pref/prefs.php:473
 msgid "Preferences"
-msgstr ""
+msgstr "Agordoj"
 
 #: prefs.php:121
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Fulmoklavoj"
 
 #: prefs.php:122
 msgid "Exit preferences"
@@ -330,11 +330,11 @@ msgstr ""
 #: prefs.php:132 classes/pref/feeds.php:127 classes/pref/feeds.php:1176
 #: classes/pref/feeds.php:1230 classes/pref/prefs.php:28
 msgid "Feeds"
-msgstr ""
+msgstr "Fluoj"
 
 #: prefs.php:136 classes/pref/filters.php:243
 msgid "Filters"
-msgstr ""
+msgstr "Filtriloj"
 
 #: prefs.php:140 classes/feeds.php:1383 classes/pref/labels.php:85
 msgid "Labels"
@@ -342,11 +342,11 @@ msgstr ""
 
 #: prefs.php:145
 msgid "Users"
-msgstr ""
+msgstr "Uzantoj"
 
 #: prefs.php:148
 msgid "System"
-msgstr ""
+msgstr "Sistemo"
 
 #: register.php:183 include/login_form.php:141
 msgid "Create new account"
@@ -383,11 +383,11 @@ msgstr ""
 
 #: register.php:225 classes/handler/public.php:938
 msgid "Email:"
-msgstr ""
+msgstr "Retpoŝtadreso:"
 
 #: register.php:228
 msgid "How much is two plus two:"
-msgstr ""
+msgstr "Kiom estas du plus du:"
 
 #: register.php:231
 msgid "Submit registration"
@@ -420,7 +420,7 @@ msgstr ""
 #: include/controls.php:85 classes/pref/filters.php:212
 #: classes/pref/filters.php:223 classes/pref/filters.php:537
 msgid "All feeds"
-msgstr ""
+msgstr "Ĉiuj fluoj"
 
 #: include/controls.php:138 include/controls.php:230 classes/digest.php:124
 #: classes/feeds.php:1395 classes/opml.php:536 classes/pref/feeds.php:246
@@ -434,7 +434,7 @@ msgstr ""
 #: include/functions.php:817
 #, php-format
 msgid "%d min"
-msgstr ""
+msgstr "%d min"
 
 #: include/functions.php:1013
 msgid "Navigation"
@@ -624,7 +624,7 @@ msgstr ""
 
 #: include/functions.php:1061 classes/feeds.php:1256
 msgid "All articles"
-msgstr ""
+msgstr "Ĉiuj artikoloj"
 
 #: include/functions.php:1062
 msgid "Fresh"
@@ -640,7 +640,7 @@ msgstr ""
 
 #: include/functions.php:1068
 msgid "Other"
-msgstr ""
+msgstr "Alia"
 
 #: include/functions.php:1069 classes/pref/labels.php:266
 msgid "Create label"
@@ -695,7 +695,7 @@ msgstr ""
 #: include/login_form.php:81 classes/handler/public.php:618
 #: classes/handler/public.php:933 classes/pref/users.php:55
 msgid "Login:"
-msgstr ""
+msgstr "Salutnomo:"
 
 #: include/login_form.php:88 classes/handler/public.php:625
 msgid "Password:"
@@ -703,16 +703,16 @@ msgstr "Pasvorto:"
 
 #: include/login_form.php:96
 msgid "I forgot my password"
-msgstr ""
+msgstr "Mi forgesis mian pasvorton"
 
 #: include/login_form.php:101
 msgid "Profile:"
-msgstr ""
+msgstr "Profilo:"
 
 #: include/login_form.php:104 classes/handler/public.php:281
 #: classes/pref/prefs.php:1065 classes/rpc.php:69
 msgid "Default profile"
-msgstr ""
+msgstr "Defaŭlta profilo"
 
 #: include/login_form.php:113
 msgid "Use less traffic"
@@ -724,11 +724,11 @@ msgstr ""
 
 #: include/login_form.php:126
 msgid "Remember me"
-msgstr ""
+msgstr "Memoru min"
 
 #: include/login_form.php:137 classes/handler/public.php:638
 msgid "Log in"
-msgstr ""
+msgstr "Ensaluti"
 
 #: include/sessions.php:45
 msgid "Session failed to validate (schema version changed)"
@@ -762,7 +762,7 @@ msgstr ""
 #: plugins/af_zz_imgproxy/init.php:243 plugins/mail/init.php:66
 #: plugins/note/init.php:53 plugins/nsfw/init.php:86
 msgid "Save"
-msgstr ""
+msgstr "Konservi"
 
 #: classes/article.php:253 classes/feeds.php:716 classes/feeds.php:757
 #: classes/handler/public.php:596 classes/pref/feeds.php:798
@@ -773,7 +773,7 @@ msgstr ""
 #: classes/pref/prefs.php:1115 classes/pref/users.php:116
 #: plugins/mail/init.php:178 plugins/note/init.php:55
 msgid "Cancel"
-msgstr ""
+msgstr "Nuligi"
 
 #: classes/article.php:348 classes/article.php:614
 msgid "no tags"
@@ -781,23 +781,23 @@ msgstr ""
 
 #: classes/article.php:458
 msgid "unknown type"
-msgstr ""
+msgstr "nekonata tipo"
 
 #: classes/article.php:535
 msgid "Attachments"
-msgstr ""
+msgstr "Aldonaĵoj"
 
 #: classes/backend.php:37
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Fulmoklavoj"
 
 #: classes/backend.php:61 classes/backend.php:130
 msgid "Shift"
-msgstr ""
+msgstr "Shift"
 
 #: classes/backend.php:64 classes/backend.php:133
 msgid "Ctrl"
-msgstr ""
+msgstr "Ctrl"
 
 #: classes/backend.php:159 classes/dlg.php:30 classes/dlg.php:57
 #: classes/dlg.php:89 classes/dlg.php:153 classes/dlg.php:187
@@ -805,7 +805,7 @@ msgstr ""
 #: classes/pref/filters.php:175 plugins/af_psql_trgm/init.php:111
 #: plugins/share/init.php:133
 msgid "Close this window"
-msgstr ""
+msgstr "Fermi ĉi tiun fenestron"
 
 #: classes/dlg.php:41
 msgid "Your Public OPML URL is:"
@@ -824,7 +824,7 @@ msgstr ""
 
 #: classes/dlg.php:72 classes/dlg.php:81
 msgid "Last update:"
-msgstr ""
+msgstr "Lasta ĝisdatigo:"
 
 #: classes/dlg.php:77
 msgid ""
@@ -842,7 +842,7 @@ msgstr ""
 #: classes/pref/prefs.php:806 classes/pref/prefs.php:852
 #: classes/pref/prefs.php:867 plugins/bookmarklets/init.php:45
 msgid "More info..."
-msgstr ""
+msgstr "Pli da informoj…"
 
 #: classes/dlg.php:196
 msgid ""
@@ -866,7 +866,7 @@ msgstr ""
 
 #: classes/feeds.php:60
 msgid "Select..."
-msgstr ""
+msgstr "Elekti…"
 
 #: classes/feeds.php:62 classes/pref/feeds.php:1224 classes/pref/feeds.php:1457
 #: classes/pref/feeds.php:1514 classes/pref/filters.php:363
@@ -875,7 +875,7 @@ msgstr ""
 #: classes/pref/labels.php:260 classes/pref/prefs.php:1030
 #: classes/pref/users.php:343
 msgid "All"
-msgstr ""
+msgstr "Ĉiuj"
 
 #: classes/feeds.php:64
 msgid "Invert"
@@ -888,7 +888,7 @@ msgstr ""
 #: classes/pref/labels.php:262 classes/pref/prefs.php:1032
 #: classes/pref/users.php:345
 msgid "None"
-msgstr ""
+msgstr "Nenio"
 
 #: classes/feeds.php:67
 msgid "Selection toggle:"
@@ -910,11 +910,11 @@ msgstr ""
 #: classes/pref/filters.php:432 classes/pref/filters.php:874
 #: classes/pref/filters.php:903
 msgid "Delete"
-msgstr ""
+msgstr "Forigi"
 
 #: classes/feeds.php:82
 msgid "Archive"
-msgstr ""
+msgstr "Arkivo"
 
 #: classes/feeds.php:86 classes/feeds.php:91 plugins/mail/init.php:76
 #: plugins/mailto/init.php:24
@@ -931,7 +931,7 @@ msgstr "Fluo ne trovita."
 
 #: classes/feeds.php:209
 msgid "Never"
-msgstr ""
+msgstr "Neniam"
 
 #: classes/feeds.php:260 classes/feeds.php:1258
 msgid "Archived articles"
@@ -998,7 +998,7 @@ msgstr ""
 #: classes/feeds.php:693 classes/pref/feeds.php:657 classes/pref/feeds.php:891
 #: classes/pref/feeds.php:1676 classes/pref/users.php:387
 msgid "Login"
-msgstr ""
+msgstr "Salutnomo"
 
 #: classes/feeds.php:697 classes/pref/feeds.php:665 classes/pref/feeds.php:899
 #: classes/pref/feeds.php:1677 classes/pref/prefs.php:289
@@ -1012,16 +1012,16 @@ msgstr ""
 #: classes/feeds.php:714 classes/handler/public.php:755
 #: classes/pref/feeds.php:1690
 msgid "Subscribe"
-msgstr ""
+msgstr "Aboni"
 
 #: classes/feeds.php:735
 #, php-format
 msgid "Search %s..."
-msgstr ""
+msgstr "Serĉi %s…"
 
 #: classes/feeds.php:741 classes/pref/feeds.php:603 classes/pref/feeds.php:841
 msgid "Language:"
-msgstr ""
+msgstr "Lingvo:"
 
 #: classes/feeds.php:743
 msgid "Used for word stemming"
@@ -1034,7 +1034,7 @@ msgstr ""
 #: classes/feeds.php:756 classes/pref/feeds.php:1217
 #: classes/pref/filters.php:772 classes/pref/users.php:330 js/Feeds.js:550
 msgid "Search"
-msgstr ""
+msgstr "Serĉi"
 
 #: classes/feeds.php:1250
 msgid "Starred articles"
@@ -1068,15 +1068,15 @@ msgstr ""
 
 #: classes/handler/public.php:570
 msgid "Title:"
-msgstr ""
+msgstr "Titolo:"
 
 #: classes/handler/public.php:575 classes/pref/feeds.php:548
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: classes/handler/public.php:580
 msgid "Content:"
-msgstr ""
+msgstr "Enhavo:"
 
 #: classes/handler/public.php:585
 msgid "Labels:"
@@ -1084,7 +1084,7 @@ msgstr ""
 
 #: classes/handler/public.php:595
 msgid "Share"
-msgstr ""
+msgstr "Kunhavigi"
 
 #: classes/handler/public.php:597
 msgid "Shared article will appear in the Published feed."
@@ -1133,7 +1133,7 @@ msgstr ""
 
 #: classes/handler/public.php:883
 msgid "Password recovery"
-msgstr ""
+msgstr "Pasvorta reakiro"
 
 #: classes/handler/public.php:926
 msgid ""
@@ -1144,7 +1144,7 @@ msgstr ""
 #: classes/handler/public.php:946
 #, php-format
 msgid "How much is %d + %d:"
-msgstr ""
+msgstr "Kiom estas %d + %d:"
 
 #: classes/handler/public.php:952 classes/pref/users.php:356
 msgid "Reset password"
@@ -1186,7 +1186,7 @@ msgstr ""
 
 #: classes/handler/public.php:1123
 msgid "Try again"
-msgstr ""
+msgstr "Provu denove"
 
 #: classes/handler/public.php:1129
 msgid "Completed."
