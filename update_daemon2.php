@@ -8,7 +8,6 @@
 
 	define('DISABLE_SESSIONS', true);
 
-	require_once "version.php";
 	require_once "autoload.php";
 	require_once "functions.php";
 	require_once "config.php";

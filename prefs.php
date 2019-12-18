@@ -16,7 +16,6 @@
 	require_once "sessions.php";
 	require_once "functions.php";
 	require_once "sanity_check.php";
-	require_once "version.php";
 	require_once "config.php";
 	require_once "db-prefs.php";
 
@@ -31,10 +30,6 @@
 <head>
 	<title>Tiny Tiny RSS : <?php echo __("Preferences") ?></title>
     <meta name="viewport" content="initial-scale=1,width=device-width" />
-
-	<script type="text/javascript">
-		var __ttrss_version = "<?php echo VERSION ?>"
-	</script>
 
 	<?php if ($_SESSION["uid"]) {
 		$theme = get_pref("USER_CSS_THEME", false, false);
@@ -164,10 +159,7 @@
         </div>
     <div id="footer" dojoType="dijit.layout.ContentPane" region="bottom">
         <a class="text-muted" target="_blank" href="http://tt-rss.org/">
-        Tiny Tiny RSS</a>
-        <?php if (!defined('HIDE_VERSION')) { ?>
-             v<?php echo VERSION ?>
-        <?php } ?>
+        Tiny Tiny RSS</a> v<?php echo get_version() ?>
         &copy; 2005-<?php echo date('Y') ?>
         <a class="text-muted" target="_blank"
         href="http://fakecake.org/">Andrew Dolgov</a>

@@ -23,7 +23,6 @@
 	require_once "sessions.php";
 	require_once "functions.php";
 	require_once "sanity_check.php";
-	require_once "version.php";
 	require_once "config.php";
 	require_once "db-prefs.php";
 
@@ -39,10 +38,6 @@
 <head>
 	<title>Tiny Tiny RSS</title>
     <meta name="viewport" content="initial-scale=1,width=device-width" />
-
-	<script type="text/javascript">
-		var __ttrss_version = "<?php echo VERSION ?>"
-	</script>
 
 	<?php if ($_SESSION["uid"]) {
 		$theme = get_pref("USER_CSS_THEME", false, false);

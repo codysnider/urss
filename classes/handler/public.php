@@ -85,7 +85,7 @@ class Handler_Public extends Handler {
 			$tpl->readTemplateFromFile("templates/generated_feed.txt");
 
 			$tpl->setVariable('FEED_TITLE', $feed_title, true);
-			$tpl->setVariable('VERSION', VERSION, true);
+			$tpl->setVariable('VERSION', get_version(), true);
 			$tpl->setVariable('FEED_URL', htmlspecialchars($feed_self_url), true);
 
 			$tpl->setVariable('SELF_URL', htmlspecialchars(get_self_url_prefix()), true);
@@ -180,7 +180,6 @@ class Handler_Public extends Handler {
 			$feed = array();
 
 			$feed['title'] = $feed_title;
-			$feed['version'] = VERSION;
 			$feed['feed_url'] = $feed_self_url;
 
 			$feed['self_url'] = get_self_url_prefix();

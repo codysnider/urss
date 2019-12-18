@@ -110,7 +110,7 @@ class Af_Comics extends Plugin {
 			$tpl->readTemplateFromFile('templates/generated_feed.txt');
 
 			$tpl->setVariable('FEED_TITLE', $feed_title, true);
-			$tpl->setVariable('VERSION', VERSION, true);
+			$tpl->setVariable('VERSION', get_version(), true);
 			$tpl->setVariable('FEED_URL', htmlspecialchars($fetch_url), true);
 			$tpl->setVariable('SELF_URL', $site_url, true);
 

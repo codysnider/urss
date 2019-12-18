@@ -7,7 +7,6 @@
 	require_once "errorhandler.php";
 	require_once "lib/accept-to-gettext.php";
 	require_once "lib/gettext/gettext.inc";
-	require_once "version.php";
 
 	$session_expire = min(2147483647 - time() - 1, max(SESSION_COOKIE_LIFETIME, 86400));
 	$session_name = (!defined('TTRSS_SESSION_NAME')) ? "ttrss_sid" : TTRSS_SESSION_NAME;
