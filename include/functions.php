@@ -1903,7 +1903,11 @@
 			$rc = 0;
 			$output = [];
 
-			exec("git log --pretty=".escapeshellarg('%ct %h')." -n1 HEAD " . escapeshellarg($root_dir) . ' 2>&1', $output, $rc);
+			$cwd = getcwd();
+
+			chdir($root_dir);
+			exec('git log --pretty='.escapeshellarg('%ct %h').' -n1 HEAD 2>&1', $output, $rc);
+			chdir($cwd);
 
 			if ($rc == 0) {
 				if (is_array($output) && count($output) > 0) {
@@ -1915,7 +1919,7 @@
 					$ttrss_version = strftime("%y.%m", $timestamp) . "-$commit";
 				}
 			} else {
-				user_error("Unable to determine version: " . implode("\n", $output), E_USER_WARNING);
+				user_error("Unable to determine version (using $root_dir): " . implode("\n", $output), E_USER_WARNING);
 			}
 		}
 
