@@ -1899,6 +1899,8 @@
 
 		if ('\\' === DIRECTORY_SEPARATOR) {
 			$ttrss_version = "UNKNOWN (Unsupported, Windows)";
+		} else if (PHP_OS === "Darwin") {
+			$ttrss_version = "UNKNOWN (Unsupported, Darwin)";
 		} else if (file_exists("$root_dir/version_static.txt")) {
 			$ttrss_version = trim(file_get_contents("$root_dir/version_static.txt")) . " (Unsupported)";
 		} else if (is_dir("$root_dir/.git")) {
