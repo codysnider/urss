@@ -1,5 +1,7 @@
 ## Contributing code the right way 
 
+*(or: how I learned to post merge requests without crying myself to sleep)*
+
 New user accounts on Gogs are not allowed to fork repositories because of spam. To get
 initial fork access, do the following:
 
