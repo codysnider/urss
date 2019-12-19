@@ -42,4 +42,3 @@
 
 	header("Content-Type: text/plain");
 	print error_json(13);
-?>

@@ -128,5 +128,3 @@
 
 	header("Content-Type: text/json");
 	print error_json(13);
-
-?>

@@ -33,5 +33,3 @@
 			print "<error>User not found</error>";
 		}
 	}
-
-?>

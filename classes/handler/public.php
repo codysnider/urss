@@ -604,10 +604,7 @@ class Handler_Public extends Handler {
 		} else {
 
 			$return = urlencode(make_self_url());
-
-			?>
-
-			<?php print_error("Not logged in"); ?>
+			print_error("Not logged in"); ?>
 
 			<form action="public.php?return=<?php echo $return ?>" method="post">
 
@@ -1232,4 +1229,3 @@ class Handler_Public extends Handler {
 		}
 	}
 }
-?>

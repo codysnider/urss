@@ -45,10 +45,10 @@
 			echo stylesheet_tag(get_theme_path($theme), 'theme_css');
 		}
 	}
+
+	print_user_stylesheet()
+
 	?>
-
-	<?php print_user_stylesheet() ?>
-
 	<style type="text/css">
 	<?php
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {

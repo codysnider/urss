@@ -1516,6 +1516,7 @@
 		}
 	}
 
+	/* TODO: This needs to use bcrypt */
 	function encrypt_password($pass, $salt = '', $mode2 = false) {
 		if ($salt && $mode2) {
 			return "MODE2:" . hash('sha256', $salt . $pass);
