@@ -27,6 +27,9 @@
 		error_reporting(E_ALL & ~E_NOTICE);
 	}
 
+	ini_set('display_errors', 0);
+	ini_set('display_startup_errors', 0);
+
 	require_once 'config.php';
 
 	/**
@@ -1897,7 +1900,11 @@
 		date_default_timezone_set('UTC');
 		$root_dir = dirname(dirname(__FILE__));
 
-		if (file_exists("$root_dir/version_static.txt")) {
+		if ('\\' === DIRECTORY_SEPARATOR) {
+			$ttrss_version = "UNKNOWN (Unsupported, Windows)";
+		} else if (PHP_OS === "Darwin") {
+			$ttrss_version = "UNKNOWN (Unsupported, Darwin)";
+		} else if (file_exists("$root_dir/version_static.txt")) {
 			$ttrss_version = trim(file_get_contents("$root_dir/version_static.txt")) . " (Unsupported)";
 		} else if (is_dir("$root_dir/.git")) {
 			$rc = 0;
