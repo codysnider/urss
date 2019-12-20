@@ -1,20 +1,20 @@
 <?php
 class RPC extends Handler_Protected {
 
-	function csrf_ignore($method) {
+	public function csrf_ignore($method) {
 		$csrf_ignored = array("sanitycheck", "completelabels", "saveprofile");
 
 		return array_search($method, $csrf_ignored) !== false;
 	}
 
-	function setprofile() {
+	public function setprofile() {
 		$_SESSION["profile"] = (int) clean($_REQUEST["id"]);
 
 		// default value
 		if (!$_SESSION["profile"]) $_SESSION["profile"] = null;
 	}
 
-	function remprofiles() {
+	public function remprofiles() {
 		$ids = explode(",", trim(clean($_REQUEST["ids"])));
 
 		foreach ($ids as $id) {
@@ -27,7 +27,7 @@ class RPC extends Handler_Protected {
 	}
 
 	// Silent
-	function addprofile() {
+	public function addprofile() {
 		$title = trim(clean($_REQUEST["title"]));
 
 		if ($title) {
@@ -61,7 +61,7 @@ class RPC extends Handler_Protected {
 		}
 	}
 
-	function saveprofile() {
+	public function saveprofile() {
 		$id = clean($_REQUEST["id"]);
 		$title = trim(clean($_REQUEST["value"]));
 
@@ -81,7 +81,7 @@ class RPC extends Handler_Protected {
 	}
 
 	// Silent
-	function remarchive() {
+	public function remarchive() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
 
 		$sth = $this->pdo->prepare("DELETE FROM ttrss_archived_feeds WHERE
@@ -94,7 +94,7 @@ class RPC extends Handler_Protected {
 		}
 	}
 
-	function addfeed() {
+	public function addfeed() {
 		$feed = clean($_REQUEST['feed']);
 		$cat = clean($_REQUEST['cat']);
 		$need_auth = isset($_REQUEST['need_auth']);
@@ -106,7 +106,7 @@ class RPC extends Handler_Protected {
 		print json_encode(array("result" => $rc));
 	}
 
-	function togglepref() {
+	public function togglepref() {
 		$key = clean($_REQUEST["key"]);
 		set_pref($key, !get_pref($key));
 		$value = get_pref($key);
@@ -114,7 +114,7 @@ class RPC extends Handler_Protected {
 		print json_encode(array("param" =>$key, "value" => $value));
 	}
 
-	function setpref() {
+	public function setpref() {
 		// set_pref escapes input, so no need to double escape it here
 		$key = clean($_REQUEST['key']);
 		$value = $_REQUEST['value'];
@@ -124,7 +124,7 @@ class RPC extends Handler_Protected {
 		print json_encode(array("param" =>$key, "value" => $value));
 	}
 
-	function mark() {
+	public function mark() {
 		$mark = clean($_REQUEST["mark"]);
 		$id = clean($_REQUEST["id"]);
 
@@ -137,7 +137,7 @@ class RPC extends Handler_Protected {
 		print json_encode(array("message" => "UPDATE_COUNTERS"));
 	}
 
-	function delete() {
+	public function delete() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
 		$ids_qmarks = arr_qmarks($ids);
 
@@ -150,7 +150,7 @@ class RPC extends Handler_Protected {
 		print json_encode(array("message" => "UPDATE_COUNTERS"));
 	}
 
-	function unarchive() {
+	public function unarchive() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
 
 		foreach ($ids as $id) {
@@ -203,7 +203,7 @@ class RPC extends Handler_Protected {
 		print json_encode(array("message" => "UPDATE_COUNTERS"));
 	}
 
-	function archive() {
+	public function archive() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
 
 		foreach ($ids as $id) {
@@ -257,7 +257,7 @@ class RPC extends Handler_Protected {
 		$this->pdo->commit();
 	}
 
-	function publ() {
+	public function publ() {
 		$pub = clean($_REQUEST["pub"]);
 		$id = clean($_REQUEST["id"]);
 
@@ -270,7 +270,7 @@ class RPC extends Handler_Protected {
 		print json_encode(array("message" => "UPDATE_COUNTERS"));
 	}
 
-	function getAllCounters() {
+	public function getAllCounters() {
 		@$seq = (int) $_REQUEST['seq'];
 
 		$reply = [
@@ -285,7 +285,7 @@ class RPC extends Handler_Protected {
 	}
 
 	/* GET["cmode"] = 0 - mark as read, 1 - as unread, 2 - toggle */
-	function catchupSelected() {
+	public function catchupSelected() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
 		$cmode = (int)clean($_REQUEST["cmode"]);
 
@@ -294,7 +294,7 @@ class RPC extends Handler_Protected {
 		print json_encode(array("message" => "UPDATE_COUNTERS", "ids" => $ids));
 	}
 
-	function markSelected() {
+	public function markSelected() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
 		$cmode = (int)clean($_REQUEST["cmode"]);
 
@@ -303,7 +303,7 @@ class RPC extends Handler_Protected {
 		print json_encode(array("message" => "UPDATE_COUNTERS"));
 	}
 
-	function publishSelected() {
+	public function publishSelected() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
 		$cmode = (int)clean($_REQUEST["cmode"]);
 
@@ -312,7 +312,7 @@ class RPC extends Handler_Protected {
 		print json_encode(array("message" => "UPDATE_COUNTERS"));
 	}
 
-	function sanityCheck() {
+	public function sanityCheck() {
 		$_SESSION["hasAudio"] = clean($_REQUEST["hasAudio"]) === "true";
 		$_SESSION["hasSandbox"] = clean($_REQUEST["hasSandbox"]) === "true";
 		$_SESSION["hasMp3"] = clean($_REQUEST["hasMp3"]) === "true";
@@ -330,7 +330,7 @@ class RPC extends Handler_Protected {
 		print json_encode($reply);
 	}
 
-	function completeLabels() {
+	public function completeLabels() {
 		$search = clean($_REQUEST["search"]);
 
 		$sth = $this->pdo->prepare("SELECT DISTINCT caption FROM
@@ -348,7 +348,7 @@ class RPC extends Handler_Protected {
 	}
 
 	// Silent
-	function massSubscribe() {
+	public function massSubscribe() {
 
 		$payload = json_decode(clean($_REQUEST["payload"]), false);
 		$mode = clean($_REQUEST["mode"]);
@@ -401,7 +401,7 @@ class RPC extends Handler_Protected {
 		}
 	}
 
-	function catchupFeed() {
+	public function catchupFeed() {
 		$feed_id = clean($_REQUEST['feed_id']);
 		$is_cat = clean($_REQUEST['is_cat']) == "true";
 		$mode = clean($_REQUEST['mode']);
@@ -416,7 +416,7 @@ class RPC extends Handler_Protected {
 		//print json_encode(array("message" => "UPDATE_COUNTERS"));
 	}
 
-	function setpanelmode() {
+	public function setpanelmode() {
 		$wide = (int) clean($_REQUEST["wide"]);
 
 		setcookie("ttrss_widescreen", $wide,
@@ -425,7 +425,7 @@ class RPC extends Handler_Protected {
 		print json_encode(array("wide" => $wide));
 	}
 
-	static function updaterandomfeed_real() {
+	public static function updaterandomfeed_real() {
 
 		// Test if the feed need a update (update interval exceded).
 		if (DB_TYPE == "pgsql") {
@@ -507,7 +507,7 @@ class RPC extends Handler_Protected {
 
 	}
 
-	function updaterandomfeed() {
+	public function updaterandomfeed() {
 		RPC::updaterandomfeed_real();
 	}
 
@@ -553,7 +553,7 @@ class RPC extends Handler_Protected {
 		$sth->execute(array_merge($ids, [$_SESSION['uid']]));
 	}
 
-	function getlinktitlebyid() {
+	public function getlinktitlebyid() {
 		$id = clean($_REQUEST['id']);
 
 		$sth = $this->pdo->prepare("SELECT link, title FROM ttrss_entries, ttrss_user_entries
@@ -570,7 +570,7 @@ class RPC extends Handler_Protected {
 		}
 	}
 
-	function log() {
+	public function log() {
 		$msg = clean($_REQUEST['msg']);
 		$file = clean_filename($_REQUEST['file']);
 		$line = (int) clean($_REQUEST['line']);
@@ -587,7 +587,7 @@ class RPC extends Handler_Protected {
 
 	}
 
-	function checkforupdates() {
+	public function checkforupdates() {
 		$rv = [];
 
 		$git_timestamp = false;

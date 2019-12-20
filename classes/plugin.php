@@ -43,8 +43,6 @@ abstract class Plugin {
 		return Plugin::API_VERSION_COMPAT;
 	}
 
-	/* gettext-related helpers */
-
 	public function __($msgid) {
 		return _dgettext(PluginHost::object_to_domain($this), $msgid);
 	}

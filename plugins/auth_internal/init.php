@@ -3,7 +3,7 @@ class Auth_Internal extends Plugin implements IAuthModule {
 
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Authenticates against internal tt-rss database",
 			"fox",
@@ -11,14 +11,14 @@ class Auth_Internal extends Plugin implements IAuthModule {
 	}
 
 	/* @var PluginHost $host */
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 		$this->pdo = Db::pdo();
 
 		$host->add_hook($host::HOOK_AUTH_USER, $this);
 	}
 
-	function authenticate($login, $password, $service = '') {
+	public function authenticate($login, $password, $service = '') {
 
 		$pwd_hash1 = encrypt_password($password);
 		$pwd_hash2 = encrypt_password($password, $login);
@@ -178,7 +178,7 @@ class Auth_Internal extends Plugin implements IAuthModule {
 		return false;
 	}
 
-	function check_password($owner_uid, $password) {
+	public function check_password($owner_uid, $password) {
 
 		$sth = $this->pdo->prepare("SELECT salt,login,otp_enabled FROM ttrss_users WHERE
 			id = ?");
@@ -215,7 +215,7 @@ class Auth_Internal extends Plugin implements IAuthModule {
 		return false;
 	}
 
-	function change_password($owner_uid, $old_password, $new_password) {
+	public function change_password($owner_uid, $old_password, $new_password) {
 
 		if ($this->check_password($owner_uid, $old_password)) {
 
@@ -262,8 +262,8 @@ class Auth_Internal extends Plugin implements IAuthModule {
 	}
 
 	private function check_app_password($login, $password, $service) {
-		$sth = $this->pdo->prepare("SELECT p.id, p.pwd_hash, u.id AS uid 
-			FROM ttrss_app_passwords p, ttrss_users u 
+		$sth = $this->pdo->prepare("SELECT p.id, p.pwd_hash, u.id AS uid
+			FROM ttrss_app_passwords p, ttrss_users u
 			WHERE p.owner_uid = u.id AND u.login = ? AND service = ?");
 		$sth->execute([$login, $service]);
 
@@ -287,7 +287,7 @@ class Auth_Internal extends Plugin implements IAuthModule {
 		return false;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

@@ -1,11 +1,11 @@
 <?php
 class Af_Comics_Whomp extends Af_ComicFilter {
 
-	function supported() {
+	public function supported() {
 		return array("Whomp!");
 	}
 
-	function process(&$article) {
+	public function process(&$article) {
 		if (strpos($article["guid"], "whompcomic.com") !== FALSE) {
 
 			$res = fetch_file_contents($article["link"], false, false, false,

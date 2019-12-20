@@ -1,6 +1,6 @@
 <?php
 class CCache {
-	static function zero_all($owner_uid) {
+	public static function zero_all($owner_uid) {
 		$pdo = Db::pdo();
 
 		$sth = $pdo->prepare("UPDATE ttrss_counters_cache SET
@@ -12,7 +12,7 @@ class CCache {
 		$sth->execute([$owner_uid]);
 	}
 
-	static function remove($feed_id, $owner_uid, $is_cat = false) {
+	public static function remove($feed_id, $owner_uid, $is_cat = false) {
 
 		$feed_id = (int) $feed_id;
 
@@ -30,7 +30,7 @@ class CCache {
 
 	}
 
-	static function update_all($owner_uid) {
+	public static function update_all($owner_uid) {
 
 		$pdo = Db::pdo();
 
@@ -61,7 +61,7 @@ class CCache {
 		}
 	}
 
-	static function find($feed_id, $owner_uid, $is_cat = false,
+	public static function find($feed_id, $owner_uid, $is_cat = false,
 						 $no_update = false) {
 
 		// "" (null) is valid and should be cast to 0 (uncategorized)
@@ -97,7 +97,7 @@ class CCache {
 
 	}
 
-	static function update($feed_id, $owner_uid, $is_cat = false,
+	public static function update($feed_id, $owner_uid, $is_cat = false,
 						   $update_pcat = true, $pcat_fast = false) {
 
 		// "" (null) is valid and should be cast to 0 (uncategorized)

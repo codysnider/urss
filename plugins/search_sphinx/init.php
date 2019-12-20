@@ -1,7 +1,7 @@
 <?php
 
 class Search_Sphinx extends Plugin {
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Delegate searching for articles to Sphinx (don't forget to set options in config.php)",
 			"hoelzro",
@@ -9,7 +9,7 @@ class Search_Sphinx extends Plugin {
 			"https://git.tt-rss.org/fox/tt-rss/wiki/SphinxSearch");
 	}
 
-	function init($host) {
+	public function init($host) {
 		$host->add_hook($host::HOOK_SEARCH, $this);
 
 		// idk if that would work but checking for the class being loaded is somehow not enough
@@ -20,7 +20,7 @@ class Search_Sphinx extends Plugin {
 		require_once __DIR__ . "/sphinxapi.php";
 	}
 
-	function hook_search($search) {
+	public function hook_search($search) {
 		$offset = 0;
 		$limit  = 500;
 
@@ -59,7 +59,7 @@ class Search_Sphinx extends Plugin {
 			return array("ref_id = -1", array());
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 }

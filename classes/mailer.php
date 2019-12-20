@@ -4,7 +4,7 @@ class Mailer {
 
 	private $last_error = "Unable to send mail: check local configuration.";
 
-	function mail($params) {
+	public function mail($params) {
 
 		$to_name = $params["to_name"];
 		$to_address = $params["to_address"];
@@ -42,11 +42,11 @@ class Mailer {
 		return mail($to_combined, $subject, $message, implode("\r\n", array_merge($headers, $additional_headers)));
 	}
 
-	function set_error($message) {
+	public function set_error($message) {
 		$this->last_error = $message;
 	}
 
-	function error() {
+	public function error() {
 		return $this->last_error;
 	}
 }

@@ -1,88 +1,89 @@
 <?php
-	error_reporting(E_ERROR | E_PARSE);
 
-	require_once "../config.php";
+error_reporting(E_ERROR | E_PARSE);
 
-	set_include_path(dirname(__FILE__) . PATH_SEPARATOR .
-		dirname(dirname(__FILE__)) . PATH_SEPARATOR .
-		dirname(dirname(__FILE__)) . "/include" . PATH_SEPARATOR .
-  		get_include_path());
+require_once "..".DIRECTORY_SEPARATOR."config.php";
 
-	chdir("..");
+set_include_path(dirname(__FILE__).PATH_SEPARATOR.
+    dirname(dirname(__FILE__)).PATH_SEPARATOR.
+    dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."include".PATH_SEPARATOR.
+    get_include_path());
 
-	define('TTRSS_SESSION_NAME', 'ttrss_api_sid');
-	define('NO_SESSION_AUTOSTART', true);
+chdir("..");
 
-	require_once "autoload.php";
-	require_once "db.php";
-	require_once "db-prefs.php";
-	require_once "functions.php";
-	require_once "sessions.php";
+define('TTRSS_SESSION_NAME', 'ttrss_api_sid');
+define('NO_SESSION_AUTOSTART', true);
 
-	ini_set('session.use_cookies', 0);
-	ini_set("session.gc_maxlifetime", 86400);
+require_once "autoload.php";
+require_once "db.php";
+require_once "db-prefs.php";
+require_once "functions.php";
+require_once "sessions.php";
 
-	if (defined('ENABLE_GZIP_OUTPUT') && ENABLE_GZIP_OUTPUT &&
-			function_exists("ob_gzhandler")) {
+ini_set('session.use_cookies', 0);
+ini_set("session.gc_maxlifetime", 86400);
 
-		ob_start("ob_gzhandler");
-	} else {
-		ob_start();
-	}
+if (defined('ENABLE_GZIP_OUTPUT') && ENABLE_GZIP_OUTPUT &&
+        function_exists("ob_gzhandler")) {
 
-	$input = file_get_contents("php://input");
+    ob_start("ob_gzhandler");
+} else {
+    ob_start();
+}
 
-	if (defined('_API_DEBUG_HTTP_ENABLED') && _API_DEBUG_HTTP_ENABLED) {
-		// Override $_REQUEST with JSON-encoded data if available
-		// fallback on HTTP parameters
-		if ($input) {
-			$input = json_decode($input, true);
-			if ($input) $_REQUEST = $input;
-		}
-	} else {
-		// Accept JSON only
-		$input = json_decode($input, true);
-		$_REQUEST = $input;
-	}
+$input = file_get_contents("php://input");
 
-	if ($_REQUEST["sid"]) {
-		session_id($_REQUEST["sid"]);
-		@session_start();
-	} else if (defined('_API_DEBUG_HTTP_ENABLED')) {
-		@session_start();
-	}
+if (defined('_API_DEBUG_HTTP_ENABLED') && _API_DEBUG_HTTP_ENABLED) {
+    // Override $_REQUEST with JSON-encoded data if available
+    // fallback on HTTP parameters
+    if ($input) {
+        $input = json_decode($input, true);
+        if ($input) $_REQUEST = $input;
+    }
+} else {
+    // Accept JSON only
+    $input = json_decode($input, true);
+    $_REQUEST = $input;
+}
 
-	startup_gettext();
+if ($_REQUEST["sid"]) {
+    session_id($_REQUEST["sid"]);
+    @session_start();
+} else if (defined('_API_DEBUG_HTTP_ENABLED')) {
+    @session_start();
+}
 
-	if (!init_plugins()) return;
+startup_gettext();
 
-	if ($_SESSION["uid"]) {
-		if (!validate_session()) {
-			header("Content-Type: text/json");
+if (!init_plugins()) return;
 
-			print json_encode(array("seq" => -1,
-				"status" => 1,
-				"content" => array("error" => "NOT_LOGGED_IN")));
+if ($_SESSION["uid"]) {
+    if (!validate_session()) {
+        header("Content-Type: text/json");
 
-			return;
-		}
+        print json_encode(array("seq" => -1,
+            "status" => 1,
+            "content" => array("error" => "NOT_LOGGED_IN")));
 
-		load_user_plugins( $_SESSION["uid"]);
-	}
+        return;
+    }
 
-	$method = strtolower($_REQUEST["op"]);
+    load_user_plugins( $_SESSION["uid"]);
+}
 
-	$handler = new API($_REQUEST);
+$method = strtolower($_REQUEST["op"]);
 
-	if ($handler->before($method)) {
-		if ($method && method_exists($handler, $method)) {
-			$handler->$method();
-		} else if (method_exists($handler, 'index')) {
-			$handler->index($method);
-		}
-		$handler->after();
-	}
+$handler = new API($_REQUEST);
 
-	header("Api-Content-Length: " . ob_get_length());
+if ($handler->before($method)) {
+    if ($method && method_exists($handler, $method)) {
+        $handler->$method();
+    } else if (method_exists($handler, 'index')) {
+        $handler->index($method);
+    }
+    $handler->after();
+}
 
-	ob_end_flush();
+header("Api-Content-Length: " . ob_get_length());
+
+ob_end_flush();

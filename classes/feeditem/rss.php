@@ -1,6 +1,6 @@
 <?php
 class FeedItem_RSS extends FeedItem_Common {
-	function get_id() {
+	public function get_id() {
 		$id = $this->elem->getElementsByTagName("guid")->item(0);
 
 		if ($id) {
@@ -10,7 +10,7 @@ class FeedItem_RSS extends FeedItem_Common {
 		}
 	}
 
-	function get_date() {
+	public function get_date() {
 		$pubDate = $this->elem->getElementsByTagName("pubDate")->item(0);
 
 		if ($pubDate) {
@@ -24,7 +24,7 @@ class FeedItem_RSS extends FeedItem_Common {
 		}
 	}
 
-	function get_link() {
+	public function get_link() {
 		$links = $this->xpath->query("atom:link", $this->elem);
 
 		foreach ($links as $link) {
@@ -50,7 +50,7 @@ class FeedItem_RSS extends FeedItem_Common {
 		}
 	}
 
-	function get_title() {
+	public function get_title() {
 		$title = $this->xpath->query("title", $this->elem)->item(0);
 
 		if ($title) {
@@ -66,7 +66,7 @@ class FeedItem_RSS extends FeedItem_Common {
 		}
 	}
 
-	function get_content() {
+	public function get_content() {
 		$contentA = $this->xpath->query("content:encoded", $this->elem)->item(0);
 		$contentB = $this->elem->getElementsByTagName("description")->item(0);
 
@@ -87,7 +87,7 @@ class FeedItem_RSS extends FeedItem_Common {
 		}
 	}
 
-	function get_description() {
+	public function get_description() {
 		$summary = $this->elem->getElementsByTagName("description")->item(0);
 
 		if ($summary) {
@@ -95,7 +95,7 @@ class FeedItem_RSS extends FeedItem_Common {
 		}
 	}
 
-	function get_categories() {
+	public function get_categories() {
 		$categories = $this->elem->getElementsByTagName("category");
 		$cats = [];
 
@@ -112,7 +112,7 @@ class FeedItem_RSS extends FeedItem_Common {
 		return $this->normalize_categories($cats);
 	}
 
-	function get_enclosures() {
+	public function get_enclosures() {
 		$enclosures = $this->elem->getElementsByTagName("enclosure");
 
 		$encs = array();
@@ -134,7 +134,7 @@ class FeedItem_RSS extends FeedItem_Common {
 		return $encs;
 	}
 
-	function get_language() {
+	public function get_language() {
 		$languages = $this->doc->getElementsByTagName('language');
 
 		if (count($languages) == 0) {

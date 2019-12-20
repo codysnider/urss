@@ -246,7 +246,7 @@ class Handler_Public extends Handler {
 		}
 	}
 
-	function getUnread() {
+	public function getUnread() {
 		$login = clean($_REQUEST["login"]);
 		$fresh = clean($_REQUEST["fresh"]) == "1";
 
@@ -268,7 +268,7 @@ class Handler_Public extends Handler {
 		}
 	}
 
-	function getProfiles() {
+	public function getProfiles() {
 		$login = clean($_REQUEST["login"]);
 		$rv = [];
 
@@ -290,16 +290,16 @@ class Handler_Public extends Handler {
 		print json_encode($rv);
 	}
 
-	function logout() {
+	public function logout() {
 		logout_user();
 		header("Location: index.php");
 	}
 
-	function share() {
+	public function share() {
 		$uuid = clean($_REQUEST["key"]);
 
 		if ($uuid) {
-			$sth = $this->pdo->prepare("SELECT ref_id, owner_uid 
+			$sth = $this->pdo->prepare("SELECT ref_id, owner_uid
 						FROM ttrss_user_entries WHERE uuid = ?");
 			$sth->execute([$uuid]);
 
@@ -444,7 +444,7 @@ class Handler_Public extends Handler {
 
 	}
 
-	function rss() {
+	public function rss() {
 		$feed = clean($_REQUEST["id"]);
 		$key = clean($_REQUEST["key"]);
 		$is_cat = clean($_REQUEST["is_cat"]);
@@ -484,21 +484,21 @@ class Handler_Public extends Handler {
 		}
 	}
 
-	function updateTask() {
+	public function updateTask() {
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_UPDATE_TASK, "hook_update_task", false);
 	}
 
-	function housekeepingTask() {
+	public function housekeepingTask() {
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_HOUSE_KEEPING, "hook_house_keeping", false);
 	}
 
-	function globalUpdateFeeds() {
+	public function globalUpdateFeeds() {
 		RPC::updaterandomfeed_real();
 
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_UPDATE_TASK, "hook_update_task", false);
 	}
 
-	function sharepopup() {
+	public function sharepopup() {
 		if (SINGLE_USER_MODE) {
 			login_sequence();
 		}
@@ -641,7 +641,7 @@ class Handler_Public extends Handler {
 		print "</div></body></html>";
 	}
 
-	function login() {
+	public function login() {
 		if (!SINGLE_USER_MODE) {
 
 			$login = clean($_POST["login"]);
@@ -699,7 +699,7 @@ class Handler_Public extends Handler {
 		}
 	}
 
-	function subscribe() {
+	public function subscribe() {
 		if (SINGLE_USER_MODE) {
 			login_sequence();
 		}
@@ -836,12 +836,12 @@ class Handler_Public extends Handler {
 		}
 	}
 
-	function index() {
+	public function index() {
 		header("Content-Type: text/plain");
 		print error_json(13);
 	}
 
-	function forgotpass() {
+	public function forgotpass() {
 		startup_gettext();
 		session_start();
 
@@ -1043,7 +1043,7 @@ class Handler_Public extends Handler {
 
 	}
 
-	function dbupdate() {
+	public function dbupdate() {
 		startup_gettext();
 
 		if (!SINGLE_USER_MODE && $_SESSION["access_level"] < 10) {
@@ -1082,7 +1082,7 @@ class Handler_Public extends Handler {
 					});
 				});
 
-				function confirmOP() {
+				public function confirmOP() {
 					return confirm("Update the database?");
 				}
 			</script>
@@ -1171,7 +1171,7 @@ class Handler_Public extends Handler {
 		<?php
 	}
 
-	function cached_url() {
+	public function cached_url() {
 		list ($cache_dir, $filename) = explode("/", $_GET["file"], 2);
 
 		// we do not allow files with extensions at the moment

@@ -7,17 +7,17 @@ class Af_Readability extends Plugin {
 	/* @var PluginHost $host */
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Try to inline article content using Readability",
 			"fox");
 	}
 
-	function flags() {
+	public function flags() {
 		return array("needs_curl" => true);
 	}
 
-	function save() {
+	public function save() {
 		$enable_share_anything = checkbox_to_sql_bool($_POST["enable_share_anything"]);
 
 		$this->host->set($this, "enable_share_anything", $enable_share_anything);
@@ -25,7 +25,7 @@ class Af_Readability extends Plugin {
 		echo __("Data saved.");
 	}
 
-	function init($host)
+	public function init($host)
 	{
 		$this->host = $host;
 
@@ -46,7 +46,7 @@ class Af_Readability extends Plugin {
 		$host->add_filter_action($this, "action_inline", __("Inline content"));
 	}
 
-	function hook_prefs_tab($args) {
+	public function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
 		print "<div dojoType='dijit.layout.AccordionPane'
@@ -115,7 +115,7 @@ class Af_Readability extends Plugin {
 		print "</div>";
 	}
 
-	function hook_prefs_edit_feed($feed_id) {
+	public function hook_prefs_edit_feed($feed_id) {
 		print "<header>".__("Readability")."</header>";
 		print "<section>";
 
@@ -135,7 +135,7 @@ class Af_Readability extends Plugin {
 		print "</section>";
 	}
 
-	function hook_prefs_save_feed($feed_id) {
+	public function hook_prefs_save_feed($feed_id) {
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
 		if (!is_array($enabled_feeds)) $enabled_feeds = array();
 
@@ -158,7 +158,7 @@ class Af_Readability extends Plugin {
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	function hook_article_filter_action($article, $action) {
+	public function hook_article_filter_action($article, $action) {
 		return $this->process_article($article);
 	}
 
@@ -220,7 +220,7 @@ class Af_Readability extends Plugin {
 		return false;
 	}
 
-	function process_article($article) {
+	public function process_article($article) {
 
 		$extracted_content = $this->extract_content($article["link"]);
 
@@ -234,7 +234,7 @@ class Af_Readability extends Plugin {
 		return $article;
 	}
 
-	function hook_article_filter($article) {
+	public function hook_article_filter($article) {
 
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
 		if (!is_array($enabled_feeds)) return $article;
@@ -246,7 +246,7 @@ class Af_Readability extends Plugin {
 
 	}
 
-	function hook_get_full_text($link)
+	public function hook_get_full_text($link)
 	{
 		$enable_share_anything = $this->host->get($this, "enable_share_anything");
 
@@ -264,7 +264,7 @@ class Af_Readability extends Plugin {
 		return false;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

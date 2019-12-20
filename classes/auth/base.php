@@ -4,13 +4,13 @@ class Auth_Base {
 
 	const AUTH_SERVICE_API = '_api';
 
-	function __construct() {
+	public function __construct() {
 		$this->pdo = Db::pdo();
 	}
 
 	// Auto-creates specified user if allowed by system configuration
 	// Can be used instead of find_user_by_login() by external auth modules
-	function auto_create_user($login, $password = false) {
+	public function auto_create_user($login, $password = false) {
 		if ($login && defined('AUTH_AUTO_CREATE') && AUTH_AUTO_CREATE) {
 			$user_id = $this->find_user_by_login($login);
 
@@ -35,7 +35,7 @@ class Auth_Base {
 		return $this->find_user_by_login($login);
 	}
 
-	function find_user_by_login($login) {
+	public function find_user_by_login($login) {
 		$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE login = ?");
 		$sth->execute([$login]);
 

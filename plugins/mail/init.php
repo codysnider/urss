@@ -4,24 +4,24 @@ class Mail extends Plugin {
 	/* @var PluginHost $host */
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Share article via email",
 			"fox");
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_ARTICLE_BUTTON, $this);
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 	}
 
-	function get_js() {
+	public function get_js() {
 		return file_get_contents(dirname(__FILE__) . "/mail.js");
 	}
 
-	function save() {
+	public function save() {
 		$addresslist = $_POST["addresslist"];
 
 		$this->host->set($this, "addresslist", $addresslist);
@@ -29,10 +29,10 @@ class Mail extends Plugin {
 		echo __("Mail addresses saved.");
 	}
 
-	function hook_prefs_tab($args) {
+	public function hook_prefs_tab($args) {
 		if ($args != "prefPrefs") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>mail</i> ".__('Mail plugin')."\">";
 
 		print "<p>" . __("You can set predefined email addressed here (comma-separated list):") . "</p>";
@@ -70,13 +70,13 @@ class Mail extends Plugin {
 		print "</div>";
 	}
 
-	function hook_article_button($line) {
+	public function hook_article_button($line) {
 		return "<i class='material-icons' style=\"cursor : pointer\"
 					onclick=\"Plugins.Mail.send(".$line["id"].")\"
 					title='".__('Forward by email')."'>mail</i>";
 	}
 
-	function emailArticle() {
+	public function emailArticle() {
 
 		$ids = explode(",", $_REQUEST['param']);
 		$ids_qmarks = arr_qmarks($ids);
@@ -181,7 +181,7 @@ class Mail extends Plugin {
 		//return;
 	}
 
-	function sendEmail() {
+	public function sendEmail() {
 		$reply = array();
 
 		/*$mail->AddReplyTo(strip_tags($_REQUEST['from_email']),
@@ -233,7 +233,7 @@ class Mail extends Plugin {
 		print "</ul>";
 	} */
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

@@ -1,11 +1,11 @@
 <?php
 class Af_Comics_Cad extends Af_ComicFilter {
 
-	function supported() {
+	public function supported() {
 		return array("Ctrl+Alt+Del");
 	}
 
-	function process(&$article) {
+	public function process(&$article) {
 		if (strpos($article["link"], "cad-comic.com") !== FALSE) {
 			if (strpos($article["title"], "News:") === FALSE) {
 

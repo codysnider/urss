@@ -4,7 +4,7 @@ abstract class FeedItem_Common extends FeedItem {
 	protected $xpath;
 	protected $doc;
 
-	function __construct($elem, $doc, $xpath) {
+	public function __construct($elem, $doc, $xpath) {
 		$this->elem = $elem;
 		$this->xpath = $xpath;
 		$this->doc = $doc;
@@ -21,11 +21,11 @@ abstract class FeedItem_Common extends FeedItem {
 		}
 	}
 
-	function get_element() {
+	public function get_element() {
 		return $this->elem;
 	}
 
-	function get_author() {
+	public function get_author() {
 		$author = $this->elem->getElementsByTagName("author")->item(0);
 
 		if ($author) {
@@ -51,7 +51,7 @@ abstract class FeedItem_Common extends FeedItem {
 		return implode(", ", $authors);
 	}
 
-	function get_comments_url() {
+	public function get_comments_url() {
 		//RSS only. Use a query here to avoid namespace clashes (e.g. with slash).
 		//might give a wrong result if a default namespace was declared (possible with XPath 2.0)
 		$com_url = $this->xpath->query("comments", $this->elem)->item(0);
@@ -67,7 +67,7 @@ abstract class FeedItem_Common extends FeedItem {
 			return clean($com_url->nodeValue);
 	}
 
-	function get_comments_count() {
+	public function get_comments_count() {
 		//also query for ATE stuff here
 		$query = "slash:comments|thread:total|atom:link[@rel='replies']/@thread:count";
 		$comments = $this->xpath->query($query, $this->elem)->item(0);
@@ -78,7 +78,7 @@ abstract class FeedItem_Common extends FeedItem {
 	}
 
 	// this is common for both Atom and RSS types and deals with various media: elements
-	function get_enclosures() {
+	public function get_enclosures() {
 		$encs = [];
 
 		$enclosures = $this->xpath->query("media:content", $this->elem);
@@ -150,11 +150,11 @@ abstract class FeedItem_Common extends FeedItem {
 		return $encs;
 	}
 
-	function count_children($node) {
+	public function count_children($node) {
 		return $node->getElementsByTagName("*")->length;
 	}
 
-	function subtree_or_text($node) {
+	public function subtree_or_text($node) {
 		if ($this->count_children($node) == 0) {
 			return $node->nodeValue;
 		} else {
@@ -162,7 +162,7 @@ abstract class FeedItem_Common extends FeedItem {
 		}
 	}
 
-	static function normalize_categories($cats) {
+	public static function normalize_categories($cats) {
 
 		$tmp = [];
 

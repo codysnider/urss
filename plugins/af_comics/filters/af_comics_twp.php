@@ -1,11 +1,11 @@
 <?php
 class Af_Comics_Twp extends Af_ComicFilter {
 
-	function supported() {
+	public function supported() {
 		return array("Three Word Phrase");
 	}
 
-	function process(&$article) {
+	public function process(&$article) {
 
 		if (strpos($article["link"], "threewordphrase.com") !== FALSE) {
 

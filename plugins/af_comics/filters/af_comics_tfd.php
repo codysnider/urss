@@ -1,11 +1,11 @@
 <?php
 class Af_Comics_Tfd extends Af_ComicFilter {
 
-	function supported() {
+	public function supported() {
 		return array("Toothpaste For Dinner", "Married to the Sea");
 	}
 
-	function process(&$article) {
+	public function process(&$article) {
 		if (strpos($article["link"], "toothpastefordinner.com") !== FALSE ||
 		    strpos($article["link"], "marriedtothesea.com") !== FALSE) {
 			$res = fetch_file_contents($article["link"], false, false, false,

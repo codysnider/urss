@@ -2,11 +2,11 @@
 
 class Af_Comics_Dilbert extends Af_ComicFilter {
 
-	function supported() {
+	public function supported() {
 		return array("Dilbert");
 	}
 
-	function process(&$article) {
+	public function process(&$article) {
 		if (strpos($article["link"], "dilbert.com") !== FALSE ||
 			strpos($article["link"], "/DilbertDailyStrip") !== FALSE) {
 

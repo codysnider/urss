@@ -1,21 +1,21 @@
 <?php
 class Pref_Filters extends Handler_Protected {
 
-	function csrf_ignore($method) {
+	public function csrf_ignore($method) {
 		$csrf_ignored = array("index", "getfiltertree", "edit", "newfilter", "newrule",
 			"newaction", "savefilterorder");
 
 		return array_search($method, $csrf_ignored) !== false;
 	}
 
-	function filtersortreset() {
+	public function filtersortreset() {
 		$sth = $this->pdo->prepare("UPDATE ttrss_filters2
 				SET order_id = 0 WHERE owner_uid = ?");
 		$sth->execute([$_SESSION['uid']]);
 		return;
 	}
 
-	function savefilterorder() {
+	public function savefilterorder() {
 		$data = json_decode($_POST['payload'], true);
 
 		#file_put_contents("/tmp/saveorder.json", clean($_POST['payload']));
@@ -45,7 +45,7 @@ class Pref_Filters extends Handler_Protected {
 		return;
 	}
 
-	function testFilterDo() {
+	public function testFilterDo() {
 		$offset = (int) clean($_REQUEST["offset"]);
 		$limit = (int) clean($_REQUEST["limit"]);
 
@@ -159,7 +159,7 @@ class Pref_Filters extends Handler_Protected {
 		print json_encode($rv);
 	}
 
-	function testFilter() {
+	public function testFilter() {
 
 		if (isset($_REQUEST["offset"])) return $this->testFilterDo();
 
@@ -237,7 +237,7 @@ class Pref_Filters extends Handler_Protected {
 		return $rv;
 	}
 
-	function getfiltertree() {
+	public function getfiltertree() {
 		$root = array();
 		$root['id'] = 'root';
 		$root['name'] = __('Filters');
@@ -324,7 +324,7 @@ class Pref_Filters extends Handler_Protected {
 		return;
 	}
 
-	function edit() {
+	public function edit() {
 
 		$filter_id = clean($_REQUEST["id"]);
 
@@ -557,7 +557,7 @@ class Pref_Filters extends Handler_Protected {
 			$filter_type, $feed, isset($rule["inverse"]) ? __("(inverse)") : "") . "</span>";
 	}
 
-	function printRuleName() {
+	public function printRuleName() {
 		print $this->getRuleName(json_decode(clean($_REQUEST["rule"]), true));
 	}
 
@@ -595,11 +595,11 @@ class Pref_Filters extends Handler_Protected {
 		return $title;
 	}
 
-	function printActionName() {
+	public function printActionName() {
 		print $this->getActionName(json_decode(clean($_REQUEST["action"]), true));
 	}
 
-	function editSave() {
+	public function editSave() {
 		if (clean($_REQUEST["savemode"] && $_REQUEST["savemode"]) == "test") {
 			return $this->testFilter();
 		}
@@ -625,7 +625,7 @@ class Pref_Filters extends Handler_Protected {
 		$this->pdo->commit();
 	}
 
-	function remove() {
+	public function remove() {
 
 		$ids = explode(",", clean($_REQUEST["ids"]));
 		$ids_qmarks = arr_qmarks($ids);
@@ -713,7 +713,7 @@ class Pref_Filters extends Handler_Protected {
 		}
 	}
 
-	function add() {
+	public function add() {
 		if (clean($_REQUEST["savemode"] && $_REQUEST["savemode"]) == "test") {
 			return $this->testFilter();
 		}
@@ -745,7 +745,7 @@ class Pref_Filters extends Handler_Protected {
 		$this->pdo->commit();
 	}
 
-	function index() {
+	public function index() {
 
 		$filter_search = clean($_REQUEST["search"]);
 
@@ -839,7 +839,7 @@ class Pref_Filters extends Handler_Protected {
 
 	}
 
-	function newfilter() {
+	public function newfilter() {
 
 		print "<form name='filter_new_form' id='filter_new_form' onsubmit='return false'>";
 
@@ -945,7 +945,7 @@ class Pref_Filters extends Handler_Protected {
 
 	}
 
-	function newrule() {
+	public function newrule() {
 		$rule = json_decode(clean($_REQUEST["rule"]), true);
 
 		if ($rule) {
@@ -976,7 +976,7 @@ class Pref_Filters extends Handler_Protected {
 		print "<section>";
 
 		print "<input dojoType=\"dijit.form.ValidationTextBox\"
-			 required=\"true\" id=\"filterDlg_regExp\" 
+			 required=\"true\" id=\"filterDlg_regExp\"
 			 onchange='Filters.filterDlgCheckRegExp(this)'
 			 onblur='Filters.filterDlgCheckRegExp(this)'
 			 onfocus='Filters.filterDlgCheckRegExp(this)'
@@ -1026,7 +1026,7 @@ class Pref_Filters extends Handler_Protected {
 		print "</form>";
 	}
 
-	function newaction() {
+	public function newaction() {
 		$action = json_decode(clean($_REQUEST["action"]), true);
 
 		if ($action) {
@@ -1165,7 +1165,7 @@ class Pref_Filters extends Handler_Protected {
 		return [];
 	}
 
-	function join() {
+	public function join() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
 
 		if (count($ids) > 1) {

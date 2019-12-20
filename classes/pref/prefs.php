@@ -7,13 +7,13 @@ class Pref_Prefs extends Handler_Protected {
 	private $pref_blacklist = [];
 	private $profile_blacklist = [];
 
-	function csrf_ignore($method) {
+	public function csrf_ignore($method) {
 		$csrf_ignored = array("index", "updateself", "customizecss", "editprefprofiles");
 
 		return array_search($method, $csrf_ignored) !== false;
 	}
 
-	function __construct($args) {
+	public function __construct($args) {
 		parent::__construct($args);
 
 		$this->pref_item_map = [
@@ -116,7 +116,7 @@ class Pref_Prefs extends Handler_Protected {
 			"SSL_CERT_SERIAL", "DIGEST_PREFERRED_TIME"];
 	}
 
-	function changepassword() {
+	public function changepassword() {
 
 		if (defined('_TTRSS_DEMO_INSTANCE')) {
 			print "ERROR: ".format_error("Disabled in demo version.");
@@ -156,7 +156,7 @@ class Pref_Prefs extends Handler_Protected {
 		}
 	}
 
-	function saveconfig() {
+	public function saveconfig() {
 		$boolean_prefs = explode(",", clean($_POST["boolean_prefs"]));
 
 		foreach ($boolean_prefs as $pref) {
@@ -198,7 +198,7 @@ class Pref_Prefs extends Handler_Protected {
 		}
 	}
 
-	function changeemail() {
+	public function changeemail() {
 
 		$email = clean($_POST["email"]);
 		$full_name = clean($_POST["full_name"]);
@@ -244,7 +244,7 @@ class Pref_Prefs extends Handler_Protected {
 		return;
 	}
 
-	function resetconfig() {
+	public function resetconfig() {
 
 		$_SESSION["prefs_op_result"] = "reset-to-defaults";
 
@@ -258,7 +258,7 @@ class Pref_Prefs extends Handler_Protected {
 		echo __("Your preferences are now set to default values.");
 	}
 
-	function index() {
+	public function index() {
 
 		global $access_level_names;
 
@@ -976,11 +976,11 @@ class Pref_Prefs extends Handler_Protected {
 
 	}
 
-	function toggleAdvanced() {
+	public function toggleAdvanced() {
 		$_SESSION["prefs_show_advanced"] = !$_SESSION["prefs_show_advanced"];
 	}
 
-	function otpsecret() {
+	public function otpsecret() {
 		$sth = $this->pdo->prepare("SELECT salt, otp_enabled
 			FROM ttrss_users
 			WHERE id = ?");
@@ -1000,7 +1000,7 @@ class Pref_Prefs extends Handler_Protected {
 		return false;
 	}
 
-	function otpqrcode() {
+	public function otpqrcode() {
 		require_once "lib/phpqrcode/phpqrcode.php";
 
 		$sth = $this->pdo->prepare("SELECT login
@@ -1019,7 +1019,7 @@ class Pref_Prefs extends Handler_Protected {
 		}
 	}
 
-	function otpenable() {
+	public function otpenable() {
 
 		$password = clean($_REQUEST["password"]);
 		$otp = clean($_REQUEST["otp"]);
@@ -1051,7 +1051,7 @@ class Pref_Prefs extends Handler_Protected {
 
 	}
 
-	static function isdefaultpassword() {
+	public static function isdefaultpassword() {
 		$authenticator = PluginHost::getInstance()->get_plugin($_SESSION["auth_module"]);
 
 		if ($authenticator &&
@@ -1064,7 +1064,7 @@ class Pref_Prefs extends Handler_Protected {
 		return false;
 	}
 
-	function otpdisable() {
+	public function otpdisable() {
 		$password = clean($_REQUEST["password"]);
 
 		$authenticator = PluginHost::getInstance()->get_plugin($_SESSION["auth_module"]);
@@ -1107,7 +1107,7 @@ class Pref_Prefs extends Handler_Protected {
 
 	}
 
-	function setplugins() {
+	public function setplugins() {
 		if (is_array(clean($_REQUEST["plugins"])))
 			$plugins = join(",", clean($_REQUEST["plugins"]));
 		else
@@ -1116,13 +1116,13 @@ class Pref_Prefs extends Handler_Protected {
 		set_pref("_ENABLED_PLUGINS", $plugins);
 	}
 
-	function clearplugindata() {
+	public function clearplugindata() {
 		$name = clean($_REQUEST["name"]);
 
 		PluginHost::getInstance()->clear_data(PluginHost::getInstance()->get_plugin($name));
 	}
 
-	function customizeCSS() {
+	public function customizeCSS() {
 		$value = get_pref("USER_STYLESHEET");
 		$value = str_replace("<br/>", "\n", $value);
 
@@ -1150,7 +1150,7 @@ class Pref_Prefs extends Handler_Protected {
 
 	}
 
-	function editPrefProfiles() {
+	public function editPrefProfiles() {
 		print "<div dojoType='fox.Toolbar'>";
 
 		print "<div dojoType='fox.form.DropDownButton'>".
@@ -1317,7 +1317,7 @@ class Pref_Prefs extends Handler_Protected {
 		return "SSHA-512:".hash('sha512', $salt . $password). ":$salt";
 	}
 
-	function deleteAppPassword() {
+	public function deleteAppPassword() {
 		$ids = explode(",", clean($_REQUEST['ids']));
 		$ids_qmarks = arr_qmarks($ids);
 
@@ -1327,7 +1327,7 @@ class Pref_Prefs extends Handler_Protected {
 		$this->appPasswordList();
 	}
 
-	function generateAppPassword() {
+	public function generateAppPassword() {
 		$title = clean($_REQUEST['title']);
 		$new_password = make_password(16);
 		$new_password_hash = $this->encryptAppPassword($new_password);

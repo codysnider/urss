@@ -1,6 +1,6 @@
 <?php
 interface IHandler {
-	function csrf_ignore($method);
-	function before($method);
-	function after();
+	public function csrf_ignore($method);
+	public function before($method);
+	public function after();
 }

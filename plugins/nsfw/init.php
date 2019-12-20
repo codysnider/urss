@@ -2,14 +2,14 @@
 class NSFW extends Plugin {
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Hide article content based on tags",
 			"fox",
 			false);
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_RENDER_ARTICLE, $this);
@@ -18,11 +18,11 @@ class NSFW extends Plugin {
 
 	}
 
-	function get_js() {
+	public function get_js() {
 		return file_get_contents(dirname(__FILE__) . "/init.js");
 	}
 
-	function hook_render_article($article) {
+	public function hook_render_article($article) {
 		$tags = array_map("trim", explode(",", $this->host->get($this, "tags")));
 		$a_tags = array_map("trim", explode(",", $article["tag_cache"]));
 
@@ -34,7 +34,7 @@ class NSFW extends Plugin {
 		return $article;
 	}
 
-	function hook_render_article_cdm($article) {
+	public function hook_render_article_cdm($article) {
 		$tags = array_map("trim", explode(",", $this->host->get($this, "tags")));
 		$a_tags = array_map("trim", explode(",", $article["tag_cache"]));
 
@@ -46,10 +46,10 @@ class NSFW extends Plugin {
 		return $article;
 	}
 
-	function hook_prefs_tab($args) {
+	public function hook_prefs_tab($args) {
 		if ($args != "prefPrefs") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>extension</i> ".__("NSFW Plugin")."\">";
 
 		print "<br/>";
@@ -90,7 +90,7 @@ class NSFW extends Plugin {
 			print "</div>"; #pane
 	}
 
-	function save() {
+	public function save() {
 		$tags = explode(",", $_POST["tags"]);
 		$tags = array_map("trim", $tags);
 		$tags = array_map("mb_strtolower", $tags);
@@ -101,7 +101,7 @@ class NSFW extends Plugin {
 		echo __("Configuration saved.");
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

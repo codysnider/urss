@@ -2,29 +2,29 @@
 class MailTo extends Plugin {
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Share article via email (using mailto: links, invoking your mail client)",
 			"fox");
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_ARTICLE_BUTTON, $this);
 	}
 
-	function get_js() {
+	public function get_js() {
 		return file_get_contents(dirname(__FILE__) . "/init.js");
 	}
 
-	function hook_article_button($line) {
+	public function hook_article_button($line) {
 		return "<i class='material-icons' style=\"cursor : pointer\"
 					onclick=\"Plugins.Mailto.send(".$line["id"].")\"
 					title='".__('Forward by email')."'>mail_outline</i>";
 	}
 
-	function emailArticle() {
+	public function emailArticle() {
 
 		$ids = explode(",", $_REQUEST['param']);
 		$ids_qmarks = arr_qmarks($ids);
@@ -88,7 +88,7 @@ class MailTo extends Plugin {
 		//return;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

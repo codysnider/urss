@@ -5,22 +5,22 @@ class DbUpdater {
 	private $db_type;
 	private $need_version;
 
-	function __construct($pdo, $db_type, $need_version) {
+	public function __construct($pdo, $db_type, $need_version) {
 		$this->pdo = Db::pdo(); //$pdo;
 		$this->db_type = $db_type;
 		$this->need_version = (int) $need_version;
 	}
 
-	function getSchemaVersion() {
+	public function getSchemaVersion() {
 		$row = $this->pdo->query("SELECT schema_version FROM ttrss_version")->fetch();
 		return (int) $row['schema_version'];
 	}
 
-	function isUpdateRequired() {
+	public function isUpdateRequired() {
 		return $this->getSchemaVersion() < $this->need_version;
 	}
 
-	function getSchemaLines($version) {
+	public function getSchemaLines($version) {
 		$filename = "schema/versions/".$this->db_type."/$version.sql";
 
 		if (file_exists($filename)) {
@@ -31,7 +31,7 @@ class DbUpdater {
 		}
 	}
 
-	function performUpdateTo($version, $html_output = true) {
+	public function performUpdateTo($version, $html_output = true) {
 		if ($this->getSchemaVersion() == $version - 1) {
 
 			$lines = $this->getSchemaLines($version);

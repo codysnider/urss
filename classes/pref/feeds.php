@@ -1,6 +1,6 @@
 <?php
 class Pref_Feeds extends Handler_Protected {
-	function csrf_ignore($method) {
+	public function csrf_ignore($method) {
 		$csrf_ignored = array("index", "getfeedtree", "add", "editcats", "editfeed",
 			"savefeedorder", "uploadicon", "feedswitherrors", "inactivefeeds",
 			"batchsubscribe");
@@ -24,12 +24,12 @@ class Pref_Feeds extends Handler_Protected {
 		return $rv;
 	}
 
-	function batch_edit_cbox($elem, $label = false) {
+	public function batch_edit_cbox($elem, $label = false) {
 		print "<input type=\"checkbox\" title=\"".__("Check to enable field")."\"
 			onchange=\"dijit.byId('feedEditDlg').toggleField(this, '$elem', '$label')\">";
 	}
 
-	function renamecat() {
+	public function renamecat() {
 		$title = clean($_REQUEST['title']);
 		$id = clean($_REQUEST['id']);
 
@@ -111,11 +111,11 @@ class Pref_Feeds extends Handler_Protected {
 		return $items;
 	}
 
-	function getfeedtree() {
+	public function getfeedtree() {
 		print json_encode($this->makefeedtree());
 	}
 
-	function makefeedtree() {
+	public function makefeedtree() {
 
 		if (clean($_REQUEST['mode']) != 2)
 			$search = $_SESSION["prefs_feed_search"];
@@ -328,13 +328,13 @@ class Pref_Feeds extends Handler_Protected {
 		return $fl;
 	}
 
-	function catsortreset() {
+	public function catsortreset() {
 		$sth = $this->pdo->prepare("UPDATE ttrss_feed_categories
 				SET order_id = 0 WHERE owner_uid = ?");
 		$sth->execute([$_SESSION['uid']]);
 	}
 
-	function feedsortreset() {
+	public function feedsortreset() {
 		$sth = $this->pdo->prepare("UPDATE ttrss_feeds
 				SET order_id = 0 WHERE owner_uid = ?");
 		$sth->execute([$_SESSION['uid']]);
@@ -403,7 +403,7 @@ class Pref_Feeds extends Handler_Protected {
 		}
 	}
 
-	function savefeedorder() {
+	public function savefeedorder() {
 		$data = json_decode($_POST['payload'], true);
 
 		#file_put_contents("/tmp/saveorder.json", clean($_POST['payload']));
@@ -439,7 +439,7 @@ class Pref_Feeds extends Handler_Protected {
 		}
 	}
 
-	function removeicon() {
+	public function removeicon() {
 		$feed_id = clean($_REQUEST["feed_id"]);
 
 		$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE id = ? AND owner_uid = ?");
@@ -453,7 +453,7 @@ class Pref_Feeds extends Handler_Protected {
 		}
 	}
 
-	function uploadicon() {
+	public function uploadicon() {
 		header("Content-type: text/html");
 
 		if (is_uploaded_file($_FILES['icon_file']['tmp_name'])) {
@@ -500,7 +500,7 @@ class Pref_Feeds extends Handler_Protected {
 		return;
 	}
 
-	function editfeed() {
+	public function editfeed() {
 		global $purge_intervals;
 		global $update_intervals;
 
@@ -795,7 +795,7 @@ class Pref_Feeds extends Handler_Protected {
 		}
 	}
 
-	function editfeeds() {
+	public function editfeeds() {
 		global $purge_intervals;
 		global $update_intervals;
 
@@ -952,15 +952,15 @@ class Pref_Feeds extends Handler_Protected {
 		return;
 	}
 
-	function batchEditSave() {
+	public function batchEditSave() {
 		return $this->editsaveops(true);
 	}
 
-	function editSave() {
+	public function editSave() {
 		return $this->editsaveops(false);
 	}
 
-	function editsaveops($batch) {
+	public function editsaveops($batch) {
 
 		$feed_title = trim(clean($_POST["title"]));
 		$feed_url = trim(clean($_POST["feed_url"]));
@@ -1140,7 +1140,7 @@ class Pref_Feeds extends Handler_Protected {
 		return;
 	}
 
-	function remove() {
+	public function remove() {
 
 		$ids = explode(",", clean($_REQUEST["ids"]));
 
@@ -1151,20 +1151,20 @@ class Pref_Feeds extends Handler_Protected {
 		return;
 	}
 
-	function removeCat() {
+	public function removeCat() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
 		foreach ($ids as $id) {
 			$this->remove_feed_category($id, $_SESSION["uid"]);
 		}
 	}
 
-	function addCat() {
+	public function addCat() {
 		$feed_cat = trim(clean($_REQUEST["cat"]));
 
 		Feeds::add_feed_category($feed_cat);
 	}
 
-	function index() {
+	public function index() {
 
 		print "<div dojoType='dijit.layout.AccordionContainer' region='center'>";
 		print "<div style='padding : 0px' dojoType='dijit.layout.AccordionPane'
@@ -1423,7 +1423,7 @@ class Pref_Feeds extends Handler_Protected {
 		return $obj;
 	}
 
-	function inactiveFeeds() {
+	public function inactiveFeeds() {
 
 		if (DB_TYPE == "pgsql") {
 			$interval_qpart = "NOW() - INTERVAL '3 months'";
@@ -1496,7 +1496,7 @@ class Pref_Feeds extends Handler_Protected {
 
 	}
 
-	function feedsWithErrors() {
+	public function feedsWithErrors() {
 		$sth = $this->pdo->prepare("SELECT id,title,feed_url,last_error,site_url
 			FROM ttrss_feeds WHERE last_error != '' AND owner_uid = ?");
 		$sth->execute([$_SESSION['uid']]);
@@ -1565,7 +1565,7 @@ class Pref_Feeds extends Handler_Protected {
 		CCache::remove($id, $owner_uid, true);
 	}
 
-	static function remove_feed($id, $owner_uid) {
+	public static function remove_feed($id, $owner_uid) {
 		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_UNSUBSCRIBE_FEED) as $p) {
 			if (! $p->hook_unsubscribe_feed($id, $owner_uid)) {
                 user_error("Feed $id (owner: $owner_uid) not removed due to plugin error (HOOK_UNSUBSCRIBE_FEED).", E_USER_WARNING);
@@ -1643,7 +1643,7 @@ class Pref_Feeds extends Handler_Protected {
 		}
 	}
 
-	function batchSubscribe() {
+	public function batchSubscribe() {
 		print_hidden("op", "pref-feeds");
 		print_hidden("method", "batchaddfeeds");
 
@@ -1687,7 +1687,7 @@ class Pref_Feeds extends Handler_Protected {
 			</footer>";
 	}
 
-	function batchAddFeeds() {
+	public function batchAddFeeds() {
 		$cat_id = clean($_REQUEST['cat']);
 		$feeds = explode("\n", clean($_REQUEST['feeds']));
 		$login = clean($_REQUEST['login']);
@@ -1718,7 +1718,7 @@ class Pref_Feeds extends Handler_Protected {
 		}
 	}
 
-	function regenOPMLKey() {
+	public function regenOPMLKey() {
 		$this->update_feed_access_key('OPML:Publish',
 		false, $_SESSION["uid"]);
 
@@ -1727,7 +1727,7 @@ class Pref_Feeds extends Handler_Protected {
 		print json_encode(array("link" => $new_link));
 	}
 
-	function regenFeedKey() {
+	public function regenFeedKey() {
 		$feed_id = clean($_REQUEST['id']);
 		$is_cat = clean($_REQUEST['is_cat']);
 
@@ -1749,7 +1749,7 @@ class Pref_Feeds extends Handler_Protected {
 	}
 
 	// Silent
-	function clearKeys() {
+	public function clearKeys() {
 		$sth = $this->pdo->prepare("DELETE FROM ttrss_access_keys WHERE
 			owner_uid = ?");
 		$sth->execute([$_SESSION['uid']]);
@@ -1769,7 +1769,7 @@ class Pref_Feeds extends Handler_Protected {
 		return $c;
 	}
 
-	function getinactivefeeds() {
+	public function getinactivefeeds() {
 		if (DB_TYPE == "pgsql") {
 			$interval_qpart = "NOW() - INTERVAL '3 months'";
 		} else {
@@ -1788,7 +1788,7 @@ class Pref_Feeds extends Handler_Protected {
 		}
 	}
 
-	static function subscribe_to_feed_url() {
+	public static function subscribe_to_feed_url() {
 		$url_path = get_self_url_prefix() .
 			"/public.php?op=subscribe&feed_url=%s";
 		return $url_path;

@@ -2,27 +2,27 @@
 class Af_Youtube_Embed extends Plugin {
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Embed videos in Youtube RSS feeds (and whitelist Youtube iframes)",
 			"fox");
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_RENDER_ENCLOSURE, $this);
 		$host->add_hook($host::HOOK_IFRAME_WHITELISTED, $this);
 	}
 
-	function hook_iframe_whitelisted($src) {
+	public function hook_iframe_whitelisted($src) {
 		return in_array($src, ["www.youtube.com", "youtube.com", "youtu.be"]);
 	}
 
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	function hook_render_enclosure($entry, $hide_images) {
+	public function hook_render_enclosure($entry, $hide_images) {
 
 		$matches = array();
 
@@ -40,7 +40,7 @@ class Af_Youtube_Embed extends Plugin {
 		}
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

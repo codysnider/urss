@@ -13,7 +13,7 @@ class Dlg extends Handler_Protected {
 		return false;
 	}
 
-	function importOpml() {
+	public function importOpml() {
 		print_notice("If you have imported labels and/or filters, you might need to reload preferences to see your new data.");
 
 		print "<div class='panel panel-scrollable'>";
@@ -35,7 +35,7 @@ class Dlg extends Handler_Protected {
 		//return;
 	}
 
-	function pubOPMLUrl() {
+	public function pubOPMLUrl() {
 		$url_path = Opml::opml_publish_url();
 
 		print "<header>" . __("Your Public OPML URL is:") . "</header>";
@@ -61,7 +61,7 @@ class Dlg extends Handler_Protected {
 		//return;
 	}
 
-	function explainError() {
+	public function explainError() {
 		print "<div class=\"errorExplained\">";
 
 		if ($this->param == 1) {
@@ -92,7 +92,7 @@ class Dlg extends Handler_Protected {
 		//return;
 	}
 
-	function printTagCloud() {
+	public function printTagCloud() {
 		print "<div class='panel text-center'>";
 
 		// from here: http://www.roscripts.com/Create_tag_cloud-71.html
@@ -155,7 +155,7 @@ class Dlg extends Handler_Protected {
 
 	}
 
-	function generatedFeed() {
+	public function generatedFeed() {
 
 		$this->params = explode(":", $this->param, 3);
 		$feed_id = $this->params[0];
@@ -191,7 +191,7 @@ class Dlg extends Handler_Protected {
 		//return;
 	}
 
-	function defaultPasswordWarning() {
+	public function defaultPasswordWarning() {
 
     	print_warning(__("You are using default tt-rss password. Please change it in the Preferences (Personal data / Authentication)."));
 

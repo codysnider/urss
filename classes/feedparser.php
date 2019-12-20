@@ -13,7 +13,7 @@ class FeedParser {
 	const FEED_RSS = 1;
 	const FEED_ATOM = 2;
 
-	function __construct($data) {
+	public function __construct($data) {
 		libxml_use_internal_errors(true);
 		libxml_clear_errors();
 		$this->doc = new DOMDocument();
@@ -37,7 +37,7 @@ class FeedParser {
 		$this->items = array();
 	}
 
-	function init() {
+	public function init() {
 		$xpath = new DOMXPath($this->doc);
 		$xpath->registerNamespace('atom', 'http://www.w3.org/2005/Atom');
 		$xpath->registerNamespace('atom03', 'http://purl.org/atom/ns#');
@@ -172,7 +172,7 @@ class FeedParser {
 		}
 	}
 
-	function format_error($error) {
+	public function format_error($error) {
 		if ($error) {
 			return sprintf("LibXML error %s at line %d (column %d): %s",
 				$error->code, $error->line, $error->column,
@@ -183,28 +183,28 @@ class FeedParser {
 	}
 
 	// libxml may have invalid unicode data in error messages
-	function error() {
+	public function error() {
 		return UConverter::transcode($this->error, 'UTF-8', 'UTF-8');
 	}
 
 	// WARNING: may return invalid unicode data
-	function errors() {
+	public function errors() {
 		return $this->libxml_errors;
 	}
 
-	function get_link() {
+	public function get_link() {
 		return clean($this->link);
 	}
 
-	function get_title() {
+	public function get_title() {
 		return clean($this->title);
 	}
 
-	function get_items() {
+	public function get_items() {
 		return $this->items;
 	}
 
-	function get_links($rel) {
+	public function get_links($rel) {
 		$rv = array();
 
 		switch ($this->type) {
