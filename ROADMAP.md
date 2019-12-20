@@ -10,6 +10,7 @@ TODO:
 - Create development docker container(s) and docker-compose files
 - Add SwiftMail
 - Add Twig and start separating views from controllers
+- Replace config constants with environment variables
 
 What we need:
 - A few other devs so we can code review everything going into the system

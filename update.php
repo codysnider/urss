@@ -369,7 +369,7 @@
 	if (isset($options["update-schema"])) {
 		Debug::log("Checking for updates (" . DB_TYPE . ")...");
 
-		$updater = new DbUpdater(Db::pdo(), DB_TYPE, SCHEMA_VERSION);
+		$updater = new DbUpdater(DB_TYPE, SCHEMA_VERSION);
 
 		if ($updater->isUpdateRequired()) {
 			Debug::log("Schema update required, version " . $updater->getSchemaVersion() . " to " . SCHEMA_VERSION);

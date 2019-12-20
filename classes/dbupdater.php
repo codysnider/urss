@@ -1,12 +1,13 @@
 <?php
+
 class DbUpdater {
 
 	private $pdo;
 	private $db_type;
 	private $need_version;
 
-	public function __construct($pdo, $db_type, $need_version) {
-		$this->pdo = Db::pdo(); //$pdo;
+	public function __construct($db_type, $need_version) {
+		$this->pdo = Db::pdo();
 		$this->db_type = $db_type;
 		$this->need_version = (int) $need_version;
 	}

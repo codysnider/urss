@@ -1094,7 +1094,7 @@ class Handler_Public extends Handler {
 
 			<?php
 				@$op = clean($_REQUEST["subop"]);
-				$updater = new DbUpdater(Db::pdo(), DB_TYPE, SCHEMA_VERSION);
+				$updater = new DbUpdater(DB_TYPE, SCHEMA_VERSION);
 
 				if ($op == "performupdate") {
 					if ($updater->isUpdateRequired()) {
