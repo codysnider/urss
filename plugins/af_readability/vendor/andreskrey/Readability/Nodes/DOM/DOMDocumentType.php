@@ -6,5 +6,5 @@ use andreskrey\Readability\Nodes\NodeTrait;
 
 class DOMDocumentType extends \DOMDocumentType
 {
-    use NodeTrait;
+	use NodeTrait;
 }

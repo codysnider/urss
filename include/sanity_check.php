@@ -3,12 +3,12 @@
 	function make_self_url() {
 		$proto = is_server_https() ? 'https' : 'http';
 
-		return $proto . '://' . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+		return $proto.'://'.$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
 	}
 
 	function make_self_url_path() {
 		$proto = is_server_https() ? 'https' : 'http';
-		$url_path = $proto . '://' . $_SERVER["HTTP_HOST"] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+		$url_path = $proto.'://'.$_SERVER["HTTP_HOST"].parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
 		return $url_path;
 	}
@@ -52,7 +52,7 @@
 			}
 
 			if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-				array_push($errors, "PHP version 5.6.0 or newer required. You're using " . PHP_VERSION . ".");
+				array_push($errors, "PHP version 5.6.0 or newer required. You're using ".PHP_VERSION.".");
 			}
 
 			if (!class_exists("UConverter")) {
@@ -63,15 +63,15 @@
 				array_push($errors, "Configuration file (config.php) has incorrect version. Update it with new options from config.php-dist and set CONFIG_VERSION to the correct value.");
 			}
 
-			if (!is_writable(CACHE_DIR . "/images")) {
+			if (!is_writable(CACHE_DIR."/images")) {
 				array_push($errors, "Image cache is not writable (chmod -R 777 ".CACHE_DIR."/images)");
 			}
 
-			if (!is_writable(CACHE_DIR . "/upload")) {
+			if (!is_writable(CACHE_DIR."/upload")) {
 				array_push($errors, "Upload cache is not writable (chmod -R 777 ".CACHE_DIR."/upload)");
 			}
 
-			if (!is_writable(CACHE_DIR . "/export")) {
+			if (!is_writable(CACHE_DIR."/export")) {
 				array_push($errors, "Data export cache is not writable (chmod -R 777 ".CACHE_DIR."/export)");
 			}
 
@@ -88,7 +88,7 @@
 			}
 
 			if (SINGLE_USER_MODE && class_exists("PDO")) {
-			    $pdo = DB::pdo();
+				$pdo = DB::pdo();
 
 				$res = $pdo->query("SELECT id FROM ttrss_users WHERE id = 1");
 
@@ -107,7 +107,7 @@
 
 			if (isset($_SERVER["HTTP_HOST"]) &&
 				(!defined('_SKIP_SELF_URL_PATH_CHECKS') || !_SKIP_SELF_URL_PATH_CHECKS) &&
-				SELF_URL_PATH != $ref_self_url_path && SELF_URL_PATH != mb_substr($ref_self_url_path, 0, mb_strlen($ref_self_url_path)-1)) {
+				SELF_URL_PATH != $ref_self_url_path && SELF_URL_PATH != mb_substr($ref_self_url_path, 0, mb_strlen($ref_self_url_path) - 1)) {
 				array_push($errors,
 					"Please set SELF_URL_PATH to the correct value detected for your server: <b>$ref_self_url_path</b>");
 			}
@@ -170,8 +170,8 @@
 						array_push($bad_tables_fmt, sprintf("%s (%s)", $bt['table_name'], $bt['engine']));
 					}
 
-					$msg = "<p>The following tables use an unsupported MySQL engine: <b>" .
-						implode(", ", $bad_tables_fmt) . "</b>.</p>";
+					$msg = "<p>The following tables use an unsupported MySQL engine: <b>".
+						implode(", ", $bad_tables_fmt)."</b>.</p>";
 
 					$msg .= "<p>The only supported engine on MySQL is InnoDB. MyISAM lacks functionality to run
 						tt-rss.

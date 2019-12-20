@@ -66,8 +66,9 @@ class CCache {
 
 		// "" (null) is valid and should be cast to 0 (uncategorized)
 		// everything else i.e. tags are not
-		if (!is_numeric($feed_id) && $feed_id)
-			return;
+		if (!is_numeric($feed_id) && $feed_id) {
+					return;
+		}
 
 		$feed_id = (int) $feed_id;
 
@@ -102,8 +103,9 @@ class CCache {
 
 		// "" (null) is valid and should be cast to 0 (uncategorized)
 		// everything else i.e. tags are not
-		if (!is_numeric($feed_id) && $feed_id)
-			return;
+		if (!is_numeric($feed_id) && $feed_id) {
+					return;
+		}
 
 		$feed_id = (int) $feed_id;
 
@@ -135,7 +137,7 @@ class CCache {
 				$sth->execute([":uid" => $owner_uid, ":cat" => $feed_id]);
 
 				while ($line = $sth->fetch()) {
-					CCache::update((int)$line["id"], $owner_uid, false, false);
+					CCache::update((int) $line["id"], $owner_uid, false, false);
 				}
 			}
 
@@ -182,7 +184,9 @@ class CCache {
 			$sth->execute([$feed_id, $unread, $owner_uid]);
 		}
 
-		if (!$tr_in_progress) $pdo->commit();
+		if (!$tr_in_progress) {
+			$pdo->commit();
+		}
 
 		if ($feed_id > 0 && $prev_unread != $unread) {
 
@@ -197,7 +201,7 @@ class CCache {
 					$sth->execute([$owner_uid, $feed_id]);
 
 					if ($row = $sth->fetch()) {
-						CCache::update((int)$row["cat_id"], $owner_uid, true, true, true);
+						CCache::update((int) $row["cat_id"], $owner_uid, true, true, true);
 					}
 				}
 			}

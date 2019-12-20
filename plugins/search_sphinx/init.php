@@ -17,7 +17,7 @@ class Search_Sphinx extends Plugin {
 			user_error("Your PHP has a separate systemwide Sphinx client installed which conflicts with the client library used by tt-rss. Either remove the system library or disable Sphinx support.");
 		}
 
-		require_once __DIR__ . "/sphinxapi.php";
+		require_once __DIR__."/sphinxapi.php";
 	}
 
 	public function hook_search($search) {
@@ -28,7 +28,7 @@ class Search_Sphinx extends Plugin {
 
 		$sphinxpair = explode(":", SPHINX_SERVER, 2);
 
-		$sphinxClient->SetServer($sphinxpair[0], (int)$sphinxpair[1]);
+		$sphinxClient->SetServer($sphinxpair[0], (int) $sphinxpair[1]);
 		$sphinxClient->SetConnectTimeout(1);
 
 		$sphinxClient->SetFieldWeights(array('title' => 70, 'content' => 30,
@@ -53,10 +53,11 @@ class Search_Sphinx extends Plugin {
 
 		$ids = join(",", $ids);
 
-		if ($ids)
-			return array("ref_id IN ($ids)", array());
-		else
-			return array("ref_id = -1", array());
+		if ($ids) {
+					return array("ref_id IN ($ids)", array());
+		} else {
+					return array("ref_id = -1", array());
+		}
 	}
 
 	public function api_version() {

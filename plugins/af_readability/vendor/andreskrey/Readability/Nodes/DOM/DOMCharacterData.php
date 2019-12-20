@@ -6,5 +6,5 @@ use andreskrey\Readability\Nodes\NodeTrait;
 
 class DOMCharacterData extends \DOMCharacterData
 {
-    use NodeTrait;
+	use NodeTrait;
 }

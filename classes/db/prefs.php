@@ -8,12 +8,15 @@ class Db_Prefs {
 		$this->pdo = Db::pdo();
 		$this->cache = array();
 
-		if ($_SESSION["uid"]) $this->cache();
+		if ($_SESSION["uid"]) {
+			$this->cache();
+		}
 	}
 
 	public static function get() {
-		if (self::$instance == null)
-			self::$instance = new self();
+		if (self::$instance == null) {
+					self::$instance = new self();
+		}
 
 		return self::$instance;
 	}
@@ -22,7 +25,9 @@ class Db_Prefs {
 		$user_id = $_SESSION["uid"];
 		@$profile = $_SESSION["profile"];
 
-		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) $profile = null;
+		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) {
+			$profile = null;
+		}
 
 		$sth = $this->pdo->prepare("SELECT
 			value,ttrss_prefs_types.type_name as type_name,ttrss_prefs.pref_name AS pref_name
@@ -61,7 +66,9 @@ class Db_Prefs {
 			return $this->convert($tuple["value"], $tuple["type"]);
 		}
 
-		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) $profile = null;
+		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) {
+			$profile = null;
+		}
 
 		$sth = $this->pdo->prepare("SELECT
 			value,ttrss_prefs_types.type_name as type_name
@@ -98,14 +105,16 @@ class Db_Prefs {
 		if ($type_name == "bool") {
 			return $value == "true";
 		} else if ($type_name == "integer") {
-			return (int)$value;
+			return (int) $value;
 		} else {
 			return $value;
 		}
 	}
 
 	public function write($pref_name, $value, $user_id = false, $strip_tags = true) {
-		if ($strip_tags) $value = strip_tags($value);
+		if ($strip_tags) {
+			$value = strip_tags($value);
+		}
 
 		if (!$user_id) {
 			$user_id = $_SESSION["uid"];
@@ -114,7 +123,9 @@ class Db_Prefs {
 			$profile = null;
 		}
 
-		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) $profile = null;
+		if (!is_numeric($profile) || !$profile || get_schema_version() < 63) {
+			$profile = null;
+		}
 
 		$type_name = "";
 		$current_value = "";
@@ -130,8 +141,9 @@ class Db_Prefs {
 				WHERE pref_name = ? AND type_id = ttrss_prefs_types.id");
 			$sth->execute([$pref_name]);
 
-			if ($row = $sth->fetch())
-				$type_name = $row["type_name"];
+			if ($row = $sth->fetch()) {
+							$type_name = $row["type_name"];
+			}
 
 		} else if ($current_value == $value) {
 			return;
@@ -145,7 +157,7 @@ class Db_Prefs {
 					$value = "false";
 				}
 			} else if ($type_name == "integer") {
-				$value = (int)$value;
+				$value = (int) $value;
 			}
 
 			if ($pref_name == 'USER_TIMEZONE' && $value == '') {

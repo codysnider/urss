@@ -70,17 +70,17 @@
 /* not really important, this one; perhaps I could've put it inline with
  * the rest. */
 function find_match($curlscore,$curcscore,$curgtlang,$langval,$charval,
-                    $gtlang)
+					$gtlang)
 {
   if($curlscore < $langval) {
-    $curlscore=$langval;
-    $curcscore=$charval;
-    $curgtlang=$gtlang;
+	$curlscore=$langval;
+	$curcscore=$charval;
+	$curgtlang=$gtlang;
   } else if ($curlscore == $langval) {
-    if($curcscore < $charval) {
-      $curcscore=$charval;
-      $curgtlang=$gtlang;
-    }
+	if($curcscore < $charval) {
+	  $curcscore=$charval;
+	  $curgtlang=$gtlang;
+	}
   }
   return array($curlscore, $curcscore, $curgtlang);
 }
@@ -88,22 +88,22 @@ function find_match($curlscore,$curcscore,$curgtlang,$langval,$charval,
 function al2gt($gettextlangs, $mime) {
   /* default to "everything is acceptable", as RFC2616 specifies */
   $acceptLang=(($_SERVER["HTTP_ACCEPT_LANGUAGE"] == '') ? '*' :
-      $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+	  $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
   $acceptChar=(($_SERVER["HTTP_ACCEPT_CHARSET"] == '') ? '*' :
-      $_SERVER["HTTP_ACCEPT_CHARSET"]);
+	  $_SERVER["HTTP_ACCEPT_CHARSET"]);
   $alparts=@preg_split("/,/",$acceptLang);
   $acparts=@preg_split("/,/",$acceptChar);
   
   /* Parse the contents of the Accept-Language header.*/
   foreach($alparts as $part) {
-    $part=trim($part);
-    if(preg_match("/;/", $part)) {
-      $lang=@preg_split("/;/",$part);
-      $score=@preg_split("/=/",$lang[1]);
-      $alscores[$lang[0]]=$score[1];
-    } else {
-      $alscores[$part]=1;
-    }
+	$part=trim($part);
+	if(preg_match("/;/", $part)) {
+	  $lang=@preg_split("/;/",$part);
+	  $score=@preg_split("/=/",$lang[1]);
+	  $alscores[$lang[0]]=$score[1];
+	} else {
+	  $alscores[$part]=1;
+	}
   }
 
   /* Do the same for the Accept-Charset header. */
@@ -119,17 +119,17 @@ function al2gt($gettextlangs, $mime) {
   $acscores["ISO-8859-1"]=2;
 
   foreach($acparts as $part) {
-    $part=trim($part);
-    if(preg_match("/;/", $part)) {
-      $cs=@preg_split("/;/",$part);
-      $score=@preg_split("/=/",$cs[1]);
-      $acscores[strtoupper($cs[0])]=$score[1];
-    } else {
-      $acscores[strtoupper($part)]=1;
-    }
+	$part=trim($part);
+	if(preg_match("/;/", $part)) {
+	  $cs=@preg_split("/;/",$part);
+	  $score=@preg_split("/=/",$cs[1]);
+	  $acscores[strtoupper($cs[0])]=$score[1];
+	} else {
+	  $acscores[strtoupper($part)]=1;
+	}
   }
   if($acscores["ISO-8859-1"]==2) {
-    $acscores["ISO-8859-1"]=(isset($acscores["*"])?$acscores["*"]:1);
+	$acscores["ISO-8859-1"]=(isset($acscores["*"])?$acscores["*"]:1);
   }
 
   /* 
@@ -142,40 +142,40 @@ function al2gt($gettextlangs, $mime) {
   $curgtlang=NULL;
   foreach($gettextlangs as $gtlang) {
 
-    $tmp1=preg_replace("/\_/","-",$gtlang);
-    $tmp2=@preg_split("/\./",$tmp1);
-    $allang=strtolower($tmp2[0]);
-    $gtcs=strtoupper($tmp2[1]);
-    $noct=@preg_split("/-/",$allang);
+	$tmp1=preg_replace("/\_/","-",$gtlang);
+	$tmp2=@preg_split("/\./",$tmp1);
+	$allang=strtolower($tmp2[0]);
+	$gtcs=strtoupper($tmp2[1]);
+	$noct=@preg_split("/-/",$allang);
 
-    $testvals=array(
-         array(@$alscores[$allang], @$acscores[$gtcs]),
-     array(@$alscores[$noct[0]], @$acscores[$gtcs]),
-     array(@$alscores[$allang], @$acscores["*"]),
-     array(@$alscores[$noct[0]], @$acscores["*"]),
-     array(@$alscores["*"], @$acscores[$gtcs]),
-     array(@$alscores["*"], @$acscores["*"]));
+	$testvals=array(
+		 array(@$alscores[$allang], @$acscores[$gtcs]),
+	 array(@$alscores[$noct[0]], @$acscores[$gtcs]),
+	 array(@$alscores[$allang], @$acscores["*"]),
+	 array(@$alscores[$noct[0]], @$acscores["*"]),
+	 array(@$alscores["*"], @$acscores[$gtcs]),
+	 array(@$alscores["*"], @$acscores["*"]));
 
-    $found=FALSE;
-    foreach($testvals as $tval) {
-      if(!$found && isset($tval[0]) && isset($tval[1])) {
-        $arr=find_match($curlscore, $curcscore, $curgtlang, $tval[0],
-              $tval[1], $gtlang);
-        $curlscore=$arr[0];
-        $curcscore=$arr[1];
-        $curgtlang=$arr[2];
-    $found=TRUE;
-      }
-    }
+	$found=FALSE;
+	foreach($testvals as $tval) {
+	  if(!$found && isset($tval[0]) && isset($tval[1])) {
+		$arr=find_match($curlscore, $curcscore, $curgtlang, $tval[0],
+			  $tval[1], $gtlang);
+		$curlscore=$arr[0];
+		$curcscore=$arr[1];
+		$curgtlang=$arr[2];
+	$found=TRUE;
+	  }
+	}
   }
 
   /* We must re-parse the gettext-string now, since we may have found it
    * through a "*" qualifier.*/
   
-  $gtparts=@preg_split("/\./",$curgtlang);
-  $tmp=strtolower($gtparts[0]);
-  $lang=preg_replace("/\_/", "-", $tmp);
-  $charset=$gtparts[1];
+  $gtparts = @preg_split("/\./", $curgtlang);
+  $tmp = strtolower($gtparts[0]);
+  $lang = preg_replace("/\_/", "-", $tmp);
+  $charset = $gtparts[1];
 
   header("Content-Language: $lang");
   header("Content-Type: $mime; charset=$charset");

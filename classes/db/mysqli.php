@@ -4,23 +4,26 @@ class Db_Mysqli implements IDb {
 	private $last_error;
 
 	public function connect($host, $user, $pass, $db, $port) {
-		if ($port)
-			$this->link = mysqli_connect($host, $user, $pass, $db, $port);
-		else
-			$this->link = mysqli_connect($host, $user, $pass, $db);
+		if ($port) {
+					$this->link = mysqli_connect($host, $user, $pass, $db, $port);
+		} else {
+					$this->link = mysqli_connect($host, $user, $pass, $db);
+		}
 
 		if ($this->link) {
 			$this->init();
 
 			return $this->link;
 		} else {
-			print("Unable to connect to database (as $user to $host, database $db): " . mysqli_connect_error());
+			print("Unable to connect to database (as $user to $host, database $db): ".mysqli_connect_error());
 			exit(102);
 		}
 	}
 
 	public function escape_string($s, $strip_tags = true) {
-		if ($strip_tags) $s = strip_tags($s);
+		if ($strip_tags) {
+			$s = strip_tags($s);
+		}
 
 		return mysqli_real_escape_string($this->link, $s);
 	}
@@ -31,7 +34,7 @@ class Db_Mysqli implements IDb {
 			$this->last_error = @mysqli_error($this->link);
 
 			@mysqli_query($this->link, "ROLLBACK");
-			user_error("Query $query failed: " . ($this->link ? $this->last_error : "No connection"),
+			user_error("Query $query failed: ".($this->link ? $this->last_error : "No connection"),
 				$die_on_error ? E_USER_ERROR : E_USER_WARNING);
 		}
 

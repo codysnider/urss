@@ -95,10 +95,11 @@ class Counters {
 
 			$count = getFeedUnread($i);
 
-			if ($i == 0 || $i == -1 || $i == -2)
-				$auxctr = Feeds::getFeedArticles($i, false);
-			else
-				$auxctr = 0;
+			if ($i == 0 || $i == -1 || $i == -2) {
+							$auxctr = Feeds::getFeedArticles($i, false);
+			} else {
+							$auxctr = 0;
+			}
 
 			$cv = array("id" => $i,
 				"counter" => (int) $count,
@@ -117,8 +118,9 @@ class Counters {
 				$cv = array("id" => PluginHost::pfeed_to_feed_id($feed['id']),
 					"counter" => $feed['sender']->get_unread($feed['id']));
 
-				if (method_exists($feed['sender'], 'get_total'))
-					$cv["auxcounter"] = $feed['sender']->get_total($feed['id']);
+				if (method_exists($feed['sender'], 'get_total')) {
+									$cv["auxcounter"] = $feed['sender']->get_total($feed['id']);
+				}
 
 				array_push($ret_arr, $cv);
 			}
@@ -150,8 +152,9 @@ class Counters {
 				"counter" => (int) $line["unread"],
 				"auxcounter" => (int) $line["total"]);
 
-			if ($descriptions)
-				$cv["description"] = $line["caption"];
+			if ($descriptions) {
+							$cv["description"] = $line["caption"];
+			}
 
 			array_push($ret_arr, $cv);
 		}
@@ -189,22 +192,25 @@ class Counters {
 				$has_img = false;
 			}
 
-			if (date('Y') - date('Y', strtotime($line['last_updated'])) > 2)
-				$last_updated = '';
+			if (date('Y') - date('Y', strtotime($line['last_updated'])) > 2) {
+							$last_updated = '';
+			}
 
 			$cv = array("id" => $id,
 				"updated" => $last_updated,
 				"counter" => (int) $count,
 				"has_img" => (int) $has_img);
 
-			if ($last_error)
-				$cv["error"] = $last_error;
+			if ($last_error) {
+							$cv["error"] = $last_error;
+			}
 
 //			if (get_pref('EXTENDED_FEEDLIST'))
 //				$cv["xmsg"] = getFeedArticles($id)." ".__("total");
 
-			if ($active_feed && $id == $active_feed)
-				$cv["title"] = truncate_string($line["title"], 30);
+			if ($active_feed && $id == $active_feed) {
+							$cv["title"] = truncate_string($line["title"], 30);
+			}
 
 			array_push($ret_arr, $cv);
 

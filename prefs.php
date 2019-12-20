@@ -3,7 +3,7 @@
 		header("Location: install/");
 	}
 
-	set_include_path(dirname(__FILE__) ."/include" . PATH_SEPARATOR .
+	set_include_path(dirname(__FILE__)."/include".PATH_SEPARATOR.
 		get_include_path());
 
 	if (!file_exists("config.php")) {
@@ -19,7 +19,9 @@
 	require_once "config.php";
 	require_once "db-prefs.php";
 
-	if (!init_plugins()) return;
+	if (!init_plugins()) {
+		return;
+	}
 
 	login_sequence();
 
@@ -153,9 +155,9 @@
                 title="<i class='material-icons'>info_outline</i> <?php echo __('System') ?>"></div>
         <?php } ?>
         <?php
-            PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TABS,
-                "hook_prefs_tabs", false);
-        ?>
+			PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TABS,
+				"hook_prefs_tabs", false);
+		?>
         </div>
     <div id="footer" dojoType="dijit.layout.ContentPane" region="bottom">
         <a class="text-muted" target="_blank" href="http://tt-rss.org/">

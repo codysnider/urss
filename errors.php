@@ -7,10 +7,10 @@ require_once "functions.php";
 $ERRORS[0] = "";
 
 $ERRORS[1] = __("This program requires XmlHttpRequest " .
-        "to function properly. Your browser doesn't seem to support it.");
+		"to function properly. Your browser doesn't seem to support it.");
 
 $ERRORS[2] = __("This program requires cookies " .
-        "to function properly. Your browser doesn't seem to support them.");
+		"to function properly. Your browser doesn't seem to support them.");
 
 $ERRORS[3] = __("Backend sanity check failed.");
 
@@ -41,15 +41,15 @@ $ERRORS[14] = __("Plugin not found");
 $ERRORS[15] = __("Encoding data as JSON failed");
 
 if ($_REQUEST['mode'] == 'js') {
-    header("Content-Type: text/javascript; charset=UTF-8");
+	header("Content-Type: text/javascript; charset=UTF-8");
 
-    print "var ERRORS = [];\n";
+	print "var ERRORS = [];\n";
 
-    foreach ($ERRORS as $id => $error) {
+	foreach ($ERRORS as $id => $error) {
 
-        $error = preg_replace("/\n/", "", $error);
-        $error = preg_replace("/\"/", "\\\"", $error);
+		$error = preg_replace("/\n/", "", $error);
+		$error = preg_replace("/\"/", "\\\"", $error);
 
-        print "ERRORS[$id] = \"$error\";\n";
-    }
+		print "ERRORS[$id] = \"$error\";\n";
+	}
 }

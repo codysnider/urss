@@ -10,5 +10,5 @@ use andreskrey\Readability\Nodes\NodeTrait;
  */
 class DOMNode extends \DOMNode
 {
-    use NodeTrait;
+	use NodeTrait;
 }

@@ -4,7 +4,7 @@
 	// 1) templates/register_notice.txt - displayed above the registration form
 	// 2) register_expire_do.php - contains user expiration queries when necessary
 
-	set_include_path(dirname(__FILE__) ."/include" . PATH_SEPARATOR .
+	set_include_path(dirname(__FILE__)."/include".PATH_SEPARATOR.
 		get_include_path());
 
 	require_once "autoload.php";
@@ -18,24 +18,28 @@
 
 	$action = $_REQUEST["action"];
 
-	if (!init_plugins()) return;
+	if (!init_plugins()) {
+		return;
+	}
 
 	if ($_REQUEST["format"] == "feed") {
 		header("Content-Type: text/xml");
 
 		print '<?xml version="1.0" encoding="utf-8"?>';
 		print "<feed xmlns=\"http://www.w3.org/2005/Atom\">
-			<id>".htmlspecialchars(SELF_URL_PATH . "/register.php")."</id>
+			<id>".htmlspecialchars(SELF_URL_PATH."/register.php")."</id>
 			<title>Tiny Tiny RSS registration slots</title>
-			<link rel=\"self\" href=\"".htmlspecialchars(SELF_URL_PATH . "/register.php?format=feed")."\"/>
+			<link rel=\"self\" href=\"".htmlspecialchars(SELF_URL_PATH."/register.php?format=feed")."\"/>
 			<link rel=\"alternate\" href=\"".htmlspecialchars(SELF_URL_PATH)."\"/>";
 
 		if (ENABLE_REGISTRATION) {
-			$result = db_query( "SELECT COUNT(*) AS cu FROM ttrss_users");
+			$result = db_query("SELECT COUNT(*) AS cu FROM ttrss_users");
 			$num_users = db_fetch_result($result, 0, "cu");
 
 			$num_users = REG_MAX_USERS - $num_users;
-			if ($num_users < 0) $num_users = 0;
+			if ($num_users < 0) {
+				$num_users = 0;
+			}
 			$reg_suffix = "enabled";
 		} else {
 			$num_users = 0;
@@ -44,7 +48,7 @@
 
 		print "<entry>
 			<id>".htmlspecialchars(SELF_URL_PATH)."/register.php?$num_users"."</id>
-			<link rel=\"alternate\" href=\"".htmlspecialchars(SELF_URL_PATH . "/register.php")."\"/>";
+			<link rel=\"alternate\" href=\"".htmlspecialchars(SELF_URL_PATH."/register.php")."\"/>";
 
 		print "<title>$num_users slots are currently available, registration $reg_suffix</title>";
 		print "<summary>$num_users slots are currently available, registration $reg_suffix</summary>";
@@ -59,10 +63,10 @@
 	/* Remove users which didn't login after receiving their registration information */
 
 	if (DB_TYPE == "pgsql") {
-		db_query( "DELETE FROM ttrss_users WHERE last_login IS NULL
+		db_query("DELETE FROM ttrss_users WHERE last_login IS NULL
 				AND created < NOW() - INTERVAL '1 day' AND access_level = 0");
 	} else {
-		db_query( "DELETE FROM ttrss_users WHERE last_login IS NULL
+		db_query("DELETE FROM ttrss_users WHERE last_login IS NULL
 				AND created < DATE_SUB(NOW(), INTERVAL 1 DAY) AND access_level = 0");
 	}
 
@@ -73,9 +77,9 @@
 	if ($action == "check") {
 		header("Content-Type: application/xml");
 
-		$login = trim(db_escape_string( $_REQUEST['login']));
+		$login = trim(db_escape_string($_REQUEST['login']));
 
-		$result = db_query( "SELECT id FROM ttrss_users WHERE
+		$result = db_query("SELECT id FROM ttrss_users WHERE
 			LOWER(login) = LOWER('$login')");
 
 		$is_registered = db_num_rows($result) > 0;
@@ -197,7 +201,7 @@
 ?>
 
 <?php if (REG_MAX_USERS > 0) {
-		$result = db_query( "SELECT COUNT(*) AS cu FROM ttrss_users");
+		$result = db_query("SELECT COUNT(*) AS cu FROM ttrss_users");
 		$num_users = db_fetch_result($result, 0, "cu");
 } ?>
 
@@ -241,9 +245,9 @@
 	<?php } else if ($action == "do_register") { ?>
 
 	<?php
-		$login = mb_strtolower(trim(db_escape_string( $_REQUEST["login"])));
-		$email = trim(db_escape_string( $_REQUEST["email"]));
-		$test = trim(db_escape_string( $_REQUEST["turing_test"]));
+		$login = mb_strtolower(trim(db_escape_string($_REQUEST["login"])));
+		$email = trim(db_escape_string($_REQUEST["email"]));
+		$test = trim(db_escape_string($_REQUEST["turing_test"]));
 
 		if (!$login || !$email || !$test) {
 			print_error(__("Your registration information is incomplete."));
@@ -255,7 +259,7 @@
 
 		if ($test == "four" || $test == "4") {
 
-			$result = db_query( "SELECT id FROM ttrss_users WHERE
+			$result = db_query("SELECT id FROM ttrss_users WHERE
 				login = '$login'");
 
 			$is_registered = db_num_rows($result) > 0;
@@ -272,11 +276,11 @@
 				$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
 				$pwd_hash = encrypt_password($password, $salt, true);
 
-				db_query( "INSERT INTO ttrss_users
+				db_query("INSERT INTO ttrss_users
 					(login,pwd_hash,access_level,last_login, email, created, salt)
 					VALUES ('$login', '$pwd_hash', 0, null, '$email', NOW(), '$salt')");
 
-				$result = db_query( "SELECT id FROM ttrss_users WHERE
+				$result = db_query("SELECT id FROM ttrss_users WHERE
 					login = '$login' AND pwd_hash = '$pwd_hash'");
 
 				if (db_num_rows($result) != 1) {
@@ -288,7 +292,7 @@
 
 					$new_uid = db_fetch_result($result, 0, "id");
 
-					initialize_user( $new_uid);
+					initialize_user($new_uid);
 
 					$reg_text = "Hi!\n".
 						"\n".
@@ -310,7 +314,9 @@
 						"subject" => "Registration information for Tiny Tiny RSS",
 						"message" => $reg_text]);
 
-					if (!$rc) print_error($mailer->error());
+					if (!$rc) {
+						print_error($mailer->error());
+					}
 
 					$reg_text = "Hi!\n".
 						"\n".
@@ -324,7 +330,9 @@
 						"subject" => "Registration notice for Tiny Tiny RSS",
 						"message" => $reg_text]);
 
-					if (!$rc) print_error($mailer->error());
+					if (!$rc) {
+						print_error($mailer->error());
+					}
 
 					print_notice(__("Account created successfully."));
 

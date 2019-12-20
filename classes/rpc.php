@@ -11,7 +11,9 @@ class RPC extends Handler_Protected {
 		$_SESSION["profile"] = (int) clean($_REQUEST["id"]);
 
 		// default value
-		if (!$_SESSION["profile"]) $_SESSION["profile"] = null;
+		if (!$_SESSION["profile"]) {
+			$_SESSION["profile"] = null;
+		}
 	}
 
 	public function remprofiles() {
@@ -173,7 +175,9 @@ class RPC extends Handler_Protected {
 				if ($row = $sth->fetch()) {
 					$feed_id = $row["id"];
 				} else {
-					if (!$title) $title = '[Unknown]';
+					if (!$title) {
+						$title = '[Unknown]';
+					}
 
 					$sth = $this->pdo->prepare("INSERT INTO ttrss_feeds
 							(owner_uid,feed_url,site_url,title,cat_id,auth_login,auth_pass,update_method)
@@ -216,7 +220,9 @@ class RPC extends Handler_Protected {
 	private function archive_article($id, $owner_uid) {
 		$this->pdo->beginTransaction();
 
-		if (!$owner_uid) $owner_uid = $_SESSION['uid'];
+		if (!$owner_uid) {
+			$owner_uid = $_SESSION['uid'];
+		}
 
 		$sth = $this->pdo->prepare("SELECT feed_id FROM ttrss_user_entries
 			WHERE ref_id = ? AND owner_uid = ?");
@@ -237,7 +243,7 @@ class RPC extends Handler_Protected {
 					$new_feed_id = $row['id'];
 				} else {
 					$row = $this->pdo->query("SELECT MAX(id) AS id FROM ttrss_archived_feeds")->fetch();
-					$new_feed_id = (int)$row['id'] + 1;
+					$new_feed_id = (int) $row['id'] + 1;
 
 					$sth = $this->pdo->prepare("INSERT INTO ttrss_archived_feeds
 						(id, owner_uid, title, feed_url, site_url, created)
@@ -278,8 +284,9 @@ class RPC extends Handler_Protected {
 			'seq' => $seq
 		];
 
-		if ($seq % 2 == 0)
-			$reply['runtime-info'] = make_runtime_info();
+		if ($seq % 2 == 0) {
+					$reply['runtime-info'] = make_runtime_info();
+		}
 
 		print json_encode($reply);
 	}
@@ -287,7 +294,7 @@ class RPC extends Handler_Protected {
 	/* GET["cmode"] = 0 - mark as read, 1 - as unread, 2 - toggle */
 	public function catchupSelected() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
-		$cmode = (int)clean($_REQUEST["cmode"]);
+		$cmode = (int) clean($_REQUEST["cmode"]);
 
 		Article::catchupArticlesById($ids, $cmode);
 
@@ -296,7 +303,7 @@ class RPC extends Handler_Protected {
 
 	public function markSelected() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
-		$cmode = (int)clean($_REQUEST["cmode"]);
+		$cmode = (int) clean($_REQUEST["cmode"]);
 
 		$this->markArticlesById($ids, $cmode);
 
@@ -305,7 +312,7 @@ class RPC extends Handler_Protected {
 
 	public function publishSelected() {
 		$ids = explode(",", clean($_REQUEST["ids"]));
-		$cmode = (int)clean($_REQUEST["cmode"]);
+		$cmode = (int) clean($_REQUEST["cmode"]);
 
 		$this->publishArticlesById($ids, $cmode);
 
@@ -342,7 +349,7 @@ class RPC extends Handler_Protected {
 
 		print "<ul>";
 		while ($line = $sth->fetch()) {
-			print "<li>" . $line["caption"] . "</li>";
+			print "<li>".$line["caption"]."</li>";
 		}
 		print "</ul>";
 	}
@@ -353,7 +360,9 @@ class RPC extends Handler_Protected {
 		$payload = json_decode(clean($_REQUEST["payload"]), false);
 		$mode = clean($_REQUEST["mode"]);
 
-		if (!$payload || !is_array($payload)) return;
+		if (!$payload || !is_array($payload)) {
+			return;
+		}
 
 		if ($mode == 1) {
 			foreach ($payload as $feed) {
@@ -578,7 +587,7 @@ class RPC extends Handler_Protected {
 
 		if ($msg) {
 			Logger::get()->log_error(E_USER_WARNING,
-				$msg, 'client-js:' . $file, $line, $context);
+				$msg, 'client-js:'.$file, $line, $context);
 
 			echo json_encode(array("message" => "HOST_ERROR_LOGGED"));
 		} else {
@@ -602,7 +611,7 @@ class RPC extends Handler_Protected {
 				$content = json_decode($content, true);
 
 				if ($content && isset($content["changeset"])) {
-					if ($git_timestamp < (int)$content["changeset"]["timestamp"] &&
+					if ($git_timestamp < (int) $content["changeset"]["timestamp"] &&
 						$git_commit != $content["changeset"]["id"]) {
 
 						$rv = $content["changeset"];

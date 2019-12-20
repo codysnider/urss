@@ -17,8 +17,9 @@ class Af_Comics_Cad extends Af_ComicFilter {
 					false, false, 0,
 					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0");
 
-				if (!$res && $fetch_last_error_content)
-					$res = $fetch_last_error_content;
+				if (!$res && $fetch_last_error_content) {
+									$res = $fetch_last_error_content;
+				}
 
 				if (@$doc->loadHTML($res)) {
 					$xpath = new DOMXPath($doc);

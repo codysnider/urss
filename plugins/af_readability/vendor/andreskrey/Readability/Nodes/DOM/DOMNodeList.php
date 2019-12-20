@@ -14,69 +14,69 @@ namespace andreskrey\Readability\Nodes\DOM;
  */
 class DOMNodeList implements \Countable, \IteratorAggregate
 {
-    /**
-     * @var array
-     */
-    protected $items = [];
+	/**
+	 * @var array
+	 */
+	protected $items = [];
 
-    /**
-     * @var int
-     */
-    protected $length = 0;
+	/**
+	 * @var int
+	 */
+	protected $length = 0;
 
-    /**
-     * To allow access to length in the same way that DOMNodeList allows.
-     *
-     * {@inheritdoc}
-     */
-    public function __get($name)
-    {
-        switch ($name) {
-            case 'length':
-                return $this->length;
-            default:
-                trigger_error(sprintf('Undefined property: %s::%s', static::class, $name));
-        }
-    }
+	/**
+	 * To allow access to length in the same way that DOMNodeList allows.
+	 *
+	 * {@inheritdoc}
+	 */
+	public function __get($name)
+	{
+		switch ($name) {
+			case 'length':
+				return $this->length;
+			default:
+				trigger_error(sprintf('Undefined property: %s::%s', static::class, $name));
+		}
+	}
 
-    /**
-     * @param DOMNode|DOMElement|DOMComment $node
-     *
-     * @return DOMNodeList
-     */
-    public function add($node)
-    {
-        $this->items[] = $node;
-        $this->length++;
+	/**
+	 * @param DOMNode|DOMElement|DOMComment $node
+	 *
+	 * @return DOMNodeList
+	 */
+	public function add($node)
+	{
+		$this->items[] = $node;
+		$this->length++;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @param int $offset
-     *
-     * @return DOMNode|DOMElement|DOMComment
-     */
-    public function item(int $offset)
-    {
-        return $this->items[$offset];
-    }
+	/**
+	 * @param int $offset
+	 *
+	 * @return DOMNode|DOMElement|DOMComment
+	 */
+	public function item(int $offset)
+	{
+		return $this->items[$offset];
+	}
 
-    /**
-     * @return int|void
-     */
-    public function count(): int
-    {
-        return $this->length;
-    }
+	/**
+	 * @return int|void
+	 */
+	public function count(): int
+	{
+		return $this->length;
+	}
 
-    /**
-     * To make it compatible with iterator_to_array() function.
-     *
-     * {@inheritdoc}
-     */
-    public function getIterator(): \ArrayIterator
-    {
-        return new \ArrayIterator($this->items);
-    }
+	/**
+	 * To make it compatible with iterator_to_array() function.
+	 *
+	 * {@inheritdoc}
+	 */
+	public function getIterator(): \ArrayIterator
+	{
+		return new \ArrayIterator($this->items);
+	}
 }

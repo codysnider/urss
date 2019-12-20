@@ -1,5 +1,5 @@
 <?php
-	set_include_path(dirname(__FILE__) ."/include" . PATH_SEPARATOR .
+	set_include_path(dirname(__FILE__)."/include".PATH_SEPARATOR.
 		get_include_path());
 
 	require_once "autoload.php";
@@ -14,7 +14,9 @@
 
 	$script_started = microtime(true);
 
-	if (!init_plugins()) return;
+	if (!init_plugins()) {
+		return;
+	}
 
 	if (ENABLE_GZIP_OUTPUT && function_exists("ob_gzhandler")) {
 		ob_start("ob_gzhandler");

@@ -11,13 +11,15 @@
 		$query = "";
 
 		if (!(strpos($filename, "?") === FALSE)) {
-			$query = substr($filename, strpos($filename, "?")+1);
+			$query = substr($filename, strpos($filename, "?") + 1);
 			$filename = substr($filename, 0, strpos($filename, "?"));
 		}
 
 		$timestamp = filemtime($filename);
 
-		if ($query) $timestamp .= "&$query";
+		if ($query) {
+			$timestamp .= "&$query";
+		}
 
 		return "<script type=\"text/javascript\" charset=\"utf-8\" src=\"$filename?$timestamp\"></script>\n";
 	}
@@ -85,7 +87,7 @@
 		$errors = array();
 
 		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-			array_push($errors, "PHP version 5.6.0 or newer required. You're using " . PHP_VERSION . ".");
+			array_push($errors, "PHP version 5.6.0 or newer required. You're using ".PHP_VERSION.".");
 		}
 
 		if (!function_exists("curl_init") && !ini_get("allow_url_fopen")) {
@@ -143,9 +145,9 @@
 
 			return $pdo;
 		} catch (Exception $e) {
-		    print "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
-		    return null;
-        }
+			print "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
+			return null;
+		}
 	}
 
 	function make_config($DB_TYPE, $DB_HOST, $DB_USER, $DB_NAME, $DB_PASS,
@@ -189,7 +191,7 @@
 	}
 
 	function make_self_url_path() {
-		$url_path = (is_server_https() ? 'https://' :  'http://') . $_SERVER["HTTP_HOST"] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+		$url_path = (is_server_https() ? 'https://' : 'http://').$_SERVER["HTTP_HOST"].parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
 		return $url_path;
 	}
@@ -322,13 +324,13 @@
 			array_push($notices, "PHP support for Internationalization Functions is required to handle Internationalized Domain Names.");
 		}
 
-        if ($DB_TYPE == "mysql" && !function_exists("mysqli_connect")) {
-            array_push($notices, "PHP extension for MySQL (mysqli) is missing. This may prevent legacy plugins from working.");
-        }
+		if ($DB_TYPE == "mysql" && !function_exists("mysqli_connect")) {
+			array_push($notices, "PHP extension for MySQL (mysqli) is missing. This may prevent legacy plugins from working.");
+		}
 
-        if ($DB_TYPE == "pgsql" && !function_exists("pg_connect")) {
+		if ($DB_TYPE == "pgsql" && !function_exists("pg_connect")) {
 			array_push($notices, "PHP extension for PostgreSQL is missing. This may prevent legacy plugins from working.");
-        }
+		}
 
 		if (count($notices) > 0) {
 			print_notice("Configuration check succeeded with minor problems:");
@@ -429,7 +431,7 @@
 				print "<h2>Initializing database...</h2>";
 
 				$lines = explode(";", preg_replace("/[\r\n]/", "",
-                    file_get_contents("../schema/ttrss_schema_".basename($DB_TYPE).".sql")));
+					file_get_contents("../schema/ttrss_schema_".basename($DB_TYPE).".sql")));
 
 				foreach ($lines as $line) {
 					if (strpos($line, "--") !== 0 && $line) {
@@ -438,7 +440,7 @@
 						if (!$res) {
 							print_notice("Query: $line");
 							print_error("Error: " . implode(", ", $pdo->errorInfo()));
-                        }
+						}
 					}
 				}
 

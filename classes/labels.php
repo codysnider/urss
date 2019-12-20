@@ -37,7 +37,7 @@ class Labels
 		}
 	}
 
-	public static function get_all_labels($owner_uid)	{
+	public static function get_all_labels($owner_uid) {
 		$rv = array();
 
 		$pdo = Db::pdo();
@@ -56,11 +56,13 @@ class Labels
 	public static function update_cache($owner_uid, $id, $labels = false, $force = false) {
 		$pdo = Db::pdo();
 
-		if ($force)
-			Labels::clear_cache($id);
+		if ($force) {
+					Labels::clear_cache($id);
+		}
 
-		if (!$labels)
-			$labels = Article::get_article_labels($id);
+		if (!$labels) {
+					$labels = Article::get_article_labels($id);
+		}
 
 		$labels = json_encode($labels);
 
@@ -70,7 +72,7 @@ class Labels
 
 	}
 
-	public static function clear_cache($id)	{
+	public static function clear_cache($id) {
 
 		$pdo = Db::pdo();
 
@@ -84,7 +86,9 @@ class Labels
 
 		$label_id = Labels::find_id($label, $owner_uid);
 
-		if (!$label_id) return;
+		if (!$label_id) {
+			return;
+		}
 
 		$pdo = Db::pdo();
 
@@ -98,11 +102,13 @@ class Labels
 		Labels::clear_cache($id);
 	}
 
-	public static function add_article($id, $label, $owner_uid)	{
+	public static function add_article($id, $label, $owner_uid) {
 
 		$label_id = Labels::find_id($label, $owner_uid);
 
-		if (!$label_id) return;
+		if (!$label_id) {
+			return;
+		}
 
 		$pdo = Db::pdo();
 
@@ -128,7 +134,9 @@ class Labels
 	}
 
 	public static function remove($id, $owner_uid) {
-		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
+		if (!$owner_uid) {
+			$owner_uid = $_SESSION["uid"];
+		}
 
 		$pdo = Db::pdo();
 		$tr_in_progress = false;
@@ -171,7 +179,7 @@ class Labels
 		if (!$tr_in_progress) $pdo->commit();
 	}
 
-	public static function create($caption, $fg_color = '', $bg_color = '', $owner_uid = false)	{
+	public static function create($caption, $fg_color = '', $bg_color = '', $owner_uid = false) {
 
 		if (!$owner_uid) $owner_uid = $_SESSION['uid'];
 
@@ -198,7 +206,9 @@ class Labels
 			$result = $sth->rowCount();
 		}
 
-		if (!$tr_in_progress) $pdo->commit();
+		if (!$tr_in_progress) {
+			$pdo->commit();
+		}
 
 		return $result;
 	}

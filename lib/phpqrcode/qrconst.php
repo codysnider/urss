@@ -45,10 +45,10 @@
 	// Supported output formats
 	
 	define('QR_FORMAT_TEXT', 0);
-	define('QR_FORMAT_PNG',  1);
+	define('QR_FORMAT_PNG', 1);
 	
 	class qrstr {
 		public static function set(&$srctab, $x, $y, $repl, $replLen = false) {
-			$srctab[$y] = substr_replace($srctab[$y], ($replLen !== false)?substr($repl,0,$replLen):$repl, $x, ($replLen !== false)?$replLen:strlen($repl));
+			$srctab[$y] = substr_replace($srctab[$y], ($replLen !== false) ?substr($repl, 0, $replLen) : $repl, $x, ($replLen !== false) ? $replLen : strlen($repl));
 		}
 	}	

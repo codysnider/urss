@@ -15,8 +15,9 @@ class Af_Comics_DarkLegacy extends Af_ComicFilter {
 
 				global $fetch_last_error_content;
 
-				if (!$res && $fetch_last_error_content)
-					$res = $fetch_last_error_content;
+				if (!$res && $fetch_last_error_content) {
+									$res = $fetch_last_error_content;
+				}
 
 				$doc = new DOMDocument();
 

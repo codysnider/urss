@@ -5,8 +5,9 @@
 		$namespace = '';
 		$class_name = $class;
 
-		if (strpos($class, '\\') !== FALSE)
-			list ($namespace, $class_name) = explode('\\', $class, 2);
+		if (strpos($class, '\\') !== FALSE) {
+					list ($namespace, $class_name) = explode('\\', $class, 2);
+		}
 
 		$root_dir = dirname(__DIR__); // we're in tt-rss/include
 
@@ -15,12 +16,13 @@
 		// 3. plugin classes are loaded by PluginHandler from plugins.local/ and plugins/ (TODO: use generic autoloader?)
 
 		if ($namespace && $class_name) {
-			$class_file = "$root_dir/vendor/$namespace/" . str_replace('\\', '/', $class_name) . ".php";
+			$class_file = "$root_dir/vendor/$namespace/".str_replace('\\', '/', $class_name).".php";
 		} else {
-			$class_file = "$root_dir/classes/" . str_replace("_", "/", strtolower($class)) . ".php";
+			$class_file = "$root_dir/classes/".str_replace("_", "/", strtolower($class)).".php";
 		}
 
-		if (file_exists($class_file))
-			include $class_file;
+		if (file_exists($class_file)) {
+					include $class_file;
+		}
 
 	});

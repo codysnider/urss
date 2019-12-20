@@ -42,10 +42,11 @@ class Pref_Feeds extends Handler_Protected {
 
 	private function get_category_items($cat_id) {
 
-		if (clean($_REQUEST['mode']) != 2)
-			$search = $_SESSION["prefs_feed_search"];
-		else
-			$search = "";
+		if (clean($_REQUEST['mode']) != 2) {
+					$search = $_SESSION["prefs_feed_search"];
+		} else {
+					$search = "";
+		}
 
 		// first one is set by API
 		$show_empty_cats = clean($_REQUEST['force_show_empty']) ||
@@ -60,8 +61,8 @@ class Pref_Feeds extends Handler_Protected {
 		while ($line = $sth->fetch()) {
 
 			$cat = array();
-			$cat['id'] = 'CAT:' . $line['id'];
-			$cat['bare_id'] = (int)$line['id'];
+			$cat['id'] = 'CAT:'.$line['id'];
+			$cat['bare_id'] = (int) $line['id'];
 			$cat['name'] = $line['title'];
 			$cat['items'] = array();
 			$cat['checkbox'] = false;
@@ -76,8 +77,9 @@ class Pref_Feeds extends Handler_Protected {
 			$num_children = $this->calculate_children_count($cat);
 			$cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
 
-			if ($num_children > 0 || $show_empty_cats)
-				array_push($items, $cat);
+			if ($num_children > 0 || $show_empty_cats) {
+							array_push($items, $cat);
+			}
 
 		}
 
@@ -93,8 +95,8 @@ class Pref_Feeds extends Handler_Protected {
 
 		while ($feed_line = $fsth->fetch()) {
 			$feed = array();
-			$feed['id'] = 'FEED:' . $feed_line['id'];
-			$feed['bare_id'] = (int)$feed_line['id'];
+			$feed['id'] = 'FEED:'.$feed_line['id'];
+			$feed['bare_id'] = (int) $feed_line['id'];
 			$feed['auxcounter'] = -1;
 			$feed['name'] = $feed_line['title'];
 			$feed['checkbox'] = false;
@@ -103,7 +105,7 @@ class Pref_Feeds extends Handler_Protected {
 			$feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
 			$feed['param'] = make_local_datetime(
 				$feed_line['last_updated'], true);
-			$feed['updates_disabled'] = (int)($feed_line['update_interval'] < 0);
+			$feed['updates_disabled'] = (int) ($feed_line['update_interval'] < 0);
 
 			array_push($items, $feed);
 		}
@@ -117,10 +119,11 @@ class Pref_Feeds extends Handler_Protected {
 
 	public function makefeedtree() {
 
-		if (clean($_REQUEST['mode']) != 2)
-			$search = $_SESSION["prefs_feed_search"];
-		else
-			$search = "";
+		if (clean($_REQUEST['mode']) != 2) {
+					$search = $_SESSION["prefs_feed_search"];
+		} else {
+					$search = "";
+		}
 
 		$root = array();
 		$root['id'] = 'root';
@@ -151,8 +154,8 @@ class Pref_Feeds extends Handler_Protected {
 					$feed_id = PluginHost::pfeed_to_feed_id($feed['id']);
 
 					$item = array();
-					$item['id'] = 'FEED:' . $feed_id;
-					$item['bare_id'] = (int)$feed_id;
+					$item['id'] = 'FEED:'.$feed_id;
+					$item['bare_id'] = (int) $feed_id;
 					$item['auxcounter'] = -1;
 					$item['name'] = $feed['title'];
 					$item['checkbox'] = false;
@@ -216,8 +219,8 @@ class Pref_Feeds extends Handler_Protected {
 
 			while ($line = $sth->fetch()) {
 				$cat = array();
-				$cat['id'] = 'CAT:' . $line['id'];
-				$cat['bare_id'] = (int)$line['id'];
+				$cat['id'] = 'CAT:'.$line['id'];
+				$cat['bare_id'] = (int) $line['id'];
 				$cat['auxcounter'] = -1;
 				$cat['name'] = $line['title'];
 				$cat['items'] = array();
@@ -231,8 +234,9 @@ class Pref_Feeds extends Handler_Protected {
 				$num_children = $this->calculate_children_count($cat);
 				$cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
 
-				if ($num_children > 0 || $show_empty_cats)
-					array_push($root['items'], $cat);
+				if ($num_children > 0 || $show_empty_cats) {
+									array_push($root['items'], $cat);
+				}
 
 				$root['param'] += count($cat['items']);
 			}
@@ -261,8 +265,8 @@ class Pref_Feeds extends Handler_Protected {
 
 			while ($feed_line = $fsth->fetch()) {
 				$feed = array();
-				$feed['id'] = 'FEED:' . $feed_line['id'];
-				$feed['bare_id'] = (int)$feed_line['id'];
+				$feed['id'] = 'FEED:'.$feed_line['id'];
+				$feed['bare_id'] = (int) $feed_line['id'];
 				$feed['auxcounter'] = -1;
 				$feed['name'] = $feed_line['title'];
 				$feed['checkbox'] = false;
@@ -272,15 +276,16 @@ class Pref_Feeds extends Handler_Protected {
 					$feed_line['last_updated'], true);
 				$feed['unread'] = -1;
 				$feed['type'] = 'feed';
-				$feed['updates_disabled'] = (int)($feed_line['update_interval'] < 0);
+				$feed['updates_disabled'] = (int) ($feed_line['update_interval'] < 0);
 
 				array_push($cat['items'], $feed);
 			}
 
 			$cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', count($cat['items'])), count($cat['items']));
 
-			if (count($cat['items']) > 0 || $show_empty_cats)
-				array_push($root['items'], $cat);
+			if (count($cat['items']) > 0 || $show_empty_cats) {
+							array_push($root['items'], $cat);
+			}
 
 			$num_children = $this->calculate_children_count($root);
 			$root['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
@@ -296,8 +301,8 @@ class Pref_Feeds extends Handler_Protected {
 
 			while ($feed_line = $fsth->fetch()) {
 				$feed = array();
-				$feed['id'] = 'FEED:' . $feed_line['id'];
-				$feed['bare_id'] = (int)$feed_line['id'];
+				$feed['id'] = 'FEED:'.$feed_line['id'];
+				$feed['bare_id'] = (int) $feed_line['id'];
 				$feed['auxcounter'] = -1;
 				$feed['name'] = $feed_line['title'];
 				$feed['checkbox'] = false;
@@ -307,7 +312,7 @@ class Pref_Feeds extends Handler_Protected {
 					$feed_line['last_updated'], true);
 				$feed['unread'] = -1;
 				$feed['type'] = 'feed';
-				$feed['updates_disabled'] = (int)($feed_line['update_interval'] < 0);
+				$feed['updates_disabled'] = (int) ($feed_line['update_interval'] < 0);
 
 				array_push($root['items'], $feed);
 			}
@@ -343,16 +348,17 @@ class Pref_Feeds extends Handler_Protected {
 	private function process_category_order(&$data_map, $item_id, $parent_id = false, $nest_level = 0) {
 
 		$prefix = "";
-		for ($i = 0; $i < $nest_level; $i++)
-			$prefix .= "   ";
+		for ($i = 0; $i < $nest_level; $i++) {
+					$prefix .= "   ";
+		}
 
 		Debug::log("$prefix C: $item_id P: $parent_id");
 
-		$bare_item_id = substr($item_id, strpos($item_id, ':')+1);
+		$bare_item_id = substr($item_id, strpos($item_id, ':') + 1);
 
 		if ($item_id != 'root') {
 			if ($parent_id && $parent_id != 'root') {
-				$parent_bare_id = substr($parent_id, strpos($parent_id, ':')+1);
+				$parent_bare_id = substr($parent_id, strpos($parent_id, ':') + 1);
 				$parent_qpart = $parent_bare_id;
 			} else {
 				$parent_qpart = null;
@@ -371,7 +377,7 @@ class Pref_Feeds extends Handler_Protected {
 		if ($cat && is_array($cat)) {
 			foreach ($cat as $item) {
 				$id = $item['_reference'];
-				$bare_id = substr($id, strpos($id, ':')+1);
+				$bare_id = substr($id, strpos($id, ':') + 1);
 
 				Debug::log("$prefix [$order_id] $id/$bare_id");
 
@@ -389,7 +395,7 @@ class Pref_Feeds extends Handler_Protected {
 
 					} else if (strpos($id, "CAT:") === 0) {
 						$this->process_category_order($data_map, $item['_reference'], $item_id,
-							$nest_level+1);
+							$nest_level + 1);
 
 						$sth = $this->pdo->prepare("UPDATE ttrss_feed_categories
 								SET order_id = ? WHERE id = ? AND
@@ -409,8 +415,9 @@ class Pref_Feeds extends Handler_Protected {
 		#file_put_contents("/tmp/saveorder.json", clean($_POST['payload']));
 		#$data = json_decode(file_get_contents("/tmp/saveorder.json"), true);
 
-		if (!is_array($data['items']))
-			$data['items'] = json_decode($data['items'], true);
+		if (!is_array($data['items'])) {
+					$data['items'] = json_decode($data['items'], true);
+		}
 
 #		print_r($data['items']);
 
@@ -446,7 +453,7 @@ class Pref_Feeds extends Handler_Protected {
 		$sth->execute([$feed_id, $_SESSION['uid']]);
 
 		if ($sth->fetch()) {
-			@unlink(ICONS_DIR . "/$feed_id.ico");
+			@unlink(ICONS_DIR."/$feed_id.ico");
 
 			$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET favicon_avg_color = NULL where id = ?");
 			$sth->execute([$feed_id]);
@@ -457,7 +464,7 @@ class Pref_Feeds extends Handler_Protected {
 		header("Content-type: text/html");
 
 		if (is_uploaded_file($_FILES['icon_file']['tmp_name'])) {
-			$tmp_file = tempnam(CACHE_DIR . '/upload', 'icon');
+			$tmp_file = tempnam(CACHE_DIR.'/upload', 'icon');
 
 			$result = move_uploaded_file($_FILES['icon_file']['tmp_name'],
 				$tmp_file);
@@ -480,8 +487,8 @@ class Pref_Feeds extends Handler_Protected {
 				$sth->execute([$feed_id, $_SESSION['uid']]);
 
 				if ($sth->fetch()) {
-					@unlink(ICONS_DIR . "/$feed_id.ico");
-					if (rename($icon_file, ICONS_DIR . "/$feed_id.ico")) {
+					@unlink(ICONS_DIR."/$feed_id.ico");
+					if (rename($icon_file, ICONS_DIR."/$feed_id.ico")) {
 
 						$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET favicon_avg_color = '' WHERE id = ?");
 						$sth->execute([$feed_id]);
@@ -494,7 +501,9 @@ class Pref_Feeds extends Handler_Protected {
 			}
 		}
 
-		if (is_file($icon_file)) @unlink($icon_file);
+		if (is_file($icon_file)) {
+			@unlink($icon_file);
+		}
 
 		print $rc;
 		return;
@@ -540,7 +549,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<fieldset>";
 
-			print "<label>" . __('URL:') . "</label> ";
+			print "<label>".__('URL:')."</label> ";
 			print "<input dojoType='dijit.form.ValidationTextBox' required='1'
 				placeHolder=\"".__("Feed URL")."\"
 				regExp='^(http|https)://.*' style='width : 300px'
@@ -563,7 +572,7 @@ class Pref_Feeds extends Handler_Protected {
 
 				print "<fieldset>";
 
-				print "<label>" . __('Place in category:') . "</label> ";
+				print "<label>".__('Place in category:')."</label> ";
 
 				print_feed_cat_select("cat_id", $cat_id,
 					'dojoType="fox.form.Select"');
@@ -577,7 +586,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<fieldset>";
 
-			print "<label>" . __('Site URL:') . "</label> ";
+			print "<label>".__('Site URL:')."</label> ";
 			print "<input dojoType='dijit.form.ValidationTextBox' required='1'
 				placeHolder=\"".__("Site URL")."\"
 				regExp='^(http|https)://.*' style='width : 300px'
@@ -590,12 +599,13 @@ class Pref_Feeds extends Handler_Protected {
 			if (DB_TYPE == "pgsql") {
 				$feed_language = $row["feed_language"];
 
-				if (!$feed_language)
-					$feed_language = get_pref('DEFAULT_SEARCH_LANGUAGE');
+				if (!$feed_language) {
+									$feed_language = get_pref('DEFAULT_SEARCH_LANGUAGE');
+				}
 
 				print "<fieldset>";
 
-				print "<label>" . __('Language:') . "</label> ";
+				print "<label>".__('Language:')."</label> ";
 				print_select("feed_language", $feed_language, $this::get_ts_languages(),
 					'dojoType="fox.form.Select"');
 
@@ -626,10 +636,10 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<fieldset>";
 
-			print "<label>" . __('Article purging:') . "</label> ";
+			print "<label>".__('Article purging:')."</label> ";
 
 			print_select_hash("purge_interval", $purge_interval, $purge_intervals,
-				'dojoType="fox.form.Select" ' .
+				'dojoType="fox.form.Select" '.
 				((FORCE_ARTICLE_PURGE == 0) ? "" : 'disabled="1"'));
 
 			print "</fieldset>";
@@ -736,7 +746,7 @@ class Pref_Feeds extends Handler_Protected {
 			print "<fieldset class='narrow'>";
 
 			print "<label class='checkbox'><input dojoType='dijit.form.CheckBox' type='checkbox' id='cache_images'
-				name='cache_images' $checked> ". __('Cache media')."</label>";
+				name='cache_images' $checked> ".__('Cache media')."</label>";
 
 			print "</fieldset>";
 
@@ -818,7 +828,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<fieldset>";
 
-			print "<label>" . __('Place in category:') . "</label> ";
+			print "<label>".__('Place in category:')."</label> ";
 
 			print_feed_cat_select("cat_id", false,
 				'disabled="1" dojoType="fox.form.Select"');
@@ -833,7 +843,7 @@ class Pref_Feeds extends Handler_Protected {
 		if (DB_TYPE == "pgsql") {
 			print "<fieldset>";
 
-			print "<label>" . __('Language:') . "</label> ";
+			print "<label>".__('Language:')."</label> ";
 			print_select("feed_language", "", $this::get_ts_languages(),
 				'disabled="1" dojoType="fox.form.Select"');
 
@@ -866,7 +876,7 @@ class Pref_Feeds extends Handler_Protected {
 
 			print "<fieldset>";
 
-			print "<label>" . __('Article purging:') . "</label> ";
+			print "<label>".__('Article purging:')."</label> ";
 
 			print_select_hash("purge_interval", "", $purge_intervals,
 				'disabled="1" dojoType="fox.form.Select"');
@@ -1026,12 +1036,12 @@ class Pref_Feeds extends Handler_Protected {
 					":purge_intl" => $purge_intl,
 					":auth_login" => $auth_login,
 					":auth_pass" => $auth_pass,
-					":private" => (int)$private,
-					":cache_images" => (int)$cache_images,
-					":hide_images" => (int)$hide_images,
-					":include_in_digest" => (int)$include_in_digest,
-					":always_display_enclosures" => (int)$always_display_enclosures,
-					":mark_unread_on_update" => (int)$mark_unread_on_update,
+					":private" => (int) $private,
+					":cache_images" => (int) $cache_images,
+					":hide_images" => (int) $hide_images,
+					":include_in_digest" => (int) $include_in_digest,
+					":always_display_enclosures" => (int) $always_display_enclosures,
+					":mark_unread_on_update" => (int) $mark_unread_on_update,
 					":feed_language" => $feed_language,
 					":id" => $feed_id,
 					":uid" => $_SESSION['uid']]);
@@ -1061,70 +1071,70 @@ class Pref_Feeds extends Handler_Protected {
 				$qpart = "";
 
 				switch ($k) {
-					case "title":
-						$qpart = "title = " . $this->pdo->quote($feed_title);
-						break;
+				case "title":
+					$qpart = "title = " . $this->pdo->quote($feed_title);
+					break;
 
-					case "feed_url":
-						$qpart = "feed_url = " . $this->pdo->quote($feed_url);
-						break;
+				case "feed_url":
+					$qpart = "feed_url = " . $this->pdo->quote($feed_url);
+					break;
 
-					case "update_interval":
-						$qpart = "update_interval = " . $this->pdo->quote($upd_intl);
-						break;
+				case "update_interval":
+					$qpart = "update_interval = " . $this->pdo->quote($upd_intl);
+					break;
 
-					case "purge_interval":
-						$qpart = "purge_interval =" . $this->pdo->quote($purge_intl);
-						break;
+				case "purge_interval":
+					$qpart = "purge_interval =" . $this->pdo->quote($purge_intl);
+					break;
 
-					case "auth_login":
-						$qpart = "auth_login = " . $this->pdo->quote($auth_login);
-						break;
+				case "auth_login":
+					$qpart = "auth_login = " . $this->pdo->quote($auth_login);
+					break;
 
-					case "auth_pass":
-						$qpart = "auth_pass =" . $this->pdo->quote($auth_pass). ", auth_pass_encrypted = false";
-						break;
+				case "auth_pass":
+					$qpart = "auth_pass =" . $this->pdo->quote($auth_pass). ", auth_pass_encrypted = false";
+					break;
 
-					case "private":
-						$qpart = "private = " . $this->pdo->quote($private);
-						break;
+				case "private":
+					$qpart = "private = " . $this->pdo->quote($private);
+					break;
 
-					case "include_in_digest":
-						$qpart = "include_in_digest = " . $this->pdo->quote($include_in_digest);
-						break;
+				case "include_in_digest":
+					$qpart = "include_in_digest = " . $this->pdo->quote($include_in_digest);
+					break;
 
-					case "always_display_enclosures":
-						$qpart = "always_display_enclosures = " . $this->pdo->quote($always_display_enclosures);
-						break;
+				case "always_display_enclosures":
+					$qpart = "always_display_enclosures = " . $this->pdo->quote($always_display_enclosures);
+					break;
 
-					case "mark_unread_on_update":
-						$qpart = "mark_unread_on_update = " . $this->pdo->quote($mark_unread_on_update);
-						break;
+				case "mark_unread_on_update":
+					$qpart = "mark_unread_on_update = " . $this->pdo->quote($mark_unread_on_update);
+					break;
 
-					case "cache_images":
-						$qpart = "cache_images = " . $this->pdo->quote($cache_images);
-						break;
+				case "cache_images":
+					$qpart = "cache_images = " . $this->pdo->quote($cache_images);
+					break;
 
-					case "hide_images":
-						$qpart = "hide_images = " . $this->pdo->quote($hide_images);
-						break;
+				case "hide_images":
+					$qpart = "hide_images = " . $this->pdo->quote($hide_images);
+					break;
 
-					case "cat_id":
-						if (get_pref('ENABLE_FEED_CATS')) {
-							if ($cat_id) {
-								$qpart = "cat_id = " . $this->pdo->quote($cat_id);
-							} else {
-								$qpart = 'cat_id = NULL';
-							}
+				case "cat_id":
+					if (get_pref('ENABLE_FEED_CATS')) {
+						if ($cat_id) {
+							$qpart = "cat_id = " . $this->pdo->quote($cat_id);
 						} else {
-							$qpart = "";
+							$qpart = 'cat_id = NULL';
 						}
+					} else {
+						$qpart = "";
+					}
 
-						break;
+					break;
 
-					case "feed_language":
-						$qpart = "feed_language = " . $this->pdo->quote($feed_language);
-						break;
+				case "feed_language":
+					$qpart = "feed_language = " . $this->pdo->quote($feed_language);
+					break;
 
 				}
 
@@ -1184,14 +1194,14 @@ class Pref_Feeds extends Handler_Protected {
 
 			$error_button = "<button dojoType=\"dijit.form.Button\"
 			  		onclick=\"CommonDialogs.showFeedsWithErrors()\" id=\"errorButton\">" .
-				__("Feeds with errors") . "</button>";
+				__("Feeds with errors")."</button>";
 		}
 
 		$inactive_button = "<button dojoType=\"dijit.form.Button\"
 				id=\"pref_feeds_inactive_btn\"
 				style=\"display : none\"
 				onclick=\"dijit.byId('feedTree').showInactiveFeeds()\">" .
-				__("Inactive feeds") . "</button>";
+				__("Inactive feeds")."</button>";
 
 		$feed_search = clean($_REQUEST["search"]);
 
@@ -1213,7 +1223,7 @@ class Pref_Feeds extends Handler_Protected {
 			</div>";
 
 		print "<div dojoType=\"fox.form.DropDownButton\">".
-				"<span>" . __('Select')."</span>";
+				"<span>".__('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"dijit.byId('feedTree').model.setAllChecked(true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
@@ -1222,7 +1232,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "</div></div>";
 
 		print "<div dojoType=\"fox.form.DropDownButton\">".
-				"<span>" . __('Feeds')."</span>";
+				"<span>".__('Feeds')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"CommonDialogs.quickAddFeed()\"
 			dojoType=\"dijit.MenuItem\">".__('Subscribe to feed')."</div>";
@@ -1238,7 +1248,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		if (get_pref('ENABLE_FEED_CATS')) {
 			print "<div dojoType=\"fox.form.DropDownButton\">".
-					"<span>" . __('Categories')."</span>";
+					"<span>".__('Categories')."</span>";
 			print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 			print "<div onclick=\"dijit.byId('feedTree').createCategory()\"
 				dojoType=\"dijit.MenuItem\">".__('Add category')."</div>";
@@ -1305,7 +1315,7 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div dojoType='dijit.layout.AccordionPane'
 			title='<i class=\"material-icons\">import_export</i> ".__('OPML')."'>";
 
-		print "<h3>" . __("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.") . "</h3>";
+		print "<h3>".__("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.")."</h3>";
 
 		print_notice("Only main settings profile can be migrated using OPML.");
 
@@ -1322,7 +1332,7 @@ class Pref_Feeds extends Handler_Protected {
 			<input type='hidden' name='op' value='dlg'>
 			<input type='hidden' name='method' value='importOpml'>
 			<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return Helpers.OPML.import();\" type=\"submit\">" .
-			__('Import OPML') . "</button>";
+			__('Import OPML')."</button>";
 
 		print "</form>";
 
@@ -1330,22 +1340,22 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<button dojoType='dijit.form.Button'
 			onclick='Helpers.OPML.export()' >" .
-			__('Export OPML') . "</button>";
+			__('Export OPML')."</button>";
 
 		print " <label class='checkbox'>";
 		print_checkbox("include_settings", true, "1", "");
-		print " " . __("Include settings");
+		print " ".__("Include settings");
 		print "</label>";
 
 		print "</form>";
 
 		print "<p/>";
 
-		print "<h2>" . __("Published OPML") . "</h2>";
+		print "<h2>".__("Published OPML")."</h2>";
 
-		print "<p>" . __('Your OPML can be published publicly and can be subscribed by anyone who knows the URL below.') .
-			" " .
-			__("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.") . "</p>";
+		print "<p>".__('Your OPML can be published publicly and can be subscribed by anyone who knows the URL below.').
+			" ".
+			__("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.")."</p>";
 
 		print "<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return App.displayDlg('".__("Public OPML URL")."','pubOPMLUrl')\">".
 			__('Display published OPML URL')."</button> ";
@@ -1358,10 +1368,10 @@ class Pref_Feeds extends Handler_Protected {
 		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>share</i> ".__('Published & shared articles / Generated feeds')."\">";
 
-		print "<h3>" . __('Published articles can be subscribed by anyone who knows the following URL:') . "</h3>";
+		print "<h3>".__('Published articles can be subscribed by anyone who knows the following URL:')."</h3>";
 
-		$rss_url = '-2::' . htmlspecialchars(get_self_url_prefix() .
-				"/public.php?op=rss&id=-2&view-mode=all_articles");;
+		$rss_url = '-2::'.htmlspecialchars(get_self_url_prefix().
+				"/public.php?op=rss&id=-2&view-mode=all_articles"); ;
 
 		print "<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return App.displayDlg('".__("Show as feed")."','generatedFeed', '$rss_url')\">".
 			__('Display URL')."</button> ";
@@ -1390,7 +1400,7 @@ class Pref_Feeds extends Handler_Protected {
 			$cat_unread = Feeds::getCategoryUnread($cat_id);
 		}
 
-		$obj['id'] = 'CAT:' . $cat_id;
+		$obj['id'] = 'CAT:'.$cat_id;
 		$obj['items'] = array();
 		$obj['name'] = Feeds::getCategoryTitle($cat_id);
 		$obj['type'] = 'category';
@@ -1404,13 +1414,15 @@ class Pref_Feeds extends Handler_Protected {
 		$obj = array();
 		$feed_id = (int) $feed_id;
 
-		if (!$title)
-			$title = Feeds::getFeedTitle($feed_id, false);
+		if (!$title) {
+					$title = Feeds::getFeedTitle($feed_id, false);
+		}
 
-		if ($unread === false)
-			$unread = getFeedUnread($feed_id, false);
+		if ($unread === false) {
+					$unread = getFeedUnread($feed_id, false);
+		}
 
-		$obj['id'] = 'FEED:' . $feed_id;
+		$obj['id'] = 'FEED:'.$feed_id;
 		$obj['name'] = $title;
 		$obj['unread'] = (int) $unread;
 		$obj['type'] = 'feed';
@@ -1446,7 +1458,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div dojoType='fox.Toolbar'>";
 		print "<div dojoType='fox.form.DropDownButton'>".
-				"<span>" . __('Select')."</span>";
+				"<span>".__('Select')."</span>";
 		print "<div dojoType='dijit.Menu' style='display: none'>";
 		print "<div onclick=\"Tables.select('inactive-feeds-list', true)\"
 			dojoType='dijit.MenuItem'>".__('All')."</div>";
@@ -1503,7 +1515,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div dojoType=\"fox.Toolbar\">";
 		print "<div dojoType=\"fox.form.DropDownButton\">".
-				"<span>" . __('Select')."</span>";
+				"<span>".__('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"Tables.select('error-feeds-list', true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
@@ -1568,8 +1580,8 @@ class Pref_Feeds extends Handler_Protected {
 	public static function remove_feed($id, $owner_uid) {
 		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_UNSUBSCRIBE_FEED) as $p) {
 			if (! $p->hook_unsubscribe_feed($id, $owner_uid)) {
-                user_error("Feed $id (owner: $owner_uid) not removed due to plugin error (HOOK_UNSUBSCRIBE_FEED).", E_USER_WARNING);
-                return;
+				user_error("Feed $id (owner: $owner_uid) not removed due to plugin error (HOOK_UNSUBSCRIBE_FEED).", E_USER_WARNING);
+				return;
 			}
 		}
 
@@ -1599,7 +1611,7 @@ class Pref_Feeds extends Handler_Protected {
 					$res = $pdo->query("SELECT MAX(id) AS id FROM ttrss_archived_feeds");
 					$row = $res->fetch();
 
-					$new_feed_id = (int)$row['id'] + 1;
+					$new_feed_id = (int) $row['id'] + 1;
 
 					$sth = $pdo->prepare("INSERT INTO ttrss_archived_feeds
 						(id, owner_uid, title, feed_url, site_url, created)
@@ -1631,8 +1643,8 @@ class Pref_Feeds extends Handler_Protected {
 
 			$pdo->commit();
 
-			if (file_exists(ICONS_DIR . "/$id.ico")) {
-				unlink(ICONS_DIR . "/$id.ico");
+			if (file_exists(ICONS_DIR."/$id.ico")) {
+				unlink(ICONS_DIR."/$id.ico");
 			}
 
 			CCache::remove($id, $owner_uid);
@@ -1656,7 +1668,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		if (get_pref('ENABLE_FEED_CATS')) {
 			print "<fieldset>";
-			print "<label>" . __('Place in category:') . "</label> ";
+			print "<label>".__('Place in category:')."</label> ";
 			print_feed_cat_select("cat", false, 'dojoType="fox.form.Select"');
 			print "</fieldset>";
 		}
@@ -1665,7 +1677,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "<div id='feedDlg_loginContainer' style='display : none'>";
 
-		print "<header>" . __("Authentication") . "</header>";
+		print "<header>".__("Authentication")."</header>";
 		print "<section>";
 
 		print "<input dojoType='dijit.form.TextBox' name='login' placeHolder=\"".__("Login")."\">
@@ -1738,7 +1750,9 @@ class Pref_Feeds extends Handler_Protected {
 
 
 	private function update_feed_access_key($feed_id, $is_cat, $owner_uid = false) {
-		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
+		if (!$owner_uid) {
+			$owner_uid = $_SESSION["uid"];
+		}
 
 		// clear old value and generate new one
 		$sth = $this->pdo->prepare("DELETE FROM ttrss_access_keys
@@ -1784,12 +1798,12 @@ class Pref_Feeds extends Handler_Protected {
 		$sth->execute([$_SESSION['uid']]);
 
 		if ($row = $sth->fetch()) {
-			print (int)$row["num_inactive"];
+			print (int) $row["num_inactive"];
 		}
 	}
 
 	public static function subscribe_to_feed_url() {
-		$url_path = get_self_url_prefix() .
+		$url_path = get_self_url_prefix().
 			"/public.php?op=subscribe&feed_url=%s";
 		return $url_path;
 	}

@@ -21,8 +21,9 @@ class Af_Unburn extends Plugin {
 	public function hook_article_filter($article) {
 		$owner_uid = $article["owner_uid"];
 
-		if (defined('NO_CURL') || !function_exists("curl_init") || ini_get("open_basedir"))
-			return $article;
+		if (defined('NO_CURL') || !function_exists("curl_init") || ini_get("open_basedir")) {
+					return $article;
+		}
 
 		if ((strpos($article["link"], "feedproxy.google.com") !== FALSE ||
 		  		strpos($article["link"], "/~r/") !== FALSE ||
@@ -57,7 +58,9 @@ class Af_Unburn extends Plugin {
 						parse_str($query, $args);
 
 						foreach (array("utm_source", "utm_medium", "utm_campaign") as $param) {
-							if (isset($args[$param])) unset($args[$param]);
+							if (isset($args[$param])) {
+								unset($args[$param]);
+							}
 						}
 
 						$new_query = http_build_query($args);
@@ -69,7 +72,7 @@ class Af_Unburn extends Plugin {
 
 					$real_url = preg_replace("/\?$/", "", $real_url);
 
-					$article["plugin_data"] = "unburn,$owner_uid:" . $article["plugin_data"];
+					$article["plugin_data"] = "unburn,$owner_uid:".$article["plugin_data"];
 					$article["link"] = $real_url;
 				}
 		}

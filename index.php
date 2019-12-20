@@ -12,11 +12,11 @@
 	// we need a separate check here because functions.php might get parsed
 	// incorrectly before 5.3 because of :: syntax.
 	if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-		print "<b>Fatal Error</b>: PHP version 5.6.0 or newer required. You're using " . PHP_VERSION . ".\n";
+		print "<b>Fatal Error</b>: PHP version 5.6.0 or newer required. You're using ".PHP_VERSION.".\n";
 		exit;
 	}
 
-	set_include_path(dirname(__FILE__) ."/include" . PATH_SEPARATOR .
+	set_include_path(dirname(__FILE__)."/include".PATH_SEPARATOR.
 		get_include_path());
 
 	require_once "autoload.php";
@@ -26,7 +26,9 @@
 	require_once "config.php";
 	require_once "db-prefs.php";
 
-	if (!init_plugins()) return;
+	if (!init_plugins()) {
+		return;
+	}
 
 	login_sequence();
 
@@ -93,9 +95,9 @@
 	<?php
 		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
 			if (method_exists($p, "get_js")) {
-			    $script = $p->get_js();
+				$script = $p->get_js();
 
-			    if ($script) {
+				if ($script) {
 					echo "try {
 					    $script
 					} catch (e) {
@@ -146,10 +148,10 @@
             <img src='images/indicator_tiny.gif'/>
             <?php echo  __("Loading, please wait..."); ?></div>
         <?php
-          foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FEED_TREE) as $p) {
-            echo $p->hook_feed_tree();
-          }
-        ?>
+		  foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FEED_TREE) as $p) {
+			echo $p->hook_feed_tree();
+		  }
+		?>
         <div id="feedTree"></div>
     </div>
 
@@ -167,10 +169,10 @@
                title="<?php echo __('Updates are available from Git.') ?>">new_releases</i>
 
             <?php
-            foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_MAIN_TOOLBAR_BUTTON) as $p) {
-                echo $p->hook_main_toolbar_button();
-            }
-            ?>
+			foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_MAIN_TOOLBAR_BUTTON) as $p) {
+				echo $p->hook_main_toolbar_button();
+			}
+			?>
 
             <form id="toolbar-headlines" action="" style="order : 10" onsubmit='return false'>
 
@@ -220,10 +222,10 @@
             <div class="action-chooser" style="order : 30">
 
                 <?php
-                    foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_TOOLBAR_BUTTON) as $p) {
-                         echo $p->hook_toolbar_button();
-                    }
-                ?>
+					foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_TOOLBAR_BUTTON) as $p) {
+						 echo $p->hook_toolbar_button();
+					}
+				?>
 
                 <div dojoType="fox.form.DropDownButton" class="action-button" title="<?php echo __('Actions...') ?>">
 					<span><i class="material-icons">menu</i></span>
@@ -242,10 +244,10 @@
                         <div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcHKhelp')"><?php echo __('Keyboard shortcuts help') ?></div>
 
                         <?php
-                            foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ACTION_ITEM) as $p) {
-                             echo $p->hook_action_item();
-                            }
-                        ?>
+							foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ACTION_ITEM) as $p) {
+							 echo $p->hook_action_item();
+							}
+						?>
 
                         <?php if (!$_SESSION["hide_logout"]) { ?>
                             <div dojoType="dijit.MenuItem" onclick="App.onActionSelected('qmcLogout')"><?php echo __('Logout') ?></div>

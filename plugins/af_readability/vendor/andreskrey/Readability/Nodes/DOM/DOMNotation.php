@@ -6,5 +6,5 @@ use andreskrey\Readability\Nodes\NodeTrait;
 
 class DOMNotation extends \DOMNotation
 {
-    use NodeTrait;
+	use NodeTrait;
 }

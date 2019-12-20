@@ -14,11 +14,11 @@ class Shorten_Expanded extends Plugin {
 	}
 
 	public function get_css() {
-		return file_get_contents(__DIR__ . "/init.css");
+		return file_get_contents(__DIR__."/init.css");
 	}
 
 	public function get_js() {
-		return file_get_contents(__DIR__ . "/init.js");
+		return file_get_contents(__DIR__."/init.js");
 	}
 
 	public function api_version() {

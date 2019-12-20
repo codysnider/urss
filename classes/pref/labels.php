@@ -35,7 +35,7 @@ class Pref_Labels extends Handler_Protected {
 
 			print "</section>";
 
-			print "<header>" . __("Colors") . "</header>";
+			print "<header>".__("Colors")."</header>";
 			print "<section>";
 
 			print "<table>";
@@ -93,7 +93,7 @@ class Pref_Labels extends Handler_Protected {
 
 		while ($line = $sth->fetch()) {
 			$label = array();
-			$label['id'] = 'LABEL:' . $line['id'];
+			$label['id'] = 'LABEL:'.$line['id'];
 			$label['bare_id'] = $line['id'];
 			$label['name'] = $line['caption'];
 			$label['fg_color'] = $line['fg_color'];
@@ -254,7 +254,7 @@ class Pref_Labels extends Handler_Protected {
 		print "<div dojoType='fox.Toolbar'>";
 
 		print "<div dojoType='fox.form.DropDownButton'>".
-				"<span>" . __('Select')."</span>";
+				"<span>".__('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"dijit.byId('labelTree').model.setAllChecked(true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";

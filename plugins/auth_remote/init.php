@@ -13,7 +13,7 @@ class Auth_Remote extends Plugin implements IAuthModule {
 	}
 
 	/* @var PluginHost $host */
-	public function init($host ) {
+	public function init($host) {
 		$this->host = $host;
 		$this->base = new Auth_Base();
 
@@ -44,10 +44,16 @@ class Auth_Remote extends Plugin implements IAuthModule {
 		$try_login = $_SERVER["REMOTE_USER"];
 
 		// php-cgi
-		if (!$try_login) $try_login = $_SERVER["REDIRECT_REMOTE_USER"];
-		if (!$try_login) $try_login = $_SERVER["PHP_AUTH_USER"];
+		if (!$try_login) {
+			$try_login = $_SERVER["REDIRECT_REMOTE_USER"];
+		}
+		if (!$try_login) {
+			$try_login = $_SERVER["PHP_AUTH_USER"];
+		}
 
-		if (!$try_login) $try_login = $this->get_login_by_ssl_certificate();
+		if (!$try_login) {
+			$try_login = $this->get_login_by_ssl_certificate();
+		}
 
 		if ($try_login) {
 			$user_id = $this->base->auto_create_user($try_login, $password);
@@ -59,16 +65,16 @@ class Auth_Remote extends Plugin implements IAuthModule {
 				$_SESSION["hide_logout"] = true;
 
 				// LemonLDAP can send user informations via HTTP HEADER
-				if (defined('AUTH_AUTO_CREATE') && AUTH_AUTO_CREATE){
+				if (defined('AUTH_AUTO_CREATE') && AUTH_AUTO_CREATE) {
 					// update user name
 					$fullname = $_SERVER['HTTP_USER_NAME'] ? $_SERVER['HTTP_USER_NAME'] : $_SERVER['AUTHENTICATE_CN'];
-					if ($fullname){
+					if ($fullname) {
 						$sth = $this->pdo->prepare("UPDATE ttrss_users SET full_name = ? WHERE id = ?");
 						$sth->execute([$fullname, $user_id]);
 					}
 					// update user mail
 					$email = $_SERVER['HTTP_USER_MAIL'] ? $_SERVER['HTTP_USER_MAIL'] : $_SERVER['AUTHENTICATE_MAIL'];
-					if ($email){
+					if ($email) {
 						$sth = $this->pdo->prepare("UPDATE ttrss_users SET email = ? WHERE id = ?");
 						$sth->execute([$email, $user_id]);
 					}

@@ -18,7 +18,7 @@ class Mail extends Plugin {
 	}
 
 	public function get_js() {
-		return file_get_contents(dirname(__FILE__) . "/mail.js");
+		return file_get_contents(dirname(__FILE__)."/mail.js");
 	}
 
 	public function save() {
@@ -30,12 +30,14 @@ class Mail extends Plugin {
 	}
 
 	public function hook_prefs_tab($args) {
-		if ($args != "prefPrefs") return;
+		if ($args != "prefPrefs") {
+			return;
+		}
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>mail</i> ".__('Mail plugin')."\">";
 
-		print "<p>" . __("You can set predefined email addressed here (comma-separated list):") . "</p>";
+		print "<p>".__("You can set predefined email addressed here (comma-separated list):")."</p>";
 
 		print "<form dojoType=\"dijit.form.Form\">";
 
@@ -94,7 +96,9 @@ class Mail extends Plugin {
 			$user_name = htmlspecialchars($row['full_name']);
 		}
 
-		if (!$user_name) $user_name = $_SESSION['name'];
+		if (!$user_name) {
+			$user_name = $_SESSION['name'];
+		}
 
 		print_hidden("from_email", "$user_email");
 		print_hidden("from_name", "$user_name");
@@ -115,17 +119,17 @@ class Mail extends Plugin {
 		$sth->execute(array_merge($ids, [$_SESSION['uid']]));
 
 		if (count($ids) > 1) {
-			$subject = __("[Forwarded]") . " " . __("Multiple articles");
+			$subject = __("[Forwarded]")." ".__("Multiple articles");
 		}
 
 		while ($line = $sth->fetch()) {
 
 			if (!$subject)
-				$subject = __("[Forwarded]") . " " . htmlspecialchars($line["title"]);
+				$subject = __("[Forwarded]")." ".htmlspecialchars($line["title"]);
 
 			$tpl->setVariable('ARTICLE_TITLE', strip_tags($line["title"]));
 			$tnote = strip_tags($line["note"]);
-			if( $tnote != ''){
+			if ($tnote != '') {
 				$tpl->setVariable('ARTICLE_NOTE', $tnote, true);
 				$tpl->addBlock('note');
 			}
@@ -210,7 +214,7 @@ class Mail extends Plugin {
 			"message" => $message]);
 
 		if (!$rc) {
-			$reply['error'] =  $mailer->error();
+			$reply['error'] = $mailer->error();
 		} else {
 			//save_email_address($destination);
 			$reply['message'] = "UPDATE_COUNTERS";

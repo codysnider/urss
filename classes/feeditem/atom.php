@@ -43,10 +43,11 @@ class FeedItem_Atom extends FeedItem_Common {
 					|| $link->getAttribute("rel") == "standout")) {
 				$base = $this->xpath->evaluate("string(ancestor-or-self::*[@xml:base][1]/@xml:base)", $link);
 
-				if ($base)
-					return rewrite_relative_url($base, clean(trim($link->getAttribute("href"))));
-				else
-					return clean(trim($link->getAttribute("href")));
+				if ($base) {
+									return rewrite_relative_url($base, clean(trim($link->getAttribute("href"))));
+				} else {
+									return clean(trim($link->getAttribute("href")));
+				}
 
 			}
 		}
@@ -106,8 +107,9 @@ class FeedItem_Atom extends FeedItem_Common {
 		$cats = [];
 
 		foreach ($categories as $cat) {
-			if ($cat->hasAttribute("term"))
-				array_push($cats, $cat->getAttribute("term"));
+			if ($cat->hasAttribute("term")) {
+							array_push($cats, $cat->getAttribute("term"));
+			}
 		}
 
 		$categories = $this->xpath->query("dc:subject", $this->elem);

@@ -6,5 +6,5 @@ use andreskrey\Readability\Nodes\NodeTrait;
 
 class DOMElement extends \DOMElement
 {
-    use NodeTrait;
+	use NodeTrait;
 }

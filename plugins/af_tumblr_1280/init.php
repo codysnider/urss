@@ -22,11 +22,12 @@ class Af_Tumblr_1280 extends Plugin {
 
 	public function hook_article_filter($article) {
 
-		if (!function_exists("curl_init") || ini_get("open_basedir"))
-			return $article;
+		if (!function_exists("curl_init") || ini_get("open_basedir")) {
+					return $article;
+		}
 
 		$doc = new DOMDocument();
-		$doc->loadHTML('<?xml encoding="UTF-8">' . $article["content"]);
+		$doc->loadHTML('<?xml encoding="UTF-8">'.$article["content"]);
 
 		$found = false;
 

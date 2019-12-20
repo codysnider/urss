@@ -7,12 +7,14 @@ class Handler_Public extends Handler {
 
 		require_once "lib/MiniTemplator.class.php";
 
-		$note_style = 	"background-color : #fff7d5;
+		$note_style = "background-color : #fff7d5;
 			border-width : 1px; ".
 			"padding : 5px; border-style : dashed; border-color : #e7d796;".
 			"margin-bottom : 1em; color : #9a8c59;";
 
-		if (!$limit) $limit = 60;
+		if (!$limit) {
+			$limit = 60;
+		}
 
 		$date_sort_field = "date_entered DESC, updated DESC";
 
@@ -73,11 +75,13 @@ class Handler_Public extends Handler {
 		$feed_site_url = $qfh_ret[2];
 		/* $last_error = $qfh_ret[3]; */
 
-		$feed_self_url = get_self_url_prefix() .
-			"/public.php?op=rss&id=$feed&key=" .
+		$feed_self_url = get_self_url_prefix().
+			"/public.php?op=rss&id=$feed&key=".
 			Feeds::get_feed_access_key($feed, false, $owner_uid);
 
-		if (!$feed_site_url) $feed_site_url = get_self_url_prefix();
+		if (!$feed_site_url) {
+			$feed_site_url = get_self_url_prefix();
+		}
 
 		if ($format == 'atom') {
 			$tpl = new MiniTemplator;
@@ -102,8 +106,7 @@ class Handler_Public extends Handler {
 				}
 
 				$tpl->setVariable('ARTICLE_ID',
-					htmlspecialchars($orig_guid ? $line['link'] :
-							$this->make_article_tag_uri($line['id'], $line['date_entered'])), true);
+					htmlspecialchars($orig_guid ? $line['link'] : $this->make_article_tag_uri($line['id'], $line['date_entered'])), true);
 				$tpl->setVariable('ARTICLE_LINK', htmlspecialchars($line['link']), true);
 				$tpl->setVariable('ARTICLE_TITLE', htmlspecialchars($line['title']), true);
 				$tpl->setVariable('ARTICLE_EXCERPT', $line["content_preview"], true);
@@ -112,7 +115,7 @@ class Handler_Public extends Handler {
 					$feed_site_url, false, $line["id"]);
 
 				if ($line['note']) {
-					$content = "<div style=\"$note_style\">Article note: " . $line['note'] . "</div>" .
+					$content = "<div style=\"$note_style\">Article note: ".$line['note']."</div>".
 						$content;
 					$tpl->setVariable('ARTICLE_NOTE', htmlspecialchars($line['note']), true);
 				}
@@ -201,14 +204,18 @@ class Handler_Public extends Handler {
 				$article = array();
 
 				$article['id'] = $line['link'];
-				$article['link']	= $line['link'];
+				$article['link'] = $line['link'];
 				$article['title'] = $line['title'];
 				$article['excerpt'] = $line["content_preview"];
 				$article['content'] = sanitize($line["content"], false, $owner_uid, $feed_site_url, false, $line["id"]);
 				$article['updated'] = date('c', strtotime($line["updated"]));
 
-				if ($line['note']) $article['note'] = $line['note'];
-				if ($article['author']) $article['author'] = $line['author'];
+				if ($line['note']) {
+					$article['note'] = $line['note'];
+				}
+				if ($article['author']) {
+					$article['author'] = $line['author'];
+				}
 
 				$tags = Article::get_article_tags($line["id"], $owner_uid);
 
@@ -277,15 +284,15 @@ class Handler_Public extends Handler {
 			WHERE ttrss_users.id = ttrss_settings_profiles.owner_uid AND login = ? ORDER BY title");
 			$sth->execute([$login]);
 
-			$rv = [ [ "value" => 0, "label" => __("Default profile") ] ];
+			$rv = [["value" => 0, "label" => __("Default profile")]];
 
 			while ($line = $sth->fetch()) {
 				$id = $line["id"];
 				$title = $line["title"];
 
-				array_push($rv, [ "label" => $title, "value" => $id ]);
+				array_push($rv, ["label" => $title, "value" => $id]);
 			}
-	    }
+		}
 
 		print json_encode($rv);
 	}
@@ -358,44 +365,44 @@ class Handler_Public extends Handler {
 
 			$enclosures = Article::get_article_enclosures($line["id"]);
 
-            header("Content-Type: text/html");
+			header("Content-Type: text/html");
 
-            $rv .= "<!DOCTYPE html>
+			$rv .= "<!DOCTYPE html>
                     <html><head>
                     <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
                     <title>".$line["title"]."</title>".
-                    stylesheet_tag("css/default.css")."
+					stylesheet_tag("css/default.css")."
                     <link rel='shortcut icon' type='image/png' href='images/favicon.png'>
                     <link rel='icon' type='image/png' sizes='72x72' href='images/favicon-72px.png'>";
 
-            $rv .= "<meta property='og:title' content=\"".htmlspecialchars(html_entity_decode($line["title"], ENT_NOQUOTES | ENT_HTML401))."\"/>\n";
-            $rv .= "<meta property='og:description' content=\"".
-                htmlspecialchars(
-                	truncate_string(
-                		preg_replace("/[\r\n\t]/", "",
+			$rv .= "<meta property='og:title' content=\"".htmlspecialchars(html_entity_decode($line["title"], ENT_NOQUOTES | ENT_HTML401))."\"/>\n";
+			$rv .= "<meta property='og:description' content=\"".
+				htmlspecialchars(
+					truncate_string(
+						preg_replace("/[\r\n\t]/", "",
 							preg_replace("/ {1,}/", " ",
 								strip_tags(html_entity_decode($line["content"], ENT_NOQUOTES | ENT_HTML401))
 							)
 					), 500, "...")
 				)."\"/>\n";
 
-            $rv .= "</head>";
+			$rv .= "</head>";
 
-            list ($og_image, $og_stream) = Article::get_article_image($enclosures, $line['content'], $line["site_url"]);
+			list ($og_image, $og_stream) = Article::get_article_image($enclosures, $line['content'], $line["site_url"]);
 
-            if ($og_image) {
-                $rv .= "<meta property='og:image' content=\"" . htmlspecialchars($og_image) . "\"/>";
-            }
+			if ($og_image) {
+				$rv .= "<meta property='og:image' content=\"" . htmlspecialchars($og_image) . "\"/>";
+			}
 
-            $rv .= "<body class='flat ttrss_utility ttrss_zoom'>";
-            $rv .= "<div class='container'>";
+			$rv .= "<body class='flat ttrss_utility ttrss_zoom'>";
+			$rv .= "<div class='container'>";
 
 			if ($line["link"]) {
 				$rv .= "<h1><a target='_blank' rel='noopener noreferrer'
 					title=\"".htmlspecialchars($line['title'])."\"
-					href=\"" .htmlspecialchars($line["link"]) . "\">" .	$line["title"] . "</a></h1>";
+					href=\"" .htmlspecialchars($line["link"])."\">".$line["title"]."</a></h1>";
 			} else {
-				$rv .= "<h1>" . $line["title"] . "</h1>";
+				$rv .= "<h1>".$line["title"]."</h1>";
 			}
 
 			$rv .= "<div class='content post'>";
@@ -410,7 +417,7 @@ class Handler_Public extends Handler {
 				$owner_uid, true);
 
 			$rv .= "<div>".$line['author']."</div>";
-            $rv .= "<div>$parsed_updated</div>";
+			$rv .= "<div>$parsed_updated</div>";
 
 			$rv .= "</div>"; # row
 
@@ -425,10 +432,10 @@ class Handler_Public extends Handler {
 
 			$rv .= $line["content"];
 
-            $rv .= Article::format_article_enclosures($id,
-                $line["always_display_enclosures"],
-                $line["content"],
-                $line["hide_images"]);
+			$rv .= Article::format_article_enclosures($id,
+				$line["always_display_enclosures"],
+				$line["content"],
+				$line["hide_images"]);
 
 			$rv .= "</div>"; # content
 
@@ -448,8 +455,8 @@ class Handler_Public extends Handler {
 		$feed = clean($_REQUEST["id"]);
 		$key = clean($_REQUEST["key"]);
 		$is_cat = clean($_REQUEST["is_cat"]);
-		$limit = (int)clean($_REQUEST["limit"]);
-		$offset = (int)clean($_REQUEST["offset"]);
+		$limit = (int) clean($_REQUEST["limit"]);
+		$offset = (int) clean($_REQUEST["offset"]);
 
 		$search = clean($_REQUEST["q"]);
 		$view_mode = clean($_REQUEST["view-mode"]);
@@ -459,7 +466,9 @@ class Handler_Public extends Handler {
 		$format = clean($_REQUEST['format']);
 		$orig_guid = clean($_REQUEST["orig_guid"]);
 
-		if (!$format) $format = 'atom';
+		if (!$format) {
+			$format = 'atom';
+		}
 
 		if (SINGLE_USER_MODE) {
 			authenticate_user("admin", null);
@@ -472,8 +481,9 @@ class Handler_Public extends Handler {
 				ttrss_access_keys WHERE access_key = ? AND feed_id = ?");
 			$sth->execute([$key, $feed]);
 
-			if ($row = $sth->fetch())
-				$owner_id = $row["owner_uid"];
+			if ($row = $sth->fetch()) {
+							$owner_id = $row["owner_uid"];
+			}
 		}
 
 		if ($owner_id) {
@@ -675,16 +685,17 @@ class Handler_Public extends Handler {
 					if ($sth->fetch()) {
 						$_SESSION["profile"] = $profile;
  					} else {
-					    $_SESSION["profile"] = null;
-                    }
+						$_SESSION["profile"] = null;
+					}
 				}
 			} else {
 
 				// start an empty session to deliver login error message
 				@session_start();
 
-				if (!isset($_SESSION["login_error_msg"]))
-					$_SESSION["login_error_msg"] = __("Incorrect username or password");
+				if (!isset($_SESSION["login_error_msg"])) {
+									$_SESSION["login_error_msg"] = __("Incorrect username or password");
+				}
 
 				user_error("Failed login attempt for $login from {$_SERVER['REMOTE_ADDR']}", E_USER_WARNING);
 			}
@@ -692,9 +703,9 @@ class Handler_Public extends Handler {
 			$return = clean($_REQUEST['return']);
 
 			if ($_REQUEST['return'] && mb_strpos($return, SELF_URL_PATH) === 0) {
-				header("Location: " . clean($_REQUEST['return']));
+				header("Location: ".clean($_REQUEST['return']));
 			} else {
-				header("Location: " . get_self_url_prefix());
+				header("Location: ".get_self_url_prefix());
 			}
 		}
 	}
@@ -760,24 +771,24 @@ class Handler_Public extends Handler {
 				$feed_urls = false;
 
 				switch ($rc['code']) {
-					case 0:
-						print_warning(T_sprintf("Already subscribed to <b>%s</b>.", $feed_url));
-						break;
-					case 1:
-						print_notice(T_sprintf("Subscribed to <b>%s</b>.", $feed_url));
-						break;
-					case 2:
-						print_error(T_sprintf("Could not subscribe to <b>%s</b>.", $feed_url));
-						break;
-					case 3:
-						print_error(T_sprintf("No feeds found in <b>%s</b>.", $feed_url));
-						break;
-					case 4:
-						$feed_urls = $rc["feeds"];
-						break;
-					case 5:
-						print_error(T_sprintf("Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL.", $feed_url));
-						break;
+				case 0:
+					print_warning(T_sprintf("Already subscribed to <b>%s</b>.", $feed_url));
+					break;
+				case 1:
+					print_notice(T_sprintf("Subscribed to <b>%s</b>.", $feed_url));
+					break;
+				case 2:
+					print_error(T_sprintf("Could not subscribe to <b>%s</b>.", $feed_url));
+					break;
+				case 3:
+					print_error(T_sprintf("No feeds found in <b>%s</b>.", $feed_url));
+					break;
+				case 4:
+					$feed_urls = $rc["feeds"];
+					break;
+				case 5:
+					print_error(T_sprintf("Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL.", $feed_url));
+					break;
 				}
 
 				if ($feed_urls) {
@@ -786,7 +797,7 @@ class Handler_Public extends Handler {
 					print "<input type='hidden' name='op' value='subscribe'>";
 
 					print "<fieldset>";
-					print "<label style='display : inline'>" . __("Multiple feed URLs found:") . "</label>";
+					print "<label style='display : inline'>".__("Multiple feed URLs found:")."</label>";
 					print "<select name='feed_url' dojoType='dijit.form.Select'>";
 
 					foreach ($feed_urls as $url => $name) {
@@ -805,9 +816,9 @@ class Handler_Public extends Handler {
 					print "</form>";
 				}
 
-				$tp_uri = get_self_url_prefix() . "/prefs.php";
+				$tp_uri = get_self_url_prefix()."/prefs.php";
 
-				if ($rc['code'] <= 2){
+				if ($rc['code'] <= 2) {
 					$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE
 					feed_url = ? AND owner_uid = ?");
 					$sth->execute([$feed_url, $_SESSION['uid']]);
@@ -895,7 +906,7 @@ class Handler_Public extends Handler {
 					list($timestamp, $resetpass_token) = explode(":", $resetpass_token_full);
 
 					if ($timestamp && $resetpass_token &&
-						$timestamp >= time() - 15*60*60 &&
+						$timestamp >= time() - 15 * 60 * 60 &&
 						$resetpass_token == $hash) {
 
 							$sth = $this->pdo->prepare("UPDATE ttrss_users SET resetpass_token = NULL
@@ -935,8 +946,8 @@ class Handler_Public extends Handler {
 				<input dojoType='dijit.form.TextBox' type='email' name='email' value='' required>
 				</fieldset>";
 
-			$_SESSION["pwdreset:testvalue1"] = rand(1,10);
-			$_SESSION["pwdreset:testvalue2"] = rand(1,10);
+			$_SESSION["pwdreset:testvalue1"] = rand(1, 10);
+			$_SESSION["pwdreset:testvalue2"] = rand(1, 10);
 
 			print "<fieldset>
 				<label>".T_sprintf("How much is %d + %d:", $_SESSION["pwdreset:testvalue1"], $_SESSION["pwdreset:testvalue2"])."</label>
@@ -981,8 +992,8 @@ class Handler_Public extends Handler {
 
 					if ($id) {
 						$resetpass_token = sha1(get_random_bytes(128));
-						$resetpass_link = get_self_url_prefix() . "/public.php?op=forgotpass&hash=" . $resetpass_token .
-							"&login=" . urlencode($login);
+						$resetpass_link = get_self_url_prefix()."/public.php?op=forgotpass&hash=".$resetpass_token.
+							"&login=".urlencode($login);
 
 						require_once "lib/MiniTemplator.class.php";
 
@@ -1007,9 +1018,11 @@ class Handler_Public extends Handler {
 							"subject" => __("[tt-rss] Password reset request"),
 							"message" => $message]);
 
-						if (!$rc) print_error($mailer->error());
+						if (!$rc) {
+							print_error($mailer->error());
+						}
 
-						$resetpass_token_full = time() . ":" . $resetpass_token;
+						$resetpass_token_full = time().":".$resetpass_token;
 
 						$sth = $this->pdo->prepare("UPDATE ttrss_users
 							SET resetpass_token = ?
@@ -1099,12 +1112,12 @@ class Handler_Public extends Handler {
 				if ($op == "performupdate") {
 					if ($updater->isUpdateRequired()) {
 
-						print "<h2>" . T_sprintf("Performing updates to version %d", SCHEMA_VERSION) . "</h2>";
+						print "<h2>".T_sprintf("Performing updates to version %d", SCHEMA_VERSION)."</h2>";
 
 						for ($i = $updater->getSchemaVersion() + 1; $i <= SCHEMA_VERSION; $i++) {
 							print "<ul>";
 
-							print "<li class='text-info'>" . T_sprintf("Updating to version %d", $i) . "</li>";
+							print "<li class='text-info'>".T_sprintf("Updating to version %d", $i)."</li>";
 
 							print "<li>";
 							$result = $updater->performUpdateTo($i, true);
@@ -1123,7 +1136,7 @@ class Handler_Public extends Handler {
 
 								return;
 							} else {
-								print "<li class='text-success'>" . __("Completed.") . "</li>";
+								print "<li class='text-success'>".__("Completed.")."</li>";
 								print "</ul>";
 							}
 						}
@@ -1191,7 +1204,7 @@ class Handler_Public extends Handler {
 
 		$timestamp = date("Y-m-d", strtotime($timestamp));
 
-		return "tag:" . parse_url(get_self_url_prefix(), PHP_URL_HOST) . ",$timestamp:/$id";
+		return "tag:".parse_url(get_self_url_prefix(), PHP_URL_HOST).",$timestamp:/$id";
 	}
 
 	// this should be used very carefully because this endpoint is exposed to unauthenticated users

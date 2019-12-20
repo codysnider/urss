@@ -3,7 +3,7 @@ class DiskCache {
 	private $dir;
 
 	public function __construct($dir) {
-		$this->dir = CACHE_DIR . "/" . clean_filename($dir);
+		$this->dir = CACHE_DIR."/".clean_filename($dir);
 	}
 
 	public function getDir() {
@@ -18,10 +18,11 @@ class DiskCache {
 
 	public function isWritable($filename = "") {
 		if ($filename) {
-			if (file_exists($this->getFullPath($filename)))
-				return is_writable($this->getFullPath($filename));
-			else
-				return is_writable($this->dir);
+			if (file_exists($this->getFullPath($filename))) {
+							return is_writable($this->getFullPath($filename));
+			} else {
+							return is_writable($this->dir);
+			}
 		} else {
 			return is_writable($this->dir);
 		}
@@ -32,16 +33,17 @@ class DiskCache {
 	}
 
 	public function getSize($filename) {
-		if ($this->exists($filename))
-			return filesize($this->getFullPath($filename));
-		else
-			return -1;
+		if ($this->exists($filename)) {
+					return filesize($this->getFullPath($filename));
+		} else {
+					return -1;
+		}
 	}
 
 	public function getFullPath($filename) {
 		$filename = clean_filename($filename);
 
-		return $this->dir . "/" . $filename;
+		return $this->dir."/".$filename;
 	}
 
 	public function put($filename, $data) {
@@ -53,17 +55,19 @@ class DiskCache {
 	}
 
 	public function get($filename) {
-		if ($this->exists($filename))
-			return file_get_contents($this->getFullPath($filename));
-		else
-			return null;
+		if ($this->exists($filename)) {
+					return file_get_contents($this->getFullPath($filename));
+		} else {
+					return null;
+		}
 	}
 
 	public function getMimeType($filename) {
-		if ($this->exists($filename))
-			return mime_content_type($this->getFullPath($filename));
-		else
-			return null;
+		if ($this->exists($filename)) {
+					return mime_content_type($this->getFullPath($filename));
+		} else {
+					return null;
+		}
 	}
 
 	public function send($filename) {
@@ -73,7 +77,7 @@ class DiskCache {
 	}
 
 	public function getUrl($filename) {
-		return get_self_url_prefix() . "/public.php?op=cached_url&file=" . basename($this->dir) . "/" . $filename;
+		return get_self_url_prefix()."/public.php?op=cached_url&file=".basename($this->dir)."/".$filename;
 	}
 
 	// check for locally cached (media) URLs and rewrite to local versions
@@ -82,10 +86,12 @@ class DiskCache {
 	static public function rewriteUrls($str)
 	{
 		$res = trim($str);
-		if (!$res) return '';
+		if (!$res) {
+			return '';
+		}
 
 		$doc = new DOMDocument();
-		if ($doc->loadHTML('<?xml encoding="UTF-8">' . $res)) {
+		if ($doc->loadHTML('<?xml encoding="UTF-8">'.$res)) {
 			$xpath = new DOMXPath($doc);
 			$cache = new DiskCache("images");
 
@@ -105,9 +111,9 @@ class DiskCache {
 
 						$src = $cache->getUrl(sha1($src));
 
-						if ($entry->hasAttribute('poster'))
-							$entry->setAttribute('poster', $src);
-						else {
+						if ($entry->hasAttribute('poster')) {
+													$entry->setAttribute('poster', $src);
+						} else {
 							$entry->setAttribute('src', $src);
 							$entry->removeAttribute("srcset");
 						}
@@ -126,7 +132,7 @@ class DiskCache {
 	}
 
 	public static function expire() {
-		$dirs = array_filter(glob(CACHE_DIR . "/*"), "is_dir");
+		$dirs = array_filter(glob(CACHE_DIR."/*"), "is_dir");
 
 		foreach ($dirs as $cache_dir) {
 			$num_deleted = 0;
@@ -136,7 +142,7 @@ class DiskCache {
 
 				if ($files) {
 					foreach ($files as $file) {
-						if (time() - filemtime($file) > 86400*CACHE_MAX_DAYS) {
+						if (time() - filemtime($file) > 86400 * CACHE_MAX_DAYS) {
 							unlink($file);
 
 							++$num_deleted;

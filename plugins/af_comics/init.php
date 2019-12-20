@@ -19,9 +19,9 @@ class Af_Comics extends Plugin {
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 
-		require_once __DIR__ . "/filter_base.php";
+		require_once __DIR__."/filter_base.php";
 
-		$filters = array_merge(glob(__DIR__ . "/filters.local/*.php"), glob(__DIR__ . "/filters/*.php"));
+		$filters = array_merge(glob(__DIR__."/filters.local/*.php"), glob(__DIR__."/filters/*.php"));
 		$names = [];
 
 		foreach ($filters as $file) {
@@ -45,12 +45,14 @@ class Af_Comics extends Plugin {
 	}
 
 	public function hook_prefs_tab($args) {
-		if ($args != "prefFeeds") return;
+		if ($args != "prefFeeds") {
+			return;
+		}
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>photo</i> ".__('Feeds supported by af_comics')."\">";
 
-		print "<p>" . __("The following comics are currently supported:") . "</p>";
+		print "<p>".__("The following comics are currently supported:")."</p>";
 
 		$comics = array("GoComics");
 
@@ -77,8 +79,9 @@ class Af_Comics extends Plugin {
 
 	public function hook_article_filter($article) {
 		foreach ($this->filters as $f) {
-			if ($f->process($article))
-				break;
+			if ($f->process($article)) {
+							break;
+			}
 		}
 
 		return $article;
@@ -89,13 +92,14 @@ class Af_Comics extends Plugin {
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	public function hook_fetch_feed($feed_data, $fetch_url, $owner_uid, $feed, $last_article_timestamp, $auth_login, $auth_pass) {
-		if ($auth_login || $auth_pass)
-			return $feed_data;
+		if ($auth_login || $auth_pass) {
+					return $feed_data;
+		}
 
 		if (preg_match('#^https?://(?:feeds\.feedburner\.com/uclick|www\.gocomics\.com)/([-a-z0-9]+)$#i', $fetch_url, $comic)) {
-			$site_url = 'https://www.gocomics.com/' . $comic[1];
+			$site_url = 'https://www.gocomics.com/'.$comic[1];
 
-			$article_link = $site_url . date('/Y/m/d');
+			$article_link = $site_url.date('/Y/m/d');
 
 			$body = fetch_file_contents(array('url' => $article_link, 'type' => 'text/html', 'followlocation' => false));
 
@@ -131,7 +135,7 @@ class Af_Comics extends Plugin {
 							$title = date('l, F d, Y');
 						}
 
-						foreach (['srcset', 'sizes', 'data-srcset', 'width'] as $attr ) {
+						foreach (['srcset', 'sizes', 'data-srcset', 'width'] as $attr) {
 							$node->removeAttribute($attr);
 						}
 
@@ -153,29 +157,35 @@ class Af_Comics extends Plugin {
 
 			$tpl->addBlock('feed');
 
-			if ($tpl->generateOutputToString($tmp_data))
-				$feed_data = $tmp_data;
+			if ($tpl->generateOutputToString($tmp_data)) {
+							$feed_data = $tmp_data;
+			}
 		}
 
 		return $feed_data;
 	}
 
 	public function hook_subscribe_feed($contents, $url, $auth_login, $auth_pass) {
-		if ($auth_login || $auth_pass)
-			return $contents;
+		if ($auth_login || $auth_pass) {
+					return $contents;
+		}
 
-		if (preg_match('#^https?://www\.gocomics\.com/([-a-z0-9]+)$#i', $url))
-			return '<?xml version="1.0" encoding="utf-8"?>'; // Get is_html() to return false.
+		if (preg_match('#^https?://www\.gocomics\.com/([-a-z0-9]+)$#i', $url)) {
+					return '<?xml version="1.0" encoding="utf-8"?>';
+		}
+		// Get is_html() to return false.
 
 		return $contents;
 	}
 
 	public function hook_feed_basic_info($basic_info, $fetch_url, $owner_uid, $feed, $auth_login, $auth_pass) {
-		if ($auth_login || $auth_pass)
-			return $basic_info;
+		if ($auth_login || $auth_pass) {
+					return $basic_info;
+		}
 
-		if (preg_match('#^https?://www\.gocomics\.com/([-a-z0-9]+)$#i', $fetch_url, $matches))
-			$basic_info = array('title' => ucfirst($matches[1]), 'site_url' => $matches[0]);
+		if (preg_match('#^https?://www\.gocomics\.com/([-a-z0-9]+)$#i', $fetch_url, $matches)) {
+					$basic_info = array('title' => ucfirst($matches[1]), 'site_url' => $matches[0]);
+		}
 
 		return $basic_info;
 	}

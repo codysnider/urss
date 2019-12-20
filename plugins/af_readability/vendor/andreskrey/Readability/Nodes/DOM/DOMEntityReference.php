@@ -6,5 +6,5 @@ use andreskrey\Readability\Nodes\NodeTrait;
 
 class DOMEntityReference extends \DOMEntityReference
 {
-    use NodeTrait;
+	use NodeTrait;
 }
