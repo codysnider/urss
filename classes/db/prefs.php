@@ -4,15 +4,11 @@ class Db_Prefs {
 	private static $instance;
 	private $cache;
 
-	function __construct() {
+	public function __construct() {
 		$this->pdo = Db::pdo();
 		$this->cache = array();
 
 		if ($_SESSION["uid"]) $this->cache();
-	}
-
-	private function __clone() {
-		//
 	}
 
 	public static function get() {
@@ -22,7 +18,7 @@ class Db_Prefs {
 		return self::$instance;
 	}
 
-	function cache() {
+	public function cache() {
 		$user_id = $_SESSION["uid"];
 		@$profile = $_SESSION["profile"];
 
@@ -51,7 +47,7 @@ class Db_Prefs {
 		}
 	}
 
-	function read($pref_name, $user_id = false, $die_on_error = false) {
+	public function read($pref_name, $user_id = false, $die_on_error = false) {
 
 		if (!$user_id) {
 			$user_id = $_SESSION["uid"];
@@ -98,7 +94,7 @@ class Db_Prefs {
 		}
 	}
 
-	function convert($value, $type_name) {
+	public function convert($value, $type_name) {
 		if ($type_name == "bool") {
 			return $value == "true";
 		} else if ($type_name == "integer") {
@@ -108,7 +104,7 @@ class Db_Prefs {
 		}
 	}
 
-	function write($pref_name, $value, $user_id = false, $strip_tags = true) {
+	public function write($pref_name, $value, $user_id = false, $strip_tags = true) {
 		if ($strip_tags) $value = strip_tags($value);
 
 		if (!$user_id) {
@@ -169,5 +165,4 @@ class Db_Prefs {
 			}
 		}
 	}
-
 }

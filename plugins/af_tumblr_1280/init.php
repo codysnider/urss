@@ -2,17 +2,17 @@
 class Af_Tumblr_1280 extends Plugin {
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Replace Tumblr pictures and videos with largest size if available (requires CURL)",
 			"fox");
 	}
 
-	function flags() {
+	public function flags() {
 		return array("needs_curl" => true);
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		if (function_exists("curl_init")) {
@@ -20,7 +20,7 @@ class Af_Tumblr_1280 extends Plugin {
 		}
 	}
 
-	function hook_article_filter($article) {
+	public function hook_article_filter($article) {
 
 		if (!function_exists("curl_init") || ini_get("open_basedir"))
 			return $article;
@@ -84,7 +84,7 @@ class Af_Tumblr_1280 extends Plugin {
 	}
 
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

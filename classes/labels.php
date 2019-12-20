@@ -1,15 +1,15 @@
 <?php
 class Labels
 {
-	static function label_to_feed_id($label) {
+	public static function label_to_feed_id($label) {
 		return LABEL_BASE_INDEX - 1 - abs($label);
 	}
 
-	static function feed_to_label_id($feed) {
+	public static function feed_to_label_id($feed) {
 		return LABEL_BASE_INDEX - 1 + abs($feed);
 	}
 
-	static function find_id($label, $owner_uid) {
+	public static function find_id($label, $owner_uid) {
 		$pdo = Db::pdo();
 
 		$sth = $pdo->prepare("SELECT id FROM ttrss_labels2 WHERE caption = ?
@@ -23,7 +23,7 @@ class Labels
 		}
 	}
 
-	static function find_caption($label, $owner_uid) {
+	public static function find_caption($label, $owner_uid) {
 		$pdo = Db::pdo();
 
 		$sth = $pdo->prepare("SELECT caption FROM ttrss_labels2 WHERE id = ?
@@ -37,7 +37,7 @@ class Labels
 		}
 	}
 
-	static function get_all_labels($owner_uid)	{
+	public static function get_all_labels($owner_uid)	{
 		$rv = array();
 
 		$pdo = Db::pdo();
@@ -53,7 +53,7 @@ class Labels
 		return $rv;
 	}
 
-	static function update_cache($owner_uid, $id, $labels = false, $force = false) {
+	public static function update_cache($owner_uid, $id, $labels = false, $force = false) {
 		$pdo = Db::pdo();
 
 		if ($force)
@@ -70,7 +70,7 @@ class Labels
 
 	}
 
-	static function clear_cache($id)	{
+	public static function clear_cache($id)	{
 
 		$pdo = Db::pdo();
 
@@ -80,7 +80,7 @@ class Labels
 
 	}
 
-	static function remove_article($id, $label, $owner_uid) {
+	public static function remove_article($id, $label, $owner_uid) {
 
 		$label_id = Labels::find_id($label, $owner_uid);
 
@@ -98,7 +98,7 @@ class Labels
 		Labels::clear_cache($id);
 	}
 
-	static function add_article($id, $label, $owner_uid)	{
+	public static function add_article($id, $label, $owner_uid)	{
 
 		$label_id = Labels::find_id($label, $owner_uid);
 
@@ -127,7 +127,7 @@ class Labels
 
 	}
 
-	static function remove($id, $owner_uid) {
+	public static function remove($id, $owner_uid) {
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
 		$pdo = Db::pdo();
@@ -171,7 +171,7 @@ class Labels
 		if (!$tr_in_progress) $pdo->commit();
 	}
 
-	static function create($caption, $fg_color = '', $bg_color = '', $owner_uid = false)	{
+	public static function create($caption, $fg_color = '', $bg_color = '', $owner_uid = false)	{
 
 		if (!$owner_uid) $owner_uid = $_SESSION['uid'];
 

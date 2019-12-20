@@ -1,11 +1,11 @@
 <?php
 class Af_Comics_Pvp extends Af_ComicFilter {
 
-	function supported() {
+	public function supported() {
 		return array("PvP Online");
 	}
 
-	function process(&$article) {
+	public function process(&$article) {
 		if (strpos($article["guid"], "pvponline.com") !== FALSE) {
 
 				$res = fetch_file_contents($article["link"], false, false, false,

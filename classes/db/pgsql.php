@@ -3,7 +3,7 @@ class Db_Pgsql implements IDb {
 	private $link;
 	private $last_error;
 
-	function connect($host, $user, $pass, $db, $port) {
+	public function connect($host, $user, $pass, $db, $port) {
 		$string = "dbname=$db user=$user";
 
 		if ($pass) {
@@ -30,13 +30,13 @@ class Db_Pgsql implements IDb {
 		return $this->link;
 	}
 
-	function escape_string($s, $strip_tags = true) {
+	public function escape_string($s, $strip_tags = true) {
 		if ($strip_tags) $s = strip_tags($s);
 
 		return pg_escape_string($s);
 	}
 
-	function query($query, $die_on_error = true) {
+	public function query($query, $die_on_error = true) {
 		$result = @pg_query($this->link, $query);
 
 		if (!$result) {
@@ -50,36 +50,36 @@ class Db_Pgsql implements IDb {
 		return $result;
 	}
 
-	function fetch_assoc($result) {
+	public function fetch_assoc($result) {
 		return pg_fetch_assoc($result);
 	}
 
 
-	function num_rows($result) {
+	public function num_rows($result) {
 		return pg_num_rows($result);
 	}
 
-	function fetch_result($result, $row, $param) {
+	public function fetch_result($result, $row, $param) {
 		return pg_fetch_result($result, $row, $param);
 	}
 
-	function close() {
+	public function close() {
 		return pg_close($this->link);
 	}
 
-	function affected_rows($result) {
+	public function affected_rows($result) {
 		return pg_affected_rows($result);
 	}
 
-	function last_error() {
+	public function last_error() {
 		return pg_last_error($this->link);
 	}
 
-	function last_query_error() {
+	public function last_query_error() {
 		return $this->last_error;
 	}
 
-	function init() {
+	public function init() {
 		$this->query("set client_encoding = 'UTF-8'");
 		pg_set_client_encoding("UNICODE");
 		$this->query("set datestyle = 'ISO, european'");

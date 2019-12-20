@@ -125,7 +125,7 @@ class DiskCache {
 		return $res;
 	}
 
-	static function expire() {
+	public static function expire() {
 		$dirs = array_filter(glob(CACHE_DIR . "/*"), "is_dir");
 
 		foreach ($dirs as $cache_dir) {

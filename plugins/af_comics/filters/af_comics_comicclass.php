@@ -1,11 +1,11 @@
 <?php
 class Af_Comics_ComicClass extends Af_ComicFilter {
 
-	function supported() {
+	public function supported() {
 		return array("Loading Artist");
 	}
 
-	function process(&$article) {
+	public function process(&$article) {
 		if (strpos($article["guid"], "loadingartist.com") !== FALSE) {
 
 				// lol at people who block clients by user agent

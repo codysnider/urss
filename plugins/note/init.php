@@ -4,29 +4,29 @@ class Note extends Plugin {
 	/* @var PluginHost $host */
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Adds support for setting article notes",
 			"fox");
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_ARTICLE_BUTTON, $this);
 	}
 
-	function get_js() {
+	public function get_js() {
 		return file_get_contents(dirname(__FILE__) . "/note.js");
 	}
 
 
-	function hook_article_button($line) {
+	public function hook_article_button($line) {
 		return "<i class='material-icons' onclick=\"Plugins.Note.edit(".$line["id"].")\"
 			style='cursor : pointer' title='".__('Edit article note')."'>note</i>";
 	}
 
-	function edit() {
+	public function edit() {
 		$param = $_REQUEST['param'];
 
 		$sth = $this->pdo->prepare("SELECT note FROM ttrss_user_entries WHERE
@@ -57,7 +57,7 @@ class Note extends Plugin {
 
 	}
 
-	function setNote() {
+	public function setNote() {
 		$id = $_REQUEST["id"];
 		$note = trim(strip_tags($_REQUEST["note"]));
 
@@ -71,7 +71,7 @@ class Note extends Plugin {
 				"raw_length" => mb_strlen($note)));
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

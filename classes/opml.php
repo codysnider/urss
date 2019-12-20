@@ -1,13 +1,13 @@
 <?php
 class Opml extends Handler_Protected {
 
-	function csrf_ignore($method) {
+	public function csrf_ignore($method) {
 		$csrf_ignored = array("export", "import");
 
 		return array_search($method, $csrf_ignored) !== false;
 	}
 
-	function export() {
+	public function export() {
 		$output_name = "tt-rss_".date("Y-m-d").".opml";
 		$include_settings = $_REQUEST["include_settings"] == "1";
 		$owner_uid = $_SESSION["uid"];
@@ -17,7 +17,7 @@ class Opml extends Handler_Protected {
 		return $rc;
 	}
 
-	function import() {
+	public function import() {
 		$owner_uid = $_SESSION["uid"];
 
 		header('Content-Type: text/html; charset=utf-8');
@@ -62,7 +62,7 @@ class Opml extends Handler_Protected {
 		$ttrss_specific_qpart = "";
 
 		if ($cat_id) {
-			$sth = $this->pdo->prepare("SELECT title,order_id 
+			$sth = $this->pdo->prepare("SELECT title,order_id
 				FROM ttrss_feed_categories WHERE id = ?
 					AND owner_uid = ?");
 			$sth->execute([$cat_id, $owner_uid]);
@@ -125,7 +125,7 @@ class Opml extends Handler_Protected {
 		return $out;
 	}
 
-	function opml_export($name, $owner_uid, $hide_private_feeds = false, $include_settings = true) {
+	public function opml_export($name, $owner_uid, $hide_private_feeds = false, $include_settings = true) {
 		if (!$owner_uid) return;
 
 		if (!isset($_REQUEST["debug"])) {
@@ -573,7 +573,7 @@ class Opml extends Handler_Protected {
 		}
 	}
 
-	function opml_import($owner_uid) {
+	public function opml_import($owner_uid) {
 		if (!$owner_uid) return;
 
 		$doc = false;
@@ -623,7 +623,7 @@ class Opml extends Handler_Protected {
 		print "$msg<br/>";
 	}
 
-	static function opml_publish_url(){
+	public static function opml_publish_url(){
 
 		$url_path = get_self_url_prefix();
 		$url_path .= "/opml.php?op=publish&key=" .
@@ -632,7 +632,7 @@ class Opml extends Handler_Protected {
 		return $url_path;
 	}
 
-	function get_feed_category($feed_cat, $parent_cat_id = false) {
+	public function get_feed_category($feed_cat, $parent_cat_id = false) {
 
 		$parent_cat_id = (int) $parent_cat_id;
 

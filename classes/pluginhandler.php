@@ -1,10 +1,10 @@
 <?php
 class PluginHandler extends Handler_Protected {
-	function csrf_ignore($method) {
+	public function csrf_ignore($method) {
 		return true;
 	}
 
-	function catchall($method) {
+	public function catchall($method) {
 		$plugin_name = clean($_REQUEST["plugin"]);
 		$plugin = PluginHost::getInstance()->get_plugin($plugin_name);
 

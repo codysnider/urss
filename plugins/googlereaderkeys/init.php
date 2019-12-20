@@ -2,19 +2,19 @@
 class GoogleReaderKeys extends Plugin {
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Keyboard hotkeys emulate Google Reader",
 			"markwaters");
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_HOTKEY_MAP, $this);
 	}
 
-	function hook_hotkey_map($hotkeys) {
+	public function hook_hotkey_map($hotkeys) {
 
 		$hotkeys["j"]		= "next_article_noscroll";
 		$hotkeys["k"]		= "prev_article_noscroll";
@@ -33,7 +33,7 @@ class GoogleReaderKeys extends Plugin {
 		return $hotkeys;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

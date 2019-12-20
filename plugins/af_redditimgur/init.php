@@ -4,27 +4,27 @@ class Af_RedditImgur extends Plugin {
 	/* @var PluginHost $host */
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Inline images (and other content) in Reddit RSS feeds",
 			"fox");
 	}
 
-	function flags() {
+	public function flags() {
 		return array("needs_curl" => true);
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 	}
 
-	function hook_prefs_tab($args) {
+	public function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>extension</i> ".__('Reddit content settings (af_redditimgur)')."\">";
 
 		$enable_readability = $this->host->get($this, "enable_readability");
@@ -72,7 +72,7 @@ class Af_RedditImgur extends Plugin {
 		print "</div>";
 	}
 
-	function save() {
+	public function save() {
 		$enable_readability = checkbox_to_sql_bool($_POST["enable_readability"]);
 		$enable_content_dupcheck = checkbox_to_sql_bool($_POST["enable_content_dupcheck"]);
 
@@ -391,7 +391,7 @@ class Af_RedditImgur extends Plugin {
 		return $found;
 	}
 
-	function hook_article_filter($article) {
+	public function hook_article_filter($article) {
 
 		if (strpos($article["link"], "reddit.com/r/") !== FALSE) {
 			$doc = new DOMDocument();
@@ -445,7 +445,7 @@ class Af_RedditImgur extends Plugin {
 		return $article;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 
@@ -477,7 +477,7 @@ class Af_RedditImgur extends Plugin {
 		$entry->parentNode->insertBefore($img, $entry);
 	}
 
-	function testurl() {
+	public function testurl() {
 		$url = htmlspecialchars($_REQUEST["url"]);
 
 		header("Content-type: text/plain");

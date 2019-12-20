@@ -2,7 +2,7 @@
 
 class Pref_System extends Handler_Protected {
 
-	function before($method) {
+	public function before($method) {
 		if (parent::before($method)) {
 			if ($_SESSION["access_level"] < 10) {
 				print __("Your access level is insufficient to open this tab.");
@@ -13,20 +13,20 @@ class Pref_System extends Handler_Protected {
 		return false;
 	}
 
-	function csrf_ignore($method) {
+	public function csrf_ignore($method) {
 		$csrf_ignored = array("index");
 
 		return array_search($method, $csrf_ignored) !== false;
 	}
 
-	function clearLog() {
+	public function clearLog() {
 		$this->pdo->query("DELETE FROM ttrss_error_log");
 	}
 
-	function index() {
+	public function index() {
 
 		print "<div dojoType=\"dijit.layout.AccordionContainer\" region=\"center\">";
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>report</i> ".__('Event Log')."\">";
 
 		if (LOG_DESTINATION == "sql") {
@@ -81,7 +81,7 @@ class Pref_System extends Handler_Protected {
 
 		print "</div>";
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>info</i> ".__('PHP Information')."\">";
 
 		ob_start();

@@ -1,11 +1,11 @@
 <?php
 class Af_Comics_Pa extends Af_ComicFilter {
 
-	function supported() {
+	public function supported() {
 		return array("Penny Arcade");
 	}
 
-	function process(&$article) {
+	public function process(&$article) {
 		if (strpos($article["link"], "penny-arcade.com") !== FALSE && strpos($article["title"], "Comic:") !== FALSE) {
 
 				$doc = new DOMDocument();

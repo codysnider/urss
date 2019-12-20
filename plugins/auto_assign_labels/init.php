@@ -4,19 +4,19 @@ class Auto_Assign_Labels extends Plugin {
 	/* @var PluginHost $host */
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Assign labels automatically based on article title, content, and tags",
 			"fox");
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 	}
 
-	function get_all_labels_filter_format($owner_uid) {
+	public function get_all_labels_filter_format($owner_uid) {
 		$rv = array();
 
 		$sth = $this->pdo->prepare("SELECT id, fg_color, bg_color, caption FROM ttrss_labels2 WHERE owner_uid = ?");
@@ -31,7 +31,7 @@ class Auto_Assign_Labels extends Plugin {
 	}
 
 
-	function hook_article_filter($article) {
+	public function hook_article_filter($article) {
 
 		$owner_uid = $article["owner_uid"];
 		$labels = $this->get_all_labels_filter_format($owner_uid);
@@ -51,7 +51,7 @@ class Auto_Assign_Labels extends Plugin {
 		return $article;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 }

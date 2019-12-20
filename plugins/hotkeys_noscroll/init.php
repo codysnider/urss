@@ -2,19 +2,19 @@
 class Hotkeys_Noscroll extends Plugin {
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"n/p hotkeys move between articles without scrolling",
 			"fox");
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_HOTKEY_MAP, $this);
 	}
 
-	function hook_hotkey_map($hotkeys) {
+	public function hook_hotkey_map($hotkeys) {
 
 		$hotkeys["(40)|Down"] = "next_article_noscroll";
 		$hotkeys["(38)|Up"] = "prev_article_noscroll";
@@ -24,7 +24,7 @@ class Hotkeys_Noscroll extends Plugin {
 		return $hotkeys;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

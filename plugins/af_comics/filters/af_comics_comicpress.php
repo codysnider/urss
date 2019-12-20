@@ -1,12 +1,12 @@
 <?php
 class Af_Comics_ComicPress extends Af_ComicFilter {
 
-	function supported() {
+	public function supported() {
 		return array("Buni", "Buttersafe", "Happy Jar", "CSection",
 			"Extra Fabulous Comics", "Nedroid", "Stonetoss");
 	}
 
-	function process(&$article) {
+	public function process(&$article) {
 		if (strpos($article["guid"], "bunicomic.com") !== FALSE ||
 				strpos($article["guid"], "buttersafe.com") !== FALSE ||
 				strpos($article["guid"], "extrafabulouscomics.com") !== FALSE ||

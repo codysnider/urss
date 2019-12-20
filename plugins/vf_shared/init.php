@@ -4,27 +4,27 @@ class VF_Shared extends Plugin {
 	/* @var PluginHost $host */
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Feed for all articles actively shared by URL",
 			"fox",
 			false);
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_feed(-1, __("Shared articles"), 'link', $this);
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	function get_unread($feed_id) {
+	public function get_unread($feed_id) {
 		$sth = $this->pdo->prepare("select count(int_id) AS count
 			from ttrss_user_entries where owner_uid = ? and unread = true and uuid != ''");
 		$sth->execute([$_SESSION['uid']]);
@@ -39,7 +39,7 @@ class VF_Shared extends Plugin {
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	function get_total($feed_id) {
+	public function get_total($feed_id) {
 		$sth = $this->pdo->prepare("select count(int_id) AS count
 			from ttrss_user_entries where owner_uid = ? and uuid != ''");
 		$sth->execute([$_SESSION['uid']]);
@@ -54,7 +54,7 @@ class VF_Shared extends Plugin {
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	function get_headlines($feed_id, $options) {
+	public function get_headlines($feed_id, $options) {
 		$params = array(
 			"feed" => -4,
 			"limit" => $options["limit"],

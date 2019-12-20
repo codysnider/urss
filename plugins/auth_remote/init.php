@@ -5,7 +5,7 @@ class Auth_Remote extends Plugin implements IAuthModule {
 	/* @var Auth_Base $base */
 	private $base;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Authenticates against remote password (e.g. supplied by Apache)",
 			"fox",
@@ -13,14 +13,14 @@ class Auth_Remote extends Plugin implements IAuthModule {
 	}
 
 	/* @var PluginHost $host */
-	function init($host ) {
+	public function init($host ) {
 		$this->host = $host;
 		$this->base = new Auth_Base();
 
 		$host->add_hook($host::HOOK_AUTH_USER, $this);
 	}
 
-	function get_login_by_ssl_certificate() {
+	public function get_login_by_ssl_certificate() {
 		$cert_serial = get_ssl_certificate_id();
 
 		if ($cert_serial) {
@@ -40,7 +40,7 @@ class Auth_Remote extends Plugin implements IAuthModule {
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	function authenticate($login, $password) {
+	public function authenticate($login, $password) {
 		$try_login = $_SERVER["REMOTE_USER"];
 
 		// php-cgi
@@ -81,7 +81,7 @@ class Auth_Remote extends Plugin implements IAuthModule {
 		return false;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

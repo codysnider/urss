@@ -2,23 +2,23 @@
 class Af_Unburn extends Plugin {
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Resolves feedburner and similar feed redirector URLs (requires CURL)",
 			"fox");
 	}
 
-	function flags() {
+	public function flags() {
 		return array("needs_curl" => true);
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 	}
 
-	function hook_article_filter($article) {
+	public function hook_article_filter($article) {
 		$owner_uid = $article["owner_uid"];
 
 		if (defined('NO_CURL') || !function_exists("curl_init") || ini_get("open_basedir"))
@@ -77,7 +77,7 @@ class Af_Unburn extends Plugin {
 		return $article;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

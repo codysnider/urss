@@ -2,7 +2,7 @@
 class FeedItem_Atom extends FeedItem_Common {
 	const NS_XML = "http://www.w3.org/XML/1998/namespace";
 
-	function get_id() {
+	public function get_id() {
 		$id = $this->elem->getElementsByTagName("id")->item(0);
 
 		if ($id) {
@@ -12,7 +12,7 @@ class FeedItem_Atom extends FeedItem_Common {
 		}
 	}
 
-	function get_date() {
+	public function get_date() {
 		$updated = $this->elem->getElementsByTagName("updated")->item(0);
 
 		if ($updated) {
@@ -33,7 +33,7 @@ class FeedItem_Atom extends FeedItem_Common {
 	}
 
 
-	function get_link() {
+	public function get_link() {
 		$links = $this->elem->getElementsByTagName("link");
 
 		foreach ($links as $link) {
@@ -52,7 +52,7 @@ class FeedItem_Atom extends FeedItem_Common {
 		}
 	}
 
-	function get_title() {
+	public function get_title() {
 		$title = $this->elem->getElementsByTagName("title")->item(0);
 
 		if ($title) {
@@ -60,7 +60,7 @@ class FeedItem_Atom extends FeedItem_Common {
 		}
 	}
 
-	function get_content() {
+	public function get_content() {
 		$content = $this->elem->getElementsByTagName("content")->item(0);
 
 		if ($content) {
@@ -80,7 +80,7 @@ class FeedItem_Atom extends FeedItem_Common {
 		}
 	}
 
-	function get_description() {
+	public function get_description() {
 		$content = $this->elem->getElementsByTagName("summary")->item(0);
 
 		if ($content) {
@@ -101,7 +101,7 @@ class FeedItem_Atom extends FeedItem_Common {
 
 	}
 
-	function get_categories() {
+	public function get_categories() {
 		$categories = $this->elem->getElementsByTagName("category");
 		$cats = [];
 
@@ -119,7 +119,7 @@ class FeedItem_Atom extends FeedItem_Common {
 		return $this->normalize_categories($cats);
 	}
 
-	function get_enclosures() {
+	public function get_enclosures() {
 		$links = $this->elem->getElementsByTagName("link");
 
 		$encs = array();
@@ -143,7 +143,7 @@ class FeedItem_Atom extends FeedItem_Common {
 		return $encs;
 	}
 
-	function get_language() {
+	public function get_language() {
 		$lang = $this->elem->getAttributeNS(self::NS_XML, "lang");
 
 		if (!empty($lang)) {

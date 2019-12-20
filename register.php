@@ -102,7 +102,7 @@
 
 <script type="text/javascript">
 
-	function checkUsername() {
+	public function checkUsername() {
 
 		try {
 			var f = document.forms['register_form'];
@@ -148,7 +148,7 @@
 
 	}
 
-	function validateRegForm() {
+	public function validateRegForm() {
 		try {
 
 			var f = document.forms['register_form'];

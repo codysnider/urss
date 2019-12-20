@@ -2,34 +2,34 @@
 class Share extends Plugin {
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Share article by unique URL",
 			"fox");
 	}
 
 	/* @var PluginHost $host */
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_ARTICLE_BUTTON, $this);
 		$host->add_hook($host::HOOK_PREFS_TAB_SECTION, $this);
 	}
 
-	function get_js() {
+	public function get_js() {
 		return file_get_contents(dirname(__FILE__) . "/share.js");
 	}
 
-	function get_css() {
+	public function get_css() {
 		return file_get_contents(dirname(__FILE__) . "/share.css");
 	}
 
-	function get_prefs_js() {
+	public function get_prefs_js() {
 		return file_get_contents(dirname(__FILE__) . "/share_prefs.js");
 	}
 
 
-	function unshare() {
+	public function unshare() {
 		$id = $_REQUEST['id'];
 
 		$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET uuid = '' WHERE int_id = ?
@@ -39,7 +39,7 @@ class Share extends Plugin {
 		print "OK";
 	}
 
-	function hook_prefs_tab_section($id) {
+	public function hook_prefs_tab_section($id) {
 		if ($id == "prefFeedsPublishedGenerated") {
 
 			print "<h3>" . __("You can disable all articles shared by unique URLs here.") . "</h3>";
@@ -53,7 +53,7 @@ class Share extends Plugin {
 	}
 
 	// Silent
-	function clearArticleKeys() {
+	public function clearArticleKeys() {
 		$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET uuid = '' WHERE
 			owner_uid = ?");
 		$sth->execute([$_SESSION['uid']]);
@@ -62,7 +62,7 @@ class Share extends Plugin {
 	}
 
 
-	function newkey() {
+	public function newkey() {
 		$id = $_REQUEST['id'];
 		$uuid = uniqid_short();
 
@@ -73,7 +73,7 @@ class Share extends Plugin {
 		print json_encode(array("link" => $uuid));
 	}
 
-	function hook_article_button($line) {
+	public function hook_article_button($line) {
 		$img_class = $line['uuid'] ? "shared" : "";
 
 		return "<i id='SHARE-IMG-".$line['int_id']."' class='material-icons icon-share $img_class'
@@ -81,7 +81,7 @@ class Share extends Plugin {
 			title='".__('Share by URL')."'>link</i>";
 	}
 
-	function shareArticle() {
+	public function shareArticle() {
 		$param = $_REQUEST['param'];
 
 		$sth = $this->pdo->prepare("SELECT uuid FROM ttrss_user_entries WHERE int_id = ?
@@ -135,7 +135,7 @@ class Share extends Plugin {
 		print "</footer>";
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

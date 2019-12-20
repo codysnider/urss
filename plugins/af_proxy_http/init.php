@@ -7,7 +7,7 @@ class Af_Proxy_Http extends Plugin {
 	/* @var DiskCache $cache */
 	private $cache;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Loads media served over plain HTTP via built-in secure proxy",
 			"fox");
@@ -15,11 +15,11 @@ class Af_Proxy_Http extends Plugin {
 
 	private $ssl_known_whitelist = "imgur.com gfycat.com i.reddituploads.com pbs.twimg.com i.redd.it i.sli.mg media.tumblr.com";
 
-	function is_public_method($method) {
+	public function is_public_method($method) {
 		return $method === "imgproxy";
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 		$this->cache = new DiskCache("images");
 
@@ -30,7 +30,7 @@ class Af_Proxy_Http extends Plugin {
 		$host->add_hook($host::HOOK_PREFS_TAB, $this);
 	}
 
-	function hook_enclosure_entry($enc) {
+	public function hook_enclosure_entry($enc) {
 		if (preg_match("/image/", $enc["content_type"])) {
 			$proxy_all = $this->host->get($this, "proxy_all");
 
@@ -40,7 +40,7 @@ class Af_Proxy_Http extends Plugin {
 		return $enc;
 	}
 
-	function hook_render_article($article) {
+	public function hook_render_article($article) {
 		return $this->hook_render_article_cdm($article);
 	}
 
@@ -152,7 +152,7 @@ class Af_Proxy_Http extends Plugin {
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	function hook_render_article_cdm($article, $api_mode = false) {
+	public function hook_render_article_cdm($article, $api_mode = false) {
 
 		$need_saving = false;
 		$proxy_all = $this->host->get($this, "proxy_all");
@@ -205,10 +205,10 @@ class Af_Proxy_Http extends Plugin {
 		return $article;
 	}
 
-	function hook_prefs_tab($args) {
+	public function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>extension</i> ".__('Image proxy settings (af_proxy_http)')."\">";
 
 		print "<form dojoType=\"dijit.form.Form\">";
@@ -246,7 +246,7 @@ class Af_Proxy_Http extends Plugin {
 		print "</div>";
 	}
 
-	function save() {
+	public function save() {
 		$proxy_all = checkbox_to_sql_bool($_POST["proxy_all"]);
 		$disable_cache = checkbox_to_sql_bool($_POST["disable_cache"]);
 
@@ -256,7 +256,7 @@ class Af_Proxy_Http extends Plugin {
 		echo __("Configuration saved");
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 }

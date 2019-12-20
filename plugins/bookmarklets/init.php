@@ -19,7 +19,7 @@ class Bookmarklets extends Plugin {
   function hook_prefs_tab($args) {
     if ($args == "prefFeeds") {
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>bookmark</i> ".__('Bookmarklets')."\">";
 
 		print "<h3>" . __("Drag the link below to your browser toolbar, open the feed you're interested in in your browser and click on the link to subscribe to it.") . "</h3>";
@@ -49,7 +49,7 @@ class Bookmarklets extends Plugin {
 	 }
   }
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

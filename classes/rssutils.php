@@ -1,6 +1,6 @@
 <?php
 class RSSUtils {
-	static function calculate_article_hash($article, $pluginhost) {
+	public static function calculate_article_hash($article, $pluginhost) {
 		$tmp = "";
 
 		foreach ($article as $k => $v) {
@@ -15,16 +15,16 @@ class RSSUtils {
 	}
 
 	// Strips utf8mb4 characters (i.e. emoji) for mysql
-	static function strip_utf8mb4($str) {
+	public static function strip_utf8mb4($str) {
 		return preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $str);
 	}
 
-	static function cleanup_feed_browser() {
+	public static function cleanup_feed_browser() {
 		$pdo = Db::pdo();
 		$pdo->query("DELETE FROM ttrss_feedbrowser_cache");
 	}
 
-	static function update_daemon_common($limit = DAEMON_FEED_LIMIT) {
+	public static function update_daemon_common($limit = DAEMON_FEED_LIMIT) {
 		$schema_version = get_schema_version();
 
 		if ($schema_version != SCHEMA_VERSION) {
@@ -181,7 +181,7 @@ class RSSUtils {
 	}
 
 	// this is used when subscribing
-	static function set_basic_feed_info($feed) {
+	public static function set_basic_feed_info($feed) {
 
 		$pdo = Db::pdo();
 
@@ -257,7 +257,7 @@ class RSSUtils {
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	static function update_rss_feed($feed, $no_cache = false) {
+	public static function update_rss_feed($feed, $no_cache = false) {
 
 		reset_fetch_domain_quota();
 
@@ -1186,7 +1186,7 @@ class RSSUtils {
 		return true;
 	}
 
-	static function cache_enclosures($enclosures, $site_url) {
+	public static function cache_enclosures($enclosures, $site_url) {
 		$cache = new DiskCache("images");
 
 		if ($cache->isWritable()) {
@@ -1221,7 +1221,7 @@ class RSSUtils {
 		}
 	}
 
-	static function cache_media($html, $site_url) {
+	public static function cache_media($html, $site_url) {
 		$cache = new DiskCache("images");
 
 		if ($cache->isWritable()) {
@@ -1263,7 +1263,7 @@ class RSSUtils {
 		}
 	}
 
-	static function expire_error_log() {
+	public static function expire_error_log() {
 		Debug::log("Removing old error log entries...");
 
 		$pdo = Db::pdo();
@@ -1277,7 +1277,7 @@ class RSSUtils {
 		}
 	}
 
-	static function expire_feed_archive() {
+	public static function expire_feed_archive() {
 		Debug::log("Removing old archived feeds...");
 
 		$pdo = Db::pdo();
@@ -1291,7 +1291,7 @@ class RSSUtils {
 		}
 	}
 
-	static function expire_lock_files() {
+	public static function expire_lock_files() {
 		Debug::log("Removing old lock files...", Debug::$LOG_VERBOSE);
 
 		$num_deleted = 0;
@@ -1319,7 +1319,7 @@ class RSSUtils {
 	 * @param    string    query
 	 * @return    array    params
 	 */
-	static function convertUrlQuery($query) {
+	public static function convertUrlQuery($query) {
 		$queryParts = explode('&', $query);
 
 		$params = array();
@@ -1332,7 +1332,7 @@ class RSSUtils {
 		return $params;
 	}
 
-	static function get_article_filters($filters, $title, $content, $link, $author, $tags, &$matched_rules = false, &$matched_filters = false) {
+	public static function get_article_filters($filters, $title, $content, $link, $author, $tags, &$matched_rules = false, &$matched_filters = false) {
 		$matches = array();
 
 		foreach ($filters as $filter) {
@@ -1413,7 +1413,7 @@ class RSSUtils {
 		return $matches;
 	}
 
-	static function find_article_filter($filters, $filter_name) {
+	public static function find_article_filter($filters, $filter_name) {
 		foreach ($filters as $f) {
 			if ($f["type"] == $filter_name) {
 				return $f;
@@ -1422,7 +1422,7 @@ class RSSUtils {
 		return false;
 	}
 
-	static function find_article_filters($filters, $filter_name) {
+	public static function find_article_filters($filters, $filter_name) {
 		$results = array();
 
 		foreach ($filters as $f) {
@@ -1433,7 +1433,7 @@ class RSSUtils {
 		return $results;
 	}
 
-	static function calculate_article_score($filters) {
+	public static function calculate_article_score($filters) {
 		$score = 0;
 
 		foreach ($filters as $f) {
@@ -1444,7 +1444,7 @@ class RSSUtils {
 		return $score;
 	}
 
-	static function labels_contains_caption($labels, $caption) {
+	public static function labels_contains_caption($labels, $caption) {
 		foreach ($labels as $label) {
 			if ($label[1] == $caption) {
 				return true;
@@ -1454,7 +1454,7 @@ class RSSUtils {
 		return false;
 	}
 
-	static function assign_article_to_label_filters($id, $filters, $owner_uid, $article_labels) {
+	public static function assign_article_to_label_filters($id, $filters, $owner_uid, $article_labels) {
 		foreach ($filters as $f) {
 			if ($f["type"] == "label") {
 				if (!RSSUtils::labels_contains_caption($article_labels, $f["param"])) {
@@ -1464,12 +1464,12 @@ class RSSUtils {
 		}
 	}
 
-	static function make_guid_from_title($title) {
+	public static function make_guid_from_title($title) {
 		return preg_replace("/[ \"\',.:;]/", "-",
 			mb_strtolower(strip_tags($title), 'utf-8'));
 	}
 
-	static function cleanup_counters_cache() {
+	public static function cleanup_counters_cache() {
 		$pdo = Db::pdo();
 
 		$res = $pdo->query("DELETE FROM ttrss_counters_cache
@@ -1491,7 +1491,7 @@ class RSSUtils {
 		Debug::log("Removed $frows (feeds) $crows (cats) orphaned counter cache entries.");
 	}
 
-	static function housekeeping_user($owner_uid) {
+	public static function housekeeping_user($owner_uid) {
 		$tmph = new PluginHost();
 
 		load_user_plugins($owner_uid, $tmph);
@@ -1499,7 +1499,7 @@ class RSSUtils {
 		$tmph->run_hooks(PluginHost::HOOK_HOUSE_KEEPING, "hook_house_keeping", "");
 	}
 
-	static function housekeeping_common() {
+	public static function housekeeping_common() {
 		DiskCache::expire();
 
 		RSSUtils::expire_lock_files();
@@ -1513,7 +1513,7 @@ class RSSUtils {
 		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_HOUSE_KEEPING, "hook_house_keeping", "");
 	}
 
-	static function check_feed_favicon($site_url, $feed) {
+	public static function check_feed_favicon($site_url, $feed) {
 		#		print "FAVICON [$site_url]: $favicon_url\n";
 
 		$icon_file = ICONS_DIR . "/$feed.ico";
@@ -1568,12 +1568,12 @@ class RSSUtils {
 		}
 	}
 
-	static function is_gzipped($feed_data) {
+	public static function is_gzipped($feed_data) {
 		return strpos(substr($feed_data, 0, 3),
 				"\x1f" . "\x8b" . "\x08", 0) === 0;
 	}
 
-	static function load_filters($feed_id, $owner_uid) {
+	public static function load_filters($feed_id, $owner_uid) {
 		$filters = array();
 
 		$feed_id = (int) $feed_id;
@@ -1692,7 +1692,7 @@ class RSSUtils {
 	 * @access public
 	 * @return mixed The favicon URL, or false if none was found.
 	 */
-	static function get_favicon_url($url) {
+	public static function get_favicon_url($url) {
 
 		$favicon_url = false;
 

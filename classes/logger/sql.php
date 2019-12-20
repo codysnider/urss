@@ -3,7 +3,7 @@ class Logger_SQL {
 
 	private $pdo;
 
-	function log_error($errno, $errstr, $file, $line, $context) {
+	public function log_error($errno, $errstr, $file, $line, $context) {
 
 		// separate PDO connection object is used for logging
 		if (!$this->pdo) $this->pdo = Db::instance()->pdo_connect();

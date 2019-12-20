@@ -3,19 +3,19 @@ class Af_Fsckportal extends Plugin {
 
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Remove feedsportal spamlinks from article content",
 			"fox");
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
 	}
 
-	function hook_article_filter($article) {
+	public function hook_article_filter($article) {
 
 			$doc = new DOMDocument();
 
@@ -40,7 +40,7 @@ class Af_Fsckportal extends Plugin {
 		return $article;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

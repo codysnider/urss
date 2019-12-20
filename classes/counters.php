@@ -1,7 +1,7 @@
 <?php
 class Counters {
 
-	static function getAllCounters() {
+	public static function getAllCounters() {
 		$data = Counters::getGlobalCounters();
 
 		$data = array_merge($data, Counters::getVirtCounters());
@@ -12,7 +12,7 @@ class Counters {
 		return $data;
 	}
 
-	static function getCategoryCounters() {
+	public static function getCategoryCounters() {
 		$ret_arr = array();
 
 		/* Labels category */
@@ -58,7 +58,7 @@ class Counters {
 		return $ret_arr;
 	}
 
-	static function getGlobalCounters($global_unread = -1) {
+	public static function getGlobalCounters($global_unread = -1) {
 		$ret_arr = array();
 
 		if ($global_unread == -1) {
@@ -87,7 +87,7 @@ class Counters {
 		return $ret_arr;
 	}
 
-	static function getVirtCounters() {
+	public static function getVirtCounters() {
 
 		$ret_arr = array();
 
@@ -127,7 +127,7 @@ class Counters {
 		return $ret_arr;
 	}
 
-	static function getLabelCounters($descriptions = false) {
+	public static function getLabelCounters($descriptions = false) {
 
 		$ret_arr = array();
 
@@ -159,7 +159,7 @@ class Counters {
 		return $ret_arr;
 	}
 
-	static function getFeedCounters($active_feed = false) {
+	public static function getFeedCounters($active_feed = false) {
 
 		$ret_arr = array();
 

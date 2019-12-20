@@ -7,13 +7,13 @@ class Cache_Starred_Images extends Plugin {
 	private $cache;
     private $max_cache_attempts = 5; // per-article
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Automatically cache media files in Starred articles",
 			"fox");
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 		$this->cache = new DiskCache("starred-images");
 
@@ -32,18 +32,18 @@ class Cache_Starred_Images extends Plugin {
 		}
 	}
 
-	function hook_house_keeping() {
+	public function hook_house_keeping() {
 		/* since HOOK_UPDATE_TASK is not available to user plugins, this hook is a next best thing */
 
 		Debug::log("caching media of starred articles for user " . $this->host->get_owner_uid() . "...");
 
-		$sth = $this->pdo->prepare("SELECT content, ttrss_entries.title, 
+		$sth = $this->pdo->prepare("SELECT content, ttrss_entries.title,
        		ttrss_user_entries.owner_uid, link, site_url, ttrss_entries.id, plugin_data
 			FROM ttrss_entries, ttrss_user_entries LEFT JOIN ttrss_feeds ON
 				(ttrss_user_entries.feed_id = ttrss_feeds.id)
 			WHERE ref_id = ttrss_entries.id AND
 				marked = true AND
-				site_url != '' AND 
+				site_url != '' AND
 			    ttrss_user_entries.owner_uid = ? AND
 				plugin_data NOT LIKE '%starred_cache_images%'
 			ORDER BY ".sql_random_function()." LIMIT 100");
@@ -94,7 +94,7 @@ class Cache_Starred_Images extends Plugin {
 		}
 	}
 
-	function hook_enclosure_entry($enc, $article_id) {
+	public function hook_enclosure_entry($enc, $article_id) {
 		$local_filename = $article_id . "-" . sha1($enc["content_url"]);
 
 		if ($this->cache->exists($local_filename)) {
@@ -104,7 +104,7 @@ class Cache_Starred_Images extends Plugin {
 		return $enc;
 	}
 
-	function hook_sanitize($doc, $site_url, $allowed_elements, $disallowed_attributes, $article_id) {
+	public function hook_sanitize($doc, $site_url, $allowed_elements, $disallowed_attributes, $article_id) {
 		$xpath = new DOMXpath($doc);
 
 		if ($article_id) {
@@ -218,7 +218,7 @@ class Cache_Starred_Images extends Plugin {
 		return $success || !$has_images;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 }

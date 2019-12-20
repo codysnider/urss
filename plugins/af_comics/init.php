@@ -4,13 +4,13 @@ class Af_Comics extends Plugin {
 	private $host;
 	private $filters = array();
 
-	function about() {
+	public function about() {
 		return array(2.0,
 			"Fixes RSS feeds of assorted comic strips",
 			"fox");
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_FETCH_FEED, $this);
@@ -44,10 +44,10 @@ class Af_Comics extends Plugin {
 		}
 	}
 
-	function hook_prefs_tab($args) {
+	public function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>photo</i> ".__('Feeds supported by af_comics')."\">";
 
 		print "<p>" . __("The following comics are currently supported:") . "</p>";
@@ -75,7 +75,7 @@ class Af_Comics extends Plugin {
 		print "</div>";
 	}
 
-	function hook_article_filter($article) {
+	public function hook_article_filter($article) {
 		foreach ($this->filters as $f) {
 			if ($f->process($article))
 				break;
@@ -88,7 +88,7 @@ class Af_Comics extends Plugin {
 	/**
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	function hook_fetch_feed($feed_data, $fetch_url, $owner_uid, $feed, $last_article_timestamp, $auth_login, $auth_pass) {
+	public function hook_fetch_feed($feed_data, $fetch_url, $owner_uid, $feed, $last_article_timestamp, $auth_login, $auth_pass) {
 		if ($auth_login || $auth_pass)
 			return $feed_data;
 
@@ -160,7 +160,7 @@ class Af_Comics extends Plugin {
 		return $feed_data;
 	}
 
-	function hook_subscribe_feed($contents, $url, $auth_login, $auth_pass) {
+	public function hook_subscribe_feed($contents, $url, $auth_login, $auth_pass) {
 		if ($auth_login || $auth_pass)
 			return $contents;
 
@@ -170,7 +170,7 @@ class Af_Comics extends Plugin {
 		return $contents;
 	}
 
-	function hook_feed_basic_info($basic_info, $fetch_url, $owner_uid, $feed, $auth_login, $auth_pass) {
+	public function hook_feed_basic_info($basic_info, $fetch_url, $owner_uid, $feed, $auth_login, $auth_pass) {
 		if ($auth_login || $auth_pass)
 			return $basic_info;
 
@@ -180,7 +180,7 @@ class Af_Comics extends Plugin {
 		return $basic_info;
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

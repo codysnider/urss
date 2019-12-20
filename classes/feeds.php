@@ -453,7 +453,7 @@ class Feeds extends Handler_Protected {
 		return array($topmost_article_ids, $headlines_count, $feed, $disable_cache, $reply);
 	}
 
-	function catchupAll() {
+	public function catchupAll() {
 		$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET
 						last_read = NOW(), unread = false WHERE unread = true AND owner_uid = ?");
 		$sth->execute([$_SESSION['uid']]);
@@ -461,7 +461,7 @@ class Feeds extends Handler_Protected {
 		CCache::zero_all($_SESSION["uid"]);
 	}
 
-	function view() {
+	public function view() {
 		$reply = array();
 
 		$feed = $_REQUEST["feed"];
@@ -644,7 +644,7 @@ class Feeds extends Handler_Protected {
 		return $reply;
 	}
 
-	function quickAddFeed() {
+	public function quickAddFeed() {
 		print "<form onsubmit='return false'>";
 
 		print_hidden("op", "rpc");
@@ -715,7 +715,7 @@ class Feeds extends Handler_Protected {
 		print "</section>";
 
 		print "<footer>";
-		print "<button dojoType='dijit.form.Button' class='alt-primary' type='submit' 
+		print "<button dojoType='dijit.form.Button' class='alt-primary' type='submit'
 				onclick=\"return dijit.byId('feedAddDlg').execute()\">".__('Subscribe')."</button>";
 
 		print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('feedAddDlg').hide()\">".__('Cancel')."</button>";
@@ -724,7 +724,7 @@ class Feeds extends Handler_Protected {
 		print "</form>";
 	}
 
-	function search() {
+	public function search() {
 		$this->params = explode(":", $_REQUEST["param"], 2);
 
 		$active_feed_id = sprintf("%d", $this->params[0]);
@@ -766,7 +766,7 @@ class Feeds extends Handler_Protected {
 		print "</form>";
 	}
 
-	function update_debugger() {
+	public function update_debugger() {
 		header("Content-type: text/html");
 
 		Debug::set_enabled(true);
@@ -849,7 +849,7 @@ class Feeds extends Handler_Protected {
 
 	}
 
-	static function catchup_feed($feed, $cat_view, $owner_uid = false, $mode = 'all', $search = false) {
+	public static function catchup_feed($feed, $cat_view, $owner_uid = false, $mode = 'all', $search = false) {
 
 		if (!$owner_uid) $owner_uid = $_SESSION['uid'];
 
@@ -1018,7 +1018,7 @@ class Feeds extends Handler_Protected {
 		}
 	}
 
-	static function getFeedArticles($feed, $is_cat = false, $unread_only = false,
+	public static function getFeedArticles($feed, $is_cat = false, $unread_only = false,
 							 $owner_uid = false) {
 
 		$n_feed = (int) $feed;
@@ -1131,7 +1131,7 @@ class Feeds extends Handler_Protected {
 	 *                 5 - Couldn't download the URL content.
 	 *                 6 - Content is an invalid XML.
 	 */
-	static function subscribe_to_feed($url, $cat_id = 0,
+	public static function subscribe_to_feed($url, $cat_id = 0,
 							   $auth_login = '', $auth_pass = '') {
 
 		global $fetch_last_error;
@@ -1202,15 +1202,15 @@ class Feeds extends Handler_Protected {
 		}
 	}
 
-	static function getIconFile($feed_id) {
+	public static function getIconFile($feed_id) {
 		return ICONS_DIR . "/$feed_id.ico";
 	}
 
-	static function feedHasIcon($id) {
+	public static function feedHasIcon($id) {
 		return is_file(ICONS_DIR . "/$id.ico") && filesize(ICONS_DIR . "/$id.ico") > 0;
 	}
 
-	static function getFeedIcon($id) {
+	public static function getFeedIcon($id) {
 		switch ($id) {
 			case 0:
 				return "archive";
@@ -1239,7 +1239,7 @@ class Feeds extends Handler_Protected {
 		return false;
 	}
 
-	static function getFeedTitle($id, $cat = false) {
+	public static function getFeedTitle($id, $cat = false) {
 	    $pdo = Db::pdo();
 
 		if ($cat) {
@@ -1285,7 +1285,7 @@ class Feeds extends Handler_Protected {
 		}
 	}
 
-	static function getCategoryUnread($cat, $owner_uid = false) {
+	public static function getCategoryUnread($cat, $owner_uid = false) {
 
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
@@ -1340,7 +1340,7 @@ class Feeds extends Handler_Protected {
 	}
 
 	// only accepts real cats (>= 0)
-	static function getCategoryChildrenUnread($cat, $owner_uid = false) {
+	public static function getCategoryChildrenUnread($cat, $owner_uid = false) {
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
 		$pdo = Db::pdo();
@@ -1359,7 +1359,7 @@ class Feeds extends Handler_Protected {
 		return $unread;
 	}
 
-	static function getGlobalUnread($user_id = false) {
+	public static function getGlobalUnread($user_id = false) {
 
 		if (!$user_id) $user_id = $_SESSION["uid"];
 
@@ -1373,7 +1373,7 @@ class Feeds extends Handler_Protected {
 		return $row["c_id"];
 	}
 
-	static function getCategoryTitle($cat_id) {
+	public static function getCategoryTitle($cat_id) {
 
 		if ($cat_id == -1) {
 			return __("Special");
@@ -1395,7 +1395,7 @@ class Feeds extends Handler_Protected {
 		}
 	}
 
-	static function getLabelUnread($label_id, $owner_uid = false) {
+	public static function getLabelUnread($label_id, $owner_uid = false) {
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
 		$pdo = Db::pdo();
@@ -1412,7 +1412,7 @@ class Feeds extends Handler_Protected {
 		}
 	}
 
-	static function queryFeedHeadlines($params) {
+	public static function queryFeedHeadlines($params) {
 
 		$pdo = Db::pdo();
 
@@ -1458,7 +1458,7 @@ class Feeds extends Handler_Protected {
 			}
 
 			if (DB_TYPE == "pgsql") {
-				$test_sth = $pdo->prepare("select $search_query_part 
+				$test_sth = $pdo->prepare("select $search_query_part
 					FROM ttrss_entries, ttrss_user_entries WHERE id = ref_id limit 1");
 
 				try {
@@ -1862,7 +1862,7 @@ class Feeds extends Handler_Protected {
 
 	}
 
-	static function getParentCategories($cat, $owner_uid) {
+	public static function getParentCategories($cat, $owner_uid) {
 		$rv = array();
 
 		$pdo = Db::pdo();
@@ -1879,7 +1879,7 @@ class Feeds extends Handler_Protected {
 		return $rv;
 	}
 
-	static function getChildCategories($cat, $owner_uid) {
+	public static function getChildCategories($cat, $owner_uid) {
 		$rv = array();
 
 		$pdo = Db::pdo();
@@ -1896,7 +1896,7 @@ class Feeds extends Handler_Protected {
 		return $rv;
 	}
 
-	static function getFeedCategory($feed) {
+	public static function getFeedCategory($feed) {
 		$pdo = Db::pdo();
 
 	    $sth = $pdo->prepare("SELECT cat_id FROM ttrss_feeds
@@ -1927,7 +1927,7 @@ class Feeds extends Handler_Protected {
         return $colormap[$sum];
 	}
 
-	static function get_feeds_from_html($url, $content) {
+	public static function get_feeds_from_html($url, $content) {
 		$url     = Feeds::fix_url($url);
 		$baseUrl = substr($url, 0, strrpos($url, '/') + 1);
 
@@ -1955,11 +1955,11 @@ class Feeds extends Handler_Protected {
 		return $feedUrls;
 	}
 
-	static function is_html($content) {
+	public static function is_html($content) {
 		return preg_match("/<html|DOCTYPE html/i", substr($content, 0, 8192)) !== 0;
 	}
 
-	static function validate_feed_url($url) {
+	public static function validate_feed_url($url) {
 		$parts = parse_url($url);
 
 		return ($parts['scheme'] == 'http' || $parts['scheme'] == 'feed' || $parts['scheme'] == 'https');
@@ -1974,7 +1974,7 @@ class Feeds extends Handler_Protected {
 	 *
 	 * @return string Fixed URL.
 	 */
-	static function fix_url($url) {
+	public static function fix_url($url) {
 
 		// support schema-less urls
 		if (strpos($url, '//') === 0) {
@@ -2009,7 +2009,7 @@ class Feeds extends Handler_Protected {
 			return '';
 	}
 
-	static function add_feed_category($feed_cat, $parent_cat_id = false, $order_id = 0) {
+	public static function add_feed_category($feed_cat, $parent_cat_id = false, $order_id = 0) {
 
 		if (!$feed_cat) return false;
 
@@ -2046,7 +2046,7 @@ class Feeds extends Handler_Protected {
 		return false;
 	}
 
-	static function get_feed_access_key($feed_id, $is_cat, $owner_uid = false) {
+	public static function get_feed_access_key($feed_id, $is_cat, $owner_uid = false) {
 
 		if (!$owner_uid) $owner_uid = $_SESSION["uid"];
 
@@ -2084,7 +2084,7 @@ class Feeds extends Handler_Protected {
 	 * @access public
 	 * @return void
 	 */
-	static function purge_feed($feed_id, $purge_interval) {
+	public static function purge_feed($feed_id, $purge_interval) {
 
 		if (!$purge_interval) $purge_interval = Feeds::feed_purge_interval($feed_id);
 
@@ -2154,7 +2154,7 @@ class Feeds extends Handler_Protected {
 		return $rows;
 	}
 
-	static function feed_purge_interval($feed_id) {
+	public static function feed_purge_interval($feed_id) {
 
 		$pdo = DB::pdo();
 
@@ -2176,7 +2176,7 @@ class Feeds extends Handler_Protected {
 		}
 	}
 
-	static function search_to_sql($search, $search_language) {
+	public static function search_to_sql($search, $search_language) {
 
 		$keywords = str_getcsv(trim($search), " ");
 		$query_keywords = array();

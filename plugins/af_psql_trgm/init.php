@@ -4,13 +4,13 @@ class Af_Psql_Trgm extends Plugin {
 	/* @var PluginHost $host */
 	private $host;
 
-	function about() {
+	public function about() {
 		return array(1.0,
 			"Marks similar articles as read (requires pg_trgm)",
 			"fox");
 	}
 
-	function save() {
+	public function save() {
 		$similarity = (float) $_POST["similarity"];
 		$min_title_length = (int) $_POST["min_title_length"];
 		$enable_globally = checkbox_to_sql_bool($_POST["enable_globally"]);
@@ -29,7 +29,7 @@ class Af_Psql_Trgm extends Plugin {
 		echo T_sprintf("Data saved (%s, %d)", $similarity, $enable_globally);
 	}
 
-	function init($host) {
+	public function init($host) {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
@@ -40,11 +40,11 @@ class Af_Psql_Trgm extends Plugin {
 
 	}
 
-	function get_js() {
+	public function get_js() {
 		return file_get_contents(__DIR__ . "/init.js");
 	}
 
-	function showrelated() {
+	public function showrelated() {
 		$id = (int) $_REQUEST['param'];
 		$owner_uid = $_SESSION["uid"];
 
@@ -114,16 +114,16 @@ class Af_Psql_Trgm extends Plugin {
 
 	}
 
-	function hook_article_button($line) {
+	public function hook_article_button($line) {
 		return "<i style=\"cursor : pointer\" class='material-icons'
 			onclick=\"Plugins.Psql_Trgm.showRelated(".$line["id"].")\"
 			title='".__('Show related articles')."'>bookmark_outline</i>";
 	}
 
-	function hook_prefs_tab($args) {
+	public function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>extension</i> ".__('Mark similar articles as read')."\">";
 
 		if (DB_TYPE != "pgsql") {
@@ -220,7 +220,7 @@ class Af_Psql_Trgm extends Plugin {
 		print "</div>";
 	}
 
-	function hook_prefs_edit_feed($feed_id) {
+	public function hook_prefs_edit_feed($feed_id) {
 		print "<header>".__("Similarity (pg_trgm)")."</header>";
 		print "<section>";
 
@@ -240,7 +240,7 @@ class Af_Psql_Trgm extends Plugin {
 		print "</section>";
 	}
 
-	function hook_prefs_save_feed($feed_id) {
+	public function hook_prefs_save_feed($feed_id) {
 		$enabled_feeds = $this->host->get($this, "enabled_feeds");
 		if (!is_array($enabled_feeds)) $enabled_feeds = array();
 
@@ -260,7 +260,7 @@ class Af_Psql_Trgm extends Plugin {
 		$this->host->set($this, "enabled_feeds", $enabled_feeds);
 	}
 
-	function hook_article_filter($article) {
+	public function hook_article_filter($article) {
 
 		if (DB_TYPE != "pgsql") return $article;
 
@@ -325,7 +325,7 @@ class Af_Psql_Trgm extends Plugin {
 
 	}
 
-	function api_version() {
+	public function api_version() {
 		return 2;
 	}
 

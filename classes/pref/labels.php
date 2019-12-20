@@ -1,13 +1,13 @@
 <?php
 class Pref_Labels extends Handler_Protected {
 
-	function csrf_ignore($method) {
+	public function csrf_ignore($method) {
 		$csrf_ignored = array("index", "getlabeltree", "edit");
 
 		return array_search($method, $csrf_ignored) !== false;
 	}
 
-	function edit() {
+	public function edit() {
 		$label_id = clean($_REQUEST['id']);
 
 		$sth = $this->pdo->prepare("SELECT * FROM ttrss_labels2 WHERE
@@ -79,7 +79,7 @@ class Pref_Labels extends Handler_Protected {
 		}
 	}
 
-	function getlabeltree() {
+	public function getlabeltree() {
 		$root = array();
 		$root['id'] = 'root';
 		$root['name'] = __('Labels');
@@ -113,7 +113,7 @@ class Pref_Labels extends Handler_Protected {
 		return;
 	}
 
-	function colorset() {
+	public function colorset() {
 		$kind = clean($_REQUEST["kind"]);
 		$ids = explode(',', clean($_REQUEST["ids"]));
 		$color = clean($_REQUEST["color"]);
@@ -146,7 +146,7 @@ class Pref_Labels extends Handler_Protected {
 		}
 	}
 
-	function colorreset() {
+	public function colorreset() {
 		$ids = explode(',', clean($_REQUEST["ids"]));
 
 		foreach ($ids as $id) {
@@ -163,7 +163,7 @@ class Pref_Labels extends Handler_Protected {
 		}
 	}
 
-	function save() {
+	public function save() {
 
 		$id = clean($_REQUEST["id"]);
 		$caption = trim(clean($_REQUEST["caption"]));
@@ -210,7 +210,7 @@ class Pref_Labels extends Handler_Protected {
 
 	}
 
-	function remove() {
+	public function remove() {
 
 		$ids = explode(",", clean($_REQUEST["ids"]));
 
@@ -220,7 +220,7 @@ class Pref_Labels extends Handler_Protected {
 
 	}
 
-	function add() {
+	public function add() {
 		$caption = clean($_REQUEST["caption"]);
 		$output = clean($_REQUEST["output"]);
 
@@ -247,7 +247,7 @@ class Pref_Labels extends Handler_Protected {
 		return;
 	}
 
-	function index() {
+	public function index() {
 
 		print "<div dojoType='dijit.layout.BorderContainer' gutters='false'>";
 		print "<div style='padding : 0px' dojoType='dijit.layout.ContentPane' region='top'>";

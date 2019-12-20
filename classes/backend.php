@@ -1,12 +1,12 @@
 <?php
 class Backend extends Handler {
-	function loading() {
+	public function loading() {
 		header("Content-type: text/html");
 		print __("Loading, please wait...") . " " .
 			"<img src='images/indicator_tiny.gif'>";
 	}
 
-	function digestTest() {
+	public function digestTest() {
 		if (isset($_SESSION['uid'])) {
 			header("Content-type: text/html");
 
@@ -21,7 +21,7 @@ class Backend extends Handler {
 		}
 	}
 
-	function help() {
+	public function help() {
 		$topic = clean_filename($_REQUEST["topic"]); // only one for now
 
 		if ($topic == "main") {

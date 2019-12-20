@@ -1,6 +1,6 @@
 <?php
 class Pref_Users extends Handler_Protected {
-		function before($method) {
+		public function before($method) {
 			if (parent::before($method)) {
 				if ($_SESSION["access_level"] < 10) {
 					print __("Your access level is insufficient to open this tab.");
@@ -11,13 +11,13 @@ class Pref_Users extends Handler_Protected {
 			return false;
 		}
 
-		function csrf_ignore($method) {
+		public function csrf_ignore($method) {
 			$csrf_ignored = array("index", "edit", "userdetails");
 
 			return array_search($method, $csrf_ignored) !== false;
 		}
 
-		function edit() {
+		public function edit() {
 			global $access_level_names;
 
 			print "<form id='user_edit_form' onsubmit='return false' dojoType='dijit.form.Form'>";
@@ -121,7 +121,7 @@ class Pref_Users extends Handler_Protected {
 			return;
 		}
 
-		function userdetails() {
+		public function userdetails() {
 			$id = (int) clean($_REQUEST["id"]);
 
 			$sth = $this->pdo->prepare("SELECT login,
@@ -190,7 +190,7 @@ class Pref_Users extends Handler_Protected {
 
 		}
 
-		function editSave() {
+		public function editSave() {
 			$login = trim(clean($_REQUEST["login"]));
 			$uid = clean($_REQUEST["id"]);
 			$access_level = (int) clean($_REQUEST["access_level"]);
@@ -212,7 +212,7 @@ class Pref_Users extends Handler_Protected {
 
 		}
 
-		function remove() {
+		public function remove() {
 			$ids = explode(",", clean($_REQUEST["ids"]));
 
 			foreach ($ids as $id) {
@@ -229,7 +229,7 @@ class Pref_Users extends Handler_Protected {
 			}
 		}
 
-		function add() {
+		public function add() {
 			$login = trim(clean($_REQUEST["login"]));
 			$tmp_user_pwd = make_password();
 			$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
@@ -271,7 +271,7 @@ class Pref_Users extends Handler_Protected {
 			}
 		}
 
-		static function resetUserPassword($uid, $format_output = false) {
+		public static function resetUserPassword($uid, $format_output = false) {
 
 			$pdo = Db::pdo();
 
@@ -302,12 +302,12 @@ class Pref_Users extends Handler_Protected {
 			}
 		}
 
-		function resetPass() {
+		public function resetPass() {
 			$uid = clean($_REQUEST["id"]);
 			Pref_Users::resetUserPassword($uid);
 		}
 
-		function index() {
+		public function index() {
 
 			global $access_level_names;
 
@@ -436,7 +436,7 @@ class Pref_Users extends Handler_Protected {
 
 		}
 
-		function validate_field($string, $allowed, $default = "") {
+		public function validate_field($string, $allowed, $default = "") {
 			if (in_array($string, $allowed))
 				return $string;
 			else
