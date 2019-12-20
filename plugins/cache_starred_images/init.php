@@ -32,9 +32,6 @@ class Cache_Starred_Images extends Plugin {
 		}
 	}
 
-	/**
-	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-	 */
 	function hook_house_keeping() {
 		/* since HOOK_UPDATE_TASK is not available to user plugins, this hook is a next best thing */
 
@@ -107,9 +104,6 @@ class Cache_Starred_Images extends Plugin {
 		return $enc;
 	}
 
-	/**
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 */
 	function hook_sanitize($doc, $site_url, $allowed_elements, $disallowed_attributes, $article_id) {
 		$xpath = new DOMXpath($doc);
 
@@ -153,9 +147,6 @@ class Cache_Starred_Images extends Plugin {
 		return false;
 	}
 
-	/**
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 */
 	private function cache_article_images($content, $site_url, $owner_uid, $article_id) {
 		$status_filename = $article_id . "-" . sha1($site_url) . ".status";
 

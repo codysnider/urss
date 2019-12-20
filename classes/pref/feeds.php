@@ -442,15 +442,13 @@ class Pref_Feeds extends Handler_Protected {
 	function removeicon() {
 		$feed_id = clean($_REQUEST["feed_id"]);
 
-		$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
-			WHERE id = ? AND owner_uid = ?");
+		$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE id = ? AND owner_uid = ?");
 		$sth->execute([$feed_id, $_SESSION['uid']]);
 
-		if ($row = $sth->fetch()) {
+		if ($sth->fetch()) {
 			@unlink(ICONS_DIR . "/$feed_id.ico");
 
-			$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET favicon_avg_color = NULL
-				where id = ?");
+			$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET favicon_avg_color = NULL where id = ?");
 			$sth->execute([$feed_id]);
 		}
 	}
@@ -478,17 +476,14 @@ class Pref_Feeds extends Handler_Protected {
 		if (is_file($icon_file) && $feed_id) {
 			if (filesize($icon_file) < 65535) {
 
-				$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
-					WHERE id = ? AND owner_uid = ?");
+				$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE id = ? AND owner_uid = ?");
 				$sth->execute([$feed_id, $_SESSION['uid']]);
 
-				if ($row = $sth->fetch()) {
+				if ($sth->fetch()) {
 					@unlink(ICONS_DIR . "/$feed_id.ico");
 					if (rename($icon_file, ICONS_DIR . "/$feed_id.ico")) {
 
-						$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET
-							favicon_avg_color = ''
-							WHERE id = ?");
+						$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET favicon_avg_color = '' WHERE id = ?");
 						$sth->execute([$feed_id]);
 
 						$rc = 0;
@@ -554,7 +549,7 @@ class Pref_Feeds extends Handler_Protected {
 			$last_error = $row["last_error"];
 
 			if ($last_error) {
-				print "&nbsp;<i class=\"material-icons\" 
+				print "&nbsp;<i class=\"material-icons\"
 					title=\"".htmlspecialchars($last_error)."\">error</i>";
 			}
 
@@ -1172,7 +1167,7 @@ class Pref_Feeds extends Handler_Protected {
 	function index() {
 
 		print "<div dojoType='dijit.layout.AccordionContainer' region='center'>";
-		print "<div style='padding : 0px' dojoType='dijit.layout.AccordionPane' 
+		print "<div style='padding : 0px' dojoType='dijit.layout.AccordionPane'
 			title=\"<i class='material-icons'>rss_feed</i> ".__('Feeds')."\">";
 
 		$sth = $this->pdo->prepare("SELECT COUNT(id) AS num_errors
@@ -1307,7 +1302,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "</div>"; # feeds pane
 
-		print "<div dojoType='dijit.layout.AccordionPane' 
+		print "<div dojoType='dijit.layout.AccordionPane'
 			title='<i class=\"material-icons\">import_export</i> ".__('OPML')."'>";
 
 		print "<h3>" . __("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.") . "</h3>";
@@ -1360,7 +1355,7 @@ class Pref_Feeds extends Handler_Protected {
 
 		print "</div>"; # pane
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" 
+		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>share</i> ".__('Published & shared articles / Generated feeds')."\">";
 
 		print "<h3>" . __('Published articles can be subscribed by anyone who knows the following URL:') . "</h3>";

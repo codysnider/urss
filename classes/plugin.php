@@ -1,57 +1,59 @@
 <?php
+
 abstract class Plugin {
+
 	const API_VERSION_COMPAT = 1;
 
-	/** @var PDO */
+	/**
+	 * @var PDO
+	 */
 	protected $pdo;
 
-	/* @var PluginHost $host */
-	abstract function init($host);
+	abstract function init(PluginHost $host);
 
+	/**
+	 * @return array(version, name, description, author, false)
+	 */
 	abstract function about();
-	// return array(1.0, "plugin", "No description", "No author", false);
 
-	function __construct() {
+	public function __construct() {
 		$this->pdo = Db::pdo();
 	}
 
-	function flags() {
+	public function flags() {
 		/* associative array, possible keys:
 			needs_curl = boolean
 		*/
 		return array();
 	}
 
-	/**
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 */
-	function is_public_method($method) {
+	public function is_public_method() {
 		return false;
 	}
 
-	function get_js() {
+	public function get_js() {
 		return "";
 	}
 
-	function get_prefs_js() {
+	public function get_prefs_js() {
 		return "";
 	}
 
-	function api_version() {
+	public function api_version() {
 		return Plugin::API_VERSION_COMPAT;
 	}
 
 	/* gettext-related helpers */
 
-	function __($msgid) {
+	public function __($msgid) {
 		return _dgettext(PluginHost::object_to_domain($this), $msgid);
 	}
 
-	function _ngettext($singular, $plural, $number) {
+	public function _ngettext($singular, $plural, $number) {
 		return _dngettext(PluginHost::object_to_domain($this), $singular, $plural, $number);
 	}
 
-	function T_sprintf() {
+	public function T_sprintf() {
 		$args = func_get_args();
 		$msgid = array_shift($args);
 

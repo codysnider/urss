@@ -875,7 +875,7 @@ class Pref_Prefs extends Handler_Protected {
 
 		$tmppluginhost = new PluginHost();
 		$tmppluginhost->load_all($tmppluginhost::KIND_ALL, $_SESSION["uid"], true);
-		$tmppluginhost->load_data(true);
+		$tmppluginhost->load_data();
 
 		foreach ($tmppluginhost->get_plugins() as $name => $plugin) {
 			$about = $plugin->about();
@@ -1031,16 +1031,11 @@ class Pref_Prefs extends Handler_Protected {
 			$secret = $this->otpsecret();
 
 			if ($secret) {
-
-				$base32 = new \OTPHP\Base32();
-
 				$topt = new \OTPHP\TOTP($secret);
-
 				$otp_check = $topt->now();
 
 				if ($otp == $otp_check) {
-					$sth = $this->pdo->prepare("UPDATE ttrss_users
-					SET otp_enabled = true WHERE id = ?");
+					$sth = $this->pdo->prepare("UPDATE ttrss_users SET otp_enabled = true WHERE id = ?");
 
 					$sth->execute([$_SESSION['uid']]);
 

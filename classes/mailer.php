@@ -10,7 +10,6 @@ class Mailer {
 		$to_address = $params["to_address"];
 		$subject = $params["subject"];
 		$message = $params["message"];
-		$message_html = $params["message_html"];
 		$from_name = $params["from_name"] ? $params["from_name"] : SMTP_FROM_NAME;
 		$from_address = $params["from_address"] ? $params["from_address"] : SMTP_FROM_ADDRESS;
 

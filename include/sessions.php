@@ -1,5 +1,4 @@
 <?php
-	// Original from http://www.daniweb.com/code/snippet43.html
 
 	require_once "config.php";
 	require_once "classes/db.php";
@@ -80,10 +79,7 @@
 		return true;
 	}
 
-	/**
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 */
-	function ttrss_open ($s, $n) {
+	function ttrss_open () {
 		return true;
 	}
 
@@ -99,8 +95,7 @@
 		} else {
 				$expire = time() + $session_expire;
 
-				$sth = Db::pdo()->prepare("INSERT INTO ttrss_sessions (id, data, expire)
-					VALUES (?, '', ?)");
+				$sth = Db::pdo()->prepare("INSERT INTO ttrss_sessions (id, data, expire) VALUES (?, '', ?)");
 				$sth->execute([$id, $expire]);
 
 				return "";
@@ -118,7 +113,7 @@
 		$sth = Db::pdo()->prepare("SELECT id FROM ttrss_sessions WHERE id=?");
 		$sth->execute([$id]);
 
-		if ($row = $sth->fetch()) {
+		if ($sth->fetch()) {
 			$sth = Db::pdo()->prepare("UPDATE ttrss_sessions SET data=?, expire=? WHERE id=?");
 			$sth->execute([$data, $expire, $id]);
 		} else {
@@ -141,16 +136,13 @@
 		return true;
 	}
 
-	/**
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 */
-	function ttrss_gc ($expire) {
+	function ttrss_gc () {
 		Db::pdo()->query("DELETE FROM ttrss_sessions WHERE expire < " . time());
 
 		return true;
 	}
 
-	if (!SINGLE_USER_MODE /* && DB_TYPE == "pgsql" */) {
+	if (!SINGLE_USER_MODE) {
 		session_set_save_handler("ttrss_open",
 			"ttrss_close", "ttrss_read", "ttrss_write",
 			"ttrss_destroy", "ttrss_gc");

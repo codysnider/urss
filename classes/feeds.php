@@ -355,7 +355,7 @@ class Feeds extends Handler_Protected {
 				else
 					$tags = false;
 
-				$line["tags_str"] = Article::format_tags_string($tags, $id);
+				$line["tags_str"] = Article::format_tags_string($tags);
 
 				if (feeds::feedHasIcon($feed_id)) {
 					$line['feed_icon'] = "<img class=\"icon\" src=\"".ICONS_URL."/$feed_id.ico\" alt=\"\">";
@@ -1214,22 +1214,16 @@ class Feeds extends Handler_Protected {
 		switch ($id) {
 			case 0:
 				return "archive";
-				break;
 			case -1:
 				return "star";
-				break;
 			case -2:
 				return "rss_feed";
-				break;
 			case -3:
 				return "whatshot";
-				break;
 			case -4:
 				return "inbox";
-				break;
 			case -6:
 				return "restore";
-				break;
 			default:
 				if ($id < LABEL_BASE_INDEX) {
 					return "label";
@@ -1240,7 +1234,6 @@ class Feeds extends Handler_Protected {
 						return ICONS_URL . "/" . basename($icon) . "?" . filemtime($icon);
 					}
 				}
-				break;
 		}
 
 		return false;

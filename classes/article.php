@@ -157,7 +157,7 @@ class Article extends Handler_Protected {
 						":id" => $ref_id];
 					$sth->execute($params);
 				}
-				
+
 				$sth = $pdo->prepare("UPDATE ttrss_user_entries SET published = true,
 						last_published = NOW() WHERE
 						int_id = ? AND owner_uid = ?");
@@ -331,13 +331,16 @@ class Article extends Handler_Protected {
 		$this->pdo->commit();
 
 		$tags = Article::get_article_tags($id);
-		$tags_str = $this->format_tags_string($tags, $id);
+		$tags_str = $this->format_tags_string($tags);
 		$tags_str_full = join(", ", $tags);
 
 		if (!$tags_str_full) $tags_str_full = __("no tags");
 
-		print json_encode(array("id" => (int)$id,
-				"content" => $tags_str, "content_full" => $tags_str_full));
+		print json_encode([
+			"id" => (int) $id,
+			"content" => $tags_str,
+			"content_full" => $tags_str_full
+		]);
 	}
 
 
@@ -648,8 +651,6 @@ class Article extends Handler_Protected {
 			<i class='material-icons'>note</i>
 			<div $onclick class='body'>$note</div>			
 			</div>";
-
-		return $str;
 	}
 
 	static function get_article_enclosures($id) {
@@ -810,7 +811,7 @@ class Article extends Handler_Protected {
 				foreach ($elems as $e) {
 					if ($e->nodeName == "iframe") {
 						$matches = [];
-						if ($rrr = preg_match("/\/embed\/([\w-]+)/", $e->getAttribute("src"), $matches)) {
+						if (preg_match("/\/embed\/([\w-]+)/", $e->getAttribute("src"), $matches)) {
 							$article_image = "https://img.youtube.com/vi/" . $matches[1] . "/hqdefault.jpg";
 							$article_stream = "https://youtu.be/" . $matches[1];
 							break;

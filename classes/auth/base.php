@@ -8,20 +8,6 @@ class Auth_Base {
 		$this->pdo = Db::pdo();
 	}
 
-	/**
-	 * @SuppressWarnings(unused)
-	 */
-	function check_password($owner_uid, $password, $service = '') {
-		return false;
-	}
-
-	/**
-	 * @SuppressWarnings(unused)
-	 */
-	function authenticate($login, $password, $service = '') {
-		return false;
-	}
-
 	// Auto-creates specified user if allowed by system configuration
 	// Can be used instead of find_user_by_login() by external auth modules
 	function auto_create_user($login, $password = false) {
@@ -50,8 +36,7 @@ class Auth_Base {
 	}
 
 	function find_user_by_login($login) {
-		$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE
-			login = ?");
+		$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE login = ?");
 		$sth->execute([$login]);
 
 		if ($row = $sth->fetch()) {
@@ -59,6 +44,5 @@ class Auth_Base {
 		} else {
 			return false;
 		}
-
 	}
 }

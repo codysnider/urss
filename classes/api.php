@@ -827,7 +827,7 @@ class API extends Handler {
 			id = ? AND owner_uid = ?");
 		$sth->execute([$feed_id, $_SESSION['uid']]);
 
-		if ($row = $sth->fetch()) {
+		if ($sth->fetch()) {
 			Pref_Feeds::remove_feed($feed_id, $_SESSION["uid"]);
 			$this->wrap(self::STATUS_OK, array("status" => "OK"));
 		} else {
