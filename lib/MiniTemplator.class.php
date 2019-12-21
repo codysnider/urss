@@ -315,18 +315,18 @@ function processTemplateCommand($cmdL, $cmdTPosBegin, $cmdTPosEnd, &$resumeFromS
     switch (strtoupper($cmd)) {
     case '$BEGINBLOCK':
      if (!$this->processBeginBlockCmd($parms, $cmdTPosBegin, $cmdTPosEnd)) {
-             return false;
-     }
+                return false;
+        }
         break;
     case '$ENDBLOCK':
      if (!$this->processEndBlockCmd($parms, $cmdTPosBegin, $cmdTPosEnd)) {
-             return false;
-     }
+                return false;
+        }
         break;
     case '$INCLUDE':
      if (!$this->processincludeCmd($parms, $cmdTPosBegin, $cmdTPosEnd)) {
-             return false;
-     }
+                return false;
+        }
         $resumeFromStart = true;
         break;
     default:
@@ -848,8 +848,8 @@ function writeString($s) {
     switch ($this->outputMode) {
     case 0:            // output to PHP output stream
      if (!print($s)) {
-             $this->outputError = true;
-     }
+                $this->outputError = true;
+        }
         break;
     case 1:            // output to file
      $rc = fwrite($this->outputFileHandle, $s);

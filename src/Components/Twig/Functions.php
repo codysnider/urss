@@ -31,7 +31,7 @@ class Functions
                     }
                 }
                 if (T_CLASS === $tokens[$index][0] && T_WHITESPACE === $tokens[$index + 1][0] && T_STRING === $tokens[$index + 2][0]) {
-                    $index           += 2;
+                    $index += 2;
                     $functionClasses[] = $namespace.'\\'.$tokens[$index][1];
                     break;
                 }

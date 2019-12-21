@@ -264,7 +264,7 @@ function stylesheet_tag($filename, $id = false)
  */
 function javascript_tag($filename)
 {
-	user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
+    user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 
 function format_warning($msg, $id = "") {
