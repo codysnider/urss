@@ -24,14 +24,14 @@ class Db
         $er = error_reporting(E_ALL);
 
         switch (DB_TYPE) {
-            case "mysql":
-                $this->adapter = new Db_Mysqli();
-                break;
-            case "pgsql":
-                $this->adapter = new Db_Pgsql();
-                break;
-            default:
-                die("Unknown DB_TYPE: ".DB_TYPE);
+        case "mysql":
+            $this->adapter = new Db_Mysqli();
+            break;
+        case "pgsql":
+            $this->adapter = new Db_Pgsql();
+            break;
+        default:
+            die("Unknown DB_TYPE: ".DB_TYPE);
         }
 
         if (!$this->adapter) {

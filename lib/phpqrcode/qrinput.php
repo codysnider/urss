@@ -566,8 +566,9 @@
                 $chunks = (int) ($payload / 11);
                 $remain = $payload - $chunks * 11;
                 $size = $chunks * 2;
-                if ($remain >= 6) 
-                    $size++;
+                if ($remain >= 6) {
+                                    $size++;
+                }
                 break;
             case QR_MODE_8:
                 $size = (int) ($payload / 8);

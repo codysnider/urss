@@ -111,7 +111,7 @@ function print_feed_multi_select($id, $default_ids = [],
         while ($line = $sth->fetch()) {
 
             for ($i = 0; $i < $nest_level; $i++) {
-                            $line["title"] = " - " . $line["title"];
+                            $line["title"] = " - ".$line["title"];
             }
 
             $is_selected = in_array("CAT:".$line["id"], $default_ids) ? "selected=\"1\"" : "";
@@ -121,7 +121,7 @@ function print_feed_multi_select($id, $default_ids = [],
 
             if ($line["num_children"] > 0) {
                             print_feed_multi_select($id, $default_ids, $attributes,
-                    $include_all_feeds, $line["id"], $nest_level+1);
+                    $include_all_feeds, $line["id"], $nest_level + 1);
             }
 
             $f_sth = $pdo->prepare("SELECT id,title FROM ttrss_feeds
@@ -132,10 +132,10 @@ function print_feed_multi_select($id, $default_ids = [],
             while ($fline = $f_sth->fetch()) {
                 $is_selected = (in_array($fline["id"], $default_ids)) ? "selected=\"1\"" : "";
 
-                $fline["title"] = " + " . $fline["title"];
+                $fline["title"] = " + ".$fline["title"];
 
                 for ($i = 0; $i < $nest_level; $i++) {
-                                    $fline["title"] = " - " . $fline["title"];
+                                    $fline["title"] = " - ".$fline["title"];
                 }
 
                 printf("<option $is_selected value='%d'>%s</option>",
@@ -156,10 +156,10 @@ function print_feed_multi_select($id, $default_ids = [],
             while ($fline = $f_sth->fetch()) {
                 $is_selected = in_array($fline["id"], $default_ids) ? "selected=\"1\"" : "";
 
-                $fline["title"] = " + " . $fline["title"];
+                $fline["title"] = " + ".$fline["title"];
 
                 for ($i = 0; $i < $nest_level; $i++) {
-                                    $fline["title"] = " - " . $fline["title"];
+                                    $fline["title"] = " - ".$fline["title"];
                 }
 
                 printf("<option $is_selected value='%d'>%s</option>",
@@ -219,7 +219,7 @@ function print_feed_cat_select($id, $default_id,
         }
 
         for ($i = 0; $i < $nest_level; $i++) {
-                    $line["title"] = " - " . $line["title"];
+                    $line["title"] = " - ".$line["title"];
         }
 
         if ($line["title"]) {
@@ -229,7 +229,7 @@ function print_feed_cat_select($id, $default_id,
 
         if ($line["num_children"] > 0) {
                     print_feed_cat_select($id, $default_id, $attributes,
-                $include_all_cats, $line["id"], $nest_level+1);
+                $include_all_cats, $line["id"], $nest_level + 1);
         }
     }
 
@@ -321,7 +321,7 @@ function format_inline_player($url, $ctype) {
 
         if ($entry) {
             $entry .= "<a target=\"_blank\" rel=\"noopener noreferrer\"
-				href=\"$url\">" . basename($url) . "</a>";
+				href=\"$url\">".basename($url)."</a>";
         }
 
         $entry .= "</div>";

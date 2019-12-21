@@ -45,7 +45,7 @@ class Backend extends Handler {
                 if ($cur_section) {
                     print "<li>&nbsp;</li>";
                 }
-                print "<li><h3>" . $section . "</h3></li>";
+                print "<li><h3>".$section."</h3></li>";
                 $cur_section = $section;
 
                 foreach ($hotkeys as $action => $description) {
@@ -64,14 +64,14 @@ class Backend extends Handler {
                                         $tmp = '';
                                         foreach (str_split($keys[$i]) as $c) {
                                             switch ($c) {
-                                                case '*':
-                                                    $tmp .= __('Shift').'+';
-                                                    break;
-                                                case '^':
-                                                    $tmp .= __('Ctrl').'+';
-                                                    break;
-                                                default:
-                                                    $tmp .= $c;
+                                            case '*':
+                                                $tmp .= __('Shift').'+';
+                                                break;
+                                            case '^':
+                                                $tmp .= __('Ctrl').'+';
+                                                break;
+                                            default:
+                                                $tmp .= $c;
                                             }
                                         }
                                         $keys[$i] = $tmp;

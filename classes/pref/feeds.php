@@ -1071,70 +1071,70 @@ class Pref_Feeds extends Handler_Protected {
                 $qpart = "";
 
                 switch ($k) {
-                    case "title":
-                        $qpart = "title = ".$this->pdo->quote($feed_title);
-                        break;
+                case "title":
+                    $qpart = "title = ".$this->pdo->quote($feed_title);
+                    break;
 
-                    case "feed_url":
-                        $qpart = "feed_url = ".$this->pdo->quote($feed_url);
-                        break;
+                case "feed_url":
+                    $qpart = "feed_url = ".$this->pdo->quote($feed_url);
+                    break;
 
-                    case "update_interval":
-                        $qpart = "update_interval = ".$this->pdo->quote($upd_intl);
-                        break;
+                case "update_interval":
+                    $qpart = "update_interval = ".$this->pdo->quote($upd_intl);
+                    break;
 
-                    case "purge_interval":
-                        $qpart = "purge_interval =".$this->pdo->quote($purge_intl);
-                        break;
+                case "purge_interval":
+                    $qpart = "purge_interval =".$this->pdo->quote($purge_intl);
+                    break;
 
-                    case "auth_login":
-                        $qpart = "auth_login = ".$this->pdo->quote($auth_login);
-                        break;
+                case "auth_login":
+                    $qpart = "auth_login = ".$this->pdo->quote($auth_login);
+                    break;
 
-                    case "auth_pass":
-                        $qpart = "auth_pass =".$this->pdo->quote($auth_pass).", auth_pass_encrypted = false";
-                        break;
+                case "auth_pass":
+                    $qpart = "auth_pass =".$this->pdo->quote($auth_pass).", auth_pass_encrypted = false";
+                    break;
 
-                    case "private":
-                        $qpart = "private = ".$this->pdo->quote($private);
-                        break;
+                case "private":
+                    $qpart = "private = ".$this->pdo->quote($private);
+                    break;
 
-                    case "include_in_digest":
-                        $qpart = "include_in_digest = ".$this->pdo->quote($include_in_digest);
-                        break;
+                case "include_in_digest":
+                    $qpart = "include_in_digest = ".$this->pdo->quote($include_in_digest);
+                    break;
 
-                    case "always_display_enclosures":
-                        $qpart = "always_display_enclosures = ".$this->pdo->quote($always_display_enclosures);
-                        break;
+                case "always_display_enclosures":
+                    $qpart = "always_display_enclosures = ".$this->pdo->quote($always_display_enclosures);
+                    break;
 
-                    case "mark_unread_on_update":
-                        $qpart = "mark_unread_on_update = ".$this->pdo->quote($mark_unread_on_update);
-                        break;
+                case "mark_unread_on_update":
+                    $qpart = "mark_unread_on_update = ".$this->pdo->quote($mark_unread_on_update);
+                    break;
 
-                    case "cache_images":
-                        $qpart = "cache_images = ".$this->pdo->quote($cache_images);
-                        break;
+                case "cache_images":
+                    $qpart = "cache_images = ".$this->pdo->quote($cache_images);
+                    break;
 
-                    case "hide_images":
-                        $qpart = "hide_images = ".$this->pdo->quote($hide_images);
-                        break;
+                case "hide_images":
+                    $qpart = "hide_images = ".$this->pdo->quote($hide_images);
+                    break;
 
-                    case "cat_id":
-                        if (get_pref('ENABLE_FEED_CATS')) {
-                            if ($cat_id) {
-                                $qpart = "cat_id = ".$this->pdo->quote($cat_id);
-                            } else {
-                                $qpart = 'cat_id = NULL';
-                            }
+                case "cat_id":
+                    if (get_pref('ENABLE_FEED_CATS')) {
+                        if ($cat_id) {
+                            $qpart = "cat_id = ".$this->pdo->quote($cat_id);
                         } else {
-                            $qpart = "";
+                            $qpart = 'cat_id = NULL';
                         }
+                    } else {
+                        $qpart = "";
+                    }
 
-                        break;
+                    break;
 
-                    case "feed_language":
-                        $qpart = "feed_language = ".$this->pdo->quote($feed_language);
-                        break;
+                case "feed_language":
+                    $qpart = "feed_language = ".$this->pdo->quote($feed_language);
+                    break;
 
                 }
 

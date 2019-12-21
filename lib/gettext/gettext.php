@@ -177,12 +177,12 @@ class gettext_reader {
     function get_original_string($num) {
     $length = $this->table_originals[$num * 2 + 1];
     $offset = $this->table_originals[$num * 2 + 2];
-    if (! $length) {
+    if (!$length) {
             return '';
     }
     $this->STREAM->seekto($offset);
     $data = $this->STREAM->read($length);
-    return (string)$data;
+    return (string) $data;
     }
 
     /**
@@ -195,12 +195,12 @@ class gettext_reader {
     function get_translation_string($num) {
     $length = $this->table_translations[$num * 2 + 1];
     $offset = $this->table_translations[$num * 2 + 2];
-    if (! $length) {
+    if (!$length) {
             return '';
     }
     $this->STREAM->seekto($offset);
     $data = $this->STREAM->read($length);
-    return (string)$data;
+    return (string) $data;
     }
 
     /**

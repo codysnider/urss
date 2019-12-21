@@ -497,7 +497,8 @@
 
     PluginHost::getInstance()->run_commands($options);
 
-    if (file_exists(LOCK_DIRECTORY."/$lock_filename"))
-        if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN')
+    if (file_exists(LOCK_DIRECTORY."/$lock_filename")) {
+            if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN')
             fclose($lock_handle);
+    }
         unlink(LOCK_DIRECTORY."/$lock_filename");

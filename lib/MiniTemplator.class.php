@@ -282,16 +282,22 @@ function parseTemplateCommands() {
     $p = 0;
     while (true) {
         $p0 = strpos($this->template, '<!--', $p);
-        if ($p0 === false) break;
+        if ($p0 === false) {
+            break;
+        }
         $p = strpos($this->template, '-->', $p0);
         if ($p === false) {
             $this->triggerError("Invalid HTML comment in template at offset $p0.");
             return false; }
         $p += 3;
         $cmdL = substr($this->template, $p0 + 4, $p - $p0 - 7);
-        if (!$this->processTemplateCommand($cmdL, $p0, $p, $resumeFromStart))
-            return false;
-        if ($resumeFromStart) $p = $p0; }
+        if (!$this->processTemplateCommand($cmdL, $p0, $p, $resumeFromStart)) {
+                    return false;
+        }
+        if ($resumeFromStart) {
+            $p = $p0;
+        }
+        }
     return true; }
 
 /**
@@ -305,23 +311,23 @@ function processTemplateCommand($cmdL, $cmdTPosBegin, $cmdTPosEnd, &$resumeFromS
     if (!$this->parseWord($cmdL, $p, $cmd)) return true;
     $parms = substr($cmdL, $p);
     switch (strtoupper($cmd)) {
-        case '$BEGINBLOCK':
-         if (!$this->processBeginBlockCmd($parms, $cmdTPosBegin, $cmdTPosEnd))
-            return false;
-            break;
-        case '$ENDBLOCK':
-         if (!$this->processEndBlockCmd($parms, $cmdTPosBegin, $cmdTPosEnd))
-            return false;
-            break;
-        case '$INCLUDE':
-         if (!$this->processincludeCmd($parms, $cmdTPosBegin, $cmdTPosEnd))
-            return false;
-            $resumeFromStart = true;
-            break;
-        default:
-         if ($cmd{0} == '$' && !(strlen($cmd) >= 2 && $cmd{1} == '{')) {
-            $this->triggerError("Unknown command \"$cmd\" in template at offset $cmdTPosBegin.");
-            return false; }}
+    case '$BEGINBLOCK':
+     if (!$this->processBeginBlockCmd($parms, $cmdTPosBegin, $cmdTPosEnd))
+        return false;
+        break;
+    case '$ENDBLOCK':
+     if (!$this->processEndBlockCmd($parms, $cmdTPosBegin, $cmdTPosEnd))
+        return false;
+        break;
+    case '$INCLUDE':
+     if (!$this->processincludeCmd($parms, $cmdTPosBegin, $cmdTPosEnd))
+        return false;
+        $resumeFromStart = true;
+        break;
+    default:
+     if ($cmd{0} == '$' && !(strlen($cmd) >= 2 && $cmd{1} == '{')) {
+        $this->triggerError("Unknown command \"$cmd\" in template at offset $cmdTPosBegin.");
+        return false; }}
     return true; }
 
 /**
@@ -387,8 +393,9 @@ function registerBlock($blockName, &$blockNo) {
     $btr = & $this->blockTab[$blockNo];
     $btr = array();
     $btr['blockName'] = $blockName;
-    if (!$this->lookupBlockName($blockName, $btr['nextWithSameName']))
-        $btr['nextWithSameName'] = -1;
+    if (!$this->lookupBlockName($blockName, $btr['nextWithSameName'])) {
+            $btr['nextWithSameName'] = -1;
+    }
     $btr['definitionIsOpen'] = true;
     $btr['instances'] = 0;
     $btr['firstBlockInstNo'] = -1;
@@ -438,7 +445,9 @@ function insertSubtemplate($subtemplateName, $tPos1, $tPos2) {
     if (strlen($this->template) > $this->maxInclTemplateSize) {
         $this->triggerError("Subtemplate include aborted because the internal template string is longer than $this->maxInclTemplateSize characters.");
         return false; }
-    if (!$this->loadSubtemplate($subtemplateName, $subtemplate)) return false;
+    if (!$this->loadSubtemplate($subtemplateName, $subtemplate)) {
+        return false;
+    }
     // (Copying the template to insert a subtemplate is a bit slow. In a future implementation of MiniTemplator,
     // a table could be used that contains references to the string fragments.)
     $this->template = substr($this->template, 0, $tPos1).$subtemplate.substr($this->template, $tPos2);
@@ -473,8 +482,9 @@ function parseTemplateVariables() {
 * @access private
 */
 function registerVariableReference($varName, $tPosBegin, $tPosEnd) {
-    if (!$this->lookupVariableName($varName, $varNo))
-        $this->registerVariable($varName, $varNo);
+    if (!$this->lookupVariableName($varName, $varNo)) {
+            $this->registerVariable($varName, $varNo);
+    }
     $varRefNo = $this->varRefTabCnt++;
     $vrtr = & $this->varRefTab[$varRefNo];
     $vrtr = array();
@@ -514,12 +524,14 @@ function associateVariablesWithBlocks() {
             $nextBlockNo += 1;
             continue; }}
         $btr = & $this->blockTab[$activeBlockNo];
-        if ($varRefTPos < $btr['tPosBegin'])
-            $this->programLogicError(1);
+        if ($varRefTPos < $btr['tPosBegin']) {
+                    $this->programLogicError(1);
+        }
         $blockVarNo = $btr['blockVarCnt']++;
         $btr['blockVarNoToVarNoMap'][$blockVarNo] = $varNo;
-        if ($btr['firstVarRefNo'] == -1)
-            $btr['firstVarRefNo'] = $varRefNo;
+        if ($btr['firstVarRefNo'] == -1) {
+                    $btr['firstVarRefNo'] = $varRefNo;
+        }
         $vrtr['blockNo'] = $activeBlockNo;
         $vrtr['blockVarNo'] = $blockVarNo;
         $varRefNo += 1; }}
@@ -535,8 +547,9 @@ function associateVariablesWithBlocks() {
 * @access public
 */
 function reset() {
-    for ($varNo = 0; $varNo < $this->varTabCnt; $varNo++)
-        $this->varTab[$varNo]['varValue'] = '';
+    for ($varNo = 0; $varNo < $this->varTabCnt; $varNo++) {
+            $this->varTab[$varNo]['varValue'] = '';
+    }
     for ($blockNo = 0; $blockNo < $this->blockTabCnt; $blockNo++) {
         $btr = & $this->blockTab[$blockNo];
         $btr['instances'] = 0;
@@ -563,7 +576,9 @@ function reset() {
 function setVariable($variableName, $variableValue, $isOptional = false) {
     if (!$this->templateValid) {$this->triggerError("Template not valid."); return false; }
     if (!$this->lookupVariableName($variableName, $varNo)) {
-        if ($isOptional) return true;
+        if ($isOptional) {
+            return true;
+        }
         $this->triggerError("Variable \"$variableName\" not defined in template.");
         return false; }
     $this->varTab[$varNo]['varValue'] = $variableValue;
@@ -631,20 +646,23 @@ function addBlockByNo($blockNo) {
     $btr = & $this->blockTab[$blockNo];
     $this->registerBlockInstance($blockInstNo);
     $bitr = & $this->blockInstTab[$blockInstNo];
-    if ($btr['firstBlockInstNo'] == -1)
-        $btr['firstBlockInstNo'] = $blockInstNo;
-    if ($btr['lastBlockInstNo'] != -1)
-        $this->blockInstTab[$btr['lastBlockInstNo']]['nextBlockInstNo'] = $blockInstNo;
+    if ($btr['firstBlockInstNo'] == -1) {
+            $btr['firstBlockInstNo'] = $blockInstNo;
+    }
+    if ($btr['lastBlockInstNo'] != -1) {
+            $this->blockInstTab[$btr['lastBlockInstNo']]['nextBlockInstNo'] = $blockInstNo;
+    }
             // set forward pointer of chain
     $btr['lastBlockInstNo'] = $blockInstNo;
     $parentBlockNo = $btr['parentBlockNo'];
     $blockVarCnt = $btr['blockVarCnt'];
     $bitr['blockNo'] = $blockNo;
     $bitr['instanceLevel'] = $btr['instances']++;
-    if ($parentBlockNo == -1)
-        $bitr['parentInstLevel'] = -1;
-    else
-        $bitr['parentInstLevel'] = $this->blockTab[$parentBlockNo]['instances'];
+    if ($parentBlockNo == -1) {
+            $bitr['parentInstLevel'] = -1;
+    } else {
+            $bitr['parentInstLevel'] = $this->blockTab[$parentBlockNo]['instances'];
+    }
     $bitr['nextBlockInstNo'] = -1;
     $bitr['blockVarTab'] = array();
     // copy instance variables for this block
@@ -691,7 +709,9 @@ function generateOutput() {
 */
 function generateOutputToFile($fileName) {
     $fh = fopen($fileName, "wb");
-    if ($fh === false) return false;
+    if ($fh === false) {
+        return false;
+    }
     $this->outputMode = 1;
     $this->outputFileHandle = $fh;
     $ok = $this->generateOutputPage();
@@ -721,14 +741,18 @@ function generateOutputToString(&$outputString) {
 */
 function generateOutputPage() {
     if (!$this->templateValid) {$this->triggerError("Template not valid."); return false; }
-    if ($this->blockTab[0]['instances'] == 0)
-        $this->addBlockByNo(0); // add main block
+    if ($this->blockTab[0]['instances'] == 0) {
+            $this->addBlockByNo(0);
+    }
+    // add main block
     for ($blockNo = 0; $blockNo < $this->blockTabCnt; $blockNo++) {
         $btr = & $this->blockTab[$blockNo];
         $btr['currBlockInstNo'] = $btr['firstBlockInstNo']; }
     $this->outputError = false;
     $this->writeBlockInstances(0, -1);
-    if ($this->outputError) return false;
+    if ($this->outputError) {
+        return false;
+    }
     return true; }
 
 /**
@@ -741,11 +765,16 @@ function writeBlockInstances($blockNo, $parentInstLevel) {
     $btr = & $this->blockTab[$blockNo];
     while (!$this->outputError) {
         $blockInstNo = $btr['currBlockInstNo'];
-        if ($blockInstNo == -1) break;
+        if ($blockInstNo == -1) {
+            break;
+        }
         $bitr = & $this->blockInstTab[$blockInstNo];
-        if ($bitr['parentInstLevel'] < $parentInstLevel)
-            $this->programLogicError(2);
-        if ($bitr['parentInstLevel'] > $parentInstLevel) break;
+        if ($bitr['parentInstLevel'] < $parentInstLevel) {
+                    $this->programLogicError(2);
+        }
+        if ($bitr['parentInstLevel'] > $parentInstLevel) {
+            break;
+        }
         $this->writeBlockInstance($blockInstNo);
         $btr['currBlockInstNo'] = $bitr['nextBlockInstNo']; }}
 
@@ -781,25 +810,25 @@ function writeBlockInstance($blockInstNo) {
         if ($tPos2 > $tPos)
             $this->writeString(substr($this->template, $tPos, $tPos2 - $tPos));
         switch ($kind) {
-            case 0:         // end of block
-            return;
-            case 1:         // variable
-            $vrtr = & $this->varRefTab[$varRefNo];
-            if ($vrtr['blockNo'] != $blockNo)
-                $this->programLogicError(4);
-            $variableValue = $bitr['blockVarTab'][$vrtr['blockVarNo']];
-            $this->writeString($variableValue);
-            $tPos = $vrtr['tPosEnd'];
-            $varRefNo += 1;
-            break;
-            case 2:         // sub block
-            $subBtr = & $this->blockTab[$subBlockNo];
-            if ($subBtr['parentBlockNo'] != $blockNo)
-                $this->programLogicError(3);
-            $this->writeBlockInstances($subBlockNo, $bitr['instanceLevel']); // recursive call
-            $tPos = $subBtr['tPosEnd'];
-            $subBlockNo += 1;
-            break; }}}
+        case 0:         // end of block
+        return;
+        case 1:         // variable
+        $vrtr = & $this->varRefTab[$varRefNo];
+        if ($vrtr['blockNo'] != $blockNo)
+            $this->programLogicError(4);
+        $variableValue = $bitr['blockVarTab'][$vrtr['blockVarNo']];
+        $this->writeString($variableValue);
+        $tPos = $vrtr['tPosEnd'];
+        $varRefNo += 1;
+        break;
+        case 2:         // sub block
+        $subBtr = & $this->blockTab[$subBlockNo];
+        if ($subBtr['parentBlockNo'] != $blockNo)
+            $this->programLogicError(3);
+        $this->writeBlockInstances($subBlockNo, $bitr['instanceLevel']); // recursive call
+        $tPos = $subBtr['tPosEnd'];
+        $subBlockNo += 1;
+        break; }}}
 
 /**
 * @access private
@@ -807,17 +836,17 @@ function writeBlockInstance($blockInstNo) {
 function writeString($s) {
     if ($this->outputError) return;
     switch ($this->outputMode) {
-        case 0:            // output to PHP output stream
-         if (!print($s))
-            $this->outputError = true;
-            break;
-        case 1:            // output to file
-         $rc = fwrite($this->outputFileHandle, $s);
-            if ($rc === false) $this->outputError = true;
-            break;
-        case 2:            // output to string
-         $this->outputString .= $s;
-            break; }}
+    case 0:            // output to PHP output stream
+     if (!print($s))
+        $this->outputError = true;
+        break;
+    case 1:            // output to file
+     $rc = fwrite($this->outputFileHandle, $s);
+        if ($rc === false) $this->outputError = true;
+        break;
+    case 2:            // output to string
+     $this->outputString .= $s;
+        break; }}
 
 //--- name lookup routines ------------------------------------------------------------------------------------------
 
@@ -828,7 +857,9 @@ function writeString($s) {
 */
 function lookupVariableName($varName, &$varNo) {
     $x = & $this->varNameToNoMap[strtoupper($varName)];
-    if (!isset($x)) return false;
+    if (!isset($x)) {
+        return false;
+    }
     $varNo = $x;
     return true; }
 
@@ -841,7 +872,9 @@ function lookupVariableName($varName, &$varNo) {
 */
 function lookupBlockName($blockName, &$blockNo) {
     $x = & $this->blockNameToNoMap[strtoupper($blockName)];
-    if (!isset($x)) return false;
+    if (!isset($x)) {
+        return false;
+    }
     $blockNo = $x;
     return true; }
 
@@ -855,15 +888,21 @@ function lookupBlockName($blockName, &$blockNo) {
 function readFileIntoString($fileName, &$s) {
     if (function_exists('version_compare') && version_compare(phpversion(), "4.3.0", ">=")) {
         $s = file_get_contents($fileName);
-        if ($s === false) return false;
+        if ($s === false) {
+            return false;
+        }
         return true; }
     $fh = fopen($fileName, "rb");
-    if ($fh === false) return false;
+    if ($fh === false) {
+        return false;
+    }
     $fileSize = filesize($fileName);
     if ($fileSize === false) {fclose($fh); return false; }
     $s = fread($fh, $fileSize);
     fclose($fh);
-    if (strlen($s) != $fileSize) return false;
+    if (strlen($s) != $fileSize) {
+        return false;
+    }
     return true; }
 
 /**
@@ -891,12 +930,22 @@ function parseWord($s, &$p, &$w) {
 */
 function parseQuotedString($s, &$p, &$w) {
     $sLen = strlen($s);
-    while ($p < $sLen && ord($s{$p}) <= 32) $p++;
-    if ($p >= $sLen) return false;
-    if (substr($s, $p, 1) != '"') return false;
+    while ($p < $sLen && ord($s{$p}) <= 32) {
+        $p++;
+    }
+    if ($p >= $sLen) {
+        return false;
+    }
+    if (substr($s, $p, 1) != '"') {
+        return false;
+    }
     $p++; $p0 = $p;
-    while ($p < $sLen && $s{$p} != '"') $p++;
-    if ($p >= $sLen) return false;
+    while ($p < $sLen && $s{$p} != '"') {
+        $p++;
+    }
+    if ($p >= $sLen) {
+        return false;
+    }
     $w = substr($s, $p0, $p - $p0);
     $p++;
     return true; }
@@ -907,25 +956,36 @@ function parseQuotedString($s, &$p, &$w) {
 */
 function parseWordOrQuotedString($s, &$p, &$w) {
     $sLen = strlen($s);
-    while ($p < $sLen && ord($s{$p}) <= 32) $p++;
-    if ($p >= $sLen) return false;
-    if (substr($s, $p, 1) == '"')
-        return $this->parseQuotedString($s, $p, $w);
-    else
-        return $this->parseWord($s, $p, $w); }
+    while ($p < $sLen && ord($s{$p}) <= 32) {
+        $p++;
+    }
+    if ($p >= $sLen) {
+        return false;
+    }
+    if (substr($s, $p, 1) == '"') {
+            return $this->parseQuotedString($s, $p, $w);
+    } else {
+            return $this->parseWord($s, $p, $w);
+    }
+    }
 
 /**
 * Combine two file system paths.
 * @access private
 */
 function combineFileSystemPath($path1, $path2) {
-    if ($path1 == '' || $path2 == '') return $path2;
+    if ($path1 == '' || $path2 == '') {
+        return $path2;
+    }
     $s = $path1;
-    if (substr($s, -1) != '\\' && substr($s, -1) != '/') $s = $s."/";
-    if (substr($path2, 0, 1) == '\\' || substr($path2, 0, 1) == '/')
-        $s = $s.substr($path2, 1);
-    else
-        $s = $s.$path2;
+    if (substr($s, -1) != '\\' && substr($s, -1) != '/') {
+        $s = $s."/";
+    }
+    if (substr($path2, 0, 1) == '\\' || substr($path2, 0, 1) == '/') {
+            $s = $s.substr($path2, 1);
+    } else {
+            $s = $s.$path2;
+    }
     return $s; }
 
 /**

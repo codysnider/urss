@@ -99,12 +99,16 @@ class Pref_Filters extends Handler_Protected {
             }
         }
 
-        if (count($scope_qparts) == 0) $scope_qparts = ["true"];
+        if (count($scope_qparts) == 0) {
+            $scope_qparts = ["true"];
+        }
 
         $glue = $filter['match_any_rule'] ? " OR " : " AND ";
         $scope_qpart = join($glue, $scope_qparts);
 
-        if (!$scope_qpart) $scope_qpart = "true";
+        if (!$scope_qpart) {
+            $scope_qpart = "true";
+        }
 
         $rv = array();
 
@@ -583,8 +587,9 @@ class Pref_Filters extends Handler_Protected {
             $title = __($row["description"]);
 
             if ($action["action_id"] == 4 || $action["action_id"] == 6 ||
-                $action["action_id"] == 7)
-                $title .= ": ".$action["action_param"];
+                $action["action_id"] == 7) {
+                            $title .= ": ".$action["action_param"];
+            }
 
             if ($action["action_id"] == 9) {
                 list ($pfclass, $pfaction) = explode(":", $action["action_param"]);
@@ -1169,11 +1174,16 @@ class Pref_Filters extends Handler_Protected {
                 $num_actions -= 1;
             }
 
-            if ($match_any_rule) $title .= " (".__("matches any rule").")";
-            if ($inverse) $title .= " (".__("inverse").")";
+            if ($match_any_rule) {
+                $title .= " (".__("matches any rule").")";
+            }
+            if ($inverse) {
+                $title .= " (".__("inverse").")";
+            }
 
-            if ($num_actions > 0)
-                $actions = sprintf(_ngettext("%s (+%d action)", "%s (+%d actions)", (int) $num_actions), $actions, $num_actions);
+            if ($num_actions > 0) {
+                            $actions = sprintf(_ngettext("%s (+%d action)", "%s (+%d actions)", (int) $num_actions), $actions, $num_actions);
+            }
 
             return [$title, $actions];
         }

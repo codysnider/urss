@@ -263,11 +263,13 @@ function _bindtextdomain($domain, $path) {
     global $text_domains;
     // ensure $path ends with a slash ('/' should work for both, but lets still play nice)
     if (substr(php_uname(), 0, 7) == "Windows") {
-        if ($path[strlen($path) - 1] != '\\' and $path[strlen($path) - 1] != '/')
-        $path .= '\\';
+        if ($path[strlen($path) - 1] != '\\' and $path[strlen($path) - 1] != '/') {
+                $path .= '\\';
+        }
     } else {
-        if ($path[strlen($path) - 1] != '/')
-        $path .= '/';
+        if ($path[strlen($path) - 1] != '/') {
+                $path .= '/';
+        }
     }
     if (!array_key_exists($domain, $text_domains)) {
         // Initialize an empty domain object.

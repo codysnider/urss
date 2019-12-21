@@ -616,10 +616,15 @@ class RSSUtils {
                 Debug::log("link $entry_link", Debug::$LOG_VERBOSE);
                 Debug::log("language $entry_language", Debug::$LOG_VERBOSE);
 
-                if (!$entry_title) $entry_title = date("Y-m-d H:i:s", $entry_timestamp); ;
+                if (!$entry_title) {
+                    $entry_title = date("Y-m-d H:i:s", $entry_timestamp);
+                }
+                ;
 
                 $entry_content = $item->get_content();
-                if (!$entry_content) $entry_content = $item->get_description();
+                if (!$entry_content) {
+                    $entry_content = $item->get_description();
+                }
 
                 if (Debug::get_loglevel() >= 3) {
                     print "content: ";
@@ -1364,35 +1369,35 @@ class RSSUtils {
                 }
 
                 switch ($rule["type"]) {
-                    case "title":
-                        $match = @preg_match("/$reg_exp/iu", $title);
-                        break;
-                    case "content":
-                        // we don't need to deal with multiline regexps
-                        $content = preg_replace("/[\r\n\t]/", "", $content);
+                case "title":
+                    $match = @preg_match("/$reg_exp/iu", $title);
+                    break;
+                case "content":
+                    // we don't need to deal with multiline regexps
+                    $content = preg_replace("/[\r\n\t]/", "", $content);
 
-                        $match = @preg_match("/$reg_exp/iu", $content);
-                        break;
-                    case "both":
-                        // we don't need to deal with multiline regexps
-                        $content = preg_replace("/[\r\n\t]/", "", $content);
+                    $match = @preg_match("/$reg_exp/iu", $content);
+                    break;
+                case "both":
+                    // we don't need to deal with multiline regexps
+                    $content = preg_replace("/[\r\n\t]/", "", $content);
 
-                        $match = (@preg_match("/$reg_exp/iu", $title) || @preg_match("/$reg_exp/iu", $content));
-                        break;
-                    case "link":
-                        $match = @preg_match("/$reg_exp/iu", $link);
-                        break;
-                    case "author":
-                        $match = @preg_match("/$reg_exp/iu", $author);
-                        break;
-                    case "tag":
-                        foreach ($tags as $tag) {
-                            if (@preg_match("/$reg_exp/iu", $tag)) {
-                                $match = true;
-                                break;
-                            }
+                    $match = (@preg_match("/$reg_exp/iu", $title) || @preg_match("/$reg_exp/iu", $content));
+                    break;
+                case "link":
+                    $match = @preg_match("/$reg_exp/iu", $link);
+                    break;
+                case "author":
+                    $match = @preg_match("/$reg_exp/iu", $author);
+                    break;
+                case "tag":
+                    foreach ($tags as $tag) {
+                        if (@preg_match("/$reg_exp/iu", $tag)) {
+                            $match = true;
+                            break;
                         }
-                        break;
+                    }
+                    break;
                 }
 
                 if ($rule_inverse) {
