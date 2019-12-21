@@ -192,11 +192,15 @@ class API extends Handler {
         $feed_id = clean($_REQUEST["feed_id"]);
         if ($feed_id !== "") {
 
-            if (is_numeric($feed_id)) $feed_id = (int) $feed_id;
+            if (is_numeric($feed_id)) {
+                $feed_id = (int) $feed_id;
+            }
 
             $limit = (int) clean($_REQUEST["limit"]);
 
-            if (!$limit || $limit >= 200) $limit = 200;
+            if (!$limit || $limit >= 200) {
+                $limit = 200;
+            }
 
             $offset = (int) clean($_REQUEST["skip"]);
             $filter = clean($_REQUEST["filter"]);
@@ -222,16 +226,16 @@ class API extends Handler {
 
             $override_order = false;
             switch (clean($_REQUEST["order_by"])) {
-                case "title":
-                    $override_order = "ttrss_entries.title, date_entered, updated";
-                    break;
-                case "date_reverse":
-                    $override_order = "score DESC, date_entered, updated";
-                    $skip_first_id_check = true;
-                    break;
-                case "feed_dates":
-                    $override_order = "updated DESC";
-                    break;
+            case "title":
+                $override_order = "ttrss_entries.title, date_entered, updated";
+                break;
+            case "date_reverse":
+                $override_order = "score DESC, date_entered, updated";
+                $skip_first_id_check = true;
+                break;
+            case "feed_dates":
+                $override_order = "updated DESC";
+                break;
             }
 
             /* do not rely on params below */
@@ -263,32 +267,32 @@ class API extends Handler {
         $set_to = "";
 
         switch ($field_raw) {
-            case 0:
-                $field = "marked";
-                $additional_fields = ",last_marked = NOW()";
-                break;
-            case 1:
-                $field = "published";
-                $additional_fields = ",last_published = NOW()";
-                break;
-            case 2:
-                $field = "unread";
-                $additional_fields = ",last_read = NOW()";
-                break;
-            case 3:
-                $field = "note";
+        case 0:
+            $field = "marked";
+            $additional_fields = ",last_marked = NOW()";
+            break;
+        case 1:
+            $field = "published";
+            $additional_fields = ",last_published = NOW()";
+            break;
+        case 2:
+            $field = "unread";
+            $additional_fields = ",last_read = NOW()";
+            break;
+        case 3:
+            $field = "note";
         };
 
         switch ($mode) {
-            case 1:
-                $set_to = "true";
-                break;
-            case 0:
-                $set_to = "false";
-                break;
-            case 2:
-                $set_to = "not $field";
-                break;
+        case 1:
+            $set_to = "true";
+            break;
+        case 0:
+            $set_to = "false";
+            break;
+        case 2:
+            $set_to = "not $field";
+            break;
         }
 
         if ($field == "note") {

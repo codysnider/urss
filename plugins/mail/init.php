@@ -55,141 +55,141 @@ class Mail extends Plugin {
 			}
 			</script>";
 
-			print_hidden("op", "pluginhandler");
-			print_hidden("method", "save");
-			print_hidden("plugin", "mail");
+            print_hidden("op", "pluginhandler");
+            print_hidden("method", "save");
+            print_hidden("plugin", "mail");
 
-			$addresslist = $this->host->get($this, "addresslist");
+            $addresslist = $this->host->get($this, "addresslist");
 
-			print "<textarea dojoType=\"dijit.form.SimpleTextarea\" style='font-size : 12px; width : 50%' rows=\"3\"
+            print "<textarea dojoType=\"dijit.form.SimpleTextarea\" style='font-size : 12px; width : 50%' rows=\"3\"
 				name='addresslist'>$addresslist</textarea>";
 
-			print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".
-				__("Save")."</button>";
+            print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".
+                __("Save")."</button>";
 
-			print "</form>";
+            print "</form>";
 
-		print "</div>";
-	}
+        print "</div>";
+    }
 
-	public function hook_article_button($line) {
-		return "<i class='material-icons' style=\"cursor : pointer\"
+    public function hook_article_button($line) {
+        return "<i class='material-icons' style=\"cursor : pointer\"
 					onclick=\"Plugins.Mail.send(".$line["id"].")\"
 					title='".__('Forward by email')."'>mail</i>";
-	}
+    }
 
-	public function emailArticle() {
+    public function emailArticle() {
 
-		$ids = explode(",", $_REQUEST['param']);
-		$ids_qmarks = arr_qmarks($ids);
+        $ids = explode(",", $_REQUEST['param']);
+        $ids_qmarks = arr_qmarks($ids);
 
-		print_hidden("op", "pluginhandler");
-		print_hidden("plugin", "mail");
-		print_hidden("method", "sendEmail");
+        print_hidden("op", "pluginhandler");
+        print_hidden("plugin", "mail");
+        print_hidden("method", "sendEmail");
 
-		$sth = $this->pdo->prepare("SELECT email, full_name FROM ttrss_users WHERE
+        $sth = $this->pdo->prepare("SELECT email, full_name FROM ttrss_users WHERE
 			id = ?");
-		$sth->execute([$_SESSION['uid']]);
+        $sth->execute([$_SESSION['uid']]);
 
-		if ($row = $sth->fetch()) {
-			$user_email = htmlspecialchars($row['email']);
-			$user_name = htmlspecialchars($row['full_name']);
-		}
+        if ($row = $sth->fetch()) {
+            $user_email = htmlspecialchars($row['email']);
+            $user_name = htmlspecialchars($row['full_name']);
+        }
 
-		if (!$user_name) {
-		    $user_name = $_SESSION['name'];
-		}
+        if (!$user_name) {
+            $user_name = $_SESSION['name'];
+        }
 
-		print_hidden("from_email", "$user_email");
-		print_hidden("from_name", "$user_name");
+        print_hidden("from_email", "$user_email");
+        print_hidden("from_name", "$user_name");
 
-		require_once "lib/MiniTemplator.class.php";
+        require_once "lib/MiniTemplator.class.php";
 
-		$tpl = new MiniTemplator;
+        $tpl = new MiniTemplator;
 
-		$tpl->readTemplateFromFile("templates/email_article_template.txt");
+        $tpl->readTemplateFromFile("templates/email_article_template.txt");
 
-		$tpl->setVariable('USER_NAME', $_SESSION["name"], true);
-		$tpl->setVariable('USER_EMAIL', $user_email, true);
-		$tpl->setVariable('TTRSS_HOST', $_SERVER["HTTP_HOST"], true);
+        $tpl->setVariable('USER_NAME', $_SESSION["name"], true);
+        $tpl->setVariable('USER_EMAIL', $user_email, true);
+        $tpl->setVariable('TTRSS_HOST', $_SERVER["HTTP_HOST"], true);
 
-		$sth = $this->pdo->prepare("SELECT DISTINCT link, content, title, note
+        $sth = $this->pdo->prepare("SELECT DISTINCT link, content, title, note
 			FROM ttrss_user_entries, ttrss_entries WHERE id = ref_id AND
 			id IN ($ids_qmarks) AND owner_uid = ?");
-		$sth->execute(array_merge($ids, [$_SESSION['uid']]));
+        $sth->execute(array_merge($ids, [$_SESSION['uid']]));
 
-		if (count($ids) > 1) {
-			$subject = __("[Forwarded]")." ".__("Multiple articles");
-		}
+        if (count($ids) > 1) {
+            $subject = __("[Forwarded]")." ".__("Multiple articles");
+        }
 
-		while ($line = $sth->fetch()) {
+        while ($line = $sth->fetch()) {
 
-			if (!$subject) {
-							$subject = __("[Forwarded]")." ".htmlspecialchars($line["title"]);
-			}
+            if (!$subject) {
+                            $subject = __("[Forwarded]")." ".htmlspecialchars($line["title"]);
+            }
 
-			$tpl->setVariable('ARTICLE_TITLE', strip_tags($line["title"]));
-			$tnote = strip_tags($line["note"]);
-			if ($tnote != '') {
-				$tpl->setVariable('ARTICLE_NOTE', $tnote, true);
-				$tpl->addBlock('note');
-			}
-			$tpl->setVariable('ARTICLE_URL', strip_tags($line["link"]));
+            $tpl->setVariable('ARTICLE_TITLE', strip_tags($line["title"]));
+            $tnote = strip_tags($line["note"]);
+            if ($tnote != '') {
+                $tpl->setVariable('ARTICLE_NOTE', $tnote, true);
+                $tpl->addBlock('note');
+            }
+            $tpl->setVariable('ARTICLE_URL', strip_tags($line["link"]));
 
-			$tpl->addBlock('article');
-		}
+            $tpl->addBlock('article');
+        }
 
-		$tpl->addBlock('email');
+        $tpl->addBlock('email');
 
-		$content = "";
-		$tpl->generateOutputToString($content);
+        $content = "";
+        $tpl->generateOutputToString($content);
 
-		print "<table width='100%'><tr><td>";
+        print "<table width='100%'><tr><td>";
 
-		$addresslist = explode(",", $this->host->get($this, "addresslist"));
+        $addresslist = explode(",", $this->host->get($this, "addresslist"));
 
-		print __('To:');
+        print __('To:');
 
-		print "</td><td>";
+        print "</td><td>";
 
 /*		print "<input dojoType=\"dijit.form.ValidationTextBox\" required=\"true\"
 				style=\"width : 30em;\"
 				name=\"destination\" id=\"emailArticleDlg_destination\">"; */
 
-		print_select("destination", "", $addresslist, 'style="width: 30em" dojoType="dijit.form.ComboBox"');
+        print_select("destination", "", $addresslist, 'style="width: 30em" dojoType="dijit.form.ComboBox"');
 
 /*		print "<div class=\"autocomplete\" id=\"emailArticleDlg_dst_choices\"
 	style=\"z-index: 30; display : none\"></div>"; */
 
-		print "</td></tr><tr><td>";
+        print "</td></tr><tr><td>";
 
-		print __('Subject:');
+        print __('Subject:');
 
-		print "</td><td>";
+        print "</td><td>";
 
-		print "<input dojoType='dijit.form.ValidationTextBox' required='true'
+        print "<input dojoType='dijit.form.ValidationTextBox' required='true'
 				style='width : 30em;' name='subject' value=\"$subject\" id='subject'>";
 
-		print "</td></tr>";
+        print "</td></tr>";
 
-		print "<tr><td colspan='2'><textarea dojoType='dijit.form.SimpleTextarea'
+        print "<tr><td colspan='2'><textarea dojoType='dijit.form.SimpleTextarea'
 			style='height : 200px; font-size : 12px; width : 98%' rows=\"20\"
 			name='content'>$content</textarea>";
 
-		print "</td></tr></table>";
+        print "</td></tr></table>";
 
-		print "<footer>";
-		print "<button dojoType='dijit.form.Button' onclick=\"dijit.byId('emailArticleDlg').execute()\">".__('Send e-mail')."</button> ";
-		print "<button dojoType='dijit.form.Button' onclick=\"dijit.byId('emailArticleDlg').hide()\">".__('Cancel')."</button>";
-		print "</footer>";
+        print "<footer>";
+        print "<button dojoType='dijit.form.Button' onclick=\"dijit.byId('emailArticleDlg').execute()\">".__('Send e-mail')."</button> ";
+        print "<button dojoType='dijit.form.Button' onclick=\"dijit.byId('emailArticleDlg').hide()\">".__('Cancel')."</button>";
+        print "</footer>";
 
-		//return;
-	}
+        //return;
+    }
 
-	public function sendEmail() {
-		$reply = array();
+    public function sendEmail() {
+        $reply = array();
 
-		/*$mail->AddReplyTo(strip_tags($_REQUEST['from_email']),
+        /*$mail->AddReplyTo(strip_tags($_REQUEST['from_email']),
 			strip_tags($_REQUEST['from_name']));
 		//$mail->AddAddress($_REQUEST['destination']);
 		$addresses = explode(';', $_REQUEST['destination']);

@@ -172,26 +172,26 @@ class Pref_Prefs extends Handler_Protected {
             $value = $_POST[$pref_name];
 
             switch ($pref_name) {
-                case 'DIGEST_PREFERRED_TIME':
-                    if (get_pref('DIGEST_PREFERRED_TIME') != $value) {
+            case 'DIGEST_PREFERRED_TIME':
+                if (get_pref('DIGEST_PREFERRED_TIME') != $value) {
 
-                        $sth = $this->pdo->prepare("UPDATE ttrss_users SET
+                    $sth = $this->pdo->prepare("UPDATE ttrss_users SET
 						last_digest_sent = NULL WHERE id = ?");
-                        $sth->execute([$_SESSION['uid']]);
+                    $sth->execute([$_SESSION['uid']]);
 
-                    }
-                    break;
-                case 'USER_LANGUAGE':
-                    if (!$need_reload) {
-                        $need_reload = $_SESSION["language"] != $value;
-                    }
-                    break;
+                }
+                break;
+            case 'USER_LANGUAGE':
+                if (!$need_reload) {
+                    $need_reload = $_SESSION["language"] != $value;
+                }
+                break;
 
-                case 'USER_CSS_THEME':
-                    if (!$need_reload) {
-                        $need_reload = get_pref($pref_name) != $value;
-                    }
-                    break;
+            case 'USER_CSS_THEME':
+                if (!$need_reload) {
+                    $need_reload = get_pref($pref_name) != $value;
+                }
+                break;
             }
 
             set_pref($pref_name, $value);

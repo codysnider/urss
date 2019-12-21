@@ -445,10 +445,12 @@ class Article extends Handler_Protected {
 
                                 if (!$hide_images) {
                                     $encsize = '';
-                                    if ($entry['height'] > 0)
-                                        $encsize .= ' height="'.intval($entry['height']).'"';
-                                    if ($entry['width'] > 0)
-                                        $encsize .= ' width="'.intval($entry['width']).'"';
+                                    if ($entry['height'] > 0) {
+                                                                            $encsize .= ' height="'.intval($entry['height']).'"';
+                                    }
+                                    if ($entry['width'] > 0) {
+                                                                            $encsize .= ' width="'.intval($entry['width']).'"';
+                                    }
                                     $rv .= "<p><img
 										alt=\"".htmlspecialchars($entry["filename"])."\"
 										src=\"" .htmlspecialchars($entry["url"])."\"
@@ -480,15 +482,17 @@ class Article extends Handler_Protected {
             $rv .= "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 
             foreach ($entries as $entry) {
-                if ($entry["title"])
-                    $title = " &mdash; ".truncate_string($entry["title"], 30);
-                else
-                    $title = "";
+                if ($entry["title"]) {
+                                    $title = " &mdash; ".truncate_string($entry["title"], 30);
+                } else {
+                                    $title = "";
+                }
 
-                if ($entry["filename"])
-                    $filename = truncate_middle(htmlspecialchars($entry["filename"]), 60);
-                else
-                    $filename = "";
+                if ($entry["filename"]) {
+                                    $filename = truncate_middle(htmlspecialchars($entry["filename"]), 60);
+                } else {
+                                    $filename = "";
+                }
 
                 $rv .= "<div onclick='popupOpenUrl(\"".htmlspecialchars($entry["url"])."\")'
 					dojoType=\"dijit.MenuItem\">".$filename.$title."</div>";

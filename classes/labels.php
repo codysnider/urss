@@ -176,12 +176,16 @@ class Labels
 
         }
 
-        if (!$tr_in_progress) $pdo->commit();
+        if (!$tr_in_progress) {
+            $pdo->commit();
+        }
     }
 
     public static function create($caption, $fg_color = '', $bg_color = '', $owner_uid = false) {
 
-        if (!$owner_uid) $owner_uid = $_SESSION['uid'];
+        if (!$owner_uid) {
+            $owner_uid = $_SESSION['uid'];
+        }
 
         $pdo = Db::pdo();
 

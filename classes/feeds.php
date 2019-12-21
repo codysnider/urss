@@ -50,8 +50,9 @@ class Feeds extends Handler_Protected {
             $reply .= strip_tags($feed_title);
         }
 
-        if ($error)
-            $reply .= " <i title=\"".htmlspecialchars($error)."\" class='material-icons icon-error'>error</i>";
+        if ($error) {
+                    $reply .= " <i title=\"".htmlspecialchars($error)."\" class='material-icons icon-error'>error</i>";
+        }
 
         $reply .= "</span>";
         $reply .= "<span id='feed_current_unread' style='display: none'></span>";
@@ -412,21 +413,21 @@ class Feeds extends Handler_Protected {
                     $message = $query_error_override;
                 } else {
                     switch ($view_mode) {
-                        case "unread":
-                            $message = __("No unread articles found to display.");
-                            break;
-                        case "updated":
-                            $message = __("No updated articles found to display.");
-                            break;
-                        case "marked":
-                            $message = __("No starred articles found to display.");
-                            break;
-                        default:
-                            if ($feed < LABEL_BASE_INDEX) {
-                                $message = __("No articles found to display. You can assign articles to labels manually from article header context menu (applies to all selected articles) or use a filter.");
-                            } else {
-                                $message = __("No articles found to display.");
-                            }
+                    case "unread":
+                        $message = __("No unread articles found to display.");
+                        break;
+                    case "updated":
+                        $message = __("No updated articles found to display.");
+                        break;
+                    case "marked":
+                        $message = __("No starred articles found to display.");
+                        break;
+                    default:
+                        if ($feed < LABEL_BASE_INDEX) {
+                            $message = __("No articles found to display. You can assign articles to labels manually from article header context menu (applies to all selected articles) or use a filter.");
+                        } else {
+                            $message = __("No articles found to display.");
+                        }
                     }
                 }
 
@@ -893,29 +894,29 @@ class Feeds extends Handler_Protected {
         // TODO: all this interval stuff needs some generic generator function
 
         switch ($mode) {
-            case "1day":
-                if (DB_TYPE == "pgsql") {
-                    $date_qpart = "date_entered < NOW() - INTERVAL '1 day' ";
-                } else {
-                    $date_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 1 DAY) ";
-                }
-                break;
-            case "1week":
-                if (DB_TYPE == "pgsql") {
-                    $date_qpart = "date_entered < NOW() - INTERVAL '1 week' ";
-                } else {
-                    $date_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 1 WEEK) ";
-                }
-                break;
-            case "2week":
-                if (DB_TYPE == "pgsql") {
-                    $date_qpart = "date_entered < NOW() - INTERVAL '2 week' ";
-                } else {
-                    $date_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 2 WEEK) ";
-                }
-                break;
-            default:
-                $date_qpart = "true";
+        case "1day":
+            if (DB_TYPE == "pgsql") {
+                $date_qpart = "date_entered < NOW() - INTERVAL '1 day' ";
+            } else {
+                $date_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 1 DAY) ";
+            }
+            break;
+        case "1week":
+            if (DB_TYPE == "pgsql") {
+                $date_qpart = "date_entered < NOW() - INTERVAL '1 week' ";
+            } else {
+                $date_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 1 WEEK) ";
+            }
+            break;
+        case "2week":
+            if (DB_TYPE == "pgsql") {
+                $date_qpart = "date_entered < NOW() - INTERVAL '2 week' ";
+            } else {
+                $date_qpart = "date_entered < DATE_SUB(NOW(), INTERVAL 2 WEEK) ";
+            }
+            break;
+        default:
+            $date_qpart = "true";
         }
 
         if (is_numeric($feed)) {
@@ -1237,28 +1238,28 @@ class Feeds extends Handler_Protected {
 
     public static function getFeedIcon($id) {
         switch ($id) {
-            case 0:
-                return "archive";
-            case -1:
-                return "star";
-            case -2:
-                return "rss_feed";
-            case -3:
-                return "whatshot";
-            case -4:
-                return "inbox";
-            case -6:
-                return "restore";
-            default:
-                if ($id < LABEL_BASE_INDEX) {
-                    return "label";
-                } else {
-                    $icon = self::getIconFile($id);
+        case 0:
+            return "archive";
+        case -1:
+            return "star";
+        case -2:
+            return "rss_feed";
+        case -3:
+            return "whatshot";
+        case -4:
+            return "inbox";
+        case -6:
+            return "restore";
+        default:
+            if ($id < LABEL_BASE_INDEX) {
+                return "label";
+            } else {
+                $icon = self::getIconFile($id);
 
-                    if ($icon && file_exists($icon)) {
-                        return ICONS_URL."/".basename($icon)."?".filemtime($icon);
-                    }
+                if ($icon && file_exists($icon)) {
+                    return ICONS_URL."/".basename($icon)."?".filemtime($icon);
                 }
+            }
         }
 
         return false;
@@ -2263,104 +2264,104 @@ class Feeds extends Handler_Protected {
             $commandpair = explode(":", mb_strtolower($k), 2);
 
             switch ($commandpair[0]) {
-                case "title":
-                    if ($commandpair[1]) {
-                        array_push($query_keywords, "($not (LOWER(ttrss_entries.title) LIKE ".
-                            $pdo->quote('%'.mb_strtolower($commandpair[1]).'%')."))");
-                    } else {
-                        array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
+            case "title":
+                if ($commandpair[1]) {
+                    array_push($query_keywords, "($not (LOWER(ttrss_entries.title) LIKE ".
+                        $pdo->quote('%'.mb_strtolower($commandpair[1]).'%')."))");
+                } else {
+                    array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
 								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
+                    array_push($search_words, $k);
+                }
+                break;
+            case "author":
+                if ($commandpair[1]) {
+                    array_push($query_keywords, "($not (LOWER(author) LIKE ".
+                        $pdo->quote('%'.mb_strtolower($commandpair[1]).'%')."))");
+                } else {
+                    array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
+                    array_push($search_words, $k);
+                }
+                break;
+            case "note":
+                if ($commandpair[1]) {
+                    if ($commandpair[1] == "true")
+                        array_push($query_keywords, "($not (note IS NOT NULL AND note != ''))");
+                    else if ($commandpair[1] == "false")
+                        array_push($query_keywords, "($not (note IS NULL OR note = ''))");
+                    else
+                        array_push($query_keywords, "($not (LOWER(note) LIKE ".
+                            $pdo->quote('%'.mb_strtolower($commandpair[1]).'%')."))");
+                } else {
+                    array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
+                    if (!$not) array_push($search_words, $k);
+                }
+                break;
+            case "star":
+
+                if ($commandpair[1]) {
+                    if ($commandpair[1] == "true")
+                        array_push($query_keywords, "($not (marked = true))");
+                    else
+                        array_push($query_keywords, "($not (marked = false))");
+                } else {
+                    array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
+                    if (!$not) array_push($search_words, $k);
+                }
+                break;
+            case "pub":
+                if ($commandpair[1]) {
+                    if ($commandpair[1] == "true")
+                        array_push($query_keywords, "($not (published = true))");
+                    else
+                        array_push($query_keywords, "($not (published = false))");
+
+                } else {
+                    array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
+                    if (!$not) array_push($search_words, $k);
+                }
+                break;
+            case "unread":
+                if ($commandpair[1]) {
+                    if ($commandpair[1] == "true")
+                        array_push($query_keywords, "($not (unread = true))");
+                    else
+                        array_push($query_keywords, "($not (unread = false))");
+
+                } else {
+                    array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
+                    if (!$not) array_push($search_words, $k);
+                }
+                break;
+            default:
+                if (strpos($k, "@") === 0) {
+
+                    $user_tz_string = get_pref('USER_TIMEZONE', $_SESSION['uid']);
+                    $orig_ts = strtotime(substr($k, 1));
+                    $k = date("Y-m-d", convert_timestamp($orig_ts, $user_tz_string, 'UTC'));
+
+                    //$k = date("Y-m-d", strtotime(substr($k, 1)));
+
+                    array_push($query_keywords, "(".SUBSTRING_FOR_DATE."(updated,1,LENGTH('$k')) $not = '$k')");
+                } else {
+
+                    if (DB_TYPE == "pgsql") {
+                        $k = mb_strtolower($k);
+                        array_push($search_query_leftover, $not ? "!$k" : $k);
+                    } else {
+                        array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
+								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
+                    }
+
+                    if (!$not) {
                         array_push($search_words, $k);
                     }
-                    break;
-                case "author":
-                    if ($commandpair[1]) {
-                        array_push($query_keywords, "($not (LOWER(author) LIKE ".
-                            $pdo->quote('%'.mb_strtolower($commandpair[1]).'%')."))");
-                    } else {
-                        array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-                        array_push($search_words, $k);
-                    }
-                    break;
-                case "note":
-                    if ($commandpair[1]) {
-                        if ($commandpair[1] == "true")
-                            array_push($query_keywords, "($not (note IS NOT NULL AND note != ''))");
-                        else if ($commandpair[1] == "false")
-                            array_push($query_keywords, "($not (note IS NULL OR note = ''))");
-                        else
-                            array_push($query_keywords, "($not (LOWER(note) LIKE ".
-                                $pdo->quote('%'.mb_strtolower($commandpair[1]).'%')."))");
-                    } else {
-                        array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-                        if (!$not) array_push($search_words, $k);
-                    }
-                    break;
-                case "star":
-
-                    if ($commandpair[1]) {
-                        if ($commandpair[1] == "true")
-                            array_push($query_keywords, "($not (marked = true))");
-                        else
-                            array_push($query_keywords, "($not (marked = false))");
-                    } else {
-                        array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-                        if (!$not) array_push($search_words, $k);
-                    }
-                    break;
-                case "pub":
-                    if ($commandpair[1]) {
-                        if ($commandpair[1] == "true")
-                            array_push($query_keywords, "($not (published = true))");
-                        else
-                            array_push($query_keywords, "($not (published = false))");
-
-                    } else {
-                        array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-                        if (!$not) array_push($search_words, $k);
-                    }
-                    break;
-                case "unread":
-                    if ($commandpair[1]) {
-                        if ($commandpair[1] == "true")
-                            array_push($query_keywords, "($not (unread = true))");
-                        else
-                            array_push($query_keywords, "($not (unread = false))");
-
-                    } else {
-                        array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-                        if (!$not) array_push($search_words, $k);
-                    }
-                    break;
-                default:
-                    if (strpos($k, "@") === 0) {
-
-                        $user_tz_string = get_pref('USER_TIMEZONE', $_SESSION['uid']);
-                        $orig_ts = strtotime(substr($k, 1));
-                        $k = date("Y-m-d", convert_timestamp($orig_ts, $user_tz_string, 'UTC'));
-
-                        //$k = date("Y-m-d", strtotime(substr($k, 1)));
-
-                        array_push($query_keywords, "(".SUBSTRING_FOR_DATE."(updated,1,LENGTH('$k')) $not = '$k')");
-                    } else {
-
-                        if (DB_TYPE == "pgsql") {
-                            $k = mb_strtolower($k);
-                            array_push($search_query_leftover, $not ? "!$k" : $k);
-                        } else {
-                            array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
-								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-                        }
-
-                        if (!$not) {
-                            array_push($search_words, $k);
-                        }
-                    }
+                }
             }
         }
 

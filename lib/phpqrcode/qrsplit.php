@@ -266,16 +266,22 @@
                 case QR_MODE_NUM: $length = $this->eatNum(); break;
                 case QR_MODE_AN:  $length = $this->eatAn(); break;
                 case QR_MODE_KANJI:
-                    if ($this->modeHint == QR_MODE_KANJI)
-                            $length = $this->eatKanji();
-                    else    $length = $this->eat8();
+                    if ($this->modeHint == QR_MODE_KANJI) {
+                                                $length = $this->eatKanji();
+                    } else {
+                        $length = $this->eat8();
+                    }
                     break;
                 default: $length = $this->eat8(); break;
                 
                 }
 
-                if ($length == 0) return 0;
-                if ($length < 0)  return -1;
+                if ($length == 0) {
+                    return 0;
+                }
+                if ($length < 0) {
+                    return -1;
+                }
                 
                 $this->dataStr = substr($this->dataStr, $length);
             }

@@ -765,101 +765,101 @@ class Handler_Public extends Handler {
 					<a href="index.php"><?php echo __("Return to Tiny Tiny RSS") ?></a>
 				</form>
 				<?php
-			} else {
+            } else {
 
-				$rc = Feeds::subscribe_to_feed($feed_url);
-				$feed_urls = false;
+                $rc = Feeds::subscribe_to_feed($feed_url);
+                $feed_urls = false;
 
-				switch ($rc['code']) {
-				case 0:
-					print_warning(T_sprintf("Already subscribed to <b>%s</b>.", $feed_url));
-					break;
-				case 1:
-					print_notice(T_sprintf("Subscribed to <b>%s</b>.", $feed_url));
-					break;
-				case 2:
-					print_error(T_sprintf("Could not subscribe to <b>%s</b>.", $feed_url));
-					break;
-				case 3:
-					print_error(T_sprintf("No feeds found in <b>%s</b>.", $feed_url));
-					break;
-				case 4:
-					$feed_urls = $rc["feeds"];
-					break;
-				case 5:
-					print_error(T_sprintf("Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL.", $feed_url));
-					break;
-				}
+                switch ($rc['code']) {
+                case 0:
+                    print_warning(T_sprintf("Already subscribed to <b>%s</b>.", $feed_url));
+                    break;
+                case 1:
+                    print_notice(T_sprintf("Subscribed to <b>%s</b>.", $feed_url));
+                    break;
+                case 2:
+                    print_error(T_sprintf("Could not subscribe to <b>%s</b>.", $feed_url));
+                    break;
+                case 3:
+                    print_error(T_sprintf("No feeds found in <b>%s</b>.", $feed_url));
+                    break;
+                case 4:
+                    $feed_urls = $rc["feeds"];
+                    break;
+                case 5:
+                    print_error(T_sprintf("Could not subscribe to <b>%s</b>.<br>Can't download the Feed URL.", $feed_url));
+                    break;
+                }
 
-				if ($feed_urls) {
+                if ($feed_urls) {
 
-					print "<form action='public.php'>";
-					print "<input type='hidden' name='op' value='subscribe'>";
+                    print "<form action='public.php'>";
+                    print "<input type='hidden' name='op' value='subscribe'>";
 
-					print "<fieldset>";
-					print "<label style='display : inline'>".__("Multiple feed URLs found:")."</label>";
-					print "<select name='feed_url' dojoType='dijit.form.Select'>";
+                    print "<fieldset>";
+                    print "<label style='display : inline'>".__("Multiple feed URLs found:")."</label>";
+                    print "<select name='feed_url' dojoType='dijit.form.Select'>";
 
-					foreach ($feed_urls as $url => $name) {
-						$url = htmlspecialchars($url);
-						$name = htmlspecialchars($name);
+                    foreach ($feed_urls as $url => $name) {
+                        $url = htmlspecialchars($url);
+                        $name = htmlspecialchars($name);
 
-						print "<option value=\"$url\">$name</option>";
-					}
+                        print "<option value=\"$url\">$name</option>";
+                    }
 
-					print "</select>";
-					print "</fieldset>";
+                    print "</select>";
+                    print "</fieldset>";
 
-					print "<button class='alt-primary' dojoType='dijit.form.Button' type='submit'>".__("Subscribe to selected feed")."</button>";
-					print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
+                    print "<button class='alt-primary' dojoType='dijit.form.Button' type='submit'>".__("Subscribe to selected feed")."</button>";
+                    print "<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>";
 
-					print "</form>";
-				}
+                    print "</form>";
+                }
 
-				$tp_uri = get_self_url_prefix()."/prefs.php";
+                $tp_uri = get_self_url_prefix()."/prefs.php";
 
-				if ($rc['code'] <= 2) {
-					$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE
+                if ($rc['code'] <= 2) {
+                    $sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE
 					feed_url = ? AND owner_uid = ?");
-					$sth->execute([$feed_url, $_SESSION['uid']]);
-					$row = $sth->fetch();
+                    $sth->execute([$feed_url, $_SESSION['uid']]);
+                    $row = $sth->fetch();
 
-					$feed_id = $row["id"];
-				} else {
-					$feed_id = 0;
-				}
+                    $feed_id = $row["id"];
+                } else {
+                    $feed_id = 0;
+                }
 
-				if ($feed_id) {
-					print "<form method='GET' action=\"$tp_uri\">
+                if ($feed_id) {
+                    print "<form method='GET' action=\"$tp_uri\">
 					<input type='hidden' name='tab' value='feedConfig'>
 					<input type='hidden' name='method' value='editfeed'>
 					<input type='hidden' name='methodparam' value='$feed_id'>
 					<button dojoType='dijit.form.Button' class='alt-info' type='submit'>".__("Edit subscription options")."</button>
 					<a href='index.php'>".__("Return to Tiny Tiny RSS")."</a>
 					</form>";
-				}
-			}
+                }
+            }
 
-			print "</div></div></body></html>";
+            print "</div></div></body></html>";
 
-		} else {
-			render_login_form();
-		}
-	}
+        } else {
+            render_login_form();
+        }
+    }
 
-	public function index() {
-		header("Content-Type: text/plain");
-		print error_json(13);
-	}
+    public function index() {
+        header("Content-Type: text/plain");
+        print error_json(13);
+    }
 
-	public function forgotpass() {
-		startup_gettext();
-		session_start();
+    public function forgotpass() {
+        startup_gettext();
+        session_start();
 
-		@$hash = clean($_REQUEST["hash"]);
+        @$hash = clean($_REQUEST["hash"]);
 
-		header('Content-Type: text/html; charset=utf-8');
-		?>
+        header('Content-Type: text/html; charset=utf-8');
+        ?>
 		<!DOCTYPE html>
 		<html>
 		<head>

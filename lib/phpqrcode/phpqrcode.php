@@ -225,8 +225,9 @@
 				
                 $width = count($frame);
                 $bitMask = array_fill(0, $width, array_fill(0, $width, 0));
-                for ($maskNo = 0; $maskNo < 8; $maskNo++)
-                    $mask->makeMaskNo($maskNo, $width, $frame, $bitMask, true);
+                for ($maskNo = 0; $maskNo < 8; $maskNo++) {
+                                    $mask->makeMaskNo($maskNo, $width, $frame, $bitMask, true);
+                }
             }
 			
             QRtools::markTime('after_build_cache');
@@ -1591,8 +1592,9 @@
                 $chunks = (int) ($payload / 11);
                 $remain = $payload - $chunks * 11;
                 $size = $chunks * 2;
-                if ($remain >= 6) 
-                    $size++;
+                if ($remain >= 6) {
+                                    $size++;
+                }
                 break;
             case QR_MODE_8:
                 $size = (int) ($payload / 8);
@@ -2231,16 +2233,22 @@
                 case QR_MODE_NUM: $length = $this->eatNum(); break;
                 case QR_MODE_AN:  $length = $this->eatAn(); break;
                 case QR_MODE_KANJI:
-                    if ($this->modeHint == QR_MODE_KANJI)
-                            $length = $this->eatKanji();
-                    else    $length = $this->eat8();
+                    if ($this->modeHint == QR_MODE_KANJI) {
+                                                $length = $this->eatKanji();
+                    } else {
+                        $length = $this->eat8();
+                    }
                     break;
                 default: $length = $this->eat8(); break;
                 
                 }
 
-                if ($length == 0) return 0;
-                if ($length < 0)  return -1;
+                if ($length == 0) {
+                    return 0;
+                }
+                if ($length < 0) {
+                    return -1;
+                }
                 
                 $this->dataStr = substr($this->dataStr, $length);
             }

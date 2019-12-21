@@ -26,8 +26,10 @@ class FeedParser {
         if ($error) {
             foreach (libxml_get_errors() as $error) {
                 if ($error->level == LIBXML_ERR_FATAL) {
-                    if (!isset($this->error)) //currently only the first error is reported
+                    if (!isset($this->error)) {
+                        //currently only the first error is reported
                         $this->error = $this->format_error($error);
+                    }
                     $this->libxml_errors [] = $this->format_error($error);
                 }
             }

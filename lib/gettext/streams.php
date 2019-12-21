@@ -57,16 +57,18 @@ class StringReader {
     function read($bytes) {
     $data = substr($this->_str, $this->_pos, $bytes);
     $this->_pos += $bytes;
-    if (strlen($this->_str) < $this->_pos)
-        $this->_pos = strlen($this->_str);
+    if (strlen($this->_str) < $this->_pos) {
+            $this->_pos = strlen($this->_str);
+    }
 
     return $data;
     }
 
     function seekto($pos) {
     $this->_pos = $pos;
-    if (strlen($this->_str) < $this->_pos)
-        $this->_pos = strlen($this->_str);
+    if (strlen($this->_str) < $this->_pos) {
+            $this->_pos = strlen($this->_str);
+    }
     return $this->_pos;
     }
 

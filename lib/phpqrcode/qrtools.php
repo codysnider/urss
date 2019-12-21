@@ -92,8 +92,9 @@
 				
                 $width = count($frame);
                 $bitMask = array_fill(0, $width, array_fill(0, $width, 0));
-                for ($maskNo = 0; $maskNo < 8; $maskNo++)
-                    $mask->makeMaskNo($maskNo, $width, $frame, $bitMask, true);
+                for ($maskNo = 0; $maskNo < 8; $maskNo++) {
+                                    $mask->makeMaskNo($maskNo, $width, $frame, $bitMask, true);
+                }
             }
 			
             QRtools::markTime('after_build_cache');

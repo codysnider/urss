@@ -1461,26 +1461,26 @@ if (!class_exists('QRcode', false)) {
                 }
                 $mode = $this->identifyMode(0);
                 switch ($mode) {
-                    case QR_MODE_NM: {
-                        $length = $this->eatNum();
-                        break;
-                    }
-                    case QR_MODE_AN: {
-                        $length = $this->eatAn();
-                        break;
-                    }
-                    case QR_MODE_KJ: {
-                        if ($this->hint == QR_MODE_KJ) {
-                            $length = $this->eatKanji();
-                        } else {
-                            $length = $this->eat8();
-                        }
-                        break;
-                    }
-                    default: {
+                case QR_MODE_NM: {
+                    $length = $this->eatNum();
+                    break;
+                }
+                case QR_MODE_AN: {
+                    $length = $this->eatAn();
+                    break;
+                }
+                case QR_MODE_KJ: {
+                    if ($this->hint == QR_MODE_KJ) {
+                        $length = $this->eatKanji();
+                    } else {
                         $length = $this->eat8();
-                        break;
                     }
+                    break;
+                }
+                default: {
+                    $length = $this->eat8();
+                    break;
+                }
                 }
                 if ($length == 0) {
                     return 0;
@@ -1665,29 +1665,29 @@ if (!class_exists('QRcode', false)) {
                 $inputitem['bstream'] = $this->appendBitstream($inputitem['bstream'], $st2['bstream']);
             } else {
                 switch ($inputitem['mode']) {
-                    case QR_MODE_NM: {
-                        $inputitem = $this->encodeModeNum($inputitem, $version);
-                        break;
-                    }
-                    case QR_MODE_AN: {
-                        $inputitem = $this->encodeModeAn($inputitem, $version);
-                        break;
-                    }
-                    case QR_MODE_8B: {
-                        $inputitem = $this->encodeMode8($inputitem, $version);
-                        break;
-                    }
-                    case QR_MODE_KJ: {
-                        $inputitem = $this->encodeModeKanji($inputitem, $version);
-                        break;
-                    }
-                    case QR_MODE_ST: {
-                        $inputitem = $this->encodeModeStructure($inputitem);
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
+                case QR_MODE_NM: {
+                    $inputitem = $this->encodeModeNum($inputitem, $version);
+                    break;
+                }
+                case QR_MODE_AN: {
+                    $inputitem = $this->encodeModeAn($inputitem, $version);
+                    break;
+                }
+                case QR_MODE_8B: {
+                    $inputitem = $this->encodeMode8($inputitem, $version);
+                    break;
+                }
+                case QR_MODE_KJ: {
+                    $inputitem = $this->encodeModeKanji($inputitem, $version);
+                    break;
+                }
+                case QR_MODE_ST: {
+                    $inputitem = $this->encodeModeStructure($inputitem);
+                    break;
+                }
+                default: {
+                    break;
+                }
                 }
             }
             return $inputitem;
@@ -1774,17 +1774,17 @@ if (!class_exists('QRcode', false)) {
             $w = (int) $size / 3;
             $bits = $w * 10;
             switch ($size - $w * 3) {
-                case 1: {
-                    $bits += 4;
-                    break;
-                }
-                case 2: {
-                    $bits += 7;
-                    break;
-                }
-                default: {
-                    break;
-                }
+            case 1: {
+                $bits += 4;
+                break;
+            }
+            case 2: {
+                $bits += 7;
+                break;
+            }
+            default: {
+                break;
+            }
             }
             return $bits;
         }
@@ -1876,24 +1876,24 @@ if (!class_exists('QRcode', false)) {
                 return false;
             }
             switch ($mode) {
-                case QR_MODE_NM: {
-                    return $this->checkModeNum($size, $data);
-                }
-                case QR_MODE_AN: {
-                    return $this->checkModeAn($size, $data);
-                }
-                case QR_MODE_KJ: {
-                    return $this->checkModeKanji($size, $data);
-                }
-                case QR_MODE_8B: {
-                    return true;
-                }
-                case QR_MODE_ST: {
-                    return true;
-                }
-                default: {
-                    break;
-                }
+            case QR_MODE_NM: {
+                return $this->checkModeNum($size, $data);
+            }
+            case QR_MODE_AN: {
+                return $this->checkModeAn($size, $data);
+            }
+            case QR_MODE_KJ: {
+                return $this->checkModeKanji($size, $data);
+            }
+            case QR_MODE_8B: {
+                return true;
+            }
+            case QR_MODE_ST: {
+                return true;
+            }
+            default: {
+                break;
+            }
             }
             return false;
         }
@@ -1911,28 +1911,28 @@ if (!class_exists('QRcode', false)) {
             }
             foreach ($items as $item) {
                 switch ($item['mode']) {
-                    case QR_MODE_NM: {
-                        $bits = $this->estimateBitsModeNum($item['size']);
-                        break;
-                    }
-                    case QR_MODE_AN: {
-                        $bits = $this->estimateBitsModeAn($item['size']);
-                        break;
-                    }
-                    case QR_MODE_8B: {
-                        $bits = $this->estimateBitsMode8($item['size']);
-                        break;
-                    }
-                    case QR_MODE_KJ: {
-                        $bits = $this->estimateBitsModeKanji($item['size']);
-                        break;
-                    }
-                    case QR_MODE_ST: {
-                        return STRUCTURE_HEADER_BITS;
-                    }
-                    default: {
-                        return 0;
-                    }
+                case QR_MODE_NM: {
+                    $bits = $this->estimateBitsModeNum($item['size']);
+                    break;
+                }
+                case QR_MODE_AN: {
+                    $bits = $this->estimateBitsModeAn($item['size']);
+                    break;
+                }
+                case QR_MODE_8B: {
+                    $bits = $this->estimateBitsMode8($item['size']);
+                    break;
+                }
+                case QR_MODE_KJ: {
+                    $bits = $this->estimateBitsModeKanji($item['size']);
+                    break;
+                }
+                case QR_MODE_ST: {
+                    return STRUCTURE_HEADER_BITS;
+                }
+                default: {
+                    return 0;
+                }
                 }
                 $l = $this->lengthIndicator($item['mode'], $version);
                 $m = 1 << $l;
@@ -1971,42 +1971,42 @@ if (!class_exists('QRcode', false)) {
             protected function lengthOfCode($mode, $version, $bits) {
             $payload = $bits - 4 - $this->lengthIndicator($mode, $version);
             switch ($mode) {
-                case QR_MODE_NM: {
-                    $chunks = (int) ($payload / 10);
-                    $remain = $payload - $chunks * 10;
-                    $size = $chunks * 3;
-                    if ($remain >= 7) {
-                        $size += 2;
-                    } elseif ($remain >= 4) {
-                        $size += 1;
-                    }
-                    break;
+            case QR_MODE_NM: {
+                $chunks = (int) ($payload / 10);
+                $remain = $payload - $chunks * 10;
+                $size = $chunks * 3;
+                if ($remain >= 7) {
+                    $size += 2;
+                } elseif ($remain >= 4) {
+                    $size += 1;
                 }
-                case QR_MODE_AN: {
-                    $chunks = (int) ($payload / 11);
-                    $remain = $payload - $chunks * 11;
-                    $size = $chunks * 2;
-                    if ($remain >= 6) {
-                        ++$size;
-                    }
-                    break;
+                break;
+            }
+            case QR_MODE_AN: {
+                $chunks = (int) ($payload / 11);
+                $remain = $payload - $chunks * 11;
+                $size = $chunks * 2;
+                if ($remain >= 6) {
+                    ++$size;
                 }
-                case QR_MODE_8B: {
-                    $size = (int) ($payload / 8);
-                    break;
-                }
-                case QR_MODE_KJ: {
-                    $size = (int) (($payload / 13) * 2);
-                    break;
-                }
-                case QR_MODE_ST: {
-                    $size = (int) ($payload / 8);
-                    break;
-                }
-                default: {
-                    $size = 0;
-                    break;
-                }
+                break;
+            }
+            case QR_MODE_8B: {
+                $size = (int) ($payload / 8);
+                break;
+            }
+            case QR_MODE_KJ: {
+                $size = (int) (($payload / 13) * 2);
+                break;
+            }
+            case QR_MODE_ST: {
+                $size = (int) ($payload / 8);
+                break;
+            }
+            default: {
+                $size = 0;
+                break;
+            }
             }
             $maxsize = $this->maximumWords($mode, $version);
             if ($size < 0) {
