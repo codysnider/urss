@@ -251,18 +251,19 @@ function print_feed_cat_select($id, $default_id,
     }
 }
 
-function stylesheet_tag($filename, $id = false) {
-    $timestamp = filemtime($filename);
-
-    $id_part = $id ? "id=\"$id\"" : "";
-
-    return "<link rel=\"stylesheet\" $id_part type=\"text/css\" data-orig-href=\"$filename\" href=\"$filename?$timestamp\"/>\n";
+/**
+ * @deprecated Use Twig filter cssTag
+ */
+function stylesheet_tag($filename, $id = false)
+{
+    user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 
 /**
  * @deprecated Use Twig filter jsTag
  */
-function javascript_tag($filename) {
+function javascript_tag($filename)
+{
 	user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 

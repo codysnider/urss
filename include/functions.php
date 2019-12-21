@@ -126,34 +126,12 @@ function get_translations() {
 require_once "lib/accept-to-gettext.php";
 require_once "lib/gettext/gettext.inc";
 
-function startup_gettext() {
-
-    # Get locale from Accept-Language header
-    $lang = al2gt(array_keys(get_translations()), "text/html");
-
-    if (defined('_TRANSLATION_OVERRIDE_DEFAULT')) {
-        $lang = _TRANSLATION_OVERRIDE_DEFAULT;
-    }
-
-    if ($_SESSION["uid"] && get_schema_version() >= 120) {
-        $pref_lang = get_pref("USER_LANGUAGE", $_SESSION["uid"]);
-
-        if ($pref_lang && $pref_lang != 'auto') {
-            $lang = $pref_lang;
-        }
-    }
-
-    if ($lang) {
-        if (defined('LC_MESSAGES')) {
-            _setlocale(LC_MESSAGES, $lang);
-        } else if (defined('LC_ALL')) {
-            _setlocale(LC_ALL, $lang);
-        }
-
-        _bindtextdomain("messages", "locale");
-        _textdomain("messages");
-        _bind_textdomain_codeset("messages", "UTF-8");
-    }
+/**
+ * @deprecated Loaded in bootstrap
+ */
+function startup_gettext()
+{
+    user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 
 require_once 'db-prefs.php';
@@ -316,7 +294,7 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
 
         foreach ($headers as $header) {
             if (strstr($header, ": ") !== false) {
-                list ($key, $value) = explode(": ", $header);
+                [$key, $value] = explode(": ", $header);
 
                 if (strtolower($key) == "last-modified") {
                     $fetch_last_modified = $value;
@@ -428,7 +406,7 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
         if (isset($http_response_header) && is_array($http_response_header)) {
             foreach ($http_response_header as $header) {
                 if (strstr($header, ": ") !== false) {
-                    list ($key, $value) = explode(": ", $header);
+                    [$key, $value] = explode(": ", $header);
 
                     $key = strtolower($key);
 
@@ -1872,7 +1850,7 @@ function get_version(&$git_commit = false, &$git_timestamp = false) {
 
         if ($rc == 0) {
             if (is_array($output) && count($output) > 0) {
-                list ($timestamp, $commit) = explode(" ", $output[0], 2);
+                [$timestamp, $commit] = explode(" ", $output[0], 2);
 
                 $git_commit = $commit;
                 $git_timestamp = $timestamp;
