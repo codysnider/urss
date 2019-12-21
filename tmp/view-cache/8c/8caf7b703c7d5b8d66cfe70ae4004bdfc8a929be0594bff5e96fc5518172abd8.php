@@ -201,7 +201,7 @@ class __TwigTemplate_bc543b7775c4a26725d93149b50b73217bed9298e64c6f42170bb2bb314
 
     public function getDebugInfo()
     {
-        return array (  37 => 1,);
+        return array(37 => 1,);
     }
 
     public function getSourceContext()

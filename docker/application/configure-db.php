@@ -16,8 +16,8 @@ if (getenv('DB_TYPE') !== false) {
     $eport = 3306;
 }
 if (!empty($eport)) {
-    $config['DB_HOST'] = env('DB_PORT_' . $eport . '_TCP_ADDR');
-    $config['DB_PORT'] = env('DB_PORT_' . $eport . '_TCP_PORT');
+    $config['DB_HOST'] = env('DB_PORT_'.$eport.'_TCP_ADDR');
+    $config['DB_PORT'] = env('DB_PORT_'.$eport.'_TCP_PORT');
 } elseif (getenv('DB_PORT') === false) {
     error('The env DB_PORT does not exist. Make sure to run with "--link mypostgresinstance:DB"');
 } elseif (is_numeric(getenv('DB_PORT')) && getenv('DB_HOST') !== false) {
@@ -26,14 +26,14 @@ if (!empty($eport)) {
     $config['DB_PORT'] = env('DB_PORT');
     if (empty($config['DB_TYPE'])) {
         switch ($config['DB_PORT']) {
-            case 3306:
-                $config['DB_TYPE'] = 'mysql';
-                break;
-            case 5432:
-                $config['DB_TYPE'] = 'pgsql';
-                break;
-            default:
-                error('Database on non-standard port ' . $config['DB_PORT'] . ' and env DB_TYPE not present');
+        case 3306:
+            $config['DB_TYPE'] = 'mysql';
+            break;
+        case 5432:
+            $config['DB_TYPE'] = 'pgsql';
+            break;
+        default:
+            error('Database on non-standard port ' . $config['DB_PORT'] . ' and env DB_TYPE not present');
         }
     }
 }
@@ -45,7 +45,7 @@ $config['DB_NAME'] = env('DB_NAME', 'ttrss');
 $config['DB_USER'] = env('DB_USER', $config['DB_NAME']);
 $config['DB_PASS'] = env('DB_PASS', $config['DB_USER']);
 if (!dbcheck($config)) {
-    echo 'Database login failed, trying to create...' . PHP_EOL;
+    echo 'Database login failed, trying to create...'.PHP_EOL;
     // superuser account to create new database and corresponding user account
     //   username (SU_USER) can be supplied or defaults to "docker"
     //   password (SU_PASS) can be supplied or defaults to username
@@ -55,15 +55,15 @@ if (!dbcheck($config)) {
     $super['DB_PASS'] = env('DB_ENV_PASS', $super['DB_USER']);
     $pdo = dbconnect($super);
     if ($super['DB_TYPE'] === 'mysql') {
-        $pdo->exec('CREATE DATABASE ' . ($config['DB_NAME']));
-        $pdo->exec('GRANT ALL PRIVILEGES ON ' . ($config['DB_NAME']) . '.* TO ' . $pdo->quote($config['DB_USER']) . '@"%" IDENTIFIED BY ' . $pdo->quote($config['DB_PASS']));
+        $pdo->exec('CREATE DATABASE '.($config['DB_NAME']));
+        $pdo->exec('GRANT ALL PRIVILEGES ON '.($config['DB_NAME']).'.* TO '.$pdo->quote($config['DB_USER']).'@"%" IDENTIFIED BY '.$pdo->quote($config['DB_PASS']));
     } else {
-        $pdo->exec('CREATE ROLE ' . ($config['DB_USER']) . ' WITH LOGIN PASSWORD ' . $pdo->quote($config['DB_PASS']));
-        $pdo->exec('CREATE DATABASE ' . ($config['DB_NAME']) . ' WITH OWNER ' . ($config['DB_USER']));
+        $pdo->exec('CREATE ROLE '.($config['DB_USER']).' WITH LOGIN PASSWORD '.$pdo->quote($config['DB_PASS']));
+        $pdo->exec('CREATE DATABASE '.($config['DB_NAME']).' WITH OWNER '.($config['DB_USER']));
     }
     unset($pdo);
     if (dbcheck($config)) {
-        echo 'Database login created and confirmed' . PHP_EOL;
+        echo 'Database login created and confirmed'.PHP_EOL;
     } else {
         error('Database login failed, trying to create login failed as well');
     }
@@ -74,8 +74,8 @@ try {
     // reached this point => table found, assume db is complete
 }
 catch (PDOException $e) {
-    echo 'Database table not found, applying schema... ' . PHP_EOL;
-    $schema = file_get_contents('schema/ttrss_schema_' . $config['DB_TYPE'] . '.sql');
+    echo 'Database table not found, applying schema... '.PHP_EOL;
+    $schema = file_get_contents('schema/ttrss_schema_'.$config['DB_TYPE'].'.sql');
     $schema = preg_replace('/--(.*?);/', '', $schema);
     $schema = preg_replace('/[\r\n]/', ' ', $schema);
     $schema = trim($schema, ' ;');
@@ -88,35 +88,35 @@ $config_prefix = 'CONFIG_';
 foreach ($_SERVER as $name => $value) {
     if (strpos($name, $config_prefix) === 0) {
         $name = substr($name, strlen($config_prefix));
-        echo 'Getting config from env: ' . $name . PHP_EOL;
+        echo 'Getting config from env: '.$name.PHP_EOL;
         $config[$name] = $value;
     }
 }
 $contents = file_get_contents($confpath);
 foreach ($config as $name => $value) {
-    $contents = preg_replace('/(define\s*\(\'' . $name . '\',\s*)(.*)(\);)/', '$1"' . $value . '"$3', $contents);
+    $contents = preg_replace('/(define\s*\(\''.$name.'\',\s*)(.*)(\);)/', '$1"'.$value.'"$3', $contents);
 }
 file_put_contents($confpath, $contents);
 function env($name, $default = null)
 {
     $v = getenv($name) ?: $default;
     if ($v === null) {
-        error('The env ' . $name . ' does not exist');
+        error('The env '.$name.' does not exist');
     }
     return $v;
 }
 function error($text)
 {
-    echo 'Error: ' . $text . PHP_EOL;
+    echo 'Error: '.$text.PHP_EOL;
     exit(1);
 }
 function dbconnect($config)
 {
     $map = array('host' => 'HOST', 'port' => 'PORT', 'dbname' => 'NAME');
-    $dsn = $config['DB_TYPE'] . ':';
+    $dsn = $config['DB_TYPE'].':';
     foreach ($map as $d => $h) {
-        if (isset($config['DB_' . $h])) {
-            $dsn .= $d . '=' . $config['DB_' . $h] . ';';
+        if (isset($config['DB_'.$h])) {
+            $dsn .= $d.'='.$config['DB_'.$h].';';
         }
     }
     $pdo = new \PDO($dsn, $config['DB_USER'], $config['DB_PASS']);
@@ -128,8 +128,7 @@ function dbcheck($config)
     try {
         dbconnect($config);
         return true;
-    }
-    catch (PDOException $e) {
+    } catch (PDOException $e) {
         return false;
     }
 }
