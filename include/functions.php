@@ -231,14 +231,14 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
     $url = str_replace(' ', '%20', $url);
 
     if (strpos($url, "//") === 0) {
-            $url = 'http:' . $url;
+            $url = 'http:'.$url;
     }
 
     $url_host = parse_url($url, PHP_URL_HOST);
     $fetch_domain_hits[$url_host] += 1;
 
     if ($fetch_domain_hits[$url_host] > MAX_FETCH_REQUESTS_PER_HOST) {
-        user_error("Exceeded fetch request quota for $url_host: " . $fetch_domain_hits[$url_host], E_USER_WARNING);
+        user_error("Exceeded fetch request quota for $url_host: ".$fetch_domain_hits[$url_host], E_USER_WARNING);
         #return false;
     }
 
@@ -255,7 +255,7 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
         }
 
         if ($http_accept) {
-                    array_push($curl_http_headers, "Accept: " . $http_accept);
+                    array_push($curl_http_headers, "Accept: ".$http_accept);
         }
 
         if (count($curl_http_headers) > 0) {
@@ -270,11 +270,10 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-        curl_setopt($ch, CURLOPT_USERAGENT, $useragent ? $useragent :
-            SELF_USER_AGENT);
+        curl_setopt($ch, CURLOPT_USERAGENT, $useragent ? $useragent : SELF_USER_AGENT);
         curl_setopt($ch, CURLOPT_ENCODING, "");
 
-        if  ($http_referrer) {
+        if ($http_referrer) {
                     curl_setopt($ch, CURLOPT_REFERER, $http_referrer);
         }
 
@@ -390,8 +389,8 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
 
         // TODO: should this support POST requests or not? idk
 
-         $context_options = array(
-              'http' => array(
+            $context_options = array(
+                'http' => array(
                     'header' => array(
                         'Connection: close'
                     ),
@@ -399,7 +398,7 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
                     'ignore_errors' => true,
                     'timeout' => $timeout ? $timeout : FILE_FETCH_TIMEOUT,
                     'protocol_version'=> 1.1)
-              );
+                );
 
         if (!$post_query && $last_modified) {
                     array_push($context_options['http']['header'], "If-Modified-Since: $last_modified");
@@ -681,7 +680,7 @@ function initialize_user($uid) {
 function logout_user() {
     @session_destroy();
     if (isset($_COOKIE[session_name()])) {
-       setcookie(session_name(), '', time() - 42000, '/');
+        setcookie(session_name(), '', time() - 42000, '/');
     }
     session_commit();
 }
@@ -725,7 +724,7 @@ function login_sequence() {
             if (AUTH_AUTO_LOGIN && authenticate_user(null, null)) {
                 $_SESSION["ref_schema_version"] = get_schema_version(true);
             } else {
-                 authenticate_user(null, null, true);
+                    authenticate_user(null, null, true);
             }
 
             if (!$_SESSION["uid"]) {
@@ -1012,9 +1011,9 @@ function make_init_params() {
     $params = array();
 
     foreach (array("ON_CATCHUP_SHOW_NEXT_FEED", "HIDE_READ_FEEDS",
-                 "ENABLE_FEED_CATS", "FEEDS_SORT_BY_UNREAD", "CONFIRM_FEED_CATCHUP",
-                 "CDM_AUTO_CATCHUP", "FRESH_ARTICLE_MAX_AGE",
-                 "HIDE_READ_SHOWS_SPECIAL", "COMBINED_DISPLAY_MODE") as $param) {
+                    "ENABLE_FEED_CATS", "FEEDS_SORT_BY_UNREAD", "CONFIRM_FEED_CATCHUP",
+                    "CDM_AUTO_CATCHUP", "FRESH_ARTICLE_MAX_AGE",
+                    "HIDE_READ_SHOWS_SPECIAL", "COMBINED_DISPLAY_MODE") as $param) {
 
         $params[strtolower($param)] = (int) get_pref($param);
     }

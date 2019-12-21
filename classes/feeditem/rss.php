@@ -1,147 +1,147 @@
 <?php
 class FeedItem_RSS extends FeedItem_Common {
-	public function get_id() {
-		$id = $this->elem->getElementsByTagName("guid")->item(0);
+    public function get_id() {
+        $id = $this->elem->getElementsByTagName("guid")->item(0);
 
-		if ($id) {
-			return clean($id->nodeValue);
-		} else {
-			return clean($this->get_link());
-		}
-	}
+        if ($id) {
+            return clean($id->nodeValue);
+        } else {
+            return clean($this->get_link());
+        }
+    }
 
-	public function get_date() {
-		$pubDate = $this->elem->getElementsByTagName("pubDate")->item(0);
+    public function get_date() {
+        $pubDate = $this->elem->getElementsByTagName("pubDate")->item(0);
 
-		if ($pubDate) {
-			return strtotime($pubDate->nodeValue);
-		}
+        if ($pubDate) {
+            return strtotime($pubDate->nodeValue);
+        }
 
-		$date = $this->xpath->query("dc:date", $this->elem)->item(0);
+        $date = $this->xpath->query("dc:date", $this->elem)->item(0);
 
-		if ($date) {
-			return strtotime($date->nodeValue);
-		}
-	}
+        if ($date) {
+            return strtotime($date->nodeValue);
+        }
+    }
 
-	public function get_link() {
-		$links = $this->xpath->query("atom:link", $this->elem);
+    public function get_link() {
+        $links = $this->xpath->query("atom:link", $this->elem);
 
-		foreach ($links as $link) {
-			if ($link && $link->hasAttribute("href") &&
-				(!$link->hasAttribute("rel")
-					|| $link->getAttribute("rel") == "alternate"
-					|| $link->getAttribute("rel") == "standout")) {
+        foreach ($links as $link) {
+            if ($link && $link->hasAttribute("href") &&
+                (!$link->hasAttribute("rel")
+                    || $link->getAttribute("rel") == "alternate"
+                    || $link->getAttribute("rel") == "standout")) {
 
-				return clean(trim($link->getAttribute("href")));
-			}
-		}
+                return clean(trim($link->getAttribute("href")));
+            }
+        }
 
-		$link = $this->elem->getElementsByTagName("guid")->item(0);
+        $link = $this->elem->getElementsByTagName("guid")->item(0);
 
-		if ($link && $link->hasAttributes() && $link->getAttribute("isPermaLink") == "true") {
-			return clean(trim($link->nodeValue));
-		}
+        if ($link && $link->hasAttributes() && $link->getAttribute("isPermaLink") == "true") {
+            return clean(trim($link->nodeValue));
+        }
 
-		$link = $this->elem->getElementsByTagName("link")->item(0);
+        $link = $this->elem->getElementsByTagName("link")->item(0);
 
-		if ($link) {
-			return clean(trim($link->nodeValue));
-		}
-	}
+        if ($link) {
+            return clean(trim($link->nodeValue));
+        }
+    }
 
-	public function get_title() {
-		$title = $this->xpath->query("title", $this->elem)->item(0);
+    public function get_title() {
+        $title = $this->xpath->query("title", $this->elem)->item(0);
 
-		if ($title) {
-			return clean(trim($title->nodeValue));
-		}
+        if ($title) {
+            return clean(trim($title->nodeValue));
+        }
 
-		// if the document has a default namespace then querying for
-		// title would fail because of reasons so let's try the old way
-		$title = $this->elem->getElementsByTagName("title")->item(0);
+        // if the document has a default namespace then querying for
+        // title would fail because of reasons so let's try the old way
+        $title = $this->elem->getElementsByTagName("title")->item(0);
 
-		if ($title) {
-			return clean(trim($title->nodeValue));
-		}
-	}
+        if ($title) {
+            return clean(trim($title->nodeValue));
+        }
+    }
 
-	public function get_content() {
-		$contentA = $this->xpath->query("content:encoded", $this->elem)->item(0);
-		$contentB = $this->elem->getElementsByTagName("description")->item(0);
+    public function get_content() {
+        $contentA = $this->xpath->query("content:encoded", $this->elem)->item(0);
+        $contentB = $this->elem->getElementsByTagName("description")->item(0);
 
-		if ($contentA && !$contentB) {
-			return $this->subtree_or_text($contentA);
-		}
+        if ($contentA && !$contentB) {
+            return $this->subtree_or_text($contentA);
+        }
 
 
-		if ($contentB && !$contentA) {
-			return $this->subtree_or_text($contentB);
-		}
+        if ($contentB && !$contentA) {
+            return $this->subtree_or_text($contentB);
+        }
 
-		if ($contentA && $contentB) {
-			$resultA = $this->subtree_or_text($contentA);
-			$resultB = $this->subtree_or_text($contentB);
+        if ($contentA && $contentB) {
+            $resultA = $this->subtree_or_text($contentA);
+            $resultB = $this->subtree_or_text($contentB);
 
-			return mb_strlen($resultA) > mb_strlen($resultB) ? $resultA : $resultB;
-		}
-	}
+            return mb_strlen($resultA) > mb_strlen($resultB) ? $resultA : $resultB;
+        }
+    }
 
-	public function get_description() {
-		$summary = $this->elem->getElementsByTagName("description")->item(0);
+    public function get_description() {
+        $summary = $this->elem->getElementsByTagName("description")->item(0);
 
-		if ($summary) {
-			return $summary->nodeValue;
-		}
-	}
+        if ($summary) {
+            return $summary->nodeValue;
+        }
+    }
 
-	public function get_categories() {
-		$categories = $this->elem->getElementsByTagName("category");
-		$cats = [];
+    public function get_categories() {
+        $categories = $this->elem->getElementsByTagName("category");
+        $cats = [];
 
-		foreach ($categories as $cat) {
-			array_push($cats, $cat->nodeValue);
-		}
+        foreach ($categories as $cat) {
+            array_push($cats, $cat->nodeValue);
+        }
 
-		$categories = $this->xpath->query("dc:subject", $this->elem);
+        $categories = $this->xpath->query("dc:subject", $this->elem);
 
-		foreach ($categories as $cat) {
-			array_push($cats, $cat->nodeValue);
-		}
+        foreach ($categories as $cat) {
+            array_push($cats, $cat->nodeValue);
+        }
 
-		return $this->normalize_categories($cats);
-	}
+        return $this->normalize_categories($cats);
+    }
 
-	public function get_enclosures() {
-		$enclosures = $this->elem->getElementsByTagName("enclosure");
+    public function get_enclosures() {
+        $enclosures = $this->elem->getElementsByTagName("enclosure");
 
-		$encs = array();
+        $encs = array();
 
-		foreach ($enclosures as $enclosure) {
-			$enc = new FeedEnclosure();
+        foreach ($enclosures as $enclosure) {
+            $enc = new FeedEnclosure();
 
-			$enc->type = clean($enclosure->getAttribute("type"));
-			$enc->link = clean($enclosure->getAttribute("url"));
-			$enc->length = clean($enclosure->getAttribute("length"));
-			$enc->height = clean($enclosure->getAttribute("height"));
-			$enc->width = clean($enclosure->getAttribute("width"));
+            $enc->type = clean($enclosure->getAttribute("type"));
+            $enc->link = clean($enclosure->getAttribute("url"));
+            $enc->length = clean($enclosure->getAttribute("length"));
+            $enc->height = clean($enclosure->getAttribute("height"));
+            $enc->width = clean($enclosure->getAttribute("width"));
 
-			array_push($encs, $enc);
-		}
+            array_push($encs, $enc);
+        }
 
-		$encs = array_merge($encs, parent::get_enclosures());
+        $encs = array_merge($encs, parent::get_enclosures());
 
-		return $encs;
-	}
+        return $encs;
+    }
 
-	public function get_language() {
-		$languages = $this->doc->getElementsByTagName('language');
+    public function get_language() {
+        $languages = $this->doc->getElementsByTagName('language');
 
-		if (count($languages) == 0) {
-			return "";
-		}
+        if (count($languages) == 0) {
+            return "";
+        }
 
-		return clean($languages[0]->textContent);
-	}
+        return clean($languages[0]->textContent);
+    }
 
 }

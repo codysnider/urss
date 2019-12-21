@@ -197,17 +197,18 @@
         {
             $bits = 0;
 
-            if ($version == 0) 
-                $version = 1;
+            if ($version == 0) {
+                            $version = 1;
+            }
 
             switch ($this->mode) {
-                case QR_MODE_NUM:        $bits = QRinput::estimateBitsModeNum($this->size); break;
-                case QR_MODE_AN:        $bits = QRinput::estimateBitsModeAn($this->size); break;
-                case QR_MODE_8:            $bits = QRinput::estimateBitsMode8($this->size); break;
-                case QR_MODE_KANJI:        $bits = QRinput::estimateBitsModeKanji($this->size); break;
-                case QR_MODE_STRUCTURE:    return STRUCTURE_HEADER_BITS;            
-                default:
-                    return 0;
+            case QR_MODE_NUM:        $bits = QRinput::estimateBitsModeNum($this->size); break;
+            case QR_MODE_AN:        $bits = QRinput::estimateBitsModeAn($this->size); break;
+            case QR_MODE_8:            $bits = QRinput::estimateBitsMode8($this->size); break;
+            case QR_MODE_KANJI:        $bits = QRinput::estimateBitsModeKanji($this->size); break;
+            case QR_MODE_STRUCTURE:    return STRUCTURE_HEADER_BITS;            
+            default:
+                return 0;
             }
 
             $l = QRspec::lengthIndicator($this->mode, $version);
@@ -247,18 +248,19 @@
                     $ret = 0;
                     
                     switch ($this->mode) {
-                        case QR_MODE_NUM:        $ret = $this->encodeModeNum($version); break;
-                        case QR_MODE_AN:        $ret = $this->encodeModeAn($version); break;
-                        case QR_MODE_8:            $ret = $this->encodeMode8($version); break;
-                        case QR_MODE_KANJI:        $ret = $this->encodeModeKanji($version); break;
-                        case QR_MODE_STRUCTURE:    $ret = $this->encodeModeStructure(); break;
+                    case QR_MODE_NUM:        $ret = $this->encodeModeNum($version); break;
+                    case QR_MODE_AN:        $ret = $this->encodeModeAn($version); break;
+                    case QR_MODE_8:            $ret = $this->encodeMode8($version); break;
+                    case QR_MODE_KANJI:        $ret = $this->encodeModeKanji($version); break;
+                    case QR_MODE_STRUCTURE:    $ret = $this->encodeModeStructure(); break;
                         
-                        default:
-                            break;
+                    default:
+                        break;
                     }
                     
-                    if ($ret < 0)
-                        return -1;
+                    if ($ret < 0) {
+                                            return -1;
+                    }
                 }
 
                 return $this->bstream->size();
@@ -404,14 +406,14 @@
             $bits = $w * 10;
             
             switch ($size - $w * 3) {
-                case 1:
-                    $bits += 4;
-                    break;
-                case 2:
-                    $bits += 7;
-                    break;
-                default:
-                    break;
+            case 1:
+                $bits += 4;
+                break;
+            case 2:
+                $bits += 7;
+                break;
+            default:
+                break;
             }
 
             return $bits;
@@ -422,7 +424,7 @@
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
             36, -1, -1, -1, 37, 38, -1, -1, -1, -1, 39, 40, -1, 41, 42, 43,
-             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 44, -1, -1, -1, -1, -1,
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 44, -1, -1, -1, -1, -1,
             -1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
             25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, -1, -1, -1, -1, -1,
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -475,8 +477,9 @@
         //----------------------------------------------------------------------
         public static function checkModeKanji($size, $data)
         {
-            if ($size & 1)
-                return false;
+            if ($size & 1) {
+                            return false;
+            }
 
             for ($i = 0; $i < $size; $i += 2) {
                 $val = (ord($data[$i]) << 8) | ord($data[$i + 1]);
@@ -496,18 +499,19 @@
 
         public static function check($mode, $size, $data)
         {
-            if ($size <= 0) 
-                return false;
+            if ($size <= 0) {
+                            return false;
+            }
 
             switch ($mode) {
-                case QR_MODE_NUM:       return self::checkModeNum($size, $data); break;
-                case QR_MODE_AN:        return self::checkModeAn($size, $data); break;
-                case QR_MODE_KANJI:     return self::checkModeKanji($size, $data); break;
-                case QR_MODE_8:         return true; break;
-                case QR_MODE_STRUCTURE: return true; break;
+            case QR_MODE_NUM:       return self::checkModeNum($size, $data); break;
+            case QR_MODE_AN:        return self::checkModeAn($size, $data); break;
+            case QR_MODE_KANJI:     return self::checkModeKanji($size, $data); break;
+            case QR_MODE_8:         return true; break;
+            case QR_MODE_STRUCTURE: return true; break;
                 
-                default:
-                    break;
+            default:
+                break;
             }
 
             return false;
@@ -548,40 +552,44 @@
         {
             $payload = $bits - 4 - QRspec::lengthIndicator($mode, $version);
             switch ($mode) {
-                case QR_MODE_NUM:
-                    $chunks = (int) ($payload / 10);
-                    $remain = $payload - $chunks * 10;
-                    $size = $chunks * 3;
-                    if ($remain >= 7) {
-                        $size += 2;
-                    } else if ($remain >= 4) {
-                        $size += 1;
-                    }
-                    break;
-                case QR_MODE_AN:
-                    $chunks = (int) ($payload / 11);
-                    $remain = $payload - $chunks * 11;
-                    $size = $chunks * 2;
-                    if ($remain >= 6) 
-                        $size++;
-                    break;
-                case QR_MODE_8:
-                    $size = (int) ($payload / 8);
-                    break;
-                case QR_MODE_KANJI:
-                    $size = (int) (($payload / 13) * 2);
-                    break;
-                case QR_MODE_STRUCTURE:
-                    $size = (int) ($payload / 8);
-                    break;
-                default:
-                    $size = 0;
-                    break;
+            case QR_MODE_NUM:
+                $chunks = (int) ($payload / 10);
+                $remain = $payload - $chunks * 10;
+                $size = $chunks * 3;
+                if ($remain >= 7) {
+                    $size += 2;
+                } else if ($remain >= 4) {
+                    $size += 1;
+                }
+                break;
+            case QR_MODE_AN:
+                $chunks = (int) ($payload / 11);
+                $remain = $payload - $chunks * 11;
+                $size = $chunks * 2;
+                if ($remain >= 6) 
+                    $size++;
+                break;
+            case QR_MODE_8:
+                $size = (int) ($payload / 8);
+                break;
+            case QR_MODE_KANJI:
+                $size = (int) (($payload / 13) * 2);
+                break;
+            case QR_MODE_STRUCTURE:
+                $size = (int) ($payload / 8);
+                break;
+            default:
+                $size = 0;
+                break;
             }
             
             $maxsize = QRspec::maximumWords($mode, $version);
-            if ($size < 0) $size = 0;
-            if ($size > $maxsize) $size = $maxsize;
+            if ($size < 0) {
+                $size = 0;
+            }
+            if ($size > $maxsize) {
+                $size = $maxsize;
+            }
 
             return $size;
         }
@@ -594,8 +602,9 @@
             foreach ($this->items as $item) {
                 $bits = $item->encodeBitStream($this->version);
                 
-                if ($bits < 0) 
-                    return -1;
+                if ($bits < 0) {
+                                    return -1;
+                }
                     
                 $total += $bits;
             }
@@ -614,8 +623,9 @@
             for (;;) {
                 $bits = $this->createBitStream();
                 
-                if ($bits < 0) 
-                    return -1;
+                if ($bits < 0) {
+                                    return -1;
+                }
                     
                 $ver = QRspec::getMinimumVersion((int) (($bits + 7) / 8), $this->level);
                 if ($ver < 0) {
@@ -652,8 +662,9 @@
             $padding = new QRbitstream();
             $ret = $padding->appendNum($words * 8 - $bits + 4, 0);
             
-            if ($ret < 0) 
-                return $ret;
+            if ($ret < 0) {
+                            return $ret;
+            }
 
             $padlen = $maxwords - $words;
             
@@ -666,8 +677,9 @@
                 
                 $ret = $padding->appendBytes($padlen, $padbuf);
                 
-                if ($ret < 0)
-                    return $ret;
+                if ($ret < 0) {
+                                    return $ret;
+                }
                 
             }
 

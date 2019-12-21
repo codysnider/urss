@@ -1,47 +1,47 @@
 <?php
 class Mail extends Plugin {
 
-	/* @var PluginHost $host */
-	private $host;
+    /* @var PluginHost $host */
+    private $host;
 
-	public function about() {
-		return array(1.0,
-			"Share article via email",
-			"fox");
-	}
+    public function about() {
+        return array(1.0,
+            "Share article via email",
+            "fox");
+    }
 
-	public function init($host) {
-		$this->host = $host;
+    public function init($host) {
+        $this->host = $host;
 
-		$host->add_hook($host::HOOK_ARTICLE_BUTTON, $this);
-		$host->add_hook($host::HOOK_PREFS_TAB, $this);
-	}
+        $host->add_hook($host::HOOK_ARTICLE_BUTTON, $this);
+        $host->add_hook($host::HOOK_PREFS_TAB, $this);
+    }
 
-	public function get_js() {
-		return file_get_contents(dirname(__FILE__)."/mail.js");
-	}
+    public function get_js() {
+        return file_get_contents(dirname(__FILE__)."/mail.js");
+    }
 
-	public function save() {
-		$addresslist = $_POST["addresslist"];
+    public function save() {
+        $addresslist = $_POST["addresslist"];
 
-		$this->host->set($this, "addresslist", $addresslist);
+        $this->host->set($this, "addresslist", $addresslist);
 
-		echo __("Mail addresses saved.");
-	}
+        echo __("Mail addresses saved.");
+    }
 
-	public function hook_prefs_tab($args) {
-		if ($args != "prefPrefs") {
-		    return;
-		}
+    public function hook_prefs_tab($args) {
+        if ($args != "prefPrefs") {
+            return;
+        }
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\"
+        print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>mail</i> ".__('Mail plugin')."\">";
 
-		print "<p>".__("You can set predefined email addressed here (comma-separated list):")."</p>";
+        print "<p>".__("You can set predefined email addressed here (comma-separated list):")."</p>";
 
-		print "<form dojoType=\"dijit.form.Form\">";
+        print "<form dojoType=\"dijit.form.Form\">";
 
-		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
+        print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
 			evt.preventDefault();
 			if (this.validate()) {
 				console.log(dojo.objectToQuery(this.getValues()));
@@ -124,8 +124,9 @@ class Mail extends Plugin {
 
 		while ($line = $sth->fetch()) {
 
-			if (!$subject)
-				$subject = __("[Forwarded]")." ".htmlspecialchars($line["title"]);
+			if (!$subject) {
+							$subject = __("[Forwarded]")." ".htmlspecialchars($line["title"]);
+			}
 
 			$tpl->setVariable('ARTICLE_TITLE', strip_tags($line["title"]));
 			$tnote = strip_tags($line["note"]);
@@ -201,29 +202,29 @@ class Mail extends Plugin {
 
 		$rc = $mail->Send(); */
 
-		$to = $_REQUEST["destination"];
-		$subject = strip_tags($_REQUEST["subject"]);
-		$message = strip_tags($_REQUEST["content"]);
-		$from = strip_tags($_REQUEST["from_email"]);
+        $to = $_REQUEST["destination"];
+        $subject = strip_tags($_REQUEST["subject"]);
+        $message = strip_tags($_REQUEST["content"]);
+        $from = strip_tags($_REQUEST["from_email"]);
 
-		$mailer = new Mailer();
+        $mailer = new Mailer();
 
-		$rc = $mailer->mail(["to_address" => $to,
-			"headers" => ["Reply-To: $from"],
-			"subject" => $subject,
-			"message" => $message]);
+        $rc = $mailer->mail(["to_address" => $to,
+            "headers" => ["Reply-To: $from"],
+            "subject" => $subject,
+            "message" => $message]);
 
-		if (!$rc) {
-			$reply['error'] = $mailer->error();
-		} else {
-			//save_email_address($destination);
-			$reply['message'] = "UPDATE_COUNTERS";
-		}
+        if (!$rc) {
+            $reply['error'] = $mailer->error();
+        } else {
+            //save_email_address($destination);
+            $reply['message'] = "UPDATE_COUNTERS";
+        }
 
-		print json_encode($reply);
-	}
+        print json_encode($reply);
+    }
 
-	/* function completeEmails() {
+    /* function completeEmails() {
 		$search = $_REQUEST["search"];
 
 		print "<ul>";
@@ -237,8 +238,8 @@ class Mail extends Plugin {
 		print "</ul>";
 	} */
 
-	public function api_version() {
-		return 2;
-	}
+    public function api_version() {
+        return 2;
+    }
 
 }

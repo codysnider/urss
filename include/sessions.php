@@ -44,7 +44,7 @@ function validate_session() {
             __("Session failed to validate (schema version changed)");
         return false;
     }
-      $pdo = Db::pdo();
+        $pdo = Db::pdo();
 
     if ($_SESSION["uid"]) {
 
@@ -58,21 +58,21 @@ function validate_session() {
 
         // user not found
         if ($row = $sth->fetch()) {
-                 $pwd_hash = $row["pwd_hash"];
+                    $pwd_hash = $row["pwd_hash"];
 
-                 if ($pwd_hash != $_SESSION["pwd_hash"]) {
+                    if ($pwd_hash != $_SESSION["pwd_hash"]) {
 
-                      $_SESSION["login_error_msg"] =
+                        $_SESSION["login_error_msg"] =
                             __("Session failed to validate (password changed)");
 
-                      return false;
-                 }
+                        return false;
+                    }
         } else {
 
-                 $_SESSION["login_error_msg"] =
-                      __("Session failed to validate (user not found)");
+                    $_SESSION["login_error_msg"] =
+                        __("Session failed to validate (user not found)");
 
-                 return false;
+                    return false;
 
         }
     }

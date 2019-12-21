@@ -43,19 +43,22 @@
     //processing form input
     //remember to sanitize user input in real-life solution !!!
     $errorCorrectionLevel = 'L';
-    if (isset($_REQUEST['level']) && in_array($_REQUEST['level'], array('L', 'M', 'Q', 'H')))
-        $errorCorrectionLevel = $_REQUEST['level'];    
+    if (isset($_REQUEST['level']) && in_array($_REQUEST['level'], array('L', 'M', 'Q', 'H'))) {
+            $errorCorrectionLevel = $_REQUEST['level'];
+    }
 
     $matrixPointSize = 4;
-    if (isset($_REQUEST['size']))
-        $matrixPointSize = min(max((int) $_REQUEST['size'], 1), 10);
+    if (isset($_REQUEST['size'])) {
+            $matrixPointSize = min(max((int) $_REQUEST['size'], 1), 10);
+    }
 
 
     if (isset($_REQUEST['data'])) { 
     
         //it's very important!
-        if (trim($_REQUEST['data']) == '')
-            die('data cannot be empty! <a href="?">back</a>');
+        if (trim($_REQUEST['data']) == '') {
+                    die('data cannot be empty! <a href="?">back</a>');
+        }
             
         // user data
         $filename = $PNG_TEMP_DIR.'test'.md5($_REQUEST['data'].'|'.$errorCorrectionLevel.'|'.$matrixPointSize).'.png';
@@ -83,8 +86,9 @@
         </select>&nbsp;
         Size:&nbsp;<select name="size">';
         
-    for ($i = 1; $i <= 10; $i++)
-        echo '<option value="'.$i.'"'.(($matrixPointSize == $i) ? ' selected' : '').'>'.$i.'</option>';
+    for ($i = 1; $i <= 10; $i++) {
+            echo '<option value="'.$i.'"'.(($matrixPointSize == $i) ? ' selected' : '').'>'.$i.'</option>';
+    }
         
     echo '</select>&nbsp;
         <input type="submit" value="GENERATE"></form><hr/>';

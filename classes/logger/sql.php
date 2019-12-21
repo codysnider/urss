@@ -24,8 +24,9 @@ class Logger_SQL {
 			];
 
 			foreach ($server_params as $n => $p) {
-				if (isset($_SERVER[$p]))
-					$context .= "\n$n: ".$_SERVER[$p];
+				if (isset($_SERVER[$p])) {
+									$context .= "\n$n: ".$_SERVER[$p];
+				}
 			}
 
 			// passed error message may contain invalid unicode characters, failing to insert an error here

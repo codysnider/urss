@@ -115,8 +115,9 @@
 
             for ($i = 1; $i <= QRSPEC_VERSION_MAX; $i++) {
                 $words = self::$capacity[$i][QRCAP_WORDS] - self::$capacity[$i][QRCAP_EC][$level];
-                if ($words >= $size) 
-                    return $i;
+                if ($words >= $size) {
+                                    return $i;
+                }
             }
 
             return -1;
@@ -152,8 +153,9 @@
         //----------------------------------------------------------------------
         public static function maximumWords($mode, $version)
         {
-            if ($mode == QR_MODE_STRUCTURE) 
-                return 3;
+            if ($mode == QR_MODE_STRUCTURE) {
+                            return 3;
+            }
                 
             if ($version <= 9) {
                 $l = 0;
@@ -299,8 +301,9 @@
         //----------------------------------------------------------------------
         public static function putAlignmentPattern($version, &$frame, $width)
         {
-            if ($version < 2)
-                return;
+            if ($version < 2) {
+                            return;
+            }
 
             $d = self::$alignmentPattern[$version][1] - self::$alignmentPattern[$version][0];
             if ($d < 0) {
@@ -336,10 +339,10 @@
 
         // Version information pattern -----------------------------------------
 
-		// Version information pattern (BCH coded).
+        // Version information pattern (BCH coded).
         // See Table 1 in Appendix D (pp.68) of JIS X0510:2004.
         
-		// size: [QRSPEC_VERSION_MAX - 6]
+        // size: [QRSPEC_VERSION_MAX - 6]
 		
         public static $versionPattern = array(
             0x07c94, 0x085bc, 0x09a99, 0x0a4d3, 0x0bbf6, 0x0c762, 0x0d847, 0x0e60d,
@@ -352,8 +355,9 @@
         //----------------------------------------------------------------------
         public static function getVersionPattern($version)
         {
-            if ($version < 7 || $version > QRSPEC_VERSION_MAX)
-                return 0;
+            if ($version < 7 || $version > QRSPEC_VERSION_MAX) {
+                            return 0;
+            }
 
             return self::$versionPattern[$version - 7];
         }
@@ -370,11 +374,13 @@
 
         public static function getFormatInfo($mask, $level)
         {
-            if ($mask < 0 || $mask > 7)
-                return 0;
+            if ($mask < 0 || $mask > 7) {
+                            return 0;
+            }
                 
-            if ($level < 0 || $level > 3)
-                return 0;                
+            if ($level < 0 || $level > 3) {
+                            return 0;
+            }
 
             return self::$formatInfo[$level][$mask];
         }
@@ -554,8 +560,9 @@
         //----------------------------------------------------------------------
         public static function newFrame($version)
         {
-            if ($version < 1 || $version > QRSPEC_VERSION_MAX) 
-                return null;
+            if ($version < 1 || $version > QRSPEC_VERSION_MAX) {
+                            return null;
+            }
 
             if (!isset(self::$frames[$version])) {
                 
@@ -573,8 +580,9 @@
                 }
             }
             
-            if (is_null(self::$frames[$version]))
-                return null;
+            if (is_null(self::$frames[$version])) {
+                            return null;
+            }
 
             return self::$frames[$version];
         }

@@ -63,59 +63,59 @@
             $rs = null;
             
             // Check parameter ranges
-            if($symsize < 0 || $symsize > 8) {
+            if ($symsize < 0 || $symsize > 8) {
                 return $rs;
             }
-            if($fcr < 0 || $fcr >= (1<<$symsize)) {
+            if ($fcr < 0 || $fcr >= (1 << $symsize)) {
                 return $rs;
             }
-            if($prim <= 0 || $prim >= (1<<$symsize)) {
+            if ($prim <= 0 || $prim >= (1 << $symsize)) {
                 return $rs;
             }
-            if($nroots < 0 || $nroots >= (1<<$symsize)) {
+            if ($nroots < 0 || $nroots >= (1 << $symsize)) {
                 return $rs;
             }
             // Can't have more roots than symbol values!
-            if($pad < 0 || $pad >= ((1<<$symsize) -1 - $nroots)) {
+            if ($pad < 0 || $pad >= ((1 << $symsize) - 1 - $nroots)) {
                 return $rs;
             }
             // Too much padding
 
             $rs = new QRrsItem();
             $rs->mm = $symsize;
-            $rs->nn = (1<<$symsize)-1;
+            $rs->nn = (1 << $symsize) - 1;
             $rs->pad = $pad;
 
-            $rs->alpha_to = array_fill(0, $rs->nn+1, 0);
-            $rs->index_of = array_fill(0, $rs->nn+1, 0);
+            $rs->alpha_to = array_fill(0, $rs->nn + 1, 0);
+            $rs->index_of = array_fill(0, $rs->nn + 1, 0);
           
             // PHP style macro replacement ;)
-            $NN =& $rs->nn;
-            $A0 =& $NN;
+            $NN = & $rs->nn;
+            $A0 = & $NN;
             
             // Generate Galois field lookup tables
             $rs->index_of[0] = $A0; // log(zero) = -inf
             $rs->alpha_to[$A0] = 0; // alpha**-inf = 0
             $sr = 1;
           
-            for($i=0; $i<$rs->nn; $i++) {
+            for ($i = 0; $i < $rs->nn; $i++) {
                 $rs->index_of[$sr] = $i;
                 $rs->alpha_to[$i] = $sr;
                 $sr <<= 1;
-                if($sr & (1<<$symsize)) {
+                if ($sr & (1 << $symsize)) {
                     $sr ^= $gfpoly;
                 }
                 $sr &= $rs->nn;
             }
             
-            if($sr != 1){
+            if ($sr != 1) {
                 // field generator polynomial is not primitive!
                 $rs = null;
                 return $rs;
             }
 
             /* Form RS code generator polynomial from its roots */
-            $rs->genpoly = array_fill(0, $nroots+1, 0);
+            $rs->genpoly = array_fill(0, $nroots + 1, 0);
         
             $rs->fcr = $fcr;
             $rs->prim = $prim;
@@ -204,23 +204,23 @@
         //----------------------------------------------------------------------
         public static function init_rs($symsize, $gfpoly, $fcr, $prim, $nroots, $pad)
         {
-            foreach(self::$items as $rs) {
-                if($rs->pad != $pad) {
+            foreach (self::$items as $rs) {
+                if ($rs->pad != $pad) {
                     continue;
                 }
-                if($rs->nroots != $nroots) {
+                if ($rs->nroots != $nroots) {
                     continue;
                 }
-                if($rs->mm != $symsize) {
+                if ($rs->mm != $symsize) {
                     continue;
                 }
-                if($rs->gfpoly != $gfpoly) {
+                if ($rs->gfpoly != $gfpoly) {
                     continue;
                 }
-                if($rs->fcr != $fcr) {
+                if ($rs->fcr != $fcr) {
                     continue;
                 }
-                if($rs->prim != $prim) {
+                if ($rs->prim != $prim) {
                     continue;
                 }
 
