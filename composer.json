@@ -1,6 +1,6 @@
 {
     "config": {
-        "vendor-dir": "plugins"
+        "vendor-dir": "external"
     },
     "require": {
         "endroid/qr-code": "^3.7",
