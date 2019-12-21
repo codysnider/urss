@@ -1,0 +1,11 @@
+{
+    "config": {
+        "vendor-dir": "plugins"
+    },
+    "require": {
+        "endroid/qr-code": "^3.7",
+        "doctrine/orm": "^2.7",
+        "twig/twig": "^3.0",
+        "spomky-labs/otphp": "^10.0"
+    }
+}
