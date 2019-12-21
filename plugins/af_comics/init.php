@@ -27,7 +27,7 @@ class Af_Comics extends Plugin {
 		foreach ($filters as $file) {
 			$filter_name = preg_replace("/\..*$/", "", basename($file));
 
-			if (array_search($filter_name, $names) === FALSE) {
+			if (array_search($filter_name, $names) === false) {
 				if (!class_exists($filter_name)) {
 					require_once $file;
 				}

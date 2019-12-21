@@ -24,9 +24,9 @@ class Af_Unburn extends Plugin {
 		if (defined('NO_CURL') || !function_exists("curl_init") || ini_get("open_basedir"))
 			return $article;
 
-		if ((strpos($article["link"], "feedproxy.google.com") !== FALSE ||
-		  		strpos($article["link"], "/~r/") !== FALSE ||
-				strpos($article["link"], "feedsportal.com") !== FALSE)) {
+		if ((strpos($article["link"], "feedproxy.google.com") !== false ||
+		  		strpos($article["link"], "/~r/") !== false ||
+				strpos($article["link"], "feedsportal.com") !== false)) {
 
 				$ch = curl_init($article["link"]);
 
@@ -52,7 +52,7 @@ class Af_Unburn extends Plugin {
 
 					$query = parse_url($real_url, PHP_URL_QUERY);
 
-					if ($query && strpos($query, "utm_source") !== FALSE) {
+					if ($query && strpos($query, "utm_source") !== false) {
 						$args = array();
 						parse_str($query, $args);
 

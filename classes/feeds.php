@@ -210,7 +210,7 @@ class Feeds extends Handler_Protected {
 		$feed_title = $qfh_ret[1];
 		$feed_site_url = $qfh_ret[2];
 		$last_error = $qfh_ret[3];
-		$last_updated = strpos($qfh_ret[4], '1970-') === FALSE ?
+		$last_updated = strpos($qfh_ret[4], '1970-') === false ?
 			make_local_datetime($qfh_ret[4], false) : __("Never");
 		$highlight_words = $qfh_ret[5];
 		$reply['first_id'] = $qfh_ret[6];
@@ -1158,7 +1158,7 @@ class Feeds extends Handler_Protected {
 			return array("code" => 5, "message" => $fetch_last_error);
 		}
 
-		if (mb_strpos($fetch_last_content_type, "html") !== FALSE && Feeds::is_html($contents)) {
+		if (mb_strpos($fetch_last_content_type, "html") !== false && Feeds::is_html($contents)) {
 			$feedUrls = Feeds::get_feeds_from_html($url, $contents);
 
 			if (count($feedUrls) == 0) {

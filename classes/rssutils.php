@@ -139,7 +139,7 @@ class RSSUtils {
 			if ($tline = $usth->fetch()) {
 				Debug::log(" => " . $tline["last_updated"] . ", " . $tline["id"] . " " . $tline["owner_uid"]);
 
-				if (array_search($tline["owner_uid"], $batch_owners) === FALSE)
+				if (array_search($tline["owner_uid"], $batch_owners) === false)
 					array_push($batch_owners, $tline["owner_uid"]);
 
 				$fstarted = microtime(true);
@@ -1309,7 +1309,7 @@ class RSSUtils {
 			}
 		}
 
-		Debug::log("Removed $num_deleted old lock files.");
+		Debug::log("removed $num_deleted old lock files.");
 	}
 
 	/**
@@ -1401,7 +1401,7 @@ class RSSUtils {
 				if (is_array($matched_rules)) array_push($matched_rules, $rule);
 				if (is_array($matched_filters)) array_push($matched_filters, $filter);
 
-				foreach ($filter["actions"] AS $action) {
+				foreach ($filter["actions"] as $action) {
 					array_push($matches, $action);
 
 					// if Stop action encountered, perform no further processing
@@ -1488,7 +1488,7 @@ class RSSUtils {
 
 		$crows = $res->rowCount();
 
-		Debug::log("Removed $frows (feeds) $crows (cats) orphaned counter cache entries.");
+		Debug::log("removed $frows (feeds) $crows (cats) orphaned counter cache entries.");
 	}
 
 	public static function housekeeping_user($owner_uid) {

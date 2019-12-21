@@ -5,7 +5,7 @@
 		$namespace = '';
 		$class_name = $class;
 
-		if (strpos($class, '\\') !== FALSE)
+		if (strpos($class, '\\') !== false)
 			list ($namespace, $class_name) = explode('\\', $class, 2);
 
 		$root_dir = dirname(__DIR__); // we're in tt-rss/include

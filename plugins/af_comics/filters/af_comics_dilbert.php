@@ -7,8 +7,8 @@ class Af_Comics_Dilbert extends Af_ComicFilter {
 	}
 
 	public function process(&$article) {
-		if (strpos($article["link"], "dilbert.com") !== FALSE ||
-			strpos($article["link"], "/DilbertDailyStrip") !== FALSE) {
+		if (strpos($article["link"], "dilbert.com") !== false ||
+			strpos($article["link"], "/DilbertDailyStrip") !== false) {
 
 				$res = fetch_file_contents($article["link"], false, false, false,
 					 false, false, 0,

@@ -283,7 +283,7 @@
         {
             if ($version < 0 || $version > QRSPEC_VERSION_MAX || $level > QR_ECLEVEL_H) {
                 throw new Exception('Invalid version no');
-                return NULL;
+                return null;
             }
             
             $this->version = $version;

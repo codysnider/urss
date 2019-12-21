@@ -31,7 +31,7 @@ class Db_Mysqli implements IDb {
 			$this->last_error = @mysqli_error($this->link);
 
 			@mysqli_query($this->link, "ROLLBACK");
-			user_error("Query $query failed: " . ($this->link ? $this->last_error : "No connection"),
+			user_error("query $query failed: " . ($this->link ? $this->last_error : "No connection"),
 				$die_on_error ? E_USER_ERROR : E_USER_WARNING);
 		}
 

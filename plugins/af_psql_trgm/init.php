@@ -228,7 +228,7 @@ class Af_Psql_Trgm extends Plugin {
 		if (!array($enabled_feeds)) $enabled_feeds = array();
 
 		$key = array_search($feed_id, $enabled_feeds);
-		$checked = $key !== FALSE ? "checked" : "";
+		$checked = $key !== false ? "checked" : "";
 
 		print "<fieldset>";
 
@@ -248,11 +248,11 @@ class Af_Psql_Trgm extends Plugin {
 		$key = array_search($feed_id, $enabled_feeds);
 
 		if ($enable) {
-			if ($key === FALSE) {
+			if ($key === false) {
 				array_push($enabled_feeds, $feed_id);
 			}
 		} else {
-			if ($key !== FALSE) {
+			if ($key !== false) {
 				unset($enabled_feeds[$key]);
 			}
 		}
@@ -272,7 +272,7 @@ class Af_Psql_Trgm extends Plugin {
 		if (!$enable_globally) {
 			$enabled_feeds = $this->host->get($this, "enabled_feeds");
 			$key = array_search($article["feed"]["id"], $enabled_feeds);
-			if ($key === FALSE) return $article;
+			if ($key === false) return $article;
 		}
 
 		$similarity = (float) $this->host->get($this, "similarity");

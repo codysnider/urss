@@ -144,7 +144,7 @@ class DiskCache {
 					}
 				}
 
-				Debug::log("Expired $cache_dir: removed $num_deleted files.");
+				Debug::log("expired $cache_dir: removed $num_deleted files.");
 			}
 		}
 	}

@@ -6,7 +6,7 @@ class Af_Comics_ComicClass extends Af_ComicFilter {
 	}
 
 	public function process(&$article) {
-		if (strpos($article["guid"], "loadingartist.com") !== FALSE) {
+		if (strpos($article["guid"], "loadingartist.com") !== false) {
 
 				// lol at people who block clients by user agent
 				// oh noes my ad revenue Q_Q

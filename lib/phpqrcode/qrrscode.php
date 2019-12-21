@@ -98,7 +98,7 @@
             
             if($sr != 1){
                 // field generator polynomial is not primitive!
-                $rs = NULL;
+                $rs = null;
                 return $rs;
             }
 

@@ -68,7 +68,7 @@ class Pref_Filters extends Handler_Protected {
 		$scope_qparts = array();
 
 		$rctr = 0;
-		foreach (clean($_REQUEST["rule"]) AS $r) {
+		foreach (clean($_REQUEST["rule"]) as $r) {
 			$rule = json_decode($r, true);
 
 			if ($rule && $rctr < 5) {
