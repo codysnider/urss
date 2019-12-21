@@ -7,7 +7,7 @@ class Af_Comics_DarkLegacy extends Af_ComicFilter {
 
 	public function process(&$article) {
 
-		if (strpos($article["guid"], "darklegacycomics.com") !== FALSE) {
+		if (strpos($article["guid"], "darklegacycomics.com") !== false) {
 
 				$res = fetch_file_contents($article["link"], false, false, false,
 					 false, false, 0,

@@ -7,13 +7,13 @@ class Af_Comics_ComicPress extends Af_ComicFilter {
 	}
 
 	public function process(&$article) {
-		if (strpos($article["guid"], "bunicomic.com") !== FALSE ||
-				strpos($article["guid"], "buttersafe.com") !== FALSE ||
-				strpos($article["guid"], "extrafabulouscomics.com") !== FALSE ||
-				strpos($article["guid"], "happyjar.com") !== FALSE ||
-				strpos($article["guid"], "nedroid.com") !== FALSE ||
-				strpos($article["guid"], "stonetoss.com") !== FALSE ||
-				strpos($article["guid"], "csectioncomics.com") !== FALSE) {
+		if (strpos($article["guid"], "bunicomic.com") !== false ||
+				strpos($article["guid"], "buttersafe.com") !== false ||
+				strpos($article["guid"], "extrafabulouscomics.com") !== false ||
+				strpos($article["guid"], "happyjar.com") !== false ||
+				strpos($article["guid"], "nedroid.com") !== false ||
+				strpos($article["guid"], "stonetoss.com") !== false ||
+				strpos($article["guid"], "csectioncomics.com") !== false) {
 
 				// lol at people who block clients by user agent
 				// oh noes my ad revenue Q_Q

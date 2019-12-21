@@ -48,7 +48,7 @@ function ttrss_fatal_handler() {
 
 	$error = error_get_last();
 
-	if ($error !== NULL) {
+	if ($error !== null) {
 		$errno = $error["type"];
 		$file = $error["file"];
 		$line = $error["line"];

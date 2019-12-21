@@ -244,7 +244,7 @@ function stylesheet_tag($filename, $id = false) {
 function javascript_tag($filename) {
 	$query = "";
 
-	if (!(strpos($filename, "?") === FALSE)) {
+	if (!(strpos($filename, "?") === false)) {
 		$query = substr($filename, strpos($filename, "?")+1);
 		$filename = substr($filename, 0, strpos($filename, "?"));
 	}

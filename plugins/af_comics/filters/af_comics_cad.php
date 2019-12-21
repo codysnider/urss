@@ -6,8 +6,8 @@ class Af_Comics_Cad extends Af_ComicFilter {
 	}
 
 	public function process(&$article) {
-		if (strpos($article["link"], "cad-comic.com") !== FALSE) {
-			if (strpos($article["title"], "News:") === FALSE) {
+		if (strpos($article["link"], "cad-comic.com") !== false) {
+			if (strpos($article["title"], "News:") === false) {
 
 				global $fetch_last_error_content;
 

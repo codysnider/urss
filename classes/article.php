@@ -60,7 +60,7 @@ class Article extends Handler_Protected {
 		if (!$title) $title = $url;
 		if (!$title && !$url) return false;
 
-		if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) return false;
+		if (filter_var($url, FILTER_VALIDATE_URL) === false) return false;
 
 		$pdo = Db::pdo();
 
@@ -629,7 +629,7 @@ class Article extends Handler_Protected {
 
         if (Debug::enabled()) {
             $rows = $res->rowCount();
-            Debug::log("Purged $rows orphaned posts.");
+            Debug::log("purged $rows orphaned posts.");
         }
     }
 
@@ -774,7 +774,7 @@ class Article extends Handler_Protected {
 
 			if (!$article_image)
 				foreach ($enclosures as $enc) {
-					if (strpos($enc["content_type"], "image/") !== FALSE) {
+					if (strpos($enc["content_type"], "image/") !== false) {
 						$article_image = $enc["content_url"];
 						break;
 					}

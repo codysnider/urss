@@ -435,7 +435,7 @@
 				$processed++;
 			}
 
-			print "Processed $processed articles...\n";
+			print "processed $processed articles...\n";
 
 			if ($processed < $limit) {
 				echo "All done.\n";

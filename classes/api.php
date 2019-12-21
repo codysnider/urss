@@ -283,7 +283,7 @@ class API extends Handler {
 				$set_to = "false";
 				break;
 			case 2:
-				$set_to = "NOT $field";
+				$set_to = "not $field";
 				break;
 		}
 
@@ -607,7 +607,7 @@ class API extends Handler {
 			/* Real feeds */
 
 			if ($limit) {
-				$limit_qpart = "LIMIT $limit OFFSET $offset";
+				$limit_qpart = "limit $limit OFFSET $offset";
 			} else {
 				$limit_qpart = "";
 			}

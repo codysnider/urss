@@ -111,7 +111,7 @@
             $el = QRspec::rsEccCodes2($spec);
             $rs = QRrs::init_rs(8, 0x11d, 0, 1, $el, 255 - $dl - $el);
             
-            if($rs == NULL) return -1;
+            if($rs == null) return -1;
             
             for($i=0; $i<QRspec::rsBlockNum2($spec); $i++) {
                 $ecc = array_slice($this->ecccode,$eccPos);
@@ -179,7 +179,7 @@
             
             $filler = new FrameFiller($width, $frame);
             if(is_null($filler)) {
-                return NULL;
+                return null;
             }
 
             // inteleaved data and ecc codes
@@ -221,8 +221,8 @@
                 $masked = $maskObj->makeMask($width, $frame, $mask, $input->getErrorCorrectionLevel());
             }
             
-            if($masked == NULL) {
-                return NULL;
+            if($masked == null) {
+                return null;
             }
             
             QRtools::markTime('after_mask');
@@ -243,18 +243,18 @@
         //----------------------------------------------------------------------
         public function encodeString8bit($string, $version, $level)
         {
-            if(string == NULL) {
+            if(string == null) {
                 throw new Exception('empty string!');
-                return NULL;
+                return null;
             }
 
             $input = new QRinput($version, $level);
-            if($input == NULL) return NULL;
+            if($input == null) return null;
 
             $ret = $input->append($input, QR_MODE_8, strlen($string), str_split($string));
             if($ret < 0) {
                 unset($input);
-                return NULL;
+                return null;
             }
             return $this->encodeInput($input);
         }
@@ -265,15 +265,15 @@
 
             if($hint != QR_MODE_8 && $hint != QR_MODE_KANJI) {
                 throw new Exception('bad hint');
-                return NULL;
+                return null;
             }
 
             $input = new QRinput($version, $level);
-            if($input == NULL) return NULL;
+            if($input == null) return null;
 
             $ret = QRsplit::splitStringToQRinput($string, $input, $hint, $casesensitive);
             if($ret < 0) {
-                return NULL;
+                return null;
             }
 
             return $this->encodeInput($input);

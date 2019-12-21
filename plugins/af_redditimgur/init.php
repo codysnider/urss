@@ -94,7 +94,7 @@ class Af_RedditImgur extends Plugin {
 		//$debug = 1;
 
 		foreach ($entries as $entry) {
-			if ($entry->hasAttribute("href") && strpos($entry->getAttribute("href"), "reddit.com") === FALSE) {
+			if ($entry->hasAttribute("href") && strpos($entry->getAttribute("href"), "reddit.com") === false) {
 
 				Debug::log("processing href: " . $entry->getAttribute("href"), Debug::$LOG_VERBOSE);
 
@@ -115,7 +115,7 @@ class Af_RedditImgur extends Plugin {
 								$p = $doc->createElement("p");
 
 								$p->appendChild($doc->importNode(
-									$tmp->getElementsByTagName("blockquote")->item(0), TRUE));
+									$tmp->getElementsByTagName("blockquote")->item(0), true));
 
 								$br = $doc->createElement('br');
 								$entry->parentNode->insertBefore($p, $entry);
@@ -140,7 +140,7 @@ class Af_RedditImgur extends Plugin {
 
 					$content_type = $this->get_content_type($source_stream);
 
-					if (strpos($content_type, "video/") !== FALSE) {
+					if (strpos($content_type, "video/") !== false) {
 						$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
 						$found = 1;
 					}
@@ -230,7 +230,7 @@ class Af_RedditImgur extends Plugin {
 
 					$source_stream = str_replace(".gifv", ".mp4", $entry->getAttribute("href"));
 
-					if (strpos($source_stream, "imgur.com") !== FALSE)
+					if (strpos($source_stream, "imgur.com") !== false)
 						$poster_url = str_replace(".mp4", "h.jpg", $source_stream);
 
 					$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
@@ -265,8 +265,8 @@ class Af_RedditImgur extends Plugin {
 				}
 
 				if (!$found && preg_match("/\.(jpg|jpeg|gif|png)(\?[0-9][0-9]*)?$/i", $entry->getAttribute("href")) ||
-					mb_strpos($entry->getAttribute("href"), "i.reddituploads.com") !== FALSE ||
-					mb_strpos($this->get_content_type($entry->getAttribute("href")), "image/") !== FALSE) {
+					mb_strpos($entry->getAttribute("href"), "i.reddituploads.com") !== false ||
+					mb_strpos($this->get_content_type($entry->getAttribute("href")), "image/") !== false) {
 
 					Debug::log("Handling as a picture", Debug::$LOG_VERBOSE);
 
@@ -393,7 +393,7 @@ class Af_RedditImgur extends Plugin {
 
 	public function hook_article_filter($article) {
 
-		if (strpos($article["link"], "reddit.com/r/") !== FALSE) {
+		if (strpos($article["link"], "reddit.com/r/") !== false) {
 			$doc = new DOMDocument();
 			@$doc->loadHTML($article["content"]);
 			$xpath = new DOMXPath($doc);
@@ -542,7 +542,7 @@ class Af_RedditImgur extends Plugin {
 
 			// do not try to embed posts linking back to other reddit posts
 			// readability.php requires PHP 5.6
-			if ($url &&	strpos($url, "reddit.com") === FALSE && version_compare(PHP_VERSION, '5.6.0', '>=')) {
+			if ($url &&	strpos($url, "reddit.com") === false && version_compare(PHP_VERSION, '5.6.0', '>=')) {
 
 				/* link may lead to a huge video file or whatever, we need to check content type before trying to
 				parse it which p much requires curl */
@@ -550,7 +550,7 @@ class Af_RedditImgur extends Plugin {
 				$useragent_compat = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)";
 				$content_type = $this->get_content_type($url, $useragent_compat);
 
-				if ($content_type && strpos($content_type, "text/html") !== FALSE) {
+				if ($content_type && strpos($content_type, "text/html") !== false) {
 
 					foreach ($this->host->get_hooks(PluginHost::HOOK_GET_FULL_TEXT) as $p) {
 						$extracted_content = $p->hook_get_full_text($url);

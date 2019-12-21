@@ -139,7 +139,7 @@ function al2gt($gettextlangs, $mime) {
    */
   $curlscore=0;
   $curcscore=0;
-  $curgtlang=NULL;
+  $curgtlang=null;
   foreach($gettextlangs as $gtlang) {
 
     $tmp1=preg_replace("/\_/","-",$gtlang);
@@ -156,7 +156,7 @@ function al2gt($gettextlangs, $mime) {
      array(@$alscores["*"], @$acscores[$gtcs]),
      array(@$alscores["*"], @$acscores["*"]));
 
-    $found=FALSE;
+    $found=false;
     foreach($testvals as $tval) {
       if(!$found && isset($tval[0]) && isset($tval[1])) {
         $arr=find_match($curlscore, $curcscore, $curgtlang, $tval[0],
@@ -164,7 +164,7 @@ function al2gt($gettextlangs, $mime) {
         $curlscore=$arr[0];
         $curcscore=$arr[1];
         $curgtlang=$arr[2];
-    $found=TRUE;
+    $found=true;
       }
     }
   }

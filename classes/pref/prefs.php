@@ -857,7 +857,7 @@ class Pref_Prefs extends Handler_Protected {
 			PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FETCH_FEED));
 
 		$feed_handlers = array_filter($feed_handlers, function($plugin) use ($feed_handler_whitelist) {
-			return in_array(get_class($plugin), $feed_handler_whitelist) === FALSE; });
+			return in_array(get_class($plugin), $feed_handler_whitelist) === false; });
 
 		if (count($feed_handlers) > 0) {
 			print_error(

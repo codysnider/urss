@@ -1568,7 +1568,7 @@ class Pref_Feeds extends Handler_Protected {
 	public static function remove_feed($id, $owner_uid) {
 		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_UNSUBSCRIBE_FEED) as $p) {
 			if (! $p->hook_unsubscribe_feed($id, $owner_uid)) {
-                user_error("Feed $id (owner: $owner_uid) not removed due to plugin error (HOOK_UNSUBSCRIBE_FEED).", E_USER_WARNING);
+                user_error("feed $id (owner: $owner_uid) not removed due to plugin error (HOOK_UNSUBSCRIBE_FEED).", E_USER_WARNING);
                 return;
 			}
 		}

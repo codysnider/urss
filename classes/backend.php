@@ -48,7 +48,7 @@ class Backend extends Handler {
 
 					if (is_array($omap[$action])) {
 						foreach ($omap[$action] as $sequence) {
-							if (strpos($sequence, "|") !== FALSE) {
+							if (strpos($sequence, "|") !== false) {
 								$sequence = substr($sequence,
 									strpos($sequence, "|")+1,
 									strlen($sequence));

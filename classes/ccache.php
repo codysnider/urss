@@ -168,7 +168,7 @@ class CCache {
 
 		if ($sth->fetch()) {
 
-			$sth = $pdo->prepare("UPDATE $table SET
+			$sth = $pdo->prepare("update $table SET
 				value = ?, updated = NOW() WHERE
 				feed_id = ? AND owner_uid = ?");
 
