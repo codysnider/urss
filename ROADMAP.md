@@ -3,7 +3,7 @@ Cleanup Roadmap
 
 TODO:
 - Make all application code PSR-12 compliant
-- Setup Composer
+- ~Setup Composer~
 - Move vendor files into Composer requirements
 - Setup Doctrine
 - Reverse-engineer Doctrine models from DDLs
@@ -13,6 +13,8 @@ TODO:
 - Replace config constants with environment variables
 - Replace OTPHP with spomky-labs/otphp
 - Replace phpqrcode with endroid/qr-code
+- Move CLI scripts to bin/
+- ~Add Roadrunner~
 
 What we need:
 - A few other backend devs so we can code review everything going into the system (ideally another maintainer or two)

@@ -1,0 +1,10 @@
+http:
+    address: :8080
+    workers:
+        command: "php /var/www/app/bootstrap.php"
+        pool:
+            numWorkers: 1
+            maxJobs:    1
+static:
+    dir: "/var/www/app/public"
+    forbid: [".php", ".htaccess"]

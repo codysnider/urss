@@ -1,11 +1,49 @@
 {
     "config": {
-        "vendor-dir": "external"
+        "vendor-dir": "external",
+        "optimize-autoloader": true,
+        "bin-compat": "full",
+        "sort-packages": true
     },
     "require": {
-        "endroid/qr-code": "^3.7",
+        "php": "^7.2",
         "doctrine/orm": "^2.7",
+        "endroid/qr-code": "^3.7",
+        "jawira/case-converter": "^3.4",
+        "spiral/roadrunner": "^1.5",
+        "spomky-labs/otphp": "^10.0",
+        "symfony/class-loader": "^3.4",
+        "symfony/config": "^5.0",
+        "symfony/framework-bundle": "^5.0",
+        "symfony/routing": "^5.0",
+        "symfony/translation": "^5.0",
+        "symfony/twig-bridge": "^5.0",
         "twig/twig": "^3.0",
-        "spomky-labs/otphp": "^10.0"
+        "zendframework/zend-diactoros": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "RssApp\\": "src/"
+        }
+    },
+    "require-dev": {
+        "spiral/dumper": "^1.1"
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "@init-config"
+        ],
+        "init-config": [
+            "php -r \"file_exists('etc/roadrunner/.rr.yaml') || copy('docker/application/.rr.yaml', 'etc/roadrunner/.rr.yaml');\""
+        ],
+        "reset-workers": [
+            "docker exec roadrunner rr -c /etc/roadrunner/.rr.yaml http:reset"
+        ],
+        "show-workers": [
+            "docker exec roadrunner rr -c /etc/roadrunner/.rr.yaml http:workers -i"
+        ],
+        "watch": [
+            "docker exec -d roadrunner bash /var/www/app/watch.sh"
+        ]
     }
 }

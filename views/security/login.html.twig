@@ -1,0 +1,147 @@
+{# <?php startup_gettext(); ?> #}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tiny Tiny RSS : Login</title>
+    {{ "default.css"|cssTag|raw }}
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	{{ "lib/prototype.js"|jsTag|raw }}
+    {{ "lib/dojo/dojo.js"|jsTag|raw }}
+    {{ "lib/dojo/tt-rss-layer.js"|jsTag|raw }}
+    {{ "common.js"|jsTag|raw }}
+    {# "/errors.php?mode=js"|jsTag|raw #}
+
+    <script type="text/javascript">
+        require({cache:{}});
+    </script>
+</head>
+
+<body class="flat ttrss_utility ttrss_login">
+
+<script type="text/javascript">
+    require(['dojo/parser', "dojo/ready", 'dijit/form/Button','dijit/form/CheckBox', 'dijit/form/Form',
+        'dijit/form/Select','dijit/form/TextBox','dijit/form/ValidationTextBox'],function(parser, ready){
+        ready(function() {
+            parser.parse();
+
+            dijit.byId("bw_limit").attr("checked", Cookie.get("ttrss_bwlimit") == 'true');
+            dijit.byId("login").focus();
+        });
+    });
+
+    function fetchProfiles() {
+        xhrJson("public.php", { op: "getprofiles", login: dijit.byId("login").attr('value') },
+            (reply) => {
+                const profile = dijit.byId('profile');
+
+                profile.removeOption(profile.getOptions());
+
+                reply.each((p) => {
+                    profile
+                        .attr("disabled", false)
+                        .addOption(p);
+                });
+            });
+    }
+
+    function gotoRegForm() {
+        window.location.href = "register.php";
+        return false;
+    }
+
+    function bwLimitChange(elem) {
+        Cookie.set("ttrss_bwlimit", elem.checked,
+            {# <?php print SESSION_COOKIE_LIFETIME ?> #} 86400);
+    }
+</script>
+
+<?php $return = urlencode(make_self_url()) ?>
+
+<div class="container">
+
+    <h1>Authentication</h1>
+    <div class="content">
+        <form action="public.php?return=<?php echo $return ?>"
+              dojoType="dijit.form.Form" method="POST">
+
+            <?php print_hidden("op", "login"); ?>
+
+            <?php if ($_SESSION["login_error_msg"]) { ?>
+            <?php echo format_error($_SESSION["login_error_msg"]) ?>
+            <?php $_SESSION["login_error_msg"] = ""; ?>
+            <?php } ?>
+
+            <fieldset>
+                <label>{{ "Login:"|trans }}</label>
+                <input name="login" id="login" dojoType="dijit.form.TextBox" type="text"
+                       onchange="fetchProfiles()" onfocus="fetchProfiles()" onblur="fetchProfiles()"
+                       required="1" value="" />
+            </fieldset>
+
+            <fieldset>
+                <label>{{ "Password:"|trans }}</label>
+
+                <input type="password" name="password" required="1"
+                       dojoType="dijit.form.TextBox"
+                       class="input input-text"
+                       value=""/>
+            </fieldset>
+            <?php if (strpos(PLUGINS, "auth_internal") !== false) { ?>
+            <fieldset class="align-right">
+                <a href="public.php?op=forgotpass">{{ "I forgot my password"|trans }}</a>
+            </fieldset>
+            <?php } ?>
+
+            <fieldset>
+                <label>{{ "Profile:"|trans }}</label>
+
+                <select disabled='disabled' name="profile" id="profile" dojoType='dijit.form.Select'>
+                    <option>{{ "Default profile"|trans }}</option>
+                </select>
+            </fieldset>
+
+            <fieldset class="narrow">
+                <label> </label>
+
+                <label id="bw_limit_label">
+                    <input dojoType="dijit.form.CheckBox" name="bw_limit" id="bw_limit" type="checkbox" onchange="bwLimitChange(this)">
+                    {{ "Use less traffic"|trans }}
+                </label>
+            </fieldset>
+
+            <div dojoType="dijit.Tooltip" connectId="bw_limit_label" position="below" style="display:none">
+                <?php echo __("Does not display images in articles, reduces automatic refreshes."); ?>
+            </div>
+
+{#            <?php if (SESSION_COOKIE_LIFETIME > 0) { ?>#}
+
+            <fieldset class="narrow">
+                <label> </label>
+                <label>
+                    <input dojoType="dijit.form.CheckBox" name="remember_me" id="remember_me" type="checkbox">
+                    {{ "Remember me"|trans }}
+                </label>
+            </fieldset>
+
+{#            <?php } ?>#}
+
+            <hr/>
+
+            <fieldset class="align-right">
+                <label> </label>
+
+                <button dojoType="dijit.form.Button" type="submit" class="alt-primary">{{ 'Log in'|trans }}</button>
+
+{#                <?php if (defined('ENABLE_REGISTRATION') && ENABLE_REGISTRATION) { ?>#}
+                <button onclick="return gotoRegForm()" dojoType="dijit.form.Button">{{ "Create new account"|trans }}</button>
+{#                <?php } ?>#}
+            </fieldset>
+
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

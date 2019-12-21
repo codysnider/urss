@@ -241,19 +241,11 @@ function stylesheet_tag($filename, $id = false) {
 	return "<link rel=\"stylesheet\" $id_part type=\"text/css\" data-orig-href=\"$filename\" href=\"$filename?$timestamp\"/>\n";
 }
 
+/**
+ * @deprecated Use Twig filter jsTag
+ */
 function javascript_tag($filename) {
-	$query = "";
-
-	if (!(strpos($filename, "?") === false)) {
-		$query = substr($filename, strpos($filename, "?")+1);
-		$filename = substr($filename, 0, strpos($filename, "?"));
-	}
-
-	$timestamp = filemtime($filename);
-
-	if ($query) $timestamp .= "&$query";
-
-	return "<script type=\"text/javascript\" charset=\"utf-8\" src=\"$filename?$timestamp\"></script>\n";
+	user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 
 function format_warning($msg, $id = "") {

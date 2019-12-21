@@ -19,3 +19,4 @@ web.config
 /.save.cson
 /.tags*
 /.gutentags
+external/*
