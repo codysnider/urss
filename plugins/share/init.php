@@ -1,142 +1,142 @@
 <?php
 class Share extends Plugin {
-	private $host;
+    private $host;
 
-	public function about() {
-		return array(1.0,
-			"Share article by unique URL",
-			"fox");
-	}
+    public function about() {
+        return array(1.0,
+            "Share article by unique URL",
+            "fox");
+    }
 
-	/* @var PluginHost $host */
-	public function init($host) {
-		$this->host = $host;
+    /* @var PluginHost $host */
+    public function init($host) {
+        $this->host = $host;
 
-		$host->add_hook($host::HOOK_ARTICLE_BUTTON, $this);
-		$host->add_hook($host::HOOK_PREFS_TAB_SECTION, $this);
-	}
+        $host->add_hook($host::HOOK_ARTICLE_BUTTON, $this);
+        $host->add_hook($host::HOOK_PREFS_TAB_SECTION, $this);
+    }
 
-	public function get_js() {
-		return file_get_contents(dirname(__FILE__) . "/share.js");
-	}
+    public function get_js() {
+        return file_get_contents(dirname(__FILE__)."/share.js");
+    }
 
-	public function get_css() {
-		return file_get_contents(dirname(__FILE__) . "/share.css");
-	}
+    public function get_css() {
+        return file_get_contents(dirname(__FILE__)."/share.css");
+    }
 
-	public function get_prefs_js() {
-		return file_get_contents(dirname(__FILE__) . "/share_prefs.js");
-	}
+    public function get_prefs_js() {
+        return file_get_contents(dirname(__FILE__)."/share_prefs.js");
+    }
 
 
-	public function unshare() {
-		$id = $_REQUEST['id'];
+    public function unshare() {
+        $id = $_REQUEST['id'];
 
-		$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET uuid = '' WHERE int_id = ?
+        $sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET uuid = '' WHERE int_id = ?
 			AND owner_uid = ?");
-		$sth->execute([$id, $_SESSION['uid']]);
+        $sth->execute([$id, $_SESSION['uid']]);
 
-		print "OK";
-	}
+        print "OK";
+    }
 
-	public function hook_prefs_tab_section($id) {
-		if ($id == "prefFeedsPublishedGenerated") {
+    public function hook_prefs_tab_section($id) {
+        if ($id == "prefFeedsPublishedGenerated") {
 
-			print "<h3>" . __("You can disable all articles shared by unique URLs here.") . "</h3>";
+            print "<h3>".__("You can disable all articles shared by unique URLs here.")."</h3>";
 
-			print "<button class='alt-danger' dojoType='dijit.form.Button' onclick=\"return Plugins.Share.clearKeys()\">".
-				__('Unshare all articles')."</button> ";
+            print "<button class='alt-danger' dojoType='dijit.form.Button' onclick=\"return Plugins.Share.clearKeys()\">".
+                __('Unshare all articles')."</button> ";
 
-			print "</p>";
+            print "</p>";
 
-		}
-	}
+        }
+    }
 
-	// Silent
-	public function clearArticleKeys() {
-		$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET uuid = '' WHERE
+    // Silent
+    public function clearArticleKeys() {
+        $sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET uuid = '' WHERE
 			owner_uid = ?");
-		$sth->execute([$_SESSION['uid']]);
+        $sth->execute([$_SESSION['uid']]);
 
-		return;
-	}
+        return;
+    }
 
 
-	public function newkey() {
-		$id = $_REQUEST['id'];
-		$uuid = uniqid_short();
+    public function newkey() {
+        $id = $_REQUEST['id'];
+        $uuid = uniqid_short();
 
-		$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET uuid = ? WHERE int_id = ?
+        $sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET uuid = ? WHERE int_id = ?
 			AND owner_uid = ?");
-		$sth->execute([$uuid, $id, $_SESSION['uid']]);
+        $sth->execute([$uuid, $id, $_SESSION['uid']]);
 
-		print json_encode(array("link" => $uuid));
-	}
+        print json_encode(array("link" => $uuid));
+    }
 
-	public function hook_article_button($line) {
-		$img_class = $line['uuid'] ? "shared" : "";
+    public function hook_article_button($line) {
+        $img_class = $line['uuid'] ? "shared" : "";
 
-		return "<i id='SHARE-IMG-".$line['int_id']."' class='material-icons icon-share $img_class'
+        return "<i id='SHARE-IMG-".$line['int_id']."' class='material-icons icon-share $img_class'
 			style='cursor : pointer' onclick=\"Plugins.Share.shareArticle(".$line['int_id'].")\"
 			title='".__('Share by URL')."'>link</i>";
-	}
+    }
 
-	public function shareArticle() {
-		$param = $_REQUEST['param'];
+    public function shareArticle() {
+        $param = $_REQUEST['param'];
 
-		$sth = $this->pdo->prepare("SELECT uuid FROM ttrss_user_entries WHERE int_id = ?
+        $sth = $this->pdo->prepare("SELECT uuid FROM ttrss_user_entries WHERE int_id = ?
 			AND owner_uid = ?");
-		$sth->execute([$param, $_SESSION['uid']]);
+        $sth->execute([$param, $_SESSION['uid']]);
 
-		if ($row = $sth->fetch()) {
+        if ($row = $sth->fetch()) {
 
-			$uuid = $row['uuid'];
+            $uuid = $row['uuid'];
 
-			if (!$uuid) {
-				$uuid = uniqid_short();
+            if (!$uuid) {
+                $uuid = uniqid_short();
 
-				$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET uuid = ? WHERE int_id = ?
+                $sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET uuid = ? WHERE int_id = ?
 					AND owner_uid = ?");
-				$sth->execute([$uuid, $param, $_SESSION['uid']]);
-			}
+                $sth->execute([$uuid, $param, $_SESSION['uid']]);
+            }
 
-			print "<header>" . __("You can share this article by the following unique URL:") . "</header>";
+            print "<header>".__("You can share this article by the following unique URL:")."</header>";
 
-			$url_path = get_self_url_prefix();
-			$url_path .= "/public.php?op=share&key=$uuid";
+            $url_path = get_self_url_prefix();
+            $url_path .= "/public.php?op=share&key=$uuid";
 
-			print "<section>
+            print "<section>
 				<div class='panel text-center'>
 				<a id='gen_article_url' href='$url_path' target='_blank' rel='noopener noreferrer'>$url_path</a>
 				</div>
 				</section>";
 
-			/* if (!label_find_id(__('Shared'), $_SESSION["uid"]))
+            /* if (!label_find_id(__('Shared'), $_SESSION["uid"]))
 				label_create(__('Shared'), $_SESSION["uid"]);
 
 			label_add_article($ref_id, __('Shared'), $_SESSION['uid']); */
 
 
-		} else {
-			print "Article not found.";
-		}
+        } else {
+            print "Article not found.";
+        }
 
-		print "<footer class='text-center'>";
+        print "<footer class='text-center'>";
 
-		print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('shareArticleDlg').unshare()\">".
-			__('Unshare article')."</button>";
+        print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('shareArticleDlg').unshare()\">".
+            __('Unshare article')."</button>";
 
-		print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('shareArticleDlg').newurl()\">".
-			__('Generate new URL')."</button>";
+        print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('shareArticleDlg').newurl()\">".
+            __('Generate new URL')."</button>";
 
-		print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('shareArticleDlg').hide()\">".
-			__('Close this window')."</button>";
+        print "<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('shareArticleDlg').hide()\">".
+            __('Close this window')."</button>";
 
-		print "</footer>";
-	}
+        print "</footer>";
+    }
 
-	public function api_version() {
-		return 2;
-	}
+    public function api_version() {
+        return 2;
+    }
 
 }

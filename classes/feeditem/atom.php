@@ -1,160 +1,162 @@
 <?php
 class FeedItem_Atom extends FeedItem_Common {
-	const NS_XML = "http://www.w3.org/XML/1998/namespace";
+    const NS_XML = "http://www.w3.org/XML/1998/namespace";
 
-	public function get_id() {
-		$id = $this->elem->getElementsByTagName("id")->item(0);
+    public function get_id() {
+        $id = $this->elem->getElementsByTagName("id")->item(0);
 
-		if ($id) {
-			return $id->nodeValue;
-		} else {
-			return clean($this->get_link());
-		}
-	}
+        if ($id) {
+            return $id->nodeValue;
+        } else {
+            return clean($this->get_link());
+        }
+    }
 
-	public function get_date() {
-		$updated = $this->elem->getElementsByTagName("updated")->item(0);
+    public function get_date() {
+        $updated = $this->elem->getElementsByTagName("updated")->item(0);
 
-		if ($updated) {
-			return strtotime($updated->nodeValue);
-		}
+        if ($updated) {
+            return strtotime($updated->nodeValue);
+        }
 
-		$published = $this->elem->getElementsByTagName("published")->item(0);
+        $published = $this->elem->getElementsByTagName("published")->item(0);
 
-		if ($published) {
-			return strtotime($published->nodeValue);
-		}
+        if ($published) {
+            return strtotime($published->nodeValue);
+        }
 
-		$date = $this->xpath->query("dc:date", $this->elem)->item(0);
+        $date = $this->xpath->query("dc:date", $this->elem)->item(0);
 
-		if ($date) {
-			return strtotime($date->nodeValue);
-		}
-	}
+        if ($date) {
+            return strtotime($date->nodeValue);
+        }
+    }
 
 
-	public function get_link() {
-		$links = $this->elem->getElementsByTagName("link");
+    public function get_link() {
+        $links = $this->elem->getElementsByTagName("link");
 
-		foreach ($links as $link) {
-			if ($link && $link->hasAttribute("href") &&
-				(!$link->hasAttribute("rel")
-					|| $link->getAttribute("rel") == "alternate"
-					|| $link->getAttribute("rel") == "standout")) {
-				$base = $this->xpath->evaluate("string(ancestor-or-self::*[@xml:base][1]/@xml:base)", $link);
+        foreach ($links as $link) {
+            if ($link && $link->hasAttribute("href") &&
+                (!$link->hasAttribute("rel")
+                    || $link->getAttribute("rel") == "alternate"
+                    || $link->getAttribute("rel") == "standout")) {
+                $base = $this->xpath->evaluate("string(ancestor-or-self::*[@xml:base][1]/@xml:base)", $link);
 
-				if ($base)
-					return rewrite_relative_url($base, clean(trim($link->getAttribute("href"))));
-				else
-					return clean(trim($link->getAttribute("href")));
+                if ($base) {
+                                    return rewrite_relative_url($base, clean(trim($link->getAttribute("href"))));
+                } else {
+                                    return clean(trim($link->getAttribute("href")));
+                }
 
-			}
-		}
-	}
+            }
+        }
+    }
 
-	public function get_title() {
-		$title = $this->elem->getElementsByTagName("title")->item(0);
+    public function get_title() {
+        $title = $this->elem->getElementsByTagName("title")->item(0);
 
-		if ($title) {
-			return clean(trim($title->nodeValue));
-		}
-	}
+        if ($title) {
+            return clean(trim($title->nodeValue));
+        }
+    }
 
-	public function get_content() {
-		$content = $this->elem->getElementsByTagName("content")->item(0);
+    public function get_content() {
+        $content = $this->elem->getElementsByTagName("content")->item(0);
 
-		if ($content) {
-			if ($content->hasAttribute('type')) {
-				if ($content->getAttribute('type') == 'xhtml') {
-					for ($i = 0; $i < $content->childNodes->length; $i++) {
-						$child = $content->childNodes->item($i);
+        if ($content) {
+            if ($content->hasAttribute('type')) {
+                if ($content->getAttribute('type') == 'xhtml') {
+                    for ($i = 0; $i < $content->childNodes->length; $i++) {
+                        $child = $content->childNodes->item($i);
 
-						if ($child->hasChildNodes()) {
-							return $this->doc->saveHTML($child);
-						}
-					}
-				}
-			}
+                        if ($child->hasChildNodes()) {
+                            return $this->doc->saveHTML($child);
+                        }
+                    }
+                }
+            }
 
-			return $this->subtree_or_text($content);
-		}
-	}
+            return $this->subtree_or_text($content);
+        }
+    }
 
-	public function get_description() {
-		$content = $this->elem->getElementsByTagName("summary")->item(0);
+    public function get_description() {
+        $content = $this->elem->getElementsByTagName("summary")->item(0);
 
-		if ($content) {
-			if ($content->hasAttribute('type')) {
-				if ($content->getAttribute('type') == 'xhtml') {
-					for ($i = 0; $i < $content->childNodes->length; $i++) {
-						$child = $content->childNodes->item($i);
+        if ($content) {
+            if ($content->hasAttribute('type')) {
+                if ($content->getAttribute('type') == 'xhtml') {
+                    for ($i = 0; $i < $content->childNodes->length; $i++) {
+                        $child = $content->childNodes->item($i);
 
-						if ($child->hasChildNodes()) {
-							return $this->doc->saveHTML($child);
-						}
-					}
-				}
-			}
+                        if ($child->hasChildNodes()) {
+                            return $this->doc->saveHTML($child);
+                        }
+                    }
+                }
+            }
 
-			return $this->subtree_or_text($content);
-		}
+            return $this->subtree_or_text($content);
+        }
 
-	}
+    }
 
-	public function get_categories() {
-		$categories = $this->elem->getElementsByTagName("category");
-		$cats = [];
+    public function get_categories() {
+        $categories = $this->elem->getElementsByTagName("category");
+        $cats = [];
 
-		foreach ($categories as $cat) {
-			if ($cat->hasAttribute("term"))
-				array_push($cats, $cat->getAttribute("term"));
-		}
+        foreach ($categories as $cat) {
+            if ($cat->hasAttribute("term")) {
+                            array_push($cats, $cat->getAttribute("term"));
+            }
+        }
 
-		$categories = $this->xpath->query("dc:subject", $this->elem);
+        $categories = $this->xpath->query("dc:subject", $this->elem);
 
-		foreach ($categories as $cat) {
-			array_push($cats, $cat->nodeValue);
-		}
+        foreach ($categories as $cat) {
+            array_push($cats, $cat->nodeValue);
+        }
 
-		return $this->normalize_categories($cats);
-	}
+        return $this->normalize_categories($cats);
+    }
 
-	public function get_enclosures() {
-		$links = $this->elem->getElementsByTagName("link");
+    public function get_enclosures() {
+        $links = $this->elem->getElementsByTagName("link");
 
-		$encs = array();
+        $encs = array();
 
-		foreach ($links as $link) {
-			if ($link && $link->hasAttribute("href") && $link->hasAttribute("rel")) {
-				if ($link->getAttribute("rel") == "enclosure") {
-					$enc = new FeedEnclosure();
+        foreach ($links as $link) {
+            if ($link && $link->hasAttribute("href") && $link->hasAttribute("rel")) {
+                if ($link->getAttribute("rel") == "enclosure") {
+                    $enc = new FeedEnclosure();
 
-					$enc->type = clean($link->getAttribute("type"));
-					$enc->link = clean($link->getAttribute("href"));
-					$enc->length = clean($link->getAttribute("length"));
+                    $enc->type = clean($link->getAttribute("type"));
+                    $enc->link = clean($link->getAttribute("href"));
+                    $enc->length = clean($link->getAttribute("length"));
 
-					array_push($encs, $enc);
-				}
-			}
-		}
+                    array_push($encs, $enc);
+                }
+            }
+        }
 
-		$encs = array_merge($encs, parent::get_enclosures());
+        $encs = array_merge($encs, parent::get_enclosures());
 
-		return $encs;
-	}
+        return $encs;
+    }
 
-	public function get_language() {
-		$lang = $this->elem->getAttributeNS(self::NS_XML, "lang");
+    public function get_language() {
+        $lang = $this->elem->getAttributeNS(self::NS_XML, "lang");
 
-		if (!empty($lang)) {
-			return clean($lang);
-		} else {
-			// Fall back to the language declared on the feed, if any.
-			foreach ($this->doc->childNodes as $child) {
-				if (method_exists($child, "getAttributeNS")) {
-					return clean($child->getAttributeNS(self::NS_XML, "lang"));
-				}
-			}
-		}
-	}
+        if (!empty($lang)) {
+            return clean($lang);
+        } else {
+            // Fall back to the language declared on the feed, if any.
+            foreach ($this->doc->childNodes as $child) {
+                if (method_exists($child, "getAttributeNS")) {
+                    return clean($child->getAttributeNS(self::NS_XML, "lang"));
+                }
+            }
+        }
+    }
 }

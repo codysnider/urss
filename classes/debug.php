@@ -1,6 +1,6 @@
 <?php
 class Debug {
-	public static $LOG_DISABLED = -1;
+    public static $LOG_DISABLED = -1;
     public static $LOG_NORMAL = 0;
     public static $LOG_VERBOSE = 1;
     public static $LOG_EXTENDED = 2;
@@ -10,7 +10,7 @@ class Debug {
     private static $logfile = false;
     private static $loglevel = 0;
 
-	public static function set_logfile($logfile) {
+    public static function set_logfile($logfile) {
         Debug::$logfile = $logfile;
     }
 
@@ -36,11 +36,13 @@ class Debug {
 
     public static function log($message, $level = 0) {
 
-        if (!Debug::$enabled || Debug::$loglevel < $level) return false;
+        if (!Debug::$enabled || Debug::$loglevel < $level) {
+            return false;
+        }
 
         $ts = strftime("%H:%M:%S", time());
         if (function_exists('posix_getpid')) {
-            $ts = "$ts/" . posix_getpid();
+            $ts = "$ts/".posix_getpid();
         }
 
         if (Debug::$logfile) {
@@ -60,7 +62,7 @@ class Debug {
 
                     if (!$locked) {
                         fclose($fp);
-                        user_error("Unable to lock debugging log file: " . Debug::$logfile, E_USER_WARNING);
+                        user_error("Unable to lock debugging log file: ".Debug::$logfile, E_USER_WARNING);
                         return;
                     }
                 }
@@ -73,11 +75,12 @@ class Debug {
 
                 fclose($fp);
 
-                if (Debug::$quiet)
-                    return;
+                if (Debug::$quiet) {
+                                    return;
+                }
 
             } else {
-                user_error("Unable to open debugging log file: " . Debug::$logfile, E_USER_WARNING);
+                user_error("Unable to open debugging log file: ".Debug::$logfile, E_USER_WARNING);
             }
         }
 

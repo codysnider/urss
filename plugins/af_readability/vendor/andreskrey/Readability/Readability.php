@@ -194,7 +194,7 @@ class Readability
                     $this->attempts[] = ['articleContent' => $result, 'textLength' => $length];
 
                     // No luck after removing flags, just return the longest text we found during the different loops
-                    usort($this->attempts, function ($a, $b) {
+                    usort($this->attempts, function($a, $b) {
                         return $a['textLength'] < $b['textLength'];
                     });
 
@@ -273,7 +273,7 @@ class Readability
         }
 
         // Prepend the XML tag to avoid having issues with special characters. Should be harmless.
-        $dom->loadHTML('<?xml encoding="UTF-8">' . $html);
+        $dom->loadHTML('<?xml encoding="UTF-8">'.$html);
         $dom->encoding = 'UTF-8';
 
         $this->removeScripts($dom);
@@ -491,7 +491,7 @@ class Readability
          * I can assure you it works properly if you let the code run.
          */
         if (preg_match('/ [\|\-\\\\\/>»] /i', $curTitle)) {
-            $titleHadHierarchicalSeparators = (bool)preg_match('/ [\\\\\/>»] /', $curTitle);
+            $titleHadHierarchicalSeparators = (bool) preg_match('/ [\\\\\/>»] /', $curTitle);
             $curTitle = preg_replace('/(.*)[\|\-\\\\\/>»] .*/i', '$1', $originalTitle);
 
             $this->logger->info(sprintf('[Metadata] Found hierarchical separators in title, new title is: \'%s\'', $curTitle));
@@ -507,7 +507,7 @@ class Readability
             // could assume it's the full title.
             $match = false;
             for ($i = 1; $i <= 2; $i++) {
-                foreach ($this->dom->getElementsByTagName('h' . $i) as $hTag) {
+                foreach ($this->dom->getElementsByTagName('h'.$i) as $hTag) {
                     // Trim texts to avoid having false negatives when the title is surrounded by spaces or tabs
                     if (trim($hTag->nodeValue) === trim($curTitle)) {
                         $match = true;
@@ -579,17 +579,17 @@ class Readability
 
         // Scheme-rooted relative URI.
         if (substr($uri, 0, 2) === '//') {
-            return $scheme . '://' . substr($uri, 2);
+            return $scheme.'://'.substr($uri, 2);
         }
 
         // Prepath-rooted relative URI.
         if (substr($uri, 0, 1) === '/') {
-            return $prePath . $uri;
+            return $prePath.$uri;
         }
 
         // Dotslash relative URI.
         if (strpos($uri, './') === 0) {
-            return $pathBase . substr($uri, 2);
+            return $pathBase.substr($uri, 2);
         }
         // Ignore hash URIs:
         if (substr($uri, 0, 1) === '#') {
@@ -598,7 +598,7 @@ class Readability
 
         // Standard relative URI; add entire path. pathBase already includes a
         // trailing "/".
-        return $pathBase . $uri;
+        return $pathBase.$uri;
     }
 
     /**
@@ -614,17 +614,17 @@ class Readability
         if ($this->dom->baseURI !== null) {
             if (substr($this->dom->baseURI, 0, 1) === '/') {
                 // URLs starting with '/' override completely the URL defined in the link
-                $pathBase = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST) . $this->dom->baseURI;
+                $pathBase = parse_url($url, PHP_URL_SCHEME).'://'.parse_url($url, PHP_URL_HOST).$this->dom->baseURI;
             } else {
                 // Otherwise just prepend the base to the actual path
-                $pathBase = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST) . dirname(parse_url($url, PHP_URL_PATH)) . '/' . rtrim($this->dom->baseURI, '/') . '/';
+                $pathBase = parse_url($url, PHP_URL_SCHEME).'://'.parse_url($url, PHP_URL_HOST).dirname(parse_url($url, PHP_URL_PATH)).'/'.rtrim($this->dom->baseURI, '/').'/';
             }
         } else {
-            $pathBase = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST) . dirname(parse_url($url, PHP_URL_PATH)) . '/';
+            $pathBase = parse_url($url, PHP_URL_SCHEME).'://'.parse_url($url, PHP_URL_HOST).dirname(parse_url($url, PHP_URL_PATH)).'/';
         }
 
         $scheme = parse_url($pathBase, PHP_URL_SCHEME);
-        $prePath = $scheme . '://' . parse_url($pathBase, PHP_URL_HOST);
+        $prePath = $scheme.'://'.parse_url($pathBase, PHP_URL_HOST);
 
         return [$pathBase, $scheme, $prePath];
     }
@@ -658,7 +658,7 @@ class Readability
                 continue;
             }
 
-            $matchString = $node->getAttribute('class') . ' ' . $node->getAttribute('id');
+            $matchString = $node->getAttribute('class').' '.$node->getAttribute('id');
 
             if (!$node->isProbablyVisible()) {
                 $this->logger->debug(sprintf('[Get Nodes] Removing hidden node... Match string was: \'%s\'', $matchString));
@@ -1049,7 +1049,7 @@ class Readability
                 while ($parentOfTopCandidate->nodeName !== 'body' && $parentOfTopCandidate->nodeType === XML_ELEMENT_NODE) {
                     $listsContainingThisAncestor = 0;
                     for ($ancestorIndex = 0; $ancestorIndex < count($alternativeCandidateAncestors) && $listsContainingThisAncestor < $MINIMUM_TOPCANDIDATES; $ancestorIndex++) {
-                        $listsContainingThisAncestor += (int)in_array($parentOfTopCandidate, $alternativeCandidateAncestors[$ancestorIndex]);
+                        $listsContainingThisAncestor += (int) in_array($parentOfTopCandidate, $alternativeCandidateAncestors[$ancestorIndex]);
                     }
                     if ($listsContainingThisAncestor >= $MINIMUM_TOPCANDIDATES) {
                         $topCandidate = $parentOfTopCandidate;
@@ -1285,7 +1285,7 @@ class Readability
                 $row = $tbody->getFirstElementChild();
                 if ($row->hasSingleTagInsideElement('td')) {
                     $cell = $row->getFirstElementChild();
-                    $cell = NodeUtility::setNodeTag($cell, (array_reduce(iterator_to_array($cell->childNodes), function ($carry, $node) {
+                    $cell = NodeUtility::setNodeTag($cell, (array_reduce(iterator_to_array($cell->childNodes), function($carry, $node) {
                         return $node->isPhrasingContent() && $carry;
                     }, true)) ? 'p' : 'div');
                     $table->parentNode->replaceChild($cell, $table);
@@ -1465,7 +1465,7 @@ class Readability
             $node = $DOMNodeList->item($length - 1 - $i);
 
             // First check if we're in a data table, in which case don't remove us.
-            if ($node->hasAncestorTag('table', -1, function ($node) {
+            if ($node->hasAncestorTag('table', -1, function($node) {
                 return $node->isReadabilityDataTable();
             })) {
                 continue;
@@ -1577,7 +1577,7 @@ class Readability
     public function _cleanHeaders(DOMDocument $article)
     {
         for ($headerIndex = 1; $headerIndex < 3; $headerIndex++) {
-            $headers = $article->getElementsByTagName('h' . $headerIndex);
+            $headers = $article->getElementsByTagName('h'.$headerIndex);
             /** @var $header DOMElement */
             foreach ($headers as $header) {
                 $weight = 0;

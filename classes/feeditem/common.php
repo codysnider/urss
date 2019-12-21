@@ -1,196 +1,210 @@
 <?php
 abstract class FeedItem_Common extends FeedItem {
-	protected $elem;
-	protected $xpath;
-	protected $doc;
+    protected $elem;
+    protected $xpath;
+    protected $doc;
 
-	public function __construct($elem, $doc, $xpath) {
-		$this->elem = $elem;
-		$this->xpath = $xpath;
-		$this->doc = $doc;
+    public function __construct($elem, $doc, $xpath) {
+        $this->elem = $elem;
+        $this->xpath = $xpath;
+        $this->doc = $doc;
 
-		try {
+        try {
 
-			$source = $elem->getElementsByTagName("source")->item(0);
+            $source = $elem->getElementsByTagName("source")->item(0);
 
-			// we don't need <source> element
-			if ($source)
-				$elem->removeChild($source);
-		} catch (DOMException $e) {
-			//
-		}
-	}
+            // we don't need <source> element
+            if ($source) {
+                            $elem->removeChild($source);
+            }
+        } catch (DOMException $e) {
+            //
+        }
+    }
 
-	public function get_element() {
-		return $this->elem;
-	}
+    public function get_element() {
+        return $this->elem;
+    }
 
-	public function get_author() {
-		$author = $this->elem->getElementsByTagName("author")->item(0);
+    public function get_author() {
+        $author = $this->elem->getElementsByTagName("author")->item(0);
 
-		if ($author) {
-			$name = $author->getElementsByTagName("name")->item(0);
+        if ($author) {
+            $name = $author->getElementsByTagName("name")->item(0);
 
-			if ($name) return clean($name->nodeValue);
+            if ($name) {
+                return clean($name->nodeValue);
+            }
 
-			$email = $author->getElementsByTagName("email")->item(0);
+            $email = $author->getElementsByTagName("email")->item(0);
 
-			if ($email) return clean($email->nodeValue);
+            if ($email) {
+                return clean($email->nodeValue);
+            }
 
-			if ($author->nodeValue)
-				return clean($author->nodeValue);
-		}
+            if ($author->nodeValue) {
+                            return clean($author->nodeValue);
+            }
+        }
 
-		$author_elems = $this->xpath->query("dc:creator", $this->elem);
-		$authors = [];
+        $author_elems = $this->xpath->query("dc:creator", $this->elem);
+        $authors = [];
 
-		foreach ($author_elems as $author) {
-			array_push($authors, clean($author->nodeValue));
-		}
+        foreach ($author_elems as $author) {
+            array_push($authors, clean($author->nodeValue));
+        }
 
-		return implode(", ", $authors);
-	}
+        return implode(", ", $authors);
+    }
 
-	public function get_comments_url() {
-		//RSS only. Use a query here to avoid namespace clashes (e.g. with slash).
-		//might give a wrong result if a default namespace was declared (possible with XPath 2.0)
-		$com_url = $this->xpath->query("comments", $this->elem)->item(0);
+    public function get_comments_url() {
+        //RSS only. Use a query here to avoid namespace clashes (e.g. with slash).
+        //might give a wrong result if a default namespace was declared (possible with XPath 2.0)
+        $com_url = $this->xpath->query("comments", $this->elem)->item(0);
 
-		if ($com_url)
-			return clean($com_url->nodeValue);
+        if ($com_url) {
+                    return clean($com_url->nodeValue);
+        }
 
-		//Atom Threading Extension (RFC 4685) stuff. Could be used in RSS feeds, so it's in common.
-		//'text/html' for type is too restrictive?
-		$com_url = $this->xpath->query("atom:link[@rel='replies' and contains(@type,'text/html')]/@href", $this->elem)->item(0);
+        //Atom Threading Extension (RFC 4685) stuff. Could be used in RSS feeds, so it's in common.
+        //'text/html' for type is too restrictive?
+        $com_url = $this->xpath->query("atom:link[@rel='replies' and contains(@type,'text/html')]/@href", $this->elem)->item(0);
 
-		if ($com_url)
-			return clean($com_url->nodeValue);
-	}
+        if ($com_url) {
+                    return clean($com_url->nodeValue);
+        }
+    }
 
-	public function get_comments_count() {
-		//also query for ATE stuff here
-		$query = "slash:comments|thread:total|atom:link[@rel='replies']/@thread:count";
-		$comments = $this->xpath->query($query, $this->elem)->item(0);
+    public function get_comments_count() {
+        //also query for ATE stuff here
+        $query = "slash:comments|thread:total|atom:link[@rel='replies']/@thread:count";
+        $comments = $this->xpath->query($query, $this->elem)->item(0);
 
-		if ($comments) {
-			return clean($comments->nodeValue);
-		}
-	}
+        if ($comments) {
+            return clean($comments->nodeValue);
+        }
+    }
 
-	// this is common for both Atom and RSS types and deals with various media: elements
-	public function get_enclosures() {
-		$encs = [];
+    // this is common for both Atom and RSS types and deals with various media: elements
+    public function get_enclosures() {
+        $encs = [];
 
-		$enclosures = $this->xpath->query("media:content", $this->elem);
+        $enclosures = $this->xpath->query("media:content", $this->elem);
 
-		foreach ($enclosures as $enclosure) {
-			$enc = new FeedEnclosure();
+        foreach ($enclosures as $enclosure) {
+            $enc = new FeedEnclosure();
 
-			$enc->type = clean($enclosure->getAttribute("type"));
-			$enc->link = clean($enclosure->getAttribute("url"));
-			$enc->length = clean($enclosure->getAttribute("length"));
-			$enc->height = clean($enclosure->getAttribute("height"));
-			$enc->width = clean($enclosure->getAttribute("width"));
+            $enc->type = clean($enclosure->getAttribute("type"));
+            $enc->link = clean($enclosure->getAttribute("url"));
+            $enc->length = clean($enclosure->getAttribute("length"));
+            $enc->height = clean($enclosure->getAttribute("height"));
+            $enc->width = clean($enclosure->getAttribute("width"));
 
-			$medium = clean($enclosure->getAttribute("medium"));
-			if (!$enc->type && $medium) {
-				$enc->type = strtolower("$medium/generic");
-			}
+            $medium = clean($enclosure->getAttribute("medium"));
+            if (!$enc->type && $medium) {
+                $enc->type = strtolower("$medium/generic");
+            }
 
-			$desc = $this->xpath->query("media:description", $enclosure)->item(0);
-			if ($desc) $enc->title = clean($desc->nodeValue);
+            $desc = $this->xpath->query("media:description", $enclosure)->item(0);
+            if ($desc) {
+                $enc->title = clean($desc->nodeValue);
+            }
 
-			array_push($encs, $enc);
-		}
+            array_push($encs, $enc);
+        }
 
-		$enclosures = $this->xpath->query("media:group", $this->elem);
+        $enclosures = $this->xpath->query("media:group", $this->elem);
 
-		foreach ($enclosures as $enclosure) {
-			$enc = new FeedEnclosure();
+        foreach ($enclosures as $enclosure) {
+            $enc = new FeedEnclosure();
 
-			$content = $this->xpath->query("media:content", $enclosure)->item(0);
+            $content = $this->xpath->query("media:content", $enclosure)->item(0);
 
-			if ($content) {
-				$enc->type = clean($content->getAttribute("type"));
-				$enc->link = clean($content->getAttribute("url"));
-				$enc->length = clean($content->getAttribute("length"));
-				$enc->height = clean($content->getAttribute("height"));
-				$enc->width = clean($content->getAttribute("width"));
+            if ($content) {
+                $enc->type = clean($content->getAttribute("type"));
+                $enc->link = clean($content->getAttribute("url"));
+                $enc->length = clean($content->getAttribute("length"));
+                $enc->height = clean($content->getAttribute("height"));
+                $enc->width = clean($content->getAttribute("width"));
 
-				$medium = clean($content->getAttribute("medium"));
-				if (!$enc->type && $medium) {
-					$enc->type = strtolower("$medium/generic");
-				}
+                $medium = clean($content->getAttribute("medium"));
+                if (!$enc->type && $medium) {
+                    $enc->type = strtolower("$medium/generic");
+                }
 
-				$desc = $this->xpath->query("media:description", $content)->item(0);
-				if ($desc) {
-					$enc->title = clean($desc->nodeValue);
-				} else {
-					$desc = $this->xpath->query("media:description", $enclosure)->item(0);
-					if ($desc) $enc->title = clean($desc->nodeValue);
-				}
+                $desc = $this->xpath->query("media:description", $content)->item(0);
+                if ($desc) {
+                    $enc->title = clean($desc->nodeValue);
+                } else {
+                    $desc = $this->xpath->query("media:description", $enclosure)->item(0);
+                    if ($desc) {
+                        $enc->title = clean($desc->nodeValue);
+                    }
+                }
 
-				array_push($encs, $enc);
-			}
-		}
+                array_push($encs, $enc);
+            }
+        }
 
-		$enclosures = $this->xpath->query("media:thumbnail", $this->elem);
+        $enclosures = $this->xpath->query("media:thumbnail", $this->elem);
 
-		foreach ($enclosures as $enclosure) {
-			$enc = new FeedEnclosure();
+        foreach ($enclosures as $enclosure) {
+            $enc = new FeedEnclosure();
 
-			$enc->type = "image/generic";
-			$enc->link = clean($enclosure->getAttribute("url"));
-			$enc->height = clean($enclosure->getAttribute("height"));
-			$enc->width = clean($enclosure->getAttribute("width"));
+            $enc->type = "image/generic";
+            $enc->link = clean($enclosure->getAttribute("url"));
+            $enc->height = clean($enclosure->getAttribute("height"));
+            $enc->width = clean($enclosure->getAttribute("width"));
 
-			array_push($encs, $enc);
-		}
+            array_push($encs, $enc);
+        }
 
-		return $encs;
-	}
+        return $encs;
+    }
 
-	public function count_children($node) {
-		return $node->getElementsByTagName("*")->length;
-	}
+    public function count_children($node) {
+        return $node->getElementsByTagName("*")->length;
+    }
 
-	public function subtree_or_text($node) {
-		if ($this->count_children($node) == 0) {
-			return $node->nodeValue;
-		} else {
-			return $node->c14n();
-		}
-	}
+    public function subtree_or_text($node) {
+        if ($this->count_children($node) == 0) {
+            return $node->nodeValue;
+        } else {
+            return $node->c14n();
+        }
+    }
 
-	public static function normalize_categories($cats) {
+    public static function normalize_categories($cats) {
 
-		$tmp = [];
+        $tmp = [];
 
-		foreach ($cats as $rawcat) {
-			$tmp = array_merge($tmp, explode(",", $rawcat));
-		}
+        foreach ($cats as $rawcat) {
+            $tmp = array_merge($tmp, explode(",", $rawcat));
+        }
 
-		$tmp = array_map(function($srccat) {
-			$cat = clean(trim(mb_strtolower($srccat)));
+        $tmp = array_map(function($srccat) {
+            $cat = clean(trim(mb_strtolower($srccat)));
 
-			// we don't support numeric tags
-			if (is_numeric($cat))
-				$cat = 't:' . $cat;
+            // we don't support numeric tags
+            if (is_numeric($cat)) {
+                            $cat = 't:'.$cat;
+            }
 
-			$cat = preg_replace('/[,\'\"]/', "", $cat);
+            $cat = preg_replace('/[,\'\"]/', "", $cat);
 
-			if (DB_TYPE == "mysql") {
-				$cat = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $cat);
-			}
+            if (DB_TYPE == "mysql") {
+                $cat = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $cat);
+            }
 
-			if (mb_strlen($cat) > 250)
-				$cat = mb_substr($cat, 0, 250);
+            if (mb_strlen($cat) > 250) {
+                            $cat = mb_substr($cat, 0, 250);
+            }
 
-			return $cat;
-		}, $tmp);
+            return $cat;
+        }, $tmp);
 
-		asort($tmp);
+        asort($tmp);
 
-		return array_unique($tmp);
-	}
+        return array_unique($tmp);
+    }
 }

@@ -1,9 +1,9 @@
 #!/usr/bin/env php
 <?php
-set_include_path(dirname(__FILE__) .DIRECTORY_SEPARATOR."include" . PATH_SEPARATOR .
+set_include_path(dirname(__FILE__).DIRECTORY_SEPARATOR."include".PATH_SEPARATOR.
     get_include_path());
 
-declare(ticks = 1);
+declare(ticks=1);
 chdir(dirname(__FILE__));
 
 define('DISABLE_SESSIONS', true);
@@ -93,9 +93,9 @@ function sigchld_handler($signal) {
 
 function shutdown($caller_pid) {
     if ($caller_pid == posix_getpid()) {
-        if (file_exists(LOCK_DIRECTORY . "/update_daemon.lock")) {
+        if (file_exists(LOCK_DIRECTORY."/update_daemon.lock")) {
             Debug::log("removing lockfile (master)...");
-            unlink(LOCK_DIRECTORY . "/update_daemon.lock");
+            unlink(LOCK_DIRECTORY."/update_daemon.lock");
         }
     }
 }
@@ -103,9 +103,9 @@ function shutdown($caller_pid) {
 function task_shutdown() {
     $pid = posix_getpid();
 
-    if (file_exists(LOCK_DIRECTORY . "/update_daemon-$pid.lock")) {
+    if (file_exists(LOCK_DIRECTORY."/update_daemon-$pid.lock")) {
         Debug::log("removing lockfile ($pid)...");
-        unlink(LOCK_DIRECTORY . "/update_daemon-$pid.lock");
+        unlink(LOCK_DIRECTORY."/update_daemon-$pid.lock");
     }
 }
 
@@ -134,15 +134,15 @@ $longopts = array(
 
 $options = getopt("", $longopts);
 
-if (isset($options["help"]) ) {
+if (isset($options["help"])) {
     print "Tiny Tiny RSS update daemon.\n\n";
     print "Options:\n";
     print "  --log FILE           - log messages to FILE\n";
     print "  --log-level N        - log verbosity level\n";
     print "  --tasks N            - amount of update tasks to spawn\n";
-    print "                         default: " . MAX_JOBS . "\n";
+    print "                         default: ".MAX_JOBS."\n";
     print "  --interval N         - task spawn interval\n";
-    print "                         default: " . SPAWN_INTERVAL . " seconds.\n";
+    print "                         default: ".SPAWN_INTERVAL." seconds.\n";
     print "  --quiet              - don't output messages to stdout\n";
     return;
 }
@@ -150,13 +150,13 @@ if (isset($options["help"]) ) {
 Debug::set_enabled(true);
 
 if (isset($options["log-level"])) {
-    Debug::set_loglevel((int)$options["log-level"]);
+    Debug::set_loglevel((int) $options["log-level"]);
 }
 
 if (isset($options["log"])) {
     Debug::set_quiet(isset($options['quiet']));
     Debug::set_logfile($options["log"]);
-    Debug::log("Logging to " . $options["log"]);
+    Debug::log("Logging to ".$options["log"]);
 } else {
     if (isset($options['quiet'])) {
         Debug::set_loglevel(Debug::$LOG_DISABLED);
@@ -164,14 +164,14 @@ if (isset($options["log"])) {
 }
 
 if (isset($options["tasks"])) {
-    Debug::log("Set to spawn " . $options["tasks"] . " children.");
+    Debug::log("Set to spawn ".$options["tasks"]." children.");
     $max_jobs = $options["tasks"];
 } else {
     $max_jobs = MAX_JOBS;
 }
 
 if (isset($options["interval"])) {
-    Debug::log("Spawn interval: " . $options["interval"] . " seconds.");
+    Debug::log("Spawn interval: ".$options["interval"]." seconds.");
     $spawn_interval = $options["interval"];
 } else {
     $spawn_interval = SPAWN_INTERVAL;
@@ -246,7 +246,7 @@ while (true) {
 
                 $my_pid = posix_getpid();
 
-                passthru(PHP_EXECUTABLE . " update.php --daemon-loop $quiet $log --task $j --pidlock $my_pid");
+                passthru(PHP_EXECUTABLE." update.php --daemon-loop $quiet $log --task $j --pidlock $my_pid");
 
                 sleep(1);
 

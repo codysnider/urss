@@ -1,130 +1,133 @@
 <?php
-	set_include_path(dirname(__FILE__) ."/include" . PATH_SEPARATOR .
-		get_include_path());
+    set_include_path(dirname(__FILE__)."/include".PATH_SEPARATOR.
+        get_include_path());
 
-	$op = $_REQUEST["op"];
-	@$method = $_REQUEST['subop'] ? $_REQUEST['subop'] : $_REQUEST["method"];
+    $op = $_REQUEST["op"];
+    @$method = $_REQUEST['subop'] ? $_REQUEST['subop'] : $_REQUEST["method"];
 
-	if (!$method)
-		$method = 'index';
-	else
-		$method = strtolower($method);
+    if (!$method) {
+            $method = 'index';
+    } else {
+            $method = strtolower($method);
+    }
 
-	/* Public calls compatibility shim */
+    /* Public calls compatibility shim */
 
-	$public_calls = array("globalUpdateFeeds", "rss", "getUnread", "getProfiles", "share",
-		"fbexport", "logout", "pubsub");
+    $public_calls = array("globalUpdateFeeds", "rss", "getUnread", "getProfiles", "share",
+        "fbexport", "logout", "pubsub");
 
-	if (array_search($op, $public_calls) !== false) {
-		header("Location: public.php?" . $_SERVER['QUERY_STRING']);
-		return;
-	}
+    if (array_search($op, $public_calls) !== false) {
+        header("Location: public.php?".$_SERVER['QUERY_STRING']);
+        return;
+    }
 
-	@$csrf_token = $_REQUEST['csrf_token'];
+    @$csrf_token = $_REQUEST['csrf_token'];
 
-	require_once "autoload.php";
-	require_once "sessions.php";
-	require_once "functions.php";
-	require_once "config.php";
-	require_once "db.php";
-	require_once "db-prefs.php";
+    require_once "autoload.php";
+    require_once "sessions.php";
+    require_once "functions.php";
+    require_once "config.php";
+    require_once "db.php";
+    require_once "db-prefs.php";
 
-	startup_gettext();
+    startup_gettext();
 
-	$script_started = microtime(true);
+    $script_started = microtime(true);
 
-	if (!init_plugins()) return;
+    if (!init_plugins()) {
+        return;
+    }
 
-	header("Content-Type: text/json; charset=utf-8");
+    header("Content-Type: text/json; charset=utf-8");
 
-	if (ENABLE_GZIP_OUTPUT && function_exists("ob_gzhandler")) {
-		ob_start("ob_gzhandler");
-	}
+    if (ENABLE_GZIP_OUTPUT && function_exists("ob_gzhandler")) {
+        ob_start("ob_gzhandler");
+    }
 
-	if (SINGLE_USER_MODE) {
-		authenticate_user( "admin", null);
-	}
+    if (SINGLE_USER_MODE) {
+        authenticate_user("admin", null);
+    }
 
-	if ($_SESSION["uid"]) {
-		if (!validate_session()) {
-			header("Content-Type: text/json");
-			print error_json(6);
-			return;
-		}
-		load_user_plugins( $_SESSION["uid"]);
-	}
+    if ($_SESSION["uid"]) {
+        if (!validate_session()) {
+            header("Content-Type: text/json");
+            print error_json(6);
+            return;
+        }
+        load_user_plugins($_SESSION["uid"]);
+    }
 
-	$purge_intervals = array(
-		0  => __("Use default"),
-		-1 => __("Never purge"),
-		5  => __("1 week old"),
-		14 => __("2 weeks old"),
-		31 => __("1 month old"),
-		60 => __("2 months old"),
-		90 => __("3 months old"));
+    $purge_intervals = array(
+        0  => __("Use default"),
+        -1 => __("Never purge"),
+        5  => __("1 week old"),
+        14 => __("2 weeks old"),
+        31 => __("1 month old"),
+        60 => __("2 months old"),
+        90 => __("3 months old"));
 
-	$update_intervals = array(
-		0   => __("Default interval"),
-		-1  => __("Disable updates"),
-		15  => __("15 minutes"),
-		30  => __("30 minutes"),
-		60  => __("Hourly"),
-		240 => __("4 hours"),
-		720 => __("12 hours"),
-		1440 => __("Daily"),
-		10080 => __("Weekly"));
+    $update_intervals = array(
+        0   => __("Default interval"),
+        -1  => __("Disable updates"),
+        15  => __("15 minutes"),
+        30  => __("30 minutes"),
+        60  => __("Hourly"),
+        240 => __("4 hours"),
+        720 => __("12 hours"),
+        1440 => __("Daily"),
+        10080 => __("Weekly"));
 
-	$update_intervals_nodefault = array(
-		-1  => __("Disable updates"),
-		15  => __("15 minutes"),
-		30  => __("30 minutes"),
-		60  => __("Hourly"),
-		240 => __("4 hours"),
-		720 => __("12 hours"),
-		1440 => __("Daily"),
-		10080 => __("Weekly"));
+    $update_intervals_nodefault = array(
+        -1  => __("Disable updates"),
+        15  => __("15 minutes"),
+        30  => __("30 minutes"),
+        60  => __("Hourly"),
+        240 => __("4 hours"),
+        720 => __("12 hours"),
+        1440 => __("Daily"),
+        10080 => __("Weekly"));
 
-	$access_level_names = array(
-		0 => __("User"),
-		5 => __("Power User"),
-		10 => __("Administrator"));
+    $access_level_names = array(
+        0 => __("User"),
+        5 => __("Power User"),
+        10 => __("Administrator"));
 
-	$op = str_replace("-", "_", $op);
+    $op = str_replace("-", "_", $op);
 
-	$override = PluginHost::getInstance()->lookup_handler($op, $method);
+    $override = PluginHost::getInstance()->lookup_handler($op, $method);
 
-	if (class_exists($op) || $override) {
+    if (class_exists($op) || $override) {
 
-		if ($override) {
-			$handler = $override;
-		} else {
-			$handler = new $op($_REQUEST);
-		}
+        if ($override) {
+            $handler = $override;
+        } else {
+            $handler = new $op($_REQUEST);
+        }
 
-		if ($handler && implements_interface($handler, 'IHandler')) {
-			if (validate_csrf($csrf_token) || $handler->csrf_ignore($method)) {
-				if ($handler->before($method)) {
-					if ($method && method_exists($handler, $method)) {
-						$handler->$method();
-					} else {
-						if (method_exists($handler, "catchall")) {
-							$handler->catchall($method);
-						}
-					}
-					$handler->after();
-					return;
-				} else {
-					header("Content-Type: text/json");
-					print error_json(6);
-					return;
-				}
-			} else {
-				header("Content-Type: text/json");
-				print error_json(6);
-				return;
-			}
-		}
-	}
+        if ($handler && implements_interface($handler, 'IHandler')) {
+            if (validate_csrf($csrf_token) || $handler->csrf_ignore($method)) {
+                if ($handler->before($method)) {
+                    if ($method && method_exists($handler, $method)) {
+                        $handler->$method();
+                    } else {
+                        if (method_exists($handler, "catchall")) {
+                            $handler->catchall($method);
+                        }
+                    }
+                    $handler->after();
+                    return;
+                } else {
+                    header("Content-Type: text/json");
+                    print error_json(6);
+                    return;
+                }
+            } else {
+                header("Content-Type: text/json");
+                print error_json(6);
+                return;
+            }
+        }
+    }
 
-	header("Content-Type: text/json");
-	print error_json(13);
+    header("Content-Type: text/json");
+    print error_json(13);

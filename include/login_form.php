@@ -7,15 +7,15 @@
 	<link rel="shortcut icon" type="image/png" href="images/favicon.png">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<?php
-	foreach (array("lib/prototype.js",
-				"lib/dojo/dojo.js",
-				"lib/dojo/tt-rss-layer.js",
-				"js/common.js",
-				"errors.php?mode=js") as $jsfile) {
+    foreach (array("lib/prototype.js",
+                "lib/dojo/dojo.js",
+                "lib/dojo/tt-rss-layer.js",
+                "js/common.js",
+                "errors.php?mode=js") as $jsfile) {
 
-		echo javascript_tag($jsfile);
+        echo javascript_tag($jsfile);
 
-	} ?>
+    } ?>
 
 	<script type="text/javascript">
 		require({cache:{}});

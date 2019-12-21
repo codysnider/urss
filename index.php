@@ -1,36 +1,38 @@
 <?php
-	if (file_exists("install") && !file_exists("config.php")) {
-		header("Location: install/");
-	}
+    if (file_exists("install") && !file_exists("config.php")) {
+        header("Location: install/");
+    }
 
-	if (!file_exists("config.php")) {
-		print "<b>Fatal Error</b>: You forgot to copy
+    if (!file_exists("config.php")) {
+        print "<b>Fatal Error</b>: You forgot to copy
 		<b>config.php-dist</b> to <b>config.php</b> and edit it.\n";
-		exit;
-	}
+        exit;
+    }
 
-	// we need a separate check here because functions.php might get parsed
-	// incorrectly before 5.3 because of :: syntax.
-	if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-		print "<b>Fatal Error</b>: PHP version 5.6.0 or newer required. You're using " . PHP_VERSION . ".\n";
-		exit;
-	}
+    // we need a separate check here because functions.php might get parsed
+    // incorrectly before 5.3 because of :: syntax.
+    if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+        print "<b>Fatal Error</b>: PHP version 5.6.0 or newer required. You're using ".PHP_VERSION.".\n";
+        exit;
+    }
 
-	set_include_path(dirname(__FILE__) ."/include" . PATH_SEPARATOR .
-		get_include_path());
+    set_include_path(dirname(__FILE__)."/include".PATH_SEPARATOR.
+        get_include_path());
 
-	require_once "autoload.php";
-	require_once "sessions.php";
-	require_once "functions.php";
-	require_once "sanity_check.php";
-	require_once "config.php";
-	require_once "db-prefs.php";
+    require_once "autoload.php";
+    require_once "sessions.php";
+    require_once "functions.php";
+    require_once "sanity_check.php";
+    require_once "config.php";
+    require_once "db-prefs.php";
 
-	if (!init_plugins()) return;
+    if (!init_plugins()) {
+        return;
+    }
 
-	login_sequence();
+    login_sequence();
 
-	header('Content-Type: text/html; charset=utf-8');
+    header('Content-Type: text/html; charset=utf-8');
 
 ?>
 <!DOCTYPE html>
@@ -40,23 +42,23 @@
     <meta name="viewport" content="initial-scale=1,width=device-width" />
 
 	<?php if ($_SESSION["uid"]) {
-		$theme = get_pref("USER_CSS_THEME", false, false);
-		if ($theme && theme_exists("$theme")) {
-			echo stylesheet_tag(get_theme_path($theme), 'theme_css');
-		}
-	}
+        $theme = get_pref("USER_CSS_THEME", false, false);
+        if ($theme && theme_exists("$theme")) {
+            echo stylesheet_tag(get_theme_path($theme), 'theme_css');
+        }
+    }
 
-	print_user_stylesheet()
+    print_user_stylesheet()
 
-	?>
+    ?>
 	<style type="text/css">
 	<?php
-		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
-			if (method_exists($p, "get_css")) {
-				echo $p->get_css();
-			}
-		}
-	?>
+        foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
+            if (method_exists($p, "get_css")) {
+                echo $p->get_css();
+            }
+        }
+    ?>
 	</style>
 
 	<link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
@@ -73,17 +75,17 @@
 	</script>
 
 	<?php
-	foreach (array("lib/prototype.js",
-				"lib/scriptaculous/scriptaculous.js?load=effects,controls",
-				"lib/dojo/dojo.js",
-				"lib/dojo/tt-rss-layer.js",
-				"js/tt-rss.js",
-				"js/common.js",
-				"errors.php?mode=js") as $jsfile) {
+    foreach (array("lib/prototype.js",
+                "lib/scriptaculous/scriptaculous.js?load=effects,controls",
+                "lib/dojo/dojo.js",
+                "lib/dojo/tt-rss-layer.js",
+                "js/tt-rss.js",
+                "js/common.js",
+                "errors.php?mode=js") as $jsfile) {
 
-		echo javascript_tag($jsfile);
+        echo javascript_tag($jsfile);
 
-	} ?>
+    } ?>
 
 	<script type="text/javascript">
 		require({cache:{}});
@@ -91,22 +93,22 @@
 
 	<script type="text/javascript">
 	<?php
-		foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
-			if (method_exists($p, "get_js")) {
-			    $script = $p->get_js();
+        foreach (PluginHost::getInstance()->get_plugins() as $n => $p) {
+            if (method_exists($p, "get_js")) {
+                $script = $p->get_js();
 
-			    if ($script) {
-					echo "try {
+                if ($script) {
+                    echo "try {
 					    $script
 					} catch (e) {
                         console.warn('failed to initialize plugin JS: $n', e);
                     }";
-				}
-			}
-		}
+                }
+            }
+        }
 
-		init_js_translations();
-	?>
+        init_js_translations();
+    ?>
 	</script>
 
 	<style type="text/css">
@@ -146,9 +148,9 @@
             <img src='images/indicator_tiny.gif'/>
             <?php echo  __("Loading, please wait..."); ?></div>
         <?php
-          foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FEED_TREE) as $p) {
+            foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FEED_TREE) as $p) {
             echo $p->hook_feed_tree();
-          }
+            }
         ?>
         <div id="feedTree"></div>
     </div>
@@ -221,7 +223,7 @@
 
                 <?php
                     foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_TOOLBAR_BUTTON) as $p) {
-                         echo $p->hook_toolbar_button();
+                            echo $p->hook_toolbar_button();
                     }
                 ?>
 
@@ -243,7 +245,7 @@
 
                         <?php
                             foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_ACTION_ITEM) as $p) {
-                             echo $p->hook_action_item();
+                                echo $p->hook_action_item();
                             }
                         ?>
 

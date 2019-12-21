@@ -1,26 +1,28 @@
 <?php
-	function stylesheet_tag($filename, $id = false) {
-		$timestamp = filemtime($filename);
+    function stylesheet_tag($filename, $id = false) {
+        $timestamp = filemtime($filename);
 
-		$id_part = $id ? "id=\"$id\"" : "";
+        $id_part = $id ? "id=\"$id\"" : "";
 
-		return "<link rel=\"stylesheet\" $id_part type=\"text/css\" href=\"$filename?$timestamp\"/>\n";
-	}
+        return "<link rel=\"stylesheet\" $id_part type=\"text/css\" href=\"$filename?$timestamp\"/>\n";
+    }
 
-	function javascript_tag($filename) {
-		$query = "";
+    function javascript_tag($filename) {
+        $query = "";
 
-		if (!(strpos($filename, "?") === false)) {
-			$query = substr($filename, strpos($filename, "?")+1);
-			$filename = substr($filename, 0, strpos($filename, "?"));
-		}
+        if (!(strpos($filename, "?") === false)) {
+            $query = substr($filename, strpos($filename, "?") + 1);
+            $filename = substr($filename, 0, strpos($filename, "?"));
+        }
 
-		$timestamp = filemtime($filename);
+        $timestamp = filemtime($filename);
 
-		if ($query) $timestamp .= "&$query";
+        if ($query) {
+            $timestamp .= "&$query";
+        }
 
-		return "<script type=\"text/javascript\" charset=\"utf-8\" src=\"$filename?$timestamp\"></script>\n";
-	}
+        return "<script type=\"text/javascript\" charset=\"utf-8\" src=\"$filename?$timestamp\"></script>\n";
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,11 +33,11 @@
 		textarea { font-size : 12px; }
 	</style>
 	<?php
-		echo stylesheet_tag("../css/default.css");
-		echo javascript_tag("../lib/prototype.js");
-		echo javascript_tag("../lib/dojo/dojo.js");
-		echo javascript_tag("../lib/dojo/tt-rss-layer.js");
-	?>
+        echo stylesheet_tag("../css/default.css");
+        echo javascript_tag("../lib/prototype.js");
+        echo javascript_tag("../lib/dojo/dojo.js");
+        echo javascript_tag("../lib/dojo/tt-rss-layer.js");
+    ?>
 </head>
 <body class="flat ttrss_utility installer">
 
@@ -50,149 +52,149 @@
 
 <?php
 
-	// could be needed because of existing config.php
-	function define_default($param, $value) {
-		//
-	}
+    // could be needed because of existing config.php
+    function define_default($param, $value) {
+        //
+    }
 
-	function make_password($length = 12) {
-		$password = "";
-		$possible = "0123456789abcdfghjkmnpqrstvwxyzABCDFGHJKMNPQRSTVWXYZ*%+^";
+    function make_password($length = 12) {
+        $password = "";
+        $possible = "0123456789abcdfghjkmnpqrstvwxyzABCDFGHJKMNPQRSTVWXYZ*%+^";
 
-		$i = 0;
+        $i = 0;
 
-		while ($i < $length) {
+        while ($i < $length) {
 
-			try {
-				$idx = function_exists("random_int") ? random_int(0, strlen($possible) - 1) : mt_rand(0, strlen($possible) - 1);
-			} catch (Exception $e) {
-				$idx = mt_rand(0, strlen($possible) - 1);
-			}
+            try {
+                $idx = function_exists("random_int") ? random_int(0, strlen($possible) - 1) : mt_rand(0, strlen($possible) - 1);
+            } catch (Exception $e) {
+                $idx = mt_rand(0, strlen($possible) - 1);
+            }
 
-			$char = substr($possible, $idx, 1);
+            $char = substr($possible, $idx, 1);
 
-			if (!strstr($password, $char)) {
-				$password .= $char;
-				$i++;
-			}
-		}
-
-		return $password;
-	}
-
-
-	function sanity_check($db_type) {
-		$errors = array();
-
-		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-			array_push($errors, "PHP version 5.6.0 or newer required. You're using " . PHP_VERSION . ".");
-		}
-
-		if (!function_exists("curl_init") && !ini_get("allow_url_fopen")) {
-			array_push($errors, "PHP configuration option allow_url_fopen is disabled, and CURL functions are not present. Either enable allow_url_fopen or install PHP extension for CURL.");
-		}
-
-		if (!function_exists("json_encode")) {
-			array_push($errors, "PHP support for JSON is required, but was not found.");
-		}
-
-		if (!class_exists("PDO")) {
-			array_push($errors, "PHP support for PDO is required but was not found.");
-		}
-
-		if (!function_exists("mb_strlen")) {
-			array_push($errors, "PHP support for mbstring functions is required but was not found.");
-		}
-
-		if (!function_exists("hash")) {
-			array_push($errors, "PHP support for hash() function is required but was not found.");
-		}
-
-		if (!function_exists("iconv")) {
-			array_push($errors, "PHP support for iconv is required to handle multiple charsets.");
-		}
-
-		if (ini_get("safe_mode")) {
-			array_push($errors, "PHP safe mode setting is obsolete and not supported by tt-rss.");
-		}
-
-		if (!class_exists("DOMDocument")) {
-			array_push($errors, "PHP support for DOMDocument is required, but was not found.");
-		}
-
-		return $errors;
-	}
-
-	function print_error($msg) {
-		print "<div class='alert alert-error'>$msg</div>";
-	}
-
-	function print_notice($msg) {
-		print "<div class=\"alert alert-info\">$msg</div>";
-	}
-
-	function pdo_connect($host, $user, $pass, $db, $type, $port = false) {
-
-		$db_port = $port ? ';port=' . $port : '';
-		$db_host = $host ? ';host=' . $host : '';
-
-		try {
-			$pdo = new PDO($type . ':dbname=' . $db . $db_host . $db_port,
-				$user,
-				$pass);
-
-			return $pdo;
-		} catch (Exception $e) {
-		    print "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
-		    return null;
+            if (!strstr($password, $char)) {
+                $password .= $char;
+                $i++;
+            }
         }
-	}
 
-	function make_config($DB_TYPE, $DB_HOST, $DB_USER, $DB_NAME, $DB_PASS,
-			$DB_PORT, $SELF_URL_PATH) {
+        return $password;
+    }
 
-		$data = explode("\n", file_get_contents("../config.php-dist"));
 
-		$rv = "";
+    function sanity_check($db_type) {
+        $errors = array();
 
-		$finished = false;
+        if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+            array_push($errors, "PHP version 5.6.0 or newer required. You're using ".PHP_VERSION.".");
+        }
 
-		foreach ($data as $line) {
-			if (preg_match("/define\('DB_TYPE'/", $line)) {
-				$rv .= "\tdefine('DB_TYPE', '$DB_TYPE');\n";
-			} else if (preg_match("/define\('DB_HOST'/", $line)) {
-				$rv .= "\tdefine('DB_HOST', '$DB_HOST');\n";
-			} else if (preg_match("/define\('DB_USER'/", $line)) {
-				$rv .= "\tdefine('DB_USER', '$DB_USER');\n";
-			} else if (preg_match("/define\('DB_NAME'/", $line)) {
-				$rv .= "\tdefine('DB_NAME', '$DB_NAME');\n";
-			} else if (preg_match("/define\('DB_PASS'/", $line)) {
-				$rv .= "\tdefine('DB_PASS', '$DB_PASS');\n";
-			} else if (preg_match("/define\('DB_PORT'/", $line)) {
-				$rv .= "\tdefine('DB_PORT', '$DB_PORT');\n";
-			} else if (preg_match("/define\('SELF_URL_PATH'/", $line)) {
-				$rv .= "\tdefine('SELF_URL_PATH', '$SELF_URL_PATH');\n";
-			} else if (!$finished) {
-				$rv .= "$line\n";
-			}
+        if (!function_exists("curl_init") && !ini_get("allow_url_fopen")) {
+            array_push($errors, "PHP configuration option allow_url_fopen is disabled, and CURL functions are not present. Either enable allow_url_fopen or install PHP extension for CURL.");
+        }
 
-			if (preg_match("/\?\>/", $line)) {
-				$finished = true;
-			}
-		}
+        if (!function_exists("json_encode")) {
+            array_push($errors, "PHP support for JSON is required, but was not found.");
+        }
 
-		return $rv;
-	}
+        if (!class_exists("PDO")) {
+            array_push($errors, "PHP support for PDO is required but was not found.");
+        }
 
-	function is_server_https() {
-		return (!empty($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] != 'off')) || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https');
-	}
+        if (!function_exists("mb_strlen")) {
+            array_push($errors, "PHP support for mbstring functions is required but was not found.");
+        }
 
-	function make_self_url_path() {
-		$url_path = (is_server_https() ? 'https://' :  'http://') . $_SERVER["HTTP_HOST"] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+        if (!function_exists("hash")) {
+            array_push($errors, "PHP support for hash() function is required but was not found.");
+        }
 
-		return $url_path;
-	}
+        if (!function_exists("iconv")) {
+            array_push($errors, "PHP support for iconv is required to handle multiple charsets.");
+        }
+
+        if (ini_get("safe_mode")) {
+            array_push($errors, "PHP safe mode setting is obsolete and not supported by tt-rss.");
+        }
+
+        if (!class_exists("DOMDocument")) {
+            array_push($errors, "PHP support for DOMDocument is required, but was not found.");
+        }
+
+        return $errors;
+    }
+
+    function print_error($msg) {
+        print "<div class='alert alert-error'>$msg</div>";
+    }
+
+    function print_notice($msg) {
+        print "<div class=\"alert alert-info\">$msg</div>";
+    }
+
+    function pdo_connect($host, $user, $pass, $db, $type, $port = false) {
+
+        $db_port = $port ? ';port='.$port : '';
+        $db_host = $host ? ';host='.$host : '';
+
+        try {
+            $pdo = new PDO($type.':dbname='.$db.$db_host.$db_port,
+                $user,
+                $pass);
+
+            return $pdo;
+        } catch (Exception $e) {
+            print "<div class='alert alert-danger'>".$e->getMessage()."</div>";
+            return null;
+        }
+    }
+
+    function make_config($DB_TYPE, $DB_HOST, $DB_USER, $DB_NAME, $DB_PASS,
+            $DB_PORT, $SELF_URL_PATH) {
+
+        $data = explode("\n", file_get_contents("../config.php-dist"));
+
+        $rv = "";
+
+        $finished = false;
+
+        foreach ($data as $line) {
+            if (preg_match("/define\('DB_TYPE'/", $line)) {
+                $rv .= "\tdefine('DB_TYPE', '$DB_TYPE');\n";
+            } else if (preg_match("/define\('DB_HOST'/", $line)) {
+                $rv .= "\tdefine('DB_HOST', '$DB_HOST');\n";
+            } else if (preg_match("/define\('DB_USER'/", $line)) {
+                $rv .= "\tdefine('DB_USER', '$DB_USER');\n";
+            } else if (preg_match("/define\('DB_NAME'/", $line)) {
+                $rv .= "\tdefine('DB_NAME', '$DB_NAME');\n";
+            } else if (preg_match("/define\('DB_PASS'/", $line)) {
+                $rv .= "\tdefine('DB_PASS', '$DB_PASS');\n";
+            } else if (preg_match("/define\('DB_PORT'/", $line)) {
+                $rv .= "\tdefine('DB_PORT', '$DB_PORT');\n";
+            } else if (preg_match("/define\('SELF_URL_PATH'/", $line)) {
+                $rv .= "\tdefine('SELF_URL_PATH', '$SELF_URL_PATH');\n";
+            } else if (!$finished) {
+                $rv .= "$line\n";
+            }
+
+            if (preg_match("/\?\>/", $line)) {
+                $finished = true;
+            }
+        }
+
+        return $rv;
+    }
+
+    function is_server_https() {
+        return (!empty($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] != 'off')) || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https');
+    }
+
+    function make_self_url_path() {
+        $url_path = (is_server_https() ? 'https://' : 'http://').$_SERVER["HTTP_HOST"].parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+
+        return $url_path;
+    }
 
 ?>
 
@@ -202,32 +204,32 @@
 
 <?php
 
-	if (file_exists("../config.php")) {
-		require "../config.php";
+    if (file_exists("../config.php")) {
+        require "../config.php";
 
-		if (!defined('_INSTALLER_IGNORE_CONFIG_CHECK')) {
-			print_error("Error: config.php already exists in tt-rss directory; aborting.");
+        if (!defined('_INSTALLER_IGNORE_CONFIG_CHECK')) {
+            print_error("Error: config.php already exists in tt-rss directory; aborting.");
 
-			print "<form method='GET' action='../index.php'>
+            print "<form method='GET' action='../index.php'>
 				<button type='submit' dojoType='dijit.form.Button' class='alt-primary'>Return to Tiny Tiny RSS</button>
 				</form>";
-			exit;
-		}
-	}
+            exit;
+        }
+    }
 
-	@$op = $_REQUEST['op'];
+    @$op = $_REQUEST['op'];
 
-	@$DB_HOST = strip_tags($_POST['DB_HOST']);
-	@$DB_TYPE = strip_tags($_POST['DB_TYPE']);
-	@$DB_USER = strip_tags($_POST['DB_USER']);
-	@$DB_NAME = strip_tags($_POST['DB_NAME']);
-	@$DB_PASS = strip_tags($_POST['DB_PASS']);
-	@$DB_PORT = strip_tags($_POST['DB_PORT']);
-	@$SELF_URL_PATH = strip_tags($_POST['SELF_URL_PATH']);
+    @$DB_HOST = strip_tags($_POST['DB_HOST']);
+    @$DB_TYPE = strip_tags($_POST['DB_TYPE']);
+    @$DB_USER = strip_tags($_POST['DB_USER']);
+    @$DB_NAME = strip_tags($_POST['DB_NAME']);
+    @$DB_PASS = strip_tags($_POST['DB_PASS']);
+    @$DB_PORT = strip_tags($_POST['DB_PORT']);
+    @$SELF_URL_PATH = strip_tags($_POST['SELF_URL_PATH']);
 
-	if (!$SELF_URL_PATH) {
-		$SELF_URL_PATH = preg_replace("/\/install\/$/", "/", make_self_url_path());
-	}
+    if (!$SELF_URL_PATH) {
+        $SELF_URL_PATH = preg_replace("/\/install\/$/", "/", make_self_url_path());
+    }
 ?>
 
 <form action="" method="post">
@@ -236,9 +238,9 @@
 	<h2>Database settings</h2>
 
 	<?php
-		$issel_pgsql = $DB_TYPE == "pgsql" ? "selected='selected'" : "";
-		$issel_mysql = $DB_TYPE == "mysql" ? "selected='selected'" : "";
-	?>
+        $issel_pgsql = $DB_TYPE == "pgsql" ? "selected='selected'" : "";
+        $issel_mysql = $DB_TYPE == "mysql" ? "selected='selected'" : "";
+    ?>
 
 	<fieldset>
 		<label>Database type:</label>
@@ -292,87 +294,87 @@
 	<h2>Checking configuration</h2>
 
 	<?php
-		$errors = sanity_check($DB_TYPE);
+        $errors = sanity_check($DB_TYPE);
 
-		if (count($errors) > 0) {
-			print "<p>Some configuration tests failed. Please correct them before continuing.</p>";
+        if (count($errors) > 0) {
+            print "<p>Some configuration tests failed. Please correct them before continuing.</p>";
 
-			print "<ul>";
+            print "<ul>";
 
-			foreach ($errors as $error) {
-				print "<li style='color : red'>$error</li>";
-			}
+            foreach ($errors as $error) {
+                print "<li style='color : red'>$error</li>";
+            }
 
-			print "</ul>";
+            print "</ul>";
 
-			exit;
-		}
+            exit;
+        }
 
-		$notices = array();
+        $notices = array();
 
-		if (!function_exists("curl_init")) {
-			array_push($notices, "It is highly recommended to enable support for CURL in PHP.");
-		}
+        if (!function_exists("curl_init")) {
+            array_push($notices, "It is highly recommended to enable support for CURL in PHP.");
+        }
 
-		if (function_exists("curl_init") && ini_get("open_basedir")) {
-			array_push($notices, "CURL and open_basedir combination breaks support for HTTP redirects. See the FAQ for more information.");
-		}
+        if (function_exists("curl_init") && ini_get("open_basedir")) {
+            array_push($notices, "CURL and open_basedir combination breaks support for HTTP redirects. See the FAQ for more information.");
+        }
 
-		if (!function_exists("idn_to_ascii")) {
-			array_push($notices, "PHP support for Internationalization Functions is required to handle Internationalized Domain Names.");
-		}
+        if (!function_exists("idn_to_ascii")) {
+            array_push($notices, "PHP support for Internationalization Functions is required to handle Internationalized Domain Names.");
+        }
 
         if ($DB_TYPE == "mysql" && !function_exists("mysqli_connect")) {
             array_push($notices, "PHP extension for MySQL (mysqli) is missing. This may prevent legacy plugins from working.");
         }
 
         if ($DB_TYPE == "pgsql" && !function_exists("pg_connect")) {
-			array_push($notices, "PHP extension for PostgreSQL is missing. This may prevent legacy plugins from working.");
+            array_push($notices, "PHP extension for PostgreSQL is missing. This may prevent legacy plugins from working.");
         }
 
-		if (count($notices) > 0) {
-			print_notice("Configuration check succeeded with minor problems:");
+        if (count($notices) > 0) {
+            print_notice("Configuration check succeeded with minor problems:");
 
-			print "<ul>";
+            print "<ul>";
 
-			foreach ($notices as $notice) {
-				print "<li>$notice</li>";
-			}
+            foreach ($notices as $notice) {
+                print "<li>$notice</li>";
+            }
 
-			print "</ul>";
-		} else {
-			print_notice("Configuration check succeeded.");
-		}
+            print "</ul>";
+        } else {
+            print_notice("Configuration check succeeded.");
+        }
 
-	?>
+    ?>
 
 	<h2>Checking database</h2>
 
 	<?php
-		$pdo = pdo_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_TYPE, $DB_PORT);
+        $pdo = pdo_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_TYPE, $DB_PORT);
 
-		if (!$pdo) {
-			print_error("Unable to connect to database using specified parameters (driver: $DB_TYPE).");
-			exit;
-		}
+        if (!$pdo) {
+            print_error("Unable to connect to database using specified parameters (driver: $DB_TYPE).");
+            exit;
+        }
 
-		print_notice("Database test succeeded.");
-	?>
+        print_notice("Database test succeeded.");
+    ?>
 
 	<h2>Initialize database</h2>
 
 	<p>Before you can start using tt-rss, database needs to be initialized. Click on the button below to do that now.</p>
 
 	<?php
-		$res = $pdo->query("SELECT true FROM ttrss_feeds");
+        $res = $pdo->query("SELECT true FROM ttrss_feeds");
 
-		if ($res && $res->fetch()) {
-			print_error("Some tt-rss data already exists in this database. If you continue with database initialization your current data <b>WILL BE LOST</b>.");
-			$need_confirm = true;
-		} else {
-			$need_confirm = false;
-		}
-	?>
+        if ($res && $res->fetch()) {
+            print_error("Some tt-rss data already exists in this database. If you continue with database initialization your current data <b>WILL BE LOST</b>.");
+            $need_confirm = true;
+        } else {
+            $need_confirm = false;
+        }
+    ?>
 
 	<table><tr><td>
 	<form method="post">
@@ -415,44 +417,44 @@
 
 	<?php
 
-		} else if ($op == 'installschema' || $op == 'skipschema') {
+        } else if ($op == 'installschema' || $op == 'skipschema') {
 
-			$pdo = pdo_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_TYPE, $DB_PORT);
+            $pdo = pdo_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_TYPE, $DB_PORT);
 
-			if (!$pdo) {
-				print_error("Unable to connect to database using specified parameters.");
-				exit;
-			}
+            if (!$pdo) {
+                print_error("Unable to connect to database using specified parameters.");
+                exit;
+            }
 
-			if ($op == 'installschema') {
+            if ($op == 'installschema') {
 
-				print "<h2>Initializing database...</h2>";
+                print "<h2>Initializing database...</h2>";
 
-				$lines = explode(";", preg_replace("/[\r\n]/", "",
+                $lines = explode(";", preg_replace("/[\r\n]/", "",
                     file_get_contents("../schema/ttrss_schema_".basename($DB_TYPE).".sql")));
 
-				foreach ($lines as $line) {
-					if (strpos($line, "--") !== 0 && $line) {
-						$res = $pdo->query($line);
+                foreach ($lines as $line) {
+                    if (strpos($line, "--") !== 0 && $line) {
+                        $res = $pdo->query($line);
 
-						if (!$res) {
-							print_notice("Query: $line");
-							print_error("Error: " . implode(", ", $pdo->errorInfo()));
+                        if (!$res) {
+                            print_notice("Query: $line");
+                            print_error("Error: ".implode(", ", $pdo->errorInfo()));
                         }
-					}
-				}
+                    }
+                }
 
-				print_notice("Database initialization completed.");
+                print_notice("Database initialization completed.");
 
-			} else {
-				print_notice("Database initialization skipped.");
-			}
+            } else {
+                print_notice("Database initialization skipped.");
+            }
 
-			print "<h2>Generated configuration file</h2>";
+            print "<h2>Generated configuration file</h2>";
 
-			print "<p>Copy following text and save as <code>config.php</code> in tt-rss main directory. It is suggested to read through the file to the end in case you need any options changed fom default values.</p>";
+            print "<p>Copy following text and save as <code>config.php</code> in tt-rss main directory. It is suggested to read through the file to the end in case you need any options changed fom default values.</p>";
 
-			print "<p>After copying the file, you will be able to login with default username and password combination: <code>admin</code> and <code>password</code>. Don't forget to change the password immediately!</p>"; ?>
+            print "<p>After copying the file, you will be able to login with default username and password combination: <code>admin</code> and <code>password</code>. Don't forget to change the password immediately!</p>"; ?>
 
 			<form action="" method="post">
 				<input type="hidden" name="op" value="saveconfig">
@@ -464,9 +466,9 @@
 				<input type="hidden" name="DB_TYPE" value="<?php echo $DB_TYPE ?>"/>
 				<input type="hidden" name="SELF_URL_PATH" value="<?php echo $SELF_URL_PATH ?>"/>
 			<?php print "<textarea rows='20' style='width : 100%'>";
-			echo make_config($DB_TYPE, $DB_HOST, $DB_USER, $DB_NAME, $DB_PASS,
-				$DB_PORT, $SELF_URL_PATH);
-			print "</textarea>"; ?>
+            echo make_config($DB_TYPE, $DB_HOST, $DB_USER, $DB_NAME, $DB_PASS,
+                $DB_PORT, $SELF_URL_PATH);
+            print "</textarea>"; ?>
 
 			<hr/>
 
@@ -476,40 +478,40 @@
 				<p><button type="submit" dojoType='dijit.form.Button' class='alt-primary'>Save configuration</button></p>
 				</form>
 			<?php } else {
-				print_error("Unfortunately, parent directory is not writable, so we're unable to save config.php automatically.");
-			}
+                print_error("Unfortunately, parent directory is not writable, so we're unable to save config.php automatically.");
+            }
 
-		   print_notice("You can generate the file again by changing the form above.");
+            print_notice("You can generate the file again by changing the form above.");
 
-		} else if ($op == "saveconfig") {
+        } else if ($op == "saveconfig") {
 
-			print "<h2>Saving configuration file to parent directory...</h2>";
+            print "<h2>Saving configuration file to parent directory...</h2>";
 
-			if (!file_exists("../config.php")) {
+            if (!file_exists("../config.php")) {
 
-				$fp = fopen("../config.php", "w");
+                $fp = fopen("../config.php", "w");
 
-				if ($fp) {
-					$written = fwrite($fp, make_config($DB_TYPE, $DB_HOST,
-						$DB_USER, $DB_NAME, $DB_PASS,
-						$DB_PORT, $SELF_URL_PATH));
+                if ($fp) {
+                    $written = fwrite($fp, make_config($DB_TYPE, $DB_HOST,
+                        $DB_USER, $DB_NAME, $DB_PASS,
+                        $DB_PORT, $SELF_URL_PATH));
 
-					if ($written > 0) {
-						print_notice("Successfully saved config.php. You can try <a href=\"..\">loading tt-rss now</a>.");
+                    if ($written > 0) {
+                        print_notice("Successfully saved config.php. You can try <a href=\"..\">loading tt-rss now</a>.");
 
-					} else {
-						print_notice("Unable to write into config.php in tt-rss directory.");
-					}
+                    } else {
+                        print_notice("Unable to write into config.php in tt-rss directory.");
+                    }
 
-					fclose($fp);
-				} else {
-					print_error("Unable to open config.php in tt-rss directory for writing.");
-				}
-			} else {
-				print_error("config.php already present in tt-rss directory, refusing to overwrite.");
-			}
-		}
-	?>
+                    fclose($fp);
+                } else {
+                    print_error("Unable to open config.php in tt-rss directory for writing.");
+                }
+            } else {
+                print_error("config.php already present in tt-rss directory, refusing to overwrite.");
+            }
+        }
+    ?>
 
 </div>
 

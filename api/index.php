@@ -38,7 +38,9 @@ if (defined('_API_DEBUG_HTTP_ENABLED') && _API_DEBUG_HTTP_ENABLED) {
     // fallback on HTTP parameters
     if ($input) {
         $input = json_decode($input, true);
-        if ($input) $_REQUEST = $input;
+        if ($input) {
+            $_REQUEST = $input;
+        }
     }
 } else {
     // Accept JSON only
@@ -55,7 +57,9 @@ if ($_REQUEST["sid"]) {
 
 startup_gettext();
 
-if (!init_plugins()) return;
+if (!init_plugins()) {
+    return;
+}
 
 if ($_SESSION["uid"]) {
     if (!validate_session()) {
@@ -68,7 +72,7 @@ if ($_SESSION["uid"]) {
         return;
     }
 
-    load_user_plugins( $_SESSION["uid"]);
+    load_user_plugins($_SESSION["uid"]);
 }
 
 $method = strtolower($_REQUEST["op"]);
@@ -84,6 +88,6 @@ if ($handler->before($method)) {
     $handler->after();
 }
 
-header("Api-Content-Length: " . ob_get_length());
+header("Api-Content-Length: ".ob_get_length());
 
 ob_end_flush();

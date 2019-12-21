@@ -35,14 +35,16 @@ function session_get_schema_version() {
 }
 
 function validate_session() {
-    if (SINGLE_USER_MODE) return true;
+    if (SINGLE_USER_MODE) {
+        return true;
+    }
 
     if (isset($_SESSION["ref_schema_version"]) && $_SESSION["ref_schema_version"] != session_get_schema_version()) {
         $_SESSION["login_error_msg"] =
             __("Session failed to validate (schema version changed)");
         return false;
     }
-      $pdo = Db::pdo();
+        $pdo = Db::pdo();
 
     if ($_SESSION["uid"]) {
 
@@ -56,21 +58,21 @@ function validate_session() {
 
         // user not found
         if ($row = $sth->fetch()) {
-                 $pwd_hash = $row["pwd_hash"];
+                    $pwd_hash = $row["pwd_hash"];
 
-                 if ($pwd_hash != $_SESSION["pwd_hash"]) {
+                    if ($pwd_hash != $_SESSION["pwd_hash"]) {
 
-                      $_SESSION["login_error_msg"] =
+                        $_SESSION["login_error_msg"] =
                             __("Session failed to validate (password changed)");
 
-                      return false;
-                 }
+                        return false;
+                    }
         } else {
 
-                 $_SESSION["login_error_msg"] =
-                      __("Session failed to validate (user not found)");
+                    $_SESSION["login_error_msg"] =
+                        __("Session failed to validate (user not found)");
 
-                 return false;
+                    return false;
 
         }
     }
@@ -78,11 +80,11 @@ function validate_session() {
     return true;
 }
 
-function ttrss_open () {
+function ttrss_open() {
     return true;
 }
 
-function ttrss_read ($id){
+function ttrss_read($id) {
     global $session_expire;
 
     $sth = Db::pdo()->prepare("SELECT data FROM ttrss_sessions WHERE id=?");
@@ -101,7 +103,7 @@ function ttrss_read ($id){
     }
 }
 
-function ttrss_write ($id, $data) {
+function ttrss_write($id, $data) {
     global $session_expire;
 
     $data = base64_encode($data);
@@ -121,7 +123,7 @@ function ttrss_write ($id, $data) {
     return true;
 }
 
-function ttrss_close () {
+function ttrss_close() {
     return true;
 }
 
@@ -132,8 +134,8 @@ function ttrss_destroy($id) {
     return true;
 }
 
-function ttrss_gc () {
-    Db::pdo()->query("DELETE FROM ttrss_sessions WHERE expire < " . time());
+function ttrss_gc() {
+    Db::pdo()->query("DELETE FROM ttrss_sessions WHERE expire < ".time());
 
     return true;
 }
