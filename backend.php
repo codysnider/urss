@@ -1,14 +1,15 @@
 <?php
-	set_include_path(dirname(__FILE__) ."/include" . PATH_SEPARATOR .
+	set_include_path(dirname(__FILE__)."/include".PATH_SEPARATOR.
 		get_include_path());
 
 	$op = $_REQUEST["op"];
 	@$method = $_REQUEST['subop'] ? $_REQUEST['subop'] : $_REQUEST["method"];
 
-	if (!$method)
-		$method = 'index';
-	else
-		$method = strtolower($method);
+	if (!$method) {
+			$method = 'index';
+	} else {
+			$method = strtolower($method);
+	}
 
 	/* Public calls compatibility shim */
 
@@ -16,7 +17,7 @@
 		"fbexport", "logout", "pubsub");
 
 	if (array_search($op, $public_calls) !== false) {
-		header("Location: public.php?" . $_SERVER['QUERY_STRING']);
+		header("Location: public.php?".$_SERVER['QUERY_STRING']);
 		return;
 	}
 
@@ -33,7 +34,9 @@
 
 	$script_started = microtime(true);
 
-	if (!init_plugins()) return;
+	if (!init_plugins()) {
+	    return;
+	}
 
 	header("Content-Type: text/json; charset=utf-8");
 
@@ -42,7 +45,7 @@
 	}
 
 	if (SINGLE_USER_MODE) {
-		authenticate_user( "admin", null);
+		authenticate_user("admin", null);
 	}
 
 	if ($_SESSION["uid"]) {
@@ -51,7 +54,7 @@
 			print error_json(6);
 			return;
 		}
-		load_user_plugins( $_SESSION["uid"]);
+		load_user_plugins($_SESSION["uid"]);
 	}
 
 	$purge_intervals = array(

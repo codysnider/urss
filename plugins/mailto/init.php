@@ -15,7 +15,7 @@ class MailTo extends Plugin {
 	}
 
 	public function get_js() {
-		return file_get_contents(dirname(__FILE__) . "/init.js");
+		return file_get_contents(dirname(__FILE__)."/init.js");
 	}
 
 	public function hook_article_button($line) {
@@ -46,15 +46,16 @@ class MailTo extends Plugin {
 		$sth->execute(array_merge($ids, [$_SESSION['uid']]));
 
 		if (count($ids) > 1) {
-			$subject = __("[Forwarded]") . " " . __("Multiple articles");
+			$subject = __("[Forwarded]")." ".__("Multiple articles");
 		} else {
 			$subject = "";
 		}
 
 		while ($line = $sth->fetch()) {
 
-			if (!$subject)
-				$subject = __("[Forwarded]") . " " . htmlspecialchars($line["title"]);
+			if (!$subject) {
+							$subject = __("[Forwarded]") . " " . htmlspecialchars($line["title"]);
+			}
 
 			$tpl->setVariable('ARTICLE_TITLE', strip_tags($line["title"]));
 			$tpl->setVariable('ARTICLE_URL', strip_tags($line["link"]));

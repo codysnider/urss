@@ -328,7 +328,7 @@ trait NodeTrait
         $ret = iterator_to_array($this->childNodes);
         if ($filterEmptyDOMText) {
             // Array values is used to discard the key order. Needs to be 0 to whatever without skipping any number
-            $ret = array_values(array_filter($ret, function ($node) {
+            $ret = array_values(array_filter($ret, function($node) {
                 return $node->nodeName !== '#text' || mb_strlen(trim($node->nodeValue));
             }));
         }
@@ -427,7 +427,7 @@ trait NodeTrait
         }
 
         // And there should be no text nodes with real content
-        return array_reduce(iterator_to_array($children), function ($carry, $child) {
+        return array_reduce(iterator_to_array($children), function($carry, $child) {
             if (!$carry === false) {
                 return false;
             }
@@ -480,7 +480,7 @@ trait NodeTrait
                  * are dealing with (And at this point we know they are empty or are just whitespace, because of the
                  * mb_strlen in this chain of checks).
                  */
-                + count(array_filter(iterator_to_array($this->childNodes), function ($child) {
+                + count(array_filter(iterator_to_array($this->childNodes), function($child) {
                     return $child instanceof DOMText;
                 }))
 
@@ -498,7 +498,7 @@ trait NodeTrait
         return $this->nodeType === XML_TEXT_NODE || in_array($this->nodeName, $this->phrasing_elems) !== false ||
             (!is_null($this->childNodes) &&
                 ($this->nodeName === 'a' || $this->nodeName === 'del' || $this->nodeName === 'ins') &&
-                array_reduce(iterator_to_array($this->childNodes), function ($carry, $node) {
+                array_reduce(iterator_to_array($this->childNodes), function($carry, $node) {
                     return $node->isPhrasingContent() && $carry;
                 }, true)
             );

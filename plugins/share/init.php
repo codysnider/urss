@@ -17,15 +17,15 @@ class Share extends Plugin {
 	}
 
 	public function get_js() {
-		return file_get_contents(dirname(__FILE__) . "/share.js");
+		return file_get_contents(dirname(__FILE__)."/share.js");
 	}
 
 	public function get_css() {
-		return file_get_contents(dirname(__FILE__) . "/share.css");
+		return file_get_contents(dirname(__FILE__)."/share.css");
 	}
 
 	public function get_prefs_js() {
-		return file_get_contents(dirname(__FILE__) . "/share_prefs.js");
+		return file_get_contents(dirname(__FILE__)."/share_prefs.js");
 	}
 
 
@@ -42,7 +42,7 @@ class Share extends Plugin {
 	public function hook_prefs_tab_section($id) {
 		if ($id == "prefFeedsPublishedGenerated") {
 
-			print "<h3>" . __("You can disable all articles shared by unique URLs here.") . "</h3>";
+			print "<h3>".__("You can disable all articles shared by unique URLs here.")."</h3>";
 
 			print "<button class='alt-danger' dojoType='dijit.form.Button' onclick=\"return Plugins.Share.clearKeys()\">".
 				__('Unshare all articles')."</button> ";
@@ -100,7 +100,7 @@ class Share extends Plugin {
 				$sth->execute([$uuid, $param, $_SESSION['uid']]);
 			}
 
-			print "<header>" . __("You can share this article by the following unique URL:") . "</header>";
+			print "<header>".__("You can share this article by the following unique URL:")."</header>";
 
 			$url_path = get_self_url_prefix();
 			$url_path .= "/public.php?op=share&key=$uuid";

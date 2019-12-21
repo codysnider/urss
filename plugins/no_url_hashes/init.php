@@ -14,7 +14,7 @@ class No_URL_Hashes extends Plugin {
 	}
 
 	public function get_js() {
-		return file_get_contents(__DIR__ . "/init.js");
+		return file_get_contents(__DIR__."/init.js");
 	}
 
 	public function api_version() {

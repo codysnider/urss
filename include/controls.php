@@ -1,14 +1,17 @@
 <?php
 
 function print_select($id, $default, $values, $attributes = "", $name = "") {
-	if (!$name) $name = $id;
+	if (!$name) {
+	    $name = $id;
+	}
 
 	print "<select name=\"$name\" id=\"$id\" $attributes>";
 	foreach ($values as $v) {
-		if ($v == $default)
-			$sel = "selected=\"1\"";
-		else
-			$sel = "";
+		if ($v == $default) {
+					$sel = "selected=\"1\"";
+		} else {
+					$sel = "";
+		}
 
 		$v = trim($v);
 
@@ -18,14 +21,17 @@ function print_select($id, $default, $values, $attributes = "", $name = "") {
 }
 
 function print_select_hash($id, $default, $values, $attributes = "", $name = "") {
-	if (!$name) $name = $id;
+	if (!$name) {
+	    $name = $id;
+	}
 
 	print "<select name=\"$name\" id='$id' $attributes>";
 	foreach (array_keys($values) as $v) {
-		if ($v == $default)
-			$sel = 'selected="selected"';
-		else
-			$sel = "";
+		if ($v == $default) {
+					$sel = 'selected="selected"';
+		} else {
+					$sel = "";
+		}
 
 		$v = trim($v);
 
@@ -53,10 +59,11 @@ function print_button($type, $value, $attributes = "") {
 function print_radio($id, $default, $true_is, $values, $attributes = "") {
 	foreach ($values as $v) {
 
-		if ($v == $default)
-			$sel = "checked";
-		else
-			$sel = "";
+		if ($v == $default) {
+					$sel = "checked";
+		} else {
+					$sel = "";
+		}
 
 		if ($v == $true_is) {
 			$sel .= " value=\"1\"";
@@ -76,7 +83,7 @@ function print_feed_multi_select($id, $default_ids = [],
 
 	$pdo = DB::pdo();
 
-	print_r(in_array("CAT:6",$default_ids));
+	print_r(in_array("CAT:6", $default_ids));
 
 	if (!$root_id) {
 		print "<select multiple=\true\" id=\"$id\" name=\"$id\" $attributes>";
@@ -88,7 +95,9 @@ function print_feed_multi_select($id, $default_ids = [],
 
 	if (get_pref('ENABLE_FEED_CATS')) {
 
-		if (!$root_id) $root_id = null;
+		if (!$root_id) {
+		    $root_id = null;
+		}
 
 		$sth = $pdo->prepare("SELECT id,title,
 				(SELECT COUNT(id) FROM ttrss_feed_categories AS c2 WHERE
@@ -101,17 +110,19 @@ function print_feed_multi_select($id, $default_ids = [],
 
 		while ($line = $sth->fetch()) {
 
-			for ($i = 0; $i < $nest_level; $i++)
-				$line["title"] = " - " . $line["title"];
+			for ($i = 0; $i < $nest_level; $i++) {
+							$line["title"] = " - " . $line["title"];
+			}
 
 			$is_selected = in_array("CAT:".$line["id"], $default_ids) ? "selected=\"1\"" : "";
 
 			printf("<option $is_selected value='CAT:%d'>%s</option>",
 				$line["id"], htmlspecialchars($line["title"]));
 
-			if ($line["num_children"] > 0)
-				print_feed_multi_select($id, $default_ids, $attributes,
+			if ($line["num_children"] > 0) {
+							print_feed_multi_select($id, $default_ids, $attributes,
 					$include_all_feeds, $line["id"], $nest_level+1);
+			}
 
 			$f_sth = $pdo->prepare("SELECT id,title FROM ttrss_feeds
 					WHERE cat_id = ? AND owner_uid = ? ORDER BY title");
@@ -123,8 +134,9 @@ function print_feed_multi_select($id, $default_ids = [],
 
 				$fline["title"] = " + " . $fline["title"];
 
-				for ($i = 0; $i < $nest_level; $i++)
-					$fline["title"] = " - " . $fline["title"];
+				for ($i = 0; $i < $nest_level; $i++) {
+									$fline["title"] = " - " . $fline["title"];
+				}
 
 				printf("<option $is_selected value='%d'>%s</option>",
 					$fline["id"], htmlspecialchars($fline["title"]));
@@ -146,8 +158,9 @@ function print_feed_multi_select($id, $default_ids = [],
 
 				$fline["title"] = " + " . $fline["title"];
 
-				for ($i = 0; $i < $nest_level; $i++)
-					$fline["title"] = " - " . $fline["title"];
+				for ($i = 0; $i < $nest_level; $i++) {
+									$fline["title"] = " - " . $fline["title"];
+				}
 
 				printf("<option $is_selected value='%d'>%s</option>",
 					$fline["id"], htmlspecialchars($fline["title"]));
@@ -182,7 +195,9 @@ function print_feed_cat_select($id, $default_id,
 
 	$pdo = DB::pdo();
 
-	if (!$root_id) $root_id = null;
+	if (!$root_id) {
+	    $root_id = null;
+	}
 
 	$sth = $pdo->prepare("SELECT id,title,
 				(SELECT COUNT(id) FROM ttrss_feed_categories AS c2 WHERE
@@ -203,16 +218,19 @@ function print_feed_cat_select($id, $default_id,
 			$is_selected = "";
 		}
 
-		for ($i = 0; $i < $nest_level; $i++)
-			$line["title"] = " - " . $line["title"];
+		for ($i = 0; $i < $nest_level; $i++) {
+					$line["title"] = " - " . $line["title"];
+		}
 
-		if ($line["title"])
-			printf("<option $is_selected value='%d'>%s</option>",
+		if ($line["title"]) {
+					printf("<option $is_selected value='%d'>%s</option>",
 				$line["id"], htmlspecialchars($line["title"]));
+		}
 
-		if ($line["num_children"] > 0)
-			print_feed_cat_select($id, $default_id, $attributes,
+		if ($line["num_children"] > 0) {
+					print_feed_cat_select($id, $default_id, $attributes,
 				$include_all_cats, $line["id"], $nest_level+1);
+		}
 	}
 
 	if (!$root_id) {
@@ -245,13 +263,15 @@ function javascript_tag($filename) {
 	$query = "";
 
 	if (!(strpos($filename, "?") === false)) {
-		$query = substr($filename, strpos($filename, "?")+1);
+		$query = substr($filename, strpos($filename, "?") + 1);
 		$filename = substr($filename, 0, strpos($filename, "?"));
 	}
 
 	$timestamp = filemtime($filename);
 
-	if ($query) $timestamp .= "&$query";
+	if ($query) {
+	    $timestamp .= "&$query";
+	}
 
 	return "<script type=\"text/javascript\" charset=\"utf-8\" src=\"$filename?$timestamp\"></script>\n";
 }
@@ -299,8 +319,10 @@ function format_inline_player($url, $ctype) {
 
 		}
 
-		if ($entry) $entry .= "<a target=\"_blank\" rel=\"noopener noreferrer\"
+		if ($entry) {
+		    $entry .= "<a target=\"_blank\" rel=\"noopener noreferrer\"
 				href=\"$url\">" . basename($url) . "</a>";
+		}
 
 		$entry .= "</div>";
 
@@ -319,7 +341,7 @@ function print_label_select($name, $value, $attributes = "") {
 			WHERE owner_uid = ? ORDER BY caption");
 	$sth->execute([$_SESSION['uid']]);
 
-	print "<select default=\"$value\" name=\"" . htmlspecialchars($name) .
+	print "<select default=\"$value\" name=\"".htmlspecialchars($name).
 		"\" $attributes>";
 
 	while ($line = $sth->fetch()) {
@@ -327,7 +349,7 @@ function print_label_select($name, $value, $attributes = "") {
 		$issel = ($line["caption"] == $value) ? "selected=\"1\"" : "";
 
 		print "<option value=\"".htmlspecialchars($line["caption"])."\"
-				$issel>" . htmlspecialchars($line["caption"]) . "</option>";
+				$issel>".htmlspecialchars($line["caption"])."</option>";
 
 	}
 

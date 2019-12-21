@@ -52,7 +52,7 @@ class Pref_Users extends Handler_Protected {
 				}
 
 				print "<fieldset>";
-				print "<label>" . __("Login:") . "</label>";
+				print "<label>".__("Login:")."</label>";
 				print "<input style='font-size : 16px'
 					dojoType='dijit.form.ValidationTextBox' required='1'
 					$sel_disabled name='login' value=\"$login\">";
@@ -65,7 +65,7 @@ class Pref_Users extends Handler_Protected {
 
 				print "<fieldset>";
 
-				print "<label>" . __('Access level: ') . "</label> ";
+				print "<label>".__('Access level: ')."</label> ";
 
 				if (!$sel_disabled) {
 					print_select_hash("access_level", $access_level, $access_level_names,
@@ -79,7 +79,7 @@ class Pref_Users extends Handler_Protected {
 				print "</fieldset>";
 				print "<fieldset>";
 
-				print "<label>" . __("New password:") . "</label> ";
+				print "<label>".__("New password:")."</label> ";
 				print "<input dojoType='dijit.form.TextBox' type='password' size='20' placeholder='Change password'
 					name='password'>";
 
@@ -91,7 +91,7 @@ class Pref_Users extends Handler_Protected {
 				print "<section>";
 
 				print "<fieldset>";
-				print "<label>" . __("E-mail:") . "</label> ";
+				print "<label>".__("E-mail:")."</label> ";
 				print "<input dojoType='dijit.form.TextBox' size='30' name='email'
 					value=\"$email\">";
 				print "</fieldset>";
@@ -235,7 +235,10 @@ class Pref_Users extends Handler_Protected {
 			$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
 			$pwd_hash = encrypt_password($tmp_user_pwd, $salt, true);
 
-			if (!$login) return; // no blank usernames
+			if (!$login) {
+			    return;
+			}
+			// no blank usernames
 
 			$sth = $this->pdo->prepare("SELECT id FROM ttrss_users WHERE
 				login = ?");
@@ -294,10 +297,11 @@ class Pref_Users extends Handler_Protected {
 
 				$message = T_sprintf("Changed password of user %s to %s", "<strong>$login</strong>", "<strong>$tmp_user_pwd</strong>");
 
-				if ($format_output)
-					print_notice($message);
-				else
-					print $message;
+				if ($format_output) {
+									print_notice($message);
+				} else {
+									print $message;
+				}
 
 			}
 		}
@@ -337,7 +341,7 @@ class Pref_Users extends Handler_Protected {
 			}
 
 			print "<div dojoType='fox.form.DropDownButton'>".
-					"<span>" . __('Select')."</span>";
+					"<span>".__('Select')."</span>";
 			print "<div dojoType='dijit.Menu' style='display: none'>";
 			print "<div onclick=\"Tables.select('prefUserList', true)\"
 				dojoType='dijit.MenuItem'>".__('All')."</div>";
@@ -365,7 +369,9 @@ class Pref_Users extends Handler_Protected {
 			$sort = $this->validate_field($sort,
 				["login", "access_level", "created", "num_feeds", "created", "last_login"], "login");
 
-			if ($sort != "login") $sort = "$sort DESC";
+			if ($sort != "login") {
+			    $sort = "$sort DESC";
+			}
 
 			$sth = $this->pdo->prepare("SELECT
 					tu.id,
@@ -405,12 +411,12 @@ class Pref_Users extends Handler_Protected {
 				print "<td align='center'><input onclick='Tables.onRowChecked(this); event.stopPropagation();'
 					dojoType='dijit.form.CheckBox' type='checkbox'></td>";
 
-				print "<td title='".__('Click to edit')."'><i class='material-icons'>person</i> " . $line["login"] . "</td>";
+				print "<td title='".__('Click to edit')."'><i class='material-icons'>person</i> ".$line["login"]."</td>";
 
-				print "<td>" .	$access_level_names[$line["access_level"]] . "</td>";
-				print "<td>" . $line["num_feeds"] . "</td>";
-				print "<td>" . $line["created"] . "</td>";
-				print "<td>" . $line["last_login"] . "</td>";
+				print "<td>".$access_level_names[$line["access_level"]]."</td>";
+				print "<td>".$line["num_feeds"]."</td>";
+				print "<td>".$line["created"]."</td>";
+				print "<td>".$line["last_login"]."</td>";
 
 				print "</tr>";
 
@@ -437,10 +443,11 @@ class Pref_Users extends Handler_Protected {
 		}
 
 		public function validate_field($string, $allowed, $default = "") {
-			if (in_array($string, $allowed))
-				return $string;
-			else
-				return $default;
+			if (in_array($string, $allowed)) {
+							return $string;
+			} else {
+							return $default;
+			}
 		}
 
 }

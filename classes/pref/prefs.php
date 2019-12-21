@@ -82,7 +82,7 @@ class Pref_Prefs extends Handler_Protected {
 			"ENABLE_API_ACCESS" => array(__("Enable API"), __("Allows accessing this account through the API")),
 			"ENABLE_FEED_CATS" => array(__("Enable categories")),
 			"FEEDS_SORT_BY_UNREAD" => array(__("Sort feeds by unread articles count"), ""),
-			"FRESH_ARTICLE_MAX_AGE" => array(__("Maximum age of fresh articles"), "<strong>" . __("hours") . "</strong>"),
+			"FRESH_ARTICLE_MAX_AGE" => array(__("Maximum age of fresh articles"), "<strong>".__("hours")."</strong>"),
 			"HIDE_READ_FEEDS" => array(__("Hide read feeds")),
 			"HIDE_READ_SHOWS_SPECIAL" => array(__("Always show special feeds"), __("While hiding read feeds")),
 			"LONG_DATE_FORMAT" => array(__("Long date format"), __("Syntax is identical to PHP <a href='http://php.net/manual/function.date.php'>date()</a> function.")),
@@ -160,7 +160,9 @@ class Pref_Prefs extends Handler_Protected {
 		$boolean_prefs = explode(",", clean($_POST["boolean_prefs"]));
 
 		foreach ($boolean_prefs as $pref) {
-			if (!isset($_POST[$pref])) $_POST[$pref] = 'false';
+			if (!isset($_POST[$pref])) {
+			    $_POST[$pref] = 'false';
+			}
 		}
 
 		$need_reload = false;
@@ -180,11 +182,15 @@ class Pref_Prefs extends Handler_Protected {
 					}
 					break;
 				case 'USER_LANGUAGE':
-					if (!$need_reload) $need_reload = $_SESSION["language"] != $value;
+					if (!$need_reload) {
+					    $need_reload = $_SESSION["language"] != $value;
+					}
 					break;
 
 				case 'USER_CSS_THEME':
-					if (!$need_reload) $need_reload = get_pref($pref_name) != $value;
+					if (!$need_reload) {
+					    $need_reload = get_pref($pref_name) != $value;
+					}
 					break;
 			}
 
@@ -403,7 +409,7 @@ class Pref_Prefs extends Handler_Protected {
 
 			if ($_SESSION["auth_module"] == "auth_internal") {
 
-				print "<div dojoType='dijit.layout.ContentPane' title=\"" . __('App passwords') . "\">";
+				print "<div dojoType='dijit.layout.ContentPane' title=\"".__('App passwords')."\">";
 
 				print_notice("You can create separate passwords for API clients. Using one is required if you enable OTP.");
 
@@ -415,11 +421,11 @@ class Pref_Prefs extends Handler_Protected {
 
 				print "<button style='float : left' class='alt-primary' dojoType='dijit.form.Button'
 					onclick=\"Helpers.AppPasswords.generate()\">" .
-					__('Generate new password') . "</button> ";
+					__('Generate new password')."</button> ";
 
 				print "<button style='float : left' class='alt-danger' dojoType='dijit.form.Button'
 					onclick=\"Helpers.AppPasswords.removeSelected()\">" .
-					__('Remove selected passwords') . "</button>";
+					__('Remove selected passwords')."</button>";
 
 				print "</div>"; # content pane
 			}
@@ -474,13 +480,13 @@ class Pref_Prefs extends Handler_Protected {
 					print_notice("You will need to generate app passwords for the API clients if you enable OTP.");
 
 					if (function_exists("imagecreatefromstring")) {
-						print "<h3>" . __("Scan the following code by the Authenticator application or copy the key manually") . "</h3>";
+						print "<h3>".__("Scan the following code by the Authenticator application or copy the key manually")."</h3>";
 
 						$csrf_token = $_SESSION["csrf_token"];
 						print "<img alt='otp qr-code' src='backend.php?op=pref-prefs&method=otpqrcode&csrf_token=$csrf_token'>";
 					} else {
 						print_error("PHP GD functions are required to generate QR codes.");
-						print "<h3>" . __("Use the following OTP key with a compatible Authenticator application") . "</h3>";
+						print "<h3>".__("Use the following OTP key with a compatible Authenticator application")."</h3>";
 					}
 
 					print "<form dojoType='dijit.form.Form' id='changeOtpForm'>";
@@ -616,8 +622,9 @@ class Pref_Prefs extends Handler_Protected {
 			$pref_name = $line["pref_name"];
 			$short_desc = $this->getShortDesc($pref_name);
 
-			if (!$short_desc)
-				continue;
+			if (!$short_desc) {
+							continue;
+			}
 
 			$prefs_available[$pref_name] = [
 				'type_name' => $line["type_name"],
@@ -647,7 +654,7 @@ class Pref_Prefs extends Handler_Protected {
 					print "<fieldset class='prefs'>";
 
 					print "<label for='CB_$pref_name'>";
-					print $item['short_desc'] . ":";
+					print $item['short_desc'].":";
 					print "</label>";
 
 					$value = $item['value'];
@@ -669,7 +676,9 @@ class Pref_Prefs extends Handler_Protected {
 						$themes = array_filter($themes, "theme_exists");
 						asort($themes);
 
-						if (!theme_exists($value)) $value = "default.php";
+						if (!theme_exists($value)) {
+						    $value = "default.php";
+						}
 
 						print "<select name='$pref_name' id='$pref_name' dojoType='fox.form.Select'>";
 
@@ -684,7 +693,7 @@ class Pref_Prefs extends Handler_Protected {
 						print "</select>";
 
 						print " <button dojoType=\"dijit.form.Button\" class='alt-info'
-							onclick=\"Helpers.customizeCSS()\">" . __('Customize') . "</button>";
+							onclick=\"Helpers.customizeCSS()\">" . __('Customize')."</button>";
 
 						print " <button dojoType='dijit.form.Button' onclick='window.open(\"https://tt-rss.org/wiki/Themes\")'>
 							<i class='material-icons'>open_in_new</i> ".__("More themes...")."</button>";
@@ -728,14 +737,15 @@ class Pref_Prefs extends Handler_Protected {
 							$disabled = "";
 						}
 
-						if ($type_name == 'integer')
-							print "<input dojoType=\"dijit.form.NumberSpinner\"
+						if ($type_name == 'integer') {
+													print "<input dojoType=\"dijit.form.NumberSpinner\"
 								required='1' $disabled
 								name=\"$pref_name\" value=\"$value\">";
-						else
-							print "<input dojoType=\"dijit.form.TextBox\"
+						} else {
+													print "<input dojoType=\"dijit.form.TextBox\"
 								required='1' $regexp $disabled
 								name=\"$pref_name\" value=\"$value\">";
+						}
 
 					} else if ($pref_name == "SSL_CERT_SERIAL") {
 
@@ -747,12 +757,12 @@ class Pref_Prefs extends Handler_Protected {
 						$has_serial = ($cert_serial) ? "false" : "true";
 
 						print "<button dojoType='dijit.form.Button' disabled='$has_serial'
-							onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '$cert_serial')\">" .
-							__('Register') . "</button>";
+							onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '$cert_serial')\">".
+							__('Register')."</button>";
 
 						print "<button dojoType='dijit.form.Button' class='alt-danger'
 							onclick=\"dijit.byId('SSL_CERT_SERIAL').attr('value', '')\">" .
-							__('Clear') . "</button>";
+							__('Clear')."</button>";
 
 						print "<button dojoType='dijit.form.Button' class='alt-info'
 							onclick='window.open(\"https://tt-rss.org/wiki/SSL%20Certificate%20Authentication\")'>
@@ -763,15 +773,16 @@ class Pref_Prefs extends Handler_Protected {
 							id=\"$pref_name\" regexp=\"[012]?\d:\d\d\" placeHolder=\"12:00\"
 							name=\"$pref_name\" value=\"$value\">";
 
-						$item['help_text'] .= ". " . T_sprintf("Current server time: %s", date("H:i"));
+						$item['help_text'] .= ". ".T_sprintf("Current server time: %s", date("H:i"));
 					} else {
 						$regexp = ($type_name == 'integer') ? 'regexp="^\d*$"' : '';
 
 						print "<input dojoType=\"dijit.form.ValidationTextBox\" $regexp name=\"$pref_name\" value=\"$value\">";
 					}
 
-					if ($item['help_text'])
-						print "<div class='help-text text-muted'><label for='CB_$pref_name'>".$item['help_text']."</label></div>";
+					if ($item['help_text']) {
+											print "<div class='help-text text-muted'><label for='CB_$pref_name'>".$item['help_text']."</label></div>";
+					}
 
 					print "</fieldset>";
 				}
@@ -849,7 +860,7 @@ class Pref_Prefs extends Handler_Protected {
 			print_warning("Your PHP configuration has open_basedir restrictions enabled. Some plugins relying on CURL for functionality may not work correctly.");
 		}
 
-		$feed_handler_whitelist = [ "Af_Comics" ];
+		$feed_handler_whitelist = ["Af_Comics"];
 
 		$feed_handlers = array_merge(
 			PluginHost::getInstance()->get_hooks(PluginHost::HOOK_FEED_FETCHED),
@@ -861,9 +872,9 @@ class Pref_Prefs extends Handler_Protected {
 
 		if (count($feed_handlers) > 0) {
 			print_error(
-				T_sprintf("The following plugins use per-feed content hooks. This may cause excessive data usage and origin server load resulting in a ban of your instance: <b>%s</b>" ,
+				T_sprintf("The following plugins use per-feed content hooks. This may cause excessive data usage and origin server load resulting in a ban of your instance: <b>%s</b>",
 					implode(", ", array_map(function($plugin) { return get_class($plugin); }, $feed_handlers))
-				) . " (<a href='https://tt-rss.org/wiki/FeedHandlerPlugins' target='_blank'>".__("More info...")."</a>)"
+				)." (<a href='https://tt-rss.org/wiki/FeedHandlerPlugins' target='_blank'>".__("More info...")."</a>)"
 			);
 		}
 
@@ -892,7 +903,7 @@ class Pref_Prefs extends Handler_Protected {
 					<label class='checkbox description text-muted' id='PLABEL-$name'>
 						<input disabled='1'
 							dojoType='dijit.form.CheckBox' $checked type='checkbox'>
-						".htmlspecialchars($about[1]). "</label>";
+						".htmlspecialchars($about[1])."</label>";
 
 					if (@$about[4]) {
 						print "<button dojoType='dijit.form.Button' class='alt-info'
@@ -1108,10 +1119,11 @@ class Pref_Prefs extends Handler_Protected {
 	}
 
 	public function setplugins() {
-		if (is_array(clean($_REQUEST["plugins"])))
-			$plugins = join(",", clean($_REQUEST["plugins"]));
-		else
-			$plugins = "";
+		if (is_array(clean($_REQUEST["plugins"]))) {
+					$plugins = join(",", clean($_REQUEST["plugins"]));
+		} else {
+					$plugins = "";
+		}
 
 		set_pref("_ENABLED_PLUGINS", $plugins);
 	}
@@ -1154,7 +1166,7 @@ class Pref_Prefs extends Handler_Protected {
 		print "<div dojoType='fox.Toolbar'>";
 
 		print "<div dojoType='fox.form.DropDownButton'>".
-				"<span>" . __('Select')."</span>";
+				"<span>".__('Select')."</span>";
 		print "<div dojoType='dijit.Menu' style='display: none'>";
 		print "<div onclick=\"Tables.select('pref-profiles-list', true)\"
 			dojoType='dijit.MenuItem'>".__('All')."</div>";
@@ -1192,7 +1204,7 @@ class Pref_Prefs extends Handler_Protected {
 			$is_active = "";
 		}
 
-		print "<td width='100%'><span>" . __("Default profile") . " $is_active</span></td>";
+		print "<td width='100%'><span>".__("Default profile")." $is_active</span></td>";
 
 		print "</tr>";
 
@@ -1214,7 +1226,7 @@ class Pref_Prefs extends Handler_Protected {
 
 			print "<td><span dojoType='dijit.InlineEditBox'
 				width='300px' autoSave='false'
-				profile-id='$profile_id'>" . $edit_title .
+				profile-id='$profile_id'>".$edit_title.
 				"<script type='dojo/method' event='onChange' args='item'>
 					var elem = this;
 					dojo.xhrPost({
@@ -1263,13 +1275,13 @@ class Pref_Prefs extends Handler_Protected {
 
 	private function appPasswordList() {
 		print "<div dojoType='fox.Toolbar'>";
-		print "<div dojoType='fox.form.DropDownButton'>" .
-			"<span>" . __('Select') . "</span>";
+		print "<div dojoType='fox.form.DropDownButton'>".
+			"<span>".__('Select')."</span>";
 		print "<div dojoType='dijit.Menu' style='display: none'>";
 		print "<div onclick=\"Tables.select('app-password-list', true)\"
-				dojoType=\"dijit.MenuItem\">" . __('All') . "</div>";
+				dojoType=\"dijit.MenuItem\">" . __('All')."</div>";
 		print "<div onclick=\"Tables.select('app-password-list', false)\"
-				dojoType=\"dijit.MenuItem\">" . __('None') . "</div>";
+				dojoType=\"dijit.MenuItem\">" . __('None')."</div>";
 		print "</div></div>";
 		print "</div>"; #toolbar
 
@@ -1294,7 +1306,7 @@ class Pref_Prefs extends Handler_Protected {
 
 			print "<td align='center'>
 						<input onclick='Tables.onRowChecked(this)' dojoType='dijit.form.CheckBox' type='checkbox'></td>";
-			print "<td>" . htmlspecialchars($row["title"]) . "</td>";
+			print "<td>".htmlspecialchars($row["title"])."</td>";
 
 			print "<td align='right' class='text-muted'>";
 			print make_local_datetime($row['created'], false);
@@ -1314,7 +1326,7 @@ class Pref_Prefs extends Handler_Protected {
 	private function encryptAppPassword($password) {
 		$salt = substr(bin2hex(get_random_bytes(24)), 0, 24);
 
-		return "SSHA-512:".hash('sha512', $salt . $password). ":$salt";
+		return "SSHA-512:".hash('sha512', $salt.$password).":$salt";
 	}
 
 	public function deleteAppPassword() {

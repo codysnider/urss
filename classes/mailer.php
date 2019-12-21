@@ -18,8 +18,9 @@ class Mailer {
 		$from_combined = $from_name ? "$from_name <$from_address>" : $from_address;
 		$to_combined = $to_name ? "$to_name <$to_address>" : $to_address;
 
-		if (defined('_LOG_SENT_MAIL') && _LOG_SENT_MAIL)
-			Logger::get()->log("Sending mail from $from_combined to $to_combined [$subject]: $message");
+		if (defined('_LOG_SENT_MAIL') && _LOG_SENT_MAIL) {
+					Logger::get()->log("Sending mail from $from_combined to $to_combined [$subject]: $message");
+		}
 
 		// HOOK_SEND_MAIL plugin instructions:
 		// 1. return 1 or true if mail is handled
@@ -30,14 +31,16 @@ class Mailer {
 		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_SEND_MAIL) as $p) {
 			$rc = $p->hook_send_mail($this, $params);
 
-			if ($rc == 1)
-				return $rc;
+			if ($rc == 1) {
+							return $rc;
+			}
 
-			if ($rc == -1)
-				return 0;
+			if ($rc == -1) {
+							return 0;
+			}
 		}
 
-		$headers = [ "From: $from_combined", "Content-Type: text/plain; charset=UTF-8" ];
+		$headers = ["From: $from_combined", "Content-Type: text/plain; charset=UTF-8"];
 
 		return mail($to_combined, $subject, $message, implode("\r\n", array_merge($headers, $additional_headers)));
 	}

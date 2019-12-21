@@ -38,7 +38,7 @@ class Dlg extends Handler_Protected {
 	public function pubOPMLUrl() {
 		$url_path = Opml::opml_publish_url();
 
-		print "<header>" . __("Your Public OPML URL is:") . "</header>";
+		print "<header>".__("Your Public OPML URL is:")."</header>";
 
 		print "<section>";
 
@@ -67,18 +67,18 @@ class Dlg extends Handler_Protected {
 		if ($this->param == 1) {
 			print __("Update daemon is enabled in configuration, but daemon process is not running, which prevents all feeds from updating. Please start the daemon process or contact instance owner.");
 
-			$stamp = (int) file_get_contents(LOCK_DIRECTORY . "/update_daemon.stamp");
+			$stamp = (int) file_get_contents(LOCK_DIRECTORY."/update_daemon.stamp");
 
-			print "<p>" . __("Last update:") . " " . date("Y.m.d, G:i", $stamp);
+			print "<p>".__("Last update:")." ".date("Y.m.d, G:i", $stamp);
 
 		}
 
 		if ($this->param == 3) {
 			print __("Update daemon is taking too long to perform a feed update. This could indicate a problem like crash or a hang. Please check the daemon process or contact instance owner.");
 
-			$stamp = (int) file_get_contents(LOCK_DIRECTORY . "/update_daemon.stamp");
+			$stamp = (int) file_get_contents(LOCK_DIRECTORY."/update_daemon.stamp");
 
-			print "<p>" . __("Last update:") . " " . date("Y.m.d, G:i", $stamp);
+			print "<p>".__("Last update:")." ".date("Y.m.d, G:i", $stamp);
 
 		}
 
@@ -108,7 +108,7 @@ class Dlg extends Handler_Protected {
 			$tags[$line["tag_name"]] = $line["count"];
 		}
 
-        if(count($tags) == 0 ){ return; }
+        if (count($tags) == 0) { return; }
 
 		ksort($tags);
 
@@ -138,9 +138,9 @@ class Dlg extends Handler_Protected {
 
 			$key_escaped = str_replace("'", "\\'", $key);
 
-			echo "<a href=\"#\" onclick=\"Feeds.open({feed:'$key_escaped'}) \" style=\"font-size: " .
-				$size . "px\" title=\"$value articles tagged with " .
-				$key . '">' . $key . '</a> ';
+			echo "<a href=\"#\" onclick=\"Feeds.open({feed:'$key_escaped'}) \" style=\"font-size: ".
+				$size."px\" title=\"$value articles tagged with ".
+				$key.'">'.$key.'</a> ';
 		}
 
 
@@ -163,7 +163,7 @@ class Dlg extends Handler_Protected {
 
 		$key = Feeds::get_feed_access_key($feed_id, $is_cat);
 
-		$url_path = htmlspecialchars($this->params[2]) . "&key=" . $key;
+		$url_path = htmlspecialchars($this->params[2])."&key=".$key;
 
 		$feed_title = Feeds::getFeedTitle($feed_id, $is_cat);
 

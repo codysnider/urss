@@ -35,7 +35,7 @@ LC_ALL          6
 // LC_MESSAGES is not available if php-gettext is not loaded
 // while the other constants are already available from session extension.
 if (!defined('LC_MESSAGES')) {
-  define('LC_MESSAGES',	5);
+  define('LC_MESSAGES', 5);
 }
 
 require('streams.php');
@@ -77,35 +77,48 @@ function get_list_of_locales($locale) {
     if (preg_match("/^(?P<lang>[a-z]{2,3})"              // language code
                    ."(?:_(?P<country>[A-Z]{2}))?"           // country code
                    ."(?:\.(?P<charset>[-A-Za-z0-9_]+))?"    // charset
-                   ."(?:@(?P<modifier>[-A-Za-z0-9_]+))?$/",  // @ modifier
+                   ."(?:@(?P<modifier>[-A-Za-z0-9_]+))?$/", // @ modifier
                    $locale, $matches)) {
 
-      if (isset($matches["lang"])) $lang = $matches["lang"];
-      if (isset($matches["country"])) $country = $matches["country"];
-      if (isset($matches["charset"])) $charset = $matches["charset"];
-      if (isset($matches["modifier"])) $modifier = $matches["modifier"];
+      if (isset($matches["lang"])) {
+          $lang = $matches["lang"];
+      }
+      if (isset($matches["country"])) {
+          $country = $matches["country"];
+      }
+      if (isset($matches["charset"])) {
+          $charset = $matches["charset"];
+      }
+      if (isset($matches["modifier"])) {
+          $modifier = $matches["modifier"];
+      }
 
       if ($modifier) {
         if ($country) {
-          if ($charset)
-            array_push($locale_names, "${lang}_$country.$charset@$modifier");
+          if ($charset) {
+                      array_push($locale_names, "${lang}_$country.$charset@$modifier");
+          }
           array_push($locale_names, "${lang}_$country@$modifier");
-        } elseif ($charset)
-            array_push($locale_names, "${lang}.$charset@$modifier");
+        } elseif ($charset) {
+                    array_push($locale_names, "${lang}.$charset@$modifier");
+        }
         array_push($locale_names, "$lang@$modifier");
       }
       if ($country) {
-        if ($charset)
-          array_push($locale_names, "${lang}_$country.$charset");
+        if ($charset) {
+                  array_push($locale_names, "${lang}_$country.$charset");
+        }
         array_push($locale_names, "${lang}_$country");
-      } elseif ($charset)
-          array_push($locale_names, "${lang}.$charset");
+      } elseif ($charset) {
+                array_push($locale_names, "${lang}.$charset");
+      }
       array_push($locale_names, $lang);
     }
 
     // If the locale name doesn't match POSIX style, just include it as-is.
-    if (!in_array($locale, $locale_names))
-      array_push($locale_names, $locale);
+    if (!in_array($locale, $locale_names)) {
+          array_push($locale_names, $locale);
+    }
   }
   return $locale_names;
 }
@@ -113,20 +126,22 @@ function get_list_of_locales($locale) {
 /**
  * Utility function to get a StreamReader for the given text domain.
  */
-function _get_reader($domain=null, $category=5, $enable_cache=true) {
+function _get_reader($domain = null, $category = 5, $enable_cache = true) {
     global $text_domains, $default_domain, $LC_CATEGORIES;
-    if (!isset($domain)) $domain = $default_domain;
+    if (!isset($domain)) {
+        $domain = $default_domain;
+    }
     if (!isset($text_domains[$domain]->l10n)) {
         // get the current locale
         $locale = _setlocale(LC_MESSAGES, 0);
         $bound_path = isset($text_domains[$domain]->path) ?
           $text_domains[$domain]->path : './';
-        $subpath = $LC_CATEGORIES[$category] ."/$domain.mo";
+        $subpath = $LC_CATEGORIES[$category]."/$domain.mo";
 
         $locale_names = get_list_of_locales($locale);
         $input = null;
         foreach ($locale_names as $locale) {
-          $full_path = $bound_path . $locale . "/" . $subpath;
+          $full_path = $bound_path.$locale."/".$subpath;
           if (file_exists($full_path)) {
             $input = new FileReader($full_path);
             break;
@@ -154,20 +169,21 @@ function locale_emulation() {
 /**
  * Checks if the current locale is supported on this system.
  */
-function _check_locale_and_function($function=false) {
+function _check_locale_and_function($function = false) {
     global $EMULATEGETTEXT;
-    if ($function and !function_exists($function))
-        return false;
+    if ($function and !function_exists($function)) {
+            return false;
+    }
     return !$EMULATEGETTEXT;
 }
 
 /**
  * Get the codeset for the given domain.
  */
-function _get_codeset($domain=null) {
+function _get_codeset($domain = null) {
     global $text_domains, $default_domain, $LC_CATEGORIES;
     if (!isset($domain)) $domain = $default_domain;
-    return (isset($text_domains[$domain]->codeset))? $text_domains[$domain]->codeset : ini_get('mbstring.internal_encoding');
+    return (isset($text_domains[$domain]->codeset)) ? $text_domains[$domain]->codeset : ini_get('mbstring.internal_encoding');
 }
 
 /**
@@ -177,8 +193,9 @@ function _encode($text) {
   $target_encoding = _get_codeset();
   if (function_exists("mb_detect_encoding")) {
     $source_encoding = mb_detect_encoding($text);
-    if ($source_encoding != $target_encoding)
-      $text = mb_convert_encoding($text, $target_encoding, $source_encoding);
+    if ($source_encoding != $target_encoding) {
+          $text = mb_convert_encoding($text, $target_encoding, $source_encoding);
+    }
   }
   return $text;
 }
@@ -190,11 +207,13 @@ function _encode($text) {
  * Returns passed in $locale, or environment variable $LANG if $locale == ''.
  */
 function _get_default_locale($locale) {
-  if ($locale == '') // emulate variable support
+  if ($locale == '') {
+      // emulate variable support
     return getenv('LANG');
-  else
-    return $locale;
-}
+  } else {
+      return $locale;
+  }
+  }
 
 /**
  * Sets a requested locale, if needed emulates it.
@@ -202,12 +221,13 @@ function _get_default_locale($locale) {
 function _setlocale($category, $locale) {
     global $CURRENTLOCALE, $EMULATEGETTEXT;
     if ($locale === 0) { // use === to differentiate between string "0"
-        if ($CURRENTLOCALE != '')
-            return $CURRENTLOCALE;
-        else
-            // obey LANG variable, maybe extend to support all of LC_* vars
+        if ($CURRENTLOCALE != '') {
+                    return $CURRENTLOCALE;
+        } else {
+                    // obey LANG variable, maybe extend to support all of LC_* vars
             // even if we tried to read locale without setting it first
             return _setlocale($category, $CURRENTLOCALE);
+        }
     } else {
         if (function_exists('setlocale')) {
           $ret = setlocale($category, $locale);
@@ -241,10 +261,10 @@ function _bindtextdomain($domain, $path) {
     global $text_domains;
     // ensure $path ends with a slash ('/' should work for both, but lets still play nice)
     if (substr(php_uname(), 0, 7) == "Windows") {
-      if ($path[strlen($path)-1] != '\\' and $path[strlen($path)-1] != '/')
+      if ($path[strlen($path) - 1] != '\\' and $path[strlen($path) - 1] != '/')
         $path .= '\\';
     } else {
-      if ($path[strlen($path)-1] != '/')
+      if ($path[strlen($path) - 1] != '/')
         $path .= '/';
     }
     if (!array_key_exists($domain, $text_domains)) {
@@ -384,96 +404,126 @@ function T_setlocale($category, $locale) {
 }
 
 function T_bindtextdomain($domain, $path) {
-    if (_check_locale_and_function()) return bindtextdomain($domain, $path);
-    else return _bindtextdomain($domain, $path);
-}
+    if (_check_locale_and_function()) {
+        return bindtextdomain($domain, $path);
+    } else {
+        return _bindtextdomain($domain, $path);
+    }
+    }
 function T_bind_textdomain_codeset($domain, $codeset) {
     // bind_textdomain_codeset is available only in PHP 4.2.0+
-    if (_check_locale_and_function('bind_textdomain_codeset'))
-        return bind_textdomain_codeset($domain, $codeset);
-    else return _bind_textdomain_codeset($domain, $codeset);
-}
+    if (_check_locale_and_function('bind_textdomain_codeset')) {
+            return bind_textdomain_codeset($domain, $codeset);
+    } else {
+        return _bind_textdomain_codeset($domain, $codeset);
+    }
+    }
 function T_textdomain($domain) {
-    if (_check_locale_and_function()) return textdomain($domain);
-    else return _textdomain($domain);
-}
+    if (_check_locale_and_function()) {
+        return textdomain($domain);
+    } else {
+        return _textdomain($domain);
+    }
+    }
 function T_gettext($msgid) {
-    if (_check_locale_and_function()) return gettext($msgid);
-    else return _gettext($msgid);
-}
+    if (_check_locale_and_function()) {
+        return gettext($msgid);
+    } else {
+        return _gettext($msgid);
+    }
+    }
 function T_($msgid) {
-    if (_check_locale_and_function()) return _($msgid);
+    if (_check_locale_and_function()) {
+        return _($msgid);
+    }
     return __($msgid);
 }
 function T_ngettext($singular, $plural, $number) {
-    if (_check_locale_and_function())
-        return ngettext($singular, $plural, $number);
-    else return _ngettext($singular, $plural, $number);
-}
+    if (_check_locale_and_function()) {
+            return ngettext($singular, $plural, $number);
+    } else {
+        return _ngettext($singular, $plural, $number);
+    }
+    }
 function T_dgettext($domain, $msgid) {
-    if (_check_locale_and_function()) return dgettext($domain, $msgid);
-    else return _dgettext($domain, $msgid);
-}
+    if (_check_locale_and_function()) {
+        return dgettext($domain, $msgid);
+    } else {
+        return _dgettext($domain, $msgid);
+    }
+    }
 function T_dngettext($domain, $singular, $plural, $number) {
-    if (_check_locale_and_function())
-        return dngettext($domain, $singular, $plural, $number);
-    else return _dngettext($domain, $singular, $plural, $number);
-}
+    if (_check_locale_and_function()) {
+            return dngettext($domain, $singular, $plural, $number);
+    } else {
+        return _dngettext($domain, $singular, $plural, $number);
+    }
+    }
 function T_dcgettext($domain, $msgid, $category) {
-    if (_check_locale_and_function())
-        return dcgettext($domain, $msgid, $category);
-    else return _dcgettext($domain, $msgid, $category);
-}
+    if (_check_locale_and_function()) {
+            return dcgettext($domain, $msgid, $category);
+    } else {
+        return _dcgettext($domain, $msgid, $category);
+    }
+    }
 function T_dcngettext($domain, $singular, $plural, $number, $category) {
-    if (_check_locale_and_function())
-      return dcngettext($domain, $singular, $plural, $number, $category);
-    else return _dcngettext($domain, $singular, $plural, $number, $category);
-}
+    if (_check_locale_and_function()) {
+          return dcngettext($domain, $singular, $plural, $number, $category);
+    } else {
+        return _dcngettext($domain, $singular, $plural, $number, $category);
+    }
+    }
 
 function T_pgettext($context, $msgid) {
-  if (_check_locale_and_function('pgettext'))
-      return pgettext($context, $msgid);
-  else
-      return _pgettext($context, $msgid);
-}
+  if (_check_locale_and_function('pgettext')) {
+        return pgettext($context, $msgid);
+  } else {
+        return _pgettext($context, $msgid);
+  }
+  }
 
 function T_dpgettext($domain, $context, $msgid) {
-  if (_check_locale_and_function('dpgettext'))
-      return dpgettext($domain, $context, $msgid);
-  else
-      return _dpgettext($domain, $context, $msgid);
-}
+  if (_check_locale_and_function('dpgettext')) {
+        return dpgettext($domain, $context, $msgid);
+  } else {
+        return _dpgettext($domain, $context, $msgid);
+  }
+  }
 
 function T_dcpgettext($domain, $context, $msgid, $category) {
-  if (_check_locale_and_function('dcpgettext'))
-      return dcpgettext($domain, $context, $msgid, $category);
-  else
-      return _dcpgettext($domain, $context, $msgid, $category);
-}
+  if (_check_locale_and_function('dcpgettext')) {
+        return dcpgettext($domain, $context, $msgid, $category);
+  } else {
+        return _dcpgettext($domain, $context, $msgid, $category);
+  }
+  }
 
 function T_npgettext($context, $singular, $plural, $number) {
-    if (_check_locale_and_function('npgettext'))
-        return npgettext($context, $singular, $plural, $number);
-    else
-        return _npgettext($context, $singular, $plural, $number);
-}
+    if (_check_locale_and_function('npgettext')) {
+            return npgettext($context, $singular, $plural, $number);
+    } else {
+            return _npgettext($context, $singular, $plural, $number);
+    }
+    }
 
 function T_dnpgettext($domain, $context, $singular, $plural, $number) {
-  if (_check_locale_and_function('dnpgettext'))
-      return dnpgettext($domain, $context, $singular, $plural, $number);
-  else
-      return _dnpgettext($domain, $context, $singular, $plural, $number);
-}
+  if (_check_locale_and_function('dnpgettext')) {
+        return dnpgettext($domain, $context, $singular, $plural, $number);
+  } else {
+        return _dnpgettext($domain, $context, $singular, $plural, $number);
+  }
+  }
 
 function T_dcnpgettext($domain, $context, $singular, $plural,
                        $number, $category) {
-    if (_check_locale_and_function('dcnpgettext'))
-        return dcnpgettext($domain, $context, $singular,
+    if (_check_locale_and_function('dcnpgettext')) {
+            return dcnpgettext($domain, $context, $singular,
                            $plural, $number, $category);
-    else
-        return _dcnpgettext($domain, $context, $singular,
+    } else {
+            return _dcnpgettext($domain, $context, $singular,
                             $plural, $number, $category);
-}
+    }
+    }
 
 
 

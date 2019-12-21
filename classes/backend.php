@@ -2,7 +2,7 @@
 class Backend extends Handler {
 	public function loading() {
 		header("Content-type: text/html");
-		print __("Loading, please wait...") . " " .
+		print __("Loading, please wait...")." ".
 			"<img src='images/indicator_tiny.gif'>";
 	}
 
@@ -30,7 +30,9 @@ class Backend extends Handler {
 			$omap = array();
 
 			foreach ($imap[1] as $sequence => $action) {
-				if (!isset($omap[$action])) $omap[$action] = array();
+				if (!isset($omap[$action])) {
+				    $omap[$action] = array();
+				}
 
 				array_push($omap[$action], $sequence);
 			}
@@ -40,7 +42,9 @@ class Backend extends Handler {
 			$cur_section = "";
 			foreach ($info as $section => $hotkeys) {
 
-				if ($cur_section) print "<li>&nbsp;</li>";
+				if ($cur_section) {
+				    print "<li>&nbsp;</li>";
+				}
 				print "<li><h3>" . $section . "</h3></li>";
 				$cur_section = $section;
 
@@ -50,7 +54,7 @@ class Backend extends Handler {
 						foreach ($omap[$action] as $sequence) {
 							if (strpos($sequence, "|") !== false) {
 								$sequence = substr($sequence,
-									strpos($sequence, "|")+1,
+									strpos($sequence, "|") + 1,
 									strlen($sequence));
 							} else {
 								$keys = explode(" ", $sequence);
@@ -61,10 +65,10 @@ class Backend extends Handler {
 										foreach (str_split($keys[$i]) as $c) {
 											switch ($c) {
 												case '*':
-													$tmp .= __('Shift') . '+';
+													$tmp .= __('Shift').'+';
 													break;
 												case '^':
-													$tmp .= __('Ctrl') . '+';
+													$tmp .= __('Ctrl').'+';
 													break;
 												default:
 													$tmp .= $c;

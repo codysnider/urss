@@ -44,18 +44,19 @@ class DbUpdater {
 				foreach ($lines as $line) {
 					if (strpos($line, "--") !== 0 && $line) {
 
-						if ($html_output)
-							print "<pre>$line</pre>";
-						else
-							Debug::log("> $line");
+						if ($html_output) {
+													print "<pre>$line</pre>";
+						} else {
+													Debug::log("> $line");
+						}
 
 						try {
 							$this->pdo->query($line); // PDO returns errors as exceptions now
 						} catch (PDOException $e) {
 							if ($html_output) {
-								print "<div class='text-error'>Error: " . $e->getMessage() . "</div>";
+								print "<div class='text-error'>Error: ".$e->getMessage()."</div>";
 							} else {
-								Debug::log("Error: " . $e->getMessage());
+								Debug::log("Error: ".$e->getMessage());
 							}
 
 							$this->pdo->rollBack();

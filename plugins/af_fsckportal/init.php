@@ -19,7 +19,7 @@ class Af_Fsckportal extends Plugin {
 
 			$doc = new DOMDocument();
 
-			@$doc->loadHTML('<?xml encoding="UTF-8">' . $article["content"]);
+			@$doc->loadHTML('<?xml encoding="UTF-8">'.$article["content"]);
 
 			if ($doc) {
 				$xpath = new DOMXPath($doc);

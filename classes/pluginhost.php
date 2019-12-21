@@ -82,8 +82,9 @@ class PluginHost {
 	}
 
 	public static function getInstance() {
-		if (self::$instance == null)
-			self::$instance = new self();
+		if (self::$instance == null) {
+					self::$instance = new self();
+		}
 
 		return self::$instance;
 	}
@@ -191,19 +192,23 @@ class PluginHost {
 			$class_file = strtolower(clean_filename($class));
 
 			if (!is_dir(__DIR__."/../plugins/$class_file") &&
-					!is_dir(__DIR__."/../plugins.local/$class_file")) continue;
+					!is_dir(__DIR__."/../plugins.local/$class_file")) {
+			    continue;
+			}
 
 			// try system plugin directory first
-			$file = __DIR__ . "/../plugins/$class_file/init.php";
-			$vendor_dir = __DIR__ . "/../plugins/$class_file/vendor";
+			$file = __DIR__."/../plugins/$class_file/init.php";
+			$vendor_dir = __DIR__."/../plugins/$class_file/vendor";
 
 			if (!file_exists($file)) {
-				$file = __DIR__ . "/../plugins.local/$class_file/init.php";
-				$vendor_dir = __DIR__ . "/../plugins.local/$class_file/vendor";
+				$file = __DIR__."/../plugins.local/$class_file/init.php";
+				$vendor_dir = __DIR__."/../plugins.local/$class_file/vendor";
 			}
 
 			if (!isset($this->plugins[$class])) {
-				if (file_exists($file)) require_once $file;
+				if (file_exists($file)) {
+				    require_once $file;
+				}
 
 				if (class_exists($class) && is_subclass_of($class, "Plugin")) {
 
@@ -217,10 +222,11 @@ class PluginHost {
 								list ($namespace, $class_name) = explode('\\', $class, 2);
 
 								if ($namespace && $class_name) {
-									$class_file = "$vendor_dir/$namespace/" . str_replace('\\', '/', $class_name) . ".php";
+									$class_file = "$vendor_dir/$namespace/".str_replace('\\', '/', $class_name).".php";
 
-									if (file_exists($class_file))
-										require_once $class_file;
+									if (file_exists($class_file)) {
+																			require_once $class_file;
+									}
 								}
 							}
 						});
@@ -231,12 +237,12 @@ class PluginHost {
 					$plugin_api = $plugin->api_version();
 
 					if ($plugin_api < PluginHost::API_VERSION) {
-						user_error("plugin $class is not compatible with current API version (need: " . PluginHost::API_VERSION . ", got: $plugin_api)", E_USER_WARNING);
+						user_error("plugin $class is not compatible with current API version (need: ".PluginHost::API_VERSION.", got: $plugin_api)", E_USER_WARNING);
 						continue;
 					}
 
-					if (file_exists(dirname($file) . "/locale")) {
-						_bindtextdomain($class, dirname($file) . "/locale");
+					if (file_exists(dirname($file)."/locale")) {
+						_bindtextdomain($class, dirname($file)."/locale");
 						_bind_textdomain_codeset($class, "UTF-8");
 					}
 
@@ -245,18 +251,24 @@ class PluginHost {
 					switch ($kind) {
 					case $this::KIND_SYSTEM:
 						if ($this->is_system($plugin)) {
-							if (!$skip_init) $plugin->init($this);
+							if (!$skip_init) {
+							    $plugin->init($this);
+							}
 							$this->register_plugin($class, $plugin);
 						}
 						break;
 					case $this::KIND_USER:
 						if (!$this->is_system($plugin)) {
-							if (!$skip_init) $plugin->init($this);
+							if (!$skip_init) {
+							    $plugin->init($this);
+							}
 							$this->register_plugin($class, $plugin);
 						}
 						break;
 					case $this::KIND_ALL:
-						if (!$skip_init) $plugin->init($this);
+						if (!$skip_init) {
+						    $plugin->init($this);
+						}
 						$this->register_plugin($class, $plugin);
 						break;
 					}
@@ -319,13 +331,13 @@ class PluginHost {
 	}
 
 	public function del_command($command) {
-		$command = "-" . strtolower($command);
+		$command = "-".strtolower($command);
 
 		unset($this->commands[$command]);
 	}
 
 	public function lookup_command($command) {
-		$command = "-" . strtolower($command);
+		$command = "-".strtolower($command);
 
 		if (is_array($this->commands[$command])) {
 			return $this->commands[$command]["class"];
@@ -348,7 +360,7 @@ class PluginHost {
 	}
 
 	public function load_data() {
-		if ($this->owner_uid)  {
+		if ($this->owner_uid) {
 			$sth = $this->pdo->prepare("SELECT name, content FROM ttrss_plugin_storage
 				WHERE owner_uid = ?");
 			$sth->execute([$this->owner_uid]);
@@ -367,21 +379,22 @@ class PluginHost {
 				owner_uid= ? AND name = ?");
 			$sth->execute([$this->owner_uid, $plugin]);
 
-			if (!isset($this->storage[$plugin]))
-				$this->storage[$plugin] = array();
+			if (!isset($this->storage[$plugin])) {
+							$this->storage[$plugin] = array();
+			}
 
 			$content = serialize($this->storage[$plugin]);
 
 			if ($sth->fetch()) {
 				$sth = $this->pdo->prepare("UPDATE ttrss_plugin_storage SET content = ?
 					WHERE owner_uid= ? AND name = ?");
-				$sth->execute([(string)$content, $this->owner_uid, $plugin]);
+				$sth->execute([(string) $content, $this->owner_uid, $plugin]);
 
 			} else {
 				$sth = $this->pdo->prepare("INSERT INTO ttrss_plugin_storage
 					(name,owner_uid,content) VALUES
 					(?, ?, ?)");
-				$sth->execute([$plugin, $this->owner_uid, (string)$content]);
+				$sth->execute([$plugin, $this->owner_uid, (string) $content]);
 			}
 
 			$this->pdo->commit();
@@ -391,12 +404,15 @@ class PluginHost {
 	public function set($sender, $name, $value, $sync = true) {
 		$idx = get_class($sender);
 
-		if (!isset($this->storage[$idx]))
-			$this->storage[$idx] = array();
+		if (!isset($this->storage[$idx])) {
+					$this->storage[$idx] = array();
+		}
 
 		$this->storage[$idx][$name] = $value;
 
-		if ($sync) $this->save_data(get_class($sender));
+		if ($sync) {
+		    $this->save_data(get_class($sender));
+		}
 	}
 
 	public function get($sender, $name, $default_value = false) {
@@ -433,7 +449,9 @@ class PluginHost {
 
 	// cat_id: only -1 is supported (Special)
 	public function add_feed($cat_id, $title, $icon, $sender) {
-		if (!$this->feeds[$cat_id]) $this->feeds[$cat_id] = array();
+		if (!$this->feeds[$cat_id]) {
+		    $this->feeds[$cat_id] = array();
+		}
 
 		$id = count($this->feeds[$cat_id]);
 
@@ -479,8 +497,9 @@ class PluginHost {
 	public function add_filter_action($sender, $action_name, $action_desc) {
 		$sender_class = get_class($sender);
 
-		if (!isset($this->plugin_actions[$sender_class]))
-			$this->plugin_actions[$sender_class] = array();
+		if (!isset($this->plugin_actions[$sender_class])) {
+					$this->plugin_actions[$sender_class] = array();
+		}
 
 		array_push($this->plugin_actions[$sender_class],
 			array("action" => $action_name, "description" => $action_desc, "sender" => $sender));
@@ -495,8 +514,8 @@ class PluginHost {
 	}
 
 	// handled by classes/pluginhandler.php, requires valid session
-	public function get_method_url($sender, $method, $params)  {
-		return get_self_url_prefix() . "/backend.php?" .
+	public function get_method_url($sender, $method, $params) {
+		return get_self_url_prefix()."/backend.php?".
 			http_build_query(
 				array_merge(
 					[
@@ -508,9 +527,9 @@ class PluginHost {
 	}
 
 	// WARNING: endpoint in public.php, exposed to unauthenticated users
-	public function get_public_method_url($sender, $method, $params)  {
+	public function get_public_method_url($sender, $method, $params) {
 		if ($sender->is_public_method($method)) {
-			return get_self_url_prefix() . "/public.php?" .
+			return get_self_url_prefix()."/public.php?".
 				http_build_query(
 					array_merge(
 						[
@@ -520,7 +539,7 @@ class PluginHost {
 						],
 						$params));
 		} else {
-			user_error("get_public_method_url: requested method '$method' of '" . get_class($sender) . "' is private.");
+			user_error("get_public_method_url: requested method '$method' of '".get_class($sender)."' is private.");
 		}
 	}
 }

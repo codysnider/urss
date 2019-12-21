@@ -6,10 +6,10 @@ require_once "functions.php";
 
 $ERRORS[0] = "";
 
-$ERRORS[1] = __("This program requires XmlHttpRequest " .
+$ERRORS[1] = __("This program requires XmlHttpRequest ".
         "to function properly. Your browser doesn't seem to support it.");
 
-$ERRORS[2] = __("This program requires cookies " .
+$ERRORS[2] = __("This program requires cookies ".
         "to function properly. Your browser doesn't seem to support them.");
 
 $ERRORS[3] = __("Backend sanity check failed.");

@@ -14,7 +14,9 @@ class Auth_Base {
 		if ($login && defined('AUTH_AUTO_CREATE') && AUTH_AUTO_CREATE) {
 			$user_id = $this->find_user_by_login($login);
 
-			if (!$password) $password = make_password();
+			if (!$password) {
+			    $password = make_password();
+			}
 
 			if (!$user_id) {
 				$salt = substr(bin2hex(get_random_bytes(125)), 0, 250);

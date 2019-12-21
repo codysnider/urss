@@ -17,11 +17,13 @@ class Cache_Starred_Images extends Plugin {
 		$this->host = $host;
 		$this->cache = new DiskCache("starred-images");
 
-		if ($this->cache->makeDir())
-			chmod($this->cache->getDir(), 0777);
+		if ($this->cache->makeDir()) {
+					chmod($this->cache->getDir(), 0777);
+		}
 
-		if (!$this->cache->exists(".no-auto-expiry"))
-			$this->cache->touch(".no-auto-expiry");
+		if (!$this->cache->exists(".no-auto-expiry")) {
+					$this->cache->touch(".no-auto-expiry");
+		}
 
 		if ($this->cache->isWritable()) {
 			$host->add_hook($host::HOOK_HOUSE_KEEPING, $this);
@@ -35,7 +37,7 @@ class Cache_Starred_Images extends Plugin {
 	public function hook_house_keeping() {
 		/* since HOOK_UPDATE_TASK is not available to user plugins, this hook is a next best thing */
 
-		Debug::log("caching media of starred articles for user " . $this->host->get_owner_uid() . "...");
+		Debug::log("caching media of starred articles for user ".$this->host->get_owner_uid()."...");
 
 		$sth = $this->pdo->prepare("SELECT content, ttrss_entries.title,
        		ttrss_user_entries.owner_uid, link, site_url, ttrss_entries.id, plugin_data
@@ -53,13 +55,13 @@ class Cache_Starred_Images extends Plugin {
 			$usth = $this->pdo->prepare("UPDATE ttrss_entries SET plugin_data = ? WHERE id = ?");
 
 			while ($line = $sth->fetch()) {
-				Debug::log("processing article " . $line["title"], Debug::$LOG_VERBOSE);
+				Debug::log("processing article ".$line["title"], Debug::$LOG_VERBOSE);
 
 				if ($line["site_url"]) {
 					$success = $this->cache_article_images($line["content"], $line["site_url"], $line["owner_uid"], $line["id"]);
 
 					if ($success) {
-						$plugin_data = "starred_cache_images,${line['owner_uid']}:" . $line["plugin_data"];
+						$plugin_data = "starred_cache_images,${line['owner_uid']}:".$line["plugin_data"];
 
 						$usth->execute([$plugin_data, $line['id']]);
 					}
@@ -69,9 +71,9 @@ class Cache_Starred_Images extends Plugin {
 
 		/* actual housekeeping */
 
-		Debug::log("expiring " . $this->cache->getDir() . "...");
+		Debug::log("expiring ".$this->cache->getDir()."...");
 
-		$files = glob($this->cache->getDir() . "/*.{png,mp4,status}", GLOB_BRACE);
+		$files = glob($this->cache->getDir()."/*.{png,mp4,status}", GLOB_BRACE);
 
 		$last_article_id = 0;
 		$article_exists = 1;
@@ -95,7 +97,7 @@ class Cache_Starred_Images extends Plugin {
 	}
 
 	public function hook_enclosure_entry($enc, $article_id) {
-		$local_filename = $article_id . "-" . sha1($enc["content_url"]);
+		$local_filename = $article_id."-".sha1($enc["content_url"]);
 
 		if ($this->cache->exists($local_filename)) {
 			$enc["content_url"] = $this->cache->getUrl($local_filename);
@@ -114,7 +116,7 @@ class Cache_Starred_Images extends Plugin {
 				if ($entry->hasAttribute('src')) {
 					$src = rewrite_relative_url($site_url, $entry->getAttribute('src'));
 
-					$local_filename = $article_id . "-" . sha1($src);
+					$local_filename = $article_id."-".sha1($src);
 
 					if ($this->cache->exists($local_filename)) {
 						$entry->setAttribute("src", $this->cache->getUrl($local_filename));
@@ -128,15 +130,17 @@ class Cache_Starred_Images extends Plugin {
 	}
 
 	private function cache_url($article_id, $url) {
-		$local_filename = $article_id . "-" . sha1($url);
+		$local_filename = $article_id."-".sha1($url);
 
 		if (!$this->cache->exists($local_filename)) {
 			Debug::log("cache_images: downloading: $url to $local_filename", Debug::$LOG_VERBOSE);
 
 			$data = fetch_file_contents(["url" => $url, "max_size" => MAX_CACHE_FILE_SIZE]);
 
-			if ($data)
-				return $this->cache->put($local_filename, $data);;
+			if ($data) {
+							return $this->cache->put($local_filename, $data);
+			}
+			;
 
 		} else {
 			//Debug::log("cache_images: local file exists for $url", Debug::$LOG_VERBOSE);
@@ -148,7 +152,7 @@ class Cache_Starred_Images extends Plugin {
 	}
 
 	private function cache_article_images($content, $site_url, $owner_uid, $article_id) {
-		$status_filename = $article_id . "-" . sha1($site_url) . ".status";
+		$status_filename = $article_id."-".sha1($site_url).".status";
 
 		/* housekeeping might run as a separate user, in this case status/media might not be writable */
 		if (!$this->cache->isWritable($status_filename)) {
@@ -158,10 +162,11 @@ class Cache_Starred_Images extends Plugin {
 
 		Debug::log("status: $status_filename", Debug::$LOG_VERBOSE);
 
-        if ($this->cache->exists($status_filename))
-            $status = json_decode($this->cache->get($status_filename), true);
-        else
-            $status = [];
+        if ($this->cache->exists($status_filename)) {
+                    $status = json_decode($this->cache->get($status_filename), true);
+        } else {
+                    $status = [];
+        }
 
         $status["attempt"] += 1;
 
@@ -181,7 +186,7 @@ class Cache_Starred_Images extends Plugin {
 		$has_images = false;
 		$success = false;
 
-        if ($doc->loadHTML('<?xml encoding="UTF-8">' . $content)) {
+        if ($doc->loadHTML('<?xml encoding="UTF-8">'.$content)) {
 			$xpath = new DOMXPath($doc);
 			$entries = $xpath->query('(//img[@src])|(//video/source[@src])');
 

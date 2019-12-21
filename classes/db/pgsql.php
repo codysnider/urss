@@ -15,13 +15,13 @@ class Db_Pgsql implements IDb {
 		}
 
 		if (is_numeric($port) && $port > 0) {
-			$string = "$string port=" . $port;
+			$string = "$string port=".$port;
 		}
 
 		$this->link = pg_connect($string);
 
 		if (!$this->link) {
-			print("Unable to connect to database (as $user to $host, database $db):" . pg_last_error());
+			print("Unable to connect to database (as $user to $host, database $db):".pg_last_error());
 			exit(102);
 		}
 
@@ -31,7 +31,9 @@ class Db_Pgsql implements IDb {
 	}
 
 	public function escape_string($s, $strip_tags = true) {
-		if ($strip_tags) $s = strip_tags($s);
+		if ($strip_tags) {
+		    $s = strip_tags($s);
+		}
 
 		return pg_escape_string($s);
 	}
@@ -44,7 +46,7 @@ class Db_Pgsql implements IDb {
 
 			@pg_query($this->link, "ROLLBACK");
 			$query = htmlspecialchars($query); // just in case
-			user_error("query $query failed: " . ($this->link ? $this->last_error : "No connection"),
+			user_error("query $query failed: ".($this->link ? $this->last_error : "No connection"),
 				$die_on_error ? E_USER_ERROR : E_USER_WARNING);
 		}
 		return $result;

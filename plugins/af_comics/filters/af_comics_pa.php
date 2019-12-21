@@ -46,15 +46,16 @@ class Af_Comics_Pa extends Af_ComicFilter {
 
 					$avatar = $xpath->query('(//div[@class="avatar"]//img)')->item(0);
 
-					if ($basenode)
-						$basenode->insertBefore($avatar, $basenode->firstChild);
+					if ($basenode) {
+											$basenode->insertBefore($avatar, $basenode->firstChild);
+					}
 
 					$uninteresting = $xpath->query('(//div[@class="avatar"])');
 					foreach ($uninteresting as $i) {
 						$i->parentNode->removeChild($i);
 					}
 
-					if ($basenode){
+					if ($basenode) {
 						$article["content"] = $doc->saveHTML($basenode);
 					}
 				}

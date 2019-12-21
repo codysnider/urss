@@ -51,11 +51,11 @@
     
     $outputCode = '';
     
-    foreach($fileList as $fileName) {
+    foreach ($fileList as $fileName) {
         $outputCode .= "\n\n".'//---- '.basename($fileName).' -----------------------------'."\n\n";
         $anotherCode = file_get_contents($fileName);
-        $anotherCode = preg_replace ('/^<\?php/', '', $anotherCode);
-        $anotherCode = preg_replace ('/\?>\*$/', '', $anotherCode);
+        $anotherCode = preg_replace('/^<\?php/', '', $anotherCode);
+        $anotherCode = preg_replace('/\?>\*$/', '', $anotherCode);
         $outputCode .= "\n\n".$anotherCode."\n\n";
     }
     

@@ -60,14 +60,14 @@ class Pref_System extends Handler_Protected {
 					$line[$k] = htmlspecialchars($v);
 				}
 
-				print "<td class='errno'>" . Logger::$errornames[$line["errno"]] . " (" . $line["errno"] . ")</td>";
-				print "<td class='filename'>" . $line["filename"] . ":" . $line["lineno"] . "</td>";
-				print "<td class='errstr'>" . $line["errstr"] . "<hr/>" . nl2br($line["context"]) . "</td>";
-				print "<td class='login'>" . $line["login"] . "</td>";
+				print "<td class='errno'>".Logger::$errornames[$line["errno"]]." (".$line["errno"].")</td>";
+				print "<td class='filename'>".$line["filename"].":".$line["lineno"]."</td>";
+				print "<td class='errstr'>".$line["errstr"]."<hr/>".nl2br($line["context"])."</td>";
+				print "<td class='login'>".$line["login"]."</td>";
 
-				print "<td class='timestamp'>" .
+				print "<td class='timestamp'>".
 					make_local_datetime(
-					$line["created_at"], false) . "</td>";
+					$line["created_at"], false)."</td>";
 
 				print "</tr>";
 			}
@@ -90,7 +90,7 @@ class Pref_System extends Handler_Protected {
 		ob_end_clean();
 
 		print "<div class='phpinfo'>";
-		print preg_replace( '%^.*<body>(.*)</body>.*$%ms','$1', $info);
+		print preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $info);
 		print "</div>";
 
 		print "</div>";
