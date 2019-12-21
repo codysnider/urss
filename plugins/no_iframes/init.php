@@ -23,8 +23,9 @@ class No_Iframes extends Plugin {
 		$entries = $xpath->query('//iframe');
 
 		foreach ($entries as $entry) {
-			if (!iframe_whitelisted($entry))
-				$entry->parentNode->removeChild($entry);
+			if (!iframe_whitelisted($entry)) {
+							$entry->parentNode->removeChild($entry);
+			}
 		}
 
 		return array($doc, $allowed_elements, $disallowed_attributes);

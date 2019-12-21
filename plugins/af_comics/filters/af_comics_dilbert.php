@@ -16,8 +16,9 @@ class Af_Comics_Dilbert extends Af_ComicFilter {
 
 				global $fetch_last_error_content;
 
-				if (!$res && $fetch_last_error_content)
-					$res = $fetch_last_error_content;
+				if (!$res && $fetch_last_error_content) {
+									$res = $fetch_last_error_content;
+				}
 
 				$doc = new DOMDocument();
 
@@ -36,7 +37,7 @@ class Af_Comics_Dilbert extends Af_ComicFilter {
 
 					foreach ($matches as $tag) {
 						// Only strings starting with a number sign are considered tags
-						if ( substr($tag->textContent, 0, 1) == '#' ) {
+						if (substr($tag->textContent, 0, 1) == '#') {
 							$tags[] = mb_strtolower(substr($tag->textContent, 1), 'utf-8');
 						}
 					}
@@ -54,7 +55,7 @@ class Af_Comics_Dilbert extends Af_ComicFilter {
 
 					// Add comic title to article type if not empty (mostly Sunday strips)
 					if ($comic_title) {
-						$article["title"] = $article["title"] . " - " . $comic_title;
+						$article["title"] = $article["title"]." - ".$comic_title;
 					}
 
 					if (!empty($tags)) {

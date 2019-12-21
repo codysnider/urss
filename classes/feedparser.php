@@ -26,7 +26,7 @@ class FeedParser {
 		if ($error) {
 			foreach (libxml_get_errors() as $error) {
 				if ($error->level == LIBXML_ERR_FATAL) {
-					if(!isset($this->error)) //currently only the first error is reported
+					if (!isset($this->error)) //currently only the first error is reported
 						$this->error = $this->format_error($error);
 					$this->libxml_errors [] = $this->format_error($error);
 				}
@@ -68,7 +68,7 @@ class FeedParser {
 					$this->type = $this::FEED_ATOM;
 					break;
 				default:
-					if( !isset($this->error) ){
+					if (!isset($this->error)) {
 						$this->error = "Unknown/unsupported feed type";
 					}
 					return;
@@ -80,8 +80,9 @@ class FeedParser {
 
 				$title = $xpath->query("//atom:feed/atom:title")->item(0);
 
-				if (!$title)
-					$title = $xpath->query("//atom03:feed/atom03:title")->item(0);
+				if (!$title) {
+									$title = $xpath->query("//atom03:feed/atom03:title")->item(0);
+				}
 
 
 				if ($title) {
@@ -90,14 +91,17 @@ class FeedParser {
 
 				$link = $xpath->query("//atom:feed/atom:link[not(@rel)]")->item(0);
 
-				if (!$link)
-					$link = $xpath->query("//atom:feed/atom:link[@rel='alternate']")->item(0);
+				if (!$link) {
+									$link = $xpath->query("//atom:feed/atom:link[@rel='alternate']")->item(0);
+				}
 
-				if (!$link)
-					$link = $xpath->query("//atom03:feed/atom03:link[not(@rel)]")->item(0);
+				if (!$link) {
+									$link = $xpath->query("//atom03:feed/atom03:link[not(@rel)]")->item(0);
+				}
 
-				if (!$link)
-					$link = $xpath->query("//atom03:feed/atom03:link[@rel='alternate']")->item(0);
+				if (!$link) {
+									$link = $xpath->query("//atom03:feed/atom03:link[@rel='alternate']")->item(0);
+				}
 
 				if ($link && $link->hasAttributes()) {
 					$this->link = $link->getAttribute("href");
@@ -105,8 +109,9 @@ class FeedParser {
 
 				$articles = $xpath->query("//atom:entry");
 
-				if (!$articles || $articles->length == 0)
-					$articles = $xpath->query("//atom03:entry");
+				if (!$articles || $articles->length == 0) {
+									$articles = $xpath->query("//atom03:entry");
+				}
 
 				foreach ($articles as $article) {
 					array_push($this->items, new FeedItem_Atom($article, $this->doc, $this->xpath));
@@ -123,10 +128,11 @@ class FeedParser {
 				$link = $xpath->query("//channel/link")->item(0);
 
 				if ($link) {
-					if ($link->getAttribute("href"))
-						$this->link = $link->getAttribute("href");
-					else if ($link->nodeValue)
-						$this->link = $link->nodeValue;
+					if ($link->getAttribute("href")) {
+											$this->link = $link->getAttribute("href");
+					} else if ($link->nodeValue) {
+											$this->link = $link->nodeValue;
+					}
 				}
 
 				$articles = $xpath->query("//channel/item");
@@ -161,11 +167,15 @@ class FeedParser {
 
 			}
 
-			if ($this->title) $this->title = trim($this->title);
-			if ($this->link) $this->link = trim($this->link);
+			if ($this->title) {
+			    $this->title = trim($this->title);
+			}
+			if ($this->link) {
+			    $this->link = trim($this->link);
+			}
 
 		} else {
-			if( !isset($this->error) ){
+			if (!isset($this->error)) {
 				$this->error = "Unknown/unsupported feed type";
 			}
 			return;

@@ -6,7 +6,9 @@ class Logger_SQL {
 	public function log_error($errno, $errstr, $file, $line, $context) {
 
 		// separate PDO connection object is used for logging
-		if (!$this->pdo) $this->pdo = Db::instance()->pdo_connect();
+		if (!$this->pdo) {
+		    $this->pdo = Db::instance()->pdo_connect();
+		}
 
 		if ($this->pdo && get_schema_version() > 117) {
 
@@ -23,7 +25,7 @@ class Logger_SQL {
 
 			foreach ($server_params as $n => $p) {
 				if (isset($_SERVER[$p]))
-					$context .= "\n$n: " . $_SERVER[$p];
+					$context .= "\n$n: ".$_SERVER[$p];
 			}
 
 			// passed error message may contain invalid unicode characters, failing to insert an error here

@@ -22,7 +22,9 @@ class Af_RedditImgur extends Plugin {
 	}
 
 	public function hook_prefs_tab($args) {
-		if ($args != "prefFeeds") return;
+		if ($args != "prefFeeds") {
+		    return;
+		}
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>extension</i> ".__('Reddit content settings (af_redditimgur)')."\">";
@@ -57,13 +59,13 @@ class Af_RedditImgur extends Plugin {
 		print "<fieldset class='narrow'>";
 		print "<label class='checkbox'>";
 		print_checkbox("enable_readability", $enable_readability);
-		print " " . __("Extract missing content using Readability (requires af_readability)") . "</label>";
+		print " ".__("Extract missing content using Readability (requires af_readability)")."</label>";
 		print "</fieldset>";
 
 		print "<fieldset class='narrow'>";
 		print "<label class='checkbox'>";
 		print_checkbox("enable_content_dupcheck", $enable_content_dupcheck);
-		print " " . __("Enable additional duplicate checking") . "</label>";
+		print " ".__("Enable additional duplicate checking")."</label>";
 		print "</fieldset>";
 
 		print_button("submit", __("Save"), 'class="alt-primary"');
@@ -96,14 +98,14 @@ class Af_RedditImgur extends Plugin {
 		foreach ($entries as $entry) {
 			if ($entry->hasAttribute("href") && strpos($entry->getAttribute("href"), "reddit.com") === false) {
 
-				Debug::log("processing href: " . $entry->getAttribute("href"), Debug::$LOG_VERBOSE);
+				Debug::log("processing href: ".$entry->getAttribute("href"), Debug::$LOG_VERBOSE);
 
 				$matches = array();
 
 				if (!$found && preg_match("/^https?:\/\/twitter.com\/(.*?)\/status\/(.*)/", $entry->getAttribute("href"), $matches)) {
-					Debug::log("handling as twitter: " . $matches[1] . " " . $matches[2], Debug::$LOG_VERBOSE);
+					Debug::log("handling as twitter: ".$matches[1]." ".$matches[2], Debug::$LOG_VERBOSE);
 
-					$oembed_result = fetch_file_contents("https://publish.twitter.com/oembed?url=" . urlencode($entry->getAttribute("href")));
+					$oembed_result = fetch_file_contents("https://publish.twitter.com/oembed?url=".urlencode($entry->getAttribute("href")));
 
 					if ($oembed_result) {
 						$oembed_result = json_decode($oembed_result, true);
@@ -111,7 +113,7 @@ class Af_RedditImgur extends Plugin {
 						if ($oembed_result && isset($oembed_result["html"])) {
 
 							$tmp = new DOMDocument();
-							if ($tmp->loadHTML('<?xml encoding="utf-8" ?>' . $oembed_result["html"])) {
+							if ($tmp->loadHTML('<?xml encoding="utf-8" ?>'.$oembed_result["html"])) {
 								$p = $doc->createElement("p");
 
 								$p->appendChild($doc->importNode(
@@ -135,8 +137,8 @@ class Af_RedditImgur extends Plugin {
 
 					Debug::log("Handling as Gfycat", Debug::$LOG_VERBOSE);
 
-					$source_stream = 'https://giant.gfycat.com/' . $matches[2] . '.mp4';
-					$poster_url = 'https://thumbs.gfycat.com/' . $matches[2] . '-mobile.jpg';
+					$source_stream = 'https://giant.gfycat.com/'.$matches[2].'.mp4';
+					$poster_url = 'https://thumbs.gfycat.com/'.$matches[2].'-mobile.jpg';
 
 					$content_type = $this->get_content_type($source_stream);
 
@@ -173,8 +175,7 @@ class Af_RedditImgur extends Plugin {
 									if ($child["data"]["url"] == $matches[0]) {
 										try {
 											$source_stream = $child["data"]["media"]["reddit_video"]["fallback_url"];
-										}
-										catch (Exception $e) {
+										} catch (Exception $e) {
 										}
 										break 2;
 									}
@@ -184,7 +185,7 @@ class Af_RedditImgur extends Plugin {
 					}
 
 					if (!$source_stream) {
-						$source_stream = "https://v.redd.it/" . $matches[1] . "/DASH_600_K";
+						$source_stream = "https://v.redd.it/".$matches[1]."/DASH_600_K";
 					}
 
 					$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
@@ -230,8 +231,9 @@ class Af_RedditImgur extends Plugin {
 
 					$source_stream = str_replace(".gifv", ".mp4", $entry->getAttribute("href"));
 
-					if (strpos($source_stream, "imgur.com") !== false)
-						$poster_url = str_replace(".mp4", "h.jpg", $source_stream);
+					if (strpos($source_stream, "imgur.com") !== false) {
+											$poster_url = str_replace(".mp4", "h.jpg", $source_stream);
+					}
 
 					$this->handle_as_video($doc, $entry, $source_stream, $poster_url);
 
@@ -426,7 +428,9 @@ class Af_RedditImgur extends Plugin {
 					if ($row = $sth->fetch()) {
 						$num_found = $row['cid'];
 
-						if ($num_found > 0) $article["force_catchup"] = true;
+						if ($num_found > 0) {
+						    $article["force_catchup"] = true;
+						}
 					}
 				}
 			}
@@ -458,7 +462,9 @@ class Af_RedditImgur extends Plugin {
 		$video->setAttribute("controls", "1");
 		$video->setAttribute("loop", "1");
 
-		if ($poster_url) $video->setAttribute("poster", $poster_url);
+		if ($poster_url) {
+		    $video->setAttribute("poster", $poster_url);
+		}
 
 		$source = $doc->createElement('source');
 		$source->setAttribute("src", $source_stream);
@@ -542,7 +548,7 @@ class Af_RedditImgur extends Plugin {
 
 			// do not try to embed posts linking back to other reddit posts
 			// readability.php requires PHP 5.6
-			if ($url &&	strpos($url, "reddit.com") === false && version_compare(PHP_VERSION, '5.6.0', '>=')) {
+			if ($url && strpos($url, "reddit.com") === false && version_compare(PHP_VERSION, '5.6.0', '>=')) {
 
 				/* link may lead to a huge video file or whatever, we need to check content type before trying to
 				parse it which p much requires curl */

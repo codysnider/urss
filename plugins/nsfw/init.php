@@ -19,7 +19,7 @@ class NSFW extends Plugin {
 	}
 
 	public function get_js() {
-		return file_get_contents(dirname(__FILE__) . "/init.js");
+		return file_get_contents(dirname(__FILE__)."/init.js");
 	}
 
 	public function hook_render_article($article) {
@@ -47,7 +47,9 @@ class NSFW extends Plugin {
 	}
 
 	public function hook_prefs_tab($args) {
-		if ($args != "prefPrefs") return;
+		if ($args != "prefPrefs") {
+		    return;
+		}
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>extension</i> ".__("NSFW Plugin")."\">";

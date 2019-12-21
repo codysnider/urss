@@ -33,8 +33,9 @@
     include "qrlib.php";    
     
     //ofcourse we need rights to create temp dir
-    if (!file_exists($PNG_TEMP_DIR))
-        mkdir($PNG_TEMP_DIR);
+    if (!file_exists($PNG_TEMP_DIR)) {
+            mkdir($PNG_TEMP_DIR);
+    }
     
     
     $filename = $PNG_TEMP_DIR.'test.png';
@@ -42,12 +43,12 @@
     //processing form input
     //remember to sanitize user input in real-life solution !!!
     $errorCorrectionLevel = 'L';
-    if (isset($_REQUEST['level']) && in_array($_REQUEST['level'], array('L','M','Q','H')))
+    if (isset($_REQUEST['level']) && in_array($_REQUEST['level'], array('L', 'M', 'Q', 'H')))
         $errorCorrectionLevel = $_REQUEST['level'];    
 
     $matrixPointSize = 4;
     if (isset($_REQUEST['size']))
-        $matrixPointSize = min(max((int)$_REQUEST['size'], 1), 10);
+        $matrixPointSize = min(max((int) $_REQUEST['size'], 1), 10);
 
 
     if (isset($_REQUEST['data'])) { 
@@ -73,17 +74,17 @@
     
     //config form
     echo '<form action="index.php" method="post">
-        Data:&nbsp;<input name="data" value="'.(isset($_REQUEST['data'])?htmlspecialchars($_REQUEST['data']):'PHP QR Code :)').'" />&nbsp;
+        Data:&nbsp;<input name="data" value="'.(isset($_REQUEST['data']) ?htmlspecialchars($_REQUEST['data']) : 'PHP QR Code :)').'" />&nbsp;
         ECC:&nbsp;<select name="level">
-            <option value="L"'.(($errorCorrectionLevel=='L')?' selected':'').'>L - smallest</option>
-            <option value="M"'.(($errorCorrectionLevel=='M')?' selected':'').'>M</option>
-            <option value="Q"'.(($errorCorrectionLevel=='Q')?' selected':'').'>Q</option>
-            <option value="H"'.(($errorCorrectionLevel=='H')?' selected':'').'>H - best</option>
+            <option value="L"'.(($errorCorrectionLevel == 'L') ? ' selected' : '').'>L - smallest</option>
+            <option value="M"'.(($errorCorrectionLevel == 'M') ? ' selected' : '').'>M</option>
+            <option value="Q"'.(($errorCorrectionLevel == 'Q') ? ' selected' : '').'>Q</option>
+            <option value="H"'.(($errorCorrectionLevel == 'H') ? ' selected' : '').'>H - best</option>
         </select>&nbsp;
         Size:&nbsp;<select name="size">';
         
-    for($i=1;$i<=10;$i++)
-        echo '<option value="'.$i.'"'.(($matrixPointSize==$i)?' selected':'').'>'.$i.'</option>';
+    for ($i = 1; $i <= 10; $i++)
+        echo '<option value="'.$i.'"'.(($matrixPointSize == $i) ? ' selected' : '').'>'.$i.'</option>';
         
     echo '</select>&nbsp;
         <input type="submit" value="GENERATE"></form><hr/>';

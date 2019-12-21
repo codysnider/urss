@@ -57,7 +57,7 @@ class Af_Proxy_Http extends Plugin {
 		$local_filename = sha1($url);
 
 		if ($this->cache->exists($local_filename)) {
-			header("Location: " . $this->cache->getUrl($local_filename));
+			header("Location: ".$this->cache->getUrl($local_filename));
 			return;
 			//$this->cache->send($local_filename);
 		} else {
@@ -69,7 +69,7 @@ class Af_Proxy_Http extends Plugin {
 
 				if (!$disable_cache) {
 					if ($this->cache->put($local_filename, $data)) {
-						header("Location: " . $this->cache->getUrl($local_filename));
+						header("Location: ".$this->cache->getUrl($local_filename));
 						return;
 					}
 				}
@@ -86,7 +86,7 @@ class Af_Proxy_Http extends Plugin {
 					/*$bg =*/ imagecolorallocate($img, 255, 255, 255);
 					$textcolor = imagecolorallocate($img, 255, 0, 0);
 
-					imagerectangle($img, 0, 0, 450-1, 75-1, $textcolor);
+					imagerectangle($img, 0, 0, 450 - 1, 75 - 1, $textcolor);
 
 					imagestring($img, 5, 5, 5, "Proxy request failed", $textcolor);
 					imagestring($img, 5, 5, 30, truncate_middle($url, 46, "..."), $textcolor);
@@ -104,7 +104,7 @@ class Af_Proxy_Http extends Plugin {
 					print "<h1>Proxy request failed.</h1>";
 					print "<p>Fetch error $fetch_last_error ($fetch_last_error_code)</p>";
 					print "<p>URL: $url</p>";
-					print "<textarea cols='80' rows='25'>" . htmlspecialchars($fetch_last_error_content) . "</textarea>";
+					print "<textarea cols='80' rows='25'>".htmlspecialchars($fetch_last_error_content)."</textarea>";
 				}
 			}
 		}
@@ -129,7 +129,7 @@ class Af_Proxy_Http extends Plugin {
 				if (strpos($url, "data:") !== 0) {
 					$parts = parse_url($url);
 
-					foreach (explode(" " , $this->ssl_known_whitelist) as $host) {
+					foreach (explode(" ", $this->ssl_known_whitelist) as $host) {
 						if (substr(strtolower($parts['host']), -strlen($host)) === strtolower($host)) {
 							$parts['scheme'] = 'https';
 							$url = build_url($parts);
@@ -158,7 +158,7 @@ class Af_Proxy_Http extends Plugin {
 		$proxy_all = $this->host->get($this, "proxy_all");
 
 		$doc = new DOMDocument();
-		if (@$doc->loadHTML('<?xml encoding="UTF-8">' . $article["content"])) {
+		if (@$doc->loadHTML('<?xml encoding="UTF-8">'.$article["content"])) {
 			$xpath = new DOMXPath($doc);
 			$imgs = $xpath->query("//img[@src]");
 
@@ -200,13 +200,17 @@ class Af_Proxy_Http extends Plugin {
 			}
 		}
 
-		if ($need_saving) $article["content"] = $doc->saveHTML();
+		if ($need_saving) {
+		    $article["content"] = $doc->saveHTML();
+		}
 
 		return $article;
 	}
 
 	public function hook_prefs_tab($args) {
-		if ($args != "prefFeeds") return;
+		if ($args != "prefFeeds") {
+		    return;
+		}
 
 		print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>extension</i> ".__('Image proxy settings (af_proxy_http)')."\">";
@@ -233,11 +237,11 @@ class Af_Proxy_Http extends Plugin {
 
 		$proxy_all = $this->host->get($this, "proxy_all");
 		print_checkbox("proxy_all", $proxy_all);
-		print "&nbsp;<label for=\"proxy_all\">" . __("Enable proxy for all remote images.") . "</label><br/>";
+		print "&nbsp;<label for=\"proxy_all\">".__("Enable proxy for all remote images.")."</label><br/>";
 
 		$disable_cache = $this->host->get($this, "disable_cache");
 		print_checkbox("disable_cache", $disable_cache);
-		print "&nbsp;<label for=\"disable_cache\">" . __("Don't cache files locally.") . "</label>";
+		print "&nbsp;<label for=\"disable_cache\">".__("Don't cache files locally.")."</label>";
 
 		print "<p>"; print_button("submit", __("Save"));
 

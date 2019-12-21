@@ -5,7 +5,7 @@ define('SCHEMA_VERSION', 139);
 define('LABEL_BASE_INDEX', -1024);
 define('PLUGIN_FEED_BASE_INDEX', -128);
 
-define('COOKIE_LIFETIME_LONG', 86400*365);
+define('COOKIE_LIFETIME_LONG', 86400 * 365);
 
 $fetch_last_error = false;
 $fetch_last_error_code = false;
@@ -18,7 +18,9 @@ libxml_disable_entity_loader(true);
 libxml_use_internal_errors(true);
 
 // separate test because this is included before sanity checks
-if (function_exists("mb_internal_encoding")) mb_internal_encoding("UTF-8");
+if (function_exists("mb_internal_encoding")) {
+    mb_internal_encoding("UTF-8");
+}
 
 date_default_timezone_set('UTC');
 if (defined('E_DEPRECATED')) {
@@ -57,13 +59,13 @@ define_default('DAEMON_FEED_LIMIT', 500);
 // feed limit for one update batch
 define_default('DAEMON_SLEEP_INTERVAL', 120);
 // default sleep interval between feed updates (sec)
-define_default('MAX_CACHE_FILE_SIZE', 64*1024*1024);
+define_default('MAX_CACHE_FILE_SIZE', 64 * 1024 * 1024);
 // do not cache files larger than that (bytes)
-define_default('MAX_DOWNLOAD_FILE_SIZE', 16*1024*1024);
+define_default('MAX_DOWNLOAD_FILE_SIZE', 16 * 1024 * 1024);
 // do not download general files larger than that (bytes)
 define_default('CACHE_MAX_DAYS', 7);
 // max age in days for various automatically cached (temporary) files
-define_default('MAX_CONDITIONAL_INTERVAL', 3600*12);
+define_default('MAX_CONDITIONAL_INTERVAL', 3600 * 12);
 // max interval between forced unconditional updates for servers
 // not complying with http if-modified-since (seconds)
 define_default('MAX_FETCH_REQUESTS_PER_HOST', 25);
@@ -157,7 +159,7 @@ function startup_gettext() {
 require_once 'db-prefs.php';
 require_once 'controls.php';
 
-define('SELF_USER_AGENT', 'Tiny Tiny RSS/' . get_version() . ' (http://tt-rss.org/)');
+define('SELF_USER_AGENT', 'Tiny Tiny RSS/'.get_version().' (http://tt-rss.org/)');
 ini_set('user_agent', SELF_USER_AGENT);
 
 $schema_version = false;
@@ -195,13 +197,14 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
     $fetch_last_modified = "";
     $fetch_effective_url = "";
 
-    if (!is_array($fetch_domain_hits))
-        $fetch_domain_hits = [];
+    if (!is_array($fetch_domain_hits)) {
+            $fetch_domain_hits = [];
+    }
 
     if (!is_array($options)) {
 
         // falling back on compatibility shim
-        $option_names = [ "url", "type", "login", "pass", "post_query", "timeout", "last_modified", "useragent" ];
+        $option_names = ["url", "type", "login", "pass", "post_query", "timeout", "last_modified", "useragent"];
         $tmp = [];
 
         for ($i = 0; $i < func_num_args(); $i++) {
@@ -227,8 +230,9 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
     $url = ltrim($url, ' ');
     $url = str_replace(' ', '%20', $url);
 
-    if (strpos($url, "//") === 0)
-        $url = 'http:' . $url;
+    if (strpos($url, "//") === 0) {
+            $url = 'http:' . $url;
+    }
 
     $url_host = parse_url($url, PHP_URL_HOST);
     $fetch_domain_hits[$url_host] += 1;
@@ -246,14 +250,17 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
 
         $curl_http_headers = [];
 
-        if ($last_modified && !$post_query)
-            array_push($curl_http_headers, "If-Modified-Since: $last_modified");
+        if ($last_modified && !$post_query) {
+                    array_push($curl_http_headers, "If-Modified-Since: $last_modified");
+        }
 
-        if ($http_accept)
-            array_push($curl_http_headers, "Accept: " . $http_accept);
+        if ($http_accept) {
+                    array_push($curl_http_headers, "Accept: " . $http_accept);
+        }
 
-        if (count($curl_http_headers) > 0)
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $curl_http_headers);
+        if (count($curl_http_headers) > 0) {
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, $curl_http_headers);
+        }
 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout ? $timeout : FILE_FETCH_CONNECT_TIMEOUT);
         curl_setopt($ch, CURLOPT_TIMEOUT, $timeout ? $timeout : FILE_FETCH_TIMEOUT);
@@ -267,8 +274,9 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
             SELF_USER_AGENT);
         curl_setopt($ch, CURLOPT_ENCODING, "");
 
-        if  ($http_referrer)
-            curl_setopt($ch, CURLOPT_REFERER, $http_referrer);
+        if  ($http_referrer) {
+                    curl_setopt($ch, CURLOPT_REFERER, $http_referrer);
+        }
 
         if ($max_size) {
             curl_setopt($ch, CURLOPT_NOPROGRESS, false);
@@ -276,7 +284,7 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
 
             // holy shit closures in php
             // download & upload are *expected* sizes respectively, could be zero
-            curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, function($curl_handle, $download_size, $downloaded, $upload_size, $uploaded) use( &$max_size) {
+            curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, function($curl_handle, $download_size, $downloaded, $upload_size, $uploaded) use(&$max_size) {
                 Debug::log("[curl progressfunction] $downloaded $max_size", Debug::$LOG_EXTENDED);
 
                 return ($downloaded > $max_size) ? 1 : 0; // if max size is set, abort when exceeding it
@@ -297,8 +305,9 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post_query);
         }
 
-        if ($login && $pass)
-            curl_setopt($ch, CURLOPT_USERPWD, "$login:$pass");
+        if ($login && $pass) {
+                    curl_setopt($ch, CURLOPT_USERPWD, "$login:$pass");
+        }
 
         $ret = @curl_exec($ch);
 
@@ -336,7 +345,7 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
         if ($http_code != 200 || $type && strpos($fetch_last_content_type, "$type") === false) {
 
             if (curl_errno($ch) != 0) {
-                $fetch_last_error .=  "; " . curl_errno($ch) . " " . curl_error($ch);
+                $fetch_last_error .= "; ".curl_errno($ch)." ".curl_error($ch);
             }
 
             $fetch_last_error_content = $contents;
@@ -345,7 +354,7 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
         }
 
         if (!$contents) {
-            $fetch_last_error = curl_errno($ch) . " " . curl_error($ch);
+            $fetch_last_error = curl_errno($ch)." ".curl_error($ch);
             curl_close($ch);
             return false;
         }
@@ -357,7 +366,9 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
         if ($is_gzipped) {
             $tmp = @gzdecode($contents);
 
-            if ($tmp) $contents = $tmp;
+            if ($tmp) {
+                $contents = $tmp;
+            }
         }
 
         return $contents;
@@ -365,7 +376,7 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
 
         $fetch_curl_used = false;
 
-        if ($login && $pass){
+        if ($login && $pass) {
             $url_parts = array();
 
             preg_match("/(^[^:]*):\/\/(.*)/", $url, $url_parts);
@@ -373,7 +384,7 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
             $pass = urlencode($pass);
 
             if ($url_parts[1] && $url_parts[2]) {
-                $url = $url_parts[1] . "://$login:$pass@" . $url_parts[2];
+                $url = $url_parts[1]."://$login:$pass@".$url_parts[2];
             }
         }
 
@@ -390,14 +401,17 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
                     'protocol_version'=> 1.1)
               );
 
-        if (!$post_query && $last_modified)
-            array_push($context_options['http']['header'], "If-Modified-Since: $last_modified");
+        if (!$post_query && $last_modified) {
+                    array_push($context_options['http']['header'], "If-Modified-Since: $last_modified");
+        }
 
-        if ($http_accept)
-            array_push($context_options['http']['header'], "Accept: $http_accept");
+        if ($http_accept) {
+                    array_push($context_options['http']['header'], "Accept: $http_accept");
+        }
 
-        if ($http_referrer)
-            array_push($context_options['http']['header'], "Referer: $http_referrer");
+        if ($http_referrer) {
+                    array_push($context_options['http']['header'], "Referer: $http_referrer");
+        }
 
         if (defined('_HTTP_PROXY')) {
             $context_options['http']['request_fulluri'] = true;
@@ -441,7 +455,7 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
             $error = error_get_last();
 
             if ($error['message'] != $old_error['message']) {
-                $fetch_last_error .= "; " . $error["message"];
+                $fetch_last_error .= "; ".$error["message"];
             }
 
             $fetch_last_error_content = $data;
@@ -454,7 +468,9 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
         if ($is_gzipped) {
             $tmp = @gzdecode($data);
 
-            if ($tmp) $data = $tmp;
+            if ($tmp) {
+                $data = $tmp;
+            }
         }
 
         return $data;
@@ -464,7 +480,9 @@ function fetch_file_contents($options /* previously: 0: $url , 1: $type = false,
 
 function initialize_user_prefs($uid, $profile = false) {
 
-    if (get_schema_version() < 63) $profile_qpart = "";
+    if (get_schema_version() < 63) {
+        $profile_qpart = "";
+    }
 
     $pdo = DB::pdo();
     $in_nested_tr = false;
@@ -477,7 +495,9 @@ function initialize_user_prefs($uid, $profile = false) {
 
     $sth = $pdo->query("SELECT pref_name,def_value FROM ttrss_prefs");
 
-    if (!is_numeric($profile) || !$profile || get_schema_version() < 63) $profile = null;
+    if (!is_numeric($profile) || !$profile || get_schema_version() < 63) {
+        $profile = null;
+    }
 
     $u_sth = $pdo->prepare("SELECT pref_name
         FROM ttrss_user_prefs WHERE owner_uid = :uid AND
@@ -510,21 +530,23 @@ function initialize_user_prefs($uid, $profile = false) {
         }
     }
 
-    if (!$in_nested_tr) $pdo->commit();
+    if (!$in_nested_tr) {
+        $pdo->commit();
+    }
 
 }
 
 function get_ssl_certificate_id() {
     if ($_SERVER["REDIRECT_SSL_CLIENT_M_SERIAL"]) {
-        return sha1($_SERVER["REDIRECT_SSL_CLIENT_M_SERIAL"] .
-            $_SERVER["REDIRECT_SSL_CLIENT_V_START"] .
-            $_SERVER["REDIRECT_SSL_CLIENT_V_END"] .
+        return sha1($_SERVER["REDIRECT_SSL_CLIENT_M_SERIAL"].
+            $_SERVER["REDIRECT_SSL_CLIENT_V_START"].
+            $_SERVER["REDIRECT_SSL_CLIENT_V_END"].
             $_SERVER["REDIRECT_SSL_CLIENT_S_DN"]);
     }
     if ($_SERVER["SSL_CLIENT_M_SERIAL"]) {
-        return sha1($_SERVER["SSL_CLIENT_M_SERIAL"] .
-            $_SERVER["SSL_CLIENT_V_START"] .
-            $_SERVER["SSL_CLIENT_V_END"] .
+        return sha1($_SERVER["SSL_CLIENT_M_SERIAL"].
+            $_SERVER["SSL_CLIENT_V_START"].
+            $_SERVER["SSL_CLIENT_V_END"].
             $_SERVER["SSL_CLIENT_S_DN"]);
     }
     return "";
@@ -659,7 +681,7 @@ function initialize_user($uid) {
 function logout_user() {
     @session_destroy();
     if (isset($_COOKIE[session_name()])) {
-       setcookie(session_name(), '', time()-42000, '/');
+       setcookie(session_name(), '', time() - 42000, '/');
     }
     session_commit();
 }
@@ -670,7 +692,9 @@ function validate_csrf($csrf_token) {
 
 function load_user_plugins($owner_uid, $pluginhost = false) {
 
-    if (!$pluginhost) $pluginhost = PluginHost::getInstance();
+    if (!$pluginhost) {
+        $pluginhost = PluginHost::getInstance();
+    }
 
     if ($owner_uid && SCHEMA_VERSION >= 100) {
         $plugins = get_pref("_ENABLED_PLUGINS", $owner_uid);
@@ -692,7 +716,9 @@ function login_sequence() {
         startup_gettext();
         load_user_plugins($_SESSION["uid"]);
     } else {
-        if (!validate_session()) $_SESSION["uid"] = false;
+        if (!validate_session()) {
+            $_SESSION["uid"] = false;
+        }
 
         if (!$_SESSION["uid"]) {
 
@@ -743,7 +769,7 @@ function login_sequence() {
 
 function truncate_string($str, $max_len, $suffix = '&hellip;') {
     if (mb_strlen($str, "utf-8") > $max_len) {
-        return mb_substr($str, 0, $max_len, "utf-8") . $suffix;
+        return mb_substr($str, 0, $max_len, "utf-8").$suffix;
     } else {
         return $str;
     }
@@ -753,7 +779,7 @@ function mb_substr_replace($original, $replacement, $position, $length) {
     $startString = mb_substr($original, 0, $position, "UTF-8");
     $endString = mb_substr($original, $position + $length, mb_strlen($original), "UTF-8");
 
-    $out = $startString . $replacement . $endString;
+    $out = $startString.$replacement.$endString;
 
     return $out;
 }
@@ -787,13 +813,19 @@ function convert_timestamp($timestamp, $source_tz, $dest_tz) {
 function make_local_datetime($timestamp, $long, $owner_uid = false,
                 $no_smart_dt = false, $eta_min = false) {
 
-    if (!$owner_uid) $owner_uid = $_SESSION['uid'];
-    if (!$timestamp) $timestamp = '1970-01-01 0:00';
+    if (!$owner_uid) {
+        $owner_uid = $_SESSION['uid'];
+    }
+    if (!$timestamp) {
+        $timestamp = '1970-01-01 0:00';
+    }
 
     global $utc_tz;
     global $user_tz;
 
-    if (!$utc_tz) $utc_tz = new DateTimeZone('UTC');
+    if (!$utc_tz) {
+        $utc_tz = new DateTimeZone('UTC');
+    }
 
     $timestamp = substr($timestamp, 0, 19);
 
@@ -805,7 +837,9 @@ function make_local_datetime($timestamp, $long, $owner_uid = false,
     if ($user_tz_string != 'Automatic') {
 
         try {
-            if (!$user_tz) $user_tz = new DateTimeZone($user_tz_string);
+            if (!$user_tz) {
+                $user_tz = new DateTimeZone($user_tz_string);
+            }
         } catch (Exception $e) {
             $user_tz = $utc_tz;
         }
@@ -821,26 +855,30 @@ function make_local_datetime($timestamp, $long, $owner_uid = false,
         return smart_date_time($user_timestamp,
             $tz_offset, $owner_uid, $eta_min);
     } else {
-        if ($long)
-            $format = get_pref('LONG_DATE_FORMAT', $owner_uid);
-        else
-            $format = get_pref('SHORT_DATE_FORMAT', $owner_uid);
+        if ($long) {
+                    $format = get_pref('LONG_DATE_FORMAT', $owner_uid);
+        } else {
+                    $format = get_pref('SHORT_DATE_FORMAT', $owner_uid);
+        }
 
         return date($format, $user_timestamp);
     }
 }
 
 function smart_date_time($timestamp, $tz_offset = 0, $owner_uid = false, $eta_min = false) {
-    if (!$owner_uid) $owner_uid = $_SESSION['uid'];
+    if (!$owner_uid) {
+        $owner_uid = $_SESSION['uid'];
+    }
 
     if ($eta_min && time() + $tz_offset - $timestamp < 3600) {
         return T_sprintf("%d min", date("i", time() + $tz_offset - $timestamp));
     } else if (date("Y.m.d", $timestamp) == date("Y.m.d", time() + $tz_offset)) {
         $format = get_pref('SHORT_DATE_FORMAT', $owner_uid);
-        if (strpos((strtolower($format)), "a") === false)
-            return date("G:i", $timestamp);
-        else
-            return date("g:i a", $timestamp);
+        if (strpos((strtolower($format)), "a") === false) {
+                    return date("G:i", $timestamp);
+        } else {
+                    return date("g:i a", $timestamp);
+        }
     } else if (date("Y", $timestamp) == date("Y", time() + $tz_offset)) {
         $format = get_pref('SHORT_DATE_FORMAT', $owner_uid);
         return date($format, $timestamp);
@@ -891,9 +929,9 @@ function sanity_check() {
 }
 
 function file_is_locked($filename) {
-    if (file_exists(LOCK_DIRECTORY . "/$filename")) {
+    if (file_exists(LOCK_DIRECTORY."/$filename")) {
         if (function_exists('flock')) {
-            $fp = @fopen(LOCK_DIRECTORY . "/$filename", "r");
+            $fp = @fopen(LOCK_DIRECTORY."/$filename", "r");
             if ($fp) {
                 if (flock($fp, LOCK_EX | LOCK_NB)) {
                     flock($fp, LOCK_UN);
@@ -914,11 +952,11 @@ function file_is_locked($filename) {
 
 
 function make_lockfile($filename) {
-    $fp = fopen(LOCK_DIRECTORY . "/$filename", "w");
+    $fp = fopen(LOCK_DIRECTORY."/$filename", "w");
 
     if ($fp && flock($fp, LOCK_EX | LOCK_NB)) {
         $stat_h = fstat($fp);
-        $stat_f = stat(LOCK_DIRECTORY . "/$filename");
+        $stat_f = stat(LOCK_DIRECTORY."/$filename");
 
         if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
             if ($stat_h["ino"] != $stat_f["ino"] ||
@@ -929,7 +967,7 @@ function make_lockfile($filename) {
         }
 
         if (function_exists('posix_getpid')) {
-            fwrite($fp, posix_getpid() . "\n");
+            fwrite($fp, posix_getpid()."\n");
         }
         return $fp;
     } else {
@@ -938,10 +976,10 @@ function make_lockfile($filename) {
 }
 
 function make_stampfile($filename) {
-    $fp = fopen(LOCK_DIRECTORY . "/$filename", "w");
+    $fp = fopen(LOCK_DIRECTORY."/$filename", "w");
 
     if (flock($fp, LOCK_EX | LOCK_NB)) {
-        fwrite($fp, time() . "\n");
+        fwrite($fp, time()."\n");
         flock($fp, LOCK_UN);
         fclose($fp);
         return true;
@@ -991,7 +1029,7 @@ function make_init_params() {
     $params["is_default_pw"] = Pref_Prefs::isdefaultpassword();
     $params["label_base_index"] = (int) LABEL_BASE_INDEX;
 
-    $theme = get_pref( "USER_CSS_THEME", false, false);
+    $theme = get_pref("USER_CSS_THEME", false, false);
     $params["theme"] = theme_exists($theme) ? $theme : "";
 
     $params["plugins"] = implode(", ", PluginHost::getInstance()->get_plugin_names());
@@ -1215,13 +1253,13 @@ function make_runtime_info() {
         }
     }
 
-    if (file_exists(LOCK_DIRECTORY . "/update_daemon.lock")) {
+    if (file_exists(LOCK_DIRECTORY."/update_daemon.lock")) {
 
         $data['daemon_is_running'] = (int) file_is_locked("update_daemon.lock");
 
         if (time() - $_SESSION["daemon_stamp_check"] > 30) {
 
-            $stamp = (int) @file_get_contents(LOCK_DIRECTORY . "/update_daemon.stamp");
+            $stamp = (int) @file_get_contents(LOCK_DIRECTORY."/update_daemon.stamp");
 
             if ($stamp) {
                 $stamp_delta = time() - $stamp;
@@ -1250,8 +1288,9 @@ function iframe_whitelisted($entry) {
 
     if ($src) {
         foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_IFRAME_WHITELISTED) as $plugin) {
-            if ($plugin->hook_iframe_whitelisted($src))
-                return true;
+            if ($plugin->hook_iframe_whitelisted($src)) {
+                            return true;
+            }
         }
     }
 
@@ -1259,12 +1298,16 @@ function iframe_whitelisted($entry) {
 }
 
 function sanitize($str, $force_remove_images = false, $owner = false, $site_url = false, $highlight_words = false, $article_id = false) {
-    if (!$owner) $owner = $_SESSION["uid"];
+    if (!$owner) {
+        $owner = $_SESSION["uid"];
+    }
 
-    $res = trim($str); if (!$res) return '';
+    $res = trim($str); if (!$res) {
+        return '';
+    }
 
     $doc = new DOMDocument();
-    $doc->loadHTML('<?xml encoding="UTF-8">' . $res);
+    $doc->loadHTML('<?xml encoding="UTF-8">'.$res);
     $xpath = new DOMXPath($doc);
 
     $rewrite_base_url = $site_url ? $site_url : get_self_url_prefix();
@@ -1323,13 +1366,15 @@ function sanitize($str, $force_remove_images = false, $owner = false, $site_url 
 
             if ($entry->nodeName == 'source') {
 
-                if ($entry->parentNode && $entry->parentNode->parentNode)
-                    $entry->parentNode->parentNode->replaceChild($p, $entry->parentNode);
+                if ($entry->parentNode && $entry->parentNode->parentNode) {
+                                    $entry->parentNode->parentNode->replaceChild($p, $entry->parentNode);
+                }
 
             } else if ($entry->nodeName == 'img') {
 
-                if ($entry->parentNode)
-                    $entry->parentNode->replaceChild($p, $entry);
+                if ($entry->parentNode) {
+                                    $entry->parentNode->replaceChild($p, $entry);
+                }
 
             }
         }
@@ -1363,9 +1408,11 @@ function sanitize($str, $force_remove_images = false, $owner = false, $site_url 
         'ol', 'p', 'picture', 'pre', 'q', 'ruby', 'rp', 'rt', 's', 'samp', 'section',
         'small', 'source', 'span', 'strike', 'strong', 'sub', 'summary',
         'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'time',
-        'tr', 'track', 'tt', 'u', 'ul', 'var', 'wbr', 'video', 'xml:namespace' );
+        'tr', 'track', 'tt', 'u', 'ul', 'var', 'wbr', 'video', 'xml:namespace');
 
-    if ($_SESSION['hasSandbox']) $allowed_elements[] = 'iframe';
+    if ($_SESSION['hasSandbox']) {
+        $allowed_elements[] = 'iframe';
+    }
 
     $disallowed_attributes = array('id', 'style', 'class');
 
@@ -1405,7 +1452,9 @@ function sanitize($str, $force_remove_images = false, $owner = false, $site_url 
                     $text = mb_substr($text, $pos + mb_strlen($word));
                 }
 
-                if (!empty($text)) $fragment->appendChild(new DomText($text));
+                if (!empty($text)) {
+                    $fragment->appendChild(new DomText($text));
+                }
 
                 $child->parentNode->replaceChild($fragment, $child);
             }
@@ -1498,8 +1547,8 @@ function is_prefix_https() {
 
 // this returns SELF_URL_PATH sans ending slash
 function get_self_url_prefix() {
-    if (strrpos(SELF_URL_PATH, "/") === strlen(SELF_URL_PATH)-1) {
-        return substr(SELF_URL_PATH, 0, strlen(SELF_URL_PATH)-1);
+    if (strrpos(SELF_URL_PATH, "/") === strlen(SELF_URL_PATH) - 1) {
+        return substr(SELF_URL_PATH, 0, strlen(SELF_URL_PATH) - 1);
     } else {
         return SELF_URL_PATH;
     }
@@ -1508,11 +1557,11 @@ function get_self_url_prefix() {
 /* TODO: This needs to use bcrypt */
 function encrypt_password($pass, $salt = '', $mode2 = false) {
     if ($salt && $mode2) {
-        return "MODE2:" . hash('sha256', $salt . $pass);
+        return "MODE2:".hash('sha256', $salt.$pass);
     } else if ($salt) {
-        return "SHA1X:" . sha1("$salt:$pass");
+        return "SHA1X:".sha1("$salt:$pass");
     } else {
-        return "SHA1:" . sha1($pass);
+        return "SHA1:".sha1($pass);
     }
 }
 
@@ -1523,7 +1572,7 @@ function init_plugins() {
 }
 
 function build_url($parts) {
-    return $parts['scheme'] . "://" . $parts['host'] . $parts['path'];
+    return $parts['scheme']."://".$parts['host'].$parts['path'];
 }
 
 function cleanup_url_path($path) {
@@ -1567,7 +1616,7 @@ function rewrite_relative_url($url, $rel_url) {
             $dir = dirname($parts['path']);
             $dir !== '/' && $dir .= '/';
         }
-        $parts['path'] = $dir . $rel_url;
+        $parts['path'] = $dir.$rel_url;
         $parts['path'] = cleanup_url_path($parts['path']);
 
         return build_url($parts);
@@ -1596,8 +1645,9 @@ function get_random_bytes($length) {
     } else {
         $output = "";
 
-        for ($i = 0; $i < $length; $i++)
-            $output .= chr(mt_rand(0, 255));
+        for ($i = 0; $i < $length; $i++) {
+                    $output .= chr(mt_rand(0, 255));
+        }
 
         return $output;
     }
@@ -1654,12 +1704,12 @@ function init_js_translations() {
 
         for ($i = 0; $i < $l10n->total; $i++) {
             $orig = $l10n->get_original_string($i);
-            if(strpos($orig, "\000") !== false) { // Plural forms
+            if (strpos($orig, "\000") !== false) { // Plural forms
                 $key = explode(chr(0), $orig);
                 print T_js_decl($key[0], _ngettext($key[0], $key[1], 1)); // Singular
                 print T_js_decl($key[1], _ngettext($key[0], $key[1], 2)); // Plural
             } else {
-                $translation = _dgettext($domain,$orig);
+                $translation = _dgettext($domain, $orig);
                 print T_js_decl($orig, $translation);
             }
         }
@@ -1667,15 +1717,20 @@ function init_js_translations() {
 }
 
 function get_theme_path($theme) {
-    if ($theme == "default.php")
-        return "css/default.css";
+    if ($theme == "default.php") {
+            return "css/default.css";
+    }
 
     $check = "themes/$theme";
-    if (file_exists($check)) return $check;
+    if (file_exists($check)) {
+        return $check;
+    }
 
     $check = "themes.local/$theme";
-    if (file_exists($check)) return $check;
-}
+    if (file_exists($check)) {
+        return $check;
+    }
+    }
 
 function theme_exists($theme) {
     return file_exists("themes/$theme") || file_exists("themes.local/$theme");
@@ -1715,7 +1770,7 @@ function base64_img($filename) {
     if (file_exists($filename)) {
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
 
-        return "data:image/$ext;base64," . base64_encode(file_get_contents($filename));
+        return "data:image/$ext;base64,".base64_encode(file_get_contents($filename));
     } else {
         return "";
     }
@@ -1731,7 +1786,9 @@ function base64_img($filename) {
 function send_local_file($filename) {
     if (file_exists($filename)) {
 
-        if (is_writable($filename)) touch($filename);
+        if (is_writable($filename)) {
+            touch($filename);
+        }
 
         $tmppluginhost = new PluginHost();
 
@@ -1739,7 +1796,9 @@ function send_local_file($filename) {
         $tmppluginhost->load_data();
 
         foreach ($tmppluginhost->get_hooks(PluginHost::HOOK_SEND_LOCAL_FILE) as $plugin) {
-            if ($plugin->hook_send_local_file($filename)) return true;
+            if ($plugin->hook_send_local_file($filename)) {
+                return true;
+            }
         }
 
         $mimetype = mime_content_type($filename);
@@ -1747,12 +1806,13 @@ function send_local_file($filename) {
         // this is hardly ideal but 1) only media is cached in images/ and 2) seemingly only mp4
         // video files are detected as octet-stream by mime_content_type()
 
-        if ($mimetype == "application/octet-stream")
-            $mimetype = "video/mp4";
+        if ($mimetype == "application/octet-stream") {
+                    $mimetype = "video/mp4";
+        }
 
         header("Content-type: $mimetype");
 
-        $stamp = gmdate("D, d M Y H:i:s", filemtime($filename)) . " GMT";
+        $stamp = gmdate("D, d M Y H:i:s", filemtime($filename))." GMT";
         header("Last-Modified: $stamp", true);
 
         return readfile($filename);
@@ -1762,7 +1822,7 @@ function send_local_file($filename) {
 }
 
 function arr_qmarks($arr) {
-    return str_repeat('?,', count($arr) - 1) . '?';
+    return str_repeat('?,', count($arr) - 1).'?';
 }
 
 function get_scripts_timestamp() {
@@ -1771,7 +1831,9 @@ function get_scripts_timestamp() {
 
     foreach ($files as $file) {
         $file_ts = filemtime($file);
-        if ($file_ts > $ts) $ts = $file_ts;
+        if ($file_ts > $ts) {
+            $ts = $file_ts;
+        }
     }
 
     return $ts;
@@ -1784,8 +1846,9 @@ function get_scripts_timestamp() {
 function get_version(&$git_commit = false, &$git_timestamp = false) {
     global $ttrss_version;
 
-    if (isset($ttrss_version))
-        return $ttrss_version;
+    if (isset($ttrss_version)) {
+            return $ttrss_version;
+    }
 
     $ttrss_version = "UNKNOWN (Unsupported)";
 
@@ -1797,7 +1860,7 @@ function get_version(&$git_commit = false, &$git_timestamp = false) {
     } else if (PHP_OS === "Darwin") {
         $ttrss_version = "UNKNOWN (Unsupported, Darwin)";
     } else if (file_exists("$root_dir/version_static.txt")) {
-        $ttrss_version = trim(file_get_contents("$root_dir/version_static.txt")) . " (Unsupported)";
+        $ttrss_version = trim(file_get_contents("$root_dir/version_static.txt"))." (Unsupported)";
     } else if (is_dir("$root_dir/.git")) {
         $rc = 0;
         $output = [];
@@ -1815,10 +1878,10 @@ function get_version(&$git_commit = false, &$git_timestamp = false) {
                 $git_commit = $commit;
                 $git_timestamp = $timestamp;
 
-                $ttrss_version = strftime("%y.%m", $timestamp) . "-$commit";
+                $ttrss_version = strftime("%y.%m", $timestamp)."-$commit";
             }
         } else {
-            user_error("Unable to determine version (using $root_dir): " . implode("\n", $output), E_USER_WARNING);
+            user_error("Unable to determine version (using $root_dir): ".implode("\n", $output), E_USER_WARNING);
         }
     }
 

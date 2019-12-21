@@ -21,8 +21,9 @@ class Pref_Filters extends Handler_Protected {
 		#file_put_contents("/tmp/saveorder.json", clean($_POST['payload']));
 		#$data = json_decode(file_get_contents("/tmp/saveorder.json"), true);
 
-		if (!is_array($data['items']))
-			$data['items'] = json_decode($data['items'], true);
+		if (!is_array($data['items'])) {
+					$data['items'] = json_decode($data['items'], true);
+		}
 
 		$index = 0;
 
@@ -80,14 +81,14 @@ class Pref_Filters extends Handler_Protected {
 
                     if (strpos($feed_id, "CAT:") === 0) {
                         $cat_id = (int) substr($feed_id, 4);
-                        array_push($scope_inner_qparts, "cat_id = " . $this->pdo->quote($cat_id));
+                        array_push($scope_inner_qparts, "cat_id = ".$this->pdo->quote($cat_id));
                     } else if ($feed_id > 0) {
-                        array_push($scope_inner_qparts, "feed_id = " . $this->pdo->quote($feed_id));
+                        array_push($scope_inner_qparts, "feed_id = ".$this->pdo->quote($feed_id));
                     }
                 }
 
                 if (count($scope_inner_qparts) > 0) {
-				    array_push($scope_qparts, "(" . implode(" OR ", $scope_inner_qparts) . ")");
+				    array_push($scope_qparts, "(".implode(" OR ", $scope_inner_qparts).")");
                 }
 
 				array_push($filter["rules"], $rule);
@@ -100,7 +101,7 @@ class Pref_Filters extends Handler_Protected {
 
 		if (count($scope_qparts) == 0) $scope_qparts = ["true"];
 
-		$glue = $filter['match_any_rule'] ? " OR " :  " AND ";
+		$glue = $filter['match_any_rule'] ? " OR " : " AND ";
 		$scope_qpart = join($glue, $scope_qparts);
 
 		if (!$scope_qpart) $scope_qpart = "true";
@@ -146,9 +147,9 @@ class Pref_Filters extends Handler_Protected {
 
 				$content_preview = $line["content_preview"];
 
-				$tmp = "<li><span class='title'>" . $line["title"] . "</span><br/>" .
-					"<span class='feed'>" . $line['feed_title'] . "</span>, <span class='date'>" . mb_substr($line["date_entered"], 0, 16) . "</span>" .
-					"<div class='preview text-muted'>" . $content_preview . "</div>" .
+				$tmp = "<li><span class='title'>".$line["title"]."</span><br/>".
+					"<span class='feed'>".$line['feed_title']."</span>, <span class='date'>".mb_substr($line["date_entered"], 0, 16)."</span>".
+					"<div class='preview text-muted'>".$content_preview."</div>".
 					"</li>";
 
 				array_push($rv, $tmp);
@@ -161,7 +162,9 @@ class Pref_Filters extends Handler_Protected {
 
 	public function testFilter() {
 
-		if (isset($_REQUEST["offset"])) return $this->testFilterDo();
+		if (isset($_REQUEST["offset"])) {
+		    return $this->testFilterDo();
+		}
 
 		//print __("Articles matching this filter:");
 
@@ -203,11 +206,11 @@ class Pref_Filters extends Handler_Protected {
                 foreach ($feeds as $feed_id) {
 
                     if (strpos($feed_id, "CAT:") === 0) {
-                        $feed_id = (int)substr($feed_id, 4);
+                        $feed_id = (int) substr($feed_id, 4);
                         array_push($feeds_fmt, Feeds::getCategoryTitle($feed_id));
                     } else {
                         if ($feed_id)
-                            array_push($feeds_fmt, Feeds::getFeedTitle((int)$feed_id));
+                            array_push($feeds_fmt, Feeds::getFeedTitle((int) $feed_id));
                         else
                             array_push($feeds_fmt, __("All feeds"));
                     }
@@ -218,8 +221,7 @@ class Pref_Filters extends Handler_Protected {
             } else {
 
                 $where = $line["cat_filter"] ?
-                    Feeds::getCategoryTitle($line["cat_id"]) :
-                    ($line["feed_id"] ?
+                    Feeds::getCategoryTitle($line["cat_id"]) : ($line["feed_id"] ?
                         Feeds::getFeedTitle($line["feed_id"]) : __("All feeds"));
             }
 
@@ -227,11 +229,11 @@ class Pref_Filters extends Handler_Protected {
 
 			$inverse = $line["inverse"] ? "inverse" : "";
 
-			$rv .= "<li class='$inverse'>" . T_sprintf("%s on %s in %s %s",
+			$rv .= "<li class='$inverse'>".T_sprintf("%s on %s in %s %s",
 				htmlspecialchars($line["reg_exp"]),
 				$line["field"],
 				$where,
-				$line["inverse"] ? __("(inverse)") : "") . "</li>";
+				$line["inverse"] ? __("(inverse)") : "")."</li>";
 		}
 
 		return $rv;
@@ -294,12 +296,12 @@ class Pref_Filters extends Handler_Protected {
 					//$fg_color = $label_row["fg_color"];
 					$bg_color = $label_row["bg_color"];
 
-					$name[1] = "<i class=\"material-icons\" style='color : $bg_color; margin-right : 4px'>label</i>" . $name[1];
+					$name[1] = "<i class=\"material-icons\" style='color : $bg_color; margin-right : 4px'>label</i>".$name[1];
 				}
 			}
 
 			$filter = array();
-			$filter['id'] = 'FILTER:' . $line['id'];
+			$filter['id'] = 'FILTER:'.$line['id'];
 			$filter['bare_id'] = $line['id'];
 			$filter['name'] = $name[0];
 			$filter['param'] = $name[1];
@@ -357,7 +359,7 @@ class Pref_Filters extends Handler_Protected {
 			print "<div dojoType=\"fox.Toolbar\">";
 
 			print "<div dojoType=\"fox.form.DropDownButton\">".
-				"<span>" . __('Select')."</span>";
+				"<span>".__('Select')."</span>";
 			print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 			print "<div onclick=\"dijit.byId('filterEditDlg').selectRules(true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
@@ -384,19 +386,21 @@ class Pref_Filters extends Handler_Protected {
 					$line["feed_id"] = json_decode($line["match_on"], true);
 				} else {
 					if ($line["cat_filter"]) {
-						$feed_id = "CAT:" . (int)$line["cat_id"];
+						$feed_id = "CAT:".(int) $line["cat_id"];
 					} else {
-						$feed_id = (int)$line["feed_id"];
+						$feed_id = (int) $line["feed_id"];
 					}
 
-					$line["feed_id"] = ["" . $feed_id]; // set item type to string for in_array()
+					$line["feed_id"] = ["".$feed_id]; // set item type to string for in_array()
 				}
 
 				unset($line["cat_filter"]);
 				unset($line["cat_id"]);
 				unset($line["filter_id"]);
 				unset($line["id"]);
-				if (!$line["inverse"]) unset($line["inverse"]);
+				if (!$line["inverse"]) {
+				    unset($line["inverse"]);
+				}
 				unset($line["match_on"]);
 
 				$data = htmlspecialchars(json_encode($line));
@@ -417,7 +421,7 @@ class Pref_Filters extends Handler_Protected {
 			print "<div dojoType=\"fox.Toolbar\">";
 
 			print "<div dojoType=\"fox.form.DropDownButton\">".
-				"<span>" . __('Select')."</span>";
+				"<span>".__('Select')."</span>";
 			print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 			print "<div onclick=\"dijit.byId('filterEditDlg').selectActions(true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
@@ -518,21 +522,25 @@ class Pref_Filters extends Handler_Protected {
 	}
 
 	private function getRuleName($rule) {
-		if (!$rule) $rule = json_decode(clean($_REQUEST["rule"]), true);
+		if (!$rule) {
+		    $rule = json_decode(clean($_REQUEST["rule"]), true);
+		}
 
 		$feeds = $rule["feed_id"];
 		$feeds_fmt = [];
 
-		if (!is_array($feeds)) $feeds = [$feeds];
+		if (!is_array($feeds)) {
+		    $feeds = [$feeds];
+		}
 
 		foreach ($feeds as $feed_id) {
 
             if (strpos($feed_id, "CAT:") === 0) {
-                $feed_id = (int)substr($feed_id, 4);
+                $feed_id = (int) substr($feed_id, 4);
                 array_push($feeds_fmt, Feeds::getCategoryTitle($feed_id));
             } else {
                 if ($feed_id)
-                    array_push($feeds_fmt, Feeds::getFeedTitle((int)$feed_id));
+                    array_push($feeds_fmt, Feeds::getFeedTitle((int) $feed_id));
                 else
                     array_push($feeds_fmt, __("All feeds"));
             }
@@ -542,7 +550,7 @@ class Pref_Filters extends Handler_Protected {
 
 		$sth = $this->pdo->prepare("SELECT description FROM ttrss_filter_types
 			WHERE id = ?");
-		$sth->execute([(int)$rule["filter_type"]]);
+		$sth->execute([(int) $rule["filter_type"]]);
 
 		if ($row = $sth->fetch()) {
 			$filter_type = $row["description"];
@@ -552,9 +560,9 @@ class Pref_Filters extends Handler_Protected {
 
 		$inverse = isset($rule["inverse"]) ? "inverse" : "";
 
-		return "<span class='filterRule $inverse'>" .
+		return "<span class='filterRule $inverse'>".
 			T_sprintf("%s on %s in %s %s", htmlspecialchars($rule["reg_exp"]),
-			$filter_type, $feed, isset($rule["inverse"]) ? __("(inverse)") : "") . "</span>";
+			$filter_type, $feed, isset($rule["inverse"]) ? __("(inverse)") : "")."</span>";
 	}
 
 	public function printRuleName() {
@@ -564,7 +572,7 @@ class Pref_Filters extends Handler_Protected {
 	private function getActionName($action) {
 		$sth = $this->pdo->prepare("SELECT description FROM
 			ttrss_filter_actions WHERE id = ?");
-		$sth->execute([(int)$action["action_id"]]);
+		$sth->execute([(int) $action["action_id"]]);
 
 		$title = "";
 
@@ -574,7 +582,7 @@ class Pref_Filters extends Handler_Protected {
 
 			if ($action["action_id"] == 4 || $action["action_id"] == 6 ||
 				$action["action_id"] == 7)
-				$title .= ": " . $action["action_param"];
+				$title .= ": ".$action["action_param"];
 
 			if ($action["action_id"] == 9) {
 				list ($pfclass, $pfaction) = explode(":", $action["action_param"]);
@@ -584,7 +592,7 @@ class Pref_Filters extends Handler_Protected {
 				foreach ($filter_actions as $fclass => $factions) {
 					foreach ($factions as $faction) {
 						if ($pfaction == $faction["action"] && $pfclass == $fclass) {
-							$title .= ": " . $fclass . ": " . $faction["description"];
+							$title .= ": ".$fclass.": ".$faction["description"];
 							break;
 						}
 					}
@@ -644,8 +652,12 @@ class Pref_Filters extends Handler_Protected {
 		$sth = $this->pdo->prepare("DELETE FROM ttrss_filters2_actions WHERE filter_id = ?");
 		$sth->execute([$filter_id]);
 
-		if (!is_array(clean($_REQUEST["rule"]))) $_REQUEST["rule"] = [];
-		if (!is_array(clean($_REQUEST["action"]))) $_REQUEST["action"] = [];
+		if (!is_array(clean($_REQUEST["rule"]))) {
+		    $_REQUEST["rule"] = [];
+		}
+		if (!is_array(clean($_REQUEST["action"]))) {
+		    $_REQUEST["action"] = [];
+		}
 
 		if ($filter_id) {
 			/* create rules */
@@ -681,7 +693,7 @@ class Pref_Filters extends Handler_Protected {
 					$reg_exp = trim($rule["reg_exp"]);
 					$inverse = isset($rule["inverse"]) ? 1 : 0;
 
-					$filter_type = (int)trim($rule["filter_type"]);
+					$filter_type = (int) trim($rule["filter_type"]);
 					$match_on = json_encode($rule["feed_id"]);
 
 					$rsth->execute([$filter_id, $reg_exp, $filter_type, $match_on, $inverse]);
@@ -695,7 +707,7 @@ class Pref_Filters extends Handler_Protected {
 			foreach ($actions as $action) {
 				if ($action) {
 
-					$action_id = (int)$action["action_id"];
+					$action_id = (int) $action["action_id"];
 					$action_param = $action["action_param"];
 					$action_param_label = $action["action_param_label"];
 
@@ -704,7 +716,7 @@ class Pref_Filters extends Handler_Protected {
 					}
 
 					if ($action_id == 6) {
-						$action_param = (int)str_replace("+", "", $action_param);
+						$action_param = (int) str_replace("+", "", $action_param);
 					}
 
 					$asth->execute([$filter_id, $action_id, $action_param]);
@@ -773,7 +785,7 @@ class Pref_Filters extends Handler_Protected {
 			</div>";
 
 		print "<div dojoType=\"fox.form.DropDownButton\">".
-				"<span>" . __('Select')."</span>";
+				"<span>".__('Select')."</span>";
 		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
 		print "<div onclick=\"dijit.byId('filterTree').model.setAllChecked(true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
@@ -859,7 +871,7 @@ class Pref_Filters extends Handler_Protected {
 		print "<div dojoType='fox.Toolbar'>";
 
 		print "<div dojoType='fox.form.DropDownButton'>".
-				"<span>" . __('Select')."</span>";
+				"<span>".__('Select')."</span>";
 		print "<div dojoType='dijit.Menu' style='display: none'>";
 		print "<div onclick=\"dijit.byId('filterEditDlg').selectRules(true)\"
 			dojoType='dijit.MenuItem'>".__('All')."</div>";
@@ -888,7 +900,7 @@ class Pref_Filters extends Handler_Protected {
 		print "<div dojoType='fox.Toolbar'>";
 
 		print "<div dojoType='fox.form.DropDownButton'>".
-				"<span>" . __('Select')."</span>";
+				"<span>".__('Select')."</span>";
 		print "<div dojoType='dijit.Menu' style='display: none'>";
 		print "<div onclick=\"dijit.byId('filterEditDlg').selectActions(true)\"
 			dojoType='dijit.MenuItem'>".__('All')."</div>";
@@ -992,10 +1004,10 @@ class Pref_Filters extends Handler_Protected {
 		print "</fieldset>";
 
 		print "<fieldset>";
-		print "<label style='display : inline'>".  __("on field") . "</label> ";
+		print "<label style='display : inline'>".__("on field")."</label> ";
 		print_select_hash("filter_type", $filter_type, $filter_types,
 			'dojoType="fox.form.Select"');
-		print "<label style='padding-left : 10px; display : inline'>" . __("in") . "</label> ";
+		print "<label style='padding-left : 10px; display : inline'>".__("in")."</label> ";
 
 		print "</fieldset>";
 
@@ -1031,7 +1043,7 @@ class Pref_Filters extends Handler_Protected {
 
 		if ($action) {
 			$action_param = $action["action_param"];
-			$action_id = (int)$action["action_id"];
+			$action_id = (int) $action["action_id"];
 		} else {
 			$action_param = "";
 			$action_id = 0;
@@ -1062,8 +1074,8 @@ class Pref_Filters extends Handler_Protected {
 		$param_hidden = ($action_id == 4 || $action_id == 6) ?
 			"" : "display : none";
 
-		$label_param_hidden = ($action_id == 7) ?	"" : "display : none";
-		$plugin_param_hidden = ($action_id == 9) ?	"" : "display : none";
+		$label_param_hidden = ($action_id == 7) ? "" : "display : none";
+		$plugin_param_hidden = ($action_id == 9) ? "" : "display : none";
 
 		print "<span id='filterDlg_paramBox' style=\"$param_box_hidden\">";
 		print " ";
@@ -1082,8 +1094,8 @@ class Pref_Filters extends Handler_Protected {
 		foreach ($filter_actions as $fclass => $factions) {
 			foreach ($factions as $faction) {
 
-				$filter_action_hash[$fclass . ":" . $faction["action"]] =
-					$fclass . ": " . $faction["description"];
+				$filter_action_hash[$fclass.":".$faction["action"]] =
+					$fclass.": ".$faction["description"];
 			}
 		}
 
@@ -1137,7 +1149,9 @@ class Pref_Filters extends Handler_Protected {
 			$match_any_rule = $row["match_any_rule"];
 			$inverse = $row["inverse"];
 
-			if (!$title) $title = __("[No caption]");
+			if (!$title) {
+			    $title = __("[No caption]");
+			}
 
 			$title = sprintf(_ngettext("%s (%d rule)", "%s (%d rules)", (int) $num_rules), $title, $num_rules);
 
@@ -1153,8 +1167,8 @@ class Pref_Filters extends Handler_Protected {
 				$num_actions -= 1;
 			}
 
-			if ($match_any_rule) $title .= " (" . __("matches any rule") . ")";
-			if ($inverse) $title .= " (" . __("inverse") . ")";
+			if ($match_any_rule) $title .= " (".__("matches any rule").")";
+			if ($inverse) $title .= " (".__("inverse").")";
 
 			if ($num_actions > 0)
 				$actions = sprintf(_ngettext("%s (+%d action)", "%s (+%d actions)", (int) $num_actions), $actions, $num_actions);

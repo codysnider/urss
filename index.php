@@ -12,11 +12,11 @@
 	// we need a separate check here because functions.php might get parsed
 	// incorrectly before 5.3 because of :: syntax.
 	if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-		print "<b>Fatal Error</b>: PHP version 5.6.0 or newer required. You're using " . PHP_VERSION . ".\n";
+		print "<b>Fatal Error</b>: PHP version 5.6.0 or newer required. You're using ".PHP_VERSION.".\n";
 		exit;
 	}
 
-	set_include_path(dirname(__FILE__) ."/include" . PATH_SEPARATOR .
+	set_include_path(dirname(__FILE__)."/include".PATH_SEPARATOR.
 		get_include_path());
 
 	require_once "autoload.php";
@@ -26,7 +26,9 @@
 	require_once "config.php";
 	require_once "db-prefs.php";
 
-	if (!init_plugins()) return;
+	if (!init_plugins()) {
+	    return;
+	}
 
 	login_sequence();
 

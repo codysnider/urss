@@ -49,7 +49,7 @@ class StringReader {
   var $_pos;
   var $_str;
 
-  function StringReader($str='') {
+  function StringReader($str = '') {
     $this->_str = $str;
     $this->_pos = 0;
   }
@@ -57,7 +57,7 @@ class StringReader {
   function read($bytes) {
     $data = substr($this->_str, $this->_pos, $bytes);
     $this->_pos += $bytes;
-    if (strlen($this->_str)<$this->_pos)
+    if (strlen($this->_str) < $this->_pos)
       $this->_pos = strlen($this->_str);
 
     return $data;
@@ -65,7 +65,7 @@ class StringReader {
 
   function seekto($pos) {
     $this->_pos = $pos;
-    if (strlen($this->_str)<$this->_pos)
+    if (strlen($this->_str) < $this->_pos)
       $this->_pos = strlen($this->_str);
     return $this->_pos;
   }
@@ -89,9 +89,9 @@ class FileReader {
   function FileReader($filename) {
     if (file_exists($filename)) {
 
-      $this->_length=filesize($filename);
+      $this->_length = filesize($filename);
       $this->_pos = 0;
-      $this->_fd = fopen($filename,'rb');
+      $this->_fd = fopen($filename, 'rb');
       if (!$this->_fd) {
         $this->error = 3; // Cannot read file, probably permissions
         return false;
@@ -117,7 +117,9 @@ class FileReader {
       $this->_pos = ftell($this->_fd);
 
       return $data;
-    } else return '';
+    } else {
+        return '';
+    }
   }
 
   function seekto($pos) {
@@ -146,8 +148,8 @@ class CachedFileReader extends StringReader {
   function CachedFileReader($filename) {
     if (file_exists($filename)) {
 
-      $length=filesize($filename);
-      $fd = fopen($filename,'rb');
+      $length = filesize($filename);
+      $fd = fopen($filename, 'rb');
 
       if (!$fd) {
         $this->error = 3; // Cannot read file, probably permissions

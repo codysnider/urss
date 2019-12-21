@@ -14,8 +14,9 @@ abstract class FeedItem_Common extends FeedItem {
 			$source = $elem->getElementsByTagName("source")->item(0);
 
 			// we don't need <source> element
-			if ($source)
-				$elem->removeChild($source);
+			if ($source) {
+							$elem->removeChild($source);
+			}
 		} catch (DOMException $e) {
 			//
 		}
@@ -31,14 +32,19 @@ abstract class FeedItem_Common extends FeedItem {
 		if ($author) {
 			$name = $author->getElementsByTagName("name")->item(0);
 
-			if ($name) return clean($name->nodeValue);
+			if ($name) {
+			    return clean($name->nodeValue);
+			}
 
 			$email = $author->getElementsByTagName("email")->item(0);
 
-			if ($email) return clean($email->nodeValue);
+			if ($email) {
+			    return clean($email->nodeValue);
+			}
 
-			if ($author->nodeValue)
-				return clean($author->nodeValue);
+			if ($author->nodeValue) {
+							return clean($author->nodeValue);
+			}
 		}
 
 		$author_elems = $this->xpath->query("dc:creator", $this->elem);
@@ -56,15 +62,17 @@ abstract class FeedItem_Common extends FeedItem {
 		//might give a wrong result if a default namespace was declared (possible with XPath 2.0)
 		$com_url = $this->xpath->query("comments", $this->elem)->item(0);
 
-		if ($com_url)
-			return clean($com_url->nodeValue);
+		if ($com_url) {
+					return clean($com_url->nodeValue);
+		}
 
 		//Atom Threading Extension (RFC 4685) stuff. Could be used in RSS feeds, so it's in common.
 		//'text/html' for type is too restrictive?
 		$com_url = $this->xpath->query("atom:link[@rel='replies' and contains(@type,'text/html')]/@href", $this->elem)->item(0);
 
-		if ($com_url)
-			return clean($com_url->nodeValue);
+		if ($com_url) {
+					return clean($com_url->nodeValue);
+		}
 	}
 
 	public function get_comments_count() {
@@ -98,7 +106,9 @@ abstract class FeedItem_Common extends FeedItem {
 			}
 
 			$desc = $this->xpath->query("media:description", $enclosure)->item(0);
-			if ($desc) $enc->title = clean($desc->nodeValue);
+			if ($desc) {
+			    $enc->title = clean($desc->nodeValue);
+			}
 
 			array_push($encs, $enc);
 		}
@@ -127,7 +137,9 @@ abstract class FeedItem_Common extends FeedItem {
 					$enc->title = clean($desc->nodeValue);
 				} else {
 					$desc = $this->xpath->query("media:description", $enclosure)->item(0);
-					if ($desc) $enc->title = clean($desc->nodeValue);
+					if ($desc) {
+					    $enc->title = clean($desc->nodeValue);
+					}
 				}
 
 				array_push($encs, $enc);
@@ -175,7 +187,7 @@ abstract class FeedItem_Common extends FeedItem {
 
 			// we don't support numeric tags
 			if (is_numeric($cat))
-				$cat = 't:' . $cat;
+				$cat = 't:'.$cat;
 
 			$cat = preg_replace('/[,\'\"]/', "", $cat);
 
@@ -183,8 +195,9 @@ abstract class FeedItem_Common extends FeedItem {
 				$cat = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $cat);
 			}
 
-			if (mb_strlen($cat) > 250)
-				$cat = mb_substr($cat, 0, 250);
+			if (mb_strlen($cat) > 250) {
+							$cat = mb_substr($cat, 0, 250);
+			}
 
 			return $cat;
 		}, $tmp);

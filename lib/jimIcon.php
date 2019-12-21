@@ -24,13 +24,15 @@ class jimIcon {
                 $r = ord($str[2]);
                 if (strlen($str) > 3) {
                         $a = 127 - (ord($str[3]) / 2);
-                        if ($a != 0 && $a != 127)
-                                $this->had_alpha = 1;
+                        if ($a != 0 && $a != 127) {
+                                                        $this->had_alpha = 1;
+                        }
                 } else {
                         $a = 0;
                 }
-                if ($a != 127)
-                        $this->all_transaprent = 0;
+                if ($a != 127) {
+                                        $this->all_transaprent = 0;
+                }
                 return imagecolorallocatealpha($img, $r, $g, $b, $a);
         }
 
@@ -67,19 +69,21 @@ class jimIcon {
                         $entry = substr($ico, 6 + 16 * $i, 16);
                         if (!$entry || strlen($entry) < 16)
                                 continue;
-                        $e = unpack("Cwidth/" .
-                                    "Cheight/" .
-                                    "Ccolors/" .
-                                    "Czero/" .
-                                    "vplanes/" .
-                                    "vbpp/" .
-                                    "Vsize/" .
+                        $e = unpack("Cwidth/".
+                                    "Cheight/".
+                                    "Ccolors/".
+                                    "Czero/".
+                                    "vplanes/".
+                                    "vbpp/".
+                                    "Vsize/".
                                     "Voffset/",
                                     $entry);
-                        if ($e["width"] == 0)
-                                $e["width"] = 256;
-                        if ($e["height"] == 0)
-                                $e["height"] = 256;
+                        if ($e["width"] == 0) {
+                                                        $e["width"] = 256;
+                        }
+                        if ($e["height"] == 0) {
+                                                        $e["height"] = 256;
+                        }
                         if ($e["zero"] != 0) {
                                 $this->error = "nonzero reserved field";
                                 return false;
@@ -122,16 +126,16 @@ class jimIcon {
                 // directory entry.
                 $bitmapinfo = unpack("Vsize", $data);
                 if ($bitmapinfo["size"] == 40) {
-                        $info = unpack("Vsize/" .
-                                       "Vwidth/" .
-                                       "Vheight/" .
-                                       "vplanes/" .
-                                       "vbpp/" .
-                                       "Vcompress/" .
-                                       "Vsize/" .
-                                       "Vxres/" .
-                                       "Vyres/" .
-                                       "Vpalcolors/" .
+                        $info = unpack("Vsize/".
+                                       "Vwidth/".
+                                       "Vheight/".
+                                       "vplanes/".
+                                       "vbpp/".
+                                       "Vcompress/".
+                                       "Vsize/".
+                                       "Vxres/".
+                                       "Vyres/".
+                                       "Vpalcolors/".
                                        "Vimpcolors/", $data);
                         if ($e["bpp"] == 0) {
                                 $e["bpp"] = $info["bpp"];
@@ -212,7 +216,7 @@ class jimIcon {
                                         $pixel1 = $palette[$p >> 4];
                                         $pixel2 = $palette[$p & 0x0f];
                                         $XOR[$y][$x] = $pixel1;
-                                        $XOR[$y][$x+1] = $pixel2;
+                                        $XOR[$y][$x + 1] = $pixel2;
                                         $x += 2;
                                         $offset++;
                                 } elseif ($bpp == 8) {
@@ -226,8 +230,9 @@ class jimIcon {
                                 }
                         }
                         // End of row padding
-                        while ($offset & 3)
-                                $offset++;
+                        while ($offset & 3) {
+                                                        $offset++;
+                        }
                 }
 
                 // Now the "AND" image, which is 1 bit per pixel.  Ignore
@@ -261,8 +266,9 @@ class jimIcon {
                         }
 
                         // End of row padding
-                        while ($offset & 3)
-                                $offset++;
+                        while ($offset & 3) {
+                                                        $offset++;
+                        }
                 }
                 return $img;
         }

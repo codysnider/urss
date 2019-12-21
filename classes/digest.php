@@ -37,7 +37,7 @@ class Digest
 					time() - $preferred_ts <= 7200
 				) {
 
-					Debug::log("Sending digest for UID:" . $line['id'] . " - " . $line["email"]);
+					Debug::log("Sending digest for UID:".$line['id']." - ".$line["email"]);
 
 					$do_catchup = get_pref('DIGEST_CATCHUP', $line['id'], false);
 
@@ -123,13 +123,13 @@ class Digest
 
 		$sth = $pdo->prepare("SELECT ttrss_entries.title,
 				ttrss_feeds.title AS feed_title,
-				COALESCE(ttrss_feed_categories.title, '" . __('Uncategorized') . "') AS cat_title,
+				COALESCE(ttrss_feed_categories.title, '" . __('Uncategorized')."') AS cat_title,
 				date_updated,
 				ttrss_user_entries.ref_id,
 				link,
 				score,
 				content,
-				" . SUBSTRING_FOR_DATE . "(last_updated,1,19) AS last_updated
+				" . SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated
 			FROM
 				ttrss_user_entries,ttrss_entries,ttrss_feeds
 			LEFT JOIN
@@ -165,7 +165,7 @@ class Digest
 				$user_id);
 
 			if (get_pref('ENABLE_FEED_CATS', $user_id)) {
-				$line['feed_title'] = $line['cat_title'] . " / " . $line['feed_title'];
+				$line['feed_title'] = $line['cat_title']." / ".$line['feed_title'];
 			}
 
 			$article_labels = Article::get_article_labels($line["ref_id"], $user_id);

@@ -36,11 +36,13 @@ class Debug {
 
     public static function log($message, $level = 0) {
 
-        if (!Debug::$enabled || Debug::$loglevel < $level) return false;
+        if (!Debug::$enabled || Debug::$loglevel < $level) {
+            return false;
+        }
 
         $ts = strftime("%H:%M:%S", time());
         if (function_exists('posix_getpid')) {
-            $ts = "$ts/" . posix_getpid();
+            $ts = "$ts/".posix_getpid();
         }
 
         if (Debug::$logfile) {
@@ -60,7 +62,7 @@ class Debug {
 
                     if (!$locked) {
                         fclose($fp);
-                        user_error("Unable to lock debugging log file: " . Debug::$logfile, E_USER_WARNING);
+                        user_error("Unable to lock debugging log file: ".Debug::$logfile, E_USER_WARNING);
                         return;
                     }
                 }
@@ -73,11 +75,12 @@ class Debug {
 
                 fclose($fp);
 
-                if (Debug::$quiet)
-                    return;
+                if (Debug::$quiet) {
+                                    return;
+                }
 
             } else {
-                user_error("Unable to open debugging log file: " . Debug::$logfile, E_USER_WARNING);
+                user_error("Unable to open debugging log file: ".Debug::$logfile, E_USER_WARNING);
             }
         }
 

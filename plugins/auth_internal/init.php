@@ -99,8 +99,9 @@ class Auth_Internal extends Plugin implements IAuthModule {
 		if ($service && get_schema_version() > 138) {
 			$user_id = $this->check_app_password($login, $password, $service);
 
-			if ($user_id)
-				return $user_id;
+			if ($user_id) {
+							return $user_id;
+			}
 		}
 
 		if (get_schema_version() > 87) {
@@ -271,7 +272,7 @@ class Auth_Internal extends Plugin implements IAuthModule {
 			list ($algo, $hash, $salt) = explode(":", $row["pwd_hash"]);
 
 			if ($algo == "SSHA-512") {
-				$test_hash = hash('sha512', $salt . $password);
+				$test_hash = hash('sha512', $salt.$password);
 
 				if ($test_hash == $hash) {
 					$usth = $this->pdo->prepare("UPDATE ttrss_app_passwords SET last_used = NOW() WHERE id = ?");

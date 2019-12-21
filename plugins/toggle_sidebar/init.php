@@ -16,7 +16,7 @@ class Toggle_Sidebar extends Plugin {
 	}
 
 	public function get_js() {
-		return file_get_contents(__DIR__ . "/init.js");
+		return file_get_contents(__DIR__."/init.js");
 	}
 
 	public function hook_main_toolbar_button() {

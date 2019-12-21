@@ -11,13 +11,15 @@
 		$query = "";
 
 		if (!(strpos($filename, "?") === false)) {
-			$query = substr($filename, strpos($filename, "?")+1);
+			$query = substr($filename, strpos($filename, "?") + 1);
 			$filename = substr($filename, 0, strpos($filename, "?"));
 		}
 
 		$timestamp = filemtime($filename);
 
-		if ($query) $timestamp .= "&$query";
+		if ($query) {
+		    $timestamp .= "&$query";
+		}
 
 		return "<script type=\"text/javascript\" charset=\"utf-8\" src=\"$filename?$timestamp\"></script>\n";
 	}
@@ -85,7 +87,7 @@
 		$errors = array();
 
 		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-			array_push($errors, "PHP version 5.6.0 or newer required. You're using " . PHP_VERSION . ".");
+			array_push($errors, "PHP version 5.6.0 or newer required. You're using ".PHP_VERSION.".");
 		}
 
 		if (!function_exists("curl_init") && !ini_get("allow_url_fopen")) {
@@ -133,17 +135,17 @@
 
 	function pdo_connect($host, $user, $pass, $db, $type, $port = false) {
 
-		$db_port = $port ? ';port=' . $port : '';
-		$db_host = $host ? ';host=' . $host : '';
+		$db_port = $port ? ';port='.$port : '';
+		$db_host = $host ? ';host='.$host : '';
 
 		try {
-			$pdo = new PDO($type . ':dbname=' . $db . $db_host . $db_port,
+			$pdo = new PDO($type.':dbname='.$db.$db_host.$db_port,
 				$user,
 				$pass);
 
 			return $pdo;
 		} catch (Exception $e) {
-		    print "<div class='alert alert-danger'>" . $e->getMessage() . "</div>";
+		    print "<div class='alert alert-danger'>".$e->getMessage()."</div>";
 		    return null;
         }
 	}
@@ -189,7 +191,7 @@
 	}
 
 	function make_self_url_path() {
-		$url_path = (is_server_https() ? 'https://' :  'http://') . $_SERVER["HTTP_HOST"] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+		$url_path = (is_server_https() ? 'https://' : 'http://').$_SERVER["HTTP_HOST"].parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
 		return $url_path;
 	}
@@ -437,7 +439,7 @@
 
 						if (!$res) {
 							print_notice("Query: $line");
-							print_error("Error: " . implode(", ", $pdo->errorInfo()));
+							print_error("Error: ".implode(", ", $pdo->errorInfo()));
                         }
 					}
 				}
