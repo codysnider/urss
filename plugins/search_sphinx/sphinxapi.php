@@ -1043,8 +1043,9 @@ class SphinxClient
             {
             case SPH_FILTER_VALUES:
                 $req .= pack("N", count($filter["values"]));
-                foreach ($filter["values"] as $value)
-                    $req .= sphPackI64($value);
+                foreach ($filter["values"] as $value) {
+                                    $req .= sphPackI64($value);
+                }
                 break;
 
             case SPH_FILTER_RANGE:
@@ -1652,8 +1653,9 @@ class SphinxClient
             {
                 $req .= pack("N", $mva ? count($v) : $v);
                 if ($mva) {
-                                    foreach ($v as $vv)
-                        $req .= pack("N", $vv);
+                                    foreach ($v as $vv) {
+                                                            $req .= pack("N", $vv);
+                                    }
                 }
             }
         }

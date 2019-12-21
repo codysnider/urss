@@ -308,20 +308,25 @@ function processTemplateCommand($cmdL, $cmdTPosBegin, $cmdTPosEnd, &$resumeFromS
     $resumeFromStart = false;
     $p = 0;
     $cmd = '';
-    if (!$this->parseWord($cmdL, $p, $cmd)) return true;
+    if (!$this->parseWord($cmdL, $p, $cmd)) {
+        return true;
+    }
     $parms = substr($cmdL, $p);
     switch (strtoupper($cmd)) {
     case '$BEGINBLOCK':
-     if (!$this->processBeginBlockCmd($parms, $cmdTPosBegin, $cmdTPosEnd))
-        return false;
+     if (!$this->processBeginBlockCmd($parms, $cmdTPosBegin, $cmdTPosEnd)) {
+             return false;
+     }
         break;
     case '$ENDBLOCK':
-     if (!$this->processEndBlockCmd($parms, $cmdTPosBegin, $cmdTPosEnd))
-        return false;
+     if (!$this->processEndBlockCmd($parms, $cmdTPosBegin, $cmdTPosEnd)) {
+             return false;
+     }
         break;
     case '$INCLUDE':
-     if (!$this->processincludeCmd($parms, $cmdTPosBegin, $cmdTPosEnd))
-        return false;
+     if (!$this->processincludeCmd($parms, $cmdTPosBegin, $cmdTPosEnd)) {
+             return false;
+     }
         $resumeFromStart = true;
         break;
     default:
@@ -807,15 +812,17 @@ function writeBlockInstance($blockInstNo) {
             if ($subBtr['tPosBegin'] < $tPos2) {
             $tPos2 = $subBtr['tPosBegin'];
             $kind = 2; }}
-        if ($tPos2 > $tPos)
-            $this->writeString(substr($this->template, $tPos, $tPos2 - $tPos));
+        if ($tPos2 > $tPos) {
+                    $this->writeString(substr($this->template, $tPos, $tPos2 - $tPos));
+        }
         switch ($kind) {
         case 0:         // end of block
         return;
         case 1:         // variable
         $vrtr = & $this->varRefTab[$varRefNo];
-        if ($vrtr['blockNo'] != $blockNo)
-            $this->programLogicError(4);
+        if ($vrtr['blockNo'] != $blockNo) {
+                    $this->programLogicError(4);
+        }
         $variableValue = $bitr['blockVarTab'][$vrtr['blockVarNo']];
         $this->writeString($variableValue);
         $tPos = $vrtr['tPosEnd'];
@@ -823,8 +830,9 @@ function writeBlockInstance($blockInstNo) {
         break;
         case 2:         // sub block
         $subBtr = & $this->blockTab[$subBlockNo];
-        if ($subBtr['parentBlockNo'] != $blockNo)
-            $this->programLogicError(3);
+        if ($subBtr['parentBlockNo'] != $blockNo) {
+                    $this->programLogicError(3);
+        }
         $this->writeBlockInstances($subBlockNo, $bitr['instanceLevel']); // recursive call
         $tPos = $subBtr['tPosEnd'];
         $subBlockNo += 1;
@@ -834,15 +842,20 @@ function writeBlockInstance($blockInstNo) {
 * @access private
 */
 function writeString($s) {
-    if ($this->outputError) return;
+    if ($this->outputError) {
+        return;
+    }
     switch ($this->outputMode) {
     case 0:            // output to PHP output stream
-     if (!print($s))
-        $this->outputError = true;
+     if (!print($s)) {
+             $this->outputError = true;
+     }
         break;
     case 1:            // output to file
      $rc = fwrite($this->outputFileHandle, $s);
-        if ($rc === false) $this->outputError = true;
+        if ($rc === false) {
+            $this->outputError = true;
+        }
         break;
     case 2:            // output to string
      $this->outputString .= $s;

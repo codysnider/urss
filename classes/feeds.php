@@ -2286,56 +2286,68 @@ class Feeds extends Handler_Protected {
                 break;
             case "note":
                 if ($commandpair[1]) {
-                    if ($commandpair[1] == "true")
-                        array_push($query_keywords, "($not (note IS NOT NULL AND note != ''))");
-                    else if ($commandpair[1] == "false")
-                        array_push($query_keywords, "($not (note IS NULL OR note = ''))");
-                    else
-                        array_push($query_keywords, "($not (LOWER(note) LIKE ".
+                    if ($commandpair[1] == "true") {
+                                            array_push($query_keywords, "($not (note IS NOT NULL AND note != ''))");
+                    } else if ($commandpair[1] == "false") {
+                                            array_push($query_keywords, "($not (note IS NULL OR note = ''))");
+                    } else {
+                                            array_push($query_keywords, "($not (LOWER(note) LIKE ".
                             $pdo->quote('%'.mb_strtolower($commandpair[1]).'%')."))");
+                    }
                 } else {
                     array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
 								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-                    if (!$not) array_push($search_words, $k);
+                    if (!$not) {
+                        array_push($search_words, $k);
+                    }
                 }
                 break;
             case "star":
 
                 if ($commandpair[1]) {
-                    if ($commandpair[1] == "true")
-                        array_push($query_keywords, "($not (marked = true))");
-                    else
-                        array_push($query_keywords, "($not (marked = false))");
+                    if ($commandpair[1] == "true") {
+                                            array_push($query_keywords, "($not (marked = true))");
+                    } else {
+                                            array_push($query_keywords, "($not (marked = false))");
+                    }
                 } else {
                     array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
 								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-                    if (!$not) array_push($search_words, $k);
+                    if (!$not) {
+                        array_push($search_words, $k);
+                    }
                 }
                 break;
             case "pub":
                 if ($commandpair[1]) {
-                    if ($commandpair[1] == "true")
-                        array_push($query_keywords, "($not (published = true))");
-                    else
-                        array_push($query_keywords, "($not (published = false))");
+                    if ($commandpair[1] == "true") {
+                                            array_push($query_keywords, "($not (published = true))");
+                    } else {
+                                            array_push($query_keywords, "($not (published = false))");
+                    }
 
                 } else {
                     array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER('%$k%')
 								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-                    if (!$not) array_push($search_words, $k);
+                    if (!$not) {
+                        array_push($search_words, $k);
+                    }
                 }
                 break;
             case "unread":
                 if ($commandpair[1]) {
-                    if ($commandpair[1] == "true")
-                        array_push($query_keywords, "($not (unread = true))");
-                    else
-                        array_push($query_keywords, "($not (unread = false))");
+                    if ($commandpair[1] == "true") {
+                                            array_push($query_keywords, "($not (unread = true))");
+                    } else {
+                                            array_push($query_keywords, "($not (unread = false))");
+                    }
 
                 } else {
                     array_push($query_keywords, "(UPPER(ttrss_entries.title) $not LIKE UPPER(".$pdo->quote("%$k%").")
 								OR UPPER(ttrss_entries.content) $not LIKE UPPER(".$pdo->quote("%$k%")."))");
-                    if (!$not) array_push($search_words, $k);
+                    if (!$not) {
+                        array_push($search_words, $k);
+                    }
                 }
                 break;
             default:
