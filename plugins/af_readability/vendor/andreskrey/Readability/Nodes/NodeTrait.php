@@ -121,36 +121,36 @@ trait NodeTrait
             $contentScore = 0;
 
             switch ($this->nodeName) {
-                case 'div':
-                    $contentScore += 5;
-                    break;
+            case 'div':
+                $contentScore += 5;
+                break;
 
-                case 'pre':
-                case 'td':
-                case 'blockquote':
-                    $contentScore += 3;
-                    break;
+            case 'pre':
+            case 'td':
+            case 'blockquote':
+                $contentScore += 3;
+                break;
 
-                case 'address':
-                case 'ol':
-                case 'ul':
-                case 'dl':
-                case 'dd':
-                case 'dt':
-                case 'li':
-                case 'form':
-                    $contentScore -= 3;
-                    break;
+            case 'address':
+            case 'ol':
+            case 'ul':
+            case 'dl':
+            case 'dd':
+            case 'dt':
+            case 'li':
+            case 'form':
+                $contentScore -= 3;
+                break;
 
-                case 'h1':
-                case 'h2':
-                case 'h3':
-                case 'h4':
-                case 'h5':
-                case 'h6':
-                case 'th':
-                    $contentScore -= 5;
-                    break;
+            case 'h1':
+            case 'h2':
+            case 'h3':
+            case 'h4':
+            case 'h5':
+            case 'h6':
+            case 'th':
+                $contentScore -= 5;
+                break;
             }
 
             $this->contentScore = $contentScore + ($weightClasses ? $this->getClassWeight() : 0);

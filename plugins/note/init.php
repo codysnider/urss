@@ -1,78 +1,78 @@
 <?php
 class Note extends Plugin {
 
-	/* @var PluginHost $host */
-	private $host;
+    /* @var PluginHost $host */
+    private $host;
 
-	public function about() {
-		return array(1.0,
-			"Adds support for setting article notes",
-			"fox");
-	}
+    public function about() {
+        return array(1.0,
+            "Adds support for setting article notes",
+            "fox");
+    }
 
-	public function init($host) {
-		$this->host = $host;
+    public function init($host) {
+        $this->host = $host;
 
-		$host->add_hook($host::HOOK_ARTICLE_BUTTON, $this);
-	}
+        $host->add_hook($host::HOOK_ARTICLE_BUTTON, $this);
+    }
 
-	public function get_js() {
-		return file_get_contents(dirname(__FILE__)."/note.js");
-	}
+    public function get_js() {
+        return file_get_contents(dirname(__FILE__)."/note.js");
+    }
 
 
-	public function hook_article_button($line) {
-		return "<i class='material-icons' onclick=\"Plugins.Note.edit(".$line["id"].")\"
+    public function hook_article_button($line) {
+        return "<i class='material-icons' onclick=\"Plugins.Note.edit(".$line["id"].")\"
 			style='cursor : pointer' title='".__('Edit article note')."'>note</i>";
-	}
+    }
 
-	public function edit() {
-		$param = $_REQUEST['param'];
+    public function edit() {
+        $param = $_REQUEST['param'];
 
-		$sth = $this->pdo->prepare("SELECT note FROM ttrss_user_entries WHERE
+        $sth = $this->pdo->prepare("SELECT note FROM ttrss_user_entries WHERE
 			ref_id = ? AND owner_uid = ?");
-		$sth->execute([$param, $_SESSION['uid']]);
+        $sth->execute([$param, $_SESSION['uid']]);
 
-		if ($row = $sth->fetch()) {
+        if ($row = $sth->fetch()) {
 
-			$note = $row['note'];
+            $note = $row['note'];
 
-			print_hidden("id", "$param");
-			print_hidden("op", "pluginhandler");
-			print_hidden("method", "setNote");
-			print_hidden("plugin", "note");
+            print_hidden("id", "$param");
+            print_hidden("op", "pluginhandler");
+            print_hidden("method", "setNote");
+            print_hidden("plugin", "note");
 
-			print "<textarea dojoType='dijit.form.SimpleTextarea'
+            print "<textarea dojoType='dijit.form.SimpleTextarea'
 				style='font-size : 12px; width : 98%; height: 100px;'
 				name='note'>$note</textarea>";
 
-		}
+        }
 
-		print "<footer class='text-center'>";
-		print "<button dojoType=\"dijit.form.Button\"
+        print "<footer class='text-center'>";
+        print "<button dojoType=\"dijit.form.Button\"
 			onclick=\"dijit.byId('editNoteDlg').execute()\">".__('Save')."</button> ";
-		print "<button dojoType=\"dijit.form.Button\"
+        print "<button dojoType=\"dijit.form.Button\"
 			onclick=\"dijit.byId('editNoteDlg').hide()\">".__('Cancel')."</button>";
-		print "</footer>";
+        print "</footer>";
 
-	}
+    }
 
-	public function setNote() {
-		$id = $_REQUEST["id"];
-		$note = trim(strip_tags($_REQUEST["note"]));
+    public function setNote() {
+        $id = $_REQUEST["id"];
+        $note = trim(strip_tags($_REQUEST["note"]));
 
-		$sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET note = ?
+        $sth = $this->pdo->prepare("UPDATE ttrss_user_entries SET note = ?
 			WHERE ref_id = ? AND owner_uid = ?");
-		$sth->execute([$note, $id, $_SESSION['uid']]);
+        $sth->execute([$note, $id, $_SESSION['uid']]);
 
-		$formatted_note = Article::format_article_note($id, $note);
+        $formatted_note = Article::format_article_note($id, $note);
 
-		print json_encode(array("note" => $formatted_note,
-				"raw_length" => mb_strlen($note)));
-	}
+        print json_encode(array("note" => $formatted_note,
+                "raw_length" => mb_strlen($note)));
+    }
 
-	public function api_version() {
-		return 2;
-	}
+    public function api_version() {
+        return 2;
+    }
 
 }

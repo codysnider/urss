@@ -67,8 +67,9 @@ class jimIcon {
                 $most_pixels = 0;
                 for ($i = 0; $i < $h["num"]; $i++) {
                         $entry = substr($ico, 6 + 16 * $i, 16);
-                        if (!$entry || strlen($entry) < 16)
-                                continue;
+                        if (!$entry || strlen($entry) < 16) {
+                                                        continue;
+                        }
                         $e = unpack("Cwidth/".
                                     "Cheight/".
                                     "Ccolors/".
@@ -127,16 +128,16 @@ class jimIcon {
                 $bitmapinfo = unpack("Vsize", $data);
                 if ($bitmapinfo["size"] == 40) {
                         $info = unpack("Vsize/".
-                                       "Vwidth/".
-                                       "Vheight/".
-                                       "vplanes/".
-                                       "vbpp/".
-                                       "Vcompress/".
-                                       "Vsize/".
-                                       "Vxres/".
-                                       "Vyres/".
-                                       "Vpalcolors/".
-                                       "Vimpcolors/", $data);
+                                        "Vwidth/".
+                                        "Vheight/".
+                                        "vplanes/".
+                                        "vbpp/".
+                                        "Vcompress/".
+                                        "Vsize/".
+                                        "Vxres/".
+                                        "Vyres/".
+                                        "Vpalcolors/".
+                                        "Vimpcolors/", $data);
                         if ($e["bpp"] == 0) {
                                 $e["bpp"] = $info["bpp"];
                         }
@@ -244,7 +245,7 @@ class jimIcon {
                         for ($y = 0; $y < $height; $y++) {
                                 for ($x = 0; $x < $width; $x++) {
                                         imagesetpixel($img, $x, $y,
-                                                      $XOR[$y][$x]);
+                                                        $XOR[$y][$x]);
                                 }
                         }
                         return $img;
@@ -255,10 +256,10 @@ class jimIcon {
                         $x = 0;
                         while ($x < $width) {
                                 for ($b = 0x80;
-                                     $b > 0 && $x < $width; $b >>= 1) {
+                                        $b > 0 && $x < $width; $b >>= 1) {
                                         if (!(ord($data[$offset]) & $b)) {
                                                 imagesetpixel($img, $x, $y,
-                                                              $XOR[$y][$x]);
+                                                                $XOR[$y][$x]);
                                         }
                                         $x++;
                                 }

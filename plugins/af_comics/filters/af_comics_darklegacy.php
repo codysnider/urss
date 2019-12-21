@@ -1,39 +1,39 @@
 <?php
 class Af_Comics_DarkLegacy extends Af_ComicFilter {
 
-	public function supported() {
-		return array("Dark Legacy Comics");
-	}
+    public function supported() {
+        return array("Dark Legacy Comics");
+    }
 
-	public function process(&$article) {
+    public function process(&$article) {
 
-		if (strpos($article["guid"], "darklegacycomics.com") !== false) {
+        if (strpos($article["guid"], "darklegacycomics.com") !== false) {
 
-				$res = fetch_file_contents($article["link"], false, false, false,
-					 false, false, 0,
-					 "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)");
+                $res = fetch_file_contents($article["link"], false, false, false,
+                        false, false, 0,
+                        "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)");
 
-				global $fetch_last_error_content;
+                global $fetch_last_error_content;
 
-				if (!$res && $fetch_last_error_content) {
-									$res = $fetch_last_error_content;
-				}
+                if (!$res && $fetch_last_error_content) {
+                                    $res = $fetch_last_error_content;
+                }
 
-				$doc = new DOMDocument();
+                $doc = new DOMDocument();
 
-				if (@$doc->loadHTML($res)) {
-					$xpath = new DOMXPath($doc);
-					$basenode = $xpath->query('//div[@class="comic"]')->item(0);
+                if (@$doc->loadHTML($res)) {
+                    $xpath = new DOMXPath($doc);
+                    $basenode = $xpath->query('//div[@class="comic"]')->item(0);
 
-					if ($basenode) {
+                    if ($basenode) {
 
-						$article["content"] = $doc->saveHTML($basenode);
-					}
-				}
+                        $article["content"] = $doc->saveHTML($basenode);
+                    }
+                }
 
-			 return true;
-		}
+                return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

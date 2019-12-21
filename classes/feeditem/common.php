@@ -186,8 +186,9 @@ abstract class FeedItem_Common extends FeedItem {
 			$cat = clean(trim(mb_strtolower($srccat)));
 
 			// we don't support numeric tags
-			if (is_numeric($cat))
-				$cat = 't:'.$cat;
+			if (is_numeric($cat)) {
+							$cat = 't:'.$cat;
+			}
 
 			$cat = preg_replace('/[,\'\"]/', "", $cat);
 

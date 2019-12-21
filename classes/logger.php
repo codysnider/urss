@@ -52,14 +52,14 @@ class Logger {
 
     public function __construct() {
         switch (LOG_DESTINATION) {
-            case "sql":
-                $this->adapter = new Logger_SQL();
-                break;
-            case "syslog":
-                $this->adapter = new Logger_Syslog();
-                break;
-            default:
-                $this->adapter = false;
+        case "sql":
+            $this->adapter = new Logger_SQL();
+            break;
+        case "syslog":
+            $this->adapter = new Logger_Syslog();
+            break;
+        default:
+            $this->adapter = false;
         }
     }
 

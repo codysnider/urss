@@ -262,12 +262,20 @@ function rgb2hsl($arr) {
         $del_G = ((($var_Max - $var_G) / 6) + ($del_Max / 2)) / $del_Max;
         $del_B = ((($var_Max - $var_B) / 6) + ($del_Max / 2)) / $del_Max;
 
-        if ($var_R == $var_Max) $h = $del_B - $del_G;
-        else if ($var_G == $var_Max) $h = (1 / 3) + $del_R - $del_B;
-        else if ($var_B == $var_Max) $h = (2 / 3) + $del_G - $del_R;
+        if ($var_R == $var_Max) {
+            $h = $del_B - $del_G;
+        } else if ($var_G == $var_Max) {
+            $h = (1 / 3) + $del_R - $del_B;
+        } else if ($var_B == $var_Max) {
+            $h = (2 / 3) + $del_G - $del_R;
+        }
 
-        if ($h < 0) $h++;
-        if ($h > 1) $h--;
+        if ($h < 0) {
+            $h++;
+        }
+        if ($h > 1) {
+            $h--;
+        }
     }
 
     return array($h, $s, $v);
@@ -287,12 +295,7 @@ function hsl2rgb($arr) {
         $var_2 = $v * (1 - $s * ($var_H - $var_i));
         $var_3 = $v * (1 - $s * (1 - ($var_H - $var_i)));
 
-        if ($var_i == 0) { $var_R = $v; $var_G = $var_3; $var_B = $var_1; }
-        else if ($var_i == 1) { $var_R = $var_2; $var_G = $v; $var_B = $var_1; }
-        else if ($var_i == 2) { $var_R = $var_1; $var_G = $v; $var_B = $var_3; }
-        else if ($var_i == 3) { $var_R = $var_1; $var_G = $var_2; $var_B = $v; }
-        else if ($var_i == 4) { $var_R = $var_3; $var_G = $var_1; $var_B = $v; }
-        else { $var_R = $v; $var_G = $var_1; $var_B = $var_2; }
+        if ($var_i == 0) { $var_R = $v; $var_G = $var_3; $var_B = $var_1; } else if ($var_i == 1) { $var_R = $var_2; $var_G = $v; $var_B = $var_1; } else if ($var_i == 2) { $var_R = $var_1; $var_G = $v; $var_B = $var_3; } else if ($var_i == 3) { $var_R = $var_1; $var_G = $var_2; $var_B = $v; } else if ($var_i == 4) { $var_R = $var_3; $var_G = $var_1; $var_B = $v; } else { $var_R = $v; $var_G = $var_1; $var_B = $var_2; }
 
         $r = $var_R * 255;
         $g = $var_G * 255;
@@ -315,10 +318,11 @@ function colorPalette($imageFile, $numColors, $granularity = 5) {
             $ico = new floIcon();
             @$ico->readICO($imageFile);
 
-            if (count($ico->images) == 0)
-                return false;
-            else
-                $img = @$ico->images[count($ico->images) - 1]->getImageResource();
+            if (count($ico->images) == 0) {
+                            return false;
+            } else {
+                            $img = @$ico->images[count($ico->images) - 1]->getImageResource();
+            }
 
         } else {
             return false;

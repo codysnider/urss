@@ -123,8 +123,9 @@
             }
             
             $ret = $this->input->append(QR_MODE_NUM, $run, str_split($this->dataStr));
-            if ($ret < 0)
-                return -1;
+            if ($ret < 0) {
+                            return -1;
+            }
 
             return $run;
         }
@@ -170,8 +171,9 @@
             }
 
             $ret = $this->input->append(QR_MODE_AN, $run, str_split($this->dataStr));
-            if ($ret < 0)
-                return -1;
+            if ($ret < 0) {
+                            return -1;
+            }
 
             return $run;
         }
@@ -186,8 +188,9 @@
             }
             
             $ret = $this->input->append(QR_MODE_KANJI, $p, str_split($this->dataStr));
-            if ($ret < 0)
-                return -1;
+            if ($ret < 0) {
+                            return -1;
+            }
 
             return $ret;
         }
@@ -241,8 +244,9 @@
             $run = $p;
             $ret = $this->input->append(QR_MODE_8, $run, str_split($this->dataStr));
             
-            if ($ret < 0)
-                return -1;
+            if ($ret < 0) {
+                            return -1;
+            }
 
             return $run;
         }
@@ -252,20 +256,21 @@
         {
             while (strlen($this->dataStr) > 0)
             {
-                if ($this->dataStr == '')
-                    return 0;
+                if ($this->dataStr == '') {
+                                    return 0;
+                }
 
                 $mode = $this->identifyMode(0);
                 
                 switch ($mode) {
-                    case QR_MODE_NUM: $length = $this->eatNum(); break;
-                    case QR_MODE_AN:  $length = $this->eatAn(); break;
-                    case QR_MODE_KANJI:
-                        if ($this->modeHint == QR_MODE_KANJI)
-                                $length = $this->eatKanji();
-                        else    $length = $this->eat8();
-                        break;
-                    default: $length = $this->eat8(); break;
+                case QR_MODE_NUM: $length = $this->eatNum(); break;
+                case QR_MODE_AN:  $length = $this->eatAn(); break;
+                case QR_MODE_KANJI:
+                    if ($this->modeHint == QR_MODE_KANJI)
+                            $length = $this->eatKanji();
+                    else    $length = $this->eat8();
+                    break;
+                default: $length = $this->eat8(); break;
                 
                 }
 
@@ -306,8 +311,9 @@
 
             $split = new QRsplit($string, $input, $modeHint);
             
-            if (!$casesensitive)
-                $split->toUpper();
+            if (!$casesensitive) {
+                            $split->toUpper();
+            }
                 
             return $split->splitString();
         }

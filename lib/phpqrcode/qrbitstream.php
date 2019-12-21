@@ -108,13 +108,15 @@
         //----------------------------------------------------------------------
         public function appendNum($bits, $num)
         {
-            if ($bits == 0) 
-                return 0;
+            if ($bits == 0) {
+                            return 0;
+            }
 
             $b = QRbitstream::newFromNum($bits, $num);
             
-            if (is_null($b))
-                return -1;
+            if (is_null($b)) {
+                            return -1;
+            }
 
             $ret = $this->append($b);
             unset($b);
@@ -125,13 +127,15 @@
         //----------------------------------------------------------------------
         public function appendBytes($size, $data)
         {
-            if ($size == 0) 
-                return 0;
+            if ($size == 0) {
+                            return 0;
+            }
 
             $b = QRbitstream::newFromBytes($size, $data);
             
-            if (is_null($b))
-                return -1;
+            if (is_null($b)) {
+                            return -1;
+            }
 
             $ret = $this->append($b);
             unset($b);

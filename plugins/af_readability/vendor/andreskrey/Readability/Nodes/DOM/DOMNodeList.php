@@ -32,10 +32,10 @@ class DOMNodeList implements \Countable, \IteratorAggregate
     public function __get($name)
     {
         switch ($name) {
-            case 'length':
-                return $this->length;
-            default:
-                trigger_error(sprintf('Undefined property: %s::%s', static::class, $name));
+        case 'length':
+            return $this->length;
+        default:
+            trigger_error(sprintf('Undefined property: %s::%s', static::class, $name));
         }
     }
 

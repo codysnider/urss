@@ -104,14 +104,17 @@
                 $blockNo++;
             }
 
-            if (QRspec::rsBlockNum2($spec) == 0)
-                return 0;
+            if (QRspec::rsBlockNum2($spec) == 0) {
+                            return 0;
+            }
 
             $dl = QRspec::rsDataCodes2($spec);
             $el = QRspec::rsEccCodes2($spec);
             $rs = QRrs::init_rs(8, 0x11d, 0, 1, $el, 255 - $dl - $el);
             
-            if ($rs == null) return -1;
+            if ($rs == null) {
+                return -1;
+            }
             
             for ($i = 0; $i < QRspec::rsBlockNum2($spec); $i++) {
                 $ecc = array_slice($this->ecccode, $eccPos);
@@ -249,7 +252,9 @@
             }
 
             $input = new QRinput($version, $level);
-            if ($input == null) return null;
+            if ($input == null) {
+                return null;
+            }
 
             $ret = $input->append($input, QR_MODE_8, strlen($string), str_split($string));
             if ($ret < 0) {
@@ -269,7 +274,9 @@
             }
 
             $input = new QRinput($version, $level);
-            if ($input == null) return null;
+            if ($input == null) {
+                return null;
+            }
 
             $ret = QRsplit::splitStringToQRinput($string, $input, $hint, $casesensitive);
             if ($ret < 0) {
@@ -379,7 +386,9 @@
                         }
                     }
                 }
-                if ($x < 0 || $y < 0) return null;
+                if ($x < 0 || $y < 0) {
+                    return null;
+                }
 
                 $this->x = $x;
                 $this->y = $y;
@@ -415,28 +424,28 @@
             $enc->margin = $margin;
             
             switch ($level.'') {
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                        $enc->level = $level;
-                    break;
-                case 'l':
-                case 'L':
-                        $enc->level = QR_ECLEVEL_L;
-                    break;
-                case 'm':
-                case 'M':
-                        $enc->level = QR_ECLEVEL_M;
-                    break;
-                case 'q':
-                case 'Q':
-                        $enc->level = QR_ECLEVEL_Q;
-                    break;
-                case 'h':
-                case 'H':
-                        $enc->level = QR_ECLEVEL_H;
-                    break;
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+                    $enc->level = $level;
+                break;
+            case 'l':
+            case 'L':
+                    $enc->level = QR_ECLEVEL_L;
+                break;
+            case 'm':
+            case 'M':
+                    $enc->level = QR_ECLEVEL_M;
+                break;
+            case 'q':
+            case 'Q':
+                    $enc->level = QR_ECLEVEL_Q;
+                break;
+            case 'h':
+            case 'H':
+                    $enc->level = QR_ECLEVEL_H;
+                break;
             }
             
             return $enc;

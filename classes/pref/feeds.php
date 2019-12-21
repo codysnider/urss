@@ -1,89 +1,89 @@
 <?php
 class Pref_Feeds extends Handler_Protected {
-	public function csrf_ignore($method) {
-		$csrf_ignored = array("index", "getfeedtree", "add", "editcats", "editfeed",
-			"savefeedorder", "uploadicon", "feedswitherrors", "inactivefeeds",
-			"batchsubscribe");
+    public function csrf_ignore($method) {
+        $csrf_ignored = array("index", "getfeedtree", "add", "editcats", "editfeed",
+            "savefeedorder", "uploadicon", "feedswitherrors", "inactivefeeds",
+            "batchsubscribe");
 
-		return array_search($method, $csrf_ignored) !== false;
-	}
+        return array_search($method, $csrf_ignored) !== false;
+    }
 
-	public static function get_ts_languages() {
-		$rv = [];
+    public static function get_ts_languages() {
+        $rv = [];
 
-		if (DB_TYPE == "pgsql") {
-			$dbh = Db::pdo();
+        if (DB_TYPE == "pgsql") {
+            $dbh = Db::pdo();
 
-			$res = $dbh->query("SELECT cfgname FROM pg_ts_config");
+            $res = $dbh->query("SELECT cfgname FROM pg_ts_config");
 
-			while ($row = $res->fetch()) {
-				array_push($rv, ucfirst($row['cfgname']));
-			}
-		}
+            while ($row = $res->fetch()) {
+                array_push($rv, ucfirst($row['cfgname']));
+            }
+        }
 
-		return $rv;
-	}
+        return $rv;
+    }
 
-	public function batch_edit_cbox($elem, $label = false) {
-		print "<input type=\"checkbox\" title=\"".__("Check to enable field")."\"
+    public function batch_edit_cbox($elem, $label = false) {
+        print "<input type=\"checkbox\" title=\"".__("Check to enable field")."\"
 			onchange=\"dijit.byId('feedEditDlg').toggleField(this, '$elem', '$label')\">";
-	}
+    }
 
-	public function renamecat() {
-		$title = clean($_REQUEST['title']);
-		$id = clean($_REQUEST['id']);
+    public function renamecat() {
+        $title = clean($_REQUEST['title']);
+        $id = clean($_REQUEST['id']);
 
-		if ($title) {
-			$sth = $this->pdo->prepare("UPDATE ttrss_feed_categories SET
+        if ($title) {
+            $sth = $this->pdo->prepare("UPDATE ttrss_feed_categories SET
 				title = ? WHERE id = ? AND owner_uid = ?");
-			$sth->execute([$title, $id, $_SESSION['uid']]);
-		}
-	}
+            $sth->execute([$title, $id, $_SESSION['uid']]);
+        }
+    }
 
-	private function get_category_items($cat_id) {
+    private function get_category_items($cat_id) {
 
-		if (clean($_REQUEST['mode']) != 2) {
-					$search = $_SESSION["prefs_feed_search"];
-		} else {
-					$search = "";
-		}
+        if (clean($_REQUEST['mode']) != 2) {
+                    $search = $_SESSION["prefs_feed_search"];
+        } else {
+                    $search = "";
+        }
 
-		// first one is set by API
-		$show_empty_cats = clean($_REQUEST['force_show_empty']) ||
-			(clean($_REQUEST['mode']) != 2 && !$search);
+        // first one is set by API
+        $show_empty_cats = clean($_REQUEST['force_show_empty']) ||
+            (clean($_REQUEST['mode']) != 2 && !$search);
 
-		$items = array();
+        $items = array();
 
-		$sth = $this->pdo->prepare("SELECT id, title FROM ttrss_feed_categories
+        $sth = $this->pdo->prepare("SELECT id, title FROM ttrss_feed_categories
 				WHERE owner_uid = ? AND parent_cat = ? ORDER BY order_id, title");
-		$sth->execute([$_SESSION['uid'], $cat_id]);
+        $sth->execute([$_SESSION['uid'], $cat_id]);
 
-		while ($line = $sth->fetch()) {
+        while ($line = $sth->fetch()) {
 
-			$cat = array();
-			$cat['id'] = 'CAT:'.$line['id'];
-			$cat['bare_id'] = (int) $line['id'];
-			$cat['name'] = $line['title'];
-			$cat['items'] = array();
-			$cat['checkbox'] = false;
-			$cat['type'] = 'category';
-			$cat['unread'] = -1;
-			$cat['child_unread'] = -1;
-			$cat['auxcounter'] = -1;
-			$cat['parent_id'] = $cat_id;
+            $cat = array();
+            $cat['id'] = 'CAT:'.$line['id'];
+            $cat['bare_id'] = (int) $line['id'];
+            $cat['name'] = $line['title'];
+            $cat['items'] = array();
+            $cat['checkbox'] = false;
+            $cat['type'] = 'category';
+            $cat['unread'] = -1;
+            $cat['child_unread'] = -1;
+            $cat['auxcounter'] = -1;
+            $cat['parent_id'] = $cat_id;
 
-			$cat['items'] = $this->get_category_items($line['id']);
+            $cat['items'] = $this->get_category_items($line['id']);
 
-			$num_children = $this->calculate_children_count($cat);
-			$cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
+            $num_children = $this->calculate_children_count($cat);
+            $cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
 
-			if ($num_children > 0 || $show_empty_cats) {
-							array_push($items, $cat);
-			}
+            if ($num_children > 0 || $show_empty_cats) {
+                            array_push($items, $cat);
+            }
 
-		}
+        }
 
-		$fsth = $this->pdo->prepare("SELECT id, title, last_error,
+        $fsth = $this->pdo->prepare("SELECT id, title, last_error,
 			".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated, update_interval
 			FROM ttrss_feeds
 			WHERE cat_id = :cat AND
@@ -91,687 +91,687 @@ class Pref_Feeds extends Handler_Protected {
 			(:search = '' OR (LOWER(title) LIKE :search OR LOWER(feed_url) LIKE :search))
 			ORDER BY order_id, title");
 
-		$fsth->execute([":cat" => $cat_id, ":uid" => $_SESSION['uid'], ":search" => $search ? "%$search%" : ""]);
+        $fsth->execute([":cat" => $cat_id, ":uid" => $_SESSION['uid'], ":search" => $search ? "%$search%" : ""]);
 
-		while ($feed_line = $fsth->fetch()) {
-			$feed = array();
-			$feed['id'] = 'FEED:'.$feed_line['id'];
-			$feed['bare_id'] = (int) $feed_line['id'];
-			$feed['auxcounter'] = -1;
-			$feed['name'] = $feed_line['title'];
-			$feed['checkbox'] = false;
-			$feed['unread'] = -1;
-			$feed['error'] = $feed_line['last_error'];
-			$feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
-			$feed['param'] = make_local_datetime(
-				$feed_line['last_updated'], true);
-			$feed['updates_disabled'] = (int) ($feed_line['update_interval'] < 0);
+        while ($feed_line = $fsth->fetch()) {
+            $feed = array();
+            $feed['id'] = 'FEED:'.$feed_line['id'];
+            $feed['bare_id'] = (int) $feed_line['id'];
+            $feed['auxcounter'] = -1;
+            $feed['name'] = $feed_line['title'];
+            $feed['checkbox'] = false;
+            $feed['unread'] = -1;
+            $feed['error'] = $feed_line['last_error'];
+            $feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
+            $feed['param'] = make_local_datetime(
+                $feed_line['last_updated'], true);
+            $feed['updates_disabled'] = (int) ($feed_line['update_interval'] < 0);
 
-			array_push($items, $feed);
-		}
+            array_push($items, $feed);
+        }
 
-		return $items;
-	}
+        return $items;
+    }
 
-	public function getfeedtree() {
-		print json_encode($this->makefeedtree());
-	}
+    public function getfeedtree() {
+        print json_encode($this->makefeedtree());
+    }
 
-	public function makefeedtree() {
+    public function makefeedtree() {
 
-		if (clean($_REQUEST['mode']) != 2) {
-					$search = $_SESSION["prefs_feed_search"];
-		} else {
-					$search = "";
-		}
+        if (clean($_REQUEST['mode']) != 2) {
+                    $search = $_SESSION["prefs_feed_search"];
+        } else {
+                    $search = "";
+        }
 
-		$root = array();
-		$root['id'] = 'root';
-		$root['name'] = __('Feeds');
-		$root['items'] = array();
-		$root['type'] = 'category';
+        $root = array();
+        $root['id'] = 'root';
+        $root['name'] = __('Feeds');
+        $root['items'] = array();
+        $root['type'] = 'category';
 
-		$enable_cats = get_pref('ENABLE_FEED_CATS');
+        $enable_cats = get_pref('ENABLE_FEED_CATS');
 
-		if (clean($_REQUEST['mode']) == 2) {
+        if (clean($_REQUEST['mode']) == 2) {
 
-			if ($enable_cats) {
-				$cat = $this->feedlist_init_cat(-1);
-			} else {
-				$cat['items'] = array();
-			}
+            if ($enable_cats) {
+                $cat = $this->feedlist_init_cat(-1);
+            } else {
+                $cat['items'] = array();
+            }
 
-			foreach (array(-4, -3, -1, -2, 0, -6) as $i) {
-				array_push($cat['items'], $this->feedlist_init_feed($i));
-			}
+            foreach (array(-4, -3, -1, -2, 0, -6) as $i) {
+                array_push($cat['items'], $this->feedlist_init_feed($i));
+            }
 
-			/* Plugin feeds for -1 */
+            /* Plugin feeds for -1 */
 
-			$feeds = PluginHost::getInstance()->get_feeds(-1);
+            $feeds = PluginHost::getInstance()->get_feeds(-1);
 
-			if ($feeds) {
-				foreach ($feeds as $feed) {
-					$feed_id = PluginHost::pfeed_to_feed_id($feed['id']);
+            if ($feeds) {
+                foreach ($feeds as $feed) {
+                    $feed_id = PluginHost::pfeed_to_feed_id($feed['id']);
 
-					$item = array();
-					$item['id'] = 'FEED:'.$feed_id;
-					$item['bare_id'] = (int) $feed_id;
-					$item['auxcounter'] = -1;
-					$item['name'] = $feed['title'];
-					$item['checkbox'] = false;
-					$item['error'] = '';
-					$item['icon'] = $feed['icon'];
+                    $item = array();
+                    $item['id'] = 'FEED:'.$feed_id;
+                    $item['bare_id'] = (int) $feed_id;
+                    $item['auxcounter'] = -1;
+                    $item['name'] = $feed['title'];
+                    $item['checkbox'] = false;
+                    $item['error'] = '';
+                    $item['icon'] = $feed['icon'];
 
-					$item['param'] = '';
-					$item['unread'] = -1;
-					$item['type'] = 'feed';
+                    $item['param'] = '';
+                    $item['unread'] = -1;
+                    $item['type'] = 'feed';
 
-					array_push($cat['items'], $item);
-				}
-			}
+                    array_push($cat['items'], $item);
+                }
+            }
 
-			if ($enable_cats) {
-				array_push($root['items'], $cat);
-			} else {
-				$root['items'] = array_merge($root['items'], $cat['items']);
-			}
+            if ($enable_cats) {
+                array_push($root['items'], $cat);
+            } else {
+                $root['items'] = array_merge($root['items'], $cat['items']);
+            }
 
-			$sth = $this->pdo->prepare("SELECT * FROM
+            $sth = $this->pdo->prepare("SELECT * FROM
 				ttrss_labels2 WHERE owner_uid = ? ORDER by caption");
-			$sth->execute([$_SESSION['uid']]);
+            $sth->execute([$_SESSION['uid']]);
 
-			if (get_pref('ENABLE_FEED_CATS')) {
-				$cat = $this->feedlist_init_cat(-2);
-			} else {
-				$cat['items'] = array();
-			}
+            if (get_pref('ENABLE_FEED_CATS')) {
+                $cat = $this->feedlist_init_cat(-2);
+            } else {
+                $cat['items'] = array();
+            }
 
-			$num_labels = 0;
-			while ($line = $sth->fetch()) {
-				++$num_labels;
+            $num_labels = 0;
+            while ($line = $sth->fetch()) {
+                ++$num_labels;
 
-				$label_id = Labels::label_to_feed_id($line['id']);
+                $label_id = Labels::label_to_feed_id($line['id']);
 
-				$feed = $this->feedlist_init_feed($label_id, false, 0);
+                $feed = $this->feedlist_init_feed($label_id, false, 0);
 
-				$feed['fg_color'] = $line['fg_color'];
-				$feed['bg_color'] = $line['bg_color'];
+                $feed['fg_color'] = $line['fg_color'];
+                $feed['bg_color'] = $line['bg_color'];
 
-				array_push($cat['items'], $feed);
-			}
+                array_push($cat['items'], $feed);
+            }
 
-			if ($num_labels) {
-				if ($enable_cats) {
-					array_push($root['items'], $cat);
-				} else {
-					$root['items'] = array_merge($root['items'], $cat['items']);
-				}
-			}
-		}
+            if ($num_labels) {
+                if ($enable_cats) {
+                    array_push($root['items'], $cat);
+                } else {
+                    $root['items'] = array_merge($root['items'], $cat['items']);
+                }
+            }
+        }
 
-		if ($enable_cats) {
-			$show_empty_cats = clean($_REQUEST['force_show_empty']) ||
-				(clean($_REQUEST['mode']) != 2 && !$search);
+        if ($enable_cats) {
+            $show_empty_cats = clean($_REQUEST['force_show_empty']) ||
+                (clean($_REQUEST['mode']) != 2 && !$search);
 
-			$sth = $this->pdo->prepare("SELECT id, title FROM ttrss_feed_categories
+            $sth = $this->pdo->prepare("SELECT id, title FROM ttrss_feed_categories
 				WHERE owner_uid = ? AND parent_cat IS NULL ORDER BY order_id, title");
-			$sth->execute([$_SESSION['uid']]);
+            $sth->execute([$_SESSION['uid']]);
 
-			while ($line = $sth->fetch()) {
-				$cat = array();
-				$cat['id'] = 'CAT:'.$line['id'];
-				$cat['bare_id'] = (int) $line['id'];
-				$cat['auxcounter'] = -1;
-				$cat['name'] = $line['title'];
-				$cat['items'] = array();
-				$cat['checkbox'] = false;
-				$cat['type'] = 'category';
-				$cat['unread'] = -1;
-				$cat['child_unread'] = -1;
+            while ($line = $sth->fetch()) {
+                $cat = array();
+                $cat['id'] = 'CAT:'.$line['id'];
+                $cat['bare_id'] = (int) $line['id'];
+                $cat['auxcounter'] = -1;
+                $cat['name'] = $line['title'];
+                $cat['items'] = array();
+                $cat['checkbox'] = false;
+                $cat['type'] = 'category';
+                $cat['unread'] = -1;
+                $cat['child_unread'] = -1;
 
-				$cat['items'] = $this->get_category_items($line['id']);
+                $cat['items'] = $this->get_category_items($line['id']);
 
-				$num_children = $this->calculate_children_count($cat);
-				$cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
+                $num_children = $this->calculate_children_count($cat);
+                $cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
 
-				if ($num_children > 0 || $show_empty_cats) {
-									array_push($root['items'], $cat);
-				}
+                if ($num_children > 0 || $show_empty_cats) {
+                                    array_push($root['items'], $cat);
+                }
 
-				$root['param'] += count($cat['items']);
-			}
+                $root['param'] += count($cat['items']);
+            }
 
-			/* Uncategorized is a special case */
+            /* Uncategorized is a special case */
 
-			$cat = array();
-			$cat['id'] = 'CAT:0';
-			$cat['bare_id'] = 0;
-			$cat['auxcounter'] = -1;
-			$cat['name'] = __("Uncategorized");
-			$cat['items'] = array();
-			$cat['type'] = 'category';
-			$cat['checkbox'] = false;
-			$cat['unread'] = -1;
-			$cat['child_unread'] = -1;
+            $cat = array();
+            $cat['id'] = 'CAT:0';
+            $cat['bare_id'] = 0;
+            $cat['auxcounter'] = -1;
+            $cat['name'] = __("Uncategorized");
+            $cat['items'] = array();
+            $cat['type'] = 'category';
+            $cat['checkbox'] = false;
+            $cat['unread'] = -1;
+            $cat['child_unread'] = -1;
 
-			$fsth = $this->pdo->prepare("SELECT id, title,last_error,
+            $fsth = $this->pdo->prepare("SELECT id, title,last_error,
 				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated, update_interval
 				FROM ttrss_feeds
 				WHERE cat_id IS NULL AND
 				owner_uid = :uid AND
 				(:search = '' OR (LOWER(title) LIKE :search OR LOWER(feed_url) LIKE :search))
 				ORDER BY order_id, title");
-			$fsth->execute([":uid" => $_SESSION['uid'], ":search" => $search ? "%$search%" : ""]);
+            $fsth->execute([":uid" => $_SESSION['uid'], ":search" => $search ? "%$search%" : ""]);
 
-			while ($feed_line = $fsth->fetch()) {
-				$feed = array();
-				$feed['id'] = 'FEED:'.$feed_line['id'];
-				$feed['bare_id'] = (int) $feed_line['id'];
-				$feed['auxcounter'] = -1;
-				$feed['name'] = $feed_line['title'];
-				$feed['checkbox'] = false;
-				$feed['error'] = $feed_line['last_error'];
-				$feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
-				$feed['param'] = make_local_datetime(
-					$feed_line['last_updated'], true);
-				$feed['unread'] = -1;
-				$feed['type'] = 'feed';
-				$feed['updates_disabled'] = (int) ($feed_line['update_interval'] < 0);
+            while ($feed_line = $fsth->fetch()) {
+                $feed = array();
+                $feed['id'] = 'FEED:'.$feed_line['id'];
+                $feed['bare_id'] = (int) $feed_line['id'];
+                $feed['auxcounter'] = -1;
+                $feed['name'] = $feed_line['title'];
+                $feed['checkbox'] = false;
+                $feed['error'] = $feed_line['last_error'];
+                $feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
+                $feed['param'] = make_local_datetime(
+                    $feed_line['last_updated'], true);
+                $feed['unread'] = -1;
+                $feed['type'] = 'feed';
+                $feed['updates_disabled'] = (int) ($feed_line['update_interval'] < 0);
 
-				array_push($cat['items'], $feed);
-			}
+                array_push($cat['items'], $feed);
+            }
 
-			$cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', count($cat['items'])), count($cat['items']));
+            $cat['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', count($cat['items'])), count($cat['items']));
 
-			if (count($cat['items']) > 0 || $show_empty_cats) {
-							array_push($root['items'], $cat);
-			}
+            if (count($cat['items']) > 0 || $show_empty_cats) {
+                            array_push($root['items'], $cat);
+            }
 
-			$num_children = $this->calculate_children_count($root);
-			$root['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
+            $num_children = $this->calculate_children_count($root);
+            $root['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', (int) $num_children), $num_children);
 
-		} else {
-			$fsth = $this->pdo->prepare("SELECT id, title, last_error,
+        } else {
+            $fsth = $this->pdo->prepare("SELECT id, title, last_error,
 				".SUBSTRING_FOR_DATE."(last_updated,1,19) AS last_updated, update_interval
 				FROM ttrss_feeds
 				WHERE owner_uid = :uid AND
 				(:search = '' OR (LOWER(title) LIKE :search OR LOWER(feed_url) LIKE :search))
 				ORDER BY order_id, title");
-			$fsth->execute([":uid" => $_SESSION['uid'], ":search" => $search ? "%$search%" : ""]);
+            $fsth->execute([":uid" => $_SESSION['uid'], ":search" => $search ? "%$search%" : ""]);
 
-			while ($feed_line = $fsth->fetch()) {
-				$feed = array();
-				$feed['id'] = 'FEED:'.$feed_line['id'];
-				$feed['bare_id'] = (int) $feed_line['id'];
-				$feed['auxcounter'] = -1;
-				$feed['name'] = $feed_line['title'];
-				$feed['checkbox'] = false;
-				$feed['error'] = $feed_line['last_error'];
-				$feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
-				$feed['param'] = make_local_datetime(
-					$feed_line['last_updated'], true);
-				$feed['unread'] = -1;
-				$feed['type'] = 'feed';
-				$feed['updates_disabled'] = (int) ($feed_line['update_interval'] < 0);
+            while ($feed_line = $fsth->fetch()) {
+                $feed = array();
+                $feed['id'] = 'FEED:'.$feed_line['id'];
+                $feed['bare_id'] = (int) $feed_line['id'];
+                $feed['auxcounter'] = -1;
+                $feed['name'] = $feed_line['title'];
+                $feed['checkbox'] = false;
+                $feed['error'] = $feed_line['last_error'];
+                $feed['icon'] = Feeds::getFeedIcon($feed_line['id']);
+                $feed['param'] = make_local_datetime(
+                    $feed_line['last_updated'], true);
+                $feed['unread'] = -1;
+                $feed['type'] = 'feed';
+                $feed['updates_disabled'] = (int) ($feed_line['update_interval'] < 0);
 
-				array_push($root['items'], $feed);
-			}
+                array_push($root['items'], $feed);
+            }
 
-			$root['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', count($root['items'])), count($root['items']));
-		}
+            $root['param'] = vsprintf(_ngettext('(%d feed)', '(%d feeds)', count($root['items'])), count($root['items']));
+        }
 
-		$fl = array();
-		$fl['identifier'] = 'id';
-		$fl['label'] = 'name';
+        $fl = array();
+        $fl['identifier'] = 'id';
+        $fl['label'] = 'name';
 
-		if (clean($_REQUEST['mode']) != 2) {
-			$fl['items'] = array($root);
-		} else {
-			$fl['items'] = $root['items'];
-		}
+        if (clean($_REQUEST['mode']) != 2) {
+            $fl['items'] = array($root);
+        } else {
+            $fl['items'] = $root['items'];
+        }
 
-		return $fl;
-	}
+        return $fl;
+    }
 
-	public function catsortreset() {
-		$sth = $this->pdo->prepare("UPDATE ttrss_feed_categories
+    public function catsortreset() {
+        $sth = $this->pdo->prepare("UPDATE ttrss_feed_categories
 				SET order_id = 0 WHERE owner_uid = ?");
-		$sth->execute([$_SESSION['uid']]);
-	}
+        $sth->execute([$_SESSION['uid']]);
+    }
 
-	public function feedsortreset() {
-		$sth = $this->pdo->prepare("UPDATE ttrss_feeds
+    public function feedsortreset() {
+        $sth = $this->pdo->prepare("UPDATE ttrss_feeds
 				SET order_id = 0 WHERE owner_uid = ?");
-		$sth->execute([$_SESSION['uid']]);
-	}
+        $sth->execute([$_SESSION['uid']]);
+    }
 
-	private function process_category_order(&$data_map, $item_id, $parent_id = false, $nest_level = 0) {
+    private function process_category_order(&$data_map, $item_id, $parent_id = false, $nest_level = 0) {
 
-		$prefix = "";
-		for ($i = 0; $i < $nest_level; $i++) {
-					$prefix .= "   ";
-		}
+        $prefix = "";
+        for ($i = 0; $i < $nest_level; $i++) {
+                    $prefix .= "   ";
+        }
 
-		Debug::log("$prefix C: $item_id P: $parent_id");
+        Debug::log("$prefix C: $item_id P: $parent_id");
 
-		$bare_item_id = substr($item_id, strpos($item_id, ':') + 1);
+        $bare_item_id = substr($item_id, strpos($item_id, ':') + 1);
 
-		if ($item_id != 'root') {
-			if ($parent_id && $parent_id != 'root') {
-				$parent_bare_id = substr($parent_id, strpos($parent_id, ':') + 1);
-				$parent_qpart = $parent_bare_id;
-			} else {
-				$parent_qpart = null;
-			}
+        if ($item_id != 'root') {
+            if ($parent_id && $parent_id != 'root') {
+                $parent_bare_id = substr($parent_id, strpos($parent_id, ':') + 1);
+                $parent_qpart = $parent_bare_id;
+            } else {
+                $parent_qpart = null;
+            }
 
-			$sth = $this->pdo->prepare("UPDATE ttrss_feed_categories
+            $sth = $this->pdo->prepare("UPDATE ttrss_feed_categories
 				SET parent_cat = ? WHERE id = ? AND
 				owner_uid = ?");
-			$sth->execute([$parent_qpart, $bare_item_id, $_SESSION['uid']]);
-		}
+            $sth->execute([$parent_qpart, $bare_item_id, $_SESSION['uid']]);
+        }
 
-		$order_id = 1;
+        $order_id = 1;
 
-		$cat = $data_map[$item_id];
+        $cat = $data_map[$item_id];
 
-		if ($cat && is_array($cat)) {
-			foreach ($cat as $item) {
-				$id = $item['_reference'];
-				$bare_id = substr($id, strpos($id, ':') + 1);
+        if ($cat && is_array($cat)) {
+            foreach ($cat as $item) {
+                $id = $item['_reference'];
+                $bare_id = substr($id, strpos($id, ':') + 1);
 
-				Debug::log("$prefix [$order_id] $id/$bare_id");
+                Debug::log("$prefix [$order_id] $id/$bare_id");
 
-				if ($item['_reference']) {
+                if ($item['_reference']) {
 
-					if (strpos($id, "FEED") === 0) {
+                    if (strpos($id, "FEED") === 0) {
 
-						$cat_id = ($item_id != "root") ? $bare_item_id : null;
+                        $cat_id = ($item_id != "root") ? $bare_item_id : null;
 
-						$sth = $this->pdo->prepare("UPDATE ttrss_feeds
+                        $sth = $this->pdo->prepare("UPDATE ttrss_feeds
 							SET order_id = ?, cat_id = ?
 							WHERE id = ? AND owner_uid = ?");
 
-						$sth->execute([$order_id, $cat_id ? $cat_id : null, $bare_id, $_SESSION['uid']]);
+                        $sth->execute([$order_id, $cat_id ? $cat_id : null, $bare_id, $_SESSION['uid']]);
 
-					} else if (strpos($id, "CAT:") === 0) {
-						$this->process_category_order($data_map, $item['_reference'], $item_id,
-							$nest_level + 1);
+                    } else if (strpos($id, "CAT:") === 0) {
+                        $this->process_category_order($data_map, $item['_reference'], $item_id,
+                            $nest_level + 1);
 
-						$sth = $this->pdo->prepare("UPDATE ttrss_feed_categories
+                        $sth = $this->pdo->prepare("UPDATE ttrss_feed_categories
 								SET order_id = ? WHERE id = ? AND
 								owner_uid = ?");
-						$sth->execute([$order_id, $bare_id, $_SESSION['uid']]);
-					}
-				}
+                        $sth->execute([$order_id, $bare_id, $_SESSION['uid']]);
+                    }
+                }
 
-				++$order_id;
-			}
-		}
-	}
+                ++$order_id;
+            }
+        }
+    }
 
-	public function savefeedorder() {
-		$data = json_decode($_POST['payload'], true);
+    public function savefeedorder() {
+        $data = json_decode($_POST['payload'], true);
 
-		#file_put_contents("/tmp/saveorder.json", clean($_POST['payload']));
-		#$data = json_decode(file_get_contents("/tmp/saveorder.json"), true);
+        #file_put_contents("/tmp/saveorder.json", clean($_POST['payload']));
+        #$data = json_decode(file_get_contents("/tmp/saveorder.json"), true);
 
-		if (!is_array($data['items'])) {
-					$data['items'] = json_decode($data['items'], true);
-		}
+        if (!is_array($data['items'])) {
+                    $data['items'] = json_decode($data['items'], true);
+        }
 
 #		print_r($data['items']);
 
-		if (is_array($data) && is_array($data['items'])) {
+        if (is_array($data) && is_array($data['items'])) {
 #			$cat_order_id = 0;
 
-			$data_map = array();
-			$root_item = false;
+            $data_map = array();
+            $root_item = false;
 
-			foreach ($data['items'] as $item) {
+            foreach ($data['items'] as $item) {
 
 #				if ($item['id'] != 'root') {
-					if (is_array($item['items'])) {
-						if (isset($item['items']['_reference'])) {
-							$data_map[$item['id']] = array($item['items']);
-						} else {
-							$data_map[$item['id']] = $item['items'];
-						}
-					}
-				if ($item['id'] == 'root') {
-					$root_item = $item['id'];
-				}
-			}
+                    if (is_array($item['items'])) {
+                        if (isset($item['items']['_reference'])) {
+                            $data_map[$item['id']] = array($item['items']);
+                        } else {
+                            $data_map[$item['id']] = $item['items'];
+                        }
+                    }
+                if ($item['id'] == 'root') {
+                    $root_item = $item['id'];
+                }
+            }
 
-			$this->process_category_order($data_map, $root_item);
-		}
-	}
+            $this->process_category_order($data_map, $root_item);
+        }
+    }
 
-	public function removeicon() {
-		$feed_id = clean($_REQUEST["feed_id"]);
+    public function removeicon() {
+        $feed_id = clean($_REQUEST["feed_id"]);
 
-		$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE id = ? AND owner_uid = ?");
-		$sth->execute([$feed_id, $_SESSION['uid']]);
+        $sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE id = ? AND owner_uid = ?");
+        $sth->execute([$feed_id, $_SESSION['uid']]);
 
-		if ($sth->fetch()) {
-			@unlink(ICONS_DIR."/$feed_id.ico");
+        if ($sth->fetch()) {
+            @unlink(ICONS_DIR."/$feed_id.ico");
 
-			$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET favicon_avg_color = NULL where id = ?");
-			$sth->execute([$feed_id]);
-		}
-	}
+            $sth = $this->pdo->prepare("UPDATE ttrss_feeds SET favicon_avg_color = NULL where id = ?");
+            $sth->execute([$feed_id]);
+        }
+    }
 
-	public function uploadicon() {
-		header("Content-type: text/html");
+    public function uploadicon() {
+        header("Content-type: text/html");
 
-		if (is_uploaded_file($_FILES['icon_file']['tmp_name'])) {
-			$tmp_file = tempnam(CACHE_DIR.'/upload', 'icon');
+        if (is_uploaded_file($_FILES['icon_file']['tmp_name'])) {
+            $tmp_file = tempnam(CACHE_DIR.'/upload', 'icon');
 
-			$result = move_uploaded_file($_FILES['icon_file']['tmp_name'],
-				$tmp_file);
+            $result = move_uploaded_file($_FILES['icon_file']['tmp_name'],
+                $tmp_file);
 
-			if (!$result) {
-				return;
-			}
-		} else {
-			return;
-		}
+            if (!$result) {
+                return;
+            }
+        } else {
+            return;
+        }
 
-		$icon_file = $tmp_file;
-		$feed_id = clean($_REQUEST["feed_id"]);
-		$rc = 2; // failed
+        $icon_file = $tmp_file;
+        $feed_id = clean($_REQUEST["feed_id"]);
+        $rc = 2; // failed
 
-		if (is_file($icon_file) && $feed_id) {
-			if (filesize($icon_file) < 65535) {
+        if (is_file($icon_file) && $feed_id) {
+            if (filesize($icon_file) < 65535) {
 
-				$sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE id = ? AND owner_uid = ?");
-				$sth->execute([$feed_id, $_SESSION['uid']]);
+                $sth = $this->pdo->prepare("SELECT id FROM ttrss_feeds WHERE id = ? AND owner_uid = ?");
+                $sth->execute([$feed_id, $_SESSION['uid']]);
 
-				if ($sth->fetch()) {
-					@unlink(ICONS_DIR."/$feed_id.ico");
-					if (rename($icon_file, ICONS_DIR."/$feed_id.ico")) {
+                if ($sth->fetch()) {
+                    @unlink(ICONS_DIR."/$feed_id.ico");
+                    if (rename($icon_file, ICONS_DIR."/$feed_id.ico")) {
 
-						$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET favicon_avg_color = '' WHERE id = ?");
-						$sth->execute([$feed_id]);
+                        $sth = $this->pdo->prepare("UPDATE ttrss_feeds SET favicon_avg_color = '' WHERE id = ?");
+                        $sth->execute([$feed_id]);
 
-						$rc = 0;
-					}
-				}
-			} else {
-				$rc = 1;
-			}
-		}
+                        $rc = 0;
+                    }
+                }
+            } else {
+                $rc = 1;
+            }
+        }
 
-		if (is_file($icon_file)) {
-		    @unlink($icon_file);
-		}
+        if (is_file($icon_file)) {
+            @unlink($icon_file);
+        }
 
-		print $rc;
-		return;
-	}
+        print $rc;
+        return;
+    }
 
-	public function editfeed() {
-		global $purge_intervals;
-		global $update_intervals;
+    public function editfeed() {
+        global $purge_intervals;
+        global $update_intervals;
 
 
-		$feed_id = clean($_REQUEST["id"]);
+        $feed_id = clean($_REQUEST["id"]);
 
-		$sth = $this->pdo->prepare("SELECT * FROM ttrss_feeds WHERE id = ? AND
+        $sth = $this->pdo->prepare("SELECT * FROM ttrss_feeds WHERE id = ? AND
 				owner_uid = ?");
-		$sth->execute([$feed_id, $_SESSION['uid']]);
+        $sth->execute([$feed_id, $_SESSION['uid']]);
 
-		if ($row = $sth->fetch()) {
-			print '<div dojoType="dijit.layout.TabContainer" style="height : 450px">
+        if ($row = $sth->fetch()) {
+            print '<div dojoType="dijit.layout.TabContainer" style="height : 450px">
         		<div dojoType="dijit.layout.ContentPane" title="'.__('General').'">';
 
-			$title = htmlspecialchars($row["title"]);
+            $title = htmlspecialchars($row["title"]);
 
-			print_hidden("id", "$feed_id");
-			print_hidden("op", "pref-feeds");
-			print_hidden("method", "editSave");
+            print_hidden("id", "$feed_id");
+            print_hidden("op", "pref-feeds");
+            print_hidden("method", "editSave");
 
-			print "<header>".__("Feed")."</header>";
-			print "<section>";
+            print "<header>".__("Feed")."</header>";
+            print "<section>";
 
-			/* Title */
+            /* Title */
 
-			print "<fieldset>";
+            print "<fieldset>";
 
-			print "<input dojoType='dijit.form.ValidationTextBox' required='1'
+            print "<input dojoType='dijit.form.ValidationTextBox' required='1'
 				placeHolder=\"".__("Feed Title")."\"
 				style='font-size : 16px; width: 500px' name='title' value=\"$title\">";
 
-			print "</fieldset>";
+            print "</fieldset>";
 
-			/* Feed URL */
+            /* Feed URL */
 
-			$feed_url = htmlspecialchars($row["feed_url"]);
+            $feed_url = htmlspecialchars($row["feed_url"]);
 
-			print "<fieldset>";
+            print "<fieldset>";
 
-			print "<label>".__('URL:')."</label> ";
-			print "<input dojoType='dijit.form.ValidationTextBox' required='1'
+            print "<label>".__('URL:')."</label> ";
+            print "<input dojoType='dijit.form.ValidationTextBox' required='1'
 				placeHolder=\"".__("Feed URL")."\"
 				regExp='^(http|https)://.*' style='width : 300px'
 				name='feed_url' value=\"$feed_url\">";
 
-			$last_error = $row["last_error"];
+            $last_error = $row["last_error"];
 
-			if ($last_error) {
-				print "&nbsp;<i class=\"material-icons\"
+            if ($last_error) {
+                print "&nbsp;<i class=\"material-icons\"
 					title=\"".htmlspecialchars($last_error)."\">error</i>";
-			}
+            }
 
-			print "</fieldset>";
+            print "</fieldset>";
 
-			/* Category */
+            /* Category */
 
-			if (get_pref('ENABLE_FEED_CATS')) {
+            if (get_pref('ENABLE_FEED_CATS')) {
 
-				$cat_id = $row["cat_id"];
+                $cat_id = $row["cat_id"];
 
-				print "<fieldset>";
+                print "<fieldset>";
 
-				print "<label>".__('Place in category:')."</label> ";
+                print "<label>".__('Place in category:')."</label> ";
 
-				print_feed_cat_select("cat_id", $cat_id,
-					'dojoType="fox.form.Select"');
+                print_feed_cat_select("cat_id", $cat_id,
+                    'dojoType="fox.form.Select"');
 
-				print "</fieldset>";
-			}
+                print "</fieldset>";
+            }
 
-			/* Site URL  */
+            /* Site URL  */
 
-			$site_url = htmlspecialchars($row["site_url"]);
+            $site_url = htmlspecialchars($row["site_url"]);
 
-			print "<fieldset>";
+            print "<fieldset>";
 
-			print "<label>".__('Site URL:')."</label> ";
-			print "<input dojoType='dijit.form.ValidationTextBox' required='1'
+            print "<label>".__('Site URL:')."</label> ";
+            print "<input dojoType='dijit.form.ValidationTextBox' required='1'
 				placeHolder=\"".__("Site URL")."\"
 				regExp='^(http|https)://.*' style='width : 300px'
 				name='site_url' value=\"$site_url\">";
 
-			print "</fieldset>";
+            print "</fieldset>";
 
-			/* FTS Stemming Language */
+            /* FTS Stemming Language */
 
-			if (DB_TYPE == "pgsql") {
-				$feed_language = $row["feed_language"];
+            if (DB_TYPE == "pgsql") {
+                $feed_language = $row["feed_language"];
 
-				if (!$feed_language) {
-									$feed_language = get_pref('DEFAULT_SEARCH_LANGUAGE');
-				}
+                if (!$feed_language) {
+                                    $feed_language = get_pref('DEFAULT_SEARCH_LANGUAGE');
+                }
 
-				print "<fieldset>";
+                print "<fieldset>";
 
-				print "<label>".__('Language:')."</label> ";
-				print_select("feed_language", $feed_language, $this::get_ts_languages(),
-					'dojoType="fox.form.Select"');
+                print "<label>".__('Language:')."</label> ";
+                print_select("feed_language", $feed_language, $this::get_ts_languages(),
+                    'dojoType="fox.form.Select"');
 
-				print "</fieldset>";
-			}
+                print "</fieldset>";
+            }
 
-			print "</section>";
+            print "</section>";
 
-			print "<header>".__("Update")."</header>";
-			print "<section>";
+            print "<header>".__("Update")."</header>";
+            print "<section>";
 
-			/* Update Interval */
+            /* Update Interval */
 
-			$update_interval = $row["update_interval"];
+            $update_interval = $row["update_interval"];
 
-			print "<fieldset>";
+            print "<fieldset>";
 
-			print "<label>".__("Interval:")."</label> ";
+            print "<label>".__("Interval:")."</label> ";
 
-			print_select_hash("update_interval", $update_interval, $update_intervals,
-				'dojoType="fox.form.Select"');
+            print_select_hash("update_interval", $update_interval, $update_intervals,
+                'dojoType="fox.form.Select"');
 
-			print "</fieldset>";
+            print "</fieldset>";
 
-			/* Purge intl */
+            /* Purge intl */
 
-			$purge_interval = $row["purge_interval"];
+            $purge_interval = $row["purge_interval"];
 
-			print "<fieldset>";
+            print "<fieldset>";
 
-			print "<label>".__('Article purging:')."</label> ";
+            print "<label>".__('Article purging:')."</label> ";
 
-			print_select_hash("purge_interval", $purge_interval, $purge_intervals,
-				'dojoType="fox.form.Select" '.
-				((FORCE_ARTICLE_PURGE == 0) ? "" : 'disabled="1"'));
+            print_select_hash("purge_interval", $purge_interval, $purge_intervals,
+                'dojoType="fox.form.Select" '.
+                ((FORCE_ARTICLE_PURGE == 0) ? "" : 'disabled="1"'));
 
-			print "</fieldset>";
+            print "</fieldset>";
 
-			print "</section>";
+            print "</section>";
 
-			$auth_login = htmlspecialchars($row["auth_login"]);
-			$auth_pass = htmlspecialchars($row["auth_pass"]);
+            $auth_login = htmlspecialchars($row["auth_login"]);
+            $auth_pass = htmlspecialchars($row["auth_pass"]);
 
-			$auth_enabled = $auth_login !== '' || $auth_pass !== '';
+            $auth_enabled = $auth_login !== '' || $auth_pass !== '';
 
-			$auth_style = $auth_enabled ? '' : 'display: none';
-			print "<div id='feedEditDlg_loginContainer' style='$auth_style'>";
-			print "<header>".__("Authentication")."</header>";
-			print "<section>";
+            $auth_style = $auth_enabled ? '' : 'display: none';
+            print "<div id='feedEditDlg_loginContainer' style='$auth_style'>";
+            print "<header>".__("Authentication")."</header>";
+            print "<section>";
 
-			print "<fieldset>";
+            print "<fieldset>";
 
-			print "<input dojoType='dijit.form.TextBox' id='feedEditDlg_login'
+            print "<input dojoType='dijit.form.TextBox' id='feedEditDlg_login'
 				placeHolder='".__("Login")."'
 				autocomplete='new-password'
 				name='auth_login' value=\"$auth_login\">";
 
-			print "</fieldset><fieldset>";
+            print "</fieldset><fieldset>";
 
-			print "<input dojoType='dijit.form.TextBox' type='password' name='auth_pass'
+            print "<input dojoType='dijit.form.TextBox' type='password' name='auth_pass'
 				autocomplete='new-password'
 				placeHolder='".__("Password")."'
 				value=\"$auth_pass\">";
 
-			print "<div dojoType='dijit.Tooltip' connectId='feedEditDlg_login' position='below'>
+            print "<div dojoType='dijit.Tooltip' connectId='feedEditDlg_login' position='below'>
 				".__('<b>Hint:</b> you need to fill in your login information if your feed requires authentication, except for Twitter feeds.')."
 				</div>";
 
-			print "</fieldset>";
+            print "</fieldset>";
 
-			print "</section></div>";
+            print "</section></div>";
 
-			$auth_checked = $auth_enabled ? 'checked' : '';
-			print "<label class='checkbox'>
+            $auth_checked = $auth_enabled ? 'checked' : '';
+            print "<label class='checkbox'>
 				<input type='checkbox' $auth_checked name='need_auth' dojoType='dijit.form.CheckBox' id='feedEditDlg_loginCheck'
 						onclick='displayIfChecked(this, \"feedEditDlg_loginContainer\")'>
 					".__('This feed requires authentication.')."</label>";
 
-			print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Options').'">';
+            print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Options').'">';
 
-			print "<section class='narrow'>";
+            print "<section class='narrow'>";
 
-			$include_in_digest = $row["include_in_digest"];
+            $include_in_digest = $row["include_in_digest"];
 
-			if ($include_in_digest) {
-				$checked = "checked=\"1\"";
-			} else {
-				$checked = "";
-			}
+            if ($include_in_digest) {
+                $checked = "checked=\"1\"";
+            } else {
+                $checked = "";
+            }
 
-			print "<fieldset class='narrow'>";
+            print "<fieldset class='narrow'>";
 
-			print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"include_in_digest\"
+            print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"include_in_digest\"
 				name=\"include_in_digest\"
 				$checked> ".__('Include in e-mail digest')."</label>";
 
-			print "</fieldset>";
+            print "</fieldset>";
 
-			$always_display_enclosures = $row["always_display_enclosures"];
+            $always_display_enclosures = $row["always_display_enclosures"];
 
-			if ($always_display_enclosures) {
-				$checked = "checked";
-			} else {
-				$checked = "";
-			}
+            if ($always_display_enclosures) {
+                $checked = "checked";
+            } else {
+                $checked = "";
+            }
 
-			print "<fieldset class='narrow'>";
+            print "<fieldset class='narrow'>";
 
-			print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"always_display_enclosures\"
+            print "<label class='checkbox'><input dojoType=\"dijit.form.CheckBox\" type=\"checkbox\" id=\"always_display_enclosures\"
 				name=\"always_display_enclosures\"
 				$checked> ".__('Always display image attachments')."</label>";
 
-			print "</fieldset>";
+            print "</fieldset>";
 
-			$hide_images = $row["hide_images"];
+            $hide_images = $row["hide_images"];
 
-			if ($hide_images) {
-				$checked = "checked=\"1\"";
-			} else {
-				$checked = "";
-			}
+            if ($hide_images) {
+                $checked = "checked=\"1\"";
+            } else {
+                $checked = "";
+            }
 
-			print "<fieldset class='narrow'>";
+            print "<fieldset class='narrow'>";
 
-			print "<label class='checkbox'><input dojoType='dijit.form.CheckBox' type='checkbox' id='hide_images'
+            print "<label class='checkbox'><input dojoType='dijit.form.CheckBox' type='checkbox' id='hide_images'
 				name='hide_images' $checked> ".__('Do not embed media')."</label>";
 
-			print "</fieldset>";
+            print "</fieldset>";
 
-			$cache_images = $row["cache_images"];
+            $cache_images = $row["cache_images"];
 
-			if ($cache_images) {
-				$checked = "checked=\"1\"";
-			} else {
-				$checked = "";
-			}
+            if ($cache_images) {
+                $checked = "checked=\"1\"";
+            } else {
+                $checked = "";
+            }
 
-			print "<fieldset class='narrow'>";
+            print "<fieldset class='narrow'>";
 
-			print "<label class='checkbox'><input dojoType='dijit.form.CheckBox' type='checkbox' id='cache_images'
+            print "<label class='checkbox'><input dojoType='dijit.form.CheckBox' type='checkbox' id='cache_images'
 				name='cache_images' $checked> ".__('Cache media')."</label>";
 
-			print "</fieldset>";
+            print "</fieldset>";
 
-			$mark_unread_on_update = $row["mark_unread_on_update"];
+            $mark_unread_on_update = $row["mark_unread_on_update"];
 
-			if ($mark_unread_on_update) {
-				$checked = "checked";
-			} else {
-				$checked = "";
-			}
+            if ($mark_unread_on_update) {
+                $checked = "checked";
+            } else {
+                $checked = "";
+            }
 
-			print "<fieldset class='narrow'>";
+            print "<fieldset class='narrow'>";
 
-			print "<label class='checkbox'><input dojoType='dijit.form.CheckBox' type='checkbox' id='mark_unread_on_update'
+            print "<label class='checkbox'><input dojoType='dijit.form.CheckBox' type='checkbox' id='mark_unread_on_update'
 				name='mark_unread_on_update' $checked> ".__('Mark updated articles as unread')."</label>";
 
-			print "</fieldset>";
+            print "</fieldset>";
 
-			print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Icon').'">';
+            print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Icon').'">';
 
-			/* Icon */
+            /* Icon */
 
-			print "<img class='feedIcon feed-editor-icon' src=\"".Feeds::getFeedIcon($feed_id)."\">";
+            print "<img class='feedIcon feed-editor-icon' src=\"".Feeds::getFeedIcon($feed_id)."\">";
 
-			print "<form onsubmit='return false;' id='feed_icon_upload_form'
+            print "<form onsubmit='return false;' id='feed_icon_upload_form'
 				enctype='multipart/form-data' method='POST'>
 			<label class='dijitButton'>".__("Choose file...")."
 				<input style='display: none' id='icon_file' size='10' name='icon_file' type='file'>
@@ -785,231 +785,231 @@ class Pref_Feeds extends Handler_Protected {
 				type='submit'>".__('Remove')."</button>
 			</form>";
 
-			print "</section>";
+            print "</section>";
 
-			print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Plugins').'">';
+            print '</div><div dojoType="dijit.layout.ContentPane" title="'.__('Plugins').'">';
 
-			PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_EDIT_FEED,
-				"hook_prefs_edit_feed", $feed_id);
+            PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_EDIT_FEED,
+                "hook_prefs_edit_feed", $feed_id);
 
-			print "</div></div>";
+            print "</div></div>";
 
-			$title = htmlspecialchars($title, ENT_QUOTES);
+            $title = htmlspecialchars($title, ENT_QUOTES);
 
-			print "<footer>
+            print "<footer>
 				<button style='float : left' class='alt-danger' dojoType='dijit.form.Button' onclick='return CommonDialogs.unsubscribeFeed($feed_id, \"$title\")'>".
-					__('Unsubscribe')."</button>
+                    __('Unsubscribe')."</button>
 				<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return dijit.byId('feedEditDlg').execute()\">".__('Save')."</button>
 				<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('feedEditDlg').hide()\">".__('Cancel')."</button>
 				</footer>";
-		}
-	}
+        }
+    }
 
-	public function editfeeds() {
-		global $purge_intervals;
-		global $update_intervals;
+    public function editfeeds() {
+        global $purge_intervals;
+        global $update_intervals;
 
-		$feed_ids = clean($_REQUEST["ids"]);
+        $feed_ids = clean($_REQUEST["ids"]);
 
-		print_notice("Enable the options you wish to apply using checkboxes on the right:");
+        print_notice("Enable the options you wish to apply using checkboxes on the right:");
 
-		print "<p>";
+        print "<p>";
 
-		print_hidden("ids", "$feed_ids");
-		print_hidden("op", "pref-feeds");
-		print_hidden("method", "batchEditSave");
+        print_hidden("ids", "$feed_ids");
+        print_hidden("op", "pref-feeds");
+        print_hidden("method", "batchEditSave");
 
-		print "<header>".__("Feed")."</header>";
-		print "<section>";
+        print "<header>".__("Feed")."</header>";
+        print "<section>";
 
-		/* Category */
+        /* Category */
 
-		if (get_pref('ENABLE_FEED_CATS')) {
+        if (get_pref('ENABLE_FEED_CATS')) {
 
-			print "<fieldset>";
+            print "<fieldset>";
 
-			print "<label>".__('Place in category:')."</label> ";
+            print "<label>".__('Place in category:')."</label> ";
 
-			print_feed_cat_select("cat_id", false,
-				'disabled="1" dojoType="fox.form.Select"');
+            print_feed_cat_select("cat_id", false,
+                'disabled="1" dojoType="fox.form.Select"');
 
-			$this->batch_edit_cbox("cat_id");
+            $this->batch_edit_cbox("cat_id");
 
-			print "</fieldset>";
-		}
+            print "</fieldset>";
+        }
 
-		/* FTS Stemming Language */
+        /* FTS Stemming Language */
 
-		if (DB_TYPE == "pgsql") {
-			print "<fieldset>";
+        if (DB_TYPE == "pgsql") {
+            print "<fieldset>";
 
-			print "<label>".__('Language:')."</label> ";
-			print_select("feed_language", "", $this::get_ts_languages(),
-				'disabled="1" dojoType="fox.form.Select"');
+            print "<label>".__('Language:')."</label> ";
+            print_select("feed_language", "", $this::get_ts_languages(),
+                'disabled="1" dojoType="fox.form.Select"');
 
-			$this->batch_edit_cbox("feed_language");
+            $this->batch_edit_cbox("feed_language");
 
-			print "</fieldset>";
-		}
+            print "</fieldset>";
+        }
 
-		print "</section>";
+        print "</section>";
 
-		print "<header>".__("Update")."</header>";
-		print "<section>";
+        print "<header>".__("Update")."</header>";
+        print "<section>";
 
-		/* Update Interval */
+        /* Update Interval */
 
-		print "<fieldset>";
+        print "<fieldset>";
 
-		print "<label>".__("Interval:")."</label> ";
+        print "<label>".__("Interval:")."</label> ";
 
-		print_select_hash("update_interval", "", $update_intervals,
-			'disabled="1" dojoType="fox.form.Select"');
+        print_select_hash("update_interval", "", $update_intervals,
+            'disabled="1" dojoType="fox.form.Select"');
 
-		$this->batch_edit_cbox("update_interval");
+        $this->batch_edit_cbox("update_interval");
 
-		print "</fieldset>";
+        print "</fieldset>";
 
-		/* Purge intl */
+        /* Purge intl */
 
-		if (FORCE_ARTICLE_PURGE == 0) {
+        if (FORCE_ARTICLE_PURGE == 0) {
 
-			print "<fieldset>";
+            print "<fieldset>";
 
-			print "<label>".__('Article purging:')."</label> ";
+            print "<label>".__('Article purging:')."</label> ";
 
-			print_select_hash("purge_interval", "", $purge_intervals,
-				'disabled="1" dojoType="fox.form.Select"');
+            print_select_hash("purge_interval", "", $purge_intervals,
+                'disabled="1" dojoType="fox.form.Select"');
 
-			$this->batch_edit_cbox("purge_interval");
+            $this->batch_edit_cbox("purge_interval");
 
-			print "</fieldset>";
-		}
+            print "</fieldset>";
+        }
 
-		print "</section>";
-		print "<header>".__("Authentication")."</header>";
-		print "<section>";
+        print "</section>";
+        print "<header>".__("Authentication")."</header>";
+        print "<section>";
 
-		print "<fieldset>";
+        print "<fieldset>";
 
-		print "<input dojoType='dijit.form.TextBox'
+        print "<input dojoType='dijit.form.TextBox'
 			placeHolder=\"".__("Login")."\" disabled='1'
 			autocomplete='new-password'
 			name='auth_login' value=''>";
 
-		$this->batch_edit_cbox("auth_login");
+        $this->batch_edit_cbox("auth_login");
 
-		print "<input dojoType='dijit.form.TextBox' type='password' name='auth_pass'
+        print "<input dojoType='dijit.form.TextBox' type='password' name='auth_pass'
 			autocomplete='new-password'
 			placeHolder=\"".__("Password")."\" disabled='1'
 			value=''>";
 
-		$this->batch_edit_cbox("auth_pass");
+        $this->batch_edit_cbox("auth_pass");
 
-		print "</fieldset>";
+        print "</fieldset>";
 
-		print "</section>";
-		print "<header>".__("Options")."</header>";
-		print "<section>";
+        print "</section>";
+        print "<header>".__("Options")."</header>";
+        print "<section>";
 
-		print "<fieldset class='narrow'>";
-		print "<label class='checkbox'><input disabled='1' type='checkbox' id='include_in_digest'
+        print "<fieldset class='narrow'>";
+        print "<label class='checkbox'><input disabled='1' type='checkbox' id='include_in_digest'
 			name='include_in_digest' dojoType='dijit.form.CheckBox'>&nbsp;".__('Include in e-mail digest')."</label>";
 
-		print "&nbsp;"; $this->batch_edit_cbox("include_in_digest", "include_in_digest_l");
+        print "&nbsp;"; $this->batch_edit_cbox("include_in_digest", "include_in_digest_l");
 
-		print "</fieldset><fieldset class='narrow'>";
+        print "</fieldset><fieldset class='narrow'>";
 
-		print "<label class='checkbox'><input disabled='1' type='checkbox' id='always_display_enclosures'
+        print "<label class='checkbox'><input disabled='1' type='checkbox' id='always_display_enclosures'
 			name='always_display_enclosures' dojoType='dijit.form.CheckBox'>&nbsp;".__('Always display image attachments')."</label>";
 
-		print "&nbsp;"; $this->batch_edit_cbox("always_display_enclosures", "always_display_enclosures_l");
+        print "&nbsp;"; $this->batch_edit_cbox("always_display_enclosures", "always_display_enclosures_l");
 
-		print "</fieldset><fieldset class='narrow'>";
+        print "</fieldset><fieldset class='narrow'>";
 
-		print "<label class='checkbox'><input disabled='1' type='checkbox' id='hide_images'
+        print "<label class='checkbox'><input disabled='1' type='checkbox' id='hide_images'
 			name='hide_images' dojoType='dijit.form.CheckBox'>&nbsp;". __('Do not embed media')."</label>";
 
-		print "&nbsp;"; $this->batch_edit_cbox("hide_images", "hide_images_l");
+        print "&nbsp;"; $this->batch_edit_cbox("hide_images", "hide_images_l");
 
-		print "</fieldset><fieldset class='narrow'>";
+        print "</fieldset><fieldset class='narrow'>";
 
-		print "<label class='checkbox'><input disabled='1' type='checkbox' id='cache_images'
+        print "<label class='checkbox'><input disabled='1' type='checkbox' id='cache_images'
 			name='cache_images' dojoType='dijit.form.CheckBox'>&nbsp;".__('Cache media')."</label>";
 
-		print "&nbsp;"; $this->batch_edit_cbox("cache_images", "cache_images_l");
+        print "&nbsp;"; $this->batch_edit_cbox("cache_images", "cache_images_l");
 
-		print "</fieldset><fieldset class='narrow'>";
+        print "</fieldset><fieldset class='narrow'>";
 
-		print "<label class='checkbox'><input disabled='1' type='checkbox' id='mark_unread_on_update'
+        print "<label class='checkbox'><input disabled='1' type='checkbox' id='mark_unread_on_update'
 			name='mark_unread_on_update' dojoType='dijit.form.CheckBox'>&nbsp;".__('Mark updated articles as unread')."</label>";
 
-		print "&nbsp;"; $this->batch_edit_cbox("mark_unread_on_update", "mark_unread_on_update_l");
+        print "&nbsp;"; $this->batch_edit_cbox("mark_unread_on_update", "mark_unread_on_update_l");
 
-		print "</fieldset>";
+        print "</fieldset>";
 
-		print "</section>";
+        print "</section>";
 
-		print "<footer>
+        print "<footer>
 			<button dojoType='dijit.form.Button' type='submit' class='alt-primary'
 				onclick=\"return dijit.byId('feedEditDlg').execute()\">".
-				__('Save')."</button>
+                __('Save')."</button>
 			<button dojoType='dijit.form.Button'
 			onclick=\"return dijit.byId('feedEditDlg').hide()\">".
-				__('Cancel')."</button>
+                __('Cancel')."</button>
 			</footer>";
 
-		return;
-	}
+        return;
+    }
 
-	public function batchEditSave() {
-		return $this->editsaveops(true);
-	}
+    public function batchEditSave() {
+        return $this->editsaveops(true);
+    }
 
-	public function editSave() {
-		return $this->editsaveops(false);
-	}
+    public function editSave() {
+        return $this->editsaveops(false);
+    }
 
-	public function editsaveops($batch) {
+    public function editsaveops($batch) {
 
-		$feed_title = trim(clean($_POST["title"]));
-		$feed_url = trim(clean($_POST["feed_url"]));
-		$site_url = trim(clean($_POST["site_url"]));
-		$upd_intl = (int) clean($_POST["update_interval"]);
-		$purge_intl = (int) clean($_POST["purge_interval"]);
-		$feed_id = (int) clean($_POST["id"]); /* editSave */
-		$feed_ids = explode(",", clean($_POST["ids"])); /* batchEditSave */
-		$cat_id = (int) clean($_POST["cat_id"]);
-		$auth_login = trim(clean($_POST["auth_login"]));
-		$auth_pass = trim(clean($_POST["auth_pass"]));
-		$private = checkbox_to_sql_bool(clean($_POST["private"]));
-		$include_in_digest = checkbox_to_sql_bool(
-			clean($_POST["include_in_digest"]));
-		$cache_images = checkbox_to_sql_bool(
-			clean($_POST["cache_images"]));
-		$hide_images = checkbox_to_sql_bool(
-			clean($_POST["hide_images"]));
-		$always_display_enclosures = checkbox_to_sql_bool(
-			clean($_POST["always_display_enclosures"]));
+        $feed_title = trim(clean($_POST["title"]));
+        $feed_url = trim(clean($_POST["feed_url"]));
+        $site_url = trim(clean($_POST["site_url"]));
+        $upd_intl = (int) clean($_POST["update_interval"]);
+        $purge_intl = (int) clean($_POST["purge_interval"]);
+        $feed_id = (int) clean($_POST["id"]); /* editSave */
+        $feed_ids = explode(",", clean($_POST["ids"])); /* batchEditSave */
+        $cat_id = (int) clean($_POST["cat_id"]);
+        $auth_login = trim(clean($_POST["auth_login"]));
+        $auth_pass = trim(clean($_POST["auth_pass"]));
+        $private = checkbox_to_sql_bool(clean($_POST["private"]));
+        $include_in_digest = checkbox_to_sql_bool(
+            clean($_POST["include_in_digest"]));
+        $cache_images = checkbox_to_sql_bool(
+            clean($_POST["cache_images"]));
+        $hide_images = checkbox_to_sql_bool(
+            clean($_POST["hide_images"]));
+        $always_display_enclosures = checkbox_to_sql_bool(
+            clean($_POST["always_display_enclosures"]));
 
-		$mark_unread_on_update = checkbox_to_sql_bool(
-			clean($_POST["mark_unread_on_update"]));
+        $mark_unread_on_update = checkbox_to_sql_bool(
+            clean($_POST["mark_unread_on_update"]));
 
-		$feed_language = trim(clean($_POST["feed_language"]));
+        $feed_language = trim(clean($_POST["feed_language"]));
 
-		if (!$batch) {
-			if (clean($_POST["need_auth"]) !== 'on') {
-				$auth_login = '';
-				$auth_pass = '';
-			}
+        if (!$batch) {
+            if (clean($_POST["need_auth"]) !== 'on') {
+                $auth_login = '';
+                $auth_pass = '';
+            }
 
-			/* $sth = $this->pdo->prepare("SELECT feed_url FROM ttrss_feeds WHERE id = ?");
+            /* $sth = $this->pdo->prepare("SELECT feed_url FROM ttrss_feeds WHERE id = ?");
 			$sth->execute([$feed_id]);
 			$row = $sth->fetch();$orig_feed_url = $row["feed_url"];
 
 			$reset_basic_info = $orig_feed_url != $feed_url; */
 
-			$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET
+            $sth = $this->pdo->prepare("UPDATE ttrss_feeds SET
 				cat_id = :cat_id,
 				title = :title,
 				feed_url = :feed_url,
@@ -1028,253 +1028,253 @@ class Pref_Feeds extends Handler_Protected {
 				feed_language = :feed_language
 			WHERE id = :id AND owner_uid = :uid");
 
-			$sth->execute([":title" => $feed_title,
-					":cat_id" => $cat_id ? $cat_id : null,
-					":feed_url" => $feed_url,
-					":site_url" => $site_url,
-					":upd_intl" => $upd_intl,
-					":purge_intl" => $purge_intl,
-					":auth_login" => $auth_login,
-					":auth_pass" => $auth_pass,
-					":private" => (int) $private,
-					":cache_images" => (int) $cache_images,
-					":hide_images" => (int) $hide_images,
-					":include_in_digest" => (int) $include_in_digest,
-					":always_display_enclosures" => (int) $always_display_enclosures,
-					":mark_unread_on_update" => (int) $mark_unread_on_update,
-					":feed_language" => $feed_language,
-					":id" => $feed_id,
-					":uid" => $_SESSION['uid']]);
+            $sth->execute([":title" => $feed_title,
+                    ":cat_id" => $cat_id ? $cat_id : null,
+                    ":feed_url" => $feed_url,
+                    ":site_url" => $site_url,
+                    ":upd_intl" => $upd_intl,
+                    ":purge_intl" => $purge_intl,
+                    ":auth_login" => $auth_login,
+                    ":auth_pass" => $auth_pass,
+                    ":private" => (int) $private,
+                    ":cache_images" => (int) $cache_images,
+                    ":hide_images" => (int) $hide_images,
+                    ":include_in_digest" => (int) $include_in_digest,
+                    ":always_display_enclosures" => (int) $always_display_enclosures,
+                    ":mark_unread_on_update" => (int) $mark_unread_on_update,
+                    ":feed_language" => $feed_language,
+                    ":id" => $feed_id,
+                    ":uid" => $_SESSION['uid']]);
 
 /*			if ($reset_basic_info) {
 				RSSUtils::set_basic_feed_info($feed_id);
 			} */
 
-			PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_SAVE_FEED,
-				"hook_prefs_save_feed", $feed_id);
+            PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_SAVE_FEED,
+                "hook_prefs_save_feed", $feed_id);
 
-		} else {
-			$feed_data = array();
+        } else {
+            $feed_data = array();
 
-			foreach (array_keys($_POST) as $k) {
-				if ($k != "op" && $k != "method" && $k != "ids") {
-					$feed_data[$k] = clean($_POST[$k]);
-				}
-			}
+            foreach (array_keys($_POST) as $k) {
+                if ($k != "op" && $k != "method" && $k != "ids") {
+                    $feed_data[$k] = clean($_POST[$k]);
+                }
+            }
 
-			$this->pdo->beginTransaction();
+            $this->pdo->beginTransaction();
 
-			$feed_ids_qmarks = arr_qmarks($feed_ids);
+            $feed_ids_qmarks = arr_qmarks($feed_ids);
 
-			foreach (array_keys($feed_data) as $k) {
+            foreach (array_keys($feed_data) as $k) {
 
-				$qpart = "";
+                $qpart = "";
 
-				switch ($k) {
-					case "title":
-						$qpart = "title = ".$this->pdo->quote($feed_title);
-						break;
+                switch ($k) {
+                    case "title":
+                        $qpart = "title = ".$this->pdo->quote($feed_title);
+                        break;
 
-					case "feed_url":
-						$qpart = "feed_url = ".$this->pdo->quote($feed_url);
-						break;
+                    case "feed_url":
+                        $qpart = "feed_url = ".$this->pdo->quote($feed_url);
+                        break;
 
-					case "update_interval":
-						$qpart = "update_interval = ".$this->pdo->quote($upd_intl);
-						break;
+                    case "update_interval":
+                        $qpart = "update_interval = ".$this->pdo->quote($upd_intl);
+                        break;
 
-					case "purge_interval":
-						$qpart = "purge_interval =".$this->pdo->quote($purge_intl);
-						break;
+                    case "purge_interval":
+                        $qpart = "purge_interval =".$this->pdo->quote($purge_intl);
+                        break;
 
-					case "auth_login":
-						$qpart = "auth_login = ".$this->pdo->quote($auth_login);
-						break;
+                    case "auth_login":
+                        $qpart = "auth_login = ".$this->pdo->quote($auth_login);
+                        break;
 
-					case "auth_pass":
-						$qpart = "auth_pass =".$this->pdo->quote($auth_pass).", auth_pass_encrypted = false";
-						break;
+                    case "auth_pass":
+                        $qpart = "auth_pass =".$this->pdo->quote($auth_pass).", auth_pass_encrypted = false";
+                        break;
 
-					case "private":
-						$qpart = "private = ".$this->pdo->quote($private);
-						break;
+                    case "private":
+                        $qpart = "private = ".$this->pdo->quote($private);
+                        break;
 
-					case "include_in_digest":
-						$qpart = "include_in_digest = ".$this->pdo->quote($include_in_digest);
-						break;
+                    case "include_in_digest":
+                        $qpart = "include_in_digest = ".$this->pdo->quote($include_in_digest);
+                        break;
 
-					case "always_display_enclosures":
-						$qpart = "always_display_enclosures = ".$this->pdo->quote($always_display_enclosures);
-						break;
+                    case "always_display_enclosures":
+                        $qpart = "always_display_enclosures = ".$this->pdo->quote($always_display_enclosures);
+                        break;
 
-					case "mark_unread_on_update":
-						$qpart = "mark_unread_on_update = ".$this->pdo->quote($mark_unread_on_update);
-						break;
+                    case "mark_unread_on_update":
+                        $qpart = "mark_unread_on_update = ".$this->pdo->quote($mark_unread_on_update);
+                        break;
 
-					case "cache_images":
-						$qpart = "cache_images = ".$this->pdo->quote($cache_images);
-						break;
+                    case "cache_images":
+                        $qpart = "cache_images = ".$this->pdo->quote($cache_images);
+                        break;
 
-					case "hide_images":
-						$qpart = "hide_images = ".$this->pdo->quote($hide_images);
-						break;
+                    case "hide_images":
+                        $qpart = "hide_images = ".$this->pdo->quote($hide_images);
+                        break;
 
-					case "cat_id":
-						if (get_pref('ENABLE_FEED_CATS')) {
-							if ($cat_id) {
-								$qpart = "cat_id = ".$this->pdo->quote($cat_id);
-							} else {
-								$qpart = 'cat_id = NULL';
-							}
-						} else {
-							$qpart = "";
-						}
+                    case "cat_id":
+                        if (get_pref('ENABLE_FEED_CATS')) {
+                            if ($cat_id) {
+                                $qpart = "cat_id = ".$this->pdo->quote($cat_id);
+                            } else {
+                                $qpart = 'cat_id = NULL';
+                            }
+                        } else {
+                            $qpart = "";
+                        }
 
-						break;
+                        break;
 
-					case "feed_language":
-						$qpart = "feed_language = ".$this->pdo->quote($feed_language);
-						break;
+                    case "feed_language":
+                        $qpart = "feed_language = ".$this->pdo->quote($feed_language);
+                        break;
 
-				}
+                }
 
-				if ($qpart) {
-					$sth = $this->pdo->prepare("UPDATE ttrss_feeds SET $qpart WHERE id IN ($feed_ids_qmarks)
+                if ($qpart) {
+                    $sth = $this->pdo->prepare("UPDATE ttrss_feeds SET $qpart WHERE id IN ($feed_ids_qmarks)
 						AND owner_uid = ?");
-					$sth->execute(array_merge($feed_ids, [$_SESSION['uid']]));
-				}
-			}
+                    $sth->execute(array_merge($feed_ids, [$_SESSION['uid']]));
+                }
+            }
 
-			$this->pdo->commit();
-		}
-		return;
-	}
+            $this->pdo->commit();
+        }
+        return;
+    }
 
-	public function remove() {
+    public function remove() {
 
-		$ids = explode(",", clean($_REQUEST["ids"]));
+        $ids = explode(",", clean($_REQUEST["ids"]));
 
-		foreach ($ids as $id) {
-			Pref_Feeds::remove_feed($id, $_SESSION["uid"]);
-		}
+        foreach ($ids as $id) {
+            Pref_Feeds::remove_feed($id, $_SESSION["uid"]);
+        }
 
-		return;
-	}
+        return;
+    }
 
-	public function removeCat() {
-		$ids = explode(",", clean($_REQUEST["ids"]));
-		foreach ($ids as $id) {
-			$this->remove_feed_category($id, $_SESSION["uid"]);
-		}
-	}
+    public function removeCat() {
+        $ids = explode(",", clean($_REQUEST["ids"]));
+        foreach ($ids as $id) {
+            $this->remove_feed_category($id, $_SESSION["uid"]);
+        }
+    }
 
-	public function addCat() {
-		$feed_cat = trim(clean($_REQUEST["cat"]));
+    public function addCat() {
+        $feed_cat = trim(clean($_REQUEST["cat"]));
 
-		Feeds::add_feed_category($feed_cat);
-	}
+        Feeds::add_feed_category($feed_cat);
+    }
 
-	public function index() {
+    public function index() {
 
-		print "<div dojoType='dijit.layout.AccordionContainer' region='center'>";
-		print "<div style='padding : 0px' dojoType='dijit.layout.AccordionPane'
+        print "<div dojoType='dijit.layout.AccordionContainer' region='center'>";
+        print "<div style='padding : 0px' dojoType='dijit.layout.AccordionPane'
 			title=\"<i class='material-icons'>rss_feed</i> ".__('Feeds')."\">";
 
-		$sth = $this->pdo->prepare("SELECT COUNT(id) AS num_errors
+        $sth = $this->pdo->prepare("SELECT COUNT(id) AS num_errors
 			FROM ttrss_feeds WHERE last_error != '' AND owner_uid = ?");
-		$sth->execute([$_SESSION['uid']]);
+        $sth->execute([$_SESSION['uid']]);
 
-		if ($row = $sth->fetch()) {
-			$num_errors = $row["num_errors"];
-		} else {
-			$num_errors = 0;
-		}
+        if ($row = $sth->fetch()) {
+            $num_errors = $row["num_errors"];
+        } else {
+            $num_errors = 0;
+        }
 
-		if ($num_errors > 0) {
+        if ($num_errors > 0) {
 
-			$error_button = "<button dojoType=\"dijit.form.Button\"
+            $error_button = "<button dojoType=\"dijit.form.Button\"
 			  		onclick=\"CommonDialogs.showFeedsWithErrors()\" id=\"errorButton\">" .
-				__("Feeds with errors")."</button>";
-		}
+                __("Feeds with errors")."</button>";
+        }
 
-		$inactive_button = "<button dojoType=\"dijit.form.Button\"
+        $inactive_button = "<button dojoType=\"dijit.form.Button\"
 				id=\"pref_feeds_inactive_btn\"
 				style=\"display : none\"
 				onclick=\"dijit.byId('feedTree').showInactiveFeeds()\">" .
-				__("Inactive feeds")."</button>";
+                __("Inactive feeds")."</button>";
 
-		$feed_search = clean($_REQUEST["search"]);
+        $feed_search = clean($_REQUEST["search"]);
 
-		if (array_key_exists("search", $_REQUEST)) {
-			$_SESSION["prefs_feed_search"] = $feed_search;
-		} else {
-			$feed_search = $_SESSION["prefs_feed_search"];
-		}
+        if (array_key_exists("search", $_REQUEST)) {
+            $_SESSION["prefs_feed_search"] = $feed_search;
+        } else {
+            $feed_search = $_SESSION["prefs_feed_search"];
+        }
 
-		print '<div dojoType="dijit.layout.BorderContainer" gutters="false">';
+        print '<div dojoType="dijit.layout.BorderContainer" gutters="false">';
 
-		print "<div region='top' dojoType=\"fox.Toolbar\">"; #toolbar
+        print "<div region='top' dojoType=\"fox.Toolbar\">"; #toolbar
 
-		print "<div style='float : right; padding-right : 4px;'>
+        print "<div style='float : right; padding-right : 4px;'>
 			<input dojoType=\"dijit.form.TextBox\" id=\"feed_search\" size=\"20\" type=\"search\"
 				value=\"$feed_search\">
 			<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('feedTree').reload()\">".
-				__('Search')."</button>
+                __('Search')."</button>
 			</div>";
 
-		print "<div dojoType=\"fox.form.DropDownButton\">".
-				"<span>".__('Select')."</span>";
-		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-		print "<div onclick=\"dijit.byId('feedTree').model.setAllChecked(true)\"
+        print "<div dojoType=\"fox.form.DropDownButton\">".
+                "<span>".__('Select')."</span>";
+        print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
+        print "<div onclick=\"dijit.byId('feedTree').model.setAllChecked(true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
-		print "<div onclick=\"dijit.byId('feedTree').model.setAllChecked(false)\"
+        print "<div onclick=\"dijit.byId('feedTree').model.setAllChecked(false)\"
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
-		print "</div></div>";
+        print "</div></div>";
 
-		print "<div dojoType=\"fox.form.DropDownButton\">".
-				"<span>".__('Feeds')."</span>";
-		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-		print "<div onclick=\"CommonDialogs.quickAddFeed()\"
+        print "<div dojoType=\"fox.form.DropDownButton\">".
+                "<span>".__('Feeds')."</span>";
+        print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
+        print "<div onclick=\"CommonDialogs.quickAddFeed()\"
 			dojoType=\"dijit.MenuItem\">".__('Subscribe to feed')."</div>";
-		print "<div onclick=\"dijit.byId('feedTree').editSelectedFeed()\"
+        print "<div onclick=\"dijit.byId('feedTree').editSelectedFeed()\"
 			dojoType=\"dijit.MenuItem\">".__('Edit selected feeds')."</div>";
-		print "<div onclick=\"dijit.byId('feedTree').resetFeedOrder()\"
+        print "<div onclick=\"dijit.byId('feedTree').resetFeedOrder()\"
 			dojoType=\"dijit.MenuItem\">".__('Reset sort order')."</div>";
-		print "<div onclick=\"dijit.byId('feedTree').batchSubscribe()\"
+        print "<div onclick=\"dijit.byId('feedTree').batchSubscribe()\"
 			dojoType=\"dijit.MenuItem\">".__('Batch subscribe')."</div>";
-		print "<div dojoType=\"dijit.MenuItem\" onclick=\"dijit.byId('feedTree').removeSelectedFeeds()\">"
-			.__('Unsubscribe')."</div> ";
-		print "</div></div>";
+        print "<div dojoType=\"dijit.MenuItem\" onclick=\"dijit.byId('feedTree').removeSelectedFeeds()\">"
+            .__('Unsubscribe')."</div> ";
+        print "</div></div>";
 
-		if (get_pref('ENABLE_FEED_CATS')) {
-			print "<div dojoType=\"fox.form.DropDownButton\">".
-					"<span>".__('Categories')."</span>";
-			print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-			print "<div onclick=\"dijit.byId('feedTree').createCategory()\"
+        if (get_pref('ENABLE_FEED_CATS')) {
+            print "<div dojoType=\"fox.form.DropDownButton\">".
+                    "<span>".__('Categories')."</span>";
+            print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
+            print "<div onclick=\"dijit.byId('feedTree').createCategory()\"
 				dojoType=\"dijit.MenuItem\">".__('Add category')."</div>";
-			print "<div onclick=\"dijit.byId('feedTree').resetCatOrder()\"
+            print "<div onclick=\"dijit.byId('feedTree').resetCatOrder()\"
 				dojoType=\"dijit.MenuItem\">".__('Reset sort order')."</div>";
-			print "<div onclick=\"dijit.byId('feedTree').removeSelectedCategories()\"
+            print "<div onclick=\"dijit.byId('feedTree').removeSelectedCategories()\"
 				dojoType=\"dijit.MenuItem\">".__('Remove selected')."</div>";
-			print "</div></div>";
+            print "</div></div>";
 
-		}
+        }
 
-		print $error_button;
-		print $inactive_button;
+        print $error_button;
+        print $inactive_button;
 
-		print "</div>"; # toolbar
+        print "</div>"; # toolbar
 
-		//print '</div>';
-		print '<div style="padding : 0px" dojoType="dijit.layout.ContentPane" region="center">';
+        //print '</div>';
+        print '<div style="padding : 0px" dojoType="dijit.layout.ContentPane" region="center">';
 
-		print "<div id=\"feedlistLoading\">
+        print "<div id=\"feedlistLoading\">
 		<img src='images/indicator_tiny.gif'>".
-		 __("Loading, please wait...")."</div>";
+            __("Loading, please wait...")."</div>";
 
-		$auto_expand = $feed_search != "" ? "true" : "false";
+        $auto_expand = $feed_search != "" ? "true" : "false";
 
-		print "<div dojoType=\"fox.PrefFeedStore\" jsId=\"feedStore\"
+        print "<div dojoType=\"fox.PrefFeedStore\" jsId=\"feedStore\"
 			url=\"backend.php?op=pref-feeds&method=getfeedtree\">
 		</div>
 		<div dojoType=\"lib.CheckBoxStoreModel\" jsId=\"feedModel\" store=\"feedStore\"
@@ -1307,23 +1307,23 @@ class Pref_Feeds extends Handler_Protected {
 #			".__('<b>Hint:</b> you can drag feeds and categories around.')."
 #			</div>";
 
-		print '</div>';
-		print '</div>';
+        print '</div>';
+        print '</div>';
 
-		print "</div>"; # feeds pane
+        print "</div>"; # feeds pane
 
-		print "<div dojoType='dijit.layout.AccordionPane'
+        print "<div dojoType='dijit.layout.AccordionPane'
 			title='<i class=\"material-icons\">import_export</i> ".__('OPML')."'>";
 
-		print "<h3>".__("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.")."</h3>";
+        print "<h3>".__("Using OPML you can export and import your feeds, filters, labels and Tiny Tiny RSS settings.")."</h3>";
 
-		print_notice("Only main settings profile can be migrated using OPML.");
+        print_notice("Only main settings profile can be migrated using OPML.");
 
-		print "<iframe id=\"upload_iframe\"
+        print "<iframe id=\"upload_iframe\"
 			name=\"upload_iframe\" onload=\"Helpers.OPML.onImportComplete(this)\"
 			style=\"width: 400px; height: 100px; display: none;\"></iframe>";
 
-		print "<form  name='opml_form' style='display : inline-block' target='upload_iframe'
+        print "<form  name='opml_form' style='display : inline-block' target='upload_iframe'
 			enctype='multipart/form-data' method='POST'
 			action='backend.php'>
 			<label class='dijitButton'>".__("Choose file...")."
@@ -1332,118 +1332,118 @@ class Pref_Feeds extends Handler_Protected {
 			<input type='hidden' name='op' value='dlg'>
 			<input type='hidden' name='method' value='importOpml'>
 			<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return Helpers.OPML.import();\" type=\"submit\">" .
-			__('Import OPML')."</button>";
+            __('Import OPML')."</button>";
 
-		print "</form>";
+        print "</form>";
 
-		print "<form dojoType='dijit.form.Form' id='opmlExportForm' style='display : inline-block'>";
+        print "<form dojoType='dijit.form.Form' id='opmlExportForm' style='display : inline-block'>";
 
-		print "<button dojoType='dijit.form.Button'
+        print "<button dojoType='dijit.form.Button'
 			onclick='Helpers.OPML.export()' >" .
-			__('Export OPML')."</button>";
+            __('Export OPML')."</button>";
 
-		print " <label class='checkbox'>";
-		print_checkbox("include_settings", true, "1", "");
-		print " ".__("Include settings");
-		print "</label>";
+        print " <label class='checkbox'>";
+        print_checkbox("include_settings", true, "1", "");
+        print " ".__("Include settings");
+        print "</label>";
 
-		print "</form>";
+        print "</form>";
 
-		print "<p/>";
+        print "<p/>";
 
-		print "<h2>".__("Published OPML")."</h2>";
+        print "<h2>".__("Published OPML")."</h2>";
 
-		print "<p>".__('Your OPML can be published publicly and can be subscribed by anyone who knows the URL below.').
-			" ".
-			__("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.")."</p>";
+        print "<p>".__('Your OPML can be published publicly and can be subscribed by anyone who knows the URL below.').
+            " ".
+            __("Published OPML does not include your Tiny Tiny RSS settings, feeds that require authentication or feeds hidden from Popular feeds.")."</p>";
 
-		print "<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return App.displayDlg('".__("Public OPML URL")."','pubOPMLUrl')\">".
-			__('Display published OPML URL')."</button> ";
+        print "<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return App.displayDlg('".__("Public OPML URL")."','pubOPMLUrl')\">".
+            __('Display published OPML URL')."</button> ";
 
-		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB_SECTION,
-			"hook_prefs_tab_section", "prefFeedsOPML");
+        PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB_SECTION,
+            "hook_prefs_tab_section", "prefFeedsOPML");
 
-		print "</div>"; # pane
+        print "</div>"; # pane
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\"
+        print "<div dojoType=\"dijit.layout.AccordionPane\"
 			title=\"<i class='material-icons'>share</i> ".__('Published & shared articles / Generated feeds')."\">";
 
-		print "<h3>".__('Published articles can be subscribed by anyone who knows the following URL:')."</h3>";
+        print "<h3>".__('Published articles can be subscribed by anyone who knows the following URL:')."</h3>";
 
-		$rss_url = '-2::'.htmlspecialchars(get_self_url_prefix().
-				"/public.php?op=rss&id=-2&view-mode=all_articles"); ;
+        $rss_url = '-2::'.htmlspecialchars(get_self_url_prefix().
+                "/public.php?op=rss&id=-2&view-mode=all_articles"); ;
 
-		print "<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return App.displayDlg('".__("Show as feed")."','generatedFeed', '$rss_url')\">".
-			__('Display URL')."</button> ";
+        print "<button dojoType='dijit.form.Button' class='alt-primary' onclick=\"return App.displayDlg('".__("Show as feed")."','generatedFeed', '$rss_url')\">".
+            __('Display URL')."</button> ";
 
-		print "<button class=\"alt-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Helpers.clearFeedAccessKeys()\">".
-			__('Clear all generated URLs')."</button> ";
+        print "<button class=\"alt-danger\" dojoType=\"dijit.form.Button\" onclick=\"return Helpers.clearFeedAccessKeys()\">".
+            __('Clear all generated URLs')."</button> ";
 
-		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB_SECTION,
-			"hook_prefs_tab_section", "prefFeedsPublishedGenerated");
+        PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB_SECTION,
+            "hook_prefs_tab_section", "prefFeedsPublishedGenerated");
 
-		print "</div>"; #pane
+        print "</div>"; #pane
 
-		PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB,
-			"hook_prefs_tab", "prefFeeds");
+        PluginHost::getInstance()->run_hooks(PluginHost::HOOK_PREFS_TAB,
+            "hook_prefs_tab", "prefFeeds");
 
-		print "</div>"; #container
-	}
+        print "</div>"; #container
+    }
 
-	private function feedlist_init_cat($cat_id) {
-		$obj = array();
-		$cat_id = (int) $cat_id;
+    private function feedlist_init_cat($cat_id) {
+        $obj = array();
+        $cat_id = (int) $cat_id;
 
-		if ($cat_id > 0) {
-			$cat_unread = CCache::find($cat_id, $_SESSION["uid"], true);
-		} else if ($cat_id == 0 || $cat_id == -2) {
-			$cat_unread = Feeds::getCategoryUnread($cat_id);
-		}
+        if ($cat_id > 0) {
+            $cat_unread = CCache::find($cat_id, $_SESSION["uid"], true);
+        } else if ($cat_id == 0 || $cat_id == -2) {
+            $cat_unread = Feeds::getCategoryUnread($cat_id);
+        }
 
-		$obj['id'] = 'CAT:'.$cat_id;
-		$obj['items'] = array();
-		$obj['name'] = Feeds::getCategoryTitle($cat_id);
-		$obj['type'] = 'category';
-		$obj['unread'] = (int) $cat_unread;
-		$obj['bare_id'] = $cat_id;
+        $obj['id'] = 'CAT:'.$cat_id;
+        $obj['items'] = array();
+        $obj['name'] = Feeds::getCategoryTitle($cat_id);
+        $obj['type'] = 'category';
+        $obj['unread'] = (int) $cat_unread;
+        $obj['bare_id'] = $cat_id;
 
-		return $obj;
-	}
+        return $obj;
+    }
 
-	private function feedlist_init_feed($feed_id, $title = false, $unread = false, $error = '', $updated = '') {
-		$obj = array();
-		$feed_id = (int) $feed_id;
+    private function feedlist_init_feed($feed_id, $title = false, $unread = false, $error = '', $updated = '') {
+        $obj = array();
+        $feed_id = (int) $feed_id;
 
-		if (!$title) {
-					$title = Feeds::getFeedTitle($feed_id, false);
-		}
+        if (!$title) {
+                    $title = Feeds::getFeedTitle($feed_id, false);
+        }
 
-		if ($unread === false) {
-					$unread = getFeedUnread($feed_id, false);
-		}
+        if ($unread === false) {
+                    $unread = getFeedUnread($feed_id, false);
+        }
 
-		$obj['id'] = 'FEED:'.$feed_id;
-		$obj['name'] = $title;
-		$obj['unread'] = (int) $unread;
-		$obj['type'] = 'feed';
-		$obj['error'] = $error;
-		$obj['updated'] = $updated;
-		$obj['icon'] = Feeds::getFeedIcon($feed_id);
-		$obj['bare_id'] = $feed_id;
-		$obj['auxcounter'] = 0;
+        $obj['id'] = 'FEED:'.$feed_id;
+        $obj['name'] = $title;
+        $obj['unread'] = (int) $unread;
+        $obj['type'] = 'feed';
+        $obj['error'] = $error;
+        $obj['updated'] = $updated;
+        $obj['icon'] = Feeds::getFeedIcon($feed_id);
+        $obj['bare_id'] = $feed_id;
+        $obj['auxcounter'] = 0;
 
-		return $obj;
-	}
+        return $obj;
+    }
 
-	public function inactiveFeeds() {
+    public function inactiveFeeds() {
 
-		if (DB_TYPE == "pgsql") {
-			$interval_qpart = "NOW() - INTERVAL '3 months'";
-		} else {
-			$interval_qpart = "DATE_SUB(NOW(), INTERVAL 3 MONTH)";
-		}
+        if (DB_TYPE == "pgsql") {
+            $interval_qpart = "NOW() - INTERVAL '3 months'";
+        } else {
+            $interval_qpart = "DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+        }
 
-		$sth = $this->pdo->prepare("SELECT ttrss_feeds.title, ttrss_feeds.site_url,
+        $sth = $this->pdo->prepare("SELECT ttrss_feeds.title, ttrss_feeds.site_url,
 		  		ttrss_feeds.feed_url, ttrss_feeds.id, MAX(updated) AS last_article
 			FROM ttrss_feeds, ttrss_entries, ttrss_user_entries WHERE
 				(SELECT MAX(updated) FROM ttrss_entries, ttrss_user_entries WHERE
@@ -1454,358 +1454,358 @@ class Pref_Feeds extends Handler_Protected {
 				ttrss_entries.id = ref_id
 			GROUP BY ttrss_feeds.title, ttrss_feeds.id, ttrss_feeds.site_url, ttrss_feeds.feed_url
 			ORDER BY last_article");
-		$sth->execute([$_SESSION['uid']]);
+        $sth->execute([$_SESSION['uid']]);
 
-		print "<div dojoType='fox.Toolbar'>";
-		print "<div dojoType='fox.form.DropDownButton'>".
-				"<span>".__('Select')."</span>";
-		print "<div dojoType='dijit.Menu' style='display: none'>";
-		print "<div onclick=\"Tables.select('inactive-feeds-list', true)\"
+        print "<div dojoType='fox.Toolbar'>";
+        print "<div dojoType='fox.form.DropDownButton'>".
+                "<span>".__('Select')."</span>";
+        print "<div dojoType='dijit.Menu' style='display: none'>";
+        print "<div onclick=\"Tables.select('inactive-feeds-list', true)\"
 			dojoType='dijit.MenuItem'>".__('All')."</div>";
-		print "<div onclick=\"Tables.select('inactive-feeds-list', false)\"
+        print "<div onclick=\"Tables.select('inactive-feeds-list', false)\"
 			dojoType='dijit.MenuItem'>".__('None')."</div>";
-		print "</div></div>";
-		print "</div>"; #toolbar
+        print "</div></div>";
+        print "</div>"; #toolbar
 
-		print "<div class='panel panel-scrollable'>";
-		print "<table width='100%' id='inactive-feeds-list'>";
+        print "<div class='panel panel-scrollable'>";
+        print "<table width='100%' id='inactive-feeds-list'>";
 
-		$lnum = 1;
+        $lnum = 1;
 
-		while ($line = $sth->fetch()) {
+        while ($line = $sth->fetch()) {
 
-			$feed_id = $line["id"];
+            $feed_id = $line["id"];
 
-			print "<tr data-row-id='$feed_id'>";
+            print "<tr data-row-id='$feed_id'>";
 
-			print "<td width='5%' align='center'><input
+            print "<td width='5%' align='center'><input
 				onclick='Tables.onRowChecked(this);' dojoType='dijit.form.CheckBox'
 				type='checkbox'></td>";
-			print "<td>";
+            print "<td>";
 
-			print "<a href='#' ".
-				"title=\"".__("Click to edit feed")."\" ".
-				"onclick=\"CommonDialogs.editFeed(".$line["id"].")\">".
-				htmlspecialchars($line["title"])."</a>";
+            print "<a href='#' ".
+                "title=\"".__("Click to edit feed")."\" ".
+                "onclick=\"CommonDialogs.editFeed(".$line["id"].")\">".
+                htmlspecialchars($line["title"])."</a>";
 
-			print "</td><td class='text-muted' align='right'>";
-			print make_local_datetime($line['last_article'], false);
-			print "</td>";
-			print "</tr>";
+            print "</td><td class='text-muted' align='right'>";
+            print make_local_datetime($line['last_article'], false);
+            print "</td>";
+            print "</tr>";
 
-			++$lnum;
-		}
+            ++$lnum;
+        }
 
-		print "</table>";
-		print "</div>";
+        print "</table>";
+        print "</div>";
 
-		print "<footer>
+        print "<footer>
 			<button style='float : left' class=\"alt-danger\" dojoType='dijit.form.Button' onclick=\"dijit.byId('inactiveFeedsDlg').removeSelected()\">"
-			.__('Unsubscribe from selected feeds')."</button>
+            .__('Unsubscribe from selected feeds')."</button>
 			<button dojoType='dijit.form.Button' onclick=\"dijit.byId('inactiveFeedsDlg').hide()\">"
-			.__('Close this window')."</button>
+            .__('Close this window')."</button>
 			</footer>";
 
-	}
+    }
 
-	public function feedsWithErrors() {
-		$sth = $this->pdo->prepare("SELECT id,title,feed_url,last_error,site_url
+    public function feedsWithErrors() {
+        $sth = $this->pdo->prepare("SELECT id,title,feed_url,last_error,site_url
 			FROM ttrss_feeds WHERE last_error != '' AND owner_uid = ?");
-		$sth->execute([$_SESSION['uid']]);
+        $sth->execute([$_SESSION['uid']]);
 
-		print "<div dojoType=\"fox.Toolbar\">";
-		print "<div dojoType=\"fox.form.DropDownButton\">".
-				"<span>".__('Select')."</span>";
-		print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
-		print "<div onclick=\"Tables.select('error-feeds-list', true)\"
+        print "<div dojoType=\"fox.Toolbar\">";
+        print "<div dojoType=\"fox.form.DropDownButton\">".
+                "<span>".__('Select')."</span>";
+        print "<div dojoType=\"dijit.Menu\" style=\"display: none;\">";
+        print "<div onclick=\"Tables.select('error-feeds-list', true)\"
 			dojoType=\"dijit.MenuItem\">".__('All')."</div>";
-		print "<div onclick=\"Tables.select('error-feeds-list', false)\"
+        print "<div onclick=\"Tables.select('error-feeds-list', false)\"
 			dojoType=\"dijit.MenuItem\">".__('None')."</div>";
-		print "</div></div>";
-		print "</div>"; #toolbar
+        print "</div></div>";
+        print "</div>"; #toolbar
 
-		print "<div class='panel panel-scrollable'>";
-		print "<table width='100%' id='error-feeds-list'>";
+        print "<div class='panel panel-scrollable'>";
+        print "<table width='100%' id='error-feeds-list'>";
 
-		$lnum = 1;
+        $lnum = 1;
 
-		while ($line = $sth->fetch()) {
+        while ($line = $sth->fetch()) {
 
-			$feed_id = $line["id"];
+            $feed_id = $line["id"];
 
-			print "<tr data-row-id='$feed_id'>";
+            print "<tr data-row-id='$feed_id'>";
 
-			print "<td width='5%' align='center'><input
+            print "<td width='5%' align='center'><input
 				onclick='Tables.onRowChecked(this);' dojoType=\"dijit.form.CheckBox\"
 				type=\"checkbox\"></td>";
-			print "<td>";
+            print "<td>";
 
-			print "<a class=\"visibleLink\" href=\"#\" ".
-				"title=\"".__("Click to edit feed")."\" ".
-				"onclick=\"CommonDialogs.editFeed(".$line["id"].")\">".
-				htmlspecialchars($line["title"])."</a>: ";
+            print "<a class=\"visibleLink\" href=\"#\" ".
+                "title=\"".__("Click to edit feed")."\" ".
+                "onclick=\"CommonDialogs.editFeed(".$line["id"].")\">".
+                htmlspecialchars($line["title"])."</a>: ";
 
-			print "<span class=\"text-muted\">";
-			print htmlspecialchars($line["last_error"]);
-			print "</span>";
+            print "<span class=\"text-muted\">";
+            print htmlspecialchars($line["last_error"]);
+            print "</span>";
 
-			print "</td>";
-			print "</tr>";
+            print "</td>";
+            print "</tr>";
 
-			++$lnum;
-		}
+            ++$lnum;
+        }
 
-		print "</table>";
-		print "</div>";
+        print "</table>";
+        print "</div>";
 
-		print "<footer>";
-		print "<button style='float : left' class=\"alt-danger\" dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('errorFeedsDlg').removeSelected()\">"
-			.__('Unsubscribe from selected feeds')."</button> ";
+        print "<footer>";
+        print "<button style='float : left' class=\"alt-danger\" dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('errorFeedsDlg').removeSelected()\">"
+            .__('Unsubscribe from selected feeds')."</button> ";
 
-		print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('errorFeedsDlg').hide()\">".
-			__('Close this window')."</button>";
+        print "<button dojoType=\"dijit.form.Button\" onclick=\"dijit.byId('errorFeedsDlg').hide()\">".
+            __('Close this window')."</button>";
 
-		print "</footer>";
-	}
+        print "</footer>";
+    }
 
-	private function remove_feed_category($id, $owner_uid) {
+    private function remove_feed_category($id, $owner_uid) {
 
-		$sth = $this->pdo->prepare("DELETE FROM ttrss_feed_categories
+        $sth = $this->pdo->prepare("DELETE FROM ttrss_feed_categories
 			WHERE id = ? AND owner_uid = ?");
-		$sth->execute([$id, $owner_uid]);
+        $sth->execute([$id, $owner_uid]);
 
-		CCache::remove($id, $owner_uid, true);
-	}
+        CCache::remove($id, $owner_uid, true);
+    }
 
-	public static function remove_feed($id, $owner_uid) {
-		foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_UNSUBSCRIBE_FEED) as $p) {
-			if (!$p->hook_unsubscribe_feed($id, $owner_uid)) {
+    public static function remove_feed($id, $owner_uid) {
+        foreach (PluginHost::getInstance()->get_hooks(PluginHost::HOOK_UNSUBSCRIBE_FEED) as $p) {
+            if (!$p->hook_unsubscribe_feed($id, $owner_uid)) {
                 user_error("feed $id (owner: $owner_uid) not removed due to plugin error (HOOK_UNSUBSCRIBE_FEED).", E_USER_WARNING);
                 return;
-			}
-		}
+            }
+        }
 
-		$pdo = Db::pdo();
+        $pdo = Db::pdo();
 
-		if ($id > 0) {
-			$pdo->beginTransaction();
+        if ($id > 0) {
+            $pdo->beginTransaction();
 
-			/* save starred articles in Archived feed */
+            /* save starred articles in Archived feed */
 
-			/* prepare feed if necessary */
+            /* prepare feed if necessary */
 
-			$sth = $pdo->prepare("SELECT feed_url FROM ttrss_feeds WHERE id = ?
+            $sth = $pdo->prepare("SELECT feed_url FROM ttrss_feeds WHERE id = ?
 				AND owner_uid = ?");
-			$sth->execute([$id, $owner_uid]);
+            $sth->execute([$id, $owner_uid]);
 
-			if ($row = $sth->fetch()) {
-				$feed_url = $row["feed_url"];
+            if ($row = $sth->fetch()) {
+                $feed_url = $row["feed_url"];
 
-				$sth = $pdo->prepare("SELECT id FROM ttrss_archived_feeds
+                $sth = $pdo->prepare("SELECT id FROM ttrss_archived_feeds
 					WHERE feed_url = ? AND owner_uid = ?");
-				$sth->execute([$feed_url, $owner_uid]);
+                $sth->execute([$feed_url, $owner_uid]);
 
-				if ($row = $sth->fetch()) {
-					$archive_id = $row["id"];
-				} else {
-					$res = $pdo->query("SELECT MAX(id) AS id FROM ttrss_archived_feeds");
-					$row = $res->fetch();
+                if ($row = $sth->fetch()) {
+                    $archive_id = $row["id"];
+                } else {
+                    $res = $pdo->query("SELECT MAX(id) AS id FROM ttrss_archived_feeds");
+                    $row = $res->fetch();
 
-					$new_feed_id = (int) $row['id'] + 1;
+                    $new_feed_id = (int) $row['id'] + 1;
 
-					$sth = $pdo->prepare("INSERT INTO ttrss_archived_feeds
+                    $sth = $pdo->prepare("INSERT INTO ttrss_archived_feeds
 						(id, owner_uid, title, feed_url, site_url, created)
 							SELECT ?, owner_uid, title, feed_url, site_url, NOW() from ttrss_feeds
 							WHERE id = ?");
-					$sth->execute([$new_feed_id, $id]);
+                    $sth->execute([$new_feed_id, $id]);
 
-					$archive_id = $new_feed_id;
-				}
+                    $archive_id = $new_feed_id;
+                }
 
-				$sth = $pdo->prepare("UPDATE ttrss_user_entries SET feed_id = NULL,
+                $sth = $pdo->prepare("UPDATE ttrss_user_entries SET feed_id = NULL,
 					orig_feed_id = ? WHERE feed_id = ? AND
 						marked = true AND owner_uid = ?");
 
-				$sth->execute([$archive_id, $id, $owner_uid]);
+                $sth->execute([$archive_id, $id, $owner_uid]);
 
-				/* Remove access key for the feed */
+                /* Remove access key for the feed */
 
-				$sth = $pdo->prepare("DELETE FROM ttrss_access_keys WHERE
+                $sth = $pdo->prepare("DELETE FROM ttrss_access_keys WHERE
 					feed_id = ? AND owner_uid = ?");
-				$sth->execute([$id, $owner_uid]);
+                $sth->execute([$id, $owner_uid]);
 
-				/* remove the feed */
+                /* remove the feed */
 
-				$sth = $pdo->prepare("DELETE FROM ttrss_feeds
+                $sth = $pdo->prepare("DELETE FROM ttrss_feeds
 					WHERE id = ? AND owner_uid = ?");
-				$sth->execute([$id, $owner_uid]);
-			}
+                $sth->execute([$id, $owner_uid]);
+            }
 
-			$pdo->commit();
+            $pdo->commit();
 
-			if (file_exists(ICONS_DIR."/$id.ico")) {
-				unlink(ICONS_DIR."/$id.ico");
-			}
+            if (file_exists(ICONS_DIR."/$id.ico")) {
+                unlink(ICONS_DIR."/$id.ico");
+            }
 
-			CCache::remove($id, $owner_uid);
+            CCache::remove($id, $owner_uid);
 
-		} else {
-			Labels::remove(Labels::feed_to_label_id($id), $owner_uid);
-			//CCache::remove($id, $owner_uid); don't think labels are cached
-		}
-	}
+        } else {
+            Labels::remove(Labels::feed_to_label_id($id), $owner_uid);
+            //CCache::remove($id, $owner_uid); don't think labels are cached
+        }
+    }
 
-	public function batchSubscribe() {
-		print_hidden("op", "pref-feeds");
-		print_hidden("method", "batchaddfeeds");
+    public function batchSubscribe() {
+        print_hidden("op", "pref-feeds");
+        print_hidden("method", "batchaddfeeds");
 
-		print "<header class='horizontal'>".__("One valid feed per line (no detection is done)")."</header>";
-		print "<section>";
+        print "<header class='horizontal'>".__("One valid feed per line (no detection is done)")."</header>";
+        print "<section>";
 
-		print "<textarea
+        print "<textarea
 			style='font-size : 12px; width : 98%; height: 200px;'
 			dojoType='dijit.form.SimpleTextarea' name='feeds'></textarea>";
 
-		if (get_pref('ENABLE_FEED_CATS')) {
-			print "<fieldset>";
-			print "<label>".__('Place in category:')."</label> ";
-			print_feed_cat_select("cat", false, 'dojoType="fox.form.Select"');
-			print "</fieldset>";
-		}
+        if (get_pref('ENABLE_FEED_CATS')) {
+            print "<fieldset>";
+            print "<label>".__('Place in category:')."</label> ";
+            print_feed_cat_select("cat", false, 'dojoType="fox.form.Select"');
+            print "</fieldset>";
+        }
 
-		print "</section>";
+        print "</section>";
 
-		print "<div id='feedDlg_loginContainer' style='display : none'>";
+        print "<div id='feedDlg_loginContainer' style='display : none'>";
 
-		print "<header>".__("Authentication")."</header>";
-		print "<section>";
+        print "<header>".__("Authentication")."</header>";
+        print "<section>";
 
-		print "<input dojoType='dijit.form.TextBox' name='login' placeHolder=\"".__("Login")."\">
+        print "<input dojoType='dijit.form.TextBox' name='login' placeHolder=\"".__("Login")."\">
 			<input placeHolder=\"".__("Password")."\" dojoType=\"dijit.form.TextBox\" type='password'
 				autocomplete='new-password' name='pass''></div>";
 
-		print "</section>";
-		print "</div>";
+        print "</section>";
+        print "</div>";
 
-		print "<fieldset class='narrow'>
+        print "<fieldset class='narrow'>
 			<label class='checkbox'><input type='checkbox' name='need_auth' dojoType='dijit.form.CheckBox'
 					onclick='displayIfChecked(this, \"feedDlg_loginContainer\")'> ".
-				__('Feeds require authentication.')."</label></div>";
-		print "</fieldset>";
+                __('Feeds require authentication.')."</label></div>";
+        print "</fieldset>";
 
-		print "<footer>
+        print "<footer>
 			<button dojoType='dijit.form.Button' type='submit' class='alt-primary'>".__('Subscribe')."</button>
 			<button dojoType='dijit.form.Button' onclick=\"return dijit.byId('batchSubDlg').hide()\">".__('Cancel')."</button>
 			</footer>";
-	}
+    }
 
-	public function batchAddFeeds() {
-		$cat_id = clean($_REQUEST['cat']);
-		$feeds = explode("\n", clean($_REQUEST['feeds']));
-		$login = clean($_REQUEST['login']);
-		$pass = trim(clean($_REQUEST['pass']));
+    public function batchAddFeeds() {
+        $cat_id = clean($_REQUEST['cat']);
+        $feeds = explode("\n", clean($_REQUEST['feeds']));
+        $login = clean($_REQUEST['login']);
+        $pass = trim(clean($_REQUEST['pass']));
 
-		$csth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
+        $csth = $this->pdo->prepare("SELECT id FROM ttrss_feeds
 						WHERE feed_url = ? AND owner_uid = ?");
 
-		$isth = $this->pdo->prepare("INSERT INTO ttrss_feeds
+        $isth = $this->pdo->prepare("INSERT INTO ttrss_feeds
 							(owner_uid,feed_url,title,cat_id,auth_login,auth_pass,update_method,auth_pass_encrypted)
 						VALUES (?, ?, '[Unknown]', ?, ?, ?, 0, false)");
 
-		foreach ($feeds as $feed) {
-			$feed = trim($feed);
+        foreach ($feeds as $feed) {
+            $feed = trim($feed);
 
-			if (Feeds::validate_feed_url($feed)) {
+            if (Feeds::validate_feed_url($feed)) {
 
-				$this->pdo->beginTransaction();
+                $this->pdo->beginTransaction();
 
-				$csth->execute([$feed, $_SESSION['uid']]);
+                $csth->execute([$feed, $_SESSION['uid']]);
 
-				if (!$csth->fetch()) {
-					$isth->execute([$_SESSION['uid'], $feed, $cat_id ? $cat_id : null, $login, $pass]);
-				}
+                if (!$csth->fetch()) {
+                    $isth->execute([$_SESSION['uid'], $feed, $cat_id ? $cat_id : null, $login, $pass]);
+                }
 
-				$this->pdo->commit();
-			}
-		}
-	}
+                $this->pdo->commit();
+            }
+        }
+    }
 
-	public function regenOPMLKey() {
-		$this->update_feed_access_key('OPML:Publish',
-		false, $_SESSION["uid"]);
+    public function regenOPMLKey() {
+        $this->update_feed_access_key('OPML:Publish',
+        false, $_SESSION["uid"]);
 
-		$new_link = Opml::opml_publish_url();
+        $new_link = Opml::opml_publish_url();
 
-		print json_encode(array("link" => $new_link));
-	}
+        print json_encode(array("link" => $new_link));
+    }
 
-	public function regenFeedKey() {
-		$feed_id = clean($_REQUEST['id']);
-		$is_cat = clean($_REQUEST['is_cat']);
+    public function regenFeedKey() {
+        $feed_id = clean($_REQUEST['id']);
+        $is_cat = clean($_REQUEST['is_cat']);
 
-		$new_key = $this->update_feed_access_key($feed_id, $is_cat);
+        $new_key = $this->update_feed_access_key($feed_id, $is_cat);
 
-		print json_encode(["link" => $new_key]);
-	}
+        print json_encode(["link" => $new_key]);
+    }
 
 
-	private function update_feed_access_key($feed_id, $is_cat, $owner_uid = false) {
-		if (!$owner_uid) {
-		    $owner_uid = $_SESSION["uid"];
-		}
+    private function update_feed_access_key($feed_id, $is_cat, $owner_uid = false) {
+        if (!$owner_uid) {
+            $owner_uid = $_SESSION["uid"];
+        }
 
-		// clear old value and generate new one
-		$sth = $this->pdo->prepare("DELETE FROM ttrss_access_keys
+        // clear old value and generate new one
+        $sth = $this->pdo->prepare("DELETE FROM ttrss_access_keys
 			WHERE feed_id = ? AND is_cat = ? AND owner_uid = ?");
-		$sth->execute([$feed_id, bool_to_sql_bool($is_cat), $owner_uid]);
+        $sth->execute([$feed_id, bool_to_sql_bool($is_cat), $owner_uid]);
 
-		return Feeds::get_feed_access_key($feed_id, $is_cat, $owner_uid);
-	}
+        return Feeds::get_feed_access_key($feed_id, $is_cat, $owner_uid);
+    }
 
-	// Silent
-	public function clearKeys() {
-		$sth = $this->pdo->prepare("DELETE FROM ttrss_access_keys WHERE
+    // Silent
+    public function clearKeys() {
+        $sth = $this->pdo->prepare("DELETE FROM ttrss_access_keys WHERE
 			owner_uid = ?");
-		$sth->execute([$_SESSION['uid']]);
-	}
+        $sth->execute([$_SESSION['uid']]);
+    }
 
-	private function calculate_children_count($cat) {
-		$c = 0;
+    private function calculate_children_count($cat) {
+        $c = 0;
 
-		foreach ($cat['items'] as $child) {
-			if ($child['type'] == 'category') {
-				$c += $this->calculate_children_count($child);
-			} else {
-				$c += 1;
-			}
-		}
+        foreach ($cat['items'] as $child) {
+            if ($child['type'] == 'category') {
+                $c += $this->calculate_children_count($child);
+            } else {
+                $c += 1;
+            }
+        }
 
-		return $c;
-	}
+        return $c;
+    }
 
-	public function getinactivefeeds() {
-		if (DB_TYPE == "pgsql") {
-			$interval_qpart = "NOW() - INTERVAL '3 months'";
-		} else {
-			$interval_qpart = "DATE_SUB(NOW(), INTERVAL 3 MONTH)";
-		}
+    public function getinactivefeeds() {
+        if (DB_TYPE == "pgsql") {
+            $interval_qpart = "NOW() - INTERVAL '3 months'";
+        } else {
+            $interval_qpart = "DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+        }
 
-		$sth = $this->pdo->prepare("SELECT COUNT(id) AS num_inactive FROM ttrss_feeds WHERE
+        $sth = $this->pdo->prepare("SELECT COUNT(id) AS num_inactive FROM ttrss_feeds WHERE
 				(SELECT MAX(updated) FROM ttrss_entries, ttrss_user_entries WHERE
 					ttrss_entries.id = ref_id AND
 						ttrss_user_entries.feed_id = ttrss_feeds.id) < $interval_qpart AND
 			  ttrss_feeds.owner_uid = ?");
-		$sth->execute([$_SESSION['uid']]);
+        $sth->execute([$_SESSION['uid']]);
 
-		if ($row = $sth->fetch()) {
-			print (int) $row["num_inactive"];
-		}
-	}
+        if ($row = $sth->fetch()) {
+            print (int) $row["num_inactive"];
+        }
+    }
 
-	public static function subscribe_to_feed_url() {
-		$url_path = get_self_url_prefix().
-			"/public.php?op=subscribe&feed_url=%s";
-		return $url_path;
-	}
+    public static function subscribe_to_feed_url() {
+        $url_path = get_self_url_prefix().
+            "/public.php?op=subscribe&feed_url=%s";
+        return $url_path;
+    }
 
 }

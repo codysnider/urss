@@ -54,7 +54,7 @@ class MailTo extends Plugin {
 		while ($line = $sth->fetch()) {
 
 			if (!$subject) {
-							$subject = __("[Forwarded]") . " " . htmlspecialchars($line["title"]);
+							$subject = __("[Forwarded]")." ".htmlspecialchars($line["title"]);
 			}
 
 			$tpl->setVariable('ARTICLE_TITLE', strip_tags($line["title"]));

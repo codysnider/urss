@@ -35,11 +35,11 @@
                 Header("Content-type: image/png");
                 ImagePng($image);
             } else {
-                if($saveandprint===true){
+                if ($saveandprint === true) {
                     ImagePng($image, $filename);
                     header("Content-type: image/png");
                     ImagePng($image);
-                } else{
+                } else {
                     ImagePng($image, $filename);
                 }
             }
