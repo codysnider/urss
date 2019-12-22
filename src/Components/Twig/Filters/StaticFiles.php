@@ -11,11 +11,13 @@ class StaticFiles
     {
         $query = "";
         if (!(strpos($filename, "?") === false)) {
-            $query = substr($filename, strpos($filename, "?")+1);
+            $query = substr($filename, strpos($filename, "?") + 1);
             $filename = substr($filename, 0, strpos($filename, "?"));
         }
         $timestamp = filemtime(BASEPATH.DS.'public'.DS.'js'.DS.$filename);
-        if ($query) $timestamp .= "&$query";
+        if ($query) {
+            $timestamp .= "&$query";
+        }
 
         return "<script type=\"text/javascript\" charset=\"utf-8\" src=\"/js/$filename?$timestamp\"></script>\n";
     }
