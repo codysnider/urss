@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace RssApp;
 
 use Exception;
+use Locale;
 use RssApp\Components\Registry;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Component\Translation\Loader\MoFileLoader;
@@ -48,14 +49,21 @@ abstract class RequestBootstrap
      */
     protected static function twigTranslations(): bool
     {
+        $locale = Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']) ?? getenv('DEFAULT_LANGUAGE');
+        $messagesFile = BASEPATH.DS.'locale'.DS.$locale.DS.'LC_MESSAGES'.DS.'messages.mo';
+
         $twig = Registry::get('twig');
-        $translator = new Translator(getenv('DEFAULT_LANGUAGE'));
-        $translator->addLoader('moloader', new MoFileLoader());
-        $translator->addResource(
-            'moloader',
-            BASEPATH.DS.'locale'.DS.getenv('DEFAULT_LANGUAGE').DS.'LC_MESSAGES'.DS.'messages.mo',
-            getenv('DEFAULT_LANGUAGE')
-        );
+        $translator = new Translator($locale);
+
+        if (is_file($messagesFile)) {
+            $translator->addLoader('moloader', new MoFileLoader());
+            $translator->addResource(
+                'moloader',
+                BASEPATH.DS.'locale'.DS.$locale.DS.'LC_MESSAGES'.DS.'messages.mo',
+                $locale
+            );
+        }
+
         $translationExt = new TranslationExtension($translator);
 
         $twig->addExtension($translationExt);

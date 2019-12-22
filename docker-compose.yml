@@ -1,0 +1,56 @@
+version: '2'
+
+services:
+    application:
+        build: ./docker/application
+        container_name: application
+        restart: always
+        env_file:
+          - .env
+        ports:
+            - 80:8080
+        volumes:
+            - ./:/var/www/app
+        depends_on:
+          - redis-cache
+          - db
+        networks:
+            backend:
+                aliases:
+                    - application
+
+    db:
+        image: mysql:5.7
+        container_name: db
+        volumes:
+            - db_data:/var/lib/mysql
+        restart: always
+        env_file:
+            - .env
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASS}
+            MYSQL_DATABASE: ${DB_NAME}
+            MYSQL_USER: ${DB_USER}
+            MYSQL_PASSWORD: ${DB_PASS}
+        networks:
+            backend:
+                aliases:
+                    - db
+
+    redis-cache:
+        image: redis:5-alpine
+        container_name: redis-cache
+        restart: always
+        ports:
+            - "6379:6379"
+        networks:
+            backend:
+                aliases:
+                    - redis-cache
+
+networks:
+    backend:
+volumes:
+    db_data: {}

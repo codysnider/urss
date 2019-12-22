@@ -1,0 +1,53 @@
+#!/usr/local/bin/php
+<?php
+
+declare(strict_types=1);
+
+use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
+use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
+use Doctrine\Migrations\Tools\Console\Command\GenerateCommand;
+use Doctrine\Migrations\Tools\Console\Command\MigrateCommand;
+use Doctrine\Migrations\Tools\Console\Command\StatusCommand;
+use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
+use Doctrine\ORM\Tools\Console\Command\ClearCache\CollectionRegionCommand;
+use Doctrine\ORM\Tools\Console\Command\ClearCache\EntityRegionCommand;
+use Doctrine\ORM\Tools\Console\Command\ClearCache\QueryRegionCommand;
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
+use RssApp\Bootstrap;
+use RssApp\Components\Registry;
+use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Helper\QuestionHelper;
+
+define("DS", DIRECTORY_SEPARATOR);
+define("BASEPATH", dirname(__FILE__).DS.'..');
+
+require_once BASEPATH.DS.'external'.DS.'autoload.php';
+
+define("APPLICATION_ENV", getenv("APPLICATION_ENV") ?? 'dev');
+
+try {
+    Bootstrap::initialize();
+} catch (Exception $e) {
+    echo "Problem with application bootstrap: ".$e->getMessage();
+}
+
+$helperSet = new HelperSet([
+    'db' => new ConnectionHelper(Registry::get('em')->getConnection()),
+    'em' => new EntityManagerHelper(Registry::get('em')),
+    'question' => new QuestionHelper(),
+]);
+$cli = ConsoleRunner::createApplication($helperSet, [
+    new DiffCommand(),
+    new ExecuteCommand(),
+    new GenerateCommand(),
+    new MigrateCommand(),
+    new StatusCommand(),
+    new VersionCommand(),
+    new CollectionRegionCommand(),
+    new EntityRegionCommand(),
+    new QueryRegionCommand()
+]);
+
+$cli->run();

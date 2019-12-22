@@ -51,8 +51,7 @@
     }
 
     function bwLimitChange(elem) {
-        Cookie.set("ttrss_bwlimit", elem.checked,
-            {# <?php print SESSION_COOKIE_LIFETIME ?> #} 86400);
+        Cookie.set("ttrss_bwlimit", elem.checked, {{ env('SESSION_COOKIE_LIFETIME') }});
     }
 </script>
 
@@ -62,7 +61,7 @@
 
     <h1>Authentication</h1>
     <div class="content">
-        <form action="public.php?return=<?php echo $return ?>"
+        <form action="/login?redirect={{ redirect }}"
               dojoType="dijit.form.Form" method="POST">
 
             <?php print_hidden("op", "login"); ?>
@@ -95,15 +94,13 @@
 
             <fieldset>
                 <label>{{ "Profile:"|trans }}</label>
-
                 <select disabled='disabled' name="profile" id="profile" dojoType='dijit.form.Select'>
                     <option>{{ "Default profile"|trans }}</option>
                 </select>
             </fieldset>
 
             <fieldset class="narrow">
-                <label> </label>
-
+                <label></label>
                 <label id="bw_limit_label">
                     <input dojoType="dijit.form.CheckBox" name="bw_limit" id="bw_limit" type="checkbox" onchange="bwLimitChange(this)">
                     {{ "Use less traffic"|trans }}
@@ -111,31 +108,29 @@
             </fieldset>
 
             <div dojoType="dijit.Tooltip" connectId="bw_limit_label" position="below" style="display:none">
-                <?php echo __("Does not display images in articles, reduces automatic refreshes."); ?>
+                {{ "Does not display images in articles, reduces automatic refreshes."|trans }}
             </div>
 
-{#            <?php if (SESSION_COOKIE_LIFETIME > 0) { ?>#}
-
-            <fieldset class="narrow">
-                <label> </label>
-                <label>
-                    <input dojoType="dijit.form.CheckBox" name="remember_me" id="remember_me" type="checkbox">
-                    {{ "Remember me"|trans }}
-                </label>
-            </fieldset>
-
-{#            <?php } ?>#}
+            {% if env('SESSION_COOKIE_LIFETIME') > 0 %}
+                <fieldset class="narrow">
+                    <label> </label>
+                    <label>
+                        <input dojoType="dijit.form.CheckBox" name="remember_me" id="remember_me" type="checkbox">
+                        {{ "Remember me"|trans }}
+                    </label>
+                </fieldset>
+            {% endif %}
 
             <hr/>
 
             <fieldset class="align-right">
-                <label> </label>
+                <label></label>
 
                 <button dojoType="dijit.form.Button" type="submit" class="alt-primary">{{ 'Log in'|trans }}</button>
 
-{#                <?php if (defined('ENABLE_REGISTRATION') && ENABLE_REGISTRATION) { ?>#}
-                <button onclick="return gotoRegForm()" dojoType="dijit.form.Button">{{ "Create new account"|trans }}</button>
-{#                <?php } ?>#}
+                {% if env('ENABLE_REGISTRATION') %}
+                    <button onclick="return gotoRegForm()" dojoType="dijit.form.Button">{{ "Create new account"|trans }}</button>
+                {% endif %}
             </fieldset>
 
         </form>

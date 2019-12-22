@@ -1,16 +1,30 @@
 FROM php:7.3-cli
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  vim \
-  libzip-dev \
-  unzip \
-  procps \
-  inotify-tools
+RUN requirements="unzip procps inotify-tools curl libzip-dev zlib1g-dev libicu-dev libcurl3-dev libzstd-dev g++" \
+    && requirementsToRemove="libzip-dev zlib1g-dev libicu-dev libcurl3-dev libzstd-dev g++" \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends $requirements \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install PHP Extensions
 RUN docker-php-ext-install zip \
   && docker-php-ext-install opcache \
-  && docker-php-ext-enable opcache
+  && docker-php-ext-enable opcache \
+  && docker-php-ext-configure intl \
+  && docker-php-ext-install intl \
+  && docker-php-ext-install pdo pdo_mysql \
+  && docker-php-ext-install mbstring \
+  && docker-php-ext-install iconv \
+  && docker-php-ext-install curl
+
+# IGBinary for Redis
+RUN pecl install igbinary \
+    && docker-php-ext-enable igbinary
+
+# Install Redis
+RUN yes | pecl install -o -f redis \
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable redis
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -32,7 +46,10 @@ RUN mkdir /tmp/rr \
 RUN mkdir /etc/roadrunner
 COPY .rr.yaml /etc/roadrunner/.rr.yaml
 
-WORKDIR /var/www
+# Clear libraries used only for build
+RUN apt-get purge --auto-remove -y $requirementsToRemove
+
+WORKDIR /var/www/app
 
 # ENTRYPOINT ["php", "/var/www/app/bootstrap.php"]
 ENTRYPOINT ["/usr/local/bin/rr", "serve", "-d", "-c", "/etc/roadrunner/.rr.yaml"]
