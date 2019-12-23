@@ -35,6 +35,6 @@ while ($req = $psr7->acceptRequest()) {
         $resp = Controller::handle();
         $psr7->respond($resp);
     } catch (Throwable $e) {
-        $psr7->getWorker()->error((string)$e);
+        $psr7->getWorker()->error((string) $e);
     }
 }

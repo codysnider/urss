@@ -155,7 +155,7 @@ abstract class Bootstrap
             echo $e->getMessage();
             return false;
         }
-        AnnotationRegistry::registerAutoloadNamespace('JMS\Serializer\Annotation',BASEPATH.DS.'external/jms/serializer/src');
+        AnnotationRegistry::registerAutoloadNamespace('JMS\Serializer\Annotation', BASEPATH.DS.'external/jms/serializer/src');
         Registry::set('serializer', SerializerBuilder::create()->addMetadataDir(BASEPATH.DS.'src')->build());
         return true;
     }

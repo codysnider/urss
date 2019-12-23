@@ -846,18 +846,18 @@ function writeString($s) {
         return;
     }
     switch ($this->outputMode) {
-        case 0:
-            print($s);
-            break;
-        case 1:
-            $rc = fwrite($this->outputFileHandle, $s);
-            if ($rc === false) {
-                $this->outputError = true;
-            }
-            break;
-        case 2:
-            $this->outputString .= $s;
-            break;
+    case 0:
+        print($s);
+        break;
+    case 1:
+        $rc = fwrite($this->outputFileHandle, $s);
+        if ($rc === false) {
+            $this->outputError = true;
+        }
+        break;
+    case 2:
+        $this->outputString .= $s;
+        break;
     }
 }
 
