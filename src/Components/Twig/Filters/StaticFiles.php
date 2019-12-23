@@ -29,4 +29,9 @@ class StaticFiles
         return "<link rel=\"stylesheet\" $id_part type=\"text/css\" data-orig-href=\"/css/$filename\" href=\"/css/$filename?$timestamp\"/>\n";
     }
 
+    public static function errorMessage(string $message)
+    {
+        return '<div class="alert alert-danger">'.$message.'</div>';
+    }
+
 }

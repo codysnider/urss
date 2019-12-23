@@ -846,20 +846,20 @@ function writeString($s) {
         return;
     }
     switch ($this->outputMode) {
-    case 0:            // output to PHP output stream
-     if (!print($s)) {
+        case 0:
+            print($s);
+            break;
+        case 1:
+            $rc = fwrite($this->outputFileHandle, $s);
+            if ($rc === false) {
                 $this->outputError = true;
-        }
-        break;
-    case 1:            // output to file
-     $rc = fwrite($this->outputFileHandle, $s);
-        if ($rc === false) {
-            $this->outputError = true;
-        }
-        break;
-    case 2:            // output to string
-     $this->outputString .= $s;
-        break; }}
+            }
+            break;
+        case 2:
+            $this->outputString .= $s;
+            break;
+    }
+}
 
 //--- name lookup routines ------------------------------------------------------------------------------------------
 

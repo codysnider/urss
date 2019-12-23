@@ -2,11 +2,15 @@
 
 namespace PHPSTORM_META
 {
+
+    use Doctrine\ORM\EntityManager;
+
     override( \RssApp\Components\Registry::get(0),
         map([
             "request" => Zend\Diactoros\ServerRequest::class,
             "router" => Symfony\Component\Routing\Router::class,
             "twig" => Environment::class,
+            "em" => EntityManager::class,
         ])
     );
 

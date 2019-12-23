@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>';
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>{{ request.getServerParams()['SELF_URL_PATH'] }}register</id>
+    <title>Tiny Tiny RSS registration slots</title>
+    <link rel="self" href="{{ request.getServerParams()['SELF_URL_PATH'] }}register-feed" />
+    <link rel="alternate" href="{{ request.getServerParams()['SELF_URL_PATH'] }}" />
+    <entry>
+        <id>{{ request.getServerParams()['SELF_URL_PATH'] }}register?{{ userCount }}</id>
+        <link rel="alternate" href="{{ request.getServerParams()['SELF_URL_PATH'] }}register"/>
+        <title>{{ availableAccounts }} slots are currently available, registration {{ availableAccounts > 0 ? 'enabled' : 'disabled' }}</title>
+        <summary>{{ availableAccounts }} slots are currently available, registration {{ availableAccounts > 0 ? 'enabled' : 'disabled' }}</summary>
+    </entry>
+</feed>

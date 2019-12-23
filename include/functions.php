@@ -123,7 +123,6 @@ function get_translations() {
     return $tr;
 }
 
-require_once "lib/accept-to-gettext.php";
 require_once "lib/gettext/gettext.inc";
 
 /**

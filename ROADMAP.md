@@ -24,6 +24,7 @@ TODO:
 - Better setup documentation re: what environment variables need to be changed
 - Bash/Powershell scripts for updating to latest from master
 - Switch password mechanism to bcrypt
+- Setup Codeception for unit and acceptance tests
 
 What we need:
 - A few other backend devs so we can code review everything going into the system (ideally another maintainer or two)
