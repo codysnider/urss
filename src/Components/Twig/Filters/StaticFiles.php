@@ -34,4 +34,13 @@ class StaticFiles
         return '<div class="alert alert-danger">'.$message.'</div>';
     }
 
+    public static function warningMessage(string $message)
+    {
+        return '<div class="alert">'.$message.'</div>';
+    }
+
+    public static function noticeMessage(string $message)
+    {
+        return '<div class="alert-info">'.$message.'</div>';
+    }
 }

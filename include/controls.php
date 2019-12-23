@@ -1,6 +1,7 @@
 <?php
 
-function print_select($id, $default, $values, $attributes = "", $name = "") {
+function print_select($id, $default, $values, $attributes = "", $name = "")
+{
     if (!$name) {
         $name = $id;
     }
@@ -8,19 +9,18 @@ function print_select($id, $default, $values, $attributes = "", $name = "") {
     print "<select name=\"$name\" id=\"$id\" $attributes>";
     foreach ($values as $v) {
         if ($v == $default) {
-                    $sel = "selected=\"1\"";
+            $sel = "selected=\"1\"";
         } else {
-                    $sel = "";
+            $sel = "";
         }
-
         $v = trim($v);
-
         print "<option value=\"$v\" $sel>$v</option>";
     }
     print "</select>";
 }
 
-function print_select_hash($id, $default, $values, $attributes = "", $name = "") {
+function print_select_hash($id, $default, $values, $attributes = "", $name = "")
+{
     if (!$name) {
         $name = $id;
     }
@@ -28,41 +28,42 @@ function print_select_hash($id, $default, $values, $attributes = "", $name = "")
     print "<select name=\"$name\" id='$id' $attributes>";
     foreach (array_keys($values) as $v) {
         if ($v == $default) {
-                    $sel = 'selected="selected"';
+            $sel = 'selected="selected"';
         } else {
-                    $sel = "";
+            $sel = "";
         }
-
         $v = trim($v);
-
         print "<option $sel value=\"$v\">".$values[$v]."</option>";
     }
 
     print "</select>";
 }
 
-function print_hidden($name, $value) {
+function print_hidden($name, $value)
+{
     print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"$name\" value=\"$value\">";
 }
 
-function print_checkbox($id, $checked, $value = "", $attributes = "") {
+function print_checkbox($id, $checked, $value = "", $attributes = "")
+{
     $checked_str = $checked ? "checked" : "";
     $value_str = $value ? "value=\"$value\"" : "";
-
     print "<input dojoType=\"dijit.form.CheckBox\" id=\"$id\" $value_str $checked_str $attributes name=\"$id\">";
 }
 
-function print_button($type, $value, $attributes = "") {
+function print_button($type, $value, $attributes = "")
+{
     print "<p><button dojoType=\"dijit.form.Button\" $attributes type=\"$type\">$value</button>";
 }
 
-function print_radio($id, $default, $true_is, $values, $attributes = "") {
+function print_radio($id, $default, $true_is, $values, $attributes = "")
+{
     foreach ($values as $v) {
 
         if ($v == $default) {
-                    $sel = "checked";
+            $sel = "checked";
         } else {
-                    $sel = "";
+            $sel = "";
         }
 
         if ($v == $true_is) {
@@ -77,14 +78,10 @@ function print_radio($id, $default, $true_is, $values, $attributes = "") {
     }
 }
 
-function print_feed_multi_select($id, $default_ids = [],
-                            $attributes = "", $include_all_feeds = true,
-                            $root_id = null, $nest_level = 0) {
-
+function print_feed_multi_select($id, $default_ids = [], $attributes = "", $include_all_feeds = true, $root_id = null, $nest_level = 0)
+{
     $pdo = DB::pdo();
-
     print_r(in_array("CAT:6", $default_ids));
-
     if (!$root_id) {
         print "<select multiple=\true\" id=\"$id\" name=\"$id\" $attributes>";
         if ($include_all_feeds) {
@@ -92,54 +89,38 @@ function print_feed_multi_select($id, $default_ids = [],
             print "<option $is_selected value=\"0\">".__('All feeds')."</option>";
         }
     }
-
     if (get_pref('ENABLE_FEED_CATS')) {
-
         if (!$root_id) {
             $root_id = null;
         }
-
         $sth = $pdo->prepare("SELECT id,title,
 				(SELECT COUNT(id) FROM ttrss_feed_categories AS c2 WHERE
 					c2.parent_cat = ttrss_feed_categories.id) AS num_children
 				FROM ttrss_feed_categories
 				WHERE owner_uid = :uid AND
 				(parent_cat = :root_id OR (:root_id IS NULL AND parent_cat IS NULL)) ORDER BY title");
-
         $sth->execute([":uid" => $_SESSION['uid'], ":root_id" => $root_id]);
-
         while ($line = $sth->fetch()) {
-
             for ($i = 0; $i < $nest_level; $i++) {
-                            $line["title"] = " - ".$line["title"];
+                $line["title"] = " - ".$line["title"];
             }
-
             $is_selected = in_array("CAT:".$line["id"], $default_ids) ? "selected=\"1\"" : "";
-
             printf("<option $is_selected value='CAT:%d'>%s</option>",
                 $line["id"], htmlspecialchars($line["title"]));
 
             if ($line["num_children"] > 0) {
-                            print_feed_multi_select($id, $default_ids, $attributes,
-                    $include_all_feeds, $line["id"], $nest_level + 1);
+                print_feed_multi_select($id, $default_ids, $attributes, $include_all_feeds, $line["id"], $nest_level + 1);
             }
 
-            $f_sth = $pdo->prepare("SELECT id,title FROM ttrss_feeds
-					WHERE cat_id = ? AND owner_uid = ? ORDER BY title");
-
+            $f_sth = $pdo->prepare("SELECT id,title FROM ttrss_feeds WHERE cat_id = ? AND owner_uid = ? ORDER BY title");
             $f_sth->execute([$line['id'], $_SESSION['uid']]);
-
             while ($fline = $f_sth->fetch()) {
                 $is_selected = (in_array($fline["id"], $default_ids)) ? "selected=\"1\"" : "";
-
                 $fline["title"] = " + ".$fline["title"];
-
                 for ($i = 0; $i < $nest_level; $i++) {
-                                    $fline["title"] = " - ".$fline["title"];
+                    $fline["title"] = " - ".$fline["title"];
                 }
-
-                printf("<option $is_selected value='%d'>%s</option>",
-                    $fline["id"], htmlspecialchars($fline["title"]));
+                printf("<option $is_selected value='%d'>%s</option>", $fline["id"], htmlspecialchars($fline["title"]));
             }
         }
 
@@ -186,19 +167,15 @@ function print_feed_multi_select($id, $default_ids = [],
     }
 }
 
-function print_feed_cat_select($id, $default_id,
-                                $attributes, $include_all_cats = true, $root_id = null, $nest_level = 0) {
-
+function print_feed_cat_select($id, $default_id, $attributes, $include_all_cats = true, $root_id = null, $nest_level = 0)
+{
     if (!$root_id) {
         print "<select id=\"$id\" name=\"$id\" default=\"$default_id\" $attributes>";
     }
-
     $pdo = DB::pdo();
-
     if (!$root_id) {
         $root_id = null;
     }
-
     $sth = $pdo->prepare("SELECT id,title,
 				(SELECT COUNT(id) FROM ttrss_feed_categories AS c2 WHERE
 					c2.parent_cat = ttrss_feed_categories.id) AS num_children
@@ -267,86 +244,84 @@ function javascript_tag($filename)
     user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 
-function format_warning($msg, $id = "") {
-    return "<div class=\"alert\" id=\"$id\">$msg</div>";
+/**
+ * @deprecated Use twig function warningMessage
+ */
+function format_warning()
+{
+    user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 
-function format_notice($msg, $id = "") {
-    return "<div class=\"alert alert-info\" id=\"$id\">$msg</div>";
+/**
+ * @deprecated Use twig function noticeMessage
+ */
+function format_notice()
+{
+    user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 
-function format_error($msg, $id = "") {
-    return "<div class=\"alert alert-danger\" id=\"$id\">$msg</div>";
+/**
+ * @deprecated Use twig function errorMessage
+ */
+function format_error()
+{
+    user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 
-function print_notice($msg) {
-    return print format_notice($msg);
+/**
+ * @deprecated Use twig function noticeMessage
+ */
+function print_notice()
+{
+    user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 
-function print_warning($msg) {
-    return print format_warning($msg);
+/**
+ * @deprecated Use twig function warningMessage
+ */
+function print_warning()
+{
+    user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 
-function print_error($msg) {
-    return print format_error($msg);
+/**
+ * @deprecated Use twig function errorMessage
+ */
+function print_error()
+{
+    user_error(__FUNCTION__.' is deprecated', E_USER_DEPRECATED);
 }
 
-function format_inline_player($url, $ctype) {
-
+function format_inline_player($url, $ctype)
+{
     $entry = "";
-
     $url = htmlspecialchars($url);
-
     if (strpos($ctype, "audio/") === 0) {
-
         $entry .= "<div class='inline-player'>";
-
         if ($_SESSION["hasAudio"] && (strpos($ctype, "ogg") !== false ||
                 $_SESSION["hasMp3"])) {
-
-            $entry .= "<audio preload=\"none\" controls>
-					<source type=\"$ctype\" src=\"$url\"/>
-					</audio> ";
-
+            $entry .= "<audio preload=\"none\" controls><source type=\"$ctype\" src=\"$url\"/></audio> ";
         }
 
         if ($entry) {
-            $entry .= "<a target=\"_blank\" rel=\"noopener noreferrer\"
-				href=\"$url\">".basename($url)."</a>";
+            $entry .= "<a target=\"_blank\" rel=\"noopener noreferrer\"href=\"$url\">".basename($url)."</a>";
         }
-
         $entry .= "</div>";
-
         return $entry;
-
     }
-
     return "";
 }
 
-function print_label_select($name, $value, $attributes = "") {
-
+function print_label_select($name, $value, $attributes = "")
+{
     $pdo = Db::pdo();
-
-    $sth = $pdo->prepare("SELECT caption FROM ttrss_labels2
-			WHERE owner_uid = ? ORDER BY caption");
+    $sth = $pdo->prepare("SELECT caption FROM ttrss_labels2 WHERE owner_uid = ? ORDER BY caption");
     $sth->execute([$_SESSION['uid']]);
-
-    print "<select default=\"$value\" name=\"".htmlspecialchars($name).
-        "\" $attributes>";
-
+    print "<select default=\"$value\" name=\"".htmlspecialchars($name)."\" $attributes>";
     while ($line = $sth->fetch()) {
-
         $issel = ($line["caption"] == $value) ? "selected=\"1\"" : "";
-
-        print "<option value=\"".htmlspecialchars($line["caption"])."\"
-				$issel>".htmlspecialchars($line["caption"])."</option>";
+        print "<option value=\"".htmlspecialchars($line["caption"])."\"$issel>".htmlspecialchars($line["caption"])."</option>";
 
     }
-
-#		print "<option value=\"ADD_LABEL\">" .__("Add label...") . "</option>";
-
     print "</select>";
-
-
 }
