@@ -1,5 +1,6 @@
-μRSS
-=============
+<p align="center">
+  <img height="100" src="https://github.com/codysnider/urss/raw/master/public/images/logo/normal-with-text.png">
+</p>
 
 **NOTE: This is not TT-RSS, but a fork to clean, secure and modernize it. The original author(s) are welcome
 to integrate our code back into the original project. Everyone is welcome to contribute.**
