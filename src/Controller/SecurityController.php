@@ -3,6 +3,9 @@
 namespace RssApp\Controller;
 
 use RssApp\Components\Registry;
+use RssApp\Components\Response\ErrorJson;
+use RssApp\Components\Response\SuccessJson;
+use RssApp\Components\TuringTest;
 use RssApp\Components\User;
 use RssApp\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,8 +60,25 @@ class SecurityController extends Controller
 
         return $this->render([
             'registrationsEnabled' => (bool) (getenv('ENABLE_REGISTRATION') === 'true'),
-            'availableAccounts' => ((int) getenv('REG_MAX_USERS') - $userCount)
+            'availableAccounts' => ((int) getenv('REG_MAX_USERS') - $userCount),
+            'turingQuestion' => TuringTest::getQuestion()
         ]);
+    }
+
+    /**
+     * @Route("/register", methods={"POST"})
+     */
+    public function registerSubmitAction()
+    {
+        $params = Registry::get('request')->getParsedBody();
+
+        dump($params);
+
+        if (User::usernameExists($params['username'])) {
+            return new ErrorJson($params, Registry::get('trans')->trans('Sorry, this username is already taken.'));
+        }
+
+        return new SuccessJson();
     }
 
     /**
@@ -84,16 +104,8 @@ class SecurityController extends Controller
      */
     public function usernameCheckAction(string $username)
     {
-        $qb = Registry::get('em')->createQueryBuilder();
-        $checkCount = $qb->select('COUNT(u)')
-            ->from('RssApp:User', 'u')
-            ->where('u.login = :login')
-            ->setParameter(':login', strtolower(trim($username)))
-            ->getQuery()
-            ->getSingleScalarResult();
-
         return $this->render([
-            'checkCount' => (int) $checkCount
+            'checkCount' => User::usernameExists($username) ? 1 : 0
         ]);
     }
 }

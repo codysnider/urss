@@ -163,19 +163,6 @@
         }
 
         if ($test == "four" || $test == "4") {
-
-            $result = db_query("SELECT id FROM ttrss_users WHERE
-				login = '$login'");
-
-            $is_registered = db_num_rows($result) > 0;
-
-            if ($is_registered) {
-                print_error(__('Sorry, this username is already taken.'));
-                print "<p><form method=\"GET\" action=\"index.php\">
-				<input type=\"submit\" value=\"".__("Return to Tiny Tiny RSS")."\">
-				</form>";
-            } else {
-
                 $password = make_password();
 
                 $salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
@@ -246,8 +233,6 @@
 					</form>";
 
                 }
-
-            }
 
             } else {
                 print_error('Plese check the form again, you have failed the robot test.');

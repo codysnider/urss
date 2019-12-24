@@ -6,7 +6,6 @@ namespace RssApp\Components\Twig\Filters;
 
 class StaticFiles
 {
-
     public static function jsTag(string $filename): string
     {
         $query = "";
@@ -25,8 +24,7 @@ class StaticFiles
     public static function cssTag(string $filename): string
     {
         $timestamp = filemtime(BASEPATH.DS.'public'.DS.'css'.DS.$filename);
-        $id_part = $id ? "id=\"$id\"" : "";
-        return "<link rel=\"stylesheet\" $id_part type=\"text/css\" data-orig-href=\"/css/$filename\" href=\"/css/$filename?$timestamp\"/>\n";
+        return "<link rel=\"stylesheet\" type=\"text/css\" data-orig-href=\"/css/$filename\" href=\"/css/$filename?$timestamp\"/>\n";
     }
 
     public static function errorMessage(string $message)

@@ -17,4 +17,17 @@ class User
             ->getQuery()
             ->getResult();
     }
+
+    public static function usernameExists(string $username): bool
+    {
+        $qb = Registry::get('em')->createQueryBuilder();
+        $exists = $qb->select('COUNT(u)')
+            ->from('RssApp:User', 'u')
+            ->where('u.login = :login')
+            ->setParameter(':login', strtolower(trim($username)))
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return ($exists === '1');
+    }
 }

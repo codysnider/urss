@@ -1,7 +1,7 @@
-Tiny Tiny RSS
+μRSS
 =============
 
-**NOTE: This is not the original TT-RSS, but a fork to clean, secure and modernize it. The original author(s) are welcome
+**NOTE: This is not TT-RSS, but a fork to clean, secure and modernize it. The original author(s) are welcome
 to integrate our code back into the original project. Everyone is welcome to contribute.**
 
 Web-based news feed aggregator, designed to allow you to read news from
@@ -24,4 +24,6 @@ To initialize the database, run:
 ./bin/migrate_db
 ```
 
-Uses Silk icons by Mark James: http://www.famfamfam.com/lab/icons/silk/
+## A Special Thanks To
+
+[TextCaptcha](http://textcaptcha.com/) - Used as a secure, privacy-sensitive captcha solution

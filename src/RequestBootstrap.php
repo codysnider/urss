@@ -65,8 +65,9 @@ abstract class RequestBootstrap
         }
 
         $translationExt = new TranslationExtension($translator);
-
         $twig->addExtension($translationExt);
+        Registry::set('trans', $translationExt);
+
         return true;
     }
 
