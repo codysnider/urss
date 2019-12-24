@@ -8,8 +8,8 @@ to integrate our code back into the original project. Everyone is welcome to con
 Web-based news feed aggregator, designed to allow you to read news from
 any location, while feeling as close to a real desktop application as possible.
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/codysnider/tt-rss/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/codysnider/tt-rss/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/codysnider/tt-rss/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/codysnider/tt-rss/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/codysnider/urss/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/codysnider/urss/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/codysnider/urss/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/codysnider/urss/?branch=master)
 
 ## Installation & Usage
 
