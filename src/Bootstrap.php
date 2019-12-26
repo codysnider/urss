@@ -160,32 +160,6 @@ abstract class Bootstrap
         return true;
     }
 
-    protected static function request(): bool
-    {
-        $request = ServerRequestFactory::fromGlobals($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
-        Registry::set('request', $request);
-        return true;
-    }
-
-    protected static function router(): bool
-    {
-        $request = Request::createFromGlobals();
-        $requestContext = new RequestContext();
-        $requestContext->fromRequest($request);
-        $logger = Registry::get('log');
-        $fileLocator = new FileLocator([
-            BASEPATH.DS.'src'.DS.'Controller',
-        ]);
-        $reader = new AnnotationReader();
-        $annotatedLoader = new AnnotatedRouteControllerLoader($reader);
-        $loader = new AnnotationDirectoryLoader($fileLocator, $annotatedLoader);
-        $router = new Router($loader, BASEPATH.DS.'src'.DS.'Controller', [], $requestContext, $logger);
-        $loader = require BASEPATH.DS.'external'.DS.'autoload.php';
-        AnnotationRegistry::registerLoader([$loader, 'loadClass']);
-        Registry::set('router', $router);
-        return true;
-    }
-
     protected static function twig(): bool
     {
         $cache = false;
@@ -195,7 +169,6 @@ abstract class Bootstrap
         $loader = new FilesystemLoader(BASEPATH.DS.'views');
         $twig = new Environment($loader, ['cache' => $cache]);
 
-        $twig->addGlobal('request', Registry::get('request'));
         $twig->addGlobal('basePath', BASEPATH);
         $twig->addGlobal('applicationEnv', APPLICATION_ENV);
 
@@ -209,5 +182,4 @@ abstract class Bootstrap
         Registry::set('twig', $twig);
         return true;
     }
-
 }

@@ -65,11 +65,13 @@ class ErrorJson extends Response
         array $headers = [],
         int $encodingOptions = self::DEFAULT_JSON_FLAGS
     ) {
-        $this->setPayload([
+        $data = [
             'status' => 'error',
             'message' => $msg,
             'payload' => $data
-        ]);
+        ];
+
+        $this->setPayload($data);
         $this->encodingOptions = $encodingOptions;
 
         $json = $this->jsonEncode($data, $this->encodingOptions);

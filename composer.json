@@ -12,7 +12,7 @@
         "endroid/qr-code": "^3.7",
         "jawira/case-converter": "^3.4",
         "jms/serializer": "^3.4",
-        "spiral/roadrunner": "^1.5",
+        "spiral/roadrunner": "dev-master",
         "spomky-labs/otphp": "^10.0",
         "symfony/class-loader": "^3.4",
         "symfony/config": "^5.0",

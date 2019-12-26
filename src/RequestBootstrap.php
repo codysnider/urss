@@ -4,12 +4,25 @@ declare(strict_types=1);
 
 namespace RssApp;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Exception;
 use Locale;
 use RssApp\Components\Registry;
+use RssApp\Components\Twig\Filters;
+use RssApp\Components\Twig\Functions;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Loader\AnnotationDirectoryLoader;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Router;
 use Symfony\Component\Translation\Loader\MoFileLoader;
 use Symfony\Component\Translation\Translator;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Zend\Diactoros\ServerRequestFactory;
 
 /**
  * @internal Intended to be a final abstract (or static) class (https://wiki.php.net/rfc/abstract_final_class)
@@ -44,9 +57,33 @@ abstract class RequestBootstrap
         }
     }
 
-    /**
-     * @todo Load language from preferences
-     */
+    protected static function router(): bool
+    {
+        $request = Request::createFromGlobals();
+        $requestContext = new RequestContext();
+        $requestContext->fromRequest($request);
+        $logger = Registry::get('log');
+        $fileLocator = new FileLocator([
+            BASEPATH.DS.'src'.DS.'Controller',
+        ]);
+        $reader = new AnnotationReader();
+        $annotatedLoader = new AnnotatedRouteControllerLoader($reader);
+        $loader = new AnnotationDirectoryLoader($fileLocator, $annotatedLoader);
+        $router = new Router($loader, BASEPATH.DS.'src'.DS.'Controller', [], $requestContext, $logger);
+        $loader = require BASEPATH.DS.'external'.DS.'autoload.php';
+        AnnotationRegistry::registerLoader([$loader, 'loadClass']);
+        Registry::set('router', $router);
+        return true;
+    }
+
+    protected static function twig(): bool
+    {
+        $twig = Registry::get('twig');
+        $twig->addGlobal('request', Registry::get('request'));
+
+        return true;
+    }
+
     protected static function twigTranslations(): bool
     {
         $locale = Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']) ?? getenv('DEFAULT_LANGUAGE');

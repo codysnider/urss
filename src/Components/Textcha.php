@@ -2,7 +2,7 @@
 
 namespace RssApp\Components;
 
-final class TuringTest
+class Textcha
 {
     const LOCAL_QUESTIONS = [
         [

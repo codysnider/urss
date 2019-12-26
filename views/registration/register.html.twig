@@ -2,16 +2,39 @@
 
 {% block title %}{{ "Create new account"|trans }}{% endblock %}
 
-{% block headerJs %}
+{% block footerJs %}
     <script type="application/javascript">
-
+        $('#check-availability-btn').on('click', function() {
+            let usernameCheckRequest = $.ajax({
+                method: "GET",
+                url: "/username-check/"+$('#login').val()
+            });
+            usernameCheckRequest.done(function(r) {
+                $('#username-message')
+                    .text(r.message);
+                $('#username, #username-message')
+                    .removeClass('is-invalid')
+                    .addClass('is-valid')
+                    .addClass('text-success')
+                    .removeClass('text-danger');
+            });
+            usernameCheckRequest.fail(function(jqXHR, textStatus){
+                $('#username-message')
+                    .text(jqXHR.responseJSON.message);
+                $('#username, #username-message')
+                    .addClass('is-invalid')
+                    .removeClass('is-valid')
+                    .addClass('text-danger')
+                    .removeClass('text-success');
+            });
+        });
     </script>
 {% endblock %}
 
 {% block content %}
 
     <div class="container">
-        <img alt="" class="my-5 mx-auto d-block" src="/images/logo/normal.png" />
+        <img alt="" class="my-5 mx-auto d-block" src="/images/logo/normal-with-text.png" />
         {% if not registrationsEnabled or availableAccounts < 1 %}
             {{ "New user registrations are administratively disabled."|trans|errorMessage|raw }}
         {% else %}
@@ -22,28 +45,30 @@
                     <form action="/register" method="POST">
 
                         <div class="form-group">
-                            <label for="login">{{ 'Desired login:'|trans }}</label>
+                            <label for="username">{{ 'Desired login:'|trans }}</label>
                             <div class="input-group">
-                                <input class="form-control" id="login">
+                                <input class="form-control" name="username" id="username" required>
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-primary" type="button">Check availability</button>
+                                    <button id="check-availability-btn" class="btn btn-outline-primary" type="button">{{ "Check availability"|trans }}</button>
                                 </div>
                             </div>
+                            <small id="username-message" class="form-text"></small>
                         </div>
 
                         <div class="form-group ">
                             <label for="email">{{ 'Email:'|trans }}</label>
-                            <input type="email" class="form-control" id="email">
+                            <input type="email" class="form-control" id="email" name="email" required>
+                            <small id="email-message" class="form-text"></small>
                         </div>
 
                         <div class="form-group">
-                            <label for="captcha">{{ turingQuestion['q']|trans }}</label>
-                            <input type="text" class="form-control" id="captcha">
+                            <label for="captcha">{{ captchaQuestion['q']|trans }}</label>
+                            <input type="text" class="form-control" id="captcha" name="captcha" required>
                         </div>
 
                         <button type="submit" class="btn btn-primary">{{ 'Submit registration'|trans }}</button>
 
-                        {% for answer in turingQuestion['a'] %}
+                        {% for answer in captchaQuestion['a'] %}
                             <input type="hidden" name="answers[]" value="{{ answer }}" />
                         {% endfor %}
                     </form>

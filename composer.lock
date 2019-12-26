@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f32037474f4902b2353bcfb5b9836422",
+    "content-hash": "f211cc1243eb070f8620a843fbb4c3dc",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1140,16 +1140,16 @@
         },
         {
             "name": "endroid/qr-code",
-            "version": "3.7.3",
+            "version": "3.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/qr-code.git",
-                "reference": "a19e3fef5fa5b92d94219947a63944ecf2493e4b"
+                "reference": "c9097df3a107649c8347d2470c1bc984a4f6123a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/qr-code/zipball/a19e3fef5fa5b92d94219947a63944ecf2493e4b",
-                "reference": "a19e3fef5fa5b92d94219947a63944ecf2493e4b",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/c9097df3a107649c8347d2470c1bc984a4f6123a",
+                "reference": "c9097df3a107649c8347d2470c1bc984a4f6123a",
                 "shasum": ""
             },
             "require": {
@@ -1158,7 +1158,7 @@
                 "khanamiryan/qrcode-detector-decoder": "^1.0.2",
                 "myclabs/php-enum": "^1.5",
                 "php": ">=7.2",
-                "symfony/http-foundation": "^3.4||^4.0||^5.0",
+                "symfony/http-foundation": "^3.4||^4.2.12||^5.0",
                 "symfony/options-resolver": "^3.4||^4.0||^5.0",
                 "symfony/property-access": "^3.4||^4.0||^5.0"
             },
@@ -1196,7 +1196,7 @@
                 "qr",
                 "qrcode"
             ],
-            "time": "2019-11-23T10:53:01+00:00"
+            "time": "2019-12-22T18:55:19+00:00"
         },
         {
             "name": "hoa/compiler",
@@ -2790,16 +2790,16 @@
         },
         {
             "name": "spiral/roadrunner",
-            "version": "v1.5.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spiral/roadrunner.git",
-                "reference": "fadf373c1fe5e51bfaeb9e5ac3fe4ee748620a44"
+                "reference": "1737dbb730de9d061c8b03733400a7b292e71822"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spiral/roadrunner/zipball/fadf373c1fe5e51bfaeb9e5ac3fe4ee748620a44",
-                "reference": "fadf373c1fe5e51bfaeb9e5ac3fe4ee748620a44",
+                "url": "https://api.github.com/repos/spiral/roadrunner/zipball/1737dbb730de9d061c8b03733400a7b292e71822",
+                "reference": "1737dbb730de9d061c8b03733400a7b292e71822",
                 "shasum": ""
             },
             "require": {
@@ -2834,7 +2834,7 @@
                 }
             ],
             "description": "High-performance PHP application server, load-balancer and process manager written in Golang",
-            "time": "2019-12-05T12:16:07+00:00"
+            "time": "2019-12-25T08:34:20+00:00"
         },
         {
             "name": "spomky-labs/otphp",
@@ -5490,7 +5490,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "spiral/roadrunner": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

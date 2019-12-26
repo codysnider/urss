@@ -10,8 +10,10 @@ DONE:
 - ~Setup Doctrine~
 - ~Reverse-engineer Doctrine models from DDLs~
 - ~Create development docker container(s) and docker-compose files~
+- ~Convert login form to Bootstrap 4~
 
 TODO:
+- Make a more robust error handler
 - Make all application code PSR-12 compliant
 - Move vendor files into Composer requirements
 - Add SwiftMail
@@ -19,7 +21,6 @@ TODO:
 - Replace phpqrcode with endroid/qr-code
 - Migrate translations to YAML format
 - Migrate view and functionality from index.php and rename bootstrap.php to index.php
-- Convert login for to Bootstrap 4
 - Configure fontawesome
 - Better setup documentation re: what environment variables need to be changed
 - Bash/Powershell scripts for updating to latest from master

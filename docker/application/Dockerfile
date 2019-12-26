@@ -1,7 +1,7 @@
 FROM php:7.3-cli
 
-RUN requirements="unzip procps inotify-tools curl libzip-dev zlib1g-dev libicu-dev libcurl3-dev libzstd-dev g++" \
-    && requirementsToRemove="libzip-dev zlib1g-dev libicu-dev libcurl3-dev libzstd-dev g++" \
+RUN requirements="unzip procps inotify-tools curl libpng-dev libzip-dev zlib1g-dev libicu-dev libcurl3-dev libzstd-dev g++" \
+    && requirementsToRemove="libpng-dev libzip-dev zlib1g-dev libicu-dev libcurl3-dev libzstd-dev g++" \
     && apt-get update \
     && apt-get install -y --no-install-recommends $requirements \
     && rm -rf /var/lib/apt/lists/*
@@ -15,7 +15,8 @@ RUN docker-php-ext-install zip \
   && docker-php-ext-install pdo pdo_mysql \
   && docker-php-ext-install mbstring \
   && docker-php-ext-install iconv \
-  && docker-php-ext-install curl
+  && docker-php-ext-install curl \
+  && docker-php-ext-install gd
 
 # IGBinary for Redis
 RUN pecl install igbinary \
@@ -52,4 +53,4 @@ RUN apt-get purge --auto-remove -y $requirementsToRemove
 WORKDIR /var/www/app
 
 # ENTRYPOINT ["php", "/var/www/app/bootstrap.php"]
-ENTRYPOINT ["/usr/local/bin/rr", "serve", "-d", "-c", "/etc/roadrunner/.rr.yaml"]
+ENTRYPOINT ["/usr/local/bin/rr", "serve", "-v", "-d", "-c", "/etc/roadrunner/.rr.yaml"]
